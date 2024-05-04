@@ -39,6 +39,7 @@ Want to keep up with Development? Join the [Legacy4J Discord Server](https://dis
 ## Not your cup of tea?
 Thats fine! Consider checking out;
 - [Console-idated](https://modrinth.com/modpack/console-idated) by N00B (Has LEM compatibility)
+- [Legacy Remade](https://modrinth.com/modpack/legacy-remade) by Permdog99
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso
 
 
@@ -53,8 +54,8 @@ Thats fine! Consider checking out;
 - **nearznn, Manager**
 ## Legacy Union
 - **BuddarScotchy, Playtester**
-- **Permdog99, [Legacy Mipmaps](https://modrinth.com/mod/legacy-mipmaps)**
 - **TheMinecraftArchitect, Playtester and Contributor**
+- **Permdog99, [Legacy Mipmaps](https://modrinth.com/mod/legacy-mipmaps)**
 ## Other
 - **mzov4J, [Programmer Art Continuation Project](https://modrinth.com/resourcepack/pacp)**
 - **All the mod developers who made this project possible!**
