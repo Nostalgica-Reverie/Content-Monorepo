@@ -18,7 +18,8 @@ We seek to be as up-to date as possible update wise, mod wise and performance wi
 
 Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for Sneak Peeks and updates on development!
 
-## Special Thanks 
+## Special Thanks
+- [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Legacy4J and Re-Console
 - [mzov4J](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
 - [N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
 - [TheMinecraftArchitect](https://www.theminecraftarchitect.com/) for porting the Tutorial Worlds to Java Edition
