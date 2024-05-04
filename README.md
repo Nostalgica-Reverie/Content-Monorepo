@@ -1,4 +1,4 @@
-# ReConsole
+# Re-Console
 ![Kyubion-Legacy Union partnership](https://cdn.modrinth.com/data/cached_images/861b84a0c4112e3f4fc745e78cc28bfcbc4beffb.png)
 
 ## Info
@@ -11,22 +11,27 @@ We seek to be as up-to date as possible update wise, mod wise and performance wi
 
 ## Features
 - Incredibly lightweight and performant; even being able to run of 512mb of ram!
-- Near 100% LCE Parity, including mip-mapping, gamma systems, tutorial worlds
+- Near 100% LCE Parity, including mip-mapping, gamma systems and tutorial worlds
 - ***optional*** old world generation from Beta 1.1, Beta 1.7.3, Beta 1.8.1, Beta 1.9, 1.0.0, 1.2.5, 1.6.4, 1.12.2 and 1.17.1!
 - Consistent, quality updates!
 - Almost entirely configurable, including worlds!
 
-
+Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for Sneak Peeks and updates on development!
 
 ## Special Thanks 
+- [mzov4J](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
 - [N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
 - [TheMinecraftArchitect](https://www.theminecraftarchitect.com/) for porting the Tutorial Worlds to Java Edition
 - [Quartzmaven](https://modrinth.com/user/quartzmaven) for making QC:R, of which this project was inspired from
 - [Wilyicaro](https://modrinth.com/user/wilyicaro) for making the Legacy4J mod, for general assistance in the project and giving me permission to create this project
 
+# Need a server?
+[![BisectHosting Partnership](https://www.bisecthosting.com/partners/custom-banners/d6c28caa-43a1-4d76-938a-e18c926d8d85.webp)](www.bisecthosting.com/raamviot50)
+
+
 ## Not your cup of tea?
 Thats fine! Consider checking out;
-- [Console-idated](https://modrinth.com/modpack/console-idated) by N00B
+- [Console-idated](https://modrinth.com/modpack/console-idated) by N00B (Has LEM compatibility)
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso
 
 
@@ -36,14 +41,18 @@ Thats fine! Consider checking out;
 
 ## Theorem
 - **omoso, Lead Developer**
-- **BuddarScotchy, Playtester**
 ## Kyubion Studios
 - **Wilyicaro, Developer**
 - **nearznn, Manager**
 ## Legacy Union
+- **BuddarScotchy, Playtester**
+- **Permdog99, [Legacy Mipmaps](https://modrinth.com/mod/legacy-mipmaps)**
 - **TheMinecraftArchitect, Playtester and Contributor**
 ## Other
+- **mzov4J, [Programmer Art Continuation Project](https://modrinth.com/resourcepack/pacp)**
 - **All the mod developers who made this project possible!**
+
+**Re-Console runs some of the [Simply Optimized](https://modrinth.com/modpack/sop) configuration files***
 
 </details>
 
