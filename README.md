@@ -20,6 +20,7 @@ We seek to be as up-to date as possible update wise, mod wise and performance wi
 - Near 100% LCE Parity, including mip-mapping, gamma systems and tutorial worlds
 - ***optional*** old world generation from Beta 1.1, Beta 1.7.3, Beta 1.8.1, Beta 1.9, 1.0.0, 1.2.5, 1.6.4, 1.12.2 and 1.17.1!
 - Consistent, quality updates!
+- All old tutorial worlds from TU1-TU46!
 - Almost entirely configurable, including worlds!
 
 Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for Sneak Peeks and updates on development!
