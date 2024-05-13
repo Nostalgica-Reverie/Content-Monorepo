@@ -26,6 +26,22 @@ We seek to be as up-to date as possible update wise, mod wise and performance wi
 
 Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for Sneak Peeks and updates on development!
 
+<details>
+<summary>Important note for MacOS users</summary>
+
+After some trial and error, I have realized Re-Console needs the SDL2 framework to run, which is not installed on macOS by default. Here is a quick tutorial to do so:
+
+1) Install the latest release here (for mac, it will be the .dmg installer): https://github.com/libsdl-org/SDL/releases/tag/release-2.30.3
+2) Run the installer
+3) Open a new finder window, and in the upper left-hand portion of the screen, click `go`, `go to folder`, and enter this path: `/Library/Frameworks`
+4) Drag the `SDL2.framework` folder from the installer to the framework directory
+5) Launch ReConsole using the launcher of your choice. Click OK on the promts until your instance crashes
+6) Open `System Settings`, go to `Privacy & Security`, and scroll down to where you see `"SDL2.framework" was blocked from use because it is not from an identified developer.`. Click `Allow Anyway`.
+7) You can now launch ReConsole!
+
+
+</details>
+
 ## Special Thanks
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Legacy4J and Re-Console
 - [mzov4J](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
