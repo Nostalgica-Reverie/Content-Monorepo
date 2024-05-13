@@ -59,6 +59,7 @@ Thats fine! Consider checking out;
 - [Console-idated](https://modrinth.com/modpack/console-idated) by N00B (Has LEM compatibility)
 - [Legacy Remade](https://modrinth.com/modpack/legacy-remade) by Permdog99
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso
+- [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
 
 
