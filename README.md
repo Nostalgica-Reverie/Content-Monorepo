@@ -83,4 +83,4 @@ Thats fine! Consider checking out;
 
 </details>
 
-**Re-Console is licensed Apache 2.0 from 0.1.0 to 0.3.3, and GPLv3 from 0.3. 4 and onwards.**
+**Re-Console is licensed Apache 2.0 from 0.1.0 to 0.3.3, and GPLv3 from 0.3.4 and onwards.**
