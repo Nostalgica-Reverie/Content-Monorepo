@@ -46,9 +46,8 @@ After some trial and error, I have realized Re-Console needs the SDL2 framework 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Legacy4J and Re-Console
 - [mzov4J](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
-- [N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
+- [S_N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
 - [TheMinecraftArchitect](https://www.theminecraftarchitect.com/) for porting the Tutorial Worlds to Java Edition
-- [Quartzmaven](https://modrinth.com/user/quartzmaven) for making QC:R, of which this project was inspired from
 - [Wilyicaro](https://modrinth.com/user/wilyicaro) for making the Legacy4J mod, for general assistance in the project and giving me permission to create this project
 
 # Need a server?
@@ -79,7 +78,7 @@ Thats fine! Consider checking out;
 - **mzov4J, [Programmer Art Continuation Project](https://modrinth.com/resourcepack/pacp)**
 - **All the mod developers who made this project possible!**
 
-**Re-Console runs the C2ME [Simply Optimized](https://modrinth.com/modpack/sop) configuration file***
+***Re-Console runs the C2ME [Simply Optimized](https://modrinth.com/modpack/sop) configuration file***
 
 </details>
 
