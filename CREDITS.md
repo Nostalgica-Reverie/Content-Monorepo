@@ -1,4 +1,4 @@
-# Credits
+![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
 
 - omoso, Lead Developer
 - bathtubfulloftoast, Wiki Developer
