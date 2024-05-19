@@ -1,0 +1,14 @@
+#Lost hearts no longer flash when disappearing, so it is easier to see how much health you currently have.
+disable_flashing_hearts = false
+#Eye height changes instantly without any interpolation. Affects mainly sneaking and swimming.
+instant_eye_height_change = false
+#Allows block hitting, bow and food punching to render properly (meaning attacking and then using the item directly afterwards). The hitting animation is no longer consumed as in vanilla.
+full_interact_animations = true
+#Don't play the first person item reequip animation when beginning to use an item by holding the mouse button, like a shield or bow.
+no_reequip_when_using = true
+#Choose a style for the attributes display on item tooltips.
+#NONE: No information regarding attributes is added.
+#LEGACY: The pre-1.9 attributes style, mainly recognizable for using blue text instead of green.
+#MODERN: The current vanilla attribute style.
+#Allowed Values: NONE, LEGACY, MODERN
+attributes_style = "LEGACY"
