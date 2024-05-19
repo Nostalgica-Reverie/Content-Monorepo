@@ -1,0 +1,26 @@
+#Only show paper doll when in first-person mode.
+first_person_only = true
+#Set axis the player head can move on.
+#Allowed Values: YAW, PITCH, BOTH
+head_movement = "YAW"
+#Define a screen corner to align the paper doll display to.
+#Allowed Values: TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+position = "TOP_LEFT"
+#Display paper doll while performing these actions.
+#Display paper doll while performing these actions.
+#Allowed Values: paperdoll:sprinting, paperdoll:swimming, paperdoll:crawling, paperdoll:crouching, paperdoll:flying, paperdoll:gliding, paperdoll:riding, paperdoll:spin_attacking, paperdoll:using
+display_actions = ["paperdoll:sprinting", "paperdoll:swimming", "paperdoll:crawling", "paperdoll:crouching", "paperdoll:flying", "paperdoll:gliding"]
+#Scale of paper doll. Also affected by video settings gui scale.
+#Range: 1 ~ 24
+scale = 4
+#Offset on y-axis from original doll position.
+#Range: > -2147483648
+offset_y = 0
+#Amount of ticks the paper doll will be kept on screen after its display conditions are no longer met. Set to 0 to always display the doll.
+#Range: > 0
+display_time = 15
+#Offset on x-axis from original doll position.
+#Range: > -2147483648
+offset_x = 0
+#Shift paper doll downwards when it would otherwise overlap with potion icons while showing in the top screen right corner.
+potion_shift = true
