@@ -77,7 +77,7 @@ Thats fine! Consider checking out;
 - **mzov4J, [Programmer Art Continuation Project](https://modrinth.com/resourcepack/pacp)**
 - **All the mod developers who made this project possible!**
 
-***Re-Console runs the C2ME [Simply Optimized](https://modrinth.com/modpack/sop) configuration file***
+Re-Console uses some modified variants of the Adrenaline configuration files!
 
 </details>
 
