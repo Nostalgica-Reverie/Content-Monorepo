@@ -64,20 +64,24 @@ Thats fine! Consider checking out;
 
 ![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
 
-## Theorem
-- **omoso, Lead Developer**
-## Kyubion Studios
-- **Wilyicaro, Developer**
-- **nearznn, Manager**
-## Legacy Union
-- **BuddarScotchy, Playtester**
-- **TheMinecraftArchitect, Playtester and Contributor**
-- **Permdog99, [Legacy Mipmaps](https://modrinth.com/mod/legacy-mipmaps)**
-## Other
-- **mzov4J, [Programmer Art Continuation Project](https://modrinth.com/resourcepack/pacp)**
-- **All the mod developers who made this project possible!**
+![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
 
-Re-Console uses some modified variants of the Adrenaline configuration files!
+# Developers
+- omoso, Lead Developer
+- bathtubfulloftoast, Wiki Developer
+- WilyIcaro, Developer and assistant
+
+# Assistants and Contributors
+- Nearznn, assistant
+- TheMinecraftArchitect, contributor and assistant
+- Cjnator38, contributor
+
+# Special Thanks
+- dbtderpbox for fixing a crash with AMD GPUs on Linuxt
+- Devin/Intergrav, creator of Adrenaline of which this modpack uses some of the config files
+- Hypersoop, creator of Simply Optimized of which this modpack uses some of the config files
+- S_N00B for making Console-idated, which inspired this projec
+
 
 </details>
 
