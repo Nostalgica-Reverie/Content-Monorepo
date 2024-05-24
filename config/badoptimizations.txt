@@ -8,7 +8,7 @@ enable_lightmap_caching: true
 # Higher values will result in less frequent updates
 # to block lighting, but better performance.
 # Values below 2 will disable hte optimization.
-lightmap_time_change_needed_for_update: 80
+lightmap_time_change_needed_for_update: 90
 
 # Whether the sky's color should be cached unless you're on a biome border.
 enable_sky_color_caching: true
