@@ -8,9 +8,10 @@
 # Assistants and Contributors
 - TheMinecraftArchitect, contributor and assistant
 - Cjnator38, contributor
+- phofers, contributor
 
 # Special Thanks
-- dbtderpbox for fixing a crash with AMD GPUs on Linuxt
+- dbtderpbox for fixing a crash with AMD GPUs on Linux
 - Devin/Intergrav, creator of Adrenaline of which this modpack uses some of the config files
 - Hypersoop, creator of Simply Optimized of which this modpack uses some of the config files
-- S_N00B for making Console-idated, which inspired this projec
+- S_N00B for making Console-idated, which inspired this project
