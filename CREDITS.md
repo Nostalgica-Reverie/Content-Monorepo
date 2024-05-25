@@ -6,7 +6,6 @@
 - WilyIcaro, Developer and assistant
 
 # Assistants and Contributors
-- Nearznn, assistant
 - TheMinecraftArchitect, contributor and assistant
 - Cjnator38, contributor
 
