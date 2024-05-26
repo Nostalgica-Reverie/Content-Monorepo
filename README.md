@@ -12,24 +12,25 @@
 Welcome back to your childhood.
 
 Re-Console is the official modpack for the Legacy4J mod, seeking to be as accurate as to the idea of if Legacy Console Edition never ended as possible.
-We do this via the Legacy4J mod, with slight modifications to make it our vision of what it would have been.
+We do this via a variety of mods, resource packs and occasionally datapacks!
 
-We seek to be as up-to date as possible update wise, mod wise and performance wise.
+We seek to be as up-to date as possible update wise, mod wise and performance wise. The fastest time we updated in accordance with Legacy4J was a time of only **3 minutes!**
+<p> We seek to be the gold standard of LCE modpacks, trying to push the ecosystem forward!
 
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
-- Incredibly lightweight and performant; even being able to run of 512mb of ram!
-- Near 100% LCE Parity, including mip-mapping, gamma systems and tutorial worlds
-- ***optional*** old world generation from Beta 1.1, Beta 1.7.3, Beta 1.8.1, Beta 1.9, 1.0.0, 1.2.5, 1.6.4, 1.12.2 and 1.17.1!
-- Consistent, quality updates!
-- All old tutorial worlds from TU1-TU46!
-- Almost entirely configurable, including worlds!
+- Near 100% Legacy Console Edition parity
+- Lightweight and performant; built on the [Adrenaline](https://modrinth.com/modpack/adrenaline) modpack, tweaked specifically for the most optimal, stable performance
+- Every tutorial world, from TU1 to TU69
+- Entirely configurable and community oriented
+- Optional old world generation, spanning from Beta 1.7.3 to 1.17.1
+<p> Re-Console, and all the mods inside of it are either Open Source or Source Available!
 
-Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for Sneak Peeks and updates on development!
+**Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for Sneak Peeks and updates on development!**
 
 <details>
 <summary>Important note for MacOS users</summary>
 
-After some trial and error, I have realized Re-Console needs the SDL2 framework to run, which is not installed on macOS by default. Here is a quick tutorial to do so:
+Re-Console needs the SDL2 framework to run, which is not installed on macOS by default. Here is a quick tutorial to do so:
 
 1) Install the latest release here (for mac, it will be the .dmg installer): https://github.com/libsdl-org/SDL/releases/tag/release-2.30.3
 2) Run the installer
@@ -42,15 +43,16 @@ After some trial and error, I have realized Re-Console needs the SDL2 framework 
 
 </details>
 
-![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
-- [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Legacy4J and Re-Console
-- [mzov4J](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
-- [S_N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
-- [TheMinecraftArchitect](https://www.theminecraftarchitect.com/) for porting the Tutorial Worlds to Java Edition
-- [Wilyicaro](https://modrinth.com/user/wilyicaro) for making the Legacy4J mod, for general assistance in the project and giving me permission to create this project
 
 # Need a server?
 [![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
+
+![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
+- [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Legacy4J and Re-Console
+- [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
+- [S_N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
+- [TheMinecraftArchitect](https://www.theminecraftarchitect.com/) for porting the Tutorial Worlds to Java Edition
+
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
 Thats fine! Consider checking out;
 - [Console-idated](https://modrinth.com/modpack/console-idated) by N00B (Has LEM compatibility)
@@ -64,23 +66,22 @@ Thats fine! Consider checking out;
 
 ![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
 
-![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
 
 # Developers
 - omoso, Lead Developer
 - bathtubfulloftoast, Wiki Developer
-- WilyIcaro, Developer and assistant
+- WilyIcaro, Developer
 
 # Assistants and Contributors
-- Nearznn, assistant
 - TheMinecraftArchitect, contributor and assistant
 - Cjnator38, contributor
+- phofers, contributor
 
 # Special Thanks
-- dbtderpbox for fixing a crash with AMD GPUs on Linuxt
+- dbtderpbox for fixing a crash with AMD GPUs on Linux
 - Devin/Intergrav, creator of Adrenaline of which this modpack uses some of the config files
 - Hypersoop, creator of Simply Optimized of which this modpack uses some of the config files
-- S_N00B for making Console-idated, which inspired this projec
+- S_N00B for making Console-idated, which inspired this project
 
 
 </details>
