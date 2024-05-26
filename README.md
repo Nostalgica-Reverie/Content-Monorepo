@@ -44,9 +44,6 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 </details>
 
 
-# Need a server?
-[![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
-
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Legacy4J and Re-Console
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
@@ -60,6 +57,9 @@ Thats fine! Consider checking out;
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso
 - [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
+
+# Need a server?
+[![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
 
 <details>
 <summary>Credits</summary>
