@@ -2,11 +2,14 @@
 
 # Developers
 - omoso, Lead Developer
-- bathtubfulloftoast, Wiki Developer
-- WilyIcaro, Developer and assistant
+- bathtubfulloftoast, Wiki Developer and Playtester
+- WilyIcaro, Developer and assistant 
 
 # Assistants and Contributors
-- TheMinecraftArchitect, contributor and assistant
+- bathtubfulloftoast, Wiki Developer and Playtester
+- dbtderpbox, Playtester
+- Lenuilu, Playtester
+- TheMinecraftArchitect, contributor and playtester
 - Cjnator38, contributor
 - phofers, contributor
 
