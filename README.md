@@ -32,7 +32,7 @@ We seek to be as up-to date as possible update wise, mod wise and performance wi
 
 Re-Console needs the SDL2 framework to run, which is not installed on macOS by default. Here is a quick tutorial to do so:
 
-1) Install the latest release here (for mac, it will be the .dmg installer): https://github.com/libsdl-org/SDL/releases/tag/release-2.30.3
+1) Install the latest release here (for mac, it will be the .dmg installer): https://github.com/libsdl-org/SDL/releases
 2) Run the installer
 3) Open a new finder window, and in the upper left-hand portion of the screen, click `go`, `go to folder`, and enter this path: `/Library/Frameworks`
 4) Drag the `SDL2.framework` folder from the installer to the framework directory
@@ -53,7 +53,7 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 Thats fine! Consider checking out;
 - [Console-idated](https://modrinth.com/modpack/console-idated) by N00B (Has LEM compatibility)
 - [Legacy Remade](https://modrinth.com/modpack/legacy-remade) by Permdog99
-- [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso
+- [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
 - [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
 
@@ -74,7 +74,7 @@ Thats fine! Consider checking out;
 - bathtubfulloftoast, Wiki Developer and Playtester
 - dbtderpbox, Playtester
 - Lenuilu, Playtester
-- TheMinecraftArchitect, contributor and playtester
+- TheMinecraftArchitect, contributor and Playtester
 - Cjnator38, contributor
 - phofers, contributor
 
