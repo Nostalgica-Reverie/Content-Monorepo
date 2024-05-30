@@ -48,7 +48,6 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Legacy4J and Re-Console
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
 - [S_N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
-- [TheMinecraftArchitect](https://www.theminecraftarchitect.com/) for porting the Tutorial Worlds to Java Edition
 
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
 Thats fine! Consider checking out;
@@ -66,14 +65,16 @@ Thats fine! Consider checking out;
 
 ![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
 
-
 # Developers
 - omoso, Lead Developer
-- bathtubfulloftoast, Wiki Developer
-- WilyIcaro, Developer
+- bathtubfulloftoast, Wiki Developer and Playtester
+- WilyIcaro, Developer and assistant 
 
 # Assistants and Contributors
-- TheMinecraftArchitect, contributor and assistant
+- bathtubfulloftoast, Wiki Developer and Playtester
+- dbtderpbox, Playtester
+- Lenuilu, Playtester
+- TheMinecraftArchitect, contributor and playtester
 - Cjnator38, contributor
 - phofers, contributor
 
@@ -82,6 +83,7 @@ Thats fine! Consider checking out;
 - Devin/Intergrav, creator of Adrenaline of which this modpack uses some of the config files
 - Hypersoop, creator of Simply Optimized of which this modpack uses some of the config files
 - S_N00B for making Console-idated, which inspired this project
+- TheMinecraftArchitect for porting the Tutorial Worlds to Java Edition
 
 
 </details>
