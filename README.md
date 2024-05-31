@@ -87,7 +87,7 @@ Thats fine! Consider checking out;
 - S_N00B for making Console-idated, which inspired this project
 - TheMinecraftArchitect for porting the Tutorial Worlds to Java Edition
 
-# Credits
+# Other
 - omoso, former maintainer
 
 
