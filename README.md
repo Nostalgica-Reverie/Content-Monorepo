@@ -56,7 +56,6 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 Thats fine! Consider checking out;
 - [Better Adventures++ LCE](https://modrinth.com/modpack/better-adventures++-lce) by FluffyPuppyKasey
 - [Console-idated](https://modrinth.com/modpack/console-idated) by N00B (Has LEM compatibility)
-- [Legacy Remade](https://modrinth.com/modpack/legacy-remade) by Permdog99
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
 - [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
