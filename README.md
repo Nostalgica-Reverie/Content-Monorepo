@@ -7,8 +7,9 @@
 Re-Console is no longer actively maintained by the original author.
 New updates and features are not confirmed to be added going forward.
 
+![image](https://github.com/ViolaFlower/Re-Console/assets/144749186/0a962f41-5d52-401c-87c7-18e102d309df)
 
-![Kyubion-Legacy Union partnership](https://cdn.modrinth.com/data/cached_images/861b84a0c4112e3f4fc745e78cc28bfcbc4beffb.png)
+
 
 ![Information](https://cdn.modrinth.com/data/cached_images/e25570e1d156c711baad158a5565061b157a94e9.webp)
 Welcome back to your childhood.
@@ -47,7 +48,7 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 
 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
-- [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Legacy4J and Re-Console
+- [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Re-Console
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
 - [S_N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
 
@@ -69,6 +70,7 @@ Thats fine! Consider checking out;
 ![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
 
 # Developers
+- omoso, Lead Developer
 - bathtubfulloftoast, Wiki Developer and Playtester
 - WilyIcaro, Developer and assistant 
 
@@ -87,8 +89,6 @@ Thats fine! Consider checking out;
 - S_N00B for making Console-idated, which inspired this project
 - TheMinecraftArchitect for porting the Tutorial Worlds to Java Edition
 
-# Other
-- omoso, former maintainer
 
 
 </details>
