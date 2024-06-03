@@ -1,68 +1,25 @@
 {
-  "enabled": true,
-  "idle_time": 0,
-  "uncap_menu_frame_rate": false,
-  "states": {
-    "hovered": {
-      "frame_rate_target": -1,
-      "volume_multipliers": {
-        "master": 0.50,
-        "music": 0.50,
-        "record": 0.50,
-        "weather": 0.50,
-        "block": 0.50,
-        "hostile": 0.50,
-        "neutral": 0.50,
-        "player": 0.50,
-        "ambient": 0.50,
-        "voice": 0.50
-      },
-      "graphics_state": "reduced",
-      "show_toasts": true,
-      "run_garbage_collector": true
-    },
-    "unfocused": {
-      "frame_rate_target": 2,
-      "volume_multipliers": {
-        "master": 0.5,
-        "music": 0.5,
-        "record": 0.5,
-        "weather": 0.5,
-        "block": 0.5,
-        "hostile": 0.5,
-        "neutral": 0.5,
-        "player": 0.5,
-        "ambient": 0.5,
-        "voice": 0.5
-      },
-      "graphics_state": "reduced",
-      "show_toasts": true,
-      "run_garbage_collector": true
-    },
-    "invisible": {
-      "frame_rate_target": 0,
-      "volume_multipliers": {
-        "master": 0.0,
-        "music": 0.0,
-        "record": 0.0,
-        "weather": 0.0,
-        "block": 0.0,
-        "hostile": 0.0,
-        "neutral": 0.0,
-        "player": 0.0,
-        "ambient": 0.0,
-        "voice": 0.0
-      },
-      "graphics_state": "minimal",
-      "show_toasts": true,
-      "run_garbage_collector": true
-    },
-    "abandoned": {
-      "frame_rate_target": 10,
-      "volume_multipliers": {},
-      "graphics_state": "default",
-      "show_toasts": false,
-      "run_garbage_collector": true
-    }
-  }
+	"states": {
+		"hovered": {
+			"frame_rate_target": -1,
+			"volume_multipliers": {},
+			"graphics_state": "default",
+			"show_toasts": true,
+			"run_garbage_collector": false
+		},
+		"unfocused": {
+			"frame_rate_target": 2,
+			"volume_multipliers": {},
+			"graphics_state": "default",
+			"show_toasts": true,
+			"run_garbage_collector": true
+		},
+		"invisible": {
+			"frame_rate_target": 0,
+			"volume_multipliers": {},
+			"graphics_state": "default",
+			"show_toasts": true,
+			"run_garbage_collector": true
+		}
+	}
 }
