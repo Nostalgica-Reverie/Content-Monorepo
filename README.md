@@ -3,10 +3,6 @@
 [<img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg">](https://modrinth.com/modpack/legacy-minecraft) 
 [<img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">](https://github.com/Legacy-Union/Re-Console/releases) [<img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg">](https://fabricmc.net/) [<img alt="adrenaline" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/adrenaline_vector.svg">](https://modrinth.com/modpack/adrenaline) [<img alt="kofi-singular" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-singular_vector.svg">](https://ko-fi.com/omoso)
 
-## :warning:  Notice
-Re-Console is no longer actively maintained by the original author.
-New updates and features are not confirmed to be added going forward.
-
 ![image](https://github.com/ViolaFlower/Re-Console/assets/144749186/0a962f41-5d52-401c-87c7-18e102d309df)
 
 
@@ -70,6 +66,7 @@ Thats fine! Consider checking out;
 
 # Developers
 - omoso, Lead Developer
+- Devin, Maintainer
 - bathtubfulloftoast, Wiki Developer and Playtester
 - WilyIcaro, Developer and assistant 
 
