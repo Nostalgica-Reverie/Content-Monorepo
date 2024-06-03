@@ -67,20 +67,20 @@ Thats fine! Consider checking out;
 # Developers
 - omoso, Lead Developer
 - Devin, Maintainer
-- bathtubfulloftoast, Wiki Developer and Playtester
-- WilyIcaro, Developer and assistant 
+- bathtubfulloftoast, Wiki Developer and Playtester 
 
 # Assistants and Contributors
 - bathtubfulloftoast, Wiki Developer and Playtester
+- Cjnator38, contributor
 - dbtderpbox, Playtester
 - Lenuilu, Playtester
-- TheMinecraftArchitect, contributor and Playtester
-- Cjnator38, contributor
 - phofers, contributor
+- TheMinecraftArchitect, contributor and Playtester
+- WilyIcaro, Assistant
 
 # Special Thanks
 - dbtderpbox for fixing a crash with AMD GPUs on Linux
-- Devin/Intergrav, creator of Adrenaline of which this modpack uses some of the config files
+- Devin/Intergrav, creator of Adrenaline of which this modpack uses some of the config files, and offering to maintain the modpack
 - Hypersoop, creator of Simply Optimized of which this modpack uses some of the config files
 - S_N00B for making Console-idated, which inspired this project
 - TheMinecraftArchitect for porting the Tutorial Worlds to Java Edition
