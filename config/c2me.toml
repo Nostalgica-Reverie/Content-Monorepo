@@ -34,7 +34,7 @@ globalExecutorParallelism = "default"
 		enableExtRenderDistanceProtocol = false
 		# (Default: true) Whether to modify maximum view distance
 		# Set to false for the following reasons: 
-		# Incompatible with bobby@5.1.0+mc1.20.4 (*) (defined in c2me) 
+		# Incompatible with bobby@5.2.0+mc1.20.6 (*) (defined in c2me) 
 		enabled = false
 		# (Default: 66) Max render distance allowed in game options
 		maxViewDistance = "default"
@@ -64,23 +64,12 @@ globalExecutorParallelism = "default"
 	# be increased to actually expose the view distance in video settings 
 	# 
 	# 
-	maxViewDistance = 48
+	maxViewDistance = 32
 	# (Default: true) Whether to enable no-tick view distance
 	enabled = "default"
 [ioSystem]
 	# (Default: true) Whether to use async chunk loading & unloading
 	async = "default"
-	# (Default: -1) Defines which chunk compression should be used 
-	# -1 for Vanilla default  
-	# 1  for GZip (RFC1952) (Vanilla compatible) 
-	# 2  for Zlib (RFC1950) (Vanilla default) (Vanilla compatible) 
-	# 3  for Uncompressed (Fastest, but higher disk usage) (Vanilla compatible) 
-	#  
-	# Original chunk data will still readable after modifying this option  
-	# as this option only affects newly stored chunks 
-	# Invalid values will fall back to vanilla default
-	# 
-	chunkStreamVersion = "default"
 	# (Default: false) Whether to recover from errors when loading chunks 
 	#  This will cause errored chunk to be regenerated entirely, which may cause data loss 
 	#  Only applies when async chunk loading is enabled
@@ -95,7 +84,7 @@ globalExecutorParallelism = "default"
 	# (may cause incompatibility with other mods)
 	# 
 	# Set to false for the following reasons: 
-	# Incompatible with architectury@11.1.17 (*) (defined in c2me) 
+	# Incompatible with architectury@12.1.3 (*) (defined in c2me) 
 	gcFreeChunkSerializer = true
 	# (Default: true) Whether to use the optimized implementation of IO system
 	replaceImpl = "default"
