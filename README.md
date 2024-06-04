@@ -8,6 +8,7 @@
 
 
 ![Information](https://cdn.modrinth.com/data/cached_images/e25570e1d156c711baad158a5565061b157a94e9.webp)
+
 Welcome back to your childhood.
 
 Re-Console is the official modpack for the Legacy4J mod, seeking to be as accurate as to the idea of if Legacy Console Edition never ended as possible.
@@ -17,9 +18,9 @@ We seek to be as up-to date as possible update wise, mod wise and performance wi
 <p> We seek to be the gold standard of LCE modpacks, trying to push the ecosystem forward!
 
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
+
 - Near 100% Legacy Console Edition parity
 - Lightweight and performant; built on the [Adrenaline](https://modrinth.com/modpack/adrenaline) modpack, tweaked specifically for the most optimal, stable performance
-- Every tutorial world, from TU1 to TU69
 - Entirely configurable and community oriented
 - Optional old world generation, spanning from Beta 1.7.3 to 1.17.1
 <p> Re-Console, and all the mods inside of it are either Open Source or Source Available!
@@ -44,11 +45,13 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 
 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
+
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Re-Console
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
 - [S_N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
 
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
+
 Thats fine! Consider checking out;
 - [Better Adventures++ LCE](https://modrinth.com/modpack/better-adventures++-lce) by FluffyPuppyKasey
 - [Console-idated](https://modrinth.com/modpack/console-idated) by N00B (Has LEM compatibility)
