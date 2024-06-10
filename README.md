@@ -1,31 +1,44 @@
 # Re-Console
-
 [<img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg">](https://modrinth.com/modpack/legacy-minecraft) 
 [<img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">](https://github.com/Legacy-Union/Re-Console/releases) [<img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg">](https://fabricmc.net/) [<img alt="adrenaline" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/adrenaline_vector.svg">](https://modrinth.com/modpack/adrenaline) [<img alt="kofi-singular" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-singular_vector.svg">](https://ko-fi.com/omoso)
 
-![image](https://github.com/ViolaFlower/Re-Console/assets/144749186/0a962f41-5d52-401c-87c7-18e102d309df)
+![image](https://github.com/ViolaFlower/Re-Console/assets/144749186/18b7ec50-0280-4c5f-b071-186f1572209d)
+
 
 
 
 ![Information](https://cdn.modrinth.com/data/cached_images/e25570e1d156c711baad158a5565061b157a94e9.webp)
 
-Welcome back to your childhood.
+Re-Console is the official modpack for the Legacy4J mod! We try to acomplish the idea of if Legacy Console Edition never ended.
+We use a variety of mods and resource packs to achieve this.
 
-Re-Console is the official modpack for the Legacy4J mod, seeking to be as accurate as to the idea of if Legacy Console Edition never ended as possible.
-We do this via a variety of mods, resource packs and occasionally datapacks!
-
-We seek to be as up-to date as possible update wise, mod wise and performance wise. The fastest time we updated in accordance with Legacy4J was a time of only **3 minutes!**
-<p> We seek to be the gold standard of LCE modpacks, trying to push the ecosystem forward!
+We always seek to be as up to date as possible regarding Minecraft versions and mods.
+Re-Console seeks to push the ecosystem forward by always being up to date.
 
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
 
+Re-Console comes with numerous features and QoL features not found in the base mod or other modpacks.
+It is built with configurability, performance and ease of use in mind.
+
+### This includes, but is not limited to:
+- Controller Support
+- Lightweight and performant; built on the [Adrenaline](https://modrinth.com/modpack/adrenaline) modpack, for the most optimal, stable performance.
 - Near 100% Legacy Console Edition parity
-- Lightweight and performant; built on the [Adrenaline](https://modrinth.com/modpack/adrenaline) modpack, tweaked specifically for the most optimal, stable performance
-- Entirely configurable and community oriented
+- Old Combat from 1.8
 - Optional old world generation, spanning from Beta 1.7.3 to 1.17.1
+- Some of the old LCE texture packs and Mash-Up packs
+
+### Theres also some extra QoL features that can improve the user experience, such as:
+- Borderless Fullscreen mode (Mods>Minecraft>Video Settings to enable)
+- Custom Color support
+- Free multiplayer via E4MC, open to LAN and send the link to your friends to play!
+- Input fixes for MacOS and Linux
+- Optifine resource pack features
+
+
 <p> Re-Console, and all the mods inside of it are either Open Source or Source Available!
 
-**Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for Sneak Peeks and updates on development!**
+**Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for sneak peeks and updates on development!**
 
 <details>
 <summary>Important note for MacOS users</summary>
@@ -47,6 +60,7 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
 
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Re-Console
+- [Devin](https://modrinth.com/user/devin) for maintaining the modpack
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
 - [S_N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
 
