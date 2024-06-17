@@ -17,6 +17,10 @@ file = "config/clean-debug.json"
 hash = "d903b8cacbf7a1c484dd5eeb0e32d11010df19a55ffc67ebc5560506433a7836"
 
 [[files]]
+file = "config/cull-less-leaves.json"
+hash = "976de2e84ba77d4a6ba59f240f79408b960d6acf8dc2f108a7dde1d193913d1c"
+
+[[files]]
 file = "config/debugify-descriptions.json"
 hash = "033e4ec7c62cc479521bee64856070e6c5670d3b793a83566588669f767558de"
 
@@ -74,7 +78,7 @@ hash = "748cb550ed31f0d7f2a8faf26cd0c659826ae10cfabc4a89eee7d32eed98f157"
 
 [[files]]
 file = "config/simplemenu.json5"
-hash = "2d359fb9351b509da4669744942281f28123e5879fb470e5a066041c59afcbf3"
+hash = "5342efeaf097a0593f614cb53b012f6f43c9371267e2264fc0a9a4d757b406da"
 
 [[files]]
 file = "config/simplemenu/icon/icon_16x16.png"
@@ -147,11 +151,6 @@ hash = "73ca360d1e06a82d5bf205d3898b420674bd5e85e3626f37f9ae7a10dc48beb1"
 metafile = true
 
 [[files]]
-file = "mods/clientsidenoteblocks.pw.toml"
-hash = "587eac67f255a2f04fb5f348243fce7b7d317f7c7eb6d3c7082c2f74babecece"
-metafile = true
-
-[[files]]
 file = "mods/cloth-config.pw.toml"
 hash = "f250d6778f5b8d03ca32913bea5ea677508e9bb6d8201cdebe005bbe9c3100ee"
 metafile = true
@@ -189,6 +188,11 @@ metafile = true
 [[files]]
 file = "mods/e4mc.pw.toml"
 hash = "e72107c4e4156546f3ad34e0c8c759438e0971b3d096ca2be00cfd81d1570d6d"
+metafile = true
+
+[[files]]
+file = "mods/ebe.pw.toml"
+hash = "df487485f2e57e77657f65da68500e5b688812d7555f75e7db910d39827386c4"
 metafile = true
 
 [[files]]
@@ -253,12 +257,12 @@ metafile = true
 
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
-hash = "547b1ccde38256b8090e6900147f2737513e423e1fc0bbfb412f8a1a8209b52c"
+hash = "2be3635a0b6d46cbe9dead49d8b9a31a7e0ff3426b18623455e4a49bc7720cf3"
 metafile = true
 
 [[files]]
 file = "mods/indium.pw.toml"
-hash = "e416b18eebf514dea2014cf5c7fd3ee8493934a0b4e937509f15172ad271fde2"
+hash = "fc8ae39ef4edbdb8e23ec91a10d1ef42c0fc569b5c8d633d7c584bfd55daa8bc"
 metafile = true
 
 [[files]]
@@ -324,11 +328,6 @@ metafile = true
 [[files]]
 file = "mods/noisium.pw.toml"
 hash = "e5bde0bc121e4e034094552cda7d9cb4a1e23b6f8468fb0c701fa3f790a7dd89"
-metafile = true
-
-[[files]]
-file = "mods/nvidium.pw.toml"
-hash = "07dd8775324c01058896b4572e23a1ca1c355186cc501c61fc68e1151c5e177c"
 metafile = true
 
 [[files]]

@@ -17,6 +17,10 @@ file = "config/clean-debug.json"
 hash = "d903b8cacbf7a1c484dd5eeb0e32d11010df19a55ffc67ebc5560506433a7836"
 
 [[files]]
+file = "config/cull-less-leaves.json"
+hash = "976de2e84ba77d4a6ba59f240f79408b960d6acf8dc2f108a7dde1d193913d1c"
+
+[[files]]
 file = "config/debugify-descriptions.json"
 hash = "033e4ec7c62cc479521bee64856070e6c5670d3b793a83566588669f767558de"
 
@@ -74,7 +78,7 @@ hash = "748cb550ed31f0d7f2a8faf26cd0c659826ae10cfabc4a89eee7d32eed98f157"
 
 [[files]]
 file = "config/simplemenu.json5"
-hash = "2d359fb9351b509da4669744942281f28123e5879fb470e5a066041c59afcbf3"
+hash = "b0fdfa971353b4526adf84e3b486fb44b2524bdeaf9adbec9f31e9e0c8fb0fd5"
 
 [[files]]
 file = "config/simplemenu/icon/icon_16x16.png"
@@ -147,11 +151,6 @@ hash = "73ca360d1e06a82d5bf205d3898b420674bd5e85e3626f37f9ae7a10dc48beb1"
 metafile = true
 
 [[files]]
-file = "mods/clientsidenoteblocks.pw.toml"
-hash = "587eac67f255a2f04fb5f348243fce7b7d317f7c7eb6d3c7082c2f74babecece"
-metafile = true
-
-[[files]]
 file = "mods/cloth-config.pw.toml"
 hash = "2c24f3b7bb9e171e8a3784e2c9a29c30f8541cff26e086962013c504a6c1cdb0"
 metafile = true
@@ -192,6 +191,11 @@ hash = "e72107c4e4156546f3ad34e0c8c759438e0971b3d096ca2be00cfd81d1570d6d"
 metafile = true
 
 [[files]]
+file = "mods/ebe.pw.toml"
+hash = "406a3f78220ed5d7a4e60c7f89eb9a07e37dd30b4ce6fe684a697096dcd2118c"
+metafile = true
+
+[[files]]
 file = "mods/emuno.pw.toml"
 hash = "8f0c18360533351fff9237b803b1a91fb86cc9b00d56e61f116076e654c9f8e8"
 metafile = true
@@ -213,7 +217,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "d47762be5aaaf014cb93812502944dff9f1dc3466f3de96f4d4808da8e97bdee"
+hash = "7bfd3f90f0f45c957ba2f7a695726cad48ab0c36eae9ac1a4feace483087f232"
 metafile = true
 
 [[files]]
@@ -253,17 +257,17 @@ metafile = true
 
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
-hash = "3c5c24ba7c1af10c4bd3522efa8d1b89c88352e53382529610f81d50d46f0a32"
+hash = "481a2ae98615aa79fa02546b5f30fef3b2a5e85e394a74d17bdb409a82c21269"
 metafile = true
 
 [[files]]
 file = "mods/indium.pw.toml"
-hash = "e416b18eebf514dea2014cf5c7fd3ee8493934a0b4e937509f15172ad271fde2"
+hash = "fc8ae39ef4edbdb8e23ec91a10d1ef42c0fc569b5c8d633d7c584bfd55daa8bc"
 metafile = true
 
 [[files]]
 file = "mods/infinite-music.pw.toml"
-hash = "7583b9243a1eece75b23843fbd388d602c124a6881760b0f1405be9a19c31755"
+hash = "5afe82f58c5714c33849f7834ac5dddedd215bd5056307fb35065340f8613c87"
 metafile = true
 
 [[files]]
@@ -338,7 +342,7 @@ metafile = true
 
 [[files]]
 file = "mods/polytone.pw.toml"
-hash = "3f3184800ed92459d603cdd929b724d43e6c9705c7fee4743e1717de02de7dce"
+hash = "fa0e8f1a5c631180a06af7c58d955609053f3cdd1a84cb2dc9b481748248c99c"
 metafile = true
 
 [[files]]
