@@ -17,7 +17,7 @@ Re-Console seeks to push the ecosystem forward by always being up to date.
 
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
 
-Re-Console comes with numerous features and QoL features not found in the base mod or other modpacks.
+Re-Console comes with numerous features and QoL not found in the base mod or other modpacks.
 It is built with configurability, performance and ease of use in mind.
 
 ### This includes, but is not limited to:
@@ -28,7 +28,7 @@ It is built with configurability, performance and ease of use in mind.
 - Optional old world generation, spanning from Beta 1.7.3 to 1.17.1
 - Some of the old LCE texture packs and Mash-Up packs
 
-### Theres also some extra QoL features that can improve the user experience, such as:
+### There's also some extra QoL features that can improve the user experience, such as:
 - Borderless Fullscreen mode (Mods>Minecraft>Video Settings to enable)
 - Custom Color support
 - Free multiplayer via E4MC, open to LAN and send the link to your friends to play!
@@ -68,7 +68,7 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 
 Thats fine! Consider checking out;
 - [Better Adventures++ LCE](https://modrinth.com/modpack/better-adventures++-lce) by FluffyPuppyKasey
-- [Console-idated](https://modrinth.com/modpack/console-idated) by N00B (Has LEM compatibility)
+- [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
 - [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
