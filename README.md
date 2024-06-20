@@ -62,7 +62,7 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Re-Console
 - [Devin](https://modrinth.com/user/devin) for maintaining the modpack
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
-- [S_N00B](https://modrinth.com/user/n00b) for making Console-Idated, of which this project was inspired from
+- [S_N00B](https://modrinth.com/user/n00b) for making Console-idated, of which this project was inspired from
 
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
 
@@ -105,5 +105,3 @@ Thats fine! Consider checking out;
 
 
 </details>
-
-**Re-Console is licensed Apache 2.0 from 0.1.0 to 0.3.3, and GPLv3 from 0.3.4 and onwards.**
