@@ -40,22 +40,6 @@ It is built with configurability, performance and ease of use in mind.
 
 **Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for sneak peeks and updates on development!**
 
-<details>
-<summary>Important note for MacOS users</summary>
-
-Re-Console needs the SDL2 framework to run, which is not installed on macOS by default. Here is a quick tutorial to do so:
-
-1) Install the latest release here (for mac, it will be the .dmg installer): https://github.com/libsdl-org/SDL/releases
-2) Run the installer
-3) Open a new finder window, and in the upper left-hand portion of the screen, click `go`, `go to folder`, and enter this path: `/Library/Frameworks`
-4) Drag the `SDL2.framework` folder from the installer to the framework directory
-5) Launch ReConsole using the launcher of your choice. Click OK on the promts until your instance crashes
-6) Open `System Settings`, go to `Privacy & Security`, and scroll down to where you see `"SDL2.framework" was blocked from use because it is not from an identified developer.`. Click `Allow Anyway`.
-7) You can now launch ReConsole!
-
-
-</details>
-
 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
 
@@ -67,10 +51,8 @@ Re-Console needs the SDL2 framework to run, which is not installed on macOS by d
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
 
 Thats fine! Consider checking out;
-- [Better Adventures++ LCE](https://modrinth.com/modpack/better-adventures++-lce) by FluffyPuppyKasey
 - [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
-- [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
 
 # Need a server?
