@@ -15,6 +15,8 @@ We use a variety of mods and resource packs to achieve this.
 We always seek to be as up to date as possible regarding Minecraft versions and mods.
 Re-Console seeks to push the ecosystem forward by always being up to date.
 
+Re-Console currently supports Minecraft 1.20.4 and 1.20.6.
+
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
 
 Re-Console comes with numerous features and QoL not found in the base mod or other modpacks.
@@ -36,7 +38,7 @@ It is built with configurability, performance and ease of use in mind.
 - Optifine resource pack features
 
 
-<p> Re-Console, and all the mods inside of it are either Open Source or Source Available!
+<p> Re-Console is available as a Packwiz project on GitHub, along with striving to use only open source or source available mods.
 
 **Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for sneak peeks and updates on development!**
 
