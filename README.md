@@ -17,7 +17,7 @@ Re-Console seeks to push the ecosystem forward by always being up to date.
 
 Re-Console currently supports Minecraft 1.20.4 and 1.20.6.
 
-Re-Console is currently available on Modrinth. It is not hosted anywhere else.
+**Re-Console is currently available on Modrinth and GitHub. It is not hosted anywhere else.**
 
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
 
@@ -57,6 +57,7 @@ It is built with configurability, performance and ease of use in mind.
 Thats fine! Consider checking out;
 - [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
+- [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
 
 # Need a server?
