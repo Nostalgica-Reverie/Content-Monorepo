@@ -11,7 +11,6 @@
 - Lenuilu, Playtester
 - phofers, contributor
 - TheMinecraftArchitect, contributor and playtester
-- WilyIcaro, Assistant 
 
 # Special Thanks
 - dbtderpbox for fixing a crash with AMD GPUs on Linux
