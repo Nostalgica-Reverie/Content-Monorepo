@@ -80,7 +80,6 @@ Thats fine! Consider checking out;
 - Lenuilu, Playtester
 - phofers, contributor
 - TheMinecraftArchitect, contributor and Playtester
-- WilyIcaro, Assistant
 
 # Special Thanks
 - dbtderpbox for fixing a crash with AMD GPUs on Linux
