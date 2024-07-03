@@ -37,7 +37,7 @@ It is built with configurability, performance and ease of use in mind.
 - Custom Color support
 - Free multiplayer via E4MC, open to LAN and send the link to your friends to play!
 - Input fixes for MacOS and Linux
-- Optifine resource pack features
+- Optifine resource pack features*
 
 
 <p> Re-Console is available as a Packwiz project on GitHub, along with striving to use only open source or source available mods.
@@ -50,7 +50,7 @@ It is built with configurability, performance and ease of use in mind.
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Re-Console
 - [Devin](https://modrinth.com/user/devin) for maintaining the modpack
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
-- [S_N00B](https://modrinth.com/user/n00b) for making Console-idated, of which this project was inspired from
+- [S_N00B](https://modrinth.com/user/s_n00b) for making Console-idated, of which this project was inspired from
 
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
 
@@ -69,22 +69,20 @@ Thats fine! Consider checking out;
 ![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
 
 # Developers
-- omoso, Lead Developer
+- omoso, Owner
 - Devin, Maintainer
-- bathtubfulloftoast, Wiki Developer and Playtester 
+- bathtubfulloftoast, Wiki Developer and playtester 
 
 # Assistants and Contributors
-- bathtubfulloftoast, Wiki Developer and Playtester
 - Cjnator38, contributor
-- dbtderpbox, Playtester
-- Lenuilu, Playtester
+- dbtderpbox, playtester
+- Lenuilu, playtester
 - phofers, contributor
-- TheMinecraftArchitect, contributor and Playtester
+- TheMinecraftArchitect, contributor and playtester
 
 # Special Thanks
 - dbtderpbox for fixing a crash with AMD GPUs on Linux
-- Devin/Intergrav, creator of Adrenaline of which this modpack uses some of the config files, and offering to maintain the modpack
-- Hypersoop, creator of Simply Optimized of which this modpack uses some of the config files
+- Devin, the creator of Adrenaline of which this modpack uses some of the config files, and offering to maintain the modpack
 - S_N00B for making Console-idated, which inspired this project
 - TheMinecraftArchitect for porting the Tutorial Worlds to Java Edition
 
