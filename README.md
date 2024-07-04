@@ -81,6 +81,7 @@ Thats fine! Consider checking out;
 - TheMinecraftArchitect, contributor and playtester
 
 # Special Thanks
+- BuddarScotchy for consistently supporting me and my projects
 - dbtderpbox for fixing a crash with AMD GPUs on Linux
 - Devin, the creator of Adrenaline of which this modpack uses some of the config files, and offering to maintain the modpack
 - S_N00B for making Console-idated, which inspired this project
