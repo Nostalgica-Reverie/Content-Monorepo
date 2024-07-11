@@ -15,7 +15,7 @@ We use a variety of mods and resource packs to achieve this.
 We always seek to be as up to date as possible regarding Minecraft versions and mods.
 Re-Console seeks to push the ecosystem forward by always being up to date.
 
-Re-Console currently supports Minecraft 1.20.4 and 1.20.6.
+Re-Console is available for 1.20.4, 1.20.6 and 1.21.
 
 **Re-Console is currently available on Modrinth and GitHub. It is not hosted anywhere else.**
 
