@@ -25,6 +25,7 @@ Re-Console comes with numerous features and QoL not found in the base mod or oth
 It is built with configurability, performance and ease of use in mind.
 
 ### This includes, but is not limited to:
+- A programmer art add-on which retextures the game
 - Controller Support
 - Lightweight and performant; built on the [Adrenaline](https://modrinth.com/modpack/adrenaline) modpack, for the most optimal, stable performance.
 - Near 100% Legacy Console Edition parity
@@ -34,10 +35,11 @@ It is built with configurability, performance and ease of use in mind.
 
 ### There's also some extra QoL features that can improve the user experience, such as:
 - Borderless Fullscreen mode (Mods>Minecraft>Video Settings to enable)
-- Custom Color support
-- Free multiplayer via E4MC, open to LAN and send the link to your friends to play!
+- A easy to use calculator which can calculate anything from basic calculations to nether portal calculations, farm rate calculations and more.
+- Free multiplayer via World Host, open to LAN and send the link to your friends to play!
 - Input fixes for MacOS and Linux
 - Optifine resource pack features*
+- Shader Support
 
 
 <p> Re-Console is available as a Packwiz project on GitHub, along with striving to use only open source or source available mods.
