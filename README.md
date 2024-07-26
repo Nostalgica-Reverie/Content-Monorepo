@@ -57,6 +57,7 @@ It is built with configurability, performance and ease of use in mind.
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
 
 Thats fine! Consider checking out;
+- [Better Adventures++ LCE](https://modrinth.com/modpack/better-adventures++-lce) by FluffyPuppyKasey
 - [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
 - [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
