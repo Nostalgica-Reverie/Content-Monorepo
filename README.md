@@ -34,12 +34,13 @@ It is built with configurability, performance and ease of use in mind.
 - Some of the old LCE texture packs and Mash-Up packs
 
 ### There's also some extra QoL features that can improve the user experience, such as:
+- An easy to use calculator which can calculate anything from basic calculations to nether portal calculations, farm rate calculations and more.
 - Borderless Fullscreen mode (Mods>Minecraft>Video Settings to enable)
-- A easy to use calculator which can calculate anything from basic calculations to nether portal calculations, farm rate calculations and more.
 - Free multiplayer via World Host, open to LAN and send the link to your friends to play!
 - Input fixes for MacOS and Linux
 - Optifine resource pack features*
 - Shader Support
+- Easy to use Zoom mod
 
 
 <p> Re-Console is available as a Packwiz project on GitHub, along with striving to use only open source or source available mods.
@@ -80,6 +81,7 @@ Thats fine! Consider checking out;
 - Cjnator38, contributor
 - dbtderpbox, playtester
 - Lenuilu, playtester
+- MitsuIsSleepy, contributor
 - phofers, contributor
 - TheMinecraftArchitect, contributor and playtester
 
@@ -87,6 +89,7 @@ Thats fine! Consider checking out;
 - BuddarScotchy for consistently supporting me and my projects
 - dbtderpbox for fixing a crash with AMD GPUs on Linux
 - Devin, the creator of Adrenaline of which this modpack uses some of the config files, and offering to maintain the modpack
+- MitsuIsSleepy for providing the Nostalgic Tweaks config file
 - S_N00B for making Console-idated, which inspired this project
 - TheMinecraftArchitect for porting the Tutorial Worlds to Java Edition
 
