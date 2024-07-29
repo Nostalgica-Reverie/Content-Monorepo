@@ -9,6 +9,7 @@
 - Cjnator38, contributor
 - dbtderpbox, Playtester
 - Lenuilu, Playtester
+- MitsuIsSleepy, contributor
 - phofers, contributor
 - TheMinecraftArchitect, contributor and playtester
 
@@ -16,4 +17,5 @@
 - dbtderpbox for fixing a crash with AMD GPUs on Linux
 - Devin/Intergrav, creator of Adrenaline of which this modpack uses some of the config files
 - Hypersoop, creator of Simply Optimized of which this modpack uses some of the config files
+- MitsuIsSleepy for providing the Nostalgic Tweaks config file
 - S_N00B for making Console-idated, which inspired this project
