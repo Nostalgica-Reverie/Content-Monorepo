@@ -80,7 +80,7 @@ Thats fine! Consider checking out;
 # Assistants and Contributors
 - bathtubfulloftoast, playtester
 - Cjnator38, contributor
-- dbtderpbox, playtester
+- Emmie, helper and playtester
 - Lenuilu, playtester
 - MitsuIsSleepy, contributor
 - phofers, contributor
@@ -88,7 +88,7 @@ Thats fine! Consider checking out;
 
 # Special Thanks
 - BuddarScotchy for consistently supporting me and my projects
-- dbtderpbox for fixing a crash with AMD GPUs on Linux
+- Emmie for fixing a crash with AMD GPUs on Linux
 - Devin, the creator of Adrenaline of which this modpack uses some of the config files, and offering to maintain the modpack
 - MitsuIsSleepy for providing the Nostalgic Tweaks config file
 - S_N00B for making Console-idated, which inspired this project
