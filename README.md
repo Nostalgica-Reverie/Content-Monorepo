@@ -45,6 +45,9 @@ It is built with configurability, performance and ease of use in mind.
 
 <p> Re-Console is available as a Packwiz project on GitHub, along with striving to use only open source or source available mods.
 
+### Notice 
+- This project is currently ***incompatible*** with the Legacy Edition Minigames server! Please see the list of alternatives for modpacks that work with the server.
+
 **Want to keep up with Development? Join the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for sneak peeks and updates on development!**
 
 
