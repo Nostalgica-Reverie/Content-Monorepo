@@ -75,9 +75,10 @@ Thats fine! Consider checking out;
 # Developers
 - omoso, Owner
 - Devin, Maintainer
-- bathtubfulloftoast, Wiki Developer and playtester 
+- Emmie, Helper
 
 # Assistants and Contributors
+- bathtubfulloftoast, playtester
 - Cjnator38, contributor
 - dbtderpbox, playtester
 - Lenuilu, playtester
