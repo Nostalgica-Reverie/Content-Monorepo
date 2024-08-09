@@ -15,9 +15,11 @@ We use a variety of mods and resource packs to achieve this.
 We always seek to be as up to date as possible regarding Minecraft versions and mods.
 Re-Console seeks to push the ecosystem forward by always being up to date.
 
-Re-Console is actively maintained for 1.20.1 and 1.21.
+Re-Console is actively maintained for 1.20.1 and 1.21.1.
 
 **Re-Console is currently available on Modrinth, Curseforge and GitHub. It is not hosted anywhere else.**
+
+Some of the features on this list may not be present in the Curseforge version due to licensing restrictions
 
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
 
@@ -29,6 +31,7 @@ It is built with configurability, performance and ease of use in mind.
 - Controller Support
 - Lightweight and performant; built on the [Adrenaline](https://modrinth.com/modpack/adrenaline) modpack, for the most optimal, stable performance.
 - Near 100% Legacy Console Edition parity
+- Nostalgic Tweaks, giving very much control over each and every feature in the game
 - Old Combat from 1.8
 - Optional old world generation, spanning from Beta 1.7.3 to 1.17.1
 - Some of the old LCE texture packs and Mash-Up packs
