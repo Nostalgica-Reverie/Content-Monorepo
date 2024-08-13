@@ -39,6 +39,7 @@ It is built with configurability, performance and ease of use in mind.
 ### There's also some extra QoL features that can improve the user experience, such as:
 - An easy to use calculator which can calculate anything from basic calculations to nether portal calculations, farm rate calculations and more.
 - Borderless Fullscreen mode (Mods>Minecraft>Video Settings to enable)
+- Dark Mode resource pack to save your eyes some strain
 - Free multiplayer via World Host, open to LAN and send the link to your friends to play!
 - Input fixes for MacOS and Linux
 - Optifine resource pack features*
@@ -66,6 +67,7 @@ It is built with configurability, performance and ease of use in mind.
 Thats fine! Consider checking out;
 - [Better Adventures++ LCE](https://modrinth.com/modpack/better-adventures++-lce) by FluffyPuppyKasey
 - [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
+- [Hero's PS4 Edition Replication Modpack](https://modrinth.com/modpack/heros-ps4-edition-replication-modpack)
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
 - [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
