@@ -67,7 +67,7 @@ It is built with configurability, performance and ease of use in mind.
 Thats fine! Consider checking out;
 - [Better Adventures++ LCE](https://modrinth.com/modpack/better-adventures++-lce) by FluffyPuppyKasey
 - [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
-- [Hero's PS4 Edition Replication Modpack](https://modrinth.com/modpack/heros-ps4-edition-replication-modpack)
+- [Hero's PS4 Edition Replication Modpack](https://modrinth.com/modpack/heros-ps4-edition-replication-modpack) by herobrinebot462
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
 - [William's Console](https://modrinth.com/modpack/williams-console) by ContraryBaton60
 
