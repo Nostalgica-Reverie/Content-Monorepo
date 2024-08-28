@@ -30,7 +30,7 @@ This means Re-Console comes with all the features within [Adrenaline](https://mo
 - Improved world generation speed
 
 ### 📩 Up to Date
-Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft and Legacy4J versions. It is also multi-version, giving you the choice between Latest MC (currently 1.21.1) and a version with long-term mod compatibility (currently 1.20.1).
+Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft and Legacy4J versions. It is also multi-version and multi-loader, giving you the choice between Latest MC (currently 1.21.1) and a version with long-term mod compatibility (currently 1.20.1) on both Fabric and Neoforge.
 
 
 
