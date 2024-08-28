@@ -23,7 +23,7 @@ Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it neve
 Re-Console is comprised of only open-source or source-available mods, which gives you the ability to see the code and contribute to the mods in the pack. Without mod developers hard work, Re-Console would not be possible. If you want to show the developers of these mods your appreciation, I encourage you to donate to them!
 
 ### 🚀 Performant
-Re-Console is built off of [Adrenaline](https://modrinth.com/modpack/adrenaline) by [devin](https://modrinth.com/user/devin), a performance modpack officially endorsed by Sodium.
+Re-Console is built off of [Adrenaline](https://modrinth.com/modpack/adrenaline) by [devin](https://modrinth.com/user/devin), the performance modpack officially endorsed by Sodium.
 This means Re-Console comes with all the features within [Adrenaline](https://modrinth.com/modpack/adrenaline), including;
 - Improved rendering & game logic performance
 - Improved memory and hardware usage
