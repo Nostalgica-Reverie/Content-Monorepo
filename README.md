@@ -47,6 +47,7 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - Old Combat from 1.8
 - Optional old world generation, spanning from Beta 1.7.3 to 1.17.1
 - Some of the old LCE texture packs and Mash-Up packs
+- Skin-changing with skinpacks from LCE
 
 ### 🛠️ Other Features
 - An easy to use calculator which can calculate anything from basic calculations to nether portal calculations, farm rate calculations and more.
@@ -107,6 +108,7 @@ Thats fine! Consider checking out;
 - Emmie for fixing a crash with AMD GPUs on Linux
 - Devin, the creator of Adrenaline of which this modpack uses some of the config files, and offering to maintain the modpack
 - MitsuIsSleepy for providing the Nostalgic Tweaks config file
+- MNTYROAD (aka mintweather) for porting skinpacks to CPM
 - S_N00B for making Console-idated, which inspired this project
 - TheMinecraftArchitect for porting the Tutorial Worlds to Java Edition
 
