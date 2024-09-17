@@ -23,14 +23,14 @@ Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it neve
 Re-Console is comprised of only open-source or source-available mods, which gives you the ability to see the code and contribute to the mods in the pack. Without mod developers hard work, Re-Console would not be possible. If you want to show the developers of these mods your appreciation, I encourage you to donate to them!
 
 ### 🚀 Performant
-Re-Console is built off of [Adrenaline](https://modrinth.com/modpack/adrenaline) by [devin](https://modrinth.com/user/devin), the performance modpack officially endorsed by Sodium.
+Re-Console is built off and kept in sync with [Adrenaline](https://modrinth.com/modpack/adrenaline) by [devin](https://modrinth.com/user/devin), the performance modpack officially endorsed by Sodium.
 This means Re-Console comes with all the features within [Adrenaline](https://modrinth.com/modpack/adrenaline), including;
 - Improved rendering & game logic performance
 - Improved memory and hardware usage
 - Improved world generation speed
 
 ### 📩 Up to Date
-Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft and Legacy4J versions. It is also multi-version and multi-loader, giving you the choice between Latest MC (currently 1.21.1) and a version with long-term mod compatibility (currently 1.20.1) on both Fabric and Neoforge.
+Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft and Legacy4J versions. It is also multi-version and multi-loader, giving you the choice between Latest MC (currently 1.21.1) and a version with long-term mod compatibility (currently 1.20.1) Fabric, Forge and Neoforge.
 
 
 
@@ -53,9 +53,9 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - An easy to use calculator which can calculate anything from basic calculations to nether portal calculations, farm rate calculations and more.
 - Borderless fullscreen mode (Mods>Minecraft>Video Settings to enable)
 - Better grass and snow (Mods>Minecraft>Quality Settings to enable)
+- Customizable and easy to use zoom mod
 - Dark Mode resource pack to save your eyes some strain
 - Dynamic lighting (Mods>RyoamicLights on 1.21.1, Mods>LambDynamicLights on 1.20.1)
-- Easy to use zoom mod
 - Free multiplayer via e4mc, open to LAN and send the link to your friends to play!
 - Input fixes for MacOS and Linux
 - Optifine resource pack features
