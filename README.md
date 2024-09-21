@@ -82,6 +82,8 @@ Thats fine! Consider checking out;
 
 
 # Need a server?
+If you enjoy this modpack, and want to play with friends using it whilst also supporting me, check out my BisectHosting code to get 25% off. You can also use the special [Serverside Software](https://modrinth.com/modpack/re-console-server-software) of Re-Console to improve performance.
+
 [![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
 
 <details>
