@@ -62,7 +62,7 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - Optifine capes
 - Shader support 
 
-**Want to keep up with Development? Join the [Violaflower](https://discord.gg/A6uFaqjGrq) or the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for sneak peeks and updates on development!**
+**Want to keep up with Development? Join the [Violaflower Discord Server](https://discord.gg/A6uFaqjGrq) or the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for sneak peeks and updates on development!**
 
 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
