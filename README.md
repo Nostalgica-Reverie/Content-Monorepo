@@ -78,6 +78,7 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 Thats fine! Consider checking out;
 - [Better Adventures++ LCE](https://modrinth.com/modpack/better-adventures++-lce) by FluffyPuppyKasey
 - [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
+- [Legacy Enhanced](https://modrinth.com/modpack/legacy+enhanced) by Jackxn
 - [Legacy Reborn](https://modrinth.com/modpack/legacy-reborn) by Permdog99
 - [Legacy Remade](https://modrinth.com/modpack/legacy-remade) by Permdog99
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
