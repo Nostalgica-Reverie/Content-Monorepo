@@ -56,7 +56,7 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - Customizable and easy to use zoom mod
 - Change Minecraft's render resolution separately from the HUD elements. (R to open)
 - Dark Mode resource pack to save your eyes some strain
-- Dynamic lighting (Mods>RyoamicLights on 1.21.1, Mods>LambDynamicLights on 1.20.1)
+- Dynamic lighting (Mods>LambDynamicLights to enable)
 - Free multiplayer via e4mc, open to LAN and send the link to your friends to play!
 - Input fixes for MacOS and Linux
 - Optifine resource pack features
