@@ -43,9 +43,9 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - A programmer art add-on which retextures the game
 - Controller support
 - Near 100% Legacy Console Edition parity
-- Nostalgic Tweaks, giving a lot of control over each and every feature in the game
+- Nostalgic Tweaks, giving a lot of control over each and every feature in the game (U to Customize)
 - Old Combat from 1.8
-- Optional old world generation, spanning from Beta 1.7.3 to 1.17.1
+- Optional old world generation, spanning from Classic Edition to 1.17.1
 - Some of the old LCE texture packs and Mash-Up packs
 - Skin-changing with skinpacks from LCE
 
@@ -59,16 +59,17 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - Dynamic lighting (Mods>LambDynamicLights to enable)
 - Free multiplayer via e4mc, open to LAN and send the link to your friends to play!
 - Input fixes for MacOS and Linux
+- Music Disc minigame in the Tutorial Worlds
 - Optifine resource pack features
 - Optifine capes
-- Shader support 
+- Shader support (O to Open)
 
 **Want to keep up with Development? Join the [Violaflower Discord Server](https://discord.gg/A6uFaqjGrq) or the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for sneak peeks and updates on development!**
 
 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
 
-- [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the [wiki](https://l4j.novassite.net/) for Re-Console
+- [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the wiki for Re-Console
 - [devin](https://modrinth.com/user/devin) for maintaining the modpack
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
 - [S_N00B](https://modrinth.com/user/s_n00b) for making Console-idated, of which this project was inspired from
@@ -87,7 +88,7 @@ Thats fine! Consider checking out;
 
 
 # Need a server?
-If you enjoy this modpack, and want to play with friends using it whilst also supporting me, check out my BisectHosting code to get 25% off. You can also use the special [Serverside Software](https://modrinth.com/modpack/re-console-server-software) of Re-Console to improve performance.
+If you enjoy this modpack, and want to play with friends using it whilst also supporting me, use code Raamviot50 at BisectHosting to get 25% off. You can also use the special [Serverside Software](https://modrinth.com/modpack/re-console-server-software) of Re-Console to improve performance.
 
 [![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
 
@@ -108,6 +109,7 @@ If you enjoy this modpack, and want to play with friends using it whilst also su
 - Lenuilu, playtester
 - MitsuIsSleepy, contributor
 - phofers, contributor
+- kaer1a, playtester
 - TheMinecraftArchitect, contributor and playtester
 
 # Special Thanks
