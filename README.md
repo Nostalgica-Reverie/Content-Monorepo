@@ -84,6 +84,7 @@ Thats fine! Consider checking out;
 - [Legacy Remade](https://modrinth.com/modpack/legacy-remade) by Permdog99
 - [Minecraft: Console Edition](https://modrinth.com/modpack/consoleedition) by omoso and ViolaFlower Modding
 - [Minecraft: Vanilla Vistas](https://modrinth.com/modpack/minecraft-vanilla-vistas) by LunaticWyrm467
+- [Project4J](https://modrinth.com/modpack/project-4j) by Cixon
 - [William's Console: Revisited](https://modrinth.com/modpack/williams-console-revisited) by ContraryBaton60, omoso and Violaflower Modding
 
 
