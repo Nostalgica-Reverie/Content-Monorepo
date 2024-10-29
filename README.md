@@ -54,7 +54,6 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - Borderless fullscreen mode (Mods>Minecraft>Video Settings to enable)
 - Better grass and snow (Mods>Minecraft>Quality Settings to enable)
 - Customizable and easy to use zoom mod
-- Change Minecraft's render resolution separately from the HUD elements. (R to open)
 - Dark Mode resource pack to save your eyes some strain
 - Dynamic lighting (Mods>LambDynamicLights to enable)
 - Free multiplayer via e4mc, open to LAN and send the link to your friends to play!
