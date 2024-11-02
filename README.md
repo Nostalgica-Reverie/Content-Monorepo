@@ -42,22 +42,31 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - Amazing performance
 - A programmer art add-on which retextures the game
 - Controller support
+- Multiloader support
 - Near 100% Legacy Console Edition parity
 - Nostalgic Tweaks, giving a lot of control over each and every feature in the game (U to Customize)
 - Old Combat from 1.8
 - Optional old world generation, spanning from Classic Edition to 1.17.1
 - Some of the old LCE texture packs and Mash-Up packs
 - Skin-changing with skinpacks from LCE
+- Split-screen support
+- Tutorial worlds from TU1 to TU69
 
 ### 🛠️ Other Features
 - An easy to use calculator which can calculate anything from basic calculations to nether portal calculations, farm rate calculations and more.
-- Borderless fullscreen mode (Mods>Minecraft>Video Settings to enable)
+- Accurate leaf culling
+- Accurate Minecarts
+- Borderless fullscreen mode
 - Better grass and snow (Mods>Minecraft>Quality Settings to enable)
 - Customizable and easy to use zoom mod
+- Customizable Player Models
 - Dark Mode resource pack to save your eyes some strain
 - Dynamic lighting (Mods>LambDynamicLights to enable)
+- Discord rich presence
 - Free multiplayer via e4mc, open to LAN and send the link to your friends to play!
 - Input fixes for MacOS and Linux
+- Improved block placing
+- Legacy mipmapping
 - Music Disc minigame in the Tutorial Worlds
 - Optifine resource pack features
 - Optifine capes
