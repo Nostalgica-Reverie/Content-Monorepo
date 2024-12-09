@@ -2,7 +2,7 @@
 Re-Console is the official modpack for the Legacy4J mod.
 
 [<img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg">](https://modrinth.com/modpack/legacy-minecraft) [<img alt="curseforge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg">](https://legacy.curseforge.com/minecraft/modpacks/re-console)
-[<img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">](https://github.com/Legacy-Union/Re-Console/releases) [<img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg">](https://fabricmc.net/) [<img alt="adrenaline" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/adrenaline_vector.svg">](https://modrinth.com/modpack/adrenaline) [<img alt="kofi-singular" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-singular_vector.svg">](https://ko-fi.com/omoso)
+[<img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">](https://github.com/Legacy-Union/Re-Console/releases) [<img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg">](https://fabricmc.net/) [<img alt="adrenaline" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/adrenaline_vector.svg">](https://modrinth.com/modpack/adrenaline) [<img alt="patreon-singular" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/patreon-singular_vector.svg">](https://www.patreon.com/ViolaFlower)
 
 ![image](https://github.com/user-attachments/assets/649da799-9091-4ac4-b414-ed6e2c2b94be)
 
@@ -13,6 +13,21 @@ Re-Console is the official modpack for the Legacy4J mod.
 ![Information](https://cdn.modrinth.com/data/cached_images/e25570e1d156c711baad158a5565061b157a94e9.webp)
 
 Re-Console is the official modpack for the Legacy4J mod, seeking to expand upon it, improve performance and add QoL features on top of the mod itself.
+
+
+
+## 📥 Installation Guide
+There are multiple ways to install and experience Re-Console: Legacy.
+## 3rd Party Launchers
+### Modrinth Launcher (Recommended)
+For the easiest possible installation, I recommend using the Modrinth Launcher. It's light, easy to use, reasonably quick, and only takes a few clicks to set up. Once you have it installed, you can install Re-Console: Legacy by searching for the modpack in the Modpacks section.
+### Prism/MultiMC
+Although more complicated, you can install Prism Launcher from their website. Prism is much more versatile and stronger as a launcher, but has a worse GUI. From there, add an instance and search "Modrinth" for Re-Console: Legacy.
+
+
+## 🐛 How to Report Issues
+Please use the issue tracker linked at the top of the page if you are experiencing bugs, crashes, or other issues. Be sure to include necessary information like your hardware/software (such as the GPU and CPU, modpack version and OS) so that it's easier for us to find issues and resolve them.
+
 
 # 🎯 Goals
 
@@ -31,6 +46,10 @@ This means Re-Console comes with all the features within [Adrenaline](https://mo
 
 ### 📩 Up to Date
 Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft and Legacy4J versions. It is also multi-version and multi-loader, giving you the choice between Latest MC (currently 1.21.1) and a version with long-term mod compatibility (currently 1.20.1) Fabric, Forge and Neoforge.
+
+
+### Want to keep up with development?
+Consider joining the [ViolaFlower Discord](https://discord.gg/kprFeAn7Gq) for sneak peeks and updates on development!
 
 
 
@@ -72,8 +91,6 @@ Re-Console comes with many QoL and useful features that are meant to enhance the
 - Optifine capes
 - Shader support (O to Open)
 
-**Want to keep up with Development? Join the [Violaflower Discord Server](https://discord.gg/A6uFaqjGrq) or the [Legacy4J Discord Server](https://discord.com/invite/FJVbVgT9uS) for sneak peeks and updates on development!**
-
 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
 
@@ -95,9 +112,8 @@ Thats fine! Consider checking out;
 - [Project4J](https://modrinth.com/modpack/project-4j) by Cixon
 - [William's Console: Revisited](https://modrinth.com/modpack/williams-console-revisited) by ContraryBaton60, omoso and Violaflower Modding
 
-
-# Need a server?
-If you enjoy this modpack, and want to play with friends using it whilst also supporting me, use code Raamviot50 at BisectHosting to get 25% off. You can also use the special [Serverside Software](https://modrinth.com/modpack/re-console-server-software) of Re-Console to improve performance.
+# 🍉 Sponsor
+Are you looking to enjoy Re-Console with your friends? Feel free to use my code ``raamviot50`` for 25% off your first month of any server from BisectHosting, supporting me in the process. You can also use the special [Serverside Software](https://modrinth.com/modpack/re-console-server-software) of Re-Console to improve performance.
 
 [![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
 
