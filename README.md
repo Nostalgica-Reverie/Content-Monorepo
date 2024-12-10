@@ -20,9 +20,9 @@ Re-Console is the official modpack for the Legacy4J mod, seeking to expand upon 
 There are multiple ways to install and experience Re-Console: Legacy.
 ## 3rd Party Launchers
 ### Modrinth Launcher (Recommended)
-For the easiest possible installation, I recommend using the Modrinth Launcher. It's light, easy to use, reasonably quick, and only takes a few clicks to set up. Once you have it installed, you can install Re-Console: Legacy by searching for the modpack in the Modpacks section.
+For the easiest possible installation, I recommend using the Modrinth Launcher. It's light, easy to use, reasonably quick, and only takes a few clicks to set up. Once you have it installed, you can install Re-Console by searching for the modpack in the Modpacks section.
 ### Prism/MultiMC
-Although more complicated, you can install Prism Launcher from their website. Prism is much more versatile and stronger as a launcher, but has a worse GUI. From there, add an instance and search "Modrinth" for Re-Console: Legacy.
+Although more complicated, you can install Prism Launcher from their website. Prism is much more versatile and stronger as a launcher, but has a worse GUI. From there, add an instance and search "Modrinth" for Re-Console.
 
 
 ## 🐛 How to Report Issues
