@@ -36,7 +36,6 @@ Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it neve
 
 If you are interested in a re-creation of old versions, check out [Re-Console: Legacy](https://modrinth.com/modpack/rc-legacy)
 
-
 ### 🚀 Major performance improvement
 Re-Console is built off and kept in sync with [Additive](https://modrinth.com/modpack/additive) by [devin](https://modrinth.com/user/devin), the OptiFine alternative officially endorsed by Sodium.
 Re-Console's goal is to significantly improve rendering and game logic performance, along with memory and hardware usage, without compromising on the game's looks or features in any way.
@@ -63,7 +62,7 @@ Re-Console features some mods unrelated to LCE or OptiFine. This includes a smal
 Re-Console is comprised of only open-source or source-available mods, which gives you the ability to see the code and contribute to the mods in the pack. Without mod developers hard work, Re-Console would not be possible. If you want to show the developers of these mods your appreciation, I encourage you to donate to them!
 
 ### 📩 Up to Date
-Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft and Legacy4J versions. It is also multi-version and multi-loader, giving you the choice between Latest MC (currently 1.21.4) and a version with long-term mod compatibility (currently 1.21.1) on Fabric and Neoforge.
+Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft versions. It is also multi-version and multi-loader, giving you the choice between Latest MC (currently 1.21.4) and a version with long-term mod compatibility (currently 1.21.1) on Fabric and Neoforge.
 
 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
