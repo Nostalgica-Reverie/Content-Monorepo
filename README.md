@@ -32,7 +32,7 @@ Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
 
 ### ⭐ Legacy Console Edition accuracy
-Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it never ended". This means the modpack does not seek to re-create old versions, but rather make LCE in the modern versions. It has titular features of LCE, including the Crafting Menu, gamma, creative menu and more!
+Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it never ended". This means the modpack does not seek to re-create old versions, but rather make LCE in the modern versions. It has titular features of LCE, including the crafting menu, gamma, creative menu and more!
 
 If you are interested in a re-creation of old versions, check out [Re-Console: Legacy](https://modrinth.com/modpack/rc-legacy)
 
