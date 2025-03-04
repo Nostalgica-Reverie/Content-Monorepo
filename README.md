@@ -29,6 +29,11 @@ Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn
 - Talk with and collaborate with our team
 - And just hang out with the rest of our community!
 
+# 🍉 Sponsor
+Are you looking to enjoy Re-Console with your friends? Feel free to use my code ``raamviot50`` for 25% off your first month of any server from BisectHosting, supporting me in the process. You can also use the special [Serverside Software](https://modrinth.com/modpack/re-console-server-software) of Re-Console to improve performance.
+
+[![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
+
 ![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
 
 ### ⭐ Legacy Console Edition accuracy
@@ -78,11 +83,6 @@ Thats fine! Consider checking out;
 - [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
 - [Re-Console: Legacy](https://modrinth.com/modpack/rc-legacy) by ViolaFlower Modding
 
-
-# 🍉 Sponsor
-Are you looking to enjoy Re-Console with your friends? Feel free to use my code ``raamviot50`` for 25% off your first month of any server from BisectHosting, supporting me in the process. You can also use the special [Serverside Software](https://modrinth.com/modpack/re-console-server-software) of Re-Console to improve performance.
-
-[![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
 
 <details>
 <summary>Credits</summary>
