@@ -65,6 +65,7 @@ Re-Console features some mods unrelated to LCE or OptiFine. This includes a smal
 
 ### ⚙️ Open Source
 Re-Console is comprised of only open-source or source-available mods, which gives you the ability to see the code and contribute to the mods in the pack. Without mod developers hard work, Re-Console would not be possible. If you want to show the developers of these mods your appreciation, I encourage you to donate to them!
+Re-Console is also available as a packwiz project on GitHub!
 
 ### 📩 Up to Date
 Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft versions. It is also multi-version and multi-loader, giving you the choice between Latest MC (currently 1.21.4) and a version with long-term mod compatibility (currently 1.21.1) on Fabric and Neoforge.
