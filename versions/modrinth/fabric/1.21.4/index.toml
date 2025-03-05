@@ -1,6 +1,150 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
+hash = "fabdef222b32fa6712f7e594b51aaf4ff1e95db78a03b1094e00392a03714cc2"
+
+[[files]]
+file = "config/nostalgic_tweaks/nostalgic_tweaks.json"
+hash = "fabdef222b32fa6712f7e594b51aaf4ff1e95db78a03b1094e00392a03714cc2"
+
+[[files]]
+file = "config/yosbr/config/NoChatReports/NCR-Client.json"
+hash = "e0d9ce47a87536c707b797789b53e9e4f09b273f69098b1303b0815ebd82b3c5"
+
+[[files]]
+file = "config/yosbr/config/NoChatReports/NCR-Common.json"
+hash = "20bb880eb7a4657399b86fd11f6e2ec56c87c04ad037d62c155dcca5d484aa7f"
+
+[[files]]
+file = "config/yosbr/config/NoChatReports/NCR-Encryption.json"
+hash = "69b2e8613a2e3084367295c7b74cb598957f97bb9b9cfe56eb7b7a3187d86b66"
+
+[[files]]
+file = "config/yosbr/config/bettergrass.json5"
+hash = "5ba4ad8c50ca8715fe648e7e68e8b5df0fe05acac0f9b152cedd93a6250ae386"
+
+[[files]]
+file = "config/yosbr/config/capes.json5"
+hash = "dda5b7b8f667e02c239390c96f2a6f84d2224c7be2449e2a75a2a7fc5a96e636"
+
+[[files]]
+file = "config/yosbr/config/citresewn.json"
+hash = "080ec08b7754723a3fa7c45cc0c37f251cc69ff5a07c06bb0f9cb40596373bbe"
+
+[[files]]
+file = "config/yosbr/config/cpm.json"
+hash = "3870f1965e60dc67b321c224c41868293c75a595c4f510b2edcff879b7372775"
+
+[[files]]
+file = "config/yosbr/config/enhanced_bes.properties"
+hash = "219204a2efc6d53ad8b3116db7392e039ba8e0ed5f45bc18562c9697bdf8f5c9"
+
+[[files]]
+file = "config/yosbr/config/fastquit.toml"
+hash = "4c7872ece540160831d0c17e505336ffa2fba0748f3f32f137af1958272e200c"
+
+[[files]]
+file = "config/yosbr/config/ferritecore.mixin.properties"
+hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
+
+[[files]]
+file = "config/yosbr/config/immediatelyfast.json"
+hash = "fe6551b3aa77d3b624acff41ed6bf65b3d6d5c8821b7bda8875ff7b6b75e0c43"
+
+[[files]]
+file = "config/yosbr/config/iris.properties"
+hash = "4b404c16b82563e05e0cc8dc1218eb6194b2aa4473f348ff0c0c7a8655d9b5ff"
+
+[[files]]
+file = "config/yosbr/config/lambdynlights.toml"
+hash = "6c6f2e8a90cd8b8c7a6c70f8c5befd5ff1d79a64d8ec87e7922e9f02bf680317"
+
+[[files]]
+file = "config/yosbr/config/modernfix-mixins.properties"
+hash = "22caf99f6531254b612c35bc12aff9c2b6d121b038b2e418a1a429049d16c9e0"
+
+[[files]]
+file = "config/yosbr/config/modmenu.json"
+hash = "ee8d1a6f11ea009f37abba6325d97766910e1786b0de848aa307771d8a87ed72"
+
+[[files]]
+file = "config/yosbr/config/puzzle.json"
+hash = "f546f5a9367d113277de4051e3c14b898dea9490d9bd9f8240f222e0ea062c22"
+
+[[files]]
+file = "config/yosbr/config/ryoamiclights.toml"
+hash = "d6afc19db2764da5ae94c735f9544987a5a4686305d1478d31fdca800a94444c"
+
+[[files]]
+file = "config/yosbr/config/servercore/config.yml"
+hash = "7ed78d3273aebb454ea062b841297b6a498364b997596383354402487e0e0434"
+
+[[files]]
+file = "config/yosbr/config/servercore/optimizations.yml"
+hash = "c1347aa983b02f5e59fcbd4f931501e2705330c5cf25e723d3239b85e6b6e262"
+
+[[files]]
+file = "config/yosbr/config/vmp.properties"
+hash = "0d0549563aca08c87a22a9fd862cc6e7a9906f2d6fca84dcbfa7cbec14dff7e6"
+
+[[files]]
+file = "config/yosbr/config/world-host.json5"
+hash = "024ab81167c90c77a81797fdc769b7d4b96c2d2be076b5f94ce28c289c05cd1d"
+
+[[files]]
+file = "config/yosbr/options.txt"
+hash = "25f1eedb536cc8ecb5c83f3facf214753e9ac26224d175bf0b3b70f6a63dda79"
+
+[[files]]
+file = "config/yosbr/resource_albums.json"
+hash = "45956df4fffe512468af2809bbe13461311a3c6221e42db76cac3bd6216a7a56"
+
+[[files]]
+file = "config/yosbr/resource_albums/candy.json"
+hash = "c53a06605ecce403a536a35a4071a570c2a6f6eccdb9ce26bb054b613e411b40"
+
+[[files]]
+file = "config/yosbr/resource_albums/city.json"
+hash = "b70544d778e09f608801776f747346ca2afb216e58d9cc182ebe8621d4066a4b"
+
+[[files]]
+file = "config/yosbr/resource_albums/dark-mode.json"
+hash = "1e70eb74111a80c5f812955fc01706bdf90c3ba2d1ff217397355e1725527597"
+
+[[files]]
+file = "config/yosbr/resource_albums/fantasy.json"
+hash = "644e111366488ddc8253b456c239bdebdc31fbb3614e2de31c5f41610aab99cd"
+
+[[files]]
+file = "config/yosbr/resource_albums/festive.json"
+hash = "b0df4774e325d1f82b79a5661edeef8ff64e098eabdb8e14e446d5db86796d4b"
+
+[[files]]
+file = "config/yosbr/resource_albums/halloween.json"
+hash = "45b32a65b085831c1f77485a8154ae83797eb701b04ab7daeecfe50aa842ed64"
+
+[[files]]
+file = "config/yosbr/resource_albums/minecraft.json"
+hash = "ea63a169bb91a1b2e8f4cddba3fd4093e15e0d46796e10a0ee0edc4cbc3c00b9"
+
+[[files]]
+file = "config/yosbr/resource_albums/minecraft_classic.json"
+hash = "56b2d1a673da56a2a874284efb869eda80f4cbccf3012292797df0736762ed54"
+
+[[files]]
+file = "config/yosbr/resource_albums/natural.json"
+hash = "9f1ec0b708572ac9ad83b102bd9551167b16aed4965c5051c8b11cbcf11a7e73"
+
+[[files]]
+file = "config/yosbr/resource_albums/ps4-parity.json"
+hash = "5fb6819bbe4db2fe6795043a8deb63e0314ac493c659897ebaa5180385a59bb1"
+
+[[files]]
+file = "config/yosbr/resource_albums/trailer.json"
+hash = "3ba7e299e21dc56c4dc0c3ead4b660453b121d8e2c35b8862bd072badb0944e9"
+
+[[files]]
 file = "mods/architectury-api.pw.toml"
 hash = "848c49f2ead5e1e71d7be95d2d9e1cb992631faf91500b9c59e72d61afca33fd"
 metafile = true
@@ -266,6 +410,11 @@ hash = "9243fdbcadf7f6bf5a32f2b73e50ce7d374f99b685a7d1d5cf77c1ec76f60c46"
 metafile = true
 
 [[files]]
+file = "resourcepacks/mash-up-addon.pw.toml"
+hash = "e7fa8a04fe568d61c6efd106c9fcc37cf69e7222c163789a4eb94f7566d34aa9"
+metafile = true
+
+[[files]]
 file = "resourcepacks/modern-skin-packs.pw.toml"
 hash = "e2df68f4727281ba97abbde12f3776ff9edf1b2ee67e36e30a25170ae0090e34"
 metafile = true
@@ -293,4 +442,9 @@ metafile = true
 [[files]]
 file = "resourcepacks/the-garden-awakens-skin-pack.pw.toml"
 hash = "73ce3f2f8aed02f522b567a66f17d441c4b4d9a04bb4def0dc9d8f4547e90f21"
+metafile = true
+
+[[files]]
+file = "resourcepacks/tu5-tutorial-world-panorama.pw.toml"
+hash = "f8844305bd6923211c196511017448a9891efa28fd8b941dbf6fa5157058c798"
 metafile = true
