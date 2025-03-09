@@ -1,6 +1,26 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/legacy/client_mixin.json"
+hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
+
+[[files]]
+file = "config/legacy/client_options.json"
+hash = "3488f67b1b158551ac8819f9ab8271da45315d4fdc9f6479ad3da67d19144eac"
+
+[[files]]
+file = "config/legacy/common.json"
+hash = "102803aae5342ed1907d7c1aa18b5ea41f622ab588a6b1c9694ae41f962d5b3a"
+
+[[files]]
+file = "config/legacy/common_mixin.json"
+hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
+
+[[files]]
+file = "config/legacy/global_packs.json"
+hash = "a882a408eebbda134df2d12b1b30e92a1c680d0dbd640bd05ec9ef8959720f73"
+
+[[files]]
 file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
 hash = "fabdef222b32fa6712f7e594b51aaf4ff1e95db78a03b1094e00392a03714cc2"
 
@@ -144,11 +164,6 @@ hash = "b50378ddd8de5877ce51ded7616ebbf3ad0a5e18af8125a473411fbabc6c37cd"
 metafile = true
 
 [[files]]
-file = "mods/craftpresence.pw.toml"
-hash = "9c0bd9d64147f7e7e8b358a7bbbb390fa24d5ae051c1879dbc6c504035c70bdc"
-metafile = true
-
-[[files]]
 file = "mods/cubes-without-borders.pw.toml"
 hash = "23bdbf17e1fd8aeed7efeeea72741662734199dbef0b2adfac2ba795acf5ca40"
 metafile = true
@@ -200,7 +215,7 @@ metafile = true
 
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
-hash = "ab40b411650905a539fbfd18790c1af55d8e8cbd0e15a1872c8d5dee68a800cf"
+hash = "a4daa9369dfcaee7ca6f9749ef7441381060dc3c146ddf96ca0fa3a094c5ab1d"
 metafile = true
 
 [[files]]
@@ -216,6 +231,11 @@ metafile = true
 [[files]]
 file = "mods/legacy-minecraft.pw.toml"
 hash = "81aa04b6915b27fe1dd323ea92456f060dffbd28d383327f4be852cec39316df"
+metafile = true
+
+[[files]]
+file = "mods/legacy-skins.pw.toml"
+hash = "51fb5e811353bea9d915af181053dcc0c26b3f20e5a5cf2d37c1c87665a59326"
 metafile = true
 
 [[files]]
@@ -281,11 +301,6 @@ metafile = true
 [[files]]
 file = "mods/text-placeholder-api.pw.toml"
 hash = "605e24df28c2facc0e22397656ff507548b86badc0a8fbc278c72f6ccd3da242"
-metafile = true
-
-[[files]]
-file = "mods/unilib.pw.toml"
-hash = "8805f378719483ade0dbc81f59ad7939b1f39678bfe42c555cf5622ba8dbebd2"
 metafile = true
 
 [[files]]

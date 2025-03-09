@@ -1,6 +1,26 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/legacy/client_mixin.json"
+hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
+
+[[files]]
+file = "config/legacy/client_options.json"
+hash = "3488f67b1b158551ac8819f9ab8271da45315d4fdc9f6479ad3da67d19144eac"
+
+[[files]]
+file = "config/legacy/common.json"
+hash = "102803aae5342ed1907d7c1aa18b5ea41f622ab588a6b1c9694ae41f962d5b3a"
+
+[[files]]
+file = "config/legacy/common_mixin.json"
+hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
+
+[[files]]
+file = "config/legacy/global_packs.json"
+hash = "a882a408eebbda134df2d12b1b30e92a1c680d0dbd640bd05ec9ef8959720f73"
+
+[[files]]
 file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
 hash = "fabdef222b32fa6712f7e594b51aaf4ff1e95db78a03b1094e00392a03714cc2"
 
@@ -160,7 +180,7 @@ metafile = true
 
 [[files]]
 file = "mods/dynamic-fps.pw.toml"
-hash = "d30a0aa27fb9e37436e0487e330162788b02439bbe3faa2e73ba5eb086011c9d"
+hash = "9aaca1495dc99be5f81c754a7c21a906d1bebc58e4c058045a0d3ae90f97947c"
 metafile = true
 
 [[files]]
@@ -180,7 +200,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "31b0a063c3052b68c11130ad864a2c24ea29261e43df0f69cc11f70ab75eff8a"
+hash = "645ffb5a991188297235b7db2d6b62ad9e6c9979c4e42d3d052128be2c53c6cc"
 metafile = true
 
 [[files]]
@@ -200,7 +220,7 @@ metafile = true
 
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
-hash = "9be3ccb28710d96c50adec480d853f292a42d96e93603bb46b6e0010a252e60d"
+hash = "3d7db29c959c6f79cd599eadaf8b35005b7d06ead070bd6eb87bed3c6b101350"
 metafile = true
 
 [[files]]
@@ -216,6 +236,11 @@ metafile = true
 [[files]]
 file = "mods/legacy-minecraft.pw.toml"
 hash = "1932d6619545f7d753902c075841b64c9e72ef43ba85ae4482fb93dec4ade400"
+metafile = true
+
+[[files]]
+file = "mods/legacy-skins.pw.toml"
+hash = "70f5939698c8b965dd40114fd381993f39a3918af7f69e27fd06ceef9c8493fc"
 metafile = true
 
 [[files]]

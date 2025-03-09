@@ -1,6 +1,26 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/legacy/client_mixin.json"
+hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
+
+[[files]]
+file = "config/legacy/client_options.json"
+hash = "3488f67b1b158551ac8819f9ab8271da45315d4fdc9f6479ad3da67d19144eac"
+
+[[files]]
+file = "config/legacy/common.json"
+hash = "102803aae5342ed1907d7c1aa18b5ea41f622ab588a6b1c9694ae41f962d5b3a"
+
+[[files]]
+file = "config/legacy/common_mixin.json"
+hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
+
+[[files]]
+file = "config/legacy/global_packs.json"
+hash = "a882a408eebbda134df2d12b1b30e92a1c680d0dbd640bd05ec9ef8959720f73"
+
+[[files]]
 file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
 hash = "fabdef222b32fa6712f7e594b51aaf4ff1e95db78a03b1094e00392a03714cc2"
 
@@ -201,7 +221,7 @@ metafile = true
 
 [[files]]
 file = "mods/dynamic-fps.pw.toml"
-hash = "c86dd05c608c904be75edc259627a003738402a0450a7e78fa17292dff70d97a"
+hash = "6f401ef69f355048385146209db2c5eabb8173969f9bddb7955706efa036808f"
 metafile = true
 
 [[files]]
@@ -226,7 +246,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "71e384f643d16f13d509c543c26e81542baa22599365d6c16d867cd1eeda5acd"
+hash = "8b8abe0b0bfbabe50f9e37c5b165535de5868459b89634db74dcdd1d83babf4d"
 metafile = true
 
 [[files]]
@@ -251,7 +271,7 @@ metafile = true
 
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
-hash = "f293bc44a5350f8c10eca8b634e0f2b7f10aa240bad0239a0735a5631cc00091"
+hash = "c29648a250d8b767119dd0526bc1ddbbdba5b1b29d7c82c1578e506682ca495b"
 metafile = true
 
 [[files]]
@@ -262,6 +282,11 @@ metafile = true
 [[files]]
 file = "mods/lambdynamiclights.pw.toml"
 hash = "9752dfb3a2284f00d64d338df2d740e5c55bfcd4eb1aa7819fd9915a007468ef"
+metafile = true
+
+[[files]]
+file = "mods/legacy-skins.pw.toml"
+hash = "c991b136e59a841e1c66a419875049f4eba7d3b65c06e243a30b1fb636371502"
 metafile = true
 
 [[files]]
