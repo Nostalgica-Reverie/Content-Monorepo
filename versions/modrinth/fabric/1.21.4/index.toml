@@ -1,6 +1,54 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/crash_assistant/config.toml"
+hash = "8396310b4572149029a81cea139ea333123a68562f081184dd1359754973fc13"
+
+[[files]]
+file = "config/crash_assistant/lang/README.md"
+hash = "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc"
+
+[[files]]
+file = "config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "e991d9d5def8431a7a765da06eafc9c59f2911a8b39c4d483f96ff8eb0a57560"
+
+[[files]]
+file = "config/crash_assistant/problematic_mods_config.json"
+hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
+
+[[files]]
+file = "config/legacy/client_mixin.json"
+hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
+
+[[files]]
+file = "config/legacy/client_options.json"
+hash = "72601a9c04c5e2ebadc0f7dba9abe2bcc87f5056be9beb90cf37054f33f486b0"
+
+[[files]]
+file = "config/legacy/common.json"
+hash = "102803aae5342ed1907d7c1aa18b5ea41f622ab588a6b1c9694ae41f962d5b3a"
+
+[[files]]
+file = "config/legacy/common_mixin.json"
+hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
+
+[[files]]
+file = "config/legacy/global_packs.json"
+hash = "a882a408eebbda134df2d12b1b30e92a1c680d0dbd640bd05ec9ef8959720f73"
+
+[[files]]
 file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
 hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
 
