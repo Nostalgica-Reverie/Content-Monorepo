@@ -13,6 +13,11 @@ Re-Console is the official modpack for the Legacy Tweaks mod, seeking to expand 
 
 
 ## 📥 Installation Guide
+
+
+**Please be sure to read Sodium's [Driver Compatibility](https://github.com/CaffeineMC/sodium-fabric/wiki/Driver-Compatibility) section on the wiki before installing Re-Console. It contains some important instructions on preventing crashes and other performance issues.**
+
+
 There are multiple ways to install and experience Re-Console.
 ### Modrinth Launcher (Recommended)
 For the easiest possible installation, we recommend using the Modrinth Launcher. It's light, easy to use, reasonably quick, and only takes a few clicks to set up. Once you have it installed, you can install Re-Console by searching for Re-Console in the Modpacks section.
@@ -21,6 +26,16 @@ Although more complicated, you can install Prism Launcher from their website. Pr
 
 # 🐛 How to Report Issues
 Please use the issue tracker linked at the top of the page if you are experiencing bugs, crashes, or other issues. Be sure to include necessary information like your hardware/software (such as the GPU, CPU, modpack version, and OS) to help us identify and resolve issues.
+
+# ✅ Hardware Compatibility
+Re-Console, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium) mod, is only compatible with graphics cards that support ***OpenGL 4.5 or newer.***
+Most graphics cards released in the past 12 years will meet these requirements, including the following:
+
+  -  INTEL HD Graphics 500 Series (Skylake) or newer
+  -  NVIDIA GeForce 400 Series (Fermi) or newer
+  -  AMD Radeon HD 7000 Series (GCN 1) or newer
+
+If you are running into problems, you should make sure that your graphics drivers are up-to-date. I also recommend taking a look at [this page](https://github.com/CaffeineMC/sodium/wiki/Driver-Compatibility) on the Sodium wiki.
 
 # 💬 Join the Community
 Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn) for sneak peeks and updates on development! By joining, you can:
