@@ -98,11 +98,23 @@ hash = "dc238f208506f0dbf661be2b256207ecd0db586888ab7ad19629c84e5d239cbf"
 
 [[files]]
 file = "config/yosbr/resource_albums.json"
-hash = "6c246ac41c3ea54b5760f32a87f1ee21044a5d11056d6995becced1a9b3ce104"
+hash = "b54571ffdda4cb8fd6abfb13f78ba5bf3e1e28049d3d90795b38a07a6b9a919f"
+
+[[files]]
+file = "config/yosbr/resource_albums/adventuretime.json"
+hash = "8918b03d7d00b7c4f3ec3931f04618b76473dd778eda568dc2643a43ba2a5cc7"
 
 [[files]]
 file = "config/yosbr/resource_albums/candy.json"
 hash = "8a017a1417cd3d47ae8f0549db64b6d4b12758c839720d0ab53efba0bd9bf7be"
+
+[[files]]
+file = "config/yosbr/resource_albums/cartoon.json"
+hash = "285d20d035812d9e8e48f1f24afb545aab200d1ab17fd9f881a92af89218fbc3"
+
+[[files]]
+file = "config/yosbr/resource_albums/china.json"
+hash = "c2113ed34b6905b891e432379be9beec268e26366af83c401cfa9caf0da4e734"
 
 [[files]]
 file = "config/yosbr/resource_albums/city.json"
@@ -110,7 +122,7 @@ hash = "01ca67ac2fc2f59568111ce55f9c403755b11477251a257088aa2fda416bfa9c"
 
 [[files]]
 file = "config/yosbr/resource_albums/dark-mode.json"
-hash = "734b427933e4819840bad7e47cdac34ae8d7892c479e0ecf1ead7723464aa927"
+hash = "679d5367e5e4713161b8f181a162386d8bda02e5fe380c30604b9d4648403afe"
 
 [[files]]
 file = "config/yosbr/resource_albums/fantasy.json"
@@ -119,6 +131,10 @@ hash = "ab842889852df49dd734e9603864f1bc035a30172be1dfeec5e280af3f4be28c"
 [[files]]
 file = "config/yosbr/resource_albums/festive.json"
 hash = "1b11da2d8d3667f76d5e2130cadfbf6bf5877cd731a935e5ae348af155f926a4"
+
+[[files]]
+file = "config/yosbr/resource_albums/greek.json"
+hash = "c5f20fd28332cf5df2ca9d766e0b2f3a44771508db78c99dd1e5799d2973d440"
 
 [[files]]
 file = "config/yosbr/resource_albums/halloween.json"
@@ -137,12 +153,36 @@ file = "config/yosbr/resource_albums/natural.json"
 hash = "681020a7dc7e0fdc073f5e0ebbd32bdbaba133cbc5395f0a139a0291640817c0"
 
 [[files]]
+file = "config/yosbr/resource_albums/nmbc.json"
+hash = "3a1acfc33af6812ffff3e12e58429948535ba64700be71b3c6068883966120b2"
+
+[[files]]
+file = "config/yosbr/resource_albums/norse.json"
+hash = "b5c15dfa54e21a1bef293c4e49234f28431f2622774d77683881e56728622f81"
+
+[[files]]
+file = "config/yosbr/resource_albums/pattern.json"
+hash = "cbf5b0fb83a82d6da2d5d6a6f2b5aa4e7cd43fc9d606105564d284dd57f8db00"
+
+[[files]]
 file = "config/yosbr/resource_albums/ps4-parity.json"
 hash = "1b936e5410ebfac5c98043bea98f2520ea53001f514dfd4d3dc73947498faac7"
 
 [[files]]
+file = "config/yosbr/resource_albums/sctp.json"
+hash = "6bedbc3873448f8326f5881b4ae5bc1eb41da79593de72cbbe4af2628c19518c"
+
+[[files]]
+file = "config/yosbr/resource_albums/skyrim.json"
+hash = "d684a900c330d4116077cf1fa226ff112ae7778e1325c3ad8ce5a98f295ca91d"
+
+[[files]]
+file = "config/yosbr/resource_albums/toystory.json"
+hash = "ba4d700cffb6a8984159827c2934c7fc9180ae3072e47e8ae2503d079aad80f9"
+
+[[files]]
 file = "config/yosbr/resource_albums/trailer.json"
-hash = "16f86f7748e925587c46bf0b5080e81a519f0960a6c86882cb76b54c0fc7ccab"
+hash = "457b09937c984197ba00b20c5ff14023ae9b5a9abbe8ffccb1a03d7b77d081e9"
 
 [[files]]
 file = "mods/architectury-api.pw.toml"
@@ -171,7 +211,7 @@ metafile = true
 
 [[files]]
 file = "mods/capes.pw.toml"
-hash = "0e05cb9cc98c7b7d42901e8fa13051bc9ab07a75e1364fa6abf007e780461ef2"
+hash = "c764ec528a8f0a0608129136fa35538e174dea6bcd712285db0a15b2ba685d1f"
 metafile = true
 
 [[files]]
@@ -271,7 +311,7 @@ metafile = true
 
 [[files]]
 file = "mods/lambdynamiclights.pw.toml"
-hash = "a6e79c38c85f688bbb1c807d2ca8a6618820d05d61d831a214d9b69b8d09fc7f"
+hash = "dd21c75c6226beb1d2c868b1beb30bf2d1ffd8de510f4a240bd42ff4c43608c8"
 metafile = true
 
 [[files]]
@@ -365,6 +405,11 @@ hash = "1bb9b2e75c6934b1f18648e9b37e20abcf6a4a2547c7cdb0abe88407267e0c10"
 metafile = true
 
 [[files]]
+file = "resourcepacks/adventure-time-mash-up.pw.toml"
+hash = "f739d27b1054e2cd6f0c7ef255160b7717dc3180195ba0da4787fa87cb93b6ad"
+metafile = true
+
+[[files]]
 file = "resourcepacks/bare-bones.pw.toml"
 hash = "ddc775dab8ce6b15678230f39fe35a210fc09615c4b0a7de43f051ee614c3802"
 metafile = true
@@ -372,6 +417,16 @@ metafile = true
 [[files]]
 file = "resourcepacks/candy-texture-pack.pw.toml"
 hash = "6fd7446a6d4ae595a8668dd9e4b8f12f54c18744797ac6efcdf379c12e0235fe"
+metafile = true
+
+[[files]]
+file = "resourcepacks/cartoon-texture-pack.pw.toml"
+hash = "49c001bd800e6d022b38dcc86a70761b69a9f19275df86867db35f6b91065fab"
+metafile = true
+
+[[files]]
+file = "resourcepacks/chinese-mythology-mash-up.pw.toml"
+hash = "74828a43d63ae351f083bbf0216ad493979a1b134524ea416277e2f49ccb03e6"
 metafile = true
 
 [[files]]
@@ -406,7 +461,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/greek-mythology-mash-up.pw.toml"
-hash = "68b1adf44c7fb2ad0e2d8508590c93d7526c89f9b26735a8b753381c61121499"
+hash = "d02053df12f6d79cf3c9e3b7f3ffff91a6e13447a21b70b56b2ba3b925364c03"
 metafile = true
 
 [[files]]
@@ -445,8 +500,18 @@ hash = "458d7de58917ddd3a8919fc517b40241f2e848a5ef34e1200e03beedbb9dcd52"
 metafile = true
 
 [[files]]
+file = "resourcepacks/norse-mythology-mash-up.pw.toml"
+hash = "2fc69dbdf31680a4a0dc5153fbd9d9ec0efa4d618559c5d6d28ffaed2fb44ac4"
+metafile = true
+
+[[files]]
 file = "resourcepacks/pacp.pw.toml"
 hash = "908cf78e3eb4a83d0f4ac54dbf29136366503872a3a57c7a20149ead8369bb45"
+metafile = true
+
+[[files]]
+file = "resourcepacks/pattern-texture-pack.pw.toml"
+hash = "296aa718e18d2956304a18eb9e33d7e27bec172a45323916ebaf969c49a9e092"
 metafile = true
 
 [[files]]
@@ -460,11 +525,36 @@ hash = "89ed7d40b9b7c799211af867b5e13afc1c6b7df1fbc024ca4fbb4bdbe19839c8"
 metafile = true
 
 [[files]]
+file = "resourcepacks/skyrim-mash-up.pw.toml"
+hash = "b8207b773e782fcf46028fc707c86a08ca5914dad9e0e1540b53614dd76a7ac7"
+metafile = true
+
+[[files]]
+file = "resourcepacks/super-cute.pw.toml"
+hash = "bb9ec55a30673b56c02549616dfdd7454028f563aa91f048b0bef722bf4ef5b7"
+metafile = true
+
+[[files]]
 file = "resourcepacks/the-garden-awakens-skin-pack.pw.toml"
 hash = "e7331a2204e94f749e246f1e4af60ce21b5995afc5a0da45541b49645fc3855f"
 metafile = true
 
 [[files]]
+file = "resourcepacks/the-nightmare-before-christmas.pw.toml"
+hash = "aa55d77146dc78ab69633fc9f6a4e1ff16bd361bc3e9c23d6e7c60cd656bd774"
+metafile = true
+
+[[files]]
+file = "resourcepacks/toy-story-mash-up.pw.toml"
+hash = "e15911785ced42d877d06e1925ea8d80134e8b90af83d9fbe0f21bf88abdf8fa"
+metafile = true
+
+[[files]]
 file = "resourcepacks/tu5-tutorial-world-panorama.pw.toml"
 hash = "3a370d69c9ef9dc350a050f570f2d845301c7d0fcd2e430d13c1ff72c57b244e"
+metafile = true
+
+[[files]]
+file = "resourcepacks/tutorial-world-addon.pw.toml"
+hash = "94d9ef20d83c22605b83346ea9514468cc27417d4f26b504cc4e5bbb90364a04"
 metafile = true
