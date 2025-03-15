@@ -1,26 +1,6 @@
 hash-format = "sha256"
 
 [[files]]
-file = "config/legacy/client_mixin.json"
-hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
-
-[[files]]
-file = "config/legacy/client_options.json"
-hash = "f79088ce66ec4c4aa7d07fa99e9a91bff65f96963cffa5f9b143815da2f3bb67"
-
-[[files]]
-file = "config/legacy/common.json"
-hash = "3b9b9361ed4ad964361358b210952bb01f4f30ff2d56c249d0ce517792244266"
-
-[[files]]
-file = "config/legacy/common_mixin.json"
-hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
-
-[[files]]
-file = "config/legacy/global_packs.json"
-hash = "b976dde04889f5828dd46337b44f4225779849af93f00960a6601da078249b9f"
-
-[[files]]
 file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
 hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
 
@@ -327,11 +307,6 @@ metafile = true
 [[files]]
 file = "mods/modmenu.pw.toml"
 hash = "88c6edc1712f4f0cd915cd723b9e0296924d454b3855a719d2962103b2b92bea"
-metafile = true
-
-[[files]]
-file = "mods/no-chat-reports.pw.toml"
-hash = "95ff1073b74b23e62cae94569ffb63e6e2f244d99a6d1a38c4a26bdd183a64eb"
 metafile = true
 
 [[files]]
