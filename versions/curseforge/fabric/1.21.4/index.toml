@@ -1,6 +1,34 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/crash_assistant/config.toml"
+hash = "8396310b4572149029a81cea139ea333123a68562f081184dd1359754973fc13"
+
+[[files]]
+file = "config/crash_assistant/lang/README.md"
+hash = "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc"
+
+[[files]]
+file = "config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "e991d9d5def8431a7a765da06eafc9c59f2911a8b39c4d483f96ff8eb0a57560"
+
+[[files]]
+file = "config/crash_assistant/problematic_mods_config.json"
+hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
+
+[[files]]
 file = "config/legacy/client_mixin.json"
 hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
 
@@ -140,12 +168,12 @@ metafile = true
 
 [[files]]
 file = "mods/bettergrassify.pw.toml"
-hash = "02f7c0aba685febf1eb58fb60a35deedeb79b3946ea80489fb49239971bc02c6"
+hash = "a65a7e5545be6a40148718867cfdb638053d498f641770a2c494c52cd793165f"
 metafile = true
 
 [[files]]
 file = "mods/capes.pw.toml"
-hash = "65939e4ad375926cfcd00a07cbac9c28ad97e7f4133e0f9a4e7d5c7442d0c1e2"
+hash = "dc0fd13cc9842ed2744ea571083294be30565473d2a3e88787d5f8604a5d1b29"
 metafile = true
 
 [[files]]
@@ -200,12 +228,12 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "8c3c200080a1dcc380d5871b22d2303ffe75480592dcd6cedccfce12866b4295"
+hash = "fb414301b6a93d9db68297f3cce4699149673edb6f6fdea32b5194f1ed8041f6"
 metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "d7c1069262cf28dbd24a933f2ac5b495ff29bc71e41bdf761fd3c8a1176c29ce"
+hash = "d603d3af57d7425dd7abf0edea73a792d7d6809e41b8989f4f4a35152bb84c71"
 metafile = true
 
 [[files]]
@@ -225,7 +253,7 @@ metafile = true
 
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
-hash = "7fc36df2b1865f6b07a11a7ef5530551ea5645a7168c9fd822d3ae6f2e5df778"
+hash = "fa32f4a5065ebec1bb6febd9a4d5f3f42986b502c7374f6997d32988546c1436"
 metafile = true
 
 [[files]]
@@ -235,12 +263,12 @@ metafile = true
 
 [[files]]
 file = "mods/lambdynamiclights.pw.toml"
-hash = "747673b49ba9cb15fc9c325f0dd3b8bef1022f184409adf158b8d8a7a52c86fd"
+hash = "41feff94b749a6b73181ea4b8099d5280d28679187d29478d284afc24a533fe4"
 metafile = true
 
 [[files]]
 file = "mods/legacy-minecraft.pw.toml"
-hash = "984af321da7ad097985eac8a96c71a12578fedf4b1df2b0ce00066cc23ac0f33"
+hash = "a24a96c5c2f8c87da89d99d43e51abd5fc9647ec320f4a956a371c580eb2b0e1"
 metafile = true
 
 [[files]]
@@ -315,7 +343,7 @@ metafile = true
 
 [[files]]
 file = "mods/yacl.pw.toml"
-hash = "9bd83c32f8100bba13b92aeaf6319dbfe606989229f6f09b1e5b56216c070ca5"
+hash = "a65e947766823111646d0f079d0aa651971170d81558418deb602e5ecf9449a7"
 metafile = true
 
 [[files]]
@@ -324,56 +352,6 @@ hash = "544a4e56b8574c53eb209f150df36ed80cec01a2253d7583dd0f7b7058bdf2ec"
 metafile = true
 
 [[files]]
-file = "resourcepacks/adventure-time-mash-up.pw.toml"
-hash = "f739d27b1054e2cd6f0c7ef255160b7717dc3180195ba0da4787fa87cb93b6ad"
-metafile = true
-
-[[files]]
-file = "resourcepacks/cartoon-texture-pack.pw.toml"
-hash = "49c001bd800e6d022b38dcc86a70761b69a9f19275df86867db35f6b91065fab"
-metafile = true
-
-[[files]]
-file = "resourcepacks/chinese-mythology-mash-up.pw.toml"
-hash = "74828a43d63ae351f083bbf0216ad493979a1b134524ea416277e2f49ccb03e6"
-metafile = true
-
-[[files]]
-file = "resourcepacks/greek-mythology-mash-up.pw.toml"
-hash = "d02053df12f6d79cf3c9e3b7f3ffff91a6e13447a21b70b56b2ba3b925364c03"
-metafile = true
-
-[[files]]
-file = "resourcepacks/norse-mythology-mash-up.pw.toml"
-hash = "2fc69dbdf31680a4a0dc5153fbd9d9ec0efa4d618559c5d6d28ffaed2fb44ac4"
-metafile = true
-
-[[files]]
-file = "resourcepacks/pattern-texture-pack.pw.toml"
-hash = "296aa718e18d2956304a18eb9e33d7e27bec172a45323916ebaf969c49a9e092"
-metafile = true
-
-[[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
 hash = "0e887a9870effd85d2391c14aa521b98b3c9abd10ffd96f6f251e152816124cd"
-metafile = true
-
-[[files]]
-file = "resourcepacks/skyrim-mash-up.pw.toml"
-hash = "b8207b773e782fcf46028fc707c86a08ca5914dad9e0e1540b53614dd76a7ac7"
-metafile = true
-
-[[files]]
-file = "resourcepacks/super-cute.pw.toml"
-hash = "bb9ec55a30673b56c02549616dfdd7454028f563aa91f048b0bef722bf4ef5b7"
-metafile = true
-
-[[files]]
-file = "resourcepacks/the-nightmare-before-christmas.pw.toml"
-hash = "aa55d77146dc78ab69633fc9f6a4e1ff16bd361bc3e9c23d6e7c60cd656bd774"
-metafile = true
-
-[[files]]
-file = "resourcepacks/toy-story-mash-up.pw.toml"
-hash = "e15911785ced42d877d06e1925ea8d80134e8b90af83d9fbe0f21bf88abdf8fa"
 metafile = true

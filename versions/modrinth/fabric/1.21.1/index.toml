@@ -1,6 +1,34 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/crash_assistant/config.toml"
+hash = "8396310b4572149029a81cea139ea333123a68562f081184dd1359754973fc13"
+
+[[files]]
+file = "config/crash_assistant/lang/README.md"
+hash = "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc"
+
+[[files]]
+file = "config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "e991d9d5def8431a7a765da06eafc9c59f2911a8b39c4d483f96ff8eb0a57560"
+
+[[files]]
+file = "config/crash_assistant/problematic_mods_config.json"
+hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
+
+[[files]]
 file = "config/legacy/client_mixin.json"
 hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
 
@@ -122,43 +150,43 @@ hash = "b54571ffdda4cb8fd6abfb13f78ba5bf3e1e28049d3d90795b38a07a6b9a919f"
 
 [[files]]
 file = "config/yosbr/resource_albums/adventuretime.json"
-hash = "5e9ae6447b90f28780fc3bbbe6e108e990d0708e7afc0e6ab815a81d8a3bc40c"
+hash = "bed26a743c5504bda496bf1cd97de494bc825cb42cd2b4c71e57a91a6fe6039e"
 
 [[files]]
 file = "config/yosbr/resource_albums/candy.json"
-hash = "bf4ef35e3dbef52b044d0682016b5da8d2e70fa8474d8107384932320294eb0c"
+hash = "fd615ac090f2ccbea4ffbe67055ededbeb8a71deb3045087e7206c573cdf77aa"
 
 [[files]]
 file = "config/yosbr/resource_albums/cartoon.json"
-hash = "192f5ac7f88b6fe56412e3ad1dbfa69187596e3f766cfec0b3b563adfe022d2b"
+hash = "1fca51361c6aef900cf72ae8e9a2e3f981bc53ee0a87fc17e5b4cfcc6c25ccb7"
 
 [[files]]
 file = "config/yosbr/resource_albums/china.json"
-hash = "6adcdb6fb2f63e43d68b693e4df7ed125740136d33a522eb8177350ec61e31ec"
+hash = "ab86368db6b547f61742d777fa1b543a68971f47d1c210ab4f9f2b72849cc16a"
 
 [[files]]
 file = "config/yosbr/resource_albums/city.json"
-hash = "2588884f011281557740d5206cb7673f0c2b1eb165af0064a149e1afa5fd44fb"
+hash = "2f6c27001c5c1de536180b63b12a2686858e6fbe51260f9deb2bb597222ec9d4"
 
 [[files]]
 file = "config/yosbr/resource_albums/dark-mode.json"
-hash = "6aed96c203e300fb09f82d97c957525d4be435526b43f83ecb516f64a9ccb1ee"
+hash = "5a25d5774b3b576c02f1ab5239f0547f6bb6b973b7794947a5664205c8311338"
 
 [[files]]
 file = "config/yosbr/resource_albums/fantasy.json"
-hash = "680347acae552d62372039861441d945f5d68754c232611cf519ee33fda4b408"
+hash = "aa0d4d4500ee58f015292214d580a88667d41dd8922cbe39590dbf955f10793c"
 
 [[files]]
 file = "config/yosbr/resource_albums/festive.json"
-hash = "3b34845b304bd91b599d6566c9f725184789e4d77748d2fa040887f832ecca23"
+hash = "e137923b8878d8347f32c153f8351369019203136961312a230104bce747bf0a"
 
 [[files]]
 file = "config/yosbr/resource_albums/greek.json"
-hash = "1cebaa6134f2634fd614bb535d41ea71bc6b6fbfba36e6fb9d9649285494c263"
+hash = "6a430aadd1106b5713203f8f6950c383e80d5ec9bcea56d043636f535ec3bc0f"
 
 [[files]]
 file = "config/yosbr/resource_albums/halloween.json"
-hash = "b8cd9f6eb4f46e55de82b493b7ba1168ee86dca5a5a50b6ee44a48eec41114a7"
+hash = "f54b2b6027c21f72d9cf7de947dfb0947154a97db4f1ee4b6fa980fff8f8db5b"
 
 [[files]]
 file = "config/yosbr/resource_albums/minecraft.json"
@@ -166,23 +194,23 @@ hash = "fa7ac2c318591b857c3c9184493f93ebc0c5fa3567999fe7f1af4ee753dc5511"
 
 [[files]]
 file = "config/yosbr/resource_albums/minecraft_classic.json"
-hash = "b3df898da24415c2b8425b8fff735c4755ff43a5c12147acafe46c1465044ee2"
+hash = "5a30cb0a1405aaae768bd0d8d46cdc6d32343029eea252fc3ef067a3f7322923"
 
 [[files]]
 file = "config/yosbr/resource_albums/natural.json"
-hash = "a4ddf14c49d80a2f2113dcde3a16f3fc9c8f638861e4ca450fbe53bdf52993fd"
+hash = "70258c810319c4429e2a2211fd258acbedad86d276ebc07ce2ff7b79d83e910c"
 
 [[files]]
 file = "config/yosbr/resource_albums/nmbc.json"
-hash = "3405ea9329c01362f1ac3628047a01b4c389ede5f3cc4e30415830a0bc38c659"
+hash = "338dbe807d54099b157e08d403915c2b8f294c12c5cbbe56b100eacc16d68226"
 
 [[files]]
 file = "config/yosbr/resource_albums/norse.json"
-hash = "a943445beeb85681db593f66a74c925fd28e7ae60201044dc8acffeab4cf4a88"
+hash = "4112f9d1dbd6cc2e55707ad9227924f7cf2028a75941d619c4f6d1f07110f978"
 
 [[files]]
 file = "config/yosbr/resource_albums/pattern.json"
-hash = "b710a88386973674b773894f8e39d369565f1eaab2d7c75255a4d6a732239204"
+hash = "a127001acd936267e70ec071f7bdbfe7d65db993e8d546574e1f670f48e082d4"
 
 [[files]]
 file = "config/yosbr/resource_albums/ps4-parity.json"
@@ -190,19 +218,19 @@ hash = "338102ae5f57ab086508867c8c14880222a1ec905f58b23516bf8f81858c0e33"
 
 [[files]]
 file = "config/yosbr/resource_albums/sctp.json"
-hash = "6a8a1ac377b0b503103b03d230d7506a124593da43c4f899129c246cb8e23038"
+hash = "05a8bc61770242fc27823be0410f9cd8b70b5e314d40ed863a80b270fe507707"
 
 [[files]]
 file = "config/yosbr/resource_albums/skyrim.json"
-hash = "bf1251b841ced689e8abb5c4ad3939c499ac56a2e3ac794ec1925b6999591d71"
+hash = "f4da8190cddcfaadfd222c58b27d4672a68801760f8d19c5c4e86356c437654b"
 
 [[files]]
 file = "config/yosbr/resource_albums/toystory.json"
-hash = "00bcf7e66dcf47f7edc600b7b83961d08b6975d1a2a41c1526e33dc68db5c893"
+hash = "f8b905f5e7be68d529f726c35e79c08610d16fa3f28c823822fb85d9abf34794"
 
 [[files]]
 file = "config/yosbr/resource_albums/trailer.json"
-hash = "22e3297757b9d4b865adbc868f0829f2c999dba0080b9d85dd23691525a7a06e"
+hash = "c218efce7390aa00585cb3ff55dcc13aebfe765f8e3d8e1e4fd2d60cef3f2870"
 
 [[files]]
 file = "mods/architectury-api.pw.toml"
@@ -221,7 +249,7 @@ metafile = true
 
 [[files]]
 file = "mods/bettergrassify.pw.toml"
-hash = "1d20cd973bd3bb657292d06165f34680f66dc0e0c2250393659035b04155ad28"
+hash = "5dd85fe4032d49d7cc7690ae27b21e2374a6703e2c02bc3e6210809b63787e97"
 metafile = true
 
 [[files]]
@@ -291,12 +319,12 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "fe95430d433104d44c741c22d8f4d0db4678756311acacccddec49e3a39a4091"
+hash = "a19f6561d4d952aaf56c494326f4c59b0f276ab2f42f119e99ffb6fb62e7e7c9"
 metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "ddd587383101590f8408208c3bdc53ec6b10077570a566211f47ee62673b74b8"
+hash = "97e7fb0bf5c563366b7c6121fa2decb67597107e5594932c6a098cccc980629e"
 metafile = true
 
 [[files]]
@@ -321,7 +349,7 @@ metafile = true
 
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
-hash = "a8f5d734693741ac07444701c7e93729f5424ed0cf8fc398b2be1062d2c4aeee"
+hash = "e0249b9f22e21c0eddf854e68e28537bf98e8c766c73b6e29a8194f0e9b2c345"
 metafile = true
 
 [[files]]
@@ -331,7 +359,7 @@ metafile = true
 
 [[files]]
 file = "mods/lambdynamiclights.pw.toml"
-hash = "cec885fcaeede117597c4619de2f122d40e3b633be5d4449d77037e8d290b50e"
+hash = "b51341c6f2ff3732617d7ffa3b3ed3d09c05d2d24fbc243734aefbe47f149f83"
 metafile = true
 
 [[files]]
@@ -341,7 +369,7 @@ metafile = true
 
 [[files]]
 file = "mods/legacy4j.pw.toml"
-hash = "83de1a0e3dcde72b23b65c8cec0ef505d10424daa896f5b54cd1e38bd9b0732b"
+hash = "757107e24190a5427bfa362a9fd79f13d85a3f2039ac89082309067891b9c55e"
 metafile = true
 
 [[files]]
@@ -421,7 +449,7 @@ metafile = true
 
 [[files]]
 file = "mods/yacl.pw.toml"
-hash = "df982e9cf0a3bbf9c7c2d6b8c9ded27cbf2b342d978a95876cd080342278e89f"
+hash = "9d3d262e7395e8b096a2c151eb7e6222597d1f927312502f6f4d904f458ff48f"
 metafile = true
 
 [[files]]
@@ -431,12 +459,12 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/adventure-time-mash-up.pw.toml"
-hash = "f739d27b1054e2cd6f0c7ef255160b7717dc3180195ba0da4787fa87cb93b6ad"
+hash = "0005e2aac90228eadbabb7d614b90371c458afc4b28b8ffe6bf2dda35df73608"
 metafile = true
 
 [[files]]
 file = "resourcepacks/bare-bones.pw.toml"
-hash = "b6e54c8bf43eea9d7a606e8330d06b78b77721884ac321e77fa17bce97a32ec6"
+hash = "587665034fb0d5c6abf7f8a807dad929a54205ecbd4597a434bec3c2b725dec0"
 metafile = true
 
 [[files]]
@@ -461,7 +489,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/default-dark-mode-expansion.pw.toml"
-hash = "cc7d26b45378d39cda42d71eda6bbbfd3dd42ea74753262e912b3b591866e5bb"
+hash = "f0165138b945b8f58b755650dcbf77ddc20abe0a49a25bfcc61fe7982b84eb0d"
 metafile = true
 
 [[files]]
@@ -531,7 +559,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/pacp.pw.toml"
-hash = "908cf78e3eb4a83d0f4ac54dbf29136366503872a3a57c7a20149ead8369bb45"
+hash = "5158068cd9fdd4d592ba78e9336eaddb1ba246cadc473af25102d60c73f4ca07"
 metafile = true
 
 [[files]]

@@ -1,6 +1,34 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/crash_assistant/config.toml"
+hash = "8396310b4572149029a81cea139ea333123a68562f081184dd1359754973fc13"
+
+[[files]]
+file = "config/crash_assistant/lang/README.md"
+hash = "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc"
+
+[[files]]
+file = "config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "e991d9d5def8431a7a765da06eafc9c59f2911a8b39c4d483f96ff8eb0a57560"
+
+[[files]]
+file = "config/crash_assistant/problematic_mods_config.json"
+hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
+
+[[files]]
 file = "config/legacy/client_mixin.json"
 hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
 
@@ -140,7 +168,7 @@ metafile = true
 
 [[files]]
 file = "mods/bettergrassify.pw.toml"
-hash = "158a849c286e132b0cc9cc297e29645b1710fc3b40be4498f690b0c41b6a396a"
+hash = "11e774a86c15dfa9bdb9148b4e08b4f09bcaa3e45955dde159a45f8d71d24b7b"
 metafile = true
 
 [[files]]
@@ -195,12 +223,12 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "153680253931b8271328cb7686c4dd4841da319b8db726956ce7b6c090ac4289"
+hash = "2982c90ffefb168a3a5caa3224a8ecdc90fcf7e9c1f4198115ee17f34882d4a8"
 metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "d7c1069262cf28dbd24a933f2ac5b495ff29bc71e41bdf761fd3c8a1176c29ce"
+hash = "d603d3af57d7425dd7abf0edea73a792d7d6809e41b8989f4f4a35152bb84c71"
 metafile = true
 
 [[files]]
@@ -215,7 +243,7 @@ metafile = true
 
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
-hash = "9b1bf37119f30737d86ffe8859c525aeeecc031db54acf4d6d88e4cd89c3df84"
+hash = "da017d71a59bd93121a2995257f3f48f5d232ebb5767ff1beda86f5a59aa8563"
 metafile = true
 
 [[files]]
@@ -225,12 +253,12 @@ metafile = true
 
 [[files]]
 file = "mods/lambdynamiclights.pw.toml"
-hash = "a5c56558a05442607f34bf4b27aa32c189e55532c4c7c5cc73ea522731a3c6b7"
+hash = "0c296900a19fa458820b467246a7a69ea5e4b5849a5a411171dcc6e96432408f"
 metafile = true
 
 [[files]]
 file = "mods/legacy-minecraft.pw.toml"
-hash = "73cc0689c53e224ed47dfdb963afca12c87d6f831b8a71313fadbb1bf7040067"
+hash = "e201da25e92336ae5c0abfa6f6a34ef3936868ecca0e685bcf89e1862d61d29a"
 metafile = true
 
 [[files]]
@@ -300,7 +328,7 @@ metafile = true
 
 [[files]]
 file = "mods/yacl.pw.toml"
-hash = "1e9a585c3a1adaf7fe11afea1200e18faee7c263d82af33bb3496be89b0a846a"
+hash = "9c507e34364bcdcdddb44802226c35f5ac05597a0b6f31c819d9a2331a45b11f"
 metafile = true
 
 [[files]]
