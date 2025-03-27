@@ -48,7 +48,6 @@ body:
     attributes:
       label: Log or crash report
       description: Please upload your log or crash report here.
-      required: true
   - type: textarea
     id: extras
     attributes:
