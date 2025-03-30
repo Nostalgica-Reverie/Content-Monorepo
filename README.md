@@ -89,9 +89,11 @@ Re-Console is usually one of the first modpacks to update in a stable state to n
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
 
 - [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the wiki for Re-Console
-- [devin](https://modrinth.com/user/devin) for maintaining the modpack
+- [devin](https://modrinth.com/user/devin), for maintaining the modpack
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
-- [S_N00B](https://modrinth.com/user/s_n00b) for making Console-idated, of which this project was inspired from
+- [S_N00B](https://modrinth.com/user/s_n00b), for making Console-idated, of which this project was inspired from
+- TheMinecraftArchitect, for porting the Tutorial Worlds to Java Edition
+- BrandonItaly, for making high-quality ports of the mash-up packs
 
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
 
