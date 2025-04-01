@@ -1,0 +1,21 @@
+{
+  "icon": "legacy:icon/minecraft_classic",
+  "background": "legacy:icon/minecraft_classic_background",
+  "packs": [
+    "vanilla",
+    "fabric",
+    "programmer_art",
+    "file/Legacy-Skin-Packs-2.1.0.zip",
+    "file/Modern-Skin-Packs-1.0.0.zip",
+    "file/The_Garden_Awakens_v1.0.zip",
+    "legacy:legacy_waters"
+  ],
+  "id": "minecraft_classic",
+  "version": 1,
+  "name": {
+    "translate": "legacy.menu.albums.resource.minecraft_classic"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.minecraft_classic.description"
+  }
+}
