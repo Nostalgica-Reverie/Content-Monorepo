@@ -54,8 +54,6 @@ Are you looking to enjoy Re-Console with your friends? Feel free to use my code 
 ### ⭐ Legacy Console Edition accuracy
 Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it never ended". This means the modpack does not seek to re-create old versions, but rather make LCE in the modern versions. It has titular features of LCE, including the crafting menu, gamma, creative menu and more!
 
-If you are interested in a re-creation of old versions, check out [Re-Console: Legacy](https://modrinth.com/modpack/rc-legacy)
-
 ### 🚀 Major performance improvement
 Re-Console is built off and kept in sync with [Additive](https://modrinth.com/modpack/additive) by [devin](https://modrinth.com/user/devin), the OptiFine alternative officially endorsed by Sodium.
 Re-Console's goal is to significantly improve rendering and game logic performance, along with memory and hardware usage, without compromising on the game's looks or features in any way.
@@ -99,7 +97,6 @@ Re-Console is usually one of the first modpacks to update in a stable state to n
 
 Thats fine! Consider checking out;
 - [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
-- [Re-Console: Legacy](https://modrinth.com/modpack/rc-legacy) by ViolaFlower Modding
 
 
 <details>
