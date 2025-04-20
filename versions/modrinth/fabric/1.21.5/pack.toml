@@ -1,13 +1,13 @@
 name = "Re-Console"
 author = "omo50"
-version = "0.10.5"
+version = "0.11.0"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "de89fb1ea43c772f6c721ab4efdd9c4b5c2c7dbe0a70e402e2081f3aa6f77cb7"
+hash = "43ae782f24177a1a6cd289011819219a8e66d4a2778539edd9185a71d2a5fa4a"
 
 [versions]
-fabric = "0.16.12"
+fabric = "0.16.14"
 minecraft = "1.21.5"
