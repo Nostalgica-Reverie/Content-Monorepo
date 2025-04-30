@@ -19,10 +19,14 @@ Re-Console is the official modpack for the Legacy Tweaks mod, seeking to expand 
 
 
 There are multiple ways to install and experience Re-Console.
+
 ### Modrinth Launcher (Recommended)
-For the easiest possible installation, we recommend using the Modrinth Launcher. It's light, easy to use, reasonably quick, and only takes a few clicks to set up. Once you have it installed, you can install Re-Console by searching for Re-Console in the Modpacks section.
+For the easiest possible installation, we recommend using the Modrinth Launcher. The Modrinth Launcher has the most streamlined user interface and is arguably the easiest to use option for players who are new to modding. It's light, reasonably quick, and only takes a few clicks to set up. Once you have it installed, you can install Re-Console by searching for Re-Console in the Modpacks section.
+
 ### Prism Launcher
 Although more complicated, you can install Prism Launcher from their website. Prism is much more versatile and stronger as a launcher, but has a worse GUI. From there, add an instance and search for "Re-Console" in the Modrinth section.
+
+Some users have found that Prism Launcher's interface can be a little challenging to use the first time, so you might want to read the [Getting Started](https://prismlauncher.org/wiki/getting-started/) guide.
 
 # 🐛 How to Report Issues
 Please use the issue tracker linked at the top of the page if you are experiencing bugs, crashes, or other issues. Be sure to include necessary information like your hardware/software (such as the GPU, CPU, modpack version, and OS) to help us identify and resolve issues.
