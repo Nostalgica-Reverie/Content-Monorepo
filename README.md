@@ -94,10 +94,12 @@ Re-Console is usually one of the first modpacks to update in a stable state to n
 - BrandonItaly, for making high-quality ports of the mash-up packs
 
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
-
 Thats fine! Consider checking out;
-- [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
 
+- [Re-Console Lite](https://modrinth.com/modpack/legacy-minecraft-lite) by omo50 and Violaflower
+- [Lite Legacy](https://modrinth.com/modpack/lite-legacy) by jacksthegreat
+- [Project4J](https://modrinth.com/modpack/project-4j) by cixon
+- [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
 
 <details>
 <summary>Credits</summary>
