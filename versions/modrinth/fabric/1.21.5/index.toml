@@ -85,10 +85,6 @@ file = "config/yosbr/config/cpm.json"
 hash = "20537ee105d0cfdd6b4c7bdff851dd1a1a8adbf0d73d08219f97af5734854f75"
 
 [[files]]
-file = "config/yosbr/config/craftpresence.json"
-hash = "616adff7c23266696effd21b205000087433333b99f689ca25e65520012324b2"
-
-[[files]]
 file = "config/yosbr/config/enhanced_bes.properties"
 hash = "219204a2efc6d53ad8b3116db7392e039ba8e0ed5f45bc18562c9697bdf8f5c9"
 
@@ -174,11 +170,11 @@ hash = "31ad7e7e0f087866c8949e3ccd15ff02fa81833e8138092b288eef74b246a69b"
 
 [[files]]
 file = "config/yosbr/resource_albums/dark-mode.json"
-hash = "ef284ae1c3497ef64b1a57957441c1ae4a1b423a2fd4a7feb18743bb548c8d20"
+hash = "4733ca75098b02a496b2ea74740c384e41dd560568e21168e9450e239d5e737b"
 
 [[files]]
 file = "config/yosbr/resource_albums/faithful.json"
-hash = "2645c3f954ca14cd73680aaadcfa0acc7aef564c837b6db4d7dc5792d7ea8ecc"
+hash = "bf1a06570963fca665f7e3e1c85548257b5fb0d7c00dc890f6ceb0abeb50306a"
 
 [[files]]
 file = "config/yosbr/resource_albums/fantasy.json"
@@ -348,6 +344,11 @@ hash = "63eb72621013233b61dffcf8756cea825a864aa34d11e09770791b7e0635c36d"
 metafile = true
 
 [[files]]
+file = "mods/fastquit.pw.toml"
+hash = "e852c63c542fce520263982c97781112f6d3d91615b6723a71b875e4230b7231"
+metafile = true
+
+[[files]]
 file = "mods/ferrite-core.pw.toml"
 hash = "bdc7b0fa81db2e54d570ac5fca10e744e03b683bd05dd63b798bbf4b5ad0c726"
 metafile = true
@@ -428,11 +429,6 @@ hash = "661624e486dc5c68127c9960cd22d1d3f86ff5922a32ca118c12b22b849615b0"
 metafile = true
 
 [[files]]
-file = "mods/sodium-shadowy-path-blocks.pw.toml"
-hash = "b91aa8ca577a8397296c43e06f54e8246cbdacd44afa08ab6188323c441ac359"
-metafile = true
-
-[[files]]
 file = "mods/sodium.pw.toml"
 hash = "5e172c647eccca3cfbcd5f0e0489acc764342acf83976586ecbb0e8944289c1a"
 metafile = true
@@ -495,11 +491,6 @@ metafile = true
 [[files]]
 file = "resourcepacks/default-dark-mode.pw.toml"
 hash = "cd2e459b51947aedd689cd7c3f6219b02a23268b44b8cb00fda3b4c2b7163a37"
-metafile = true
-
-[[files]]
-file = "resourcepacks/faithful-32x.pw.toml"
-hash = "54443027f9790a0afd476a208bad68a52f05f988bf6e72095a0c3056d8fd7273"
 metafile = true
 
 [[files]]
@@ -604,7 +595,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "092b3398229ea32475c9099a5cde2cbdaa01226b8617ac270501a2462cefcad8"
+hash = "bba23af2ed77ef4108a8c927aee90b0f7dd9c8ca5be81de8fee99c326dcac54e"
 metafile = true
 
 [[files]]
