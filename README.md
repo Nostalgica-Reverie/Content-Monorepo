@@ -28,6 +28,17 @@ Although more complicated, you can install Prism Launcher from their website. Pr
 
 Some users have found that Prism Launcher's interface can be a little challenging to use the first time, so you might want to read the [Getting Started](https://prismlauncher.org/wiki/getting-started/) guide.
 
+### ATLauncher
+It's just like Prism Launcher but it provides much more features and a much cleaner user interface, head to the Packs section, go to the Modrinth category, then search up “Lite Legacy”, then click on the Install, once it's done, head over to the Instances section, and then open the instance by clicking Play, and then you're ready to play the modpack.
+
+### Curseforge Launcher (Not recommended)
+The CurseForge Launcher has had a long, troubled history in regards to corporate ownership and software stability. Furthermore, there are a number of issues that remain unresolved, which we believe make it a poor choice when compared to our other recommended picks.
+- The built-in mod management is known to have major weaknesses, which can waste time and result in confusing error messages.
+- The launcher is extremely slow compared to other available options, and uses significant computer resources. Furthermore, it only acts as a shim on top of the official Minecraft launcher, which means that you are technically running two launchers, increasing the resource consumption even further.
+- It contains invasive, unsolicited pop-up advertising that is displayed even when the launcher is closed.
+
+
+
 # 🐛 How to Report Issues
 Please use the issue tracker linked at the top of the page if you are experiencing bugs, crashes, or other issues. Be sure to include necessary information like your hardware/software (such as the GPU, CPU, modpack version, and OS) to help us identify and resolve issues.
 
@@ -57,6 +68,10 @@ Are you looking to enjoy Re-Console with your friends? Feel free to use my code 
 
 ### ⭐ Legacy Console Edition accuracy
 Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it never ended". This means the modpack does not seek to re-create old versions, but rather make LCE in the modern versions. It has titular features of LCE, including the crafting menu, gamma, creative menu and more!
+This includes features like;
+- The Tutorial Worlds
+- Mash-up's and texture packs
+- Minigames (1.21.4 only)
 
 ### 🚀 Major performance improvement
 Re-Console is built off and kept in sync with [Additive](https://modrinth.com/modpack/additive) by [devin](https://modrinth.com/user/devin), the OptiFine alternative officially endorsed by Sodium.
@@ -85,7 +100,7 @@ Re-Console is comprised of only open-source or source-available mods, which give
 Re-Console is also available as a packwiz project on GitHub!
 
 ### 📩 Up to Date
-Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft versions. It is also multi-version and multi-loader, giving you the choice between Latest MC (currently 1.21.4) and a version with long-term mod compatibility (currently 1.21.1) on Fabric and Neoforge.
+Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft versions. It is also multi-version, giving you the choice between Latest MC (currently 1.21.5) and a version with long-term mod compatibility (currently 1.21.1 and 1.20.1)
 
 
 ![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
@@ -94,8 +109,8 @@ Re-Console is usually one of the first modpacks to update in a stable state to n
 - [devin](https://modrinth.com/user/devin), for maintaining the modpack
 - [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
 - [S_N00B](https://modrinth.com/user/s_n00b), for making Console-idated, of which this project was inspired from
-- TheMinecraftArchitect, for porting the Tutorial Worlds to Java Edition
-- BrandonItaly, for making high-quality ports of the mash-up packs
+- [TheMinecraftArchitect](https://www.theminecraftarchitect.com), for porting the Tutorial Worlds to Java Edition
+- [BrandonItaly](https://modrinth.com/user/BrandonItaly), for making high-quality ports of the mash-up packs
 
 ![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
 Thats fine! Consider checking out;
