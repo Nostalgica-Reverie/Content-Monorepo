@@ -96,7 +96,7 @@ Re-Console features some mods unrelated to LCE or OptiFine. This includes a smal
 - Optional old world generation, spanning from Classic Edition to 1.17.1
 
 ### ⚙️ Open Source
-Re-Console is comprised of only open-source or source-available mods, which gives you the ability to see the code and contribute to the mods in the pack. Without mod developers hard work, Re-Console would not be possible. If you want to show the developers of these mods your appreciation, I encourage you to donate to them!
+Re-Console is comprised of mostly open-source or source-available mods, which gives you the ability to see the code and contribute to the mods in the pack. Without mod developers hard work, Re-Console would not be possible. If you want to show the developers of these mods your appreciation, I encourage you to donate to them!
 Re-Console is also available as a packwiz project on GitHub!
 
 ### 📩 Up to Date
