@@ -70,8 +70,11 @@ Are you looking to enjoy Re-Console with your friends? Feel free to use my code 
 Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it never ended". This means the modpack does not seek to re-create old versions, but rather make LCE in the modern versions. It has titular features of LCE, including the crafting menu, gamma, creative menu and more!
 This includes features like;
 - The Tutorial Worlds
-- Mash-up's and texture packs
-- Minigames (1.21.4 only)
+- All GUI, including the crafting menu
+- Minigames (1.21.5 and 1.21.4, Modrinth only)
+
+### ⭐ Official SMP
+Re-Console is partnered with the JSS SMP (Survival Multiplayer) server. To join, you need to be on Re-Console 0.12.02 or later, and on 1.21.5.
 
 ### 🚀 Major performance improvement
 Re-Console is built off and kept in sync with [Additive](https://modrinth.com/modpack/additive) by [devin](https://modrinth.com/user/devin), the OptiFine alternative officially endorsed by Sodium.
