@@ -1,0 +1,16 @@
+name = "Re-Console Server Software"
+author = "omo50"
+version = "0.2.0"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "e1547f644a497d9ff72bce37daca7240d98c31a775e678e66594d32ad456ff06"
+
+[versions]
+fabric = "0.16.10"
+minecraft = "1.21.4"
+
+[options]
+acceptable-game-versions = []
