@@ -41,7 +41,14 @@ body:
     id: rc-version
     attributes:
       label: Re-Console Version and Modpack
-      description: What Re-Console Modpack (Re-Console, Re-Console Lite, Re-Console Special Edition or Re-Console Server Software) and what version are you on?
+      description: What Re-Console Modpack and what version are you on?
+      options:
+        - Re-Console Modrinth
+        - Re-Console Curseforge
+        - Re-Console Lite
+        - Re-Console Special Edition
+        - Re-Console Server Software
+      default: 0
     validations:
       required: true
   - type: textarea
