@@ -21,7 +21,7 @@ Soon™
 If you do not need tech support and would like to report an issue (bug, crash, etc.) or otherwise request a feature for any version of Re-Console, then we encourage you to open an issue on the
 [project issue tracker](https://github.com/ViolaFlower/Re-Console-Monorepository/issues).
 
-# ✅ Hardware Compatibility
+### ✅ Hardware Compatibility
 Re-Console, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium) mod, is only compatible with graphics cards that support ***OpenGL 4.5 or newer.***
 Most graphics cards released in the past 12 years will meet these requirements, including the following:
 
@@ -31,7 +31,7 @@ Most graphics cards released in the past 12 years will meet these requirements, 
 
 If you are running into problems, you should make sure that your graphics drivers are up-to-date. I also recommend taking a look at [this page](https://github.com/CaffeineMC/sodium/wiki/Driver-Compatibility) on the Sodium wiki.
 
-# 💬 Join the Community
+### 💬 Join the Community
 Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn) for sneak peeks and updates on development! By joining, you can:
 - Get installation help and technical support for all of ViolaFlower's projects
 - Get the latest updates about development
