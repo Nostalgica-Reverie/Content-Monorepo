@@ -30,6 +30,7 @@ body:
       label: Minecraft Version
       description: What version of Minecraft are you running?
       options:
+        - 1.21.5
         - 1.21.4
         - 1.21.1
         - 1.20.1
@@ -39,8 +40,8 @@ body:
   - type: input
     id: rc-version
     attributes:
-      label: Re-Console Version
-      description: What Re-Console version are you on?
+      label: Re-Console Version and Modpack
+      description: What Re-Console Modpack (Re-Console, Re-Console Lite, Re-Console Special Edition or Re-Console Server Software) and what version are you on?
     validations:
       required: true
   - type: textarea
