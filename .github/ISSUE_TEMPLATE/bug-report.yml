@@ -47,13 +47,15 @@ body:
   - type: textarea
     id: logs
     attributes:
-      label: Log or crash report
-      description: Please upload your log or crash report here.
+      label: Log and/or crash report
+      description: Please upload your log or crash report to mclo.gs and paste the link here.
+    validations:
+      required: true
   - type: textarea
     id: extras
     attributes:
       label: Additional Context
-      description: Put any extra info you feel is nessecary here.
+      description: Put any extra info you feel is neccessary here.
   - type: checkboxes
     id: terms
     attributes:
