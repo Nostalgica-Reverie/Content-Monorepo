@@ -37,7 +37,7 @@ body:
       default: 0
     validations:
       required: true
-  - type: input
+  - type: dropdown
     id: rc-version
     attributes:
       label: Re-Console Version and Modpack
