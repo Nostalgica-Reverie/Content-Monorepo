@@ -1,46 +1,25 @@
-# Re-Console
-Re-Console is the official modpack for the Legacy Tweaks mod.
-
-[<img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg">](https://modrinth.com/modpack/legacy-minecraft) [<img alt="curseforge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg">](https://legacy.curseforge.com/minecraft/modpacks/re-console)
-[<img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">](https://github.com/Legacy-Union/Re-Console/releases) [<img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg">](https://fabricmc.net/) [<img alt="adrenaline" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/adrenaline_vector.svg">](https://modrinth.com/modpack/adrenaline) [<img alt="patreon-singular" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/patreon-singular_vector.svg">](https://www.patreon.com/ViolaFlower)
-
-![image](https://github.com/user-attachments/assets/649da799-9091-4ac4-b414-ed6e2c2b94be)
-
-![Information](https://cdn.modrinth.com/data/cached_images/e25570e1d156c711baad158a5565061b157a94e9.webp)
-
-Re-Console is the official modpack for the Legacy Tweaks mod, seeking to expand upon it, improve performance and add QoL features on top of the mod itself.
+<img src="versions/re-console/modrinth/fabric/1.21.5/rc-icon.png" width="128">
 
 
+### Re-Console Monorepository
+This is the repository hosting all of the different versions of Re-Console, and their source code.
 
-## 📥 Installation Guide
+---
 
+### 📥 Downloads
 
-**Please be sure to read Sodium's [Driver Compatibility](https://github.com/CaffeineMC/sodium-fabric/wiki/Driver-Compatibility) section on the wiki before installing Re-Console. It contains some important instructions on preventing crashes and other performance issues.**
+#### Stable builds
 
+The latest stable releases of Re-Console can be downloaded from our official [Modrinth](https://modrinth.com/modpack/legacy-minecraft) and cases where applicable, [CurseForge](https://legacy.curseforge.com/minecraft/modpacks/re-console) pages.
 
-There are multiple ways to install and experience Re-Console.
+#### Nightly builds
 
-### Modrinth Launcher (Recommended)
-For the easiest possible installation, we recommend using the Modrinth Launcher. The Modrinth Launcher has the most streamlined user interface and is arguably the easiest to use option for players who are new to modding. It's light, reasonably quick, and only takes a few clicks to set up. Once you have it installed, you can install Re-Console by searching for Re-Console in the Modpacks section.
+Soon™
 
-### Prism Launcher
-Although more complicated, you can install Prism Launcher from their website. Prism is much more versatile and stronger as a launcher, but has a worse GUI. From there, add an instance and search for "Re-Console" in the Modrinth section.
+### 📬 Reporting Issues
 
-Some users have found that Prism Launcher's interface can be a little challenging to use the first time, so you might want to read the [Getting Started](https://prismlauncher.org/wiki/getting-started/) guide.
-
-### ATLauncher
-It's just like Prism Launcher but it provides much more features and a much cleaner user interface, head to the Packs section, go to the Modrinth category, then search up “Lite Legacy”, then click on the Install, once it's done, head over to the Instances section, and then open the instance by clicking Play, and then you're ready to play the modpack.
-
-### Curseforge Launcher (Not recommended)
-The CurseForge Launcher has had a long, troubled history in regards to corporate ownership and software stability. Furthermore, there are a number of issues that remain unresolved, which we believe make it a poor choice when compared to our other recommended picks.
-- The built-in mod management is known to have major weaknesses, which can waste time and result in confusing error messages.
-- The launcher is extremely slow compared to other available options, and uses significant computer resources. Furthermore, it only acts as a shim on top of the official Minecraft launcher, which means that you are technically running two launchers, increasing the resource consumption even further.
-- It contains invasive, unsolicited pop-up advertising that is displayed even when the launcher is closed.
-
-
-
-# 🐛 How to Report Issues
-Please use the issue tracker linked at the top of the page if you are experiencing bugs, crashes, or other issues. Be sure to include necessary information like your hardware/software (such as the GPU, CPU, modpack version, and OS) to help us identify and resolve issues.
+If you do not need tech support and would like to report an issue (bug, crash, etc.) or otherwise request a feature for any version of Re-Console, then we encourage you to open an issue on the
+[project issue tracker](https://github.com/ViolaFlower/Re-Console-Monorepository/issues).
 
 # ✅ Hardware Compatibility
 Re-Console, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium) mod, is only compatible with graphics cards that support ***OpenGL 4.5 or newer.***
@@ -59,99 +38,5 @@ Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn
 - Talk with and collaborate with our team
 - And just hang out with the rest of our community!
 
-# 🍉 Sponsor
-Are you looking to enjoy Re-Console with your friends? Feel free to use my code ``raamviot50`` for 25% off your first month of any server from BisectHosting, supporting me in the process. You can also use the special [Serverside Software](https://modrinth.com/modpack/re-console-server-software) of Re-Console to improve performance.
-
-[![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bisecthosting.com/raamviot50)
-
-![Features](https://cdn.modrinth.com/data/cached_images/97029679acef552aaa93810310bee9e0f287dc5d.webp)
-
-### ⭐ Legacy Console Edition accuracy
-Re-Console seeks to be accurate to an idea of "Legacy Console Edition if it never ended". This means the modpack does not seek to re-create old versions, but rather make LCE in the modern versions. It has titular features of LCE, including the crafting menu, gamma, creative menu and more!
-This includes features like;
-- The Tutorial Worlds
-- All GUI, including the crafting menu
-- Minigames (1.21.5 and 1.21.4, Modrinth only)
-
-### ⭐ Official SMP
-Re-Console is partnered with the JSS SMP (Survival Multiplayer) server. To join, you need to be on Re-Console 0.12.02 or later, and on 1.21.5.
-
-### 🚀 Major performance improvement
-Re-Console is built off and kept in sync with [Additive](https://modrinth.com/modpack/additive) by [devin](https://modrinth.com/user/devin), the OptiFine alternative officially endorsed by Sodium.
-Re-Console's goal is to significantly improve rendering and game logic performance, along with memory and hardware usage, without compromising on the game's looks or features in any way.
-Additive is based on and kept in sync with the Adrenaline modpack. This means Re-Console comes with all the features within [Adrenaline](https://modrinth.com/modpack/adrenaline), including;
-- Improved rendering & game logic performance
-- Improved memory and hardware usage
-- Improved world generation speed
-
-### 💡 OptiFine Features
-Re-Console features and utilizes various mods that offers the same features that OptiFine does while also being modular so that you can remove features you don't want or features that are incompatible with other mods.
-This includes major resource pack features, dynamic lighting, better grass and snow and more.
-
-### 💡 Misc. Features
-Re-Console features some mods unrelated to LCE or OptiFine. This includes a small list of features:
-- A programmer art add-on which retextures the game
-- An easy to use calculator which can calculate anything from basic calculations to nether portal calculations, farm rate calculations and more.
-- Borderless fullscreen mode
-- Customizable Player Models
-- Discord rich presence
-- Input fixes for MacOS and Linux
-- Optional old world generation, spanning from Classic Edition to 1.17.1
-
-### ⚙️ Open Source
-Re-Console is comprised of mostly open-source or source-available mods, which gives you the ability to see the code and contribute to the mods in the pack. Without mod developers hard work, Re-Console would not be possible. If you want to show the developers of these mods your appreciation, I encourage you to donate to them!
-Re-Console is also available as a packwiz project on GitHub!
-
-### 📩 Up to Date
-Re-Console is usually one of the first modpacks to update in a stable state to new Minecraft versions. It is also multi-version, giving you the choice between Latest MC (currently 1.21.5) and a version with long-term mod compatibility (currently 1.21.1 and 1.20.1)
-
-
-![Special Thanks](https://cdn.modrinth.com/data/cached_images/42bdd0b7ac744fbb277bcb8aea88598b682b9c07.webp)
-
-- [bathtubfulloftoast](https://modrinth.com/user/bathtubfulloftoast) for making the wiki for Re-Console
-- [devin](https://modrinth.com/user/devin), for maintaining the modpack
-- [mzov_jen](https://modrinth.com/user/mzov_jen), for porting PACP to Modrinth + making a special compatible version for the modpack
-- [S_N00B](https://modrinth.com/user/s_n00b), for making Console-idated, of which this project was inspired from
-- [TheMinecraftArchitect](https://www.theminecraftarchitect.com), for porting the Tutorial Worlds to Java Edition
-- [BrandonItaly](https://modrinth.com/user/BrandonItaly), for making high-quality ports of the mash-up packs
-
-![Not your cup of tea?](https://cdn.modrinth.com/data/cached_images/0c70e2e9dcbf8b50e1aa6f41388ef26875661063.webp)
-Thats fine! Consider checking out;
-
-- [Re-Console Lite](https://modrinth.com/modpack/legacy-minecraft-lite) by omo50 and Violaflower
-- [Lite Legacy](https://modrinth.com/modpack/lite-legacy) by jacksthegreat
-- [Project4J](https://modrinth.com/modpack/project-4j) by cixon
-- [Console-idated](https://modrinth.com/modpack/console-idated) by S_N00B (Has LEM compatibility)
-
-<details>
-<summary>Credits</summary>
-
-![Credits](https://cdn.modrinth.com/data/cached_images/60eabb80c3a86652dbc3b9323f70d5adc93a1d4a.webp)
-
-# Developers
-- omoso, Owner
-- devin, Maintainer
-- Emmie, Helper
-
-# Assistants and Contributors
-- bathtubfulloftoast, playtester
-- Cjnator38, contributor
-- Emmie, helper and playtester
-- Lenuilu, playtester
-- MitsuIsSleepy, contributor
-- phofers, contributor
-- kaer1a, playtester
-- TheMinecraftArchitect, contributor and playtester
-
-# Special Thanks
-- BuddarScotchy for consistently supporting me and my projects
-- Emmie for fixing a crash with AMD GPUs on Linux
-- Devin, the creator of Adrenaline of which this modpack uses some of the config files, and offering to maintain the modpack
-- MitsuIsSleepy for providing the Nostalgic Tweaks config file
-- MNTYROAD (aka mintweather) for porting skinpacks to CPM
-- S_N00B for making Console-idated, which inspired this project
-- TheMinecraftArchitect for porting the Tutorial Worlds to Java Edition
-
-
-
-</details>
+## 📜 License
+Unless otherwise stated, the Re-Console Monorepo is licensed under the GPL-3.0 license or later.
