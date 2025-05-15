@@ -14,7 +14,7 @@ The latest stable releases of Re-Console can be downloaded from our official [Mo
 
 #### Nightly builds
 
-Soon™
+Re-Console now has nightly builds, produced after every single commit. You can download the versions [here](https://github.com/ViolaFlower/Re-Console-Monorepository/actions)
 
 ### 📬 Reporting Issues
 
