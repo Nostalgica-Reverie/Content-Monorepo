@@ -39,10 +39,10 @@ Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn
 - And just hang out with the rest of our community!
 
 ### 📝 Supported Versions
-Re-Console supports 1.20.1, 1.21.1, 1.21.4 and 1.21.5
-Re-Console Lite supports 1.21.4 and 1.21.5
-Re-Console Special Edition supports 1.21.5
-RCSS supports 1.21.1 and 1.21.4
+- Re-Console supports 1.20.1, 1.21.1, 1.21.4 and 1.21.5
+- Re-Console Lite supports 1.21.4 and 1.21.5
+- Re-Console Special Edition supports 1.21.5
+- RCSS supports 1.21.1 and 1.21.4
 
 ## 📜 License
 Unless otherwise stated, the Re-Console Monorepo is licensed under the GPL-3.0 license or later.
