@@ -44,5 +44,15 @@ Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn
 - Re-Console Special Edition supports 1.21.5
 - RCSS supports 1.21.1 and 1.21.4
 
+### Versioning
+The versioning format is x.y.z+mc(mc version)+(modloader), where
+
+- x is a update to a new minecraft version
+- y is a mod list revision (addition/removal of a mod)
+- z is incremented when there's a version with only mod updates and little to no changes otherwise
+- MC version is pulled from the Minecraft version that the version suppprts
+- Modloader is the modloader (if applicable) that the version supports
+
+
 ## 📜 License
 Unless otherwise stated, the Re-Console Monorepo is licensed under the GPL-3.0 license or later.
