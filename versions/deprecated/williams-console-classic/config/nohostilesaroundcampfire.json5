@@ -1,0 +1,20 @@
+{
+	// The radius around the campfire in blocks where hostile mob spawns will be blocked.
+	// min: 1, max: 128
+	"preventHostilesRadius": 48,
+	// If enabled, burns all hostile mobs around the campfire within the radius whenever a player places a campfire.
+	"burnHostilesAroundWhenPlaced": true,
+	// By default set to 0.5. This means that if the radius is 16, the campfire burns prior mobs in a radius of 8.
+	// min: 0.0, max: 1.0
+	"burnHostilesRadiusModifier": 0.5,
+	// When enabled, the mob spawners spawns are also disabled when a campfire is within the radius.
+	"preventMobSpawnerSpawns": false,
+	// When enabled, the campfire only has an effect when the block is lit up.
+	"campfireMustBeLit": true,
+	// When enabled, the campfire only has an effect when the block is signalling.
+	"campfireMustBeSignalling": false,
+	// When enabled, the mod will work with normal campfires.
+	"enableEffectForNormalCampfires": true,
+	// When enabled, the mod will work with soul campfires.
+	"enableEffectForSoulCampfires": true
+}
