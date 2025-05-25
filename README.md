@@ -43,6 +43,7 @@ Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn
 - Re-Console Lite supports 1.21.4 and 1.21.5
 - Re-Console Special Edition supports 1.21.5
 - William's Console: Revisited supports 1.21.1 and 1.21.5
+- Aric's Console supports 1.21.5
 
 ### Versioning
 The versioning format is 1.y.z+mc(mc version)+(modloader), where
