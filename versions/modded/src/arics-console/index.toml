@@ -1,2 +1,41 @@
 hash-format = "sha256"
-files = []
+
+[[files]]
+file = "mods/fabric-api.pw.toml"
+hash = "7a6f0b29e5002753456d2fb78734c2a64a4713f58304df0114cd529091eb5909"
+metafile = true
+
+[[files]]
+file = "mods/friends-and-foes.pw.toml"
+hash = "4b8ec7ba4e8fcb9fd7746adfc42397498eec568f5049aea45db623ece9582e24"
+metafile = true
+
+[[files]]
+file = "mods/glitchcore.pw.toml"
+hash = "e4f20c9ed1d0250a4cad864f6cc593a471c21f462e69b00e7c8d4ae8b57e7c46"
+metafile = true
+
+[[files]]
+file = "mods/midnightlib.pw.toml"
+hash = "58b90c52266f89c339a35bd46378d8059d56949d5926c7b25da98719d0b38065"
+metafile = true
+
+[[files]]
+file = "mods/repurposed-structures-fabric.pw.toml"
+hash = "ccbf910844f53f680ce890156dccc3169e0df17a2d1124f0b9f9791498c4001e"
+metafile = true
+
+[[files]]
+file = "mods/resourceful-lib.pw.toml"
+hash = "d2ec471884a04cb3ef01e1fa33c7cd80596989ac5811315fd0167599c59503ae"
+metafile = true
+
+[[files]]
+file = "mods/serene-seasons.pw.toml"
+hash = "9cc3101b8ef8da197aa54568b544403f056bf4e24ecd286b1d129c7d8dfe5f09"
+metafile = true
+
+[[files]]
+file = "mods/yacl.pw.toml"
+hash = "07d2a07067af1330cda2f153bf753dd2dea151062be830acb74b6a39a308fe60"
+metafile = true
