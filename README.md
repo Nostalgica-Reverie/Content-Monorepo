@@ -1,8 +1,8 @@
 <img src="versions/re-console/modrinth/fabric/1.21.5/rc-icon.png" width="128">
 
 
-### Re-Console Monorepository
-This is the repository hosting all of the different versions of Re-Console, and their source code.
+### LCE Modpack Monorepository
+This is the repository hosting all of the different versions of Re-Console, its forks, and their source code.
 
 ---
 
@@ -10,11 +10,11 @@ This is the repository hosting all of the different versions of Re-Console, and 
 
 #### Stable builds
 
-The latest stable releases of Re-Console can be downloaded from our official [Modrinth](https://modrinth.com/modpack/legacy-minecraft) and cases where applicable, [CurseForge](https://legacy.curseforge.com/minecraft/modpacks/re-console) pages.
+The latest stable releases of these modpacks can be found on the [Modrinth Collection](https://modrinth.com/collection/sgxcMC60)
 
 #### Nightly builds
 
-Re-Console now has nightly builds, produced after every single commit. You can download the versions [here](https://github.com/ViolaFlower/Re-Console-Monorepository/actions)
+Re-Console, and affiliated projects, now have nightly builds, produced after every single commit. You can download the versions [here](https://github.com/ViolaFlower/Re-Console-Monorepository/actions)
 
 ### 📬 Reporting Issues
 
@@ -42,12 +42,11 @@ Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn
 - Re-Console supports 1.20.1, 1.21.1, 1.21.4 and 1.21.5
 - Re-Console Lite supports 1.21.4 and 1.21.5
 - Re-Console Special Edition supports 1.21.5
-- RCSS supports 1.21.1 and 1.21.4
+- William's Console: Revisited supports 1.21.1 and 1.21.5
 
 ### Versioning
-The versioning format is x.y.z+mc(mc version)+(modloader), where
+The versioning format is 1.y.z+mc(mc version)+(modloader), where
 
-- x is a update to a new minecraft version
 - y is a mod list revision (addition/removal of a mod)
 - z is incremented when there's a version with only mod updates and little to no changes otherwise
 - MC version is pulled from the Minecraft version that the version suppprts
