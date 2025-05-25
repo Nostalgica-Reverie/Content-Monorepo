@@ -53,6 +53,12 @@ The versioning format is 1.y.z+mc(mc version)+(modloader), where
 - MC version is pulled from the Minecraft version that the version suppprts
 - Modloader is the modloader (if applicable) that the version supports
 
+Each modpack also has a different semantic version.
+- Re-Console Lite takes 1.y.z
+- Re-Console takes 2.y.z
+- William's Console: Revisited takes 3.y.z
+- Aric's Console takes 4.y.z
+
 
 ## 📜 License
 Unless otherwise stated, the Re-Console Monorepo is licensed under the GPL-3.0 license or later.
