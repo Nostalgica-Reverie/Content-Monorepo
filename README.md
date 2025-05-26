@@ -1,7 +1,7 @@
 <img src="versions/vanilla/src/re-console/modrinth/fabric/1.21.5/rc-icon.png" width="128">
 
 
-### LCE Modpack Monorepository
+### Legacy Modpack Monorepository
 This is the repository hosting all of the different versions of Re-Console, its forks, and their source code.
 
 ---
@@ -22,7 +22,7 @@ If you do not need tech support and would like to report an issue (bug, crash, e
 [project issue tracker](https://github.com/ViolaFlower/Re-Console-Monorepository/issues).
 
 ### ✅ Hardware Compatibility
-Re-Console, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium) mod, is only compatible with graphics cards that support ***OpenGL 4.5 or newer.***
+Our modpacks, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium) mod, is only compatible with graphics cards that support ***OpenGL 4.5 or newer.***
 Most graphics cards released in the past 12 years will meet these requirements, including the following:
 
   -  INTEL HD Graphics 500 Series (Skylake) or newer
@@ -61,4 +61,4 @@ Each modpack also has a different semantic version.
 
 
 ## 📜 License
-Unless otherwise stated, the Re-Console Monorepo is licensed under the GPL-3.0 license or later.
+Unless otherwise stated, the Legacy Modpack Monorepository is licensed under the GPL-3.0 license or later.
