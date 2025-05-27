@@ -169,6 +169,11 @@ file = "config/yosbr/resource_albums/minecraft_classic.json"
 hash = "56b2d1a673da56a2a874284efb869eda80f4cbccf3012292797df0736762ed54"
 
 [[files]]
+file = "mods/adorn.pw.toml"
+hash = "2e0ff2696a9b3181c1361b286d1e555c6aed4423238bc32ba03c00842afb49e1"
+metafile = true
+
+[[files]]
 file = "mods/ambientsounds.pw.toml"
 hash = "ed903d0b2e147daecbe0ab26174685d0179cd587fcf533e55aa30886eda480b0"
 metafile = true
@@ -176,6 +181,11 @@ metafile = true
 [[files]]
 file = "mods/architectury-api.pw.toml"
 hash = "a463f60553d19dc6cdb468e8a0f9faa73fd6694f8eb87fe11532c81e9c908dcf"
+metafile = true
+
+[[files]]
+file = "mods/atlas-core.pw.toml"
+hash = "a4ca53ca2909f71e51bbe956ae5c6729ea42e53f32df1d74efcae347b957b7e1"
 metafile = true
 
 [[files]]
@@ -249,13 +259,13 @@ hash = "13ae813426f52226d8363499d722df0933e84534f216eef127c198c18bcdbb6b"
 metafile = true
 
 [[files]]
-file = "mods/continuity.pw.toml"
-hash = "278a349024e41e039f9f4a278532b56d1774cd2f7fde04f2cff298f3e085d995"
+file = "mods/combatify.pw.toml"
+hash = "8257cac912500ea9bea97dda3e2f375d7cb1015b3d118219d3454b1ea0bb593e"
 metafile = true
 
 [[files]]
-file = "mods/craftpresence.pw.toml"
-hash = "a569669bf86a00fcea0504f4f79c778228cd65246bb08764a14c1a53de829bbe"
+file = "mods/continuity.pw.toml"
+hash = "278a349024e41e039f9f4a278532b56d1774cd2f7fde04f2cff298f3e085d995"
 metafile = true
 
 [[files]]
@@ -279,8 +289,8 @@ hash = "c3fd9f982cc8cd2b52a7dea98b519fc746f717850bb11330b684e8fe58d1208f"
 metafile = true
 
 [[files]]
-file = "mods/custom-window-title.pw.toml"
-hash = "09d3121e0f62df0f7543ec669a7d2465ccc257f8ece46eaa37c0d8597ec36c15"
+file = "mods/defaulted.pw.toml"
+hash = "c44817b666ddf9884e26764438173e24109930157854de3434727519a0103f16"
 metafile = true
 
 [[files]]
@@ -291,11 +301,6 @@ metafile = true
 [[files]]
 file = "mods/e4mc.pw.toml"
 hash = "d1f561a89e7a4c5d98b6cbb25088ea2ad56ca1cff60118f2076912f49f8cfed3"
-metafile = true
-
-[[files]]
-file = "mods/ears.pw.toml"
-hash = "f34159a6e4806f4127a6db44b859c1801ffcd37f482dd87281dc29ebbbf95806"
 metafile = true
 
 [[files]]
@@ -444,11 +449,6 @@ hash = "3ba523b0e2a61388644998f4ce0e34bffe2b4bbe59d5b4bd8e467e52fc4fc21a"
 metafile = true
 
 [[files]]
-file = "mods/main-menu-credits.pw.toml"
-hash = "732e3a5fb7d7c41c380d1ba92118293db75d5a7f2c05a6df6ac04c54c4bd1a22"
-metafile = true
-
-[[files]]
 file = "mods/map-tooltip.pw.toml"
 hash = "808ebcde2cb1ba57d6369f11846452332cb8d24ccd1826ed75861de73ac57b42"
 metafile = true
@@ -496,6 +496,11 @@ metafile = true
 [[files]]
 file = "mods/not-enough-animations.pw.toml"
 hash = "f1873dc9fe8a5cbea26ceffba3ec46098bce4eef7f4efd29ea849df9ccc2f66c"
+metafile = true
+
+[[files]]
+file = "mods/notebook.pw.toml"
+hash = "0d58f6ca6edb1493898e4520c62f1d30249edf8c7a6eb5ce9351d25bf6b7a075"
 metafile = true
 
 [[files]]
@@ -609,6 +614,11 @@ hash = "ff0d87064f466d6dfa5151178cb805cea4169a6e85f47913b462758262a78024"
 metafile = true
 
 [[files]]
+file = "mods/true-ending.pw.toml"
+hash = "14df8655ca64e9362a1e85e6c7bf8f916a92f67b5186fec53a02afe90aec1128"
+metafile = true
+
+[[files]]
 file = "mods/unilib.pw.toml"
 hash = "8e6cc98c22bd80bbc820defcd9443eb74832ac911b75099b0babe64cf07b9b66"
 metafile = true
@@ -626,6 +636,11 @@ metafile = true
 [[files]]
 file = "mods/worldgen-patches.pw.toml"
 hash = "a39b36424f533c3782535b2e47fde1fb3f26eb60eb11f2fef411910d0cec0e62"
+metafile = true
+
+[[files]]
+file = "mods/xaeros-minimap.pw.toml"
+hash = "130159e2b3734e4013e2ad5040e6a80b14a004d75a921dc24633d906636500e8"
 metafile = true
 
 [[files]]
