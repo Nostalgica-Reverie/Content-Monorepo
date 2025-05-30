@@ -35,58 +35,106 @@ jobs:
     - name: Prepare Builds
       run: |
           mkdir RC-Modrinth-1.20.1-temp
-          cp -r ./versions/re-console/modrinth/fabric/1.20.1/* ./RC-Modrinth-1.20.1-temp/
-          cp ./LICENSE.md ./RC-Modrinth-1.20.1-temp/
+          cp -r ./versions/vanilla/src/re-console/modrinth/fabric/1.20.1/* ./RC-Modrinth-1.20.1-temp/
+          cp ./LICENSE ./RC-Modrinth-1.20.1-temp/
           cp ./README.md ./RC-Modrinth-1.20.1-temp/
 
           mkdir RC-Modrinth-1.21.1-temp
-          cp -r ./versions/re-console/modrinth/fabric/1.21.1/* ./RC-Modrinth-1.21.1-temp/
-          cp ./LICENSE.md ./RC-Modrinth-1.21.1-temp/
+          cp -r ./versions/vanilla/src/re-console/modrinth/fabric/1.21.1/* ./RC-Modrinth-1.21.1-temp/
+          cp ./LICENSE ./RC-Modrinth-1.21.1-temp/
           cp ./README.md ./RC-Modrinth-1.21.1-temp/
 
           mkdir RC-Modrinth-1.21.4-temp
-          cp -r ./versions/re-console/modrinth/fabric/1.21.4/* ./RC-Modrinth-1.21.4-temp/
-          cp ./LICENSE.md ./RC-Modrinth-1.21.4-temp/
+          cp -r ./versions/vanilla/src/re-console/modrinth/fabric/1.21.4/* ./RC-Modrinth-1.21.4-temp/
+          cp ./LICENSE ./RC-Modrinth-1.21.4-temp/
           cp ./README.md ./RC-Modrinth-1.21.4-temp/
 
           mkdir RC-Modrinth-1.21.5-temp
-          cp -r ./versions/re-console/modrinth/fabric/1.21.5/* ./RC-Modrinth-1.21.5-temp/
-          cp ./LICENSE.md ./RC-Modrinth-1.21.5-temp/
+          cp -r ./versions/vanilla/src/re-console/modrinth/fabric/1.21.5/* ./RC-Modrinth-1.21.5-temp/
+          cp ./LICENSE ./RC-Modrinth-1.21.5-temp/
           cp ./README.md ./RC-Modrinth-1.21.5-temp/
 
+          mkdir RC-CurseForge-1.20.1-temp
+          cp -r ./versions/vanilla/src/re-console/curseforge/fabric/1.20.1/* ./RC-CurseForge-1.20.1-temp/
+          cp ./LICENSE ./RC-CurseForge-1.20.1-temp/
+          cp ./README.md ./RC-CurseForge-1.20.1-temp/
 
-    - name: Create 1.20.1 build
+          mkdir RC-CurseForge-1.21.1-temp
+          cp -r ./versions/vanilla/src/re-console/curseforge/fabric/1.21.1/* ./RC-CurseForge-1.21.1-temp/
+          cp ./LICENSE ./RC-CurseForge-1.21.1-temp/
+          cp ./README.md ./RC-CurseForge-1.21.1-temp/
+
+          mkdir RC-CurseForge-1.21.4-temp
+          cp -r ./versions/vanilla/src/re-console/curseforge/fabric/1.21.4/* ./RC-CurseForge-1.21.4-temp/
+          cp ./LICENSE ./RC-CurseForge-1.21.4-temp/
+          cp ./README.md ./RC-CurseForge-1.21.4-temp/
+
+          mkdir RC-CurseForge-1.21.5-temp
+          cp -r ./versions/vanilla/src/re-console/curseforge/fabric/1.21.5/* ./RC-CurseForge-1.21.5-temp/
+          cp ./LICENSE ./RC-CurseForge-1.21.5-temp/
+          cp ./README.md ./RC-CurseForge-1.21.5-temp/
+
+    - name: Create 1.20.1 build Modrinth
       run: |
           cd ./RC-Modrinth-1.20.1-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.20.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz modrinth export --output ${PACK_NAME}-1.20.1-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
-    - name: Create 1.21.1 build
+    - name: Create 1.21.1 build Modrinth
       run: |
           cd ./RC-Modrinth-1.21.1-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz modrinth export --output ${PACK_NAME}-1.21.1-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
-    - name: Create 1.21.4 build
+    - name: Create 1.21.4 build Modrinth
       run: |
           cd ./RC-Modrinth-1.21.4-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.4-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz modrinth export --output ${PACK_NAME}-1.21.4-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
-    - name: Create 1.21.5 build
+    - name: Create 1.21.5 build Modrinth
       run: |
           cd ./RC-Modrinth-1.21.5-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.5-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz modrinth export --output ${PACK_NAME}-1.21.5-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack
+
+    - name: Create 1.20.1 build CurseForge
+      run: |
+          cd ./RC-CurseForge-1.20.1-temp/
+          packwiz refresh
+          packwiz curseforge export --output ${PACK_NAME}-1.20.1-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.zip
+
+    - name: Create 1.21.1 build CurseForge
+      run: |
+          cd ./RC-CurseForge-1.21.1-temp/
+          packwiz refresh
+          packwiz curseforge export --output ${PACK_NAME}-1.21.1-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.zip
+
+    - name: Create 1.21.4 build CurseForge
+      run: |
+          cd ./RC-CurseForge-1.21.4-temp/
+          packwiz refresh
+          packwiz curseforge export --output ${PACK_NAME}-1.21.4-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.zip
+
+    - name: Create 1.21.5 build CurseForge
+      run: |
+          cd ./RC-CurseForge-1.21.5-temp/
+          packwiz refresh
+          packwiz curseforge export --output ${PACK_NAME}-1.21.5-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.zip
 
     - name: Prepare artifacts
       run: |
           mkdir $OUTPUT
 
-          mv ./RC-Modrinth-1.20.1-temp/${PACK_NAME}-1.20.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
-          mv ./RC-Modrinth-1.21.1-temp/${PACK_NAME}-1.21.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
-          mv ./RC-Modrinth-1.21.4-temp/${PACK_NAME}-1.21.4-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
-          mv ./RC-Modrinth-1.21.5-temp/${PACK_NAME}-1.21.5-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
+          mv ./RC-Modrinth-1.20.1-temp/${PACK_NAME}-1.20.1-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
+          mv ./RC-Modrinth-1.21.1-temp/${PACK_NAME}-1.21.1-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
+          mv ./RC-Modrinth-1.21.4-temp/${PACK_NAME}-1.21.4-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
+          mv ./RC-Modrinth-1.21.5-temp/${PACK_NAME}-1.21.5-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
+
+          mv ./RC-CurseForge-1.20.1-temp/${PACK_NAME}-1.20.1-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.zip ${OUTPUT}/
+          mv ./RC-CurseForge-1.21.1-temp/${PACK_NAME}-1.21.1-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.zip ${OUTPUT}/
+          mv ./RC-CurseForge-1.21.4-temp/${PACK_NAME}-1.21.4-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.zip ${OUTPUT}/
+          mv ./RC-CurseForge-1.21.5-temp/${PACK_NAME}-1.21.5-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.zip ${OUTPUT}/
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
