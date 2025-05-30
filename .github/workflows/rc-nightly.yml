@@ -78,49 +78,49 @@ jobs:
       run: |
           cd ./RC-Modrinth-1.20.1-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.20.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz modrinth export --output ${PACK_NAME}-1.20.1-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Create 1.21.1 build Modrinth
       run: |
           cd ./RC-Modrinth-1.21.1-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz modrinth export --output ${PACK_NAME}-1.21.1-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Create 1.21.4 build Modrinth
       run: |
           cd ./RC-Modrinth-1.21.4-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.4-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz modrinth export --output ${PACK_NAME}-1.21.4-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Create 1.21.5 build Modrinth
       run: |
           cd ./RC-Modrinth-1.21.5-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.5-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz modrinth export --output ${PACK_NAME}-1.21.5-dev-Modrinth-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Create 1.20.1 build CurseForge
       run: |
           cd ./RC-CurseForge-1.20.1-temp/
           packwiz refresh
-          packwiz curseforge export --output ${PACK_NAME}-1.20.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz curseforge export --output ${PACK_NAME}-1.20.1-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Create 1.21.1 build CurseForge
       run: |
           cd ./RC-CurseForge-1.21.1-temp/
           packwiz refresh
-          packwiz curseforge export --output ${PACK_NAME}-1.21.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz curseforge export --output ${PACK_NAME}-1.21.1-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Create 1.21.4 build CurseForge
       run: |
           cd ./RC-CurseForge-1.21.4-temp/
           packwiz refresh
-          packwiz curseforge export --output ${PACK_NAME}-1.21.4-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz curseforge export --output ${PACK_NAME}-1.21.4-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Create 1.21.5 build CurseForge
       run: |
           cd ./RC-CurseForge-1.21.5-temp/
           packwiz refresh
-          packwiz curseforge export --output ${PACK_NAME}-1.21.5-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz curseforge export --output ${PACK_NAME}-1.21.5-dev-CurseForge-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Prepare artifacts
       run: |
