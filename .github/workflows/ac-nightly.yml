@@ -36,7 +36,7 @@ jobs:
       run: |
           mkdir Arics-Modrinth-1.21.5-temp
           cp -r ./versions/modded/src/arics-console/modrinth/1.21.5/* ./Arics-Modrinth-1.21.5-temp/
-          cp ./LICENSE.md ./Arics-Modrinth-1.21.5-temp/
+          cp ./LICENSE ./Arics-Modrinth-1.21.5-temp/
           cp ./README.md ./Arics-Modrinth-1.21.5-temp/
 
     - name: Create 1.21.5 build

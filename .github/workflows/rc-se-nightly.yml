@@ -36,7 +36,7 @@ jobs:
       run: |
           mkdir SE-Modrinth-1.21.5-temp
           cp -r ./versions/vanilla/src/re-console-se/modrinth/fabric/0.5.x/1.21.5/* ./SE-Modrinth-1.21.5-temp/
-          cp ./LICENSE.md ./SE-Modrinth-1.21.5-temp/
+          cp ./LICENSE ./SE-Modrinth-1.21.5-temp/
           cp ./README.md ./SE-Modrinth-1.21.5-temp/
 
     - name: Create 1.21.5 build

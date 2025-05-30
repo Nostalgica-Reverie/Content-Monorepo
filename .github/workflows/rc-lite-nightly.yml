@@ -36,12 +36,12 @@ jobs:
       run: |
           mkdir Lite-Modrinth-1.21.4-temp
           cp -r ./versions/vanilla/src/re-console-lite/modrinth/fabric/1.21.4/* ./Lite-Modrinth-1.21.4-temp/
-          cp ./LICENSE.md ./Lite-Modrinth-1.21.4-temp/
+          cp ./LICENSE ./Lite-Modrinth-1.21.4-temp/
           cp ./README.md ./Lite-Modrinth-1.21.4-temp/
 
           mkdir Lite-Modrinth-1.21.5-temp
           cp -r ./versions/vanilla/src/re-console-lite/modrinth/fabric/1.21.5/* ./Lite-Modrinth-1.21.5-temp/
-          cp ./LICENSE.md ./Lite-Modrinth-1.21.5-temp/
+          cp ./LICENSE ./Lite-Modrinth-1.21.5-temp/
           cp ./README.md ./Lite-Modrinth-1.21.5-temp/
 
     - name: Create 1.21.4 build

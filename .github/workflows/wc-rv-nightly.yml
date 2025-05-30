@@ -36,12 +36,12 @@ jobs:
       run: |
           mkdir WC-Modrinth-1.21.1-temp
           cp -r ./versions/modded/src/williams-console-revisited/modrinth/1.21.1/* ./WC-Modrinth-1.21.1-temp/
-          cp ./LICENSE.md ./WC-Modrinth-1.21.1-temp/
+          cp ./LICENSE ./WC-Modrinth-1.21.1-temp/
           cp ./README.md ./WC-Modrinth-1.21.1-temp/
 
           mkdir WC-Modrinth-1.21.5-temp
           cp -r ./versions/modded/src/williams-console-revisited/modrinth/1.21.5/* ./WC-Modrinth-1.21.5-temp/
-          cp ./LICENSE.md ./WC-Modrinth-1.21.5-temp/
+          cp ./LICENSE ./WC-Modrinth-1.21.5-temp/
           cp ./README.md ./WC-Modrinth-1.21.5-temp/
 
     - name: Create 1.21.1 build
