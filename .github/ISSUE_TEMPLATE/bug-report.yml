@@ -2,6 +2,8 @@ name: Bug Report
 description: File a bug report.
 title: "[Issue]: "
 labels: ["bug"]
+assignees:
+  - kaer1a
 body:
   - type: input
     id: issue
