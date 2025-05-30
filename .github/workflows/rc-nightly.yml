@@ -35,22 +35,22 @@ jobs:
     - name: Prepare Builds
       run: |
           mkdir RC-Modrinth-1.20.1-temp
-          cp -r ./versions/re-console/modrinth/fabric/1.20.1/* ./RC-Modrinth-1.20.1-temp/
+          cp -r ./versions/vanilla/src/re-console/modrinth/fabric/1.20.1/* ./RC-Modrinth-1.20.1-temp/
           cp ./LICENSE.md ./RC-Modrinth-1.20.1-temp/
           cp ./README.md ./RC-Modrinth-1.20.1-temp/
 
           mkdir RC-Modrinth-1.21.1-temp
-          cp -r ./versions/re-console/modrinth/fabric/1.21.1/* ./RC-Modrinth-1.21.1-temp/
+          cp -r ./versions/vanilla/src/re-console/modrinth/fabric/1.21.1/* ./RC-Modrinth-1.21.1-temp/
           cp ./LICENSE.md ./RC-Modrinth-1.21.1-temp/
           cp ./README.md ./RC-Modrinth-1.21.1-temp/
 
           mkdir RC-Modrinth-1.21.4-temp
-          cp -r ./versions/re-console/modrinth/fabric/1.21.4/* ./RC-Modrinth-1.21.4-temp/
+          cp -r ./versions/vanilla/src/re-console/modrinth/fabric/1.21.4/* ./RC-Modrinth-1.21.4-temp/
           cp ./LICENSE.md ./RC-Modrinth-1.21.4-temp/
           cp ./README.md ./RC-Modrinth-1.21.4-temp/
 
           mkdir RC-Modrinth-1.21.5-temp
-          cp -r ./versions/re-console/modrinth/fabric/1.21.5/* ./RC-Modrinth-1.21.5-temp/
+          cp -r ./versions/vanilla/src/re-console/modrinth/fabric/1.21.5/* ./RC-Modrinth-1.21.5-temp/
           cp ./LICENSE.md ./RC-Modrinth-1.21.5-temp/
           cp ./README.md ./RC-Modrinth-1.21.5-temp/
 
