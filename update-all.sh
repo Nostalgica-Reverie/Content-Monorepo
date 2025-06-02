@@ -39,8 +39,8 @@ for i in "${vpacks[@]}"; do
             done
         done
     done
-    echo Waiting 5s for rate-limiting
-    sleep 5
+    echo Waiting 10s for rate-limiting
+    sleep 10
 done
 echo
 echo Vanilla Packs Updated
@@ -55,8 +55,8 @@ for i in "${mpacks[@]}"; do
             fi
         done
     done
-    echo Waiting 5s for rate-limiting
-    sleep 5
+    echo Waiting 10s for rate-limiting
+    sleep 10
 done
 echo
 echo Modded Packs Updated
