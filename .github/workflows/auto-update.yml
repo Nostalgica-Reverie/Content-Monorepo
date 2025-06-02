@@ -30,8 +30,11 @@ jobs:
         with:
           default_author: github_actions
         
-      - name: Export Packs
+      - name: Export RC
         uses: .github/workflows/rc-nightly.yml
+      - name: Export RC: Lite
         uses: .github/workflows/rc-lite-nightly.yml
+      - name: Export AC
         uses: .github/workflows/ac-nightly.yml
+      - name: Export WC: RV
         uses: .github/workflows/wc-rv-nightly.yml
