@@ -1,7 +1,13 @@
 #!/bin/bash
-modpacks=(
+# Vanilla Modpacks
+vpacks=(
     re-console
     re-console-lite
+)
+# Modded Packs
+mpacks=(
+    arics-console
+    williams-console-revisited
 )
 # Platform Version
 pfvs=(
@@ -21,7 +27,7 @@ mcvs=(
     1.21.5
 )
 
-for i in "${modpacks[@]}"; do
+for i in "${vpacks[@]}"; do
     for q in "${pfvs[@]}"; do
         for w in "${mlvs[@]}"; do
             for e in "${mcvs[@]}"; do
@@ -33,4 +39,24 @@ for i in "${modpacks[@]}"; do
             done
         done
     done
+    echo Waiting 5s for rate-limiting
+    sleep 5
 done
+echo
+echo Vanilla Packs Updated
+echo
+for i in "${mpacks[@]}"; do
+    for q in "${pfvs[@]}"; do
+        for e in "${mcvs[@]}"; do
+            DIR="./versions/modded/src/$i/$q/$e"
+            if [ -d "$DIR" ]; then
+                echo Updating $i $q $w $e
+                (cd $DIR && packwiz update -a -y)
+            fi
+        done
+    done
+    echo Waiting 5s for rate-limiting
+    sleep 5
+done
+echo
+echo Modded Packs Updated
