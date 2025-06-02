@@ -40,9 +40,9 @@ for i in "${vpacks[@]}"; do
             done
         if [ -d "./versions/vanilla/src/$i/$q/$w" ]; then
             echo
-            echo Waiting 10s for rate-limiting
+            echo Waiting 20s for rate-limiting
             echo
-            sleep 10
+            sleep 20
         fi
         done
     done
@@ -62,9 +62,9 @@ for i in "${mpacks[@]}"; do
         done
     if [ -d "./versions/modded/src/$i/$q" ]; then
         echo
-        echo Waiting 10s for rate-limiting
+        echo Waiting 20s for rate-limiting
         echo
-        sleep 10
+        sleep 20
     fi
     done
 done
