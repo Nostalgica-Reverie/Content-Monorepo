@@ -10,7 +10,12 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        version: ['1.21.1','1.21.4','1.21.5']
     runs-on: ubuntu-latest
+    outputs:
+      commit_sha: ${{ steps.vars.outputs.commit_sha }}
     env:  
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PACK_NAME: Re-Console-Lite
@@ -19,9 +24,10 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Set up Go
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v5
       with:
-        go-version: '1.20'
+        go-version: 'stable'
+        cache: false
 
     - name: Install Packwiz
       run: go install github.com/packwiz/packwiz@latest
@@ -31,54 +37,41 @@ jobs:
       run: |
           shortSha=$(git rev-parse --short ${{ github.sha }})
           echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
+          echo "commit_sha=$shortSha" >> $GITHUB_OUTPUT
 
-    - name: Prepare Builds
+    - name: Build ${{ matrix.version }}
       run: |
-          mkdir Lite-Modrinth-1.21.1-temp
-          cp -r ./versions/vanilla/src/re-console-lite/modrinth/fabric/1.21.1/* ./Lite-Modrinth-1.21.1-temp/
-          cp ./LICENSE ./Lite-Modrinth-1.21.1-temp/
-          cp ./README.md ./Lite-Modrinth-1.21.1-temp/
-
-          mkdir Lite-Modrinth-1.21.4-temp
-          cp -r ./versions/vanilla/src/re-console-lite/modrinth/fabric/1.21.4/* ./Lite-Modrinth-1.21.4-temp/
-          cp ./LICENSE ./Lite-Modrinth-1.21.4-temp/
-          cp ./README.md ./Lite-Modrinth-1.21.4-temp/
-
-          mkdir Lite-Modrinth-1.21.5-temp
-          cp -r ./versions/vanilla/src/re-console-lite/modrinth/fabric/1.21.5/* ./Lite-Modrinth-1.21.5-temp/
-          cp ./LICENSE ./Lite-Modrinth-1.21.5-temp/
-          cp ./README.md ./Lite-Modrinth-1.21.5-temp/
-
-    - name: Create 1.21.1 build
-      run: |
-          cd ./Lite-Modrinth-1.21.1-temp/
+          mkdir Lite-Modrinth-${{ matrix.version }}-temp
+          cp -r ./versions/vanilla/src/re-console-lite/modrinth/fabric/${{ matrix.version }}/* ./Lite-Modrinth-${{ matrix.version }}-temp/
+          cp ./LICENSE ./Lite-Modrinth-${{ matrix.version }}-temp/
+          cp ./README.md ./Lite-Modrinth-${{ matrix.version }}-temp/
+          cd ./Lite-Modrinth-${{ matrix.version }}-temp/
           packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
-
-    - name: Create 1.21.4 build
-      run: |
-          cd ./Lite-Modrinth-1.21.4-temp/
-          packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.4-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
-
-    - name: Create 1.21.5 build
-      run: |
-          cd ./Lite-Modrinth-1.21.5-temp/
-          packwiz refresh
-          packwiz modrinth export --output ${PACK_NAME}-1.21.5-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
-
-    - name: Prepare artifacts
-      run: |
-          mkdir $OUTPUT
-          
-          mv ./Lite-Modrinth-1.21.1-temp/${PACK_NAME}-1.21.1-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
-          mv ./Lite-Modrinth-1.21.4-temp/${PACK_NAME}-1.21.4-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
-          mv ./Lite-Modrinth-1.21.5-temp/${PACK_NAME}-1.21.5-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack ${OUTPUT}/
+          mkdir -p ../$OUTPUT
+          packwiz modrinth export --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: "Re-Console-Lite-dev-${{ env.COMMIT_SHORT_SHA }}"
+        name: "Re-Console-Lite-${{ matrix.version }}-dev-${{ env.COMMIT_SHORT_SHA }}"
         path: artifacts
 
-        
+  combine:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: downloaded-artifacts
+
+    - name: Combine artifacts
+      run: |
+        mkdir combined-artifacts
+        find downloaded-artifacts -name "*.mrpack" -exec cp {} combined-artifacts/ \;
+
+    - name: Upload combined artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: "Re-Console-Lite-dev-${{ needs.build.outputs.commit_sha }}"
+        path: combined-artifacts

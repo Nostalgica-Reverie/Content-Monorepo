@@ -33,30 +33,41 @@ for i in "${vpacks[@]}"; do
             for e in "${mcvs[@]}"; do
                 DIR="./versions/vanilla/src/$i/$q/$w/$e"
                 if [ -d "$DIR" ]; then
+                    echo
                     echo Updating $i $q $w $e
                     (cd $DIR && packwiz update -a -y)
                 fi
             done
+        if [ -d "./versions/vanilla/src/$i/$q/$w" ]; then
+            echo
+            echo Waiting 20s for rate-limiting
+            echo
+            sleep 20
+        fi
         done
     done
-    echo Waiting 5s for rate-limiting
-    sleep 5
 done
-echo
+echo ---------------------
 echo Vanilla Packs Updated
-echo
+echo ---------------------
 for i in "${mpacks[@]}"; do
     for q in "${pfvs[@]}"; do
         for e in "${mcvs[@]}"; do
             DIR="./versions/modded/src/$i/$q/$e"
             if [ -d "$DIR" ]; then
+                echo
                 echo Updating $i $q $w $e
                 (cd $DIR && packwiz update -a -y)
             fi
         done
+    if [ -d "./versions/modded/src/$i/$q" ]; then
+        echo
+        echo Waiting 20s for rate-limiting
+        echo
+        sleep 20
+    fi
     done
-    echo Waiting 5s for rate-limiting
-    sleep 5
 done
-echo
+echo --------------------
 echo Modded Packs Updated
+echo --------------------
