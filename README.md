@@ -15,7 +15,7 @@ The latest stable releases of these modpacks can be found on the [Modrinth Colle
 
 #### Nightly builds
 
-Re-Console, and affiliated projects, now have nightly builds, produced after every single commit. You can download the versions [here](https://github.com/ViolaFlower/Re-Console-Monorepository/actions)
+Re-Console, and affiliated projects, now have nightly builds, produced ar 0 UTC. You can download the versions [here](https://github.com/ViolaFlower/Re-Console-Monorepository/actions)
 
 ### 📬 Reporting Issues
 
