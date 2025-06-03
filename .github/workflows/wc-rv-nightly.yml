@@ -14,6 +14,8 @@ jobs:
       matrix:
         version: ['1.21.1','1.21.5']
     runs-on: ubuntu-latest
+    outputs:
+      commit_sha: ${{ steps.vars.outputs.commit_sha }}
     env:  
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PACK_NAME: Williams-Console-Revisited
@@ -35,6 +37,7 @@ jobs:
       run: |
           shortSha=$(git rev-parse --short ${{ github.sha }})
           echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
+          echo "commit_sha=$shortSha" >> $GITHUB_OUTPUT
 
     - name: Build ${{ matrix.version }}
       run: |
@@ -57,12 +60,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Create short commit SHA
-      id: vars
-      run: |
-          shortSha=$(git rev-parse --short ${{ github.sha }})
-          echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
-
     - name: Download all artifacts
       uses: actions/download-artifact@v4
       with:
@@ -76,5 +73,5 @@ jobs:
     - name: Upload combined artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: "Williams-Console-Revisited-dev-${{ env.COMMIT_SHORT_SHA }}"
+        name: "Williams-Console-Revisited-dev-${{ needs.build.outputs.commit_sha }}"
         path: combined-artifacts
