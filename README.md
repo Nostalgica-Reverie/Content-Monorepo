@@ -32,9 +32,9 @@ Most graphics cards released in the past 12 years will meet these requirements, 
 
 If you are running into problems, you should make sure that your graphics drivers are up-to-date. I also recommend taking a look at [this page](https://github.com/CaffeineMC/sodium/wiki/Driver-Compatibility) on the Sodium wiki.
 
-### 💬 Join the Community
-Consider joining the [ViolaFlower Discord](https://discord.com/invite/dsBrDdJysn) for sneak peeks and updates on development! By joining, you can:
-- Get installation help and technical support for all of ViolaFlower's projects
+# 💬 Nostalgica Reverie
+Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW) for sneak peeks and updates on development! By joining, you can:
+- Get installation help and technical support for alot of nostalgic projects
 - Get the latest updates about development
 - Talk with and collaborate with our team
 - And just hang out with the rest of our community!
