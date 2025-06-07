@@ -35,7 +35,7 @@ for i in "${vpacks[@]}"; do
                 if [ -d "$DIR" ]; then
                     echo
                     echo Updating $i $q $w $e
-                    (cd $DIR && packwiz update -a -y)
+                    (cd $DIR && packwiz refresh -y && packwiz update -a -y)
                 fi
             done
         if [ -d "./versions/vanilla/src/$i/$q/$w" ]; then
@@ -57,7 +57,7 @@ for i in "${mpacks[@]}"; do
             if [ -d "$DIR" ]; then
                 echo
                 echo Updating $i $q $w $e
-                (cd $DIR && packwiz update -a -y)
+                (cd $DIR && packwiz refresh -y && packwiz update -a -y)
             fi
         done
     if [ -d "./versions/modded/src/$i/$q" ]; then
