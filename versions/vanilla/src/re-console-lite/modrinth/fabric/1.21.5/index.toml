@@ -2,23 +2,23 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/legacy/client_mixin.json"
-hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
+hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
 
 [[files]]
 file = "config/legacy/client_options.json"
-hash = "4727eed255722ddd13ade6cf28a3714000b3d45f4cd816e23237a89242e065f6"
+hash = "72601a9c04c5e2ebadc0f7dba9abe2bcc87f5056be9beb90cf37054f33f486b0"
 
 [[files]]
 file = "config/legacy/common.json"
-hash = "3b9b9361ed4ad964361358b210952bb01f4f30ff2d56c249d0ce517792244266"
+hash = "102803aae5342ed1907d7c1aa18b5ea41f622ab588a6b1c9694ae41f962d5b3a"
 
 [[files]]
 file = "config/legacy/common_mixin.json"
-hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
+hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
 
 [[files]]
 file = "config/legacy/global_packs.json"
-hash = "9e247f86405d42e83a3e1af74984e4bd4cf64cc3e357de1821df3516cafa7ff7"
+hash = "658f1fa15243f40bc82d920379ccc1e5ce5d3a039dda82a180d45d9ebf309b2e"
 
 [[files]]
 file = "config/yosbr/config/badoptimizations.txt"
@@ -30,7 +30,7 @@ hash = "b75ccc24ddb7fdd8e91f16a568885abd88b00876e9ffe40578d1cf0ce6d7371d"
 
 [[files]]
 file = "config/yosbr/config/enhanced_bes.properties"
-hash = "219204a2efc6d53ad8b3116db7392e039ba8e0ed5f45bc18562c9697bdf8f5c9"
+hash = "6ef9e4a1132e7aeab97f6829893124078b95be3c9a5b247754c2ccc9deb423ce"
 
 [[files]]
 file = "config/yosbr/config/entityculling.json"
@@ -47,6 +47,10 @@ hash = "fe6551b3aa77d3b624acff41ed6bf65b3d6d5c8821b7bda8875ff7b6b75e0c43"
 [[files]]
 file = "config/yosbr/config/modernfix-mixins.properties"
 hash = "22caf99f6531254b612c35bc12aff9c2b6d121b038b2e418a1a429049d16c9e0"
+
+[[files]]
+file = "config/yosbr/config/moreculling.toml"
+hash = "20a7c9a9d1ec3c730f37af63357d6847afbb28fd37cd13657928c3d22feb055c"
 
 [[files]]
 file = "config/yosbr/config/servercore/config.yml"
@@ -66,7 +70,7 @@ hash = "545cbe317c5146bacb9e13c7c03a605f0b6bd6e1ddaf1a05f8be8537d6f8b0ce"
 
 [[files]]
 file = "config/yosbr/config/vmp.properties"
-hash = "0d0549563aca08c87a22a9fd862cc6e7a9906f2d6fca84dcbfa7cbec14dff7e6"
+hash = "9119e990f7bf6d27b9761144fa9a8ed9168a575f3c54d83815aedbbb3c594a49"
 
 [[files]]
 file = "config/yosbr/options.txt"
@@ -153,6 +157,11 @@ hash = "8d250e4781a41beb98270b2f36e042415067f92081c6fcf843d7ea89a61b4cdc"
 metafile = true
 
 [[files]]
+file = "mods/noisium.pw.toml"
+hash = "ea1d303d34de75ef3745a218e1e48fa72cc0e04265142ed27345fdede5b1d954"
+metafile = true
+
+[[files]]
 file = "mods/servercore.pw.toml"
 hash = "2f7057e72af0cc31061ed60c31fce906122d0913ecbb956f124a1b35575f4b1a"
 metafile = true
@@ -206,3 +215,7 @@ metafile = true
 file = "resourcepacks/re-console-resources.pw.toml"
 hash = "1c3e06c2051f59e8c258e93230ccaeab3894b7e3d20e46afbcde18b1216e388f"
 metafile = true
+
+[[files]]
+file = "servers.dat"
+hash = "fd4962951c610748761e3d1530542dd02bfd3e94cf5a5bbad74fca31e9d4359f"
