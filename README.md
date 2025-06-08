@@ -1,4 +1,4 @@
-<img src="versions/vanilla/src/re-console/modrinth/fabric/1.21.5/rc-icon.png" width="128"> <img src="versions/modded/src/williams-console-revisited/modrinth/1.21.5/wcr-icon.png" width="128">
+<img src="versions/vanilla/src/re-console/modrinth/fabric/1.21.5/rc-icon.png" width="128">
 
 
 
