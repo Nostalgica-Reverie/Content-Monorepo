@@ -7,7 +7,6 @@ vpacks=(
 # Modded Packs
 mpacks=(
     arics-console
-    williams-console-revisited
 )
 # Platform Version
 pfvs=(
