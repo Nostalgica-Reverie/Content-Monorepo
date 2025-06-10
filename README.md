@@ -43,7 +43,6 @@ Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW)
 - Re-Console supports 1.20.1, 1.21.1, 1.21.4 and 1.21.5
 - Re-Console Lite supports 1.21.4 and 1.21.5
 - Re-Console Special Edition supports 1.21.5
-- William's Console: Revisited supports 1.21.1 and 1.21.5
 - Aric's Console supports 1.21.5
 
 ### Versioning
@@ -57,8 +56,7 @@ The versioning format is 1.y.z+mc(mc version)+(modloader), where
 Each modpack also has a different semantic version.
 - Re-Console Lite takes 1.y.z
 - Re-Console takes 2.y.z
-- William's Console: Revisited takes 3.y.z
-- Aric's Console takes 4.y.z
+- Aric's Console takes 3.y.z
 
 
 ## 📜 License
