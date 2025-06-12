@@ -5,6 +5,13 @@
 ### Legacy Modpack Monorepository
 This is the repository hosting all of the different versions of Re-Console, its forks, and their source code.
 
+## Projects
+
+|                                                            Icon                                                            | Name                                                                                                                           | Developers                                                                                 | Download Count                                                                                                                                                                                                 |
+|:--------------------------------------------------------------------------------------------------------------------------:|--------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://cdn.modrinth.com/data/g9O0WaGR/ddcf785514b663b5ad8fe00f248df567ce873f94_96.webp" width="64" height="64"> | [Re-Console](/versions/vanilla/src/re-console) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft)                | [omo50/bowen](https://github.com/omo50)                                                    | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft?logo=Modrinth&label=Downloads) ![CurseForge Downloads](https://img.shields.io/curseforge/dt/1066411?logo=CurseForge&label=Downloads) |
+| <img src="https://cdn.modrinth.com/data/i39v5M7t/c66a3b878466592882847100e72fa95a82bc6c2b_96.webp" width="64" height="64"> | [Re-Console Lite](/versions/vanilla/src/re-console-lite) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft-lite) | [JacksTheGreat](https://github.com/JacksTheGreat), [omo50/bowen](https://github.com/omo50) | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft-lite?logo=Modrinth&label=Downloads)                                                                                                  |
+
 ---
 
 ### 📥 Downloads
