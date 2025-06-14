@@ -1,2 +1,2 @@
 # Re-Console Lite
-TODO: explain what this is
+Re-Console Lite is a lightweight version of Re-Console for low-end computers, or for those wanting a lightweight experience.
