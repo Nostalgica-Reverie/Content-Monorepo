@@ -47,7 +47,7 @@ Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW)
 - And just hang out with the rest of our community!
 
 ### 📝 Supported Versions
-- Re-Console supports 1.20.1, 1.21.1, 1.21.4 and 1.21.5
+- Re-Console supports 1.21.1, and 1.21.5 on both Fabric and NeoForged
 - Re-Console Lite supports 1.21.4 and 1.21.5
 - Re-Console Special Edition supports 1.21.5
 - Aric's Console supports 1.21.5
