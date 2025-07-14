@@ -3,7 +3,7 @@
 
 
 ### Legacy Modpack Monorepository
-This is the repository hosting all of the different versions of Re-Console, its forks, and their source code.
+This is the repository hosting all of the different versions of Re-Console, its versions, and their source code.
 
 ## Projects
 
