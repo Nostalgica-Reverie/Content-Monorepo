@@ -10,6 +10,7 @@
       "disabled": false
     },
     "openedConfigScreen": true,
+    "openedSodiumScreen": true,
     "openedSupporterScreen": false,
     "persistentConfigScreen": true,
     "defaultScreen": "HOME_SCREEN",
@@ -34,13 +35,13 @@
   "sound": {
     "disabledPositionedSounds": {
       "list": [],
-      "disabled": false
+      "disabled": true
     },
     "disabledGlobalSounds": {
       "list": [],
-      "disabled": false
+      "disabled": true
     },
-    "playMusicWhenPaused": true,
+    "playMusicWhenPaused": false,
     "musicForMenu": "BLENDED",
     "musicForCreative": "BLENDED",
     "replaceOverworldBiomeMusic": true,
@@ -62,6 +63,7 @@
     "disableBlastFurnace": false,
     "disableGrowth": false,
     "disableDoorPlace": false,
+    "disableBubbleColumn": false,
     "oldAttack": false,
     "oldHurt": false,
     "oldFall": false,
@@ -88,7 +90,7 @@
         "minecraft:powder_snow_bucket",
         "minecraft:composter"
       ],
-      "disabled": false
+      "disabled": true
     },
     "disableBlockOffsets": {
       "items": [
@@ -97,14 +99,14 @@
         "minecraft:rose_bush",
         "minecraft:rose_bush*"
       ],
-      "disabled": false
+      "disabled": true
     },
     "disableAllOffset": false,
     "oldMissingTexture": "MODERN",
     "applyFullBlockCollisions": false,
     "fullBlockCollisions": {
       "items": [],
-      "disabled": false
+      "disabled": true
     },
     "fullBlockOutlines": {
       "items": [
@@ -125,10 +127,11 @@
         "minecraft:anvil",
         "minecraft:anvil*"
       ],
-      "disabled": false
+      "disabled": true
     },
     "blockOutlineColor": "#00000066",
     "blockOutlineThickness": 2.5,
+    "disableHitboxOverride": true,
     "oldBlockOverlay": false,
     "overlayRenderOrder": "FIRST",
     "blockOverlayColorType": "SOLID",
@@ -146,20 +149,28 @@
     "applyChestVoxel": false,
     "oldModChests": {
       "items": [],
-      "disabled": false
+      "disabled": true
     },
     "translucentChests": {
       "items": [],
-      "disabled": false
+      "disabled": true
     },
     "oldTorchBrightness": false,
     "oldTorchBottom": false,
-    "oldTorchModel": false,
-    "oldRedstoneTorchModel": false,
-    "oldSoulTorchModel": false,
-    "hidePlayerInBed": false,
+    "oldTorchModel": true,
+    "oldRedstoneTorchModel": true,
+    "oldSoulTorchModel": true,
+    "hidePlayerInBed": true,
+    "hideRecipeToasts": false,
+    "hideTutorialToasts": false,
+    "hideAdvancementToasts": false,
+    "hideAdvancementChats": true,
     "hideExperienceBar": false,
     "hideHungerBar": false,
+    "hideStaminaBar": false,
+    "hideStaminaMoving": false,
+    "hideStaminaCooldown": false,
+    "hideStaminaBarInactive": false,
     "adventureCraftOffhand": false,
     "leftOffhandOffset": 0,
     "rightOffhandOffset": 0,
@@ -192,8 +203,16 @@
     "altHungerSaturationOffsetY": 0,
     "altHungerSaturationShadow": true,
     "altHungerSaturationText": "Saturation: %v%",
+    "showStaminaText": false,
+    "useDynamicStaminaColor": true,
+    "altStaminaShowOnActive": false,
+    "altStaminaCorner": "TOP_LEFT",
+    "altStaminaOffsetX": 0,
+    "altStaminaOffsetY": 0,
+    "altStaminaShadow": true,
+    "altStaminaText": "Stamina: %v%",
     "oldVersionOverlay": false,
-    "oldOverlayShadow": false,
+    "oldOverlayShadow": true,
     "oldOverlayCorner": "TOP_LEFT",
     "oldOverlayOffsetX": 0,
     "oldOverlayOffsetY": 0,
@@ -203,35 +222,36 @@
     "windowTitleText": "Minecraft %v",
     "oldDebug": "MODERN",
     "debugEntityId": false,
-    "fpsChart": "CLASSIC",
+    "fpsChart": "DISABLED",
     "showDebugPieChart": false,
     "oldPieChartBackground": false,
-    "showDebugLeftTextShadow": true,
-    "showDebugRightTextShadow": true,
-    "showDebugLeftBackground": false,
-    "showDebugRightBackground": false,
+    "showDebugLeftTextShadow": false,
+    "showDebugRightTextShadow": false,
+    "showDebugLeftBackground": true,
+    "showDebugRightBackground": true,
     "debugLeftBackgroundColor": "#50505090",
     "debugRightBackgroundColor": "#50505090",
-    "showDebugLeftTextColor": true,
-    "showDebugRightTextColor": true,
+    "showDebugLeftTextColor": false,
+    "showDebugRightTextColor": false,
     "debugLeftTextColor": "#FFFFFFFF",
-    "debugRightTextColor": "#E0E0E0FF",
+    "debugRightTextColor": "#FFFFFFFF",
     "showDebugGpuUsage": false,
     "showDebugLightData": false,
     "showDebugFacingData": false,
     "showDebugTargetData": false,
     "showDebugBiomeData": false,
     "oldInventory": false,
-    "inventoryBook": "SMALL",
+    "inventoryBook": "MODERN",
     "inventoryShield": "MODERN",
     "disableEmptyArmorTexture": false,
     "disableEmptyShieldTexture": false,
     "invertedPlayerLighting": false,
     "oldCreativeHotbar": "MODERN",
+    "fixSavingIndicatorOffset": false,
     "removeScreenBlur": false,
     "oldButtonTextColor": false,
     "oldDirtScreenBackground": false,
-    "applyGuiColorBackground": true,
+    "applyGuiColorBackground": false,
     "oldGuiBackground": "SOLID_BLACK",
     "customGuiBackground": false,
     "customGuiTopGradient": "#00000000",
@@ -245,13 +265,13 @@
     "progressBarInsideColor": "#FFFFFF",
     "oldProgressScreen": false,
     "oldPauseMenu": "MODERN",
-    "includeModsOnPause": true,
+    "includeModsOnPause": false,
     "removeExtraPauseButtons": false,
     "oldAnvilScreen": false,
     "oldCraftingScreen": false,
-    "craftingBook": "SMALL",
+    "craftingBook": "MODERN",
     "oldFurnaceScreen": false,
-    "furnaceBook": "SMALL",
+    "furnaceBook": "MODERN",
     "oldChatInput": false,
     "oldChatBox": false,
     "disableSignatureBoxes": false,
@@ -260,6 +280,7 @@
     "oldDeathScore": false,
     "hideCauseOfDeath": false,
     "oldWorldSelectScreen": "MODERN",
+    "levelSelectWhenEmpty": false,
     "addWorldThumbnail": true,
     "addWorldMetadata": true,
     "ignoreWorldSize": false,
@@ -267,10 +288,10 @@
     "removeCreateWorldFooter": false,
     "overrideTitleScreen": false,
     "oldTitleBackground": false,
-    "uncapTitleFPS": true,
+    "uncapTitleFPS": false,
     "oldAlphaLogo": false,
     "titleButtonLayout": "MODERN",
-    "includeModsOnTitle": true,
+    "includeModsOnTitle": false,
     "removeTitleRealmsButton": false,
     "removeTitleAccessibilityButton": false,
     "removeTitleLanguageButton": false,
@@ -279,7 +300,7 @@
     "titleVersionText": "Minecraft %v",
     "titleBottomLeftText": false,
     "titleTopRightDebugText": false,
-    "removeTitleModLoaderText": true,
+    "removeTitleModLoaderText": false,
     "oldTooltipBoxes": false,
     "oldNoItemTooltips": false,
     "showEnchantmentTip": true,
@@ -296,12 +317,18 @@
       "items": [
         "minecraft:crossbow"
       ],
-      "disabled": false
+      "disabled": true
     },
     "itemMergeLimit": 16,
     "oldItemMerging": false,
     "old2dItems": false,
     "old2dRendering": false,
+    "old2dExceptions": {
+      "items": [
+        "minecraft:decorated_pot"
+      ],
+      "disabled": true
+    },
     "disableEnchantedGroundItems": false,
     "disableEnchantedStaticItems": false,
     "oldDurabilityColors": false,
@@ -315,16 +342,18 @@
     "oldWaterLighting": false,
     "chestLightBlock": false,
     "roundRobinRelight": false,
-    "oldSmoothLighting": false,
     "oldNetherLighting": false,
+    "oldSmoothLighting": false,
+    "disableSmoothLighting": false,
     "oldClassicEngine": false,
-    "smoothLightTransition": false,
-    "disableBrightness": false,
+    "smoothLightTransition": true,
+    "dynamicLightBrightness": false,
+    "disableLightBrightness": false,
     "oldLightColor": false,
     "maxBlockLight": 15,
     "disabledParticles": {
       "list": [],
-      "disabled": false
+      "disabled": true
     },
     "oldOpaqueExperience": false,
     "disableNetherParticles": false,
@@ -347,8 +376,8 @@
     "oldExplosionParticles": false,
     "oldMixedExplosionParticles": false,
     "unoptimizedExplosionParticles": false,
-    "oldSquareBorder": true,
-    "oldWorldFog": "MODERN",
+    "oldSquareBorder": false,
+    "oldWorldFog": "ALPHA_R164",
     "fogBinding": -1,
     "oldNetherFog": false,
     "oldSunriseSunsetFog": false,
@@ -367,8 +396,8 @@
     "customNetherFogEnd": 60,
     "oldWaterFogDensity": false,
     "oldWaterFogColor": false,
-    "smoothWaterDensity": false,
-    "smoothWaterColor": false,
+    "smoothWaterDensity": true,
+    "smoothWaterColor": true,
     "renderSunriseSunsetColor": true,
     "oldSunriseAtNorth": false,
     "oldStars": "MODERN",
@@ -376,7 +405,6 @@
     "universalSkyColor": "DISABLED",
     "oldNetherSky": false,
     "oldCloudHeight": 192,
-    "sunsetSunriseType": "JAVA",
     "customOverworldSky": false,
     "customOverworldSkyColor": "#FFFFFF",
     "oldBlueVoid": "MODERN",
@@ -384,10 +412,9 @@
     "oldDarkVoidHeight": false,
     "customVoidSky": false,
     "customVoidSkyColor": "#0000FF",
-    "xbox360BlueVoidColor": true,
     "renderVoidFog": false,
-    "creativeVoidFog": false,
-    "creativeVoidParticles": false,
+    "creativeVoidFog": true,
+    "creativeVoidParticles": true,
     "lightRemovesVoidFog": false,
     "voidFogEncroach": 70,
     "voidFogStart": 50,
@@ -400,7 +427,8 @@
     "oldSquidMilking": false,
     "disableAnimalPanic": false,
     "disableMonsterAvoidSun": false,
-    "disableGolemCreation": false,
+    "disableSkeletonStrafing": false,
+    "oldCreeperStrafeOnSwell": false,
     "disableMonsterItemPickup": false,
     "disableBabyZombieSpawn": false,
     "disableBabyPiglinSpawn": false,
@@ -408,8 +436,8 @@
     "disableMonsterArmorSpawn": false,
     "disableMonsterEnchantSpawn": false,
     "piglinOnlyGoldSwordSpawn": false,
-    "monsterSpawnCap": 90,
-    "animalSpawnCap": 20,
+    "monsterSpawnCap": 70,
+    "animalSpawnCap": 10,
     "oldAnimalSpawning": false,
     "disableBabyAnimalSpawning": false,
     "disableAnimalBreeding": false,
@@ -434,14 +462,14 @@
     "oldStyleStrayDrops": false,
     "oldStyleHuskDrops": false,
     "blockWithSwordOnShield": false,
-    "oldSwordBlocking": true,
-    "attackWhileSwordBlocking": true,
+    "oldSwordBlocking": false,
+    "attackWhileSwordBlocking": false,
     "swordBlockDamageReduction": 50,
-    "oldDamageValues": true,
-    "disableCooldown": true,
-    "disableMissTimer": true,
-    "disableCriticalHit": true,
-    "disableSweep": true,
+    "oldDamageValues": false,
+    "disableCooldown": false,
+    "disableMissTimer": false,
+    "disableCriticalHit": false,
+    "disableSweep": false,
     "arrowSpeed": 70,
     "instantBow": false,
     "invincibleBow": false,
@@ -449,32 +477,50 @@
     "disableOrbRendering": false,
     "disableAnvil": false,
     "disableEnchantTable": false,
+    "staminaSprint": false,
+    "staminaInfinitePeaceful": false,
+    "staminaRegainWhenMoving": "NORMAL",
+    "staminaDuration": 5,
+    "staminaRecharge": 7,
+    "staminaCooldown": 0,
+    "staminaSaturationEffect": false,
+    "staminaHungerEffect": false,
     "oldNightmares": false,
     "disableSprint": false,
     "leftClickDoor": false,
     "leftClickLever": false,
     "leftClickButton": false,
-    "disableSneakingUnderSlabs": false,
-    "disableCrawling": false,
+    "oldFishingLoot": false,
+    "oldFishingLuring": false,
+    "oldFishingCasting": false,
     "instantBonemeal": false,
     "tilledGrassSeeds": false,
-    "disableBonemealShortGrass": false,
-    "disableTallGrassBonemeal": false,
-    "disableCocoaBeanPlacement": false,
     "oldFire": false,
     "infiniteBurn": false,
-    "disableSoulFire": false,
     "instantAir": false,
     "disableSwim": false,
     "cartBoosting": false,
     "cartRiderTurning": false,
-    "cartSafeRiderTurning": false,
+    "cartSafeRiderTurning": true,
     "disableBoatBusyHands": false,
     "oldBoatWaterLift": false,
-    "oldBoatDrops": true,
+    "oldBoatDrops": false,
+    "selfBlockDrops": {
+      "items": [
+        "minecraft:iron_ore",
+        "minecraft:gold_ore",
+        "minecraft:copper_ore",
+        "minecraft:deepslate_iron_ore",
+        "minecraft:deepslate_gold_ore",
+        "minecraft:deepslate_copper_ore"
+      ],
+      "disabled": true
+    },
     "punchTntIgnition": false,
     "disableBedBounce": false,
     "alwaysOpenChest": false,
+    "disableShovelPathing": false,
+    "disableAxeStripping": false,
     "disableHunger": false,
     "instantEat": false,
     "oldFoodStacking": false,
@@ -495,7 +541,7 @@
         "minecraft:golden_apple": 20,
         "minecraft:enchanted_golden_apple": 20
       },
-      "disabled": false
+      "disabled": true
     },
     "customFoodStacking": {
       "items": {
@@ -538,31 +584,30 @@
         "minecraft:suspicious_stew": 1,
         "minecraft:tropical_fish": 1
       },
-      "disabled": false
+      "disabled": true
     },
     "customItemStacking": {
       "items": {},
-      "disabled": false
-    },
-    "disableAxeStripping": false,
-    "disableShovelPathing": false,
-    "disableWaterBonemeal": false
+      "disabled": true
+    }
   },
   "animation": {
     "preventArmSway": false,
     "armSwayMirror": false,
     "armSwayIntensity": 100,
     "oldSwing": false,
-    "oldSwingInterrupt": true,
-    "oldSwingDropping": false,
+    "oldSwingInterrupt": false,
+    "oldSwingDropping": true,
     "oldClassicAttackSwing": false,
     "oldClassicUseSwing": false,
-    "oldItemCooldown": true,
-    "oldItemReequip": false,
+    "oldItemCooldown": false,
+    "oldItemReequip": true,
     "oldToolExplosion": false,
-    "oldZombieArms": false,
+    "oldZombieArms": true,
     "oldSkeletonArms": false,
     "oldGhastCharging": false,
+    "oldMobDeathTopple": false,
+    "oldMobHeadBodyTurn": false,
     "hideBoatRowing": false,
     "oldClassicWalkBobbing": false,
     "oldClassicWalkArms": false,
@@ -574,7 +619,7 @@
     "preventDeathTopple": false
   },
   "swing": {
-    "overrideSpeeds": false,
+    "overrideSpeeds": true,
     "attackGlobalSpeed": -1,
     "useGlobalSpeed": -1,
     "attackItemSpeed": 8,
@@ -591,11 +636,11 @@
     "useFatigueSpeed": -1,
     "attackSwingSpeeds": {
       "items": {},
-      "disabled": false
+      "disabled": true
     },
     "useSwingSpeeds": {
       "items": {},
-      "disabled": false
+      "disabled": true
     }
   }
 }
