@@ -109,7 +109,7 @@ jobs:
       #   uses: Kir-Antipov/mc-publish@v3.3
       #   with:
       #     modrinth-id: legacy-minecraft
-      #     modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+      #     modrinth-token: ${{ secrets.MR }}
           
       #     files: |
       #       ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
@@ -132,7 +132,7 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           curseforge-id: re-console
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-token: ${{ secrets.CF }}
           
           files: |
             ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
