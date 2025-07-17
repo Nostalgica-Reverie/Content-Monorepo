@@ -59,7 +59,7 @@ jobs:
             file_ext: "zip"
     runs-on: ubuntu-latest
     env:  
-      GITHUB_TOKEN: MR
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PACK_NAME: Re-Console
       OUTPUT: artifacts
     
@@ -132,7 +132,7 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           curseforge-id: re-console
-          curseforge-token: CF
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           
           files: |
             ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
