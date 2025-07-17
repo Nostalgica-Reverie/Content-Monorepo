@@ -1,0 +1,166 @@
+name: Publish Re-Console Modpack
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version_override:
+        description: 'Override version number'
+        required: false
+        type: string
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          # Fabric
+          - version: "1.21.1"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.4"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.5"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.1"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.4"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.5"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          # NeoForge
+          - version: "1.21.1"
+            loader: "neoforged"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.5"
+            loader: "neoforged"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.1"
+            loader: "neoforged"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.5"
+            loader: "neoforged"
+            platform: "curseforge"
+            file_ext: "zip"
+    runs-on: ubuntu-latest
+    env:  
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PACK_NAME: Re-Console
+      OUTPUT: artifacts
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: false
+
+      - name: Install Packwiz
+        run: go install github.com/packwiz/packwiz@latest
+
+      - name: Set version and commit SHA
+        id: version
+        run: |
+          shortSha=$(git rev-parse --short ${{ github.sha }})
+          echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
+          
+          if [ -n "${{ github.event.inputs.version_override }}" ]; then
+            version="${{ github.event.inputs.version_override }}"
+          elif [ "${{ github.event_name }}" = "release" ]; then
+            version="${{ github.event.release.tag_name }}"
+          else
+            version="dev-$(date +%Y%m%d-%H%M%S)"
+          fi
+          
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "VERSION=$version" >> $GITHUB_ENV
+
+      - name: Build modpack
+        run: |
+          mkdir RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp
+          cp -r ./versions/vanilla/src/re-console/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cp ./LICENSE ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cp ./README.md ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cd ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          packwiz refresh
+          mkdir -p ../$OUTPUT
+          packwiz ${{ matrix.platform }} export --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
+
+      - name: Publish to Modrinth
+        if: matrix.platform == 'modrinth'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: legacy-minecraft
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          
+          files: |
+            ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
+          
+          name: "Re-Console ${{ env.VERSION }} (Fabric ${{ matrix.version }})"
+          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+          
+          loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
+          game-versions: ${{ matrix.version }}
+          
+          changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
+          
+          retry-attempts: 3
+          retry-delay: 10000
+          fail-mode: warn
+
+      - name: Publish to CurseForge
+        if: matrix.platform == 'curseforge'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: re-console
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          
+          files: |
+            ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
+          
+          name: "Re-Console ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
+          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+          
+          loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
+          game-versions: ${{ matrix.version }}
+          
+          changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
+          
+          retry-attempts: 3
+          retry-delay: 10000
+          fail-mode: warn
+
+      - name: Upload to GitHub Release (if triggered by release)
+        if: github.event_name == 'release'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          
+          files: |
+            ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
+          
+          name: "Re-Console ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
+          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+          
+          loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
+          game-versions: ${{ matrix.version }}
