@@ -104,28 +104,28 @@ jobs:
           mkdir -p ../$OUTPUT
           packwiz ${{ matrix.platform }} export --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
 
-      - name: Publish to Modrinth
-        if: matrix.platform == 'modrinth'
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          modrinth-id: legacy-minecraft
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+      # - name: Publish to Modrinth
+      #   if: matrix.platform == 'modrinth'
+      #   uses: Kir-Antipov/mc-publish@v3.3
+      #   with:
+      #     modrinth-id: legacy-minecraft
+      #     modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           
-          files: |
-            ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
+      #     files: |
+      #       ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
           
-          name: "Re-Console ${{ env.VERSION }} (Fabric ${{ matrix.version }})"
-          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
-          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+      #     name: "Re-Console ${{ env.VERSION }} (Fabric ${{ matrix.version }})"
+      #     version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+      #     version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           
-          loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
-          game-versions: ${{ matrix.version }}
+      #     loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
+      #     game-versions: ${{ matrix.version }}
           
-          changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
+      #     changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
           
-          retry-attempts: 3
-          retry-delay: 10000
-          fail-mode: warn
+      #     retry-attempts: 3
+      #     retry-delay: 10000
+      #     fail-mode: warn
 
       - name: Publish to CurseForge
         if: matrix.platform == 'curseforge'
@@ -150,17 +150,17 @@ jobs:
           retry-delay: 10000
           fail-mode: warn
 
-      - name: Upload to GitHub Release (if triggered by release)
-        if: github.event_name == 'release'
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Upload to GitHub Release (if triggered by release)
+      #   if: github.event_name == 'release'
+      #   uses: Kir-Antipov/mc-publish@v3.3
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
           
-          files: |
-            ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
+      #     files: |
+      #       ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-${{ matrix.platform }}.${{ matrix.file_ext }}
           
-          name: "Re-Console ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
-          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+      #     name: "Re-Console ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
+      #     version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
           
-          loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
-          game-versions: ${{ matrix.version }}
+      #     loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
+      #     game-versions: ${{ matrix.version }}
