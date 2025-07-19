@@ -41,14 +41,14 @@ jobs:
             platform: "curseforge"
             file_ext: "zip"
           # NeoForge
-          - version: "1.21.1"
-            loader: "neoforged"
-            platform: "modrinth"
-            file_ext: "mrpack"
-          - version: "1.21.5"
-            loader: "neoforged"
-            platform: "modrinth"
-            file_ext: "mrpack"
+          # - version: "1.21.1"
+          #   loader: "neoforged"
+          #   platform: "modrinth"
+          #   file_ext: "mrpack"
+          # - version: "1.21.5"
+          #   loader: "neoforged"
+          #   platform: "modrinth"
+          #   file_ext: "mrpack"
           # - version: "1.21.1"
           #   loader: "neoforged"
           #   platform: "curseforge"
@@ -120,14 +120,14 @@ jobs:
     strategy:
       matrix:
         include:
-          - version: "1.21.1"
-            loader: "neoforged"
+          # - version: "1.21.1"
+          #   loader: "neoforged"
           - version: "1.21.1"
             loader: "fabric"
           - version: "1.21.4"
             loader: "fabric"
-          - version: "1.21.5"
-            loader: "neoforged"
+          # - version: "1.21.5"
+          #   loader: "neoforged"
           - version: "1.21.5"
             loader: "fabric"
       max-parallel: 1  # Ensures sequential uploads
@@ -252,7 +252,7 @@ jobs:
           
           loaders: |
             fabric
-            neoforge
+            # neoforge
           game-versions: |
             1.21.1
             1.21.4
