@@ -1,0 +1,15 @@
+{
+    "pack": {
+        "pack_format": 15,
+		"supported_formats": [15, 32],
+        "description": "Resources used for William's Console."
+    },
+	"overlays": {
+		"entries": [
+			{
+				"formats": {"min_inclusive": 18, "max_inclusive": 2147483647},
+				"directory": "overlay_18"
+			}
+		]
+	}
+}

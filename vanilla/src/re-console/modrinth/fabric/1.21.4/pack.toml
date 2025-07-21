@@ -1,0 +1,13 @@
+name = "Re-Console"
+author = "omo50"
+version = "2.6.0+mc1.21.4+fabric"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "3c0d8a27c5aadbd647942595a16bbf4508fa67203671175225a0bea4b81e4d38"
+
+[versions]
+fabric = "0.16.14"
+minecraft = "1.21.4"
