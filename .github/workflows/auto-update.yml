@@ -73,7 +73,7 @@ jobs:
       
       - name: Rate limiting delay
         if: steps.check-dir.outputs.dir-exists == 'true'
-        run: sleep 10
+        run: sleep 5
       
       # Upload changes only if files were updated
       - name: Upload changes
