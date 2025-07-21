@@ -79,15 +79,34 @@ jobs:
       OUTPUT: artifacts
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
 
+    # Cache Packwiz binary to avoid Go setup and compilation
+    - name: Cache Packwiz Binary
+      uses: actions/cache@v4
+      id: cache-packwiz
+      with:
+        path: ~/go/bin/packwiz
+        key: packwiz-binary-${{ runner.os }}-v1
+        restore-keys: |
+          packwiz-binary-${{ runner.os }}-
+
+    # Only set up Go and install Packwiz if not cached
     - name: Set up Go
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
       uses: actions/setup-go@v5
       with:
         go-version: 'stable'
         cache: false
 
     - name: Install Packwiz
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
       run: go install github.com/packwiz/packwiz@latest
+
+    # Add Packwiz to PATH (whether cached or freshly installed)
+    - name: Add Packwiz to PATH
+      run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
     - name: Create short commit SHA
       id: vars
