@@ -4,10 +4,6 @@ vpacks=(
     re-console
     re-console-lite
 )
-# Modded Packs
-mpacks=(
-    arics-console
-)
 # Platform Version
 pfvs=(
     curseforge
@@ -49,24 +45,3 @@ done
 echo ---------------------
 echo Vanilla Packs Updated
 echo ---------------------
-for i in "${mpacks[@]}"; do
-    for q in "${pfvs[@]}"; do
-        for e in "${mcvs[@]}"; do
-            DIR="./versions/modded/src/$i/$q/$e"
-            if [ -d "$DIR" ]; then
-                echo
-                echo Updating $i $q $w $e
-                (cd $DIR && packwiz refresh -y && packwiz update -a -y)
-            fi
-        done
-    if [ -d "./versions/modded/src/$i/$q" ]; then
-        echo
-        echo Waiting 20s for rate-limiting
-        echo
-        sleep 20
-    fi
-    done
-done
-echo --------------------
-echo Modded Packs Updated
-echo --------------------
