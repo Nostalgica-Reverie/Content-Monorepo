@@ -14,11 +14,11 @@ jobs:
       matrix:
         include:
           # Fabric
-         - version: "1.20.1"
+         - version:  "1.20.1"
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
-         - version: "1.20.4"
+         - version:  "1.20.4"
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
@@ -26,7 +26,7 @@ jobs:
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
-         - version: "1.21.3"
+         - version:  "1.21.3"
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
