@@ -4,8 +4,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  auto-update:
+  update-modpacks:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        modpack: [re-console, re-console-lite]
+        platform: [curseforge, modrinth]
+        loader: [fabric]
+        minecraft: [1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8]
+      max-parallel: 3  # Helps with rate limiting
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
@@ -21,10 +29,31 @@ jobs:
       - name: Install Packwiz
         run: go install github.com/packwiz/packwiz@latest
 
-      - name: Update
+      - name: Update ${{ matrix.modpack }} - ${{ matrix.platform }} - ${{ matrix.loader }} - ${{ matrix.minecraft }}
         run: |
-          sudo chmod +x update-all.sh
-          ./update-all.sh
+          DIR="./versions/vanilla/src/${{ matrix.modpack }}/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.minecraft }}"
+          if [ -d "$DIR" ]; then
+            echo "Updating ${{ matrix.modpack }} ${{ matrix.platform }} ${{ matrix.loader }} ${{ matrix.minecraft }}"
+            cd "$DIR"
+            packwiz refresh -y
+            packwiz update -a -y
+          else
+            echo "Directory $DIR does not exist, skipping"
+          fi
+
+      - name: Rate limiting delay
+        run: sleep 10
+
+  commit-changes:
+    needs: update-modpacks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Pull latest changes
+        run: git pull origin main
 
       - name: Commit Updates
         uses: EndBug/add-and-commit@v9.1.4
