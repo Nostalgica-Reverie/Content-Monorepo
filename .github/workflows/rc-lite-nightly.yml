@@ -12,7 +12,58 @@ jobs:
   build:
     strategy:
       matrix:
-        version: ['1.21.1','1.21.4','1.21.5']
+        include:
+          # modrinth
+          - version: "1.20.1"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.20.4"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.1"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.3"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.4"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.5"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          # curseforge
+          - version: "1.20.1"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.20.4"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.1"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.3"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.4"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.5"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+
     runs-on: ubuntu-latest
     outputs:
       commit_sha: ${{ steps.vars.outputs.commit_sha }}
@@ -39,21 +90,21 @@ jobs:
           echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
           echo "commit_sha=$shortSha" >> $GITHUB_OUTPUT
 
-    - name: Build ${{ matrix.version }}
+    - name: Build ${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}
       run: |
-          mkdir Lite-Modrinth-${{ matrix.version }}-temp
-          cp -r ./versions/vanilla/src/re-console-lite/modrinth/fabric/${{ matrix.version }}/* ./Lite-Modrinth-${{ matrix.version }}-temp/
-          cp ./LICENSE ./Lite-Modrinth-${{ matrix.version }}-temp/
-          cp ./README.md ./Lite-Modrinth-${{ matrix.version }}-temp/
-          cd ./Lite-Modrinth-${{ matrix.version }}-temp/
+          mkdir RC-Lite-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp
+          cp -r ./versions/vanilla/src/re-console-lite/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./RC-Lite-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cp ./LICENSE ./RC-Lite-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cp ./README.md ./RC-Lite-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cd ./RC-Lite-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
           packwiz refresh
           mkdir -p ../$OUTPUT
-          packwiz modrinth export --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-dev-${{ env.COMMIT_SHORT_SHA }}.mrpack
+          packwiz ${{ matrix.platform }} export --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-${{ matrix.loader }}-dev-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}.${{ matrix.file_ext }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: "Re-Console-Lite-${{ matrix.version }}-dev-${{ env.COMMIT_SHORT_SHA }}"
+        name: "Re-Console-Lite-${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}-dev-${{ env.COMMIT_SHORT_SHA }}"
         path: artifacts
 
   combine:
@@ -64,14 +115,15 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: downloaded-artifacts
-
+        
     - name: Combine artifacts
       run: |
         mkdir combined-artifacts
         find downloaded-artifacts -name "*.mrpack" -exec cp {} combined-artifacts/ \;
-
+        find downloaded-artifacts -name "*.zip" -exec cp {} combined-artifacts/ \;
+        
     - name: Upload combined artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: "Re-Console-Lite-dev-${{ needs.build.outputs.commit_sha }}"
+        name: "Re-Console-dev-${{ needs.build.outputs.commit_sha }}"
         path: combined-artifacts
