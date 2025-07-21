@@ -1,10 +1,10 @@
 name: RC-Lite Nighty Builds
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push, pull_request]
+  branches: [ "main" ]
+  paths: 
+  - 'versions/vanilla/src/re-console-lite/curseforge/**'
+  - 'versions/vanilla/src/re-console-lite/modrinth/**'
 
   workflow_dispatch:
 
