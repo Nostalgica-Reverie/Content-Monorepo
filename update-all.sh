@@ -12,14 +12,16 @@ pfvs=(
 # Mod Loader Version
 mlvs=(
     fabric
-    neoforged
 )
 # Minecraft Version
 mcvs=(
     1.20.1
+    1.20.4
     1.21.1
+    1.21.3
     1.21.4
     1.21.5
+    1.21.8
 )
 
 for i in "${vpacks[@]}"; do
@@ -42,6 +44,3 @@ for i in "${vpacks[@]}"; do
         done
     done
 done
-echo ---------------------
-echo Vanilla Packs Updated
-echo ---------------------
