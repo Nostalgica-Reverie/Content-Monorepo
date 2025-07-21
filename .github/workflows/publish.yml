@@ -114,107 +114,107 @@ jobs:
           path: ${{ env.OUTPUT }}/*
           retention-days: 1
 
-  publish-modrinth:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          # - version: "1.21.1"
-          #   loader: "neoforged"
-          - version: "1.21.1"
-            loader: "fabric"
-          - version: "1.21.4"
-            loader: "fabric"
-          # - version: "1.21.5"
-          #   loader: "neoforged"
-          - version: "1.21.5"
-            loader: "fabric"
-      max-parallel: 1  # Ensures sequential uploads
-    env:
-      PACK_NAME: Re-Console
-      VERSION: ${{ needs.build.outputs.version }}
-      COMMIT_SHORT_SHA: ${{ needs.build.outputs.commit-sha }}
+  # publish-modrinth:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         # - version: "1.21.1"
+  #         #   loader: "neoforged"
+  #         - version: "1.21.1"
+  #           loader: "fabric"
+  #         - version: "1.21.4"
+  #           loader: "fabric"
+  #         # - version: "1.21.5"
+  #         #   loader: "neoforged"
+  #         - version: "1.21.5"
+  #           loader: "fabric"
+  #     max-parallel: 1  # Ensures sequential uploads
+  #   env:
+  #     PACK_NAME: Re-Console
+  #     VERSION: ${{ needs.build.outputs.version }}
+  #     COMMIT_SHORT_SHA: ${{ needs.build.outputs.commit-sha }}
     
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: modrinth-${{ matrix.loader }}-${{ matrix.version }}
-          path: artifacts
+  #   steps:
+  #     - name: Download build artifacts
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: modrinth-${{ matrix.loader }}-${{ matrix.version }}
+  #         path: artifacts
 
-      - name: Publish to Modrinth
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          modrinth-id: legacy-minecraft
-          modrinth-token: ${{ secrets.MR }}
+  #     - name: Publish to Modrinth
+  #       uses: Kir-Antipov/mc-publish@v3.3
+  #       with:
+  #         modrinth-id: legacy-minecraft
+  #         modrinth-token: ${{ secrets.MR }}
           
-          files: |
-            artifacts/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-modrinth.mrpack
+  #         files: |
+  #           artifacts/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-modrinth.mrpack
           
-          name: "RC ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
-          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
-          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+  #         name: "RC ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
+  #         version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+  #         version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           
-          loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
-          game-versions: ${{ matrix.version }}
+  #         loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
+  #         game-versions: ${{ matrix.version }}
           
-          changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
+  #         changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
           
-          retry-attempts: 3
-          retry-delay: 10000
-          fail-mode: warn
+  #         retry-attempts: 3
+  #         retry-delay: 10000
+  #         fail-mode: warn
 
-  publish-curseforge:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          # - version: "1.21.1"
-          #   loader: "neoforged"
-          - version: "1.21.1"
-            loader: "fabric"
-          - version: "1.21.4"
-            loader: "fabric"
-          # - version: "1.21.5"
-          #   loader: "neoforged"
-          - version: "1.21.5"
-            loader: "fabric"
-      max-parallel: 1  # Ensures sequential uploads
-    env:
-      PACK_NAME: Re-Console
-      VERSION: ${{ needs.build.outputs.version }}
-      COMMIT_SHORT_SHA: ${{ needs.build.outputs.commit-sha }}
+  # publish-curseforge:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         # - version: "1.21.1"
+  #         #   loader: "neoforged"
+  #         - version: "1.21.1"
+  #           loader: "fabric"
+  #         - version: "1.21.4"
+  #           loader: "fabric"
+  #         # - version: "1.21.5"
+  #         #   loader: "neoforged"
+  #         - version: "1.21.5"
+  #           loader: "fabric"
+  #     max-parallel: 1  # Ensures sequential uploads
+  #   env:
+  #     PACK_NAME: Re-Console
+  #     VERSION: ${{ needs.build.outputs.version }}
+  #     COMMIT_SHORT_SHA: ${{ needs.build.outputs.commit-sha }}
     
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: curseforge-${{ matrix.loader }}-${{ matrix.version }}
-          path: artifacts
+  #   steps:
+  #     - name: Download build artifacts
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: curseforge-${{ matrix.loader }}-${{ matrix.version }}
+  #         path: artifacts
 
-      - name: Publish to CurseForge
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          curseforge-id: re-console
-          curseforge-token: ${{ secrets.CF }}
+  #     - name: Publish to CurseForge
+  #       uses: Kir-Antipov/mc-publish@v3.3
+  #       with:
+  #         curseforge-id: re-console
+  #         curseforge-token: ${{ secrets.CF }}
           
-          files: |
-            artifacts/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-curseforge.zip
+  #         files: |
+  #           artifacts/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-curseforge.zip
           
-          name: "RC ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
-          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
-          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+  #         name: "RC ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
+  #         version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+  #         version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           
-          loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
-          game-versions: ${{ matrix.version }}
+  #         loaders: ${{ matrix.loader == 'neoforged' && 'neoforge' || matrix.loader }}
+  #         game-versions: ${{ matrix.version }}
           
-          changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
+  #         changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
           
-          retry-attempts: 3
-          retry-delay: 10000
-          fail-mode: warn
+  #         retry-attempts: 3
+  #         retry-delay: 10000
+  #         fail-mode: warn
 
   publish-github:
     needs: build
