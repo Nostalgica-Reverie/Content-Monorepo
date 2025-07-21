@@ -13,8 +13,20 @@ jobs:
     strategy:
       matrix:
         include:
-          # Fabric
+          # modrinth
+          - version: "1.20.1"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.20.4"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
           - version: "1.21.1"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.3"
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
@@ -26,7 +38,20 @@ jobs:
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
+          # curseforge
+          - version: "1.20.1"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.20.4"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
           - version: "1.21.1"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.3"
             loader: "fabric"
             platform: "curseforge"
             file_ext: "zip"
@@ -38,15 +63,6 @@ jobs:
             loader: "fabric"
             platform: "curseforge"
             file_ext: "zip"
-            # NeoForge
-          - version: "1.21.1"
-            loader: "neoforged"
-            platform: "modrinth"
-            file_ext: "mrpack"
-          - version: "1.21.5"
-            loader: "neoforged"
-            platform: "modrinth"
-            file_ext: "mrpack"
 
     runs-on: ubuntu-latest
     outputs:
