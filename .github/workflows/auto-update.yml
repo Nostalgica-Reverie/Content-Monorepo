@@ -1,8 +1,6 @@
 name: Auto Update
-
 on:
   workflow_dispatch:
-
 jobs:
   update-modpacks:
     runs-on: ubuntu-latest
@@ -14,13 +12,12 @@ jobs:
         minecraft: [1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8]
       max-parallel: 3  # Helps with rate limiting
       fail-fast: false
-
     steps:
       - uses: actions/checkout@v4
         with: 
           token: ${{ secrets.GH_PAT }}
           fetch-depth: 1
-
+      
       # Cache Packwiz binary to avoid Go setup and compilation
       - name: Cache Packwiz Binary
         uses: actions/cache@v4
@@ -30,7 +27,7 @@ jobs:
           key: packwiz-binary-${{ runner.os }}-v1
           restore-keys: |
             packwiz-binary-${{ runner.os }}-
-
+      
       # Only set up Go and install Packwiz if not cached
       - name: Set up Go
         if: steps.cache-packwiz.outputs.cache-hit != 'true'
@@ -38,15 +35,15 @@ jobs:
         with:
           go-version: 'stable'
           cache: false
-
+      
       - name: Install Packwiz
         if: steps.cache-packwiz.outputs.cache-hit != 'true'
         run: go install github.com/packwiz/packwiz@latest
-
+      
       # Add Packwiz to PATH (whether cached or freshly installed)
       - name: Add Packwiz to PATH
         run: echo "$HOME/go/bin" >> $GITHUB_PATH
-
+      
       - name: Update ${{ matrix.modpack }} - ${{ matrix.platform }} - ${{ matrix.loader }} - ${{ matrix.minecraft }}
         run: |
           DIR="./versions/vanilla/src/${{ matrix.modpack }}/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.minecraft }}"
@@ -58,22 +55,47 @@ jobs:
           else
             echo "Directory $DIR does not exist, skipping"
           fi
-
+      
       - name: Rate limiting delay
         run: sleep 10
-
+      
+      # Check if there are changes and upload them
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet; then
+            echo "has-changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has-changes=true" >> $GITHUB_OUTPUT
+          fi
+      
+      # Upload the entire workspace if there are changes
+      - name: Upload changes
+        if: steps.check-changes.outputs.has-changes == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: changes-${{ strategy.job-index }}
+          path: versions/
+          retention-days: 1
+  
   commit-changes:
     needs: update-modpacks
     runs-on: ubuntu-22.04
+    if: always() # Run even if some matrix jobs fail
     steps:
       - uses: actions/checkout@v4
         with: 
           token: ${{ secrets.GH_PAT }}
           fetch-depth: 1
-
-      - name: Pull latest changes
-        run: git pull origin main
-
+      
+      # Download all artifacts from matrix jobs
+      - name: Download all changes
+        uses: actions/download-artifact@v4
+        with:
+          pattern: changes-*
+          merge-multiple: true
+          path: ./
+      
       - name: Commit Updates
         uses: EndBug/add-and-commit@v9.1.4
         with:
