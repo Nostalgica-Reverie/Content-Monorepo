@@ -1,130 +1,111 @@
 name: Auto Update
+
 on:
   workflow_dispatch:
+
 jobs:
-  update-modpacks:
+  auto-update:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        modpack: [re-console, re-console-lite]
-        platform: [curseforge, modrinth]
-        loader: [fabric]
-        minecraft: [1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8]
-      max-parallel: 3  # Helps with rate limiting
-      fail-fast: false
+
     steps:
-      - uses: actions/checkout@v4
-        with: 
-          token: ${{ secrets.GH_PAT }}
-          fetch-depth: 1
-      
-      # Check if directory exists first
-      - name: Check if directory exists
-        id: check-dir
-        run: |
-          DIR="./versions/vanilla/src/${{ matrix.modpack }}/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.minecraft }}"
-          if [ -d "$DIR" ]; then
-            echo "dir-exists=true" >> $GITHUB_OUTPUT
-            echo "Directory $DIR exists, proceeding with update"
-          else
-            echo "dir-exists=false" >> $GITHUB_OUTPUT
-            echo "Directory $DIR does not exist, skipping all steps"
-          fi
-      
-      # Cache Packwiz binary to avoid Go setup and compilation
-      - name: Cache Packwiz Binary
-        if: steps.check-dir.outputs.dir-exists == 'true'
-        uses: actions/cache@v4
-        id: cache-packwiz
-        with:
-          path: ~/go/bin/packwiz
-          key: packwiz-binary-${{ runner.os }}-v1
-          restore-keys: |
-            packwiz-binary-${{ runner.os }}-
-      
-      # Only set up Go and install Packwiz if not cached
-      - name: Set up Go
-        if: steps.check-dir.outputs.dir-exists == 'true' && steps.cache-packwiz.outputs.cache-hit != 'true'
-        uses: actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: false
-      
-      - name: Install Packwiz
-        if: steps.check-dir.outputs.dir-exists == 'true' && steps.cache-packwiz.outputs.cache-hit != 'true'
-        run: go install github.com/packwiz/packwiz@latest
-      
-      # Add Packwiz to PATH (whether cached or freshly installed)
-      - name: Add Packwiz to PATH
-        if: steps.check-dir.outputs.dir-exists == 'true'
-        run: echo "$HOME/go/bin" >> $GITHUB_PATH
-      
-      - name: Update ${{ matrix.modpack }} - ${{ matrix.platform }} - ${{ matrix.loader }} - ${{ matrix.minecraft }}
-        if: steps.check-dir.outputs.dir-exists == 'true'
-        id: update-step
-        run: |
-          DIR="./versions/vanilla/src/${{ matrix.modpack }}/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.minecraft }}"
-          echo "Updating ${{ matrix.modpack }} ${{ matrix.platform }} ${{ matrix.loader }} ${{ matrix.minecraft }}"
-          cd "$DIR"
-          packwiz refresh -y
-          UPDATE_OUTPUT=$(packwiz update -a -y 2>&1 | tail -n 1)
-          echo "update-output=$UPDATE_OUTPUT" >> $GITHUB_OUTPUT
-          echo "Last line of packwiz update: $UPDATE_OUTPUT"
-      
-      - name: Rate limiting delay
-        if: steps.check-dir.outputs.dir-exists == 'true'
-        run: sleep 5
-      
-      # Upload changes only if files were updated
-      - name: Upload changes
-        if: steps.check-dir.outputs.dir-exists == 'true' && steps.update-step.outputs.update-output == 'Files updated!'
-        uses: actions/upload-artifact@v4
-        with:
-          name: changes-${{ strategy.job-index }}
-          path: ./versions/vanilla/src/${{ matrix.modpack }}/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.minecraft }}/
-          retention-days: 1
-  
-  commit-changes:
-    needs: update-modpacks
-    runs-on: ubuntu-22.04
-    if: always() # Run even if some matrix jobs fail
-    steps:
-      - uses: actions/checkout@v4
-        with: 
-          token: ${{ secrets.GH_PAT }}
-          fetch-depth: 1
-      
-      # Download all artifacts from matrix jobs
-      - name: Download all changes
-        uses: actions/download-artifact@v4
-        with:
-          pattern: changes-*
-          path: ./
-          merge-multiple: false
-      
-      # Move artifacts to correct locations
-      - name: Restore file structure
-        run: |
-          if [ -d "./changes-"* ]; then
-            for artifact_dir in ./changes-*; do
-              if [ -d "$artifact_dir" ]; then
-                echo "Processing $artifact_dir"
-                # Find and move the content to the right location
-                find "$artifact_dir" -name "versions" -type d | while read versions_dir; do
-                  if [ -d "$versions_dir" ]; then
-                    echo "Copying from $versions_dir to ./versions/"
-                    cp -r "$versions_dir"/* ./versions/ 2>/dev/null || true
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GH_PAT }}
+        fetch-depth: 1
+
+    # Cache Packwiz binary to avoid Go setup and compilation
+    - name: Cache Packwiz Binary
+      uses: actions/cache@v4
+      id: cache-packwiz
+      with:
+        path: ~/go/bin/packwiz
+        key: packwiz-binary-${{ runner.os }}-v1
+        restore-keys: |
+          packwiz-binary-${{ runner.os }}-
+
+    # Only set up Go and install Packwiz if not cached
+    - name: Set up Go
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
+      uses: actions/setup-go@v5
+      with:
+        go-version: 'stable'
+        cache: false
+
+    - name: Install Packwiz
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
+      run: go install github.com/packwiz/packwiz@latest
+
+    # Add Packwiz to PATH (whether cached or freshly installed)
+    - name: Add Packwiz to PATH
+      run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
+    - name: Update All Modpacks
+      run: |
+        BATCH_SIZE=2
+        WAIT_TIME=18
+
+        vpacks=(re-console re-console-lite)
+        pfvs=(curseforge modrinth)
+        mlvs=(fabric)
+        mcvs=(1.20.1 1.20.4 1.21.1 1.21.3 1.21.4 1.21.5 1.21.8)
+
+        batch=()
+        run_batch() {
+          echo "Running batch of ${#batch[@]} updates"
+          pids=()
+          logs=()
+
+          for idx in "${!batch[@]}"; do
+            log_file="update_log_$idx.txt"
+            logs+=("$log_file")
+
+            bash -c "${batch[$idx]}" > "$log_file" 2>&1 &
+            pids+=($!)
+          done
+
+          # Wait for all background tasks to finish
+          for pid in "${pids[@]}"; do
+            wait $pid
+          done
+
+          # Show logs
+          for idx in "${!logs[@]}"; do
+            echo
+            echo "==== Output for Task $((idx + 1)) ===="
+            cat "${logs[$idx]}"
+            echo "==== End Output for Task $((idx + 1)) ===="
+            echo
+          done
+
+          echo "Batch complete, waiting ${WAIT_TIME} seconds..."
+          echo
+          sleep ${WAIT_TIME}
+          batch=()
+        }
+
+        for i in "${vpacks[@]}"; do
+          for q in "${pfvs[@]}"; do
+            for w in "${mlvs[@]}"; do
+              for e in "${mcvs[@]}"; do
+                DIR="./versions/vanilla/src/$i/$q/$w/$e"
+                if [ -d "$DIR" ]; then
+                  echo "Queued: $i $q $w $e"
+                  batch+=("cd \"$DIR\" && packwiz refresh -y && packwiz update -a -y")
+                  if [ "${#batch[@]}" -eq "$BATCH_SIZE" ]; then
+                    run_batch
                   fi
-                done
-                # Clean up artifact directory
-                rm -rf "$artifact_dir"
-              fi
+                fi
+              done
             done
-          else
-            echo "No artifacts found to process"
-          fi
-      
-      - name: Commit Updates
-        uses: EndBug/add-and-commit@v9.1.4
-        with:
-          default_author: github_actions
+          done
+        done
+
+        # Final batch if anything remains
+        if [ "${#batch[@]}" -gt 0 ]; then
+          run_batch
+        fi
+
+    - name: Commit Updates
+      uses: EndBug/add-and-commit@v9.1.4
+      with:
+        default_author: github_actions
