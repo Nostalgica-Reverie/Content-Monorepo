@@ -3,11 +3,11 @@ filename = "FactoryAPI-1.21.5-2.2.5-fabric.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/nkTZHOLD/versions/JycD38nU/FactoryAPI-1.21.5-2.2.5-fabric.jar"
-hash-format = "sha512"
-hash = "7e27871077e0d2cf40cf5cbafed44aa333e3b3e99c320153c193d39ca71f9030b07960389cb337fa729ef26f3a293706f0d4d102de6b39fa365e80d61030ec48"
+hash-format = "sha1"
+hash = "30a506035e2ff411ab603484b24859c64eeb518b"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "nkTZHOLD"
-version = "JycD38nU"
+[update.curseforge]
+file-id = 6603539
+project-id = 704136

@@ -3,11 +3,11 @@ filename = "legacyskins-1.4.0+fabric+1.21.3.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/4UNJZ4cX/versions/zSy8JH2f/legacyskins-1.4.0%2Bfabric%2B1.21.3.jar"
-hash-format = "sha512"
-hash = "111b0fbf28a05c5c6c4779309e30c2ab22abd03c51fd391fdfc0d51891b2f9e81211adbbfa70e6b8c134966bc55453bd35051060f99cd80f2d0434e661533cec"
+hash-format = "sha1"
+hash = "87a7975c3d926c5836f7728636737a6cbc8c2da3"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "4UNJZ4cX"
-version = "zSy8JH2f"
+[update.curseforge]
+file-id = 6263059
+project-id = 1090749
