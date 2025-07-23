@@ -28,11 +28,11 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "release" ]; then
             tag="${{ github.event.release.tag_name }}"
-            if [[ "$tag" =~ ^(RC|Lite)[[:space:]]+[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
+            if [[ "$tag" =~ ^(RC|Lite)-[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
               echo "should_run=true" >> $GITHUB_OUTPUT
             else
               echo "should_run=false" >> $GITHUB_OUTPUT
-              echo "Tag '$tag' does not match pattern 'RC X.Y.Z' or 'Lite X.Y.Z'. Skipping workflow."
+              echo "Tag '$tag' does not match pattern 'RC-X.Y.Z' or 'Lite-X.Y.Z'. Skipping workflow."
             fi
           else
             # Always run for workflow_dispatch
@@ -47,22 +47,22 @@ jobs:
             tag="${{ github.event.release.tag_name }}"
             
             # Check if it's a Lite release
-            if [[ "$tag" =~ ^Lite[[:space:]] ]]; then
+            if [[ "$tag" =~ ^Lite- ]]; then
               echo "is_lite=true" >> $GITHUB_OUTPUT
               echo "pack_name=Re-Console-Lite" >> $GITHUB_OUTPUT
               echo "source_path=re-console-lite" >> $GITHUB_OUTPUT
               echo "modrinth_id=legacy-minecraft-lite" >> $GITHUB_OUTPUT
               echo "curseforge_id=re-console-lite" >> $GITHUB_OUTPUT
-              # Extract version after "Lite "
-              version=$(echo "$tag" | sed 's/^Lite[[:space:]]\+//')
+              # Extract version after "Lite-"
+              version=$(echo "$tag" | sed 's/^Lite-//')
             else
               echo "is_lite=false" >> $GITHUB_OUTPUT
               echo "pack_name=Re-Console" >> $GITHUB_OUTPUT
               echo "source_path=re-console" >> $GITHUB_OUTPUT
               echo "modrinth_id=legacy-minecraft" >> $GITHUB_OUTPUT
               echo "curseforge_id=re-console" >> $GITHUB_OUTPUT
-              # Extract version after "RC "
-              version=$(echo "$tag" | sed 's/^RC[[:space:]]\+//')
+              # Extract version after "RC-"
+              version=$(echo "$tag" | sed 's/^RC-//')
             fi
             
             echo "version=$version" >> $GITHUB_OUTPUT
