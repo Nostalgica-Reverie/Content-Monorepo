@@ -115,6 +115,10 @@ jobs:
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
+          - version: "1.21.8"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
           # curseforge
           - version: "1.20.1"
             loader: "fabric"
@@ -137,6 +141,10 @@ jobs:
             platform: "curseforge"
             file_ext: "zip"
           - version: "1.21.5"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.8"
             loader: "fabric"
             platform: "curseforge"
             file_ext: "zip"
@@ -245,6 +253,8 @@ jobs:
             loader: "fabric"
           - version: "1.21.5"
             loader: "fabric"
+          - version: "1.21.8"
+            loader: "fabric"
       max-parallel: 1  # Ensures sequential uploads
     env:
       PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
@@ -298,6 +308,8 @@ jobs:
           - version: "1.21.4"
             loader: "fabric"
           - version: "1.21.5"
+            loader: "fabric"
+          - version: "1.21.8"
             loader: "fabric"
       max-parallel: 1  # Ensures sequential uploads
     env:
