@@ -1,10 +1,6 @@
 hash-format = "sha256"
 
 [[files]]
-file = ".run/eula.txt"
-hash = "ee27072e4a23e088522f740ddaab0c7c4145c186969e90a86254faa3a5ec5ce6"
-
-[[files]]
 file = "configureddefaults/config/NoChatReports/NCR-Client.json"
 hash = "e0d9ce47a87536c707b797789b53e9e4f09b273f69098b1303b0815ebd82b3c5"
 
@@ -454,11 +450,6 @@ metafile = true
 [[files]]
 file = "mods/macos-input-fixes.pw.toml"
 hash = "e4562622be1286bf8f2c8af9e3fc4e6052c9cd51c67c70f2bfce0fd9d26c31bb"
-metafile = true
-
-[[files]]
-file = "mods/minimega.pw.toml"
-hash = "a4de9cae3546add7c2ae208af2110474be94aa62589de5e81330367649d3dd7b"
 metafile = true
 
 [[files]]
