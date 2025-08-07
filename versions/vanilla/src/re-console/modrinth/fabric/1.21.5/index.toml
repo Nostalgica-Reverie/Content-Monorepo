@@ -2,7 +2,7 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
-hash = "e201fa917ffd624e255599c43a51dd0e1450b20a587d88086a7c4aa5e16ffaf9"
+hash = "5b3100f7845d896562b731a6593acc9be576a4c182935db30642e151707eec79"
 
 [[files]]
 file = "config/crash_assistant/lang/README.md"
@@ -283,6 +283,11 @@ hash = "5dccb53650c19b933db206e676ef00f1d1d0129f6d072a53e5111421ea461cf6"
 metafile = true
 
 [[files]]
+file = "mods/c2me-fabric.pw.toml"
+hash = "39d2695bf316d7d48d21da0ae6b38ea3e74c47c3b07c93bbade4dd753df90321"
+metafile = true
+
+[[files]]
 file = "mods/cape-provider.pw.toml"
 hash = "39c04fec9c473c7f3f2f0370f23eb783d59554a4c0616bda7b2f2f4603195290"
 metafile = true
@@ -325,6 +330,11 @@ metafile = true
 [[files]]
 file = "mods/custom-player-models.pw.toml"
 hash = "e9da3a3be79682a00b8337d151201b24fc0700b125cf225aa0e4e611659c6e08"
+metafile = true
+
+[[files]]
+file = "mods/debugify.pw.toml"
+hash = "847dce2251028733f139692907e89466896dc6ca35cfcc1bdaa0ec1f02aebefb"
 metafile = true
 
 [[files]]
@@ -433,13 +443,13 @@ hash = "e4562622be1286bf8f2c8af9e3fc4e6052c9cd51c67c70f2bfce0fd9d26c31bb"
 metafile = true
 
 [[files]]
-file = "mods/main-menu-credits.pw.toml"
-hash = "732e3a5fb7d7c41c380d1ba92118293db75d5a7f2c05a6df6ac04c54c4bd1a22"
+file = "mods/minimega.pw.toml"
+hash = "a4de9cae3546add7c2ae208af2110474be94aa62589de5e81330367649d3dd7b"
 metafile = true
 
 [[files]]
-file = "mods/minimega.pw.toml"
-hash = "a4de9cae3546add7c2ae208af2110474be94aa62589de5e81330367649d3dd7b"
+file = "mods/mixintrace.pw.toml"
+hash = "6cd55df8041a48cb7f5f95ea4520f5ed59064e71ff9dab8b0e02bb922b68c9cb"
 metafile = true
 
 [[files]]
@@ -463,13 +473,18 @@ hash = "8d250e4781a41beb98270b2f36e042415067f92081c6fcf843d7ea89a61b4cdc"
 metafile = true
 
 [[files]]
+file = "mods/mouse-tweaks.pw.toml"
+hash = "4aef3c4dbc01c945f4a30f63c03607aad77d16ab194983510c10ce516312e258"
+metafile = true
+
+[[files]]
 file = "mods/no-chat-reports.pw.toml"
 hash = "e94c47d7679c5a6a4a3deccaa7bba8f7c3961a70f6c03c32adc809d7135c87cc"
 metafile = true
 
 [[files]]
 file = "mods/noisium.pw.toml"
-hash = "ea1d303d34de75ef3745a218e1e48fa72cc0e04265142ed27345fdede5b1d954"
+hash = "1f9c70510fe21d5028a900ae31923e12c4bc4d7bbc38937f9c90ef75385ae6b7"
 metafile = true
 
 [[files]]
@@ -490,6 +505,16 @@ metafile = true
 [[files]]
 file = "mods/polytone.pw.toml"
 hash = "e24aeba11ce13849f85babb8dfacf4917aa28b42b172feffa2c123be58766f6f"
+metafile = true
+
+[[files]]
+file = "mods/raknetify.pw.toml"
+hash = "41e29e8057a2614a0eb83255cbd8c08504f23d584b0df0d12f5f5705444cbf87"
+metafile = true
+
+[[files]]
+file = "mods/scalablelux.pw.toml"
+hash = "3975d8351b1a246c8c2e13251ea4f86fee525ae772a51927c37407a88b03defb"
 metafile = true
 
 [[files]]
@@ -515,6 +540,11 @@ metafile = true
 [[files]]
 file = "mods/unilib.pw.toml"
 hash = "8e6cc98c22bd80bbc820defcd9443eb74832ac911b75099b0babe64cf07b9b66"
+metafile = true
+
+[[files]]
+file = "mods/vmp-fabric.pw.toml"
+hash = "dee7712131e72105b1a9dafe6e103308e33023a4a48ec3b3868298d8d6c4ed6c"
 metafile = true
 
 [[files]]
