@@ -62,7 +62,7 @@
 #Also you can see diff by running '/crash_assistant modlist diff' command.
 [modpack_modlist]
 	#Enable feature.
-	enabled = false
+	enabled = true
 	#nicknames of players, who considered as modpack creator.
 	#Only this players can overwrite modlist.json
 	#If this feature is enabled and this array is empty, will be appended with nickname of current player.
@@ -89,11 +89,11 @@
 	#Enable feature.
 	enabled = true
 	#Show funny related gif in warning message.
-	show_gif = true
+	show_gif = false
 
 [greeting]
 	#You don't need to touch this option.
 	#On first world join of modpack creator if set to false shows greeting, then self enables.
-	shown_greeting = false
+	shown_greeting = true
 
 
