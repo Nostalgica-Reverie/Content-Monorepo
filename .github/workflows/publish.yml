@@ -144,10 +144,10 @@ jobs:
             loader: "fabric"
             platform: "curseforge"
             file_ext: "zip"
-          - version: "1.21.8"
-            loader: "fabric"
-            platform: "curseforge"
-            file_ext: "zip"
+          # - version: "1.21.8"
+          #   loader: "fabric"
+          #   platform: "curseforge"
+          #   file_ext: "zip"
 
     runs-on: ubuntu-latest
     env:  
@@ -309,8 +309,8 @@ jobs:
             loader: "fabric"
           - version: "1.21.5"
             loader: "fabric"
-          - version: "1.21.8"
-            loader: "fabric"
+          # - version: "1.21.8"
+          #   loader: "fabric"
       max-parallel: 1  # Ensures sequential uploads
     env:
       PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
@@ -390,3 +390,4 @@ jobs:
             1.21.3
             1.21.4
             1.21.5
+            1.21.8
