@@ -1,6 +1,10 @@
 hash-format = "sha256"
 
 [[files]]
+file = "configureddefaults/bettergrass.json"
+hash = "876580a5ebe7e34ca51b871828234e5f949968392cbbbb3e6da2a32c67efe674"
+
+[[files]]
 file = "configureddefaults/config/NoChatReports/NCR-Client.json"
 hash = "b9c822c512a6dceb195e2a750cce00759973f4a5d99fe7051f21e837861fbcbf"
 
@@ -14,7 +18,7 @@ hash = "34ea70c41ff1600e0b169ab969d9acc21420a1a0078f104edb576b7f8a83fc36"
 
 [[files]]
 file = "configureddefaults/config/bettergrass.json"
-hash = "c932d49a4b7f33be410b2c3d2eb436405cf67bc197473aba19016e942965efaf"
+hash = "876580a5ebe7e34ca51b871828234e5f949968392cbbbb3e6da2a32c67efe674"
 
 [[files]]
 file = "configureddefaults/config/capes.json5"
@@ -74,7 +78,7 @@ hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
 
 [[files]]
 file = "configureddefaults/config/immediatelyfast.json"
-hash = "616308873c29d4de3410db2fc50e70297e77943698d673025c1e72a31618f57f"
+hash = "f5ec7211d5e40c4a292edabe333cc81a6e0206f9e48782f3881ceb431467fff6"
 
 [[files]]
 file = "configureddefaults/config/iris.properties"
@@ -82,7 +86,7 @@ hash = "bc5fc249179fa926c9395c63626120f52f55e5c25638712a3e4008a3737e9013"
 
 [[files]]
 file = "configureddefaults/config/lambdynlights.toml"
-hash = "6c6f2e8a90cd8b8c7a6c70f8c5befd5ff1d79a64d8ec87e7922e9f02bf680317"
+hash = "0fbd6c5f78625f0240300838e7ff89836df8612cca07091a644819341624138f"
 
 [[files]]
 file = "configureddefaults/config/legacy/client_mixin.json"
@@ -106,7 +110,7 @@ hash = "f77f351e6b53e333cfee2511513fb2483f59c94c244a800aabfaf531790c2ac5"
 
 [[files]]
 file = "configureddefaults/config/modernfix-mixins.properties"
-hash = "4822d1751f54182e9e675d458b8bcd045e99bc6cc76152bf6945cce6d91c5405"
+hash = "890f408f1f70e476505023ef20da5613d0245d27c6ca1b4a692548e294c5fcac"
 
 [[files]]
 file = "configureddefaults/config/modmenu.json"
@@ -129,10 +133,6 @@ file = "configureddefaults/config/puzzle.json"
 hash = "dd04f1ceea37a64e0867a55b3bb6e559f4f2358113717abe76a8e250e3718b03"
 
 [[files]]
-file = "configureddefaults/config/ryoamiclights.toml"
-hash = "14a351043b99f57958700fae31d66bd3f28c68ea0ba0b78dc40644eba97de391"
-
-[[files]]
 file = "configureddefaults/config/servercore/config.yml"
 hash = "a6fbf706590f394558edc5996f07a9575739fb9f056eed59cffe17fa57ec4e55"
 
@@ -147,6 +147,10 @@ hash = "0d0549563aca08c87a22a9fd862cc6e7a9906f2d6fca84dcbfa7cbec14dff7e6"
 [[files]]
 file = "configureddefaults/config/world-host.json5"
 hash = "beb51783002c46da1c609c40f31cd3a79773a1a0c2b63f7d6442c61b0bf9ae43"
+
+[[files]]
+file = "configureddefaults/lambdynlights.toml"
+hash = "0fbd6c5f78625f0240300838e7ff89836df8612cca07091a644819341624138f"
 
 [[files]]
 file = "configureddefaults/options.txt"
