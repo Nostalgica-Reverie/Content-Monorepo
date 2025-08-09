@@ -86,7 +86,7 @@ hash = "6c6f2e8a90cd8b8c7a6c70f8c5befd5ff1d79a64d8ec87e7922e9f02bf680317"
 
 [[files]]
 file = "configureddefaults/config/legacy/client_mixin.json"
-hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
+hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
 
 [[files]]
 file = "configureddefaults/config/legacy/client_options.json"
@@ -94,15 +94,15 @@ hash = "09d72c9d87e60eeb4de85a4f71755b3938f255e5a2f25a880fcee1c25911ade5"
 
 [[files]]
 file = "configureddefaults/config/legacy/common.json"
-hash = "102803aae5342ed1907d7c1aa18b5ea41f622ab588a6b1c9694ae41f962d5b3a"
+hash = "3b9b9361ed4ad964361358b210952bb01f4f30ff2d56c249d0ce517792244266"
 
 [[files]]
 file = "configureddefaults/config/legacy/common_mixin.json"
-hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
+hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "f77f351e6b53e333cfee2511513fb2483f59c94c244a800aabfaf531790c2ac5"
+hash = "521cdd96d97f75d25f46433d94cf093a13f0cff782ba3ce0d69d2bea2741f408"
 
 [[files]]
 file = "configureddefaults/config/modernfix-mixins.properties"
@@ -114,7 +114,7 @@ hash = "4dc7d729a2b83401f4a39dff457680f6f5872df1a5b2a93d9eb27b0b5df42d0e"
 
 [[files]]
 file = "configureddefaults/config/moreculling.toml"
-hash = "20a7c9a9d1ec3c730f37af63357d6847afbb28fd37cd13657928c3d22feb055c"
+hash = "a8ef29e5d01530454b385d39d8cf9f90d240cfd2462c044b7d33fa8555101657"
 
 [[files]]
 file = "configureddefaults/config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
@@ -314,7 +314,7 @@ metafile = true
 
 [[files]]
 file = "mods/cubes-without-borders.pw.toml"
-hash = "a90139b002d632ba9256cb3e7e877945bf8e3afa5b191d1adc83c5e3eb72da4c"
+hash = "e1879d997a12a832043c0380df086748a51de9688718bfa9c323e68520014858"
 metafile = true
 
 [[files]]
@@ -354,7 +354,7 @@ metafile = true
 
 [[files]]
 file = "mods/esf.pw.toml"
-hash = "b485baa8463264b932f798974a17f3edd963f5abe1c65da425529124a10a411a"
+hash = "d7e2cbcc24bd64acb8c469303a014e1ad86e4b5bee565883dbba59bedbdedbfe"
 metafile = true
 
 [[files]]
@@ -389,12 +389,12 @@ metafile = true
 
 [[files]]
 file = "mods/ferrite-core.pw.toml"
-hash = "fbf9806c22ee5bccbe08f7dec15b742f5ae3a70caf186d6dce0d42f28790f559"
+hash = "bdc7b0fa81db2e54d570ac5fca10e744e03b683bd05dd63b798bbf4b5ad0c726"
 metafile = true
 
 [[files]]
 file = "mods/fix-keyboard-on-linux.pw.toml"
-hash = "6e572f70d25f8f509761cb13f0d29eb2f9333713e4d32b33ecd576f7545a738e"
+hash = "db653ff43ccd32a562405d13e93865d74e6e9e9e8fca2f4e42d290b845c3e256"
 metafile = true
 
 [[files]]
@@ -444,7 +444,7 @@ metafile = true
 
 [[files]]
 file = "mods/modelfix.pw.toml"
-hash = "14800fc12fd4b92497c0f26455523783bdf59194233bdaa71d4864b3d436929a"
+hash = "06e7d48c72ceed67b560d88521e86b685f876249d8d3f840a039b3617f5a38af"
 metafile = true
 
 [[files]]
@@ -509,7 +509,7 @@ metafile = true
 
 [[files]]
 file = "mods/threadtweak.pw.toml"
-hash = "ff0d87064f466d6dfa5151178cb805cea4169a6e85f47913b462758262a78024"
+hash = "9973e988e573963e42d6de40ea4c1e1e4dc582331f9241532252603bb0cd310b"
 metafile = true
 
 [[files]]
@@ -588,7 +588,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/faithful-legacy.pw.toml"
-hash = "ab61332d0a6bb249e26f30c34e7bce7bb88999e2730f186363ef4407857ffd44"
+hash = "5c09e99f53b9b522944cb800874b4a9915c0fa296768b6cb0d5a369aef8c10a1"
 metafile = true
 
 [[files]]
@@ -599,6 +599,11 @@ metafile = true
 [[files]]
 file = "resourcepacks/fantasy-texture-pack.pw.toml"
 hash = "9b0b35d0b11262718177a10a4c7f8184acbfc7c849e4790749e3291117d3180a"
+metafile = true
+
+[[files]]
+file = "resourcepacks/fast-better-grass.pw.toml"
+hash = "774b51f7257a3a18f0afc40c155bac4bb1dbade055170137f2ac96456f0e3653"
 metafile = true
 
 [[files]]
@@ -614,6 +619,11 @@ metafile = true
 [[files]]
 file = "resourcepacks/fresh-animations.pw.toml"
 hash = "0aa8713871d6d3d169eff2166b07beb767ab3a4ca4ad0eedf0e07476181e3373"
+metafile = true
+
+[[files]]
+file = "resourcepacks/golden-days-alpha.pw.toml"
+hash = "29236daaf3d07f44cfc1834e50001a78e4112303928939ea3e818ee3a522a5ae"
 metafile = true
 
 [[files]]
@@ -663,7 +673,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/legacy-worlds.pw.toml"
-hash = "aed5efab46de12e572df2b7f73173d7536552b941d796ca7afea7d8218c6afa1"
+hash = "19a12264b24fc709ebb6e1cd77f2944df8f337958da4128446ad3b2f0b2f1866"
 metafile = true
 
 [[files]]
@@ -692,8 +702,13 @@ hash = "cc1cff1be476ff3a6660ebe8061780c8edae0916bf28a513190f7ffc0ebe083f"
 metafile = true
 
 [[files]]
+file = "resourcepacks/ore4j.pw.toml"
+hash = "f0822bfbfbc7aec450ecfbcc668ff634c96bd7945b13eea1e37bc3a982c5ca1e"
+metafile = true
+
+[[files]]
 file = "resourcepacks/pacp.pw.toml"
-hash = "6c863af9d3705655b0ed7963e3367c0acede5ead408502c73b2401935187b228"
+hash = "05e9b536189dd2f079a9c03294659e1b34d34e7a65871c7967326904c8165c54"
 metafile = true
 
 [[files]]
@@ -713,7 +728,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "0e0d1d8f83c5af75781b11907ff1d52737f4fcfb7786ed16d69b31c4fce26f48"
+hash = "dd7097406ca7611a6d883fb1676d01fc94705681cbaf50e20defc3149ef1fa44"
 metafile = true
 
 [[files]]
@@ -749,6 +764,21 @@ metafile = true
 [[files]]
 file = "resourcepacks/tutorial-world-addon.pw.toml"
 hash = "de5f3c59c9ec0ad545235dca595c8bb8a28d4c72ba0cfd5a491f234c0e948f44"
+metafile = true
+
+[[files]]
+file = "resourcepacks/vanilla-3d-doors.pw.toml"
+hash = "e6d2085cf15ab4ee86f58f0f12cf640b37522f0ed00c8802b040f28d1cc89b9d"
+metafile = true
+
+[[files]]
+file = "resourcepacks/vanilla-3d.pw.toml"
+hash = "f363bba4980aecfd21b5f413947204a943412fbf699bb130fa6e575253d15105"
+metafile = true
+
+[[files]]
+file = "resourcepacks/vanilla-plus-jaronwqhd.pw.toml"
+hash = "846b7d88b6037e7cd2ba555842093d9bbcd701d8f8c5037c26f4d22ebdc91e16"
 metafile = true
 
 [[files]]
