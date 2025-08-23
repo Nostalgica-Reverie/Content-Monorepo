@@ -90,7 +90,7 @@ hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
 
 [[files]]
 file = "configureddefaults/config/legacy/client_options.json"
-hash = "efdae01e76b7728a8ea7cd2d3b4e41d172e76510ddc6190c6465bbf093eb56b7"
+hash = "adb3216aa6f06cc2840fb842e2ab9d189f076f6cba67c3241b4c1144447e7016"
 
 [[files]]
 file = "configureddefaults/config/legacy/common.json"
@@ -118,7 +118,7 @@ hash = "4dc7d729a2b83401f4a39dff457680f6f5872df1a5b2a93d9eb27b0b5df42d0e"
 
 [[files]]
 file = "configureddefaults/config/moonrise.yml"
-hash = "f88d00171ded567baaf569af2b70fe02ab95e8712e1be6f43bddf8b1ae1f7db4"
+hash = "8366e8d4fa7952e0abcf0a0871c06f0b562725b912e0d3537fc37906392a2329"
 
 [[files]]
 file = "configureddefaults/config/moreculling.toml"
@@ -275,23 +275,13 @@ hash = "c518cfc6337cc29d7bf1dbde0f82a2f035844564a9811818e462059c8e1a4adc"
 metafile = true
 
 [[files]]
-file = "mods/bobby.pw.toml"
-hash = "abb9312cb3b52e89b5ee67f99766bfa25a267961676f613b35d85aab09bd785c"
-metafile = true
-
-[[files]]
 file = "mods/cape-provider.pw.toml"
 hash = "37f1a6f956395d325213968929b958c43ce8b4e2820b43aa969c392f1c6f3561"
 metafile = true
 
 [[files]]
 file = "mods/chat-heads.pw.toml"
-hash = "bc024432f1ff6f9b92effa4b84e93ca5ebc16df5e15b5f91d3fb8daf42d090c9"
-metafile = true
-
-[[files]]
-file = "mods/cloth-config.pw.toml"
-hash = "f3f42ed82cd674f79fe88f4761c7b287b37a158c13fc0432609c0e56ad15227e"
+hash = "21ecdd06d63e862c24703ef6fd496eef5c6dfa72ada035853304619ee9e63122"
 metafile = true
 
 [[files]]
@@ -335,11 +325,6 @@ hash = "d2da6c692fa07ac16b6629afb2e043ccefbc304ebaef338629711daeb17f5011"
 metafile = true
 
 [[files]]
-file = "mods/ears.pw.toml"
-hash = "eaa717966f4aa42c52d937ce9bc797d653cd3d8d060546668beb40b515c36b27"
-metafile = true
-
-[[files]]
 file = "mods/entity-model-features.pw.toml"
 hash = "c9030b75ae9d5dc803417490edaa71dbcd9ab693ab800d5b0dafd0a4fc0d98d7"
 metafile = true
@@ -365,18 +350,8 @@ hash = "010460cb79eb3d3d197332b41de7a16d25c0b6bfbc63ac690dd15a5e6b945060"
 metafile = true
 
 [[files]]
-file = "mods/fabric-language-kotlin.pw.toml"
-hash = "b30889a8953047bd9231292a984e3833319f22d23f2748c6d54db0f2843d878c"
-metafile = true
-
-[[files]]
 file = "mods/fabricbettergrass.pw.toml"
 hash = "866e4d2ef4305ae720f759d98267aaa206cf8245bdf151309b7f87172efc7a3b"
-metafile = true
-
-[[files]]
-file = "mods/fabrishot.pw.toml"
-hash = "f5f8864fb282875911880a67e0f4043c26dae1e4be49115a61c22f499ea156f6"
 metafile = true
 
 [[files]]
@@ -415,8 +390,8 @@ hash = "c70626f7b878045801fa59fa98884a2ad5681331bd916af225b0aadb931edcff"
 metafile = true
 
 [[files]]
-file = "mods/language-reload.pw.toml"
-hash = "0d1cfccabcb2630a2d198ac9c8f0f4c77434ac084b2edb9276fb4211587d666a"
+file = "mods/lazy-language-loader.pw.toml"
+hash = "1dfb5c49a53c3b2a91dc7c64654ea9b5dab2ac6e78f3c2c8decbf5c9c3ed1ef8"
 metafile = true
 
 [[files]]
@@ -440,16 +415,6 @@ hash = "de21b252a7de6bc60358d42befd12d563a9cdf44657bae5f88a19ebaff4d1070"
 metafile = true
 
 [[files]]
-file = "mods/mixintrace.pw.toml"
-hash = "0a8e6a58962ba40f696a44cb2d02355490bc831b49509f8083e3e7bc89b40052"
-metafile = true
-
-[[files]]
-file = "mods/modelfix.pw.toml"
-hash = "14800fc12fd4b92497c0f26455523783bdf59194233bdaa71d4864b3d436929a"
-metafile = true
-
-[[files]]
 file = "mods/moderner-beta.pw.toml"
 hash = "63044c55831c97ef1db2be94aefa4ab4bded36e0fc7853be94348f80f9127716"
 metafile = true
@@ -470,8 +435,8 @@ hash = "3d40b29c555b8e7b606b508fa7dee4b84a125519a97244cded16e74129bccbb7"
 metafile = true
 
 [[files]]
-file = "mods/no-chat-reports.pw.toml"
-hash = "b2484dbeb2eb2fbdefa2497f2061c98438aab667d90e802194d23db1b1c51931"
+file = "mods/nvidium.pw.toml"
+hash = "9fdc8d13f0a57a634a265854ff4715e0246360d2221fb202e1b53055364eeba9"
 metafile = true
 
 [[files]]
@@ -480,13 +445,13 @@ hash = "a0d4d2e725a98bd43bafa256551589de1d8993737be9bf496744c5274920675e"
 metafile = true
 
 [[files]]
-file = "mods/placeholder-api.pw.toml"
-hash = "d6e9d2b8213a8b54400aa0d22bd16151efc12eaea24279625283b2cbdd6f3f06"
+file = "mods/raknetify.pw.toml"
+hash = "83c1463f49863d0d252991929cc1cb3fcf05ec3aed22793a178416186e545736"
 metafile = true
 
 [[files]]
-file = "mods/raknetify.pw.toml"
-hash = "83c1463f49863d0d252991929cc1cb3fcf05ec3aed22793a178416186e545736"
+file = "mods/renderscale.pw.toml"
+hash = "0f2304985a05c62f033b0d189433a940229540c1552359d08ca045bd867b5bde"
 metafile = true
 
 [[files]]

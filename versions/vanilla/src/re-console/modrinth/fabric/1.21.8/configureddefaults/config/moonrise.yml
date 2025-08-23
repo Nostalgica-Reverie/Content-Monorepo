@@ -70,12 +70,12 @@ chunk-system:
   # as mods affecting world gen are not safe to run in parallel. If you have no mods affecting
   # gen and are saturating the population generation (~10 threads of the worker pool generating
   # chunks), you may set this to true to possibly increase generation speed.
-  population-gen-parallelism: false
+  population-gen-parallelism: true
 misc:
   # Whether the loading screen should be closed immediately when joining servers/SP worlds.
   # This will let you in game faster, but may result in getting in game before enough chunks are
   # loaded for rendering.
-  immediately-close-loading-screen: false
+  immediately-close-loading-screen: true
 # Do not change, used internally.
 version: 1
 # Configuration options which control the behavior of the common threadpool workers.
