@@ -2,10 +2,14 @@
   "packs": [
     "vanilla",
     "fabric",
-    "file/Faithful 32x - 1.21.1.zip",
-    "file/Faithful Legacy 2 beta 1.zip"
+    "file/Faithful 32x - 1.20.1.zip",
+    "__moremcmeta-internal__"
   ],
   "id": "faithful",
-  "name": "High-Resolution Texture Pack",
-  "description": "The original Minecraft texture feel, with double the resolution and double the fun!"
+  "name": {
+    "text": "High-Resolution Texture Pack"
+  },
+  "description": {
+    "text": "The original Minecraft texture feel, with double the resolution and double the fun!"
+  }
 }
