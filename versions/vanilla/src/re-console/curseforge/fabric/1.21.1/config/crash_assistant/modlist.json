@@ -1,8 +1,8 @@
 {
-  "fabric-loader-0.17.1.jar (modloader)": {
-    "jarName": "fabric-loader-0.17.1.jar (modloader)",
+  "fabric-loader-0.17.2.jar (modloader)": {
+    "jarName": "fabric-loader-0.17.2.jar (modloader)",
     "modId": "fabric",
-    "version": "fabric-loader-0.17.1.jar"
+    "version": "fabric-loader-0.17.2.jar"
   },
   "architectury-13.0.8-fabric.jar": {
     "jarName": "architectury-13.0.8-fabric.jar",
@@ -89,35 +89,30 @@
     "modId": "dynamic_fps",
     "version": "3.9.5"
   },
-  "ears-fabric-1.21-1.4.7.jar": {
-    "jarName": "ears-fabric-1.21-1.4.7.jar",
-    "modId": "ears",
-    "version": "1.4.7"
-  },
   "enhancedblockentities-0.10.2+1.21.jar": {
     "jarName": "enhancedblockentities-0.10.2+1.21.jar",
     "modId": "enhancedblockentities",
     "version": "0.10.2+1.21"
   },
-  "entity_model_features_fabric_1.21.1-2.4.1.jar": {
-    "jarName": "entity_model_features_fabric_1.21.1-2.4.1.jar",
+  "entity_model_features_1.21-fabric-3.0.1.jar": {
+    "jarName": "entity_model_features_1.21-fabric-3.0.1.jar",
     "modId": "entity_model_features",
-    "version": "2.4.1"
+    "version": "3.0.1"
   },
-  "entity_texture_features_fabric_1.21.1-6.2.9.jar": {
-    "jarName": "entity_texture_features_fabric_1.21.1-6.2.9.jar",
+  "entity_texture_features_1.21-fabric-7.0.0.jar": {
+    "jarName": "entity_texture_features_1.21-fabric-7.0.0.jar",
     "modId": "entity_texture_features",
-    "version": "6.2.9"
+    "version": "7.0.0"
   },
-  "fabric-api-0.116.4+1.21.1.jar": {
-    "jarName": "fabric-api-0.116.4+1.21.1.jar",
+  "fabric-api-0.116.5+1.21.1.jar": {
+    "jarName": "fabric-api-0.116.5+1.21.1.jar",
     "modId": "fabric-api",
-    "version": "0.116.4+1.21.1"
+    "version": "0.116.5+1.21.1"
   },
-  "fabric-language-kotlin-1.13.4+kotlin.2.2.0.jar": {
-    "jarName": "fabric-language-kotlin-1.13.4+kotlin.2.2.0.jar",
+  "fabric-language-kotlin-1.13.5+kotlin.2.2.10.jar": {
+    "jarName": "fabric-language-kotlin-1.13.5+kotlin.2.2.10.jar",
     "modId": "fabric-language-kotlin",
-    "version": "1.13.4+kotlin.2.2.0"
+    "version": "1.13.5+kotlin.2.2.10"
   },
   "fabricskyboxes-0.7.4+mc1.21.jar": {
     "jarName": "fabricskyboxes-0.7.4+mc1.21.jar",
@@ -164,15 +159,15 @@
     "modId": "lambdynlights",
     "version": "4.1.5+1.21.1"
   },
-  "language-reload-1.7.4+1.21.1.jar": {
-    "jarName": "language-reload-1.7.4+1.21.1.jar",
-    "modId": "languagereload",
-    "version": "1.7.4+1.21.1"
+  "lazy-language-loader-0.3.7.jar": {
+    "jarName": "lazy-language-loader-0.3.7.jar",
+    "modId": "lazy-language-loader",
+    "version": "0.3.7"
   },
-  "Legacy4J-1.21.1-1.8.3-lts-fabric.jar": {
-    "jarName": "Legacy4J-1.21.1-1.8.3-lts-fabric.jar",
+  "Legacy4J-1.21.1-1.8.5-lts-fabric.jar": {
+    "jarName": "Legacy4J-1.21.1-1.8.5-lts-fabric.jar",
     "modId": "legacy",
-    "version": "1.8.3-lts"
+    "version": "1.8.5-lts"
   },
   "legacyskins-1.5.0+fabric+1.21.1.jar": {
     "jarName": "legacyskins-1.5.0+fabric+1.21.1.jar",
@@ -188,11 +183,6 @@
     "jarName": "macos-input-fixes-1.9.jar",
     "modId": "macos_input_fixes",
     "version": "1.9"
-  },
-  "mixintrace-1.1.1+1.17.jar": {
-    "jarName": "mixintrace-1.1.1+1.17.jar",
-    "modId": "mixintrace",
-    "version": "1.1.1+1.17"
   },
   "modelfix-1.21-1.6-fabric.jar": {
     "jarName": "modelfix-1.21-1.6-fabric.jar",
@@ -224,16 +214,6 @@
     "modId": "moremcmeta",
     "version": "1.21.1-4.5.2"
   },
-  "MouseTweaks-fabric-mc1.21-2.26.jar": {
-    "jarName": "MouseTweaks-fabric-mc1.21-2.26.jar",
-    "modId": "mousetweaks",
-    "version": "2.26"
-  },
-  "NoChatReports-FABRIC-1.21.1-v2.9.1.jar": {
-    "jarName": "NoChatReports-FABRIC-1.21.1-v2.9.1.jar",
-    "modId": "nochatreports",
-    "version": "1.21.1-v2.9.1"
-  },
   "noisium-fabric-2.3.0+mc1.21-1.21.1.jar": {
     "jarName": "noisium-fabric-2.3.0+mc1.21-1.21.1.jar",
     "modId": "noisium",
@@ -249,30 +229,20 @@
     "modId": "ok_zoomer",
     "version": "10.0.0-beta.10"
   },
-  "optigui-3.0.0-alpha.3+fabric.1.21.jar": {
-    "jarName": "optigui-3.0.0-alpha.3+fabric.1.21.jar",
-    "modId": "optigui",
-    "version": "3.0.0-alpha.3+fabric.1.21"
-  },
   "placeholder-api-2.4.2+1.21.jar": {
     "jarName": "placeholder-api-2.4.2+1.21.jar",
     "modId": "placeholder-api",
     "version": "2.4.2+1.21"
   },
-  "polytone-1.21-3.5.4-fabric.jar": {
-    "jarName": "polytone-1.21-3.5.4-fabric.jar",
+  "polytone-1.21-3.5.5-fabric.jar": {
+    "jarName": "polytone-1.21-3.5.5-fabric.jar",
     "modId": "polytone",
-    "version": "1.21-3.5.4"
+    "version": "1.21-3.5.5"
   },
   "ScalableLux-0.1.0+fabric.26c6e72-all.jar": {
     "jarName": "ScalableLux-0.1.0+fabric.26c6e72-all.jar",
     "modId": "scalablelux",
     "version": "0.1.0+fabric.26c6e72"
-  },
-  "sodium-extra-fabric-0.6.0+mc1.21.1.jar": {
-    "jarName": "sodium-extra-fabric-0.6.0+mc1.21.1.jar",
-    "modId": "sodium-extra",
-    "version": "0.6.0+mc1.21.1"
   },
   "sodium-fabric-0.6.13+mc1.21.1.jar": {
     "jarName": "sodium-fabric-0.6.13+mc1.21.1.jar",
@@ -289,15 +259,10 @@
     "modId": "unilib",
     "version": "1.1.1"
   },
-  "vmp-fabric-mc1.21.1-0.2.0+beta.7.172-all.jar": {
-    "jarName": "vmp-fabric-mc1.21.1-0.2.0+beta.7.172-all.jar",
-    "modId": "vmp",
-    "version": "0.2.0+beta.7.172+1.21.1"
-  },
-  "voicechat-fabric-1.21.1-2.5.35.jar": {
-    "jarName": "voicechat-fabric-1.21.1-2.5.35.jar",
+  "voicechat-fabric-1.21.1-2.5.36.jar": {
+    "jarName": "voicechat-fabric-1.21.1-2.5.36.jar",
     "modId": "voicechat",
-    "version": "1.21.1-2.5.35"
+    "version": "1.21.1-2.5.36"
   },
   "world-host-0.5.2+1.21.1-fabric.jar": {
     "jarName": "world-host-0.5.2+1.21.1-fabric.jar",
