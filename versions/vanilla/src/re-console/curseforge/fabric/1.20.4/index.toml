@@ -1,16 +1,32 @@
 hash-format = "sha256"
 
 [[files]]
-file = "configureddefaults/config/NoChatReports/NCR-Client.json"
-hash = "e0d9ce47a87536c707b797789b53e9e4f09b273f69098b1303b0815ebd82b3c5"
+file = "config/crash_assistant/config.toml"
+hash = "d63ef06db7855e70531e63cfa0367f5193a270527425e9d5cd0e5f73ec34a2b0"
 
 [[files]]
-file = "configureddefaults/config/NoChatReports/NCR-Common.json"
-hash = "20bb880eb7a4657399b86fd11f6e2ec56c87c04ad037d62c155dcca5d484aa7f"
+file = "config/crash_assistant/lang/README.md"
+hash = "bd2631461374ee995478917064980edee09d5c300dfde1548264c1d9b6763349"
 
 [[files]]
-file = "configureddefaults/config/NoChatReports/NCR-Encryption.json"
-hash = "69b2e8613a2e3084367295c7b74cb598957f97bb9b9cfe56eb7b7a3187d86b66"
+file = "config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "caeb5fb5a881ea0dd16cd851e0ed4543e74b94e07f3c16cdd18b04a64343df5c"
+
+[[files]]
+file = "config/crash_assistant/problematic_mods_config.json"
+hash = "ac39420512ece55a61087db09fe6c4375aa8bd02966b78716c3e3e404938f693"
 
 [[files]]
 file = "configureddefaults/config/bettergrass.json5"
@@ -33,34 +49,6 @@ file = "configureddefaults/config/craftpresence.json"
 hash = "616adff7c23266696effd21b205000087433333b99f689ca25e65520012324b2"
 
 [[files]]
-file = "configureddefaults/config/crash_assistant/config.toml"
-hash = "d63ef06db7855e70531e63cfa0367f5193a270527425e9d5cd0e5f73ec34a2b0"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/README.md"
-hash = "bd2631461374ee995478917064980edee09d5c300dfde1548264c1d9b6763349"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/en_us.json"
-hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/ru_ru.json"
-hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/zh_cn.json"
-hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/modlist.json"
-hash = "dd3d813eae218bcec40d6c044474d1264dbd0b2a6116888c5c8ef2dd851633de"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/problematic_mods_config.json"
-hash = "ac39420512ece55a61087db09fe6c4375aa8bd02966b78716c3e3e404938f693"
-
-[[files]]
 file = "configureddefaults/config/enhanced_bes.properties"
 hash = "6ef9e4a1132e7aeab97f6829893124078b95be3c9a5b247754c2ccc9deb423ce"
 
@@ -74,7 +62,7 @@ hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
 
 [[files]]
 file = "configureddefaults/config/immediatelyfast.json"
-hash = "f5ec7211d5e40c4a292edabe333cc81a6e0206f9e48782f3881ceb431467fff6"
+hash = "2718bb7c2762955bb9080c5cf992d3fd2dc46dee2e8167141eca76d8ee9849fd"
 
 [[files]]
 file = "configureddefaults/config/iris.properties"
@@ -253,7 +241,7 @@ metafile = true
 
 [[files]]
 file = "mods/entity-texture-features-fabric.pw.toml"
-hash = "31ab4e335ad0b4c6a3b5dee663ac5fe768134453a8668fbe4b930d65409a2962"
+hash = "2aec0a604bd98ca57e6ffd98f012988a2b2c3489cc88503bbe035175b8da0bef"
 metafile = true
 
 [[files]]

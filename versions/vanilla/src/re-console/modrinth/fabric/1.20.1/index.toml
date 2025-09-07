@@ -1,16 +1,32 @@
 hash-format = "sha256"
 
 [[files]]
-file = "configureddefaults/config/NoChatReports/NCR-Client.json"
-hash = "e0d9ce47a87536c707b797789b53e9e4f09b273f69098b1303b0815ebd82b3c5"
+file = "config/crash_assistant/config.toml"
+hash = "d63ef06db7855e70531e63cfa0367f5193a270527425e9d5cd0e5f73ec34a2b0"
 
 [[files]]
-file = "configureddefaults/config/NoChatReports/NCR-Common.json"
-hash = "20bb880eb7a4657399b86fd11f6e2ec56c87c04ad037d62c155dcca5d484aa7f"
+file = "config/crash_assistant/lang/README.md"
+hash = "bd2631461374ee995478917064980edee09d5c300dfde1548264c1d9b6763349"
 
 [[files]]
-file = "configureddefaults/config/NoChatReports/NCR-Encryption.json"
-hash = "69b2e8613a2e3084367295c7b74cb598957f97bb9b9cfe56eb7b7a3187d86b66"
+file = "config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "5bd3f983fdf477272050f76c96293f42100e9beb2fcff6e55b40fa9dca011fb9"
+
+[[files]]
+file = "config/crash_assistant/problematic_mods_config.json"
+hash = "ac39420512ece55a61087db09fe6c4375aa8bd02966b78716c3e3e404938f693"
 
 [[files]]
 file = "configureddefaults/config/bettergrass.json"
@@ -37,34 +53,6 @@ file = "configureddefaults/config/craftpresence.json"
 hash = "616adff7c23266696effd21b205000087433333b99f689ca25e65520012324b2"
 
 [[files]]
-file = "configureddefaults/config/crash_assistant/config.toml"
-hash = "d63ef06db7855e70531e63cfa0367f5193a270527425e9d5cd0e5f73ec34a2b0"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/README.md"
-hash = "bd2631461374ee995478917064980edee09d5c300dfde1548264c1d9b6763349"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/en_us.json"
-hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/ru_ru.json"
-hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/zh_cn.json"
-hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/modlist.json"
-hash = "46b95b21d88fd2ae985f9c60f146bedd6edb22fa7c958042a0cc71b722baf78b"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/problematic_mods_config.json"
-hash = "ac39420512ece55a61087db09fe6c4375aa8bd02966b78716c3e3e404938f693"
-
-[[files]]
 file = "configureddefaults/config/enhanced_bes.properties"
 hash = "6ef9e4a1132e7aeab97f6829893124078b95be3c9a5b247754c2ccc9deb423ce"
 
@@ -78,7 +66,7 @@ hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
 
 [[files]]
 file = "configureddefaults/config/immediatelyfast.json"
-hash = "f5ec7211d5e40c4a292edabe333cc81a6e0206f9e48782f3881ceb431467fff6"
+hash = "2718bb7c2762955bb9080c5cf992d3fd2dc46dee2e8167141eca76d8ee9849fd"
 
 [[files]]
 file = "configureddefaults/config/iris.properties"
@@ -214,7 +202,7 @@ hash = "7a210551c2bd02b2a4496d0f09e9c5d012b60503f8088b81027f952b09de952a"
 
 [[files]]
 file = "configureddefaults/resource_albums/minecraft.json"
-hash = "4b9dca3fc9d287fe4829154a9cab590f97fceb204a86316edcf18ac6227c1b39"
+hash = "90890bb55dd006ecb7b098bc5b5aec90e268cf9c8c0ab4136fadf61d5b5d30d8"
 
 [[files]]
 file = "configureddefaults/resource_albums/minecraft_classic.json"
@@ -348,7 +336,7 @@ metafile = true
 
 [[files]]
 file = "mods/entity-model-features.pw.toml"
-hash = "724f38446c3830230388cec99fed286ff1e8580f0a82c1466c7d59bde4450c71"
+hash = "f1d9c0910c3172c83058cc6d9af49e9b8dd9a6e410b0113e41077a373a0646a0"
 metafile = true
 
 [[files]]
@@ -358,7 +346,7 @@ metafile = true
 
 [[files]]
 file = "mods/entitytexturefeatures.pw.toml"
-hash = "431846491318f66fdef523f169044383847e75d3e1ff36cccd2bf8cb10e85ae8"
+hash = "91f45174d8627de2d04922bcf83b4b7c31188fbfc748240fcca27ea4f3282e93"
 metafile = true
 
 [[files]]
@@ -508,17 +496,17 @@ metafile = true
 
 [[files]]
 file = "mods/polytone.pw.toml"
-hash = "1251cbb4503a8ee3d70d2eba7144c9a4ae18ee75a5623f328ea77df23047c5d3"
+hash = "031743fe4b9dde448acc3e3b8cfcde7bef052c2b25b3a5506aae8da3b9ac6166"
 metafile = true
 
 [[files]]
 file = "mods/raknetify.pw.toml"
-hash = "41e29e8057a2614a0eb83255cbd8c08504f23d584b0df0d12f5f5705444cbf87"
+hash = "841b2a3eb5b54a05b8f603da3fb3af84ba4a8064ab8366003dcd3c1c97f0ee99"
 metafile = true
 
 [[files]]
 file = "mods/simple-voice-chat.pw.toml"
-hash = "15a2a2b64ce2acc534793268a84f76e1f46cbccd409633879b1655afeb0b85c7"
+hash = "72c1533380179770ae00d958d3f5750842cd8df096ba05779e3903f935951bb7"
 metafile = true
 
 [[files]]
@@ -633,7 +621,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/fresh-animations.pw.toml"
-hash = "b96abadb2cdb56d53145609e6a8ee9fd70171878bb5414412dddee1fca902a7b"
+hash = "bf6bf356ece200c132c604c1cdd981c8a7baf6a30ed05fa057fdfc0444df779d"
 metafile = true
 
 [[files]]
@@ -723,7 +711,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/pacp.pw.toml"
-hash = "6c863af9d3705655b0ed7963e3367c0acede5ead408502c73b2401935187b228"
+hash = "6dfe57ae000a50b1b129022f33c77aa4b3551714a89edbb77b90f22a2e6d98bc"
 metafile = true
 
 [[files]]
