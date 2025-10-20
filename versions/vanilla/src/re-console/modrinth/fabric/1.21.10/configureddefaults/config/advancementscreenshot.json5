@@ -1,0 +1,7 @@
+{
+	// If enabled, shows the normal screenshot taken (same as F2) message when a screenshot is taken after an advancement.
+	"showScreenshotTakenMessage": false,
+	// How many ticks the mod should wait until it takes a screenshot. By default 1 second. 20 ticks = 1 second
+	// min: 0, max: 100
+	"takeScreenshotTickDelay": 20
+}
