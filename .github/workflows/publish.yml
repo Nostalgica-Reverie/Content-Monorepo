@@ -119,6 +119,10 @@ jobs:
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
+          - version: "1.21.10"
+            loader: "fabric"
+            platform: "modrinth"
+            file_ext: "mrpack"
           # curseforge
           - version: "1.20.1"
             loader: "fabric"
