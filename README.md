@@ -47,22 +47,15 @@ Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW)
 - And just hang out with the rest of our community!
 
 ### 📝 Supported Versions
-- Re-Console supports 1.20.1, 1.20.2, 1.20.4, 1.20.6, 1.21.1, 1.21.3, 1.21.4, 1.21.5 and 1.21.8
-- Re-Console Lite supports 1.20.1, 1.20.2, 1.20.4, 1.20.6, 1.21.1, 1.21.3, 1.21.4, 1.21.5 and 1.21.8
+- Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8 and 1.21.10
 
 ### Versioning
-The versioning format is 1.y.z+mc(mc version)+(modloader), where
-
-- y is a mod list revision (addition/removal of a mod)
-- z is incremented when there's a version with only mod updates and little to no changes otherwise
-- MC version is pulled from the Minecraft version that the version suppprts
-- Modloader is the modloader (if applicable) that the version supports
-
-Each modpack also has a different semantic version.
-- Re-Console Lite takes 1.y.z
-- Re-Console takes 2.y.z
-- Aric's Console takes 3.y.z
-
+The versioning format is year.major.minor, where for example:
+``25.15.12``
+``25`` is the year (2025)
+``15`` is the major version
+``12`` is the minor patches
+This resets after the year changes to a different year.
 
 ## 📜 License
 Unless otherwise stated, the Legacy Modpack Monorepository is licensed under the GPL-3.0 license or later.
