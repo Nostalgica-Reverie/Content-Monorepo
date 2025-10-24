@@ -148,10 +148,10 @@ jobs:
             loader: "fabric"
             platform: "curseforge"
             file_ext: "zip"
-          # - version: "1.21.8"
-          #   loader: "fabric"
-          #   platform: "curseforge"
-          #   file_ext: "zip"
+          - version: "1.21.8"
+            loader: "fabric"
+            platform: "curseforge"
+            file_ext: "zip"
 
     runs-on: ubuntu-latest
     env:  
