@@ -315,8 +315,8 @@ jobs:
             loader: "fabric"
           - version: "1.21.5"
             loader: "fabric"
-          # - version: "1.21.8"
-          #   loader: "fabric"
+          - version: "1.21.8"
+            loader: "fabric"
       max-parallel: 1  # Ensures sequential uploads
     env:
       PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
