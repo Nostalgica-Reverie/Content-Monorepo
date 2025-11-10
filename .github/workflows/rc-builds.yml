@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         include:
-          # modrinth
+          # modrinth fabric
           - version: "1.20.1"
             loader: "fabric"
             platform: "modrinth"
@@ -52,7 +52,40 @@ jobs:
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
-          # curseforge
+          # modrinth quilt
+          - version: "1.20.1"
+            loader: "quilt"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.20.4"
+            loader: "quilt"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.1"
+            loader: "quilt"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.3"
+            loader: "quilt"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.4"
+            loader: "quilt"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.5"
+            loader: "quilt"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.8"
+            loader: "quilt"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          - version: "1.21.10"
+            loader: "quilt"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          # curseforge fabric
           - version: "1.20.1"
             loader: "fabric"
             platform: "curseforge"
