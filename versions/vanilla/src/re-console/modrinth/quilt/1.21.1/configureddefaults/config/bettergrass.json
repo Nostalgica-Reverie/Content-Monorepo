@@ -1,0 +1,38 @@
+{
+  "general": {
+    "betterGrassMode": "FANCY",
+    "resourcePackCompatibilityMode": true,
+    "blocks": {
+      "grassBlocks": true,
+      "snowy": true,
+      "dirtPaths": true,
+      "farmLands": true,
+      "podzol": true,
+      "mycelium": true,
+      "crimsonNylium": true,
+      "warpedNylium": true,
+      "moreBlocks": []
+    }
+  },
+  "betterSnow": {
+    "betterSnowMode": "OFF",
+    "snowLayers": [
+      "snow",
+      "moss_carpet",
+      "pale_moss_carpet",
+      "leaf_litter",
+      "pink_petals",
+      "wildflowers"
+    ],
+    "whitelistedTags": [],
+    "whitelistedBlocks": [],
+    "excludedTags": [],
+    "excludedBlocks": [
+      "lantern[hanging]",
+      "redstone_wall_torch",
+      "soul_lantern[hanging]",
+      "soul_wall_torch",
+      "wall_torch"
+    ]
+  }
+}

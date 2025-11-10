@@ -1,0 +1,25 @@
+version = 1
+enableSodiumMenu = true
+dontCull = []
+cloudCulling = true
+signTextCulling = true
+rainCulling = true
+useBlockStateCulling = true
+useCustomItemFrameRenderer = true
+itemFrameMapCulling = true
+useItemFrameLOD = true
+itemFrameLODRange = 16
+useItemFrame3FaceCulling = true
+itemFrame3FaceCullingRange = 2.0
+paintingCulling = true
+leavesCullingMode = "DEFAULT"
+leavesCullingAmount = 2
+includeMangroveRoots = true
+endGatewayCulling = true
+beaconBeamCulling = true
+useOnModdedBlocksByDefault = true
+
+[modCompatibility]
+minimega = true
+legacy = true
+minecraft = true
