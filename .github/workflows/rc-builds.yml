@@ -85,6 +85,16 @@ jobs:
             loader: "quilt"
             platform: "modrinth"
             file_ext: "mrpack"
+          # modrinth forge
+          - version: "1.20.1"
+            loader: "forge"
+            platform: "modrinth"
+            file_ext: "mrpack"
+          # modrinth neoforge
+          - version: "1.21.1"
+            loader: "neoforge"
+            platform: "modrinth"
+            file_ext: "mrpack"
           # curseforge fabric
           - version: "1.20.1"
             loader: "fabric"
@@ -114,6 +124,46 @@ jobs:
             loader: "fabric"
             platform: "curseforge"
             file_ext: "zip"
+          # curseforge quilt
+          - version: "1.20.1"
+            loader: "quilt"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.20.4"
+            loader: "quilt"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.1"
+            loader: "quilt"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.3"
+            loader: "quilt"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.4"
+            loader: "quilt"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.5"
+            loader: "quilt"
+            platform: "curseforge"
+            file_ext: "zip"
+          - version: "1.21.8"
+            loader: "quilt"
+            platform: "curseforge"
+            file_ext: "zip"
+          # curseforge forge
+          - version: "1.20.1"
+            loader: "forge"
+            platform: "curseforge"
+            file_ext: "zip"
+          # curseforge neoforge
+          - version: "1.21.1"
+            loader: "neoforge"
+            platform: "curseforge"
+            file_ext: "zip"
+
 
     runs-on: ubuntu-latest
     outputs:
