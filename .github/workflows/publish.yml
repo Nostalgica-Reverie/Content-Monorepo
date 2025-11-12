@@ -224,6 +224,11 @@ jobs:
             loader: "quilt"
             platform: "curseforge"
             file_ext: "zip"
+          # curseforge neoforge
+          - version: "1.21.1"
+            loader: "neoforge"
+            platform: "curseforge"
+            file_ext: "zip"
 
     runs-on: ubuntu-latest
     env:  
