@@ -145,6 +145,10 @@ file = "configureddefaults/resource_albums/minecraft_classic.json"
 hash = "b3df898da24415c2b8425b8fff735c4755ff43a5c12147acafe46c1465044ee2"
 
 [[files]]
+file = "global_packs/required_resources/rcr3.zip"
+hash = "436dbd1a711aabdfbe884674dcd8171fae455c39cb59aab3a706c841772c1210"
+
+[[files]]
 file = "mods/architectury-api.pw.toml"
 hash = "5e9edd1fd2395f14a0c8a4acbdbdd61e1047be1f0033deb3140d2ce0d093e9d8"
 metafile = true
@@ -270,13 +274,13 @@ hash = "62ef7e92478035b77e996189984e4749b2d876ed0a389977a2670a28f105bfd2"
 metafile = true
 
 [[files]]
-file = "mods/immediatelyfast.pw.toml"
-hash = "c949e6e0d6a70b8693ef48f8f205cb4fb967cc7c2ecbe029ffe7809e36ad5138"
+file = "mods/globalpacks.pw.toml"
+hash = "b83d45ba3ee98d6052251af9756dc8b86cb156d1a8c41f8e8a70fd5d5c1d85b2"
 metafile = true
 
 [[files]]
-file = "mods/irisshaders.pw.toml"
-hash = "59b7d88506f6b279df22801e84d6b149c9e0145626904bcccb99ea502352a96f"
+file = "mods/immediatelyfast.pw.toml"
+hash = "c949e6e0d6a70b8693ef48f8f205cb4fb967cc7c2ecbe029ffe7809e36ad5138"
 metafile = true
 
 [[files]]
@@ -297,11 +301,6 @@ metafile = true
 [[files]]
 file = "mods/legacy-skins.pw.toml"
 hash = "95e9f2f0cff5c15ef7e2be13499e73e9d9a91444d5789be9dad2f042e8320849"
-metafile = true
-
-[[files]]
-file = "mods/lithium.pw.toml"
-hash = "c09eeb5ca1887a767370439d3bfb45eb2b1272af196c2b8cf2f8fe5edea9f1c7"
 metafile = true
 
 [[files]]
@@ -387,11 +386,6 @@ metafile = true
 [[files]]
 file = "mods/yacl.pw.toml"
 hash = "c08817fe8025a9d62c8f7abd5f56a54b90673e5ab60f39ae8fa1d70d5ace529b"
-metafile = true
-
-[[files]]
-file = "mods/yungs-api.pw.toml"
-hash = "9fb6a1a06b18f2ce7b0811200339d997925cb39bde220fbaea4d5c8067376c12"
 metafile = true
 
 [[files]]
