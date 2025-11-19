@@ -1,28 +1,33 @@
 # LambDynamicLights configuration.
 # The dynamic lights mode
-mode = "off"
+mode = "fancy"
 
 # Light sources settings.
 [light_sources]
 	# Enables water-sensitive light sources check. This means that water-sensitive items will not light up when submerged in water.
 	water_sensitive_check = true
+	beam = true
+	firefly = true
+	# Enable entities light source.
+	entities = true
 	# Enable first-person player light source.
 	self = true
 	# TNT lighting mode. May be off, simple or fancy.
-	tnt = "off"
-	# Enable entities light source.
-	entities = true
+	tnt = "fancy"
 	# Creeper lighting mode. May be off, simple or fancy.
-	creeper = "simple"
+	creeper = "fancy"
+	guardian_laser = true
 
 			[light_sources.settings.entities.minecraft]
 				zombie_horse = true
+				pale_oak_boat = true
 				axolotl = true
 				egg = true
 				zoglin = true
 				spawner_minecart = true
 				allay = true
 				llama = true
+				jungle_chest_boat = true
 				mule = true
 				bat = true
 				husk = true
@@ -32,15 +37,20 @@ mode = "off"
 				firework_rocket = true
 				silverfish = true
 				giant = true
+				happy_ghast = true
 				drowned = true
+				creaking = true
 				item = true
+				oak_chest_boat = true
 				goat = true
 				horse = true
 				vindicator = true
+				birch_boat = true
 				minecart = true
 				spectral_arrow = true
 				llama_spit = true
 				mooshroom = true
+				oak_boat = true
 				glow_item_frame = false
 				snowball = true
 				tnt = true
@@ -54,6 +64,7 @@ mode = "off"
 				tropical_fish = true
 				slime = true
 				pillager = true
+				dark_oak_chest_boat = true
 				area_effect_cloud = true
 				blaze = true
 				piglin = true
@@ -74,6 +85,8 @@ mode = "off"
 				zombie_villager = true
 				elder_guardian = true
 				chest_boat = true
+				cherry_chest_boat = true
+				acacia_chest_boat = true
 				boat = true
 				small_fireball = true
 				strider = true
@@ -86,19 +99,24 @@ mode = "off"
 				panda = true
 				bee = true
 				arrow = true
+				lingering_potion = true
 				cow = true
+				birch_chest_boat = true
 				magma_cube = true
 				pig = true
 				skeleton = true
+				spruce_boat = true
 				frog = true
 				hoglin = true
 				armadillo = true
+				splash_potion = true
 				armor_stand = true
 				experience_orb = true
 				dolphin = true
 				stray = true
 				shulker = true
 				turtle = true
+				jungle_boat = true
 				salmon = true
 				vex = true
 				wandering_trader = true
@@ -107,6 +125,9 @@ mode = "off"
 				breeze = true
 				ocelot = true
 				furnace_minecart = true
+				acacia_boat = true
+				pale_oak_chest_boat = true
+				mangrove_boat = true
 				item_frame = true
 				phantom = true
 				ender_dragon = true
@@ -121,10 +142,15 @@ mode = "off"
 				dragon_fireball = true
 				chicken = true
 				sniffer = true
+				dark_oak_boat = true
 				trader_llama = true
 				donkey = true
 				bogged = true
+				bamboo_chest_raft = true
+				bamboo_raft = true
 				fox = true
+				mangrove_chest_boat = true
+				cherry_boat = true
 				iron_golem = true
 				zombified_piglin = true
 				cat = true
@@ -146,3 +172,9 @@ mode = "off"
 				painting = true
 				interaction = true
 				wither = true
+				spruce_chest_boat = true
+
+[debug]
+	active_dynamic_lighting_cells = false
+	display_dynamic_lighting_chunk_rebuild = false
+	display_behavior_bounding_box = false
