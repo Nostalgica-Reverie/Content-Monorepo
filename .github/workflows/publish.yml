@@ -380,7 +380,7 @@ jobs:
           files: |
             artifacts/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-modrinth.mrpack
           
-          name: "${{ needs.check-tag.outputs.is_lite == 'true' && 'RC-Lite' || 'RC' }} ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
+          name: "${{ needs.check-tag.outputs.is_lite == 'true' && 'RC-Lite' || 'RC' }} ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' ? 'NeoForge' : matrix.loader == 'neoforge' ? 'NeoForge' : matrix.loader == 'forge' ? 'Forge' : matrix.loader == 'fabric' ? 'Fabric' : matrix.loader == 'quilt' ? 'Quilt' : 'ERROR, FIX ME IN publish.yml' }})"
           version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           
@@ -452,7 +452,7 @@ jobs:
           files: |
             artifacts/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-curseforge.zip
           
-          name: "${{ needs.check-tag.outputs.is_lite == 'true' && 'RC-Lite' || 'RC' }} ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' && 'NeoForge' || 'Fabric' }} ${{ matrix.version }})"
+          name: "${{ needs.check-tag.outputs.is_lite == 'true' && 'RC-Lite' || 'RC' }} ${{ env.VERSION }} (${{ matrix.loader == 'neoforged' ? 'NeoForge' : matrix.loader == 'neoforge' ? 'NeoForge' : matrix.loader == 'forge' ? 'Forge' : matrix.loader == 'fabric' ? 'Fabric' : matrix.loader == 'quilt' ? 'Quilt' : 'ERROR, FIX ME IN publish.yml' }})"
           version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           
