@@ -2,7 +2,7 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
-hash = "3800c00a252879fb83bdab36311b951c3cce1943b4afe844cc0f2f4e86224950"
+hash = "cd92732ab9216126faaf6d52692033af59f9df3736ec83454ddb87e7b6f35b99"
 
 [[files]]
 file = "config/crash_assistant/lang/README.md"
@@ -29,18 +29,6 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
 
 [[files]]
-file = "configureddefaults/config/advancementscreenshot.json5"
-hash = "bafdc53b21f11eadd6c1a932a9dcb7f7ec9e503be98cbd81ce92c17228be7439"
-
-[[files]]
-file = "configureddefaults/config/beautifiedchatclient.json5"
-hash = "fd20f923db33eadb5b98950d754d2dfa58d75ec0f9f23590978d699c41739745"
-
-[[files]]
-file = "configureddefaults/config/bettergrass.json"
-hash = "876580a5ebe7e34ca51b871828234e5f949968392cbbbb3e6da2a32c67efe674"
-
-[[files]]
 file = "configureddefaults/config/capes.json5"
 hash = "3c5f5e2ce32a31415ea9667f667eecc074cf9de46421afc348e1d17e8fd6957c"
 
@@ -57,10 +45,6 @@ file = "configureddefaults/config/craftpresence.json"
 hash = "1d855833cc00eb0aa2e7ee1aa6e84b3ae84264cd3a276d862cf0a4e499e27955"
 
 [[files]]
-file = "configureddefaults/config/currentgamemusictrack.json5"
-hash = "ff54b6483e46419b1d8cee3152e7d6d1dda4bfdf277ae4cd607ffa1e86f7534c"
-
-[[files]]
 file = "configureddefaults/config/enhanced_bes.properties"
 hash = "219204a2efc6d53ad8b3116db7392e039ba8e0ed5f45bc18562c9697bdf8f5c9"
 
@@ -73,16 +57,8 @@ file = "configureddefaults/config/ferritecore.mixin.properties"
 hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
 
 [[files]]
-file = "configureddefaults/config/hidehands.json5"
-hash = "3074931fda9af006879400bddc0d8ac2806d5cd53b8bff881679cec60386e62f"
-
-[[files]]
 file = "configureddefaults/config/immediatelyfast.json"
 hash = "892f8cd94a9de2a17b2a938d8b33b5b411a20b0f14a5857963333cbd8ce2f36c"
-
-[[files]]
-file = "configureddefaults/config/improvedsignediting.json5"
-hash = "734a1f076312ffa5a6222f7fd0abb1f9ec40033730653ca7c1c4ff479cc2d82a"
 
 [[files]]
 file = "configureddefaults/config/iris.properties"
@@ -145,26 +121,6 @@ file = "configureddefaults/config/nostalgic_tweaks/nostalgic_tweaks.json"
 hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
 
 [[files]]
-file = "configureddefaults/config/passiveshield.json5"
-hash = "71e75f88c2bd7f82563a26de633c0d37c8b0e3d67258a82082f09c201fd40a19"
-
-[[files]]
-file = "configureddefaults/config/puzzle.json"
-hash = "dd04f1ceea37a64e0867a55b3bb6e559f4f2358113717abe76a8e250e3718b03"
-
-[[files]]
-file = "configureddefaults/config/serilumsclientbundle.json5"
-hash = "cefddb1867d1af187f8208c1cd619c7c9f3f5907fe41e7938083adc80508dd11"
-
-[[files]]
-file = "configureddefaults/config/servercore/config.yml"
-hash = "a6fbf706590f394558edc5996f07a9575739fb9f056eed59cffe17fa57ec4e55"
-
-[[files]]
-file = "configureddefaults/config/servercore/optimizations.yml"
-hash = "8d528c4cad1cca659e5582d0ac35bb1ab971d4a98df009e3fc224d03f2304eff"
-
-[[files]]
 file = "configureddefaults/config/threadtweak.json"
 hash = "33191bf9b7c96165db5eea96dfa57e7ca7763fc3b842ebfd943184dc895969c6"
 
@@ -186,7 +142,7 @@ hash = "f7da923a67bbf61f8ff58e5934bd9823098d338e46698d0f3831d4876eaada8f"
 
 [[files]]
 file = "configureddefaults/resource_albums/animated.json"
-hash = "4c00ec445b6cbd13068bd6a91b3e70647013b8f537f9dfdc67ab1c8f46a28fb0"
+hash = "690248dbc4519d4e100cd8268a224ca574bb0a644c363153c0067f5cc80543a9"
 
 [[files]]
 file = "configureddefaults/resource_albums/beta.json"
@@ -214,7 +170,7 @@ hash = "0b6cb147e132150afd6add37f2011b40d7a9838345ba418957253ad9b525f92e"
 
 [[files]]
 file = "configureddefaults/resource_albums/dark-mode.json"
-hash = "eacca1fbfc7718a56c883605dc215e978f5a2e6027c2db9ecd8c5367a411179e"
+hash = "698999fda1cf7158cd34a609f166b7e488d53d9e982997490ad7d4a44d916b62"
 
 [[files]]
 file = "configureddefaults/resource_albums/faithful.json"
@@ -282,7 +238,7 @@ hash = "dfaff10d2c8d432900485f60e42bbe525b76f6f7502984001f774e4aaf32fe45"
 
 [[files]]
 file = "configureddefaults/resource_albums/trailer.json"
-hash = "3640a67d8ecbdb2493ae703149cf17438e60ab8c8cd754129eca51fc0704ee30"
+hash = "2d86b53d95ac5db7150615c60b0d4ecdca46649f08f439101964f26e0cf12011"
 
 [[files]]
 file = "mods/animatica.pw.toml"
