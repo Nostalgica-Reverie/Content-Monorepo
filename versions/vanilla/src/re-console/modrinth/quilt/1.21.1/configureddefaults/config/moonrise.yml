@@ -1,0 +1,91 @@
+# This is the configuration file for Moonrise.
+# 
+# Each configuration option is prefixed with a comment to explain what it does. Additional changes to this file
+# other than modifying the options, such as adding comments, will be overwritten when Moonrise loads the config.
+# 
+# Below are the Moonrise startup flags. Note that startup flags must be placed in the JVM arguments, not
+# program arguments.
+# -DMoonrise.ConfigFile=<file> - Override the config file location. Might be useful for multiple game versions.
+# -DMoonrise.WorkerThreadCount=<number> - Override the auto configured worker thread counts (worker-threads).
+# -DMoonrise.MaxViewDistance=<number> - Overrides the maximum view distance, should only use for debugging purposes.
+
+bug-fixes:
+  # Fixes https://bugs.mojang.com/browse/MC-159283. This fixes a bug resulting in the end islands
+  # not properly generating at far enough distances in the end. Note that toggling this config option
+  # will not affect already generated areas.
+  # This configuration has two options:
+  # true    -> Fixes the end islands generation. This is different from Vanilla behavior.
+  # false   -> Does not fix the end islands generation. This is the same behavior as Vanilla.
+  fix-MC-159283: false
+  # Fixes https://bugs.mojang.com/browse/MC-224294. By avoiding double ticking lava blocks during
+  # chunk random ticking, the cost of world random ticking is significantly reduced.
+  # This configuration has two options:
+  # true    -> Does not double tick lava. This is different from Vanilla behavior.
+  # false   -> Does double tick lava. This is the same behavior as Vanilla.
+  fix-MC-224294: true
+chunk-loading:
+  # Advanced configuration options for player chunk loading. You shouldn't be touching these
+  # unless you have a reason.
+  advanced:
+    # Whether to avoid sending chunks to players who have a view distance
+    # configured lower than the server's.
+    auto-config-send-distance: true
+    # The maximum amount of pending chunk generations per player. If
+    # this value is 0, then the player chunk loader will automatically determine a value. If
+    # this value is less-than 0, then there is no limit.
+    # 
+    # This value should be used to tune the saturation of the chunk system.
+    player-max-concurrent-chunk-generates: 0
+    # The maximum amount of pending chunk loads per player. If
+    # this value is 0, then the player chunk loader will automatically determine a value. If
+    # this value is less-than 0, then there is no limit.
+    # 
+    # This value should be used to tune the saturation of the chunk system.
+    player-max-concurrent-chunk-loads: 0
+  # Chunk loading/generation/sending rate targets for the chunk system.  These values are the
+  # maximum rates at which the player chunk loader will attempt to load/generate/send chunks to
+  # players. Actual resulting rates will depend on hardware.
+  basic:
+    # The delay before chunks are unloaded around players once they leave their view distance.
+    # The Vanilla value is 0 ticks. Setting this value higher (i.e 5s) will allow pets to teleport
+    # to their owners when they teleport.
+    player-chunk-unload-delay: 0t
+    # The maximum rate of chunks to generate for given player, per second. If this value is <= 0,
+    # then there is no rate limit.
+    player-max-gen-rate: -1.0
+    # The maximum rate of chunks to load from disk for any given player, per second. If this value is <= 0,
+    # then there is no rate limit.
+    player-max-load-rate: -1.0
+    # The maximum rate of chunks to send to any given player, per second. If this value is <= 0,
+    # then there is no rate limit.
+    player-max-send-rate: -1.0
+chunk-saving:
+  # The interval at which chunks should be incrementally autosaved.
+  auto-save-interval: 5m
+  # The maximum number of chunks to incrementally autosave each tick. If
+  # the value is <= 0, then no chunks will be incrementally saved.
+  max-auto-save-chunks-per-tick: 12
+chunk-system:
+  # Whether to run generation population in parallel. By default this is set to false,
+  # as mods affecting world gen are not safe to run in parallel. If you have no mods affecting
+  # gen and are saturating the population generation (~10 threads of the worker pool generating
+  # chunks), you may set this to true to possibly increase generation speed.
+  population-gen-parallelism: true
+misc:
+  # Whether the loading screen should be closed immediately when joining servers/SP worlds.
+  # This will let you in game faster, but may result in getting in game before enough chunks are
+  # loaded for rendering.
+  immediately-close-loading-screen: true
+# Do not change, used internally.
+version: 1
+# Configuration options which control the behavior of the common threadpool workers.
+worker-pool:
+  # Set the number of threads dedicated to RegionFile I/O operations.
+  # If the value is <= 0, then the number of threads used is 1. Configuring
+  # a higher value than 1 is only recommended on SSDs (HDDs scale negatively)
+  # and when you have determined that I/O is the bottleneck for chunk loading/saving.
+  io-threads: -1
+  # Set the number of shared worker threads to be used by chunk rendering,
+  # chunk loading, chunk generation. If the value is <= 0, then the number
+  # of threads will automatically be determined.
+  worker-threads: -1
