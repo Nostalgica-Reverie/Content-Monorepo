@@ -250,18 +250,13 @@ hash = "ff31791271197f8122fb52893e7e67d86ba038dd0e77e57227ef84de8f7e069e"
 metafile = true
 
 [[files]]
+file = "mods/architectury-api.pw.toml"
+hash = "1102440dd2533ba3a154419bb95ff1f81b858201eb0c44d2a2eea486c74e565a"
+metafile = true
+
+[[files]]
 file = "mods/badoptimizations.pw.toml"
 hash = "be28a9ff89c60140b2983eb91089e77bec90bc5a0379c25472be01cb14dcbb97"
-metafile = true
-
-[[files]]
-file = "mods/better-block-entities.pw.toml"
-hash = "c8d6bda044475105c02984665f1205537241931d927f825cd8af9699264c1025"
-metafile = true
-
-[[files]]
-file = "mods/cape-provider.pw.toml"
-hash = "d720c72a64b4a6c15472c55d6c55cf1652c0627a76a9d18d3db91dc705217b46"
 metafile = true
 
 [[files]]
@@ -282,11 +277,6 @@ metafile = true
 [[files]]
 file = "mods/configured-defaults.pw.toml"
 hash = "ff59ad266ecefbf446e44af81a2090d20f6a2d36b771b4113c1267195cf8312a"
-metafile = true
-
-[[files]]
-file = "mods/console-advancement-sounds.pw.toml"
-hash = "84f3e3f063b510e98defc11dc16eebdab11ead09378af3eb9747bc089a455139"
 metafile = true
 
 [[files]]
@@ -350,6 +340,11 @@ hash = "446f8047ee9168b65fe9d4600f82cb915c7aa0d0f049a344177ba340a5b93a8a"
 metafile = true
 
 [[files]]
+file = "mods/fabric-language-kotlin.pw.toml"
+hash = "d7c055f277c1751122d9abc5f09015e629699e04a9383cd0c666b33436293079"
+metafile = true
+
+[[files]]
 file = "mods/factory-api.pw.toml"
 hash = "94443379af096b43e7475d2e0a0f5f59560b53814288dd1b8ccf17f8de29f0eb"
 metafile = true
@@ -405,16 +400,6 @@ hash = "aec5d0a14ae8e2b3a9985e1f367d491f95ebf98c18b241e15369be3a369cea1a"
 metafile = true
 
 [[files]]
-file = "mods/legacy-mechanics.pw.toml"
-hash = "e3a89919aceb536befd0b2d0d530b51b7fb0b3c278621489afedf189aa3e043a"
-metafile = true
-
-[[files]]
-file = "mods/legacy-nether-extended.pw.toml"
-hash = "ee6013e8beb4f88698f0086afd586edb85a85aec3bfa73dc7db767ba18a73b8c"
-metafile = true
-
-[[files]]
 file = "mods/legacy-skins.pw.toml"
 hash = "45d8b3b08cb5fca151dbd4a7131685aa6108bc356fbe5b79acd963adba3b3301"
 metafile = true
@@ -440,11 +425,6 @@ hash = "9e22c0ffb05cf4345308cd8760dd0c5cc69e186f4709f0593882dccb52323180"
 metafile = true
 
 [[files]]
-file = "mods/modernfix-mvus.pw.toml"
-hash = "d50b7be11b0ef674f0f5b7b4307dc4919683fa63bdc72703912258a528398e61"
-metafile = true
-
-[[files]]
 file = "mods/modernfix.pw.toml"
 hash = "941a5aac1b441e2b4bd0c8465ea7e9f5c6826b4f99aa8c4ba63b3b657b6e7530"
 metafile = true
@@ -452,11 +432,6 @@ metafile = true
 [[files]]
 file = "mods/modmenu.pw.toml"
 hash = "d917697e84a95f857a447d26f94d93169a5a62176c93193cdf80c8d8bc1e280a"
-metafile = true
-
-[[files]]
-file = "mods/moonrise-opt.pw.toml"
-hash = "763812ef16697aff4ad4f4aebb90df9c60a9eed572e68c95f31ba053691b9a43"
 metafile = true
 
 [[files]]
@@ -472,11 +447,6 @@ metafile = true
 [[files]]
 file = "mods/nuit.pw.toml"
 hash = "cf4069fa0d413aa55c0eaca14e7ffd7f472764af98b34459a9bf03a7073aa212"
-metafile = true
-
-[[files]]
-file = "mods/numeral-ping.pw.toml"
-hash = "dfddd8520fa2cbf80313f8680cdd99ed8b9342f7ad0a0abf268c2dce471e7b7e"
 metafile = true
 
 [[files]]
@@ -757,19 +727,4 @@ metafile = true
 [[files]]
 file = "resourcepacks/tutorial-world-addon.pw.toml"
 hash = "de5f3c59c9ec0ad545235dca595c8bb8a28d4c72ba0cfd5a491f234c0e948f44"
-metafile = true
-
-[[files]]
-file = "resourcepacks/vanilla-3d-doors.pw.toml"
-hash = "e6d2085cf15ab4ee86f58f0f12cf640b37522f0ed00c8802b040f28d1cc89b9d"
-metafile = true
-
-[[files]]
-file = "resourcepacks/vanilla-3d.pw.toml"
-hash = "f363bba4980aecfd21b5f413947204a943412fbf699bb130fa6e575253d15105"
-metafile = true
-
-[[files]]
-file = "resourcepacks/vanilla-plus-jaronwqhd.pw.toml"
-hash = "0af5302e1b67a2716b26c9f34b78f9cf8d3580847e1ce33a8565f0eef55b7dea"
 metafile = true
