@@ -1,10 +1,16 @@
 {
+  "icon": "legacy:comparisons/steampunk/icon",
+  "background": "legacy:comparisons/steampunk/comparison",
   "packs": [
     "vanilla",
     "fabric",
     "file/Steampunk Texture Pack.zip"
   ],
   "id": "steampunk",
-  "name": "Steampunk Texture Pack",
-  "description": "Create your own Industrial Revolution with this Victorian inspired Steampunk texture pack!"
+  "name": {
+    "translate": "legacy.menu.albums.resource.steampunk"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.steampunk.description"
+  }
 }
