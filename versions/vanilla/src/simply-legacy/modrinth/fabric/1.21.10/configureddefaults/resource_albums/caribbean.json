@@ -1,10 +1,16 @@
 {
+  "icon": "legacy:comparisons/caribbean/icon",
+  "background": "legacy:comparisons/caribbean/comparison",
   "packs": [
     "vanilla",
     "fabric",
     "file/Pirates Of The Caribbean.zip"
   ],
   "id": "caribbean",
-  "name": "Pirates Of The Caribbean Mash-up",
-  "description": "Take what you can. Give nothing back! Join Jack and his crew in the Pirates of the Caribbean Mash-up, featuring all of your favorite rogues and rascals. Plot a course from Tortuga to Shipwreck Cove and all the way down to Davy Jones’ Locker. This is the day you will always remember as the day you sailed with Captain Jack Sparrow."
+  "name": {
+    "translate": "legacy.menu.albums.resource.caribbean"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.caribbean.description"
+  }
 }

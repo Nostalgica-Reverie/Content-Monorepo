@@ -1,10 +1,16 @@
 {
+  "icon": "legacy:comparisons/natural/icon",
+  "background": "legacy:comparisons/natural/comparison",
   "packs": [
     "vanilla",
     "fabric",
     "file/Natural Texture Pack.zip"
   ],
   "id": "natural",
-  "name": "Natural Texture Pack",
-  "description": "Give your worlds a more natural look. A texture pack based on soft colors and lines."
+  "name": {
+    "translate": "legacy.menu.albums.resource.natural"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.natural.description"
+  }
 }

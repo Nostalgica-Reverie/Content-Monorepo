@@ -1,10 +1,16 @@
 {
+  "icon": "legacy:comparisons/pattern/icon",
+  "background": "legacy:comparisons/pattern/comparison",
   "packs": [
     "vanilla",
     "fabric",
     "file/Pattern Texture Pack.zip"
   ],
   "id": "pattern",
-  "name": "Pattern Texture Pack",
-  "description": "Decorate your world with this bright and colorful texture pack filled with beautiful patterns and knitted animals!"
+  "name": {
+    "translate": "legacy.menu.albums.resource.pattern"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.pattern.description"
+  }
 }
