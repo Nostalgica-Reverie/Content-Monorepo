@@ -1,10 +1,16 @@
 {
+  "icon": "legacy:comparisons/norse/icon",
+  "background": "legacy:comparisons/norse/comparison",
   "packs": [
     "vanilla",
     "fabric",
     "file/Norse Mythology.zip"
   ],
   "id": "norse",
-  "name": "Norse Mythology",
-  "description": "Are you heroic enough to enter the Great Hall, Valhalla? Find out in the Norse Mythology Mash-up! Compose your own grand saga as you voyage through the 9 realms, from the treetops of Yggdrasil, down into the mines of Svartalfheim and the depths of Hel! The third episode in the mythology series, this pack has hand carved textures, a thunderous soundtrack and a horde of skins. Skål!"
+  "name": {
+    "translate": "legacy.menu.albums.resource.norse"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.norse.description"
+  }
 }

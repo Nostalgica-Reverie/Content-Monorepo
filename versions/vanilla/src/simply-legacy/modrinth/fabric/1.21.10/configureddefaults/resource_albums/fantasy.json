@@ -1,10 +1,16 @@
 {
+  "icon": "legacy:comparisons/fantasy/icon",
+  "background": "legacy:comparisons/fantasy/comparison",
   "packs": [
     "vanilla",
     "fabric",
     "file/Fantasy Texture Pack.zip"
   ],
   "id": "fantasy",
-  "name": "Fantasy Texture Pack",
-  "description": "The golden times are here. A medieval, fantasy look for your worlds."
+  "name": {
+    "translate": "legacy.menu.albums.resource.fantasy"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.fantasy.description"
+  }
 }

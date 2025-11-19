@@ -1,10 +1,16 @@
 {
+  "icon": "legacy:comparisons/super_cute/icon",
+  "background": "legacy:comparisons/super_cute/comparison",
   "packs": [
     "vanilla",
     "fabric",
     "file/Super Cute Texture Pack.zip"
   ],
   "id": "super_cute",
-  "name": "Super Cute Texture Pack",
-  "description": "The Super Cute Texture Pack lets you create a cheerful world full of the cutest and cuddliest mobs! Bouncing bunnies, ultra-adorable unicorns, brilliant bumblebees and, er, burgers? Yes, burgers! Even the squid will make you Squeee! This texture pack comes with 15 skins!"
+  "name": {
+    "translate": "legacy.menu.albums.resource.super_cute"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.super_cute.description"
+  }
 }
