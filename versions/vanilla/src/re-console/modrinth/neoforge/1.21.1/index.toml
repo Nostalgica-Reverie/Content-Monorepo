@@ -2,7 +2,7 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
-hash = "3800c00a252879fb83bdab36311b951c3cce1943b4afe844cc0f2f4e86224950"
+hash = "cd92732ab9216126faaf6d52692033af59f9df3736ec83454ddb87e7b6f35b99"
 
 [[files]]
 file = "config/crash_assistant/lang/README.md"
@@ -29,12 +29,8 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
 
 [[files]]
-file = "configureddefaults/config/bettergrass.json"
-hash = "876580a5ebe7e34ca51b871828234e5f949968392cbbbb3e6da2a32c67efe674"
-
-[[files]]
-file = "configureddefaults/config/bettergrass.json5"
-hash = "09c1c1c7b8c8cac38f31c198e8da31028466ccb739a9bc005e7e975a4aaa03de"
+file = "configureddefaults/config/animatium.json"
+hash = "edab9a722a8eae2215740e1fbc0e359b851a541bd674deef7c974f2dcd80592d"
 
 [[files]]
 file = "configureddefaults/config/capes.json5"
@@ -73,6 +69,10 @@ file = "configureddefaults/config/iris.properties"
 hash = "bc5fc249179fa926c9395c63626120f52f55e5c25638712a3e4008a3737e9013"
 
 [[files]]
+file = "configureddefaults/config/jimmy-smiths.json"
+hash = "479d6f67a8d209f6489cbe91d07baf43c0eab91325f168573159d4b3f0f22bf2"
+
+[[files]]
 file = "configureddefaults/config/lambdynlights.toml"
 hash = "0fbd6c5f78625f0240300838e7ff89836df8612cca07091a644819341624138f"
 
@@ -82,11 +82,11 @@ hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
 
 [[files]]
 file = "configureddefaults/config/legacy/client_options.json"
-hash = "d95687f9b8292701a6312f92385f07384a10fb7921349090ded463e3c42169aa"
+hash = "adb3216aa6f06cc2840fb842e2ab9d189f076f6cba67c3241b4c1144447e7016"
 
 [[files]]
 file = "configureddefaults/config/legacy/common.json"
-hash = "b53b37731be8c0b43792606469971acca200596aa957ece8387507daea19b7e8"
+hash = "102803aae5342ed1907d7c1aa18b5ea41f622ab588a6b1c9694ae41f962d5b3a"
 
 [[files]]
 file = "configureddefaults/config/legacy/common_mixin.json"
@@ -94,15 +94,27 @@ hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "f77f351e6b53e333cfee2511513fb2483f59c94c244a800aabfaf531790c2ac5"
+hash = "6c8f4233e2a10d367ccf0c0fec9d6f5d890bd054f092dec285940b49555074dc"
+
+[[files]]
+file = "configureddefaults/config/lithium.properties"
+hash = "818ed301a636eb596663a08b967fe77f563186eef682ee2753a0f07f44988708"
 
 [[files]]
 file = "configureddefaults/config/modernfix-mixins.properties"
-hash = "890f408f1f70e476505023ef20da5613d0245d27c6ca1b4a692548e294c5fcac"
+hash = "88e156ebea5860a21c27da03912948a7849f9dd0ba5c4ccc9c102f3c52208c81"
 
 [[files]]
 file = "configureddefaults/config/modmenu.json"
 hash = "4dc7d729a2b83401f4a39dff457680f6f5872df1a5b2a93d9eb27b0b5df42d0e"
+
+[[files]]
+file = "configureddefaults/config/moonrise.yml"
+hash = "4a69168659e824c56cd8cf7cc48fd0393e620183d5400395a9f22ae02eff72f1"
+
+[[files]]
+file = "configureddefaults/config/moreculling.toml"
+hash = "a8ef29e5d01530454b385d39d8cf9f90d240cfd2462c044b7d33fa8555101657"
 
 [[files]]
 file = "configureddefaults/config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
@@ -110,23 +122,11 @@ hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
 
 [[files]]
 file = "configureddefaults/config/nostalgic_tweaks/nostalgic_tweaks.json"
-hash = "f03920579e869b9e443b00ba9a7c44af74a60bcb7625609bfb428c6388cfca18"
+hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
 
 [[files]]
-file = "configureddefaults/config/puzzle.json"
-hash = "dd04f1ceea37a64e0867a55b3bb6e559f4f2358113717abe76a8e250e3718b03"
-
-[[files]]
-file = "configureddefaults/config/servercore/config.yml"
-hash = "a6fbf706590f394558edc5996f07a9575739fb9f056eed59cffe17fa57ec4e55"
-
-[[files]]
-file = "configureddefaults/config/servercore/optimizations.yml"
-hash = "8d528c4cad1cca659e5582d0ac35bb1ab971d4a98df009e3fc224d03f2304eff"
-
-[[files]]
-file = "configureddefaults/config/vmp.properties"
-hash = "0d0549563aca08c87a22a9fd862cc6e7a9906f2d6fca84dcbfa7cbec14dff7e6"
+file = "configureddefaults/config/threadtweak.json"
+hash = "33191bf9b7c96165db5eea96dfa57e7ca7763fc3b842ebfd943184dc895969c6"
 
 [[files]]
 file = "configureddefaults/config/world-host.json5"
@@ -245,8 +245,280 @@ file = "configureddefaults/resource_albums/trailer.json"
 hash = "3640a67d8ecbdb2493ae703149cf17438e60ab8c8cd754129eca51fc0704ee30"
 
 [[files]]
-file = "global_packs/required_resources/rcr3.zip"
-hash = "436dbd1a711aabdfbe884674dcd8171fae455c39cb59aab3a706c841772c1210"
+file = "global_packs/required_resources/rcr-neoforge/1.21.1/sodium/shaders/blocks/block_layer_opaque.vsh"
+hash = "b25e2c77dab8652fb4b1b9ece7fc22999d329e260b18ee539aac93f4c8776621"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/1.21.4/sodium/shaders/blocks/block_layer_opaque.vsh"
+hash = "b25e2c77dab8652fb4b1b9ece7fc22999d329e260b18ee539aac93f4c8776621"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/1.21.5/sodium/shaders/blocks/block_layer_opaque.vsh"
+hash = "b25e2c77dab8652fb4b1b9ece7fc22999d329e260b18ee539aac93f4c8776621"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/README.md"
+hash = "661e04c3138162d71330ff39471bfabf4c3b0061384c8ed33d69b9c503f5e230"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/discs/lang/en_us.json"
+hash = "a6c4f3cbd42408d5d67198fa78f609a692c060be2162f9396b236815bc2435e1"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/intro.json"
+hash = "ff90045d3ee20c7dd9aee2eeb41470368fb7a4d20e2a9921db1e9e2fda2be1e5"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/lang/en_us.json"
+hash = "0bfda85b03abc12a6b0cf5b0e3dff9160dc99d086c3a4c844a6ac09148a85540"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/intro/nr.png"
+hash = "9b60980b770ead84fedabf54589f84a20b0995d43d358441dd3881468d101821"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/adv_time/comparison.png"
+hash = "ce5892b1d13ac22d021b27093e56cf28f27e8726930cd3ab908c3370b00db889"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/adv_time/icon.png"
+hash = "fafb4ec3e279a23e0df864f7986fd490794d5aa05818a9fa3ff9516574c56775"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/candy/comparison.png"
+hash = "1f80165c02ba6403d12b6dd684e74d4e25e110c9764aa65229ab8df193d9908c"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/candy/icon.png"
+hash = "6c691407d0e38aae8e451d6a7f5a169e592d695b4326e2802b078874b63c7a09"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/caribbean/comparison.png"
+hash = "bed3288b1d7e7f210ffd26ca5f4a1efb93e33bc33f07de084f23245f6e2b0e56"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/caribbean/icon.png"
+hash = "a9df65ee8758fd219ce4ce6a8d72deb81cbd57286fb3d5388c3a9cef100f706d"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/cartoon/comparison.png"
+hash = "979466ed7447b7bb2d4ba2f01f37ff91d1d274f0b76b594d9ed04c2bc9093b17"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/cartoon/icon.png"
+hash = "6d225c94b384af7e141c9e387a53a3cf1055dfc2d7caf0aad3979b8288acebf2"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/chinese/comparison.png"
+hash = "3b15dad26abe7c5e99a3615af9ec6be612aae5c16d7e4fa43ae9becff5191849"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/chinese/icon.png"
+hash = "d11c1f20eb3cdb4207f1037c5fbb1910218d8f30f58b175b7b0270fc39b3c499"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/city/comparison.png"
+hash = "8408546140623852493fa9ef336b8a7c7ed35f121e572c3010bb00fa895c554b"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/city/icon.png"
+hash = "3ae45512e4a43b6e8e3d78bc51eeb4042014a044d0f8dcd58b9c5ba7c2c9c707"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/dragonborn/comparison.png"
+hash = "e23f6a6c01bdffe7b2321e0d65d6749430b8fee5686a854810e9001c3b6faab2"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/dragonborn/icon.png"
+hash = "f0679e9d4a35236fbccee19e2848ddcfc20f7972b2346ba4bd119ef0a2ea5c4d"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/egyptian/comparison.png"
+hash = "2a03675fd78bdc5e60a97415b8b7ee4abd123d6780e39b2ed626f19c22d91a58"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/egyptian/icon.png"
+hash = "5dd8a7b1463905380ce3bec812bde41b898678da9dca8baaaf23e0411f412c68"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/fallout/comparison.png"
+hash = "ababda13b5eda2637c034374f13605ea405a00b7d15b0249049f18466bb354a5"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/fallout/icon.png"
+hash = "c7c96d4b911ae183f8cf8be00eda98248d757d4b4ca4ceb671d68be180e72a9e"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/fantasy/comparison.png"
+hash = "170f8a7663a5b83ddf43d2c88196f35c908e400a1a81dd4d1a5fbded22e4bd97"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/fantasy/icon.png"
+hash = "b39836e4216018d3a27a788641900ed801843d72b06163584492ffe1b2110393"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/festive/comparison.png"
+hash = "1bd63065aaa0f3709c51ce844c9fffef91651831f31a8a3ddc5a3af298028446"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/festive/icon.png"
+hash = "af643f37c4cff536dd9e63e436884f7c9e59d16ca2f4a6c541233bcb3983751d"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/greek/comparison.png"
+hash = "500e3722aee77e56a6bebc2bbfacac4fc13fdbfe1115ab14cca253144aa79734"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/greek/icon.png"
+hash = "4656ca807726f6ee2e0f573408d7ff6da140f6ad0d57214d823953c2f9907d54"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/halloween/comparison.png"
+hash = "fc869a028af3005f31a1b13587018539841c45d74862a9a6de207674d286e4ae"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/halloween/icon.png"
+hash = "dd049f2743b7f96629dc2546c91552baa91ec926086355db673c18adeacb1eb2"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/comparison.png"
+hash = "0a08f41af41d29d1ca97766be24314b2fafeab857e564e396eec6fc6d11d2d49"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/icon.png"
+hash = "13ebc0ea843091607988b725596abd4070fb5bab382239dbf94b367823ad80c1"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/master_chief/comparison.png"
+hash = "a8277fc9c122c933cd0029c2a0a7b4479aaefa886f64226e03f5522987ff9da9"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/master_chief/icon.png"
+hash = "87f8d53a6789f040ae7e4ef53709c98cd546e7ad75015efe9df1d58da01d6dfa"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/n7/comparison.png"
+hash = "a59571d1490a757974349c1e120775d8c81777c47d04c4c382f949efa4ba1fdd"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/n7/icon.png"
+hash = "c4dca6fd44768af91a4cea21413e62e7bd828f50672cc6189c40c0ad8da9a01f"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/natural/comparison.png"
+hash = "24bb54b428f1f1667bba5af0a43039afae8ce6273ea5fad68841cb047a990fbb"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/natural/icon.png"
+hash = "abb7c3877a8be5239bce78960c29ac5f1c6a15d28957a58a98622e24a9683069"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/nightmare/comparison.png"
+hash = "f8bc8027e602aaed12e012018df8caa8efa0c60cab3984b0212ba3d1f84001f5"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/nightmare/icon.png"
+hash = "1098e02d10ac644686cb160f742b9feab7bde713c1ad3c9f894c794f4e6859e3"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/norse/comparison.png"
+hash = "f4100a76da546e82e6847a5d29368074076b23d0850ee9b1daaecf473739d7ff"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/norse/icon.png"
+hash = "459c7d02dc672c552051ca1d687945683a28feb62578e3ab709646dc5fd9c553"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/pattern/comparison.png"
+hash = "d0f8405bdd26d0dd25b7087aa484f35e3c1c1e90ab18c2f659e94bbe4eb8963c"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/pattern/icon.png"
+hash = "799aebc057d5a70ba64a6774b30aff4104167939e5c385c01651970ca33b1ed8"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/plastic/comparison.png"
+hash = "5054d4769c62fe1ea30c4184044416adef63b9c9a02c0686987665d79b4a299b"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/plastic/icon.png"
+hash = "5e53affb565e2ef75585a908937d51f95be5324facc5f81aec089c87387ac3ae"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/sackboy/comparison.png"
+hash = "33371b91c2557c4f61db51679440321f68b4f9538e1401ffd0c9b27ca7b5a70c"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/sackboy/icon.png"
+hash = "8c1a9fc99638ac0ef3e90ce569f21bdc247e43ec43cc19dd31de80a9e26bde95"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/steampunk/comparison.png"
+hash = "6f2e7232d7efdedeb179b70fc9ccd2388b211202a212b2a369a62ab27d233dba"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/steampunk/icon.png"
+hash = "c40ff126bb227fb76956521ade48f97d1df2b39301ccec04828cfcba3567fb05"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/steven_uni/comparison.png"
+hash = "4d34219d3c4e97f502013d194d52735067dad681d1ca73b8f920e6eea22cc308"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/steven_uni/icon.png"
+hash = "7554131bad578295866cf093e3c28478923f86f75c81ee721890fc6350ef2127"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/super_cute/comparison.png"
+hash = "a8adea4d78feb81cc605448be65c1c3eebe900d9e41ac9da449da4e5d6c206a6"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/super_cute/icon.png"
+hash = "fb8753d918d25bff5c1a3bb824fa2765565572889e94d9f92fd55a62fd4ea70b"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/super_mario/comparison.png"
+hash = "de1b84ce8d7ffb4646a5eae6091c168d1073fd5e79824cafa96d9c75268a8711"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/super_mario/icon.png"
+hash = "0f195001d9aa37a65dea613ebd44b145afd0191fb92e932fc13b8fe2ef00b420"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/toy/comparison.png"
+hash = "92069c0592c5dd0d3211afb438ceae860e6ce11bb98180889883963e1690b92d"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/sprites/comparisons/toy/icon.png"
+hash = "ada1b7cc1eb8ee561d3df78f82aab0603fe14c74b9f8c28de514b2a06f7f1415"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/title/panorama_day.png"
+hash = "94d793ec4abb86b29e5c94ffc7e60b6d51410a4993cfc90180c9f21c72c031a3"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/legacy/textures/gui/title/panorama_night.png"
+hash = "e4ad25ca1b3582606223255d5826c1b91e859f602831cea596f163e2f495328c"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/minecraft/lang/en_us.json"
+hash = "a4562296364811eb09349a984cbd2a82867b4ce9ef8e1fe01033e0190adfc49b"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/minecraft/models/block/grass_block.json"
+hash = "76bf6a5f30e944ca268d115038387816bfe8bd1a66a50b60b8887881046e8acb"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/assets/reconsole/lang/en_us.json"
+hash = "1f884af19413b270066a6cd6737429a8e57e4d93f041ed5d323ec9b2a3bb64ad"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/pack.mcmeta"
+hash = "a5a98670b3ddeeb1a23843633f980ed41fde2db454659763392510923d73c966"
+
+[[files]]
+file = "global_packs/required_resources/rcr-neoforge/pack.png"
+hash = "5d7d465b0d36a0c5b0040d334f29d8594f271f9029ef703865d0a6dae661c9ae"
 
 [[files]]
 file = "mods/architectury-api.pw.toml"
@@ -261,11 +533,6 @@ metafile = true
 [[files]]
 file = "mods/better-ping-display-fabric.pw.toml"
 hash = "54f3a9c5edb39bb4807bf05ad52138ae561648c4b36c21ec8d6962b265594dfc"
-metafile = true
-
-[[files]]
-file = "mods/bettergrassify.pw.toml"
-hash = "a850075a3b7e380701f0291f6151487d0a05bb54db125c8edf9f96a696b73188"
 metafile = true
 
 [[files]]
@@ -344,11 +611,6 @@ hash = "216006067453efa7a750f0d8bac6ea84c503b79e40aba32bd77c9edd183ec232"
 metafile = true
 
 [[files]]
-file = "mods/fabricbettergrass.pw.toml"
-hash = "ea9465210dfcb4e163764e394ed16e6963f0e51be68dcf9635af0173f431fa5e"
-metafile = true
-
-[[files]]
 file = "mods/factory-api.pw.toml"
 hash = "ffe1f25184b8a86129eb16a930a8e0129643eba77f8419d3b1ad018fdf1bfdef"
 metafile = true
@@ -381,6 +643,11 @@ metafile = true
 [[files]]
 file = "mods/iris.pw.toml"
 hash = "f67aa60c765593a8c70f78296a460349c6aef5f4a16d173eae02e8803b545ad4"
+metafile = true
+
+[[files]]
+file = "mods/lambdabettergrass.pw.toml"
+hash = "894e5bf05eb42c2a6a2fc872b509135a47a39572abbd006528a4c79d962524f2"
 metafile = true
 
 [[files]]
@@ -429,11 +696,6 @@ hash = "eae3c14c915400de36bf547550f630de727bbf48ae0ce719b99b2ff50ceaab0d"
 metafile = true
 
 [[files]]
-file = "mods/noisium.pw.toml"
-hash = "d424a9260ef51bc102e56f0423d91dfabb739ccca8a86eb1c450ea631b739280"
-metafile = true
-
-[[files]]
 file = "mods/nuit.pw.toml"
 hash = "cf4069fa0d413aa55c0eaca14e7ffd7f472764af98b34459a9bf03a7073aa212"
 metafile = true
@@ -451,11 +713,6 @@ metafile = true
 [[files]]
 file = "mods/polytone.pw.toml"
 hash = "d735e9cc5652e654cfa85bd42c43b5f91d9ed96f008cdefe258f827dbda195c5"
-metafile = true
-
-[[files]]
-file = "mods/scalablelux.pw.toml"
-hash = "2c1661e65d47c2942d2c3e926698d0762672224f1925c7f25105b964ce25b093"
 metafile = true
 
 [[files]]
@@ -716,19 +973,4 @@ metafile = true
 [[files]]
 file = "resourcepacks/tutorial-world-addon.pw.toml"
 hash = "de5f3c59c9ec0ad545235dca595c8bb8a28d4c72ba0cfd5a491f234c0e948f44"
-metafile = true
-
-[[files]]
-file = "resourcepacks/vanilla-3d-doors.pw.toml"
-hash = "e6d2085cf15ab4ee86f58f0f12cf640b37522f0ed00c8802b040f28d1cc89b9d"
-metafile = true
-
-[[files]]
-file = "resourcepacks/vanilla-3d.pw.toml"
-hash = "f363bba4980aecfd21b5f413947204a943412fbf699bb130fa6e575253d15105"
-metafile = true
-
-[[files]]
-file = "resourcepacks/vanilla-plus-jaronwqhd.pw.toml"
-hash = "0af5302e1b67a2716b26c9f34b78f9cf8d3580847e1ce33a8565f0eef55b7dea"
 metafile = true
