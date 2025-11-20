@@ -1,0 +1,16 @@
+name = "Rekindled Legacy"
+author = "omo50, Agari, Panduino"
+version = "25.0.0"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "83e5fbd15aa5e0d2dd59aa66b76aed7084c80896c60733e30c77211e3ca55961"
+
+[versions]
+minecraft = "1.21.1"
+neoforge = "21.1.215"
+
+[options]
+acceptable-game-versions = []
