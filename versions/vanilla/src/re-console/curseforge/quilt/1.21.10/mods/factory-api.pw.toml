@@ -1,9 +1,13 @@
 name = "Factory API"
-filename = "FactoryAPI-1.21.10-port-2.2.6.2541.3.jar"
+filename = "FactoryAPI-1.21.10-2.2.7-fabric.jar"
 side = "both"
 
 [download]
-url = "https://github.com/omo50/aw/releases/download/1/factory_api-fabric-1.21.10-2.2.6.2541.3.jar"
-hash-format = "sha256"
-hash = "ced06ffd87807902eaf026f4a7cea6c1ec23b253b874e5574116472422cbb618"
+hash-format = "sha1"
+hash = "44cc314315b41eb8a9edd8bf67756dc06f03b4a0"
+mode = "metadata:curseforge"
 
+[update]
+[update.curseforge]
+file-id = 7241322
+project-id = 704136
