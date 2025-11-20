@@ -1,0 +1,14 @@
+{
+  "overlays": {
+    "entries": [
+      {"directory": "1.21.5", "formats": [55, 100]},
+      {"directory": "1.21.4", "formats": [46, 100]},
+      {"directory": "1.21.1", "formats": [34, 100]}
+    ]
+  },
+  "pack": {
+    "description": "Re-Console Resources adds textures into Re-Console that are necessary to the modpack function!",
+    "pack_format": 15,
+    "supported_formats": {"max_inclusive": 420, "min_inclusive": 15}
+  }
+}
