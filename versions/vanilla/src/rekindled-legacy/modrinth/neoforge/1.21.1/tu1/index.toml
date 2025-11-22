@@ -945,10 +945,6 @@ file = "global_packs/required_resources/TU1 Assets/assets/legacy/control_tooltip
 hash = "510be84ad1c945b95c77bbcd13cd31d311167ff8783f65019039a746a6592ea8"
 
 [[files]]
-file = "global_packs/required_resources/TU1 Assets/assets/legacy/crafting_tab_listing.json"
-hash = "7f08fbba7e5999e43fa789b208ab02efc6d013ef81ed95c009ca2ba53300b681"
-
-[[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/creative_tab_listing.json"
 hash = "0c8e1f86bfa5f8bdf4713eccb89985fa9dd3c1770aa69060e630d86dc947e53a"
 
@@ -1662,7 +1658,11 @@ hash = "127c7d58810399ebf8a33005d15c2081d51589c1a3874b4f72324d23c105dd87"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/sprites/widget/loading_background.png"
-hash = "09771316344b95753fbca80bda0bee73e261f12e4b6e7ce7429a43065964c2ec"
+hash = "cf0f6f8a53028febe30231f757af58db3fc393bbf4b90eafb0540a2dd275dfab"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/sprites/widget/loading_bar.png"
+hash = "fe8a0a45eac0a86bbfafbe7ca6429efee0e401a6c37f54a3b6e96696a2808b38"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/sprites/widget/slider.png"
@@ -1706,7 +1706,7 @@ hash = "2ddd21ca78719e9a97a900060f47ae5303abe9e8a5d8a54862e5b174b5c0f561"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/title/minecraft.png"
-hash = "a85c932a23a54d45979a589d99c599492bdc745ece37cdc73062082b3e387709"
+hash = "a79f4dff0090a7f1a5b1b188e9e0ce891917f035e8de62a0acea336a1bb74346"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/title/minecraft.png.mcmeta"
@@ -1714,11 +1714,19 @@ hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/title/panorama_day.png"
-hash = "c2933ce1903e82e3f20db845c898f6ce42697deb4bae0cb726dd2575bf45c891"
+hash = "b098312f61c9cf7f53bb5b00cdb9be3abf92c919e7a14f7cd531cec3482aabff"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/title/panorama_day.png.mcmeta"
+hash = "14972e242987e4be84336806bc1f08e61480110a1668718688def1be06787f1b"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/title/panorama_night.png"
-hash = "f4389e3e2a06cbc88d976ac6cd2cdee1f1a0779bb15fdf64d7b8a5ae8613de22"
+hash = "1a5f103e23679694ec6427b352186fb3f7c1a38674ccb076c094f80be332c0e5"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/gui/title/panorama_night.png.mcmeta"
+hash = "14972e242987e4be84336806bc1f08e61480110a1668718688def1be06787f1b"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/tip_overrides/axes.json"
@@ -1835,6 +1843,22 @@ hash = "2aaf37e9a756ce0d47a9cfc4f74e98df46790daf71ad1ba33e7124f56dc0650d"
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/tutorial/tutorial.zip"
 hash = "251a1bfd39e6129d4e8a79feb220d67fc95186104858be960a9d54e0b109153a"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/ui_definitions/legacy_crafting_screen.json"
+hash = "1ccfdb89c6533a6dbec75d81f1166d8c8556ef3cbd8ef398a677712d1abe0a7c"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/ui_definitions/loading_screen.json"
+hash = "0379b5278ee8ed690ec6c03641ffafc4f7832a10331ea9cfa9db3c2eca1578da"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/ui_definitions/pause_screen.json"
+hash = "b638cc745c83c5bd364a59e1993667f102d3363986781414e6fb4441b7f11ad7"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/ui_definitions/play_game_screen.json"
+hash = "1417d85362869ceb2748a37d6f4bc73303377a780bdf8ec960bdc6c9e8549f29"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/world_templates.json"
@@ -3347,11 +3371,6 @@ metafile = true
 [[files]]
 file = "mods/puzzles-lib.pw.toml"
 hash = "6812c3faa178cd48c65c5b8e7aeef50bc0b63d8e3b2117065d6179a43d8d3649"
-metafile = true
-
-[[files]]
-file = "mods/shuttfup.pw.toml"
-hash = "e4891e76bc72c6b2cc0443679b7412506e32bddcb0648539cc7781d3bfb045c7"
 metafile = true
 
 [[files]]
