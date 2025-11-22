@@ -1,0 +1,62 @@
+{
+  "targetType": "class",
+  "targetUI": "wily.legacy.client.screen.LegacyCraftingScreen",
+  "elements": {
+    "hasTypeTabList": {
+      "type": "put_boolean",
+      "value": false
+    },
+    "tabListXOffset": {
+      "type": "put_number",
+      "value": -1.2,
+      "applyCondition": "${is2x2}"
+    },
+    "tabListSelectedYOffset": 1.5,
+    "imageWidth": {
+      "type": "put_number",
+      "value": 300,
+      "applyCondition": "${is2x2}"
+    },
+    "maxTabCount": {
+      "type": "put_number",
+      "value": 6,
+      "applyCondition": "${is2x2}"
+    },
+    "maxCraftingButtonsCount": {
+      "type": "put_number",
+      "value": 10,
+      "applyCondition": "${is2x2}"
+    },
+    "craftingButtonsX": {
+      "type": "put_number",
+      "value": 16,
+      "applyCondition": "${is2x2}"
+    },
+    "inventoryOffset": {
+      "type": "put_vec3",
+      "x": -42.5,
+      "y": 0.5,
+      "applyCondition": "${is2x2}"
+    },
+    "bottomPanelTitleY": {
+      "type": "put_number",
+      "value": 108,
+      "applyCondition": "${is2x2}"
+    },
+    "inventoryPanelX": {
+      "type": "put_number",
+      "value": 138,
+      "applyCondition": "${is2x2}"
+    },
+    "inventoryPanelWidth": {
+      "type": "put_number",
+      "value": 153,
+      "applyCondition": "${is2x2}"
+    },
+    "craftingGridPanelWidth": {
+      "type": "put_number",
+      "value": 125,
+      "applyCondition": "${is2x2}"
+    }
+  }
+}
