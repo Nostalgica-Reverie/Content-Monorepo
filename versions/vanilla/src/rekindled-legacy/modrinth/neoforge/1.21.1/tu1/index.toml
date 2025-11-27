@@ -29,6 +29,10 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
 
 [[files]]
+file = "config/item_obliterator.json5"
+hash = "a676b8efdf18d124e3f946e921cb2e0d361b79c96d10bed4ed35e4d1b1ab6ed8"
+
+[[files]]
 file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
 hash = "ecb328180f67d2450a40ce4ebe6f9d946ce4dd0d045a592cfaa633983ec94204"
 
@@ -177,6 +181,18 @@ file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/loot
 hash = "05285653d70143a73e46990bba24f503f6621206f33d924edc77d44e757393de"
 
 [[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/loot_table/blocks/deepslate.json"
+hash = "b5685bc1817b8e6931ba16e6eb6a0e72583215c97e6ec38ef3ba05a4edd5fe20"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/loot_table/blocks/deepslate_gold_ore.json"
+hash = "db75b16fdc0f9f0c01bbfb6291c6aa479041dbafa70f9d5b4ee66700ce5c193f"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/loot_table/blocks/deepslate_iron_ore.json"
+hash = "c54c59ae39269a6a9404247b416baaf5efc640c2de9c373c7c5c821b1ad2578f"
+
+[[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/loot_table/blocks/gold_ore.json"
 hash = "db75b16fdc0f9f0c01bbfb6291c6aa479041dbafa70f9d5b4ee66700ce5c193f"
 
@@ -210,7 +226,7 @@ hash = "c80e263b0a7ec88fbe684c2197fcb117648d81bdc6c5680204fd3903e31f2e4d"
 
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/loot_table/chests/simple_dungeon.json"
-hash = "f087f6f70036db61f8ca94b80add352726797e8e669c46ec77bc4a2640705b4a"
+hash = "f5693c38f895aca11129744e671061bd7cbc0e277bde9a21cb0d92e0c4315e8b"
 
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/loot_table/chests/spawn_bonus_chest.json"
@@ -245,20 +261,8 @@ file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/loot
 hash = "7f52ec295927e17b618dd214b2335cd3b3a3d514a79b542cc2c21711d84b05f0"
 
 [[files]]
-file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/black_wool.json"
-hash = "c9108fc3f866900c336b7785d954f776599db12b3bc6256ea9e40a9cd9c0e7fb"
-
-[[files]]
-file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/blue_wool.json"
-hash = "077082dc8b290be8796dca240e735949e948b5bd361705068265ce1d1175b75b"
-
-[[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/book.json"
 hash = "44cd4d52c983fd78176a9913953cdce55f033264bd1d7a83071f07b657deab52"
-
-[[files]]
-file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/brown_wool.json"
-hash = "0e92640aa028016332643c2ce1aeee84908cc993704e1e05d9f1172d34d2da84"
 
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/cobblestone_slab.json"
@@ -267,6 +271,70 @@ hash = "09bbec27ff29186b95c021970e40baa076885c8a2d288074628dc0fb63ccf6b4"
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/cyan_dye.json"
 hash = "5b767dc8c5b220ea699149a7818694f5bd401a75f4416c8e7f50c8d326eb9357"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_black_wool.json"
+hash = "9b1f6c75f62af6ac4585a0d221fbd2382b95c773f90cae6a112b261cb76f1cb5"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_blue_wool.json"
+hash = "537aae5f3ef5c0ae8f8d8406f07c085990f32df8c25d58eaaf1c34d396e8a1a0"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_brown_wool.json"
+hash = "ac0067e51755cdc121de4a9aefe37b43920c89e53bfae6aff6bb65c5d0e57129"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_cyan_wool.json"
+hash = "3e69b6274bb4fe97987b0b432141c3489dff293a103557bdc97de1cb0b24c8c9"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_gray_wool.json"
+hash = "2c44a733f2b253806830982baa40dd6330dafb4c7a43c68a6cbfe72be07bc36d"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_green_wool.json"
+hash = "c5834c07935dec067e5757ac83fe876e88a0743bccdeaeb5e28a5f0672e78e66"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_light_blue_wool.json"
+hash = "abf9fca0c51f034da70eb6e98be8ae06a7b08c5fc9c2b945214880f2fb859dd9"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_light_gray_wool.json"
+hash = "e2ffcfa8e10bc5d690f2be8f2e8fdefc5b970006dd5a78aafacc948739e4eb2a"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_lime_wool.json"
+hash = "01d68c10bcbdde238ee33b4488ab5da49472048a1eb4251a533e71c3a4183183"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_magenta_wool.json"
+hash = "44d37d6d64b91f8c5ee55d3943723e7d1b9dadc6a7a8fdd72d6675abad2e99a3"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_orange_wool.json"
+hash = "ad09c0798d858f0dd4eb93484c91c5707cb56c9e63d77b8987c0b2b5abe54bd4"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_pink_wool.json"
+hash = "e6c3dbe72896d2fc5138633c5a91f747fbf30b92a5612bb4a10216b05ad1cd79"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_purple_wool.json"
+hash = "3c560310961a79e4b37cfe4d3c2ee5603e969d3c449e3e871756933013f4f0bd"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_red_wool.json"
+hash = "ec346ed32938adc881097a751c57ede1836b98a6c28bd2138d5f0a3967e441fd"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_white_wool.json"
+hash = "c95c794871f9b8ef5599b214a36d50cf21917ebbbcccce336e09474bdb73c3eb"
+
+[[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/dye_yellow_wool.json"
+hash = "974eee8c1c644cafa6ca5376ec9d6beaa3f5a0c5de89a3053f1f319ca8a5ec05"
 
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/flint_and_steel.json"
@@ -379,10 +447,6 @@ hash = "748929a33f3a7916b095a63f600c112e7f4ec86f197d765e2ddb6d496d261418"
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/tnt.json"
 hash = "450692962c04754ea4708d3450010f5f9a7440dc7bf7a15002acd661a16473e0"
-
-[[files]]
-file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/white_wool.json"
-hash = "044e970607476ea176aa6a7e52059849915a4403be2a1ae1fa680252725bd5d2"
 
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/recipe/wooden_door.json"
@@ -625,6 +689,10 @@ file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/worl
 hash = "939115c7284f4ff71229065d7073ed56a1603b1ac5cf389a352043d1e02714c5"
 
 [[files]]
+file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/worldgen/configured_feature/patch_pumpkin.json"
+hash = "ea405ace8227a824e92efbee083f15b7b57f0cc6eaed8a453212cf362636e431"
+
+[[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/worldgen/configured_feature/patch_sunflower.json"
 hash = "70701ed0ca65ff3f3400948e4ac2ff1db886b014c500c784b0187cd0424de05e"
 
@@ -810,7 +878,7 @@ hash = "11562bc060d688e36ed708a5fdd5569863de187e5ee4b91f4b9d300b503f5af9"
 
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/minecraft/worldgen/world_preset/normal.json"
-hash = "2737a03a0e304fa08374e4a3815fd2a5b5cc21b8ce7fe3f286f8d95486fd56fe"
+hash = "bbf5c933d6ec36688f5a8a1e0acb55be3bafb3fc6da8bc69934960ed7dc0a306"
 
 [[files]]
 file = "global_packs/required_data/Rekindled Legacy Datapack/data/moderner_beta/worldgen/biome/beta_cold_ocean.json"
@@ -945,6 +1013,10 @@ file = "global_packs/required_resources/TU1 Assets/assets/legacy/control_tooltip
 hash = "510be84ad1c945b95c77bbcd13cd31d311167ff8783f65019039a746a6592ea8"
 
 [[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/crafting_tab_listing.json"
+hash = "2c521513a912671afb773f1f88f413b90883d01fe798b73c66c5780e7836ef92"
+
+[[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/creative_tab_listing.json"
 hash = "0c8e1f86bfa5f8bdf4713eccb89985fa9dd3c1770aa69060e630d86dc947e53a"
 
@@ -1026,7 +1098,7 @@ hash = "5ff949467b40e6a329b14b5a9a89a9211dcb0b79a8f9900283d3383f84ba8938"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/texts/tips.json"
-hash = "9fe11205b907b6597277c659716128f5b69af4efec9a7b4c2062f5cf9611163e"
+hash = "f34bdcbb16e789afcea219f5a0dafc6ebd1413d2a4269137237078543f5c33a6"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/textures/component/ps5/down_button.png"
@@ -1841,6 +1913,10 @@ file = "global_packs/required_resources/TU1 Assets/assets/legacy/tip_overrides/w
 hash = "2aaf37e9a756ce0d47a9cfc4f74e98df46790daf71ad1ba33e7124f56dc0650d"
 
 [[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/legacy/tutorial/tutorial.mcsave"
+hash = "e228120f28ba46b146a865d6f8f8c54d0b49cfd803358a504ad6a68fcf54c2e7"
+
+[[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/tutorial/tutorial.zip"
 hash = "251a1bfd39e6129d4e8a79feb220d67fc95186104858be960a9d54e0b109153a"
 
@@ -1862,7 +1938,7 @@ hash = "1417d85362869ceb2748a37d6f4bc73303377a780bdf8ec960bdc6c9e8549f29"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacy/world_templates.json"
-hash = "6a08fc2a4f520ee253165f0c08e266d1ceede9b0c158d6ef32bc6cf549f1da96"
+hash = "5c89a053fb772e21650135ccd660902dc87329b8ceedbc712e00729c5b161ce0"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/legacyskins/textures/skin_packs/default.png"
@@ -1875,6 +1951,10 @@ hash = "74c395d8935bc6b35d2b5d486b367332db70cf045094ca413f2599edd52a8048"
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/minecraft/blockstates/oak_log.json"
 hash = "e192605b8c6372af5ae893f2b05d7274a035c3c8600ff31127948f4b9e6c66b4"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/blockstates/pumpkin.json"
+hash = "f49a054386c64e4dd73a753d479b9fe367242d161c5a461fccc37368101febd5"
 
 [[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/minecraft/blockstates/spruce_log.json"
@@ -2645,6 +2725,38 @@ file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/blo
 hash = "a85f811f8f86e0baba8123d79ed432414187021020b274f4429ddaa07f483391"
 
 [[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/deepslate.png"
+hash = "5e013a92a696fd4380dd2766e86d0f1667b7524f1f9586a4f1e0e2ff83e517fc"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/deepslate_coal_ore.png"
+hash = "8aa19433057085797e1fd292852054a6933664640168ca47434c6c5142c3f241"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/deepslate_diamond_ore.png"
+hash = "bd049d980605a5e14c3601362ee631d576fb2a6f94fc063418409b40fbce3974"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/deepslate_gold_ore.png"
+hash = "57c1f3542a80a9bce7b61d1758f9989a3a969034ada9eb7b72a7264525995e47"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/deepslate_iron_ore.png"
+hash = "2c7fc74f6d15fb06285076b8f67c6dde91dd3f4f99b785019eda3aa7c4dd7846"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/deepslate_lapis_ore.png"
+hash = "ffedbf87e6dffde32ba075f3f62959efd928a857146658b38157234509478ced"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/deepslate_redstone_ore.png"
+hash = "9c77f898f2c544a055f7915cde47b2289fc39320e39b8e8eff3ec8b6d6d00569"
+
+[[files]]
+file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/deepslate_top.png"
+hash = "5e013a92a696fd4380dd2766e86d0f1667b7524f1f9586a4f1e0e2ff83e517fc"
+
+[[files]]
 file = "global_packs/required_resources/TU1 Assets/assets/minecraft/textures/block/diamond_block.png"
 hash = "f36df1e3d1481478728c51242dd71d480511d5f78a4bd95681a2ffffea65251c"
 
@@ -3391,6 +3503,11 @@ metafile = true
 [[files]]
 file = "mods/world-host.pw.toml"
 hash = "b844c10676b5911a4d2af32710d21fa22eafafcb6e1e3505fb8651b643cd99f7"
+metafile = true
+
+[[files]]
+file = "mods/world-start-commands-and-global-gamerules.pw.toml"
+hash = "a063efd814db4bddeb0a118d4d87316dda265ee39ccb6a92dfbc6b9418bb66d4"
 metafile = true
 
 [[files]]
