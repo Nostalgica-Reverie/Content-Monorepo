@@ -138,6 +138,13 @@
             },
             {
                 "recipes": [
+                    "shears",
+                    "flint_and_steel"
+                ],
+                "group": "shears"
+            },
+            {
+                "recipes": [
                     "tnt"
                 ],
                 "group": "misc"
@@ -288,7 +295,14 @@
                 ],
                 "group": "item_transport"
             },
-            "note_block"
+            "note_block",
+            {
+                "recipes": [
+                    "piston",
+                    "sticky_piston"
+                ],
+                "group": "pistons"
+            }
         ]
     },
     {
