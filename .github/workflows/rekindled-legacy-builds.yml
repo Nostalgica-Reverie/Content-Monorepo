@@ -1,0 +1,111 @@
+name: Rekindled Legacy Builds
+
+on:
+  push:
+    branches: [ "main" ]
+    paths: 
+      - 'versions/vanilla/src/rekindled-legacy/modrinth/**'
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+      - 'versions/vanilla/src/rekindled-legacy/modrinth/**'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          # modrinth
+          - version: "1.21.1"
+            loader: "neoforge"
+            platform: "modrinth"
+            file_ext: "mrpack"
+            tu: "tu1"
+          - version: "1.21.1"
+            loader: "neoforge"
+            platform: "modrinth"
+            file_ext: "mrpack"
+            tu: "tu3"
+
+    runs-on: ubuntu-latest
+    outputs:
+      commit_sha: ${{ steps.vars.outputs.commit_sha }}
+    env:  
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PACK_NAME: Rekindled-Legacy
+      OUTPUT: artifacts
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    # Cache Packwiz binary to avoid Go setup and compilation
+    - name: Cache Packwiz Binary
+      uses: actions/cache@v4
+      id: cache-packwiz
+      with:
+        path: ~/go/bin/packwiz
+        key: packwiz-binary-${{ runner.os }}-v1
+        restore-keys: |
+          packwiz-binary-${{ runner.os }}-
+
+    # Only set up Go and install Packwiz if not cached
+    - name: Set up Go
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
+      uses: actions/setup-go@v5
+      with:
+        go-version: 'stable'
+        cache: false
+
+    - name: Install Packwiz
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
+      run: go install github.com/packwiz/packwiz@latest
+
+    # Add Packwiz to PATH (whether cached or freshly installed)
+    - name: Add Packwiz to PATH
+      run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
+    - name: Create short commit SHA
+      id: vars
+      run: |
+          shortSha=$(git rev-parse --short ${{ github.sha }})
+          echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
+          echo "commit_sha=$shortSha" >> $GITHUB_OUTPUT
+
+    - name: Build ${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}-${{ matrix.tu }}
+      run: |
+          mkdir Rekindled-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-${{ matrix.tu }}-temp
+          cp -r ./versions/vanilla/src/rekindled-legacy/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/${{ matrix.tu }}/* ./Rekindled-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-${{ matrix.tu }}-temp/
+          cd ./Rekindled-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-${{ matrix.tu }}-temp/
+          packwiz refresh
+          mkdir -p ../$OUTPUT
+          packwiz ${{ matrix.platform }} export --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-${{ matrix.loader }}-dev-${{ matrix.platform }}-${{ matrix.tu }}-${{ env.COMMIT_SHORT_SHA }}.${{ matrix.file_ext }}
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: "Rekindled-Legacy-${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}-${{ matrix.tu }}-dev-${{ env.COMMIT_SHORT_SHA }}"
+        path: artifacts
+
+  combine:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: downloaded-artifacts
+        
+    - name: Combine artifacts
+      run: |
+        mkdir combined-artifacts
+        find downloaded-artifacts -name "*.mrpack" -exec cp {} combined-artifacts/ \;
+        find downloaded-artifacts -name "*.zip" -exec cp {} combined-artifacts/ \;
+        
+    - name: Upload combined artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: "Rekindled-Legacy-dev-${{ needs.build.outputs.commit_sha }}"
+        path: combined-artifacts
