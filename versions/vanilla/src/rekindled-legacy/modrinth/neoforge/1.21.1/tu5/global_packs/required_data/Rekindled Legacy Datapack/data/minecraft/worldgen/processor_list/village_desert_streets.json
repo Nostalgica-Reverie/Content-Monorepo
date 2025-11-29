@@ -1,0 +1,55 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:water"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:gravel"
+          },
+          "output_state": {
+            "Name": "minecraft:cut_sandstone"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:lava"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:gravel"
+          },
+          "output_state": {
+            "Name": "minecraft:cut_sandstone"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:gravel"
+          },
+          "output_state": {
+            "Name": "minecraft:sandstone"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:barrier"
+        }
+      ]
+    }
+  ]
+}
