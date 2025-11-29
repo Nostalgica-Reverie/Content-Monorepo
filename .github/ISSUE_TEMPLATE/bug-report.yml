@@ -42,15 +42,15 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: rc-version
+    id: modpack
     attributes:
-      label: Re-Console Version and Modpack
-      description: What Re-Console Modpack and what version are you on?
+      label: Modpack
+      description: What Modpack and what version are you on?
       options:
         - Re-Console Modrinth
         - Re-Console Curseforge
-        - Re-Console Lite Modrinth
-        - Re-Console Lite Curseforge
+        - Simply Legacy
+        - Rekindled Legacy
       default: 0
     validations:
       required: true
