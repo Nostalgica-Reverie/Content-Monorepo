@@ -214,8 +214,6 @@ jobs:
       run: |
           mkdir RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp
           cp -r ./versions/vanilla/src/re-console/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
-          cp ./LICENSE ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
-          cp ./README.md ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
           cd ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
           packwiz refresh
           mkdir -p ../$OUTPUT
