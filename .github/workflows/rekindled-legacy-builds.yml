@@ -28,6 +28,11 @@ jobs:
             platform: "modrinth"
             file_ext: "mrpack"
             tu: "tu3"
+          - version: "1.21.1"
+            loader: "neoforge"
+            platform: "modrinth"
+            file_ext: "mrpack"
+            tu: "tu5"
 
     runs-on: ubuntu-latest
     outputs:
