@@ -71,9 +71,7 @@ jobs:
     - name: Build ${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}
       run: |
           mkdir Simply-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp
-          cp -r ./versions/vanilla/src/re-console-lite/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./Simply-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
-          cp ./LICENSE ./Simply-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
-          cp ./README.md ./Simply-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cp -r ./versions/vanilla/src/simply-legacy/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./Simply-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
           cd ./Simply-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
           packwiz refresh
           mkdir -p ../$OUTPUT
