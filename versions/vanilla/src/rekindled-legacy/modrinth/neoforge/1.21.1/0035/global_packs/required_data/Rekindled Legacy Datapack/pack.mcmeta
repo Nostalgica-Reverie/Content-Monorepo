@@ -1,0 +1,30 @@
+{
+  "pack": {
+    "pack_format": 22,
+    "description": "Assets used in Rekindled Legacy"
+  },
+  "filter": {
+    "block": [
+      {
+        "namespace": "minecraft",
+        "path": "advancement/adventure/*"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "advancement/end/*"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "advancement/husbandry/*"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "advancement/nether/*"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "advancement/story/*"
+      }
+    ]
+  }
+}
