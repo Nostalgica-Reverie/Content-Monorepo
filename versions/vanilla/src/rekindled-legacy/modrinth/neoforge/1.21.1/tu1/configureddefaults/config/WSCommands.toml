@@ -6,7 +6,7 @@
 	#If true, commands will only run if the game is fully restarted
 	OnFullRestart = false
 	#list of all the commands to run, in order
-	Commands = ["worldborder center 0 0", "worldborder set 864"]
+	Commands = ["worldborder center 0 0", "worldborder set 864", "gamerule doInsomnia false", "gamerule doPatrolSpawning false", "gamerule doTraderSpawning false", "gamerule doWardenSpawning false"]
 
 [2]
 	#this new set of commands uses different settings from the other 2 and will run second
