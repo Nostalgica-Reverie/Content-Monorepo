@@ -1,10 +1,20 @@
 {
+  "icon": "legacy:comparisons/fallout/icon",
+  "background": "legacy:comparisons/fallout/comparison",
   "packs": [
     "vanilla",
     "fabric",
+    "file/rcr3.zip",
+    "file/Legacy Panorama",
+    "legacy:console_aspects",
+    "legacy:legacy_waters",
     "file/FalloutMash-upPack.zip"
   ],
   "id": "fallout",
-  "name": "Fallout",
-  "description": "Welcome to the Wasteland! Celebrate the Fallout® series in Minecraft by cracking open this Vault containing 44 unique skins, custom textures, re-skinned mobs, a special post-apocalyptic map, original Fallout soundtrack compilation and a Pip-Boy inspired UI."
+  "name": {
+    "translate": "legacy.menu.albums.resource.fallout"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.fallout.description"
+  }
 }

@@ -1,10 +1,20 @@
 {
+  "icon": "legacy:comparisons/candy/icon",
+  "background": "legacy:comparisons/candy/comparison",
   "packs": [
     "vanilla",
     "fabric",
+    "file/rcr3.zip",
+    "file/Legacy Panorama",
+    "legacy:console_aspects",
+    "legacy:legacy_waters",
     "file/Candy Texture Pack.zip"
   ],
   "id": "candy",
-  "name": "Candy Texture Pack",
-  "description": "Indulge your sweet tooth with this sugar-coated texture pack!"
+  "name": {
+    "translate": "legacy.menu.albums.resource.candy"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.candy.description"
+  }
 }
