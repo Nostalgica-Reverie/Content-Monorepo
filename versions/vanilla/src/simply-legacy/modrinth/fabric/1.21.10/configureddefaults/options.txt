@@ -56,8 +56,8 @@ damageTiltStrength:1.0
 highContrast:false
 highContrastBlockOutline:false
 narratorHotkey:true
-resourcePacks:["vanilla","fabric","legacy:console_aspects","legacy:legacy_waters","legacy:legacy_resources"]
-incompatibleResourcePacks:["badoptimizations","entity_model_features","entity_texture_features","factory_api","legacy","modernfix","yet_another_config_lib_v3","file/Legacy Worlds.zip","file/Legacy Titles RC.zip"]
+resourcePacks:["vanilla","fabric","legacy:console_aspects","legacy:legacy_waters","legacy:legacy_resources","file/Legacy Worlds.zip"]
+incompatibleResourcePacks:["badoptimizations","cpm","entity_model_features","entity_texture_features","factory_api","legacy","legacy_world_sizes","modernfix","yet_another_config_lib_v3","file/Ore Aspects","file/Legacy Titles.zip","file/rcr3.zip","file/Legacy Panorama"]
 lastServer:
 lang:en_us
 chatVisibility:0
@@ -68,8 +68,8 @@ backgroundForChatOnly:true
 hideServerAddress:false
 advancedItemTooltips:false
 pauseOnLostFocus:true
-overrideWidth:0
-overrideHeight:0
+overrideWidth:854
+overrideHeight:480
 chatHeightFocused:1.0
 chatDelay:0.0
 chatHeightUnfocused:1.0
@@ -87,6 +87,7 @@ glDebugVerbosity:1
 skipMultiplayerWarning:true
 hideMatchedNames:true
 joinedFirstServer:true
+syncChunkWrites:false
 showAutosaveIndicator:true
 allowServerListing:true
 onlyShowSecureChat:false
