@@ -4,13 +4,13 @@ on:
   push:
     branches: [ "main" ]
     paths: 
-      - 'versions/vanilla/src/re-console/curseforge/**'
-      - 'versions/vanilla/src/re-console/modrinth/**'
+      - 'modpacks/re-console/cf/**'
+      - 'modpacks/re-console/mr/**'
   pull_request:
     branches: [ "main" ]
     paths: 
-      - 'versions/vanilla/src/re-console/curseforge/**'
-      - 'versions/vanilla/src/re-console/modrinth/**'
+      - 'modpacks/re-console/cf/**'
+      - 'modpacks/re-console/mr/**'
 
   workflow_dispatch:
 
@@ -165,7 +165,7 @@ jobs:
             file_ext: "zip"
 
 
-    runs-on: ubuntu-latest
+    runs-on: codeberg-medium
     outputs:
       commit_sha: ${{ steps.vars.outputs.commit_sha }}
     env:  
