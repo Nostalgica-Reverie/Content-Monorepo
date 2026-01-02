@@ -160,65 +160,64 @@ jobs:
             platform: "curseforge"
             file_ext: "zip"
 
-runs-on: technocality
+    outputs:
+      commit_sha: ${{ steps.vars.outputs.commit_sha }}
 
     env:
-      GITHUB_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
       PACK_NAME: Re-Console
       OUTPUT: artifacts
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.FORGEJO_TOKEN }}
 
-      - name: Cache Packwiz
+      - name: Cache Packwiz Binary
         uses: actions/cache@v4
         with:
           path: ~/go/bin/packwiz
           key: packwiz-${{ runner.os }}
 
-      - name: Setup Go
+      - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: stable
 
       - name: Install Packwiz
-        run: go install github.com/packwiz/packwiz@latest
+        run: |
+          go install github.com/packwiz/packwiz@latest
+          echo "$HOME/go/bin" >> $FORGEJO_PATH
 
-      - name: Add Packwiz to PATH
-        run: echo "$HOME/go/bin" >> $GITHUB_PATH
-
-      - name: Short SHA
+      - name: Create short commit SHA
         id: vars
         run: |
-          echo "COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "commit_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          short=$(git rev-parse --short ${{ forgejo.sha }})
+          echo "commit_sha=$short" >> $FORGEJO_OUTPUT
+          echo "COMMIT_SHORT_SHA=$short" >> $FORGEJO_ENV
 
       - name: Build pack
         run: |
-          SRC="modpacks/re-console/${{ matrix.platform }}/${{ matrix.tree }}/${{ matrix.folder }}"
-          DEST="RC-${{ matrix.platform }}-${{ matrix.folder }}"
-
-          echo "Building from $SRC"
-
-          mkdir "$DEST"
-          cp -r "$SRC"/* "$DEST/"
-          cd "$DEST"
-
+          mkdir build
+          cp -r modpacks/re-console/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }} build/pack
+          cd build/pack
           packwiz refresh
-          mkdir -p "../$OUTPUT"
-
+          mkdir -p ../${OUTPUT}
           packwiz ${{ matrix.platform }} export \
-            --output "../$OUTPUT/${PACK_NAME}-${{ matrix.version }}-${{ matrix.loader }}-dev-${{ env.COMMIT_SHORT_SHA }}.${{ matrix.file_ext }}"
+            --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}-${COMMIT_SHORT_SHA}.${{ matrix.file_ext }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ matrix.folder }}-${{ matrix.platform }}"
+          name: Re-Console-${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}
           path: artifacts
 
   combine:
     needs: build
     runs-on: technocality
+
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -231,5 +230,5 @@ runs-on: technocality
 
       - uses: actions/upload-artifact@v4
         with:
-          name: "Re-Console-dev-${{ needs.build.outputs.commit_sha }}"
+          name: Re-Console-dev-${{ needs.build.outputs.commit_sha }}
           path: combined
