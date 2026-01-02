@@ -1,0 +1,234 @@
+{
+  "elements": {
+    "scrollable_renderer": {
+      "type": "put_scrollable_renderer",
+      "x": "${width}/2-236",
+      "y": "(${height}-${scrollable_renderer.height})/2 + 29",
+      "width": 211,
+      "height": 192,
+      "elements": {
+        "text": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.crafting_message", "allowVariables": true, "args": ["controlIcon.legacy.key.crafting"]},
+          "width": 190,
+          "shadow": false
+        },
+        "text1": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.crafting_message_1", "allowVariables": true, "args": ["controlIcon.left_tab","controlIcon.right_tab","controlIcon.horizontal_navigation","controlIcon.press"]},
+          "width": 190,
+          "shadow": false
+        },
+        "text2": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.crafting_message_2", "allowVariables": true, "args": ["controlIcon.left_crafting_type","controlIcon.right_crafting_type"]},
+          "width": 190,
+          "shadow": false
+        }
+      }
+    },
+    "low_tabs": {
+      "type":"blit_sprite",
+      "sprite":"legacy:tiles/low_tab",
+      "width":45,
+      "height":36,
+      "x":"${panel.x}+43+42*${low_tabs.index}",
+      "y":"${panel.y}-30",
+      "amount": 5,
+      "translateY": 1.5
+    },
+    "panel": {
+      "type":"blit_sprite",
+      "sprite":"legacy:tiles/small_panel",
+      "width":256,
+      "height":183,
+      "x":"${scrollable_renderer.x}+${scrollable_renderer.width}+4",
+      "y":"${scrollable_renderer.y}+20"
+    },
+      "high_tab": {
+      "type":"blit_sprite",
+      "sprite":"legacy:tiles/high_tab_left",
+      "width":45,
+      "height":36,
+      "x":"${panel.x}",
+      "y":"${panel.y}-30"
+    },
+    "tab_icons": {
+      "type": "children",
+      "applyPrefix": false,
+      "elements": {
+        "structures": {
+          "type":"blit_sprite",
+          "sprite":"legacy:icon/structures",
+          "width":24,
+          "height":24,
+          "translateX": 0.5,
+          "x":"${high_tab.x}+10",
+          "y":"${high_tab.y}+6"
+        },
+        "tools": {
+          "type":"blit_sprite",
+          "sprite":"legacy:icon/tools",
+          "width":24,
+          "height":24,
+          "translateX": 0.5,
+          "x":"${structures.x}+42",
+          "y":"${structures.y}+0"
+        },
+        "food": {
+          "type":"blit_sprite",
+          "sprite":"legacy:icon/food",
+          "width":24,
+          "height":24,
+          "translateX": 0.5,
+          "x":"${tools.x}+42",
+          "y":"${tools.y}"
+        },
+        "mechanisms": {
+          "type":"blit_sprite",
+          "sprite":"legacy:icon/mechanisms",
+          "width":24,
+          "height":24,
+          "translateX": 0.5,
+          "x":"${food.x}+41",
+          "y":"${food.y}"
+        },
+        "redstone_and_transport": {
+          "type":"blit_sprite",
+          "sprite":"legacy:icon/redstone_and_transport",
+          "width":24,
+          "height":24,
+          "translateX": 0.5,
+          "x":"${mechanisms.x}+43",
+          "y":"${mechanisms.y}"
+        },
+        "decoration": {
+          "type":"blit_sprite",
+          "sprite":"legacy:icon/decoration",
+          "width":24,
+          "height":24,
+          "translateX": 0.5,
+          "x":"${redstone_and_transport.x}+42",
+          "y":"${redstone_and_transport.y}-2"
+        }
+      }
+    },
+    "tab_label": {
+      "type":"draw_string",
+      "component": {"translate": "legacy.container.tab.structures"},
+      "color": "${commonColor.inventory_gray_text}",
+      "shadow": false,
+      "x":"${panel.x}+(${panel.width}-${tab_label.component.width})/2",
+      "y":"${panel.y}+9"
+    },
+    "quick_select": {
+      "type":"put_legacy_slot",
+      "range":"[0,9]",
+      "isFake":true,
+      "fakeContainer": ["oak_planks","stick","crafting_table","sandstone","air","air","air","air","air"],
+      "x":"${panel.x}+20+(${quick_select.index}%10)*22",
+      "y":"${panel.y}+32",
+      "width": 22
+    },
+    "highlight": {
+      "type":"blit_sprite",
+      "sprite":"legacy:container/select_icon_highlight",
+      "width":29,
+      "height":29,
+      "x":"${quick_select.x}+39",
+      "y":"${quick_select.y}-4",
+      "translateZ": 332
+    },
+    "inventory": {
+      "type": "blit_sprite",
+      "sprite": "legacy:tiles/square_recessed_panel",
+      "x": "${panel.x}+39*3",
+      "y": "${panel.y}+94",
+      "order": 4,
+      "width": 132,
+      "height": 82
+    },
+    "inventorymenu":
+    {
+      "type": "put_legacy_slot",
+      "range":"[0,26]",
+      "isFake":true,
+      "fakeContainer": [
+        {"item": "dirt", "count": 30},{"item": "oak_planks", "count": 12},"air","air","wheat_seeds","air","air","air","air",
+        "air","air","air",{"item": "bone", "count": 2},"air","air","air","air","air",
+        {"item": "oak_sapling", "count": 10},"air","air","air","air","air","air","air","air"],
+      "width": 14,
+      "height": 14,
+      "x":"${inventory.x}+4+(${inventorymenu.index}%9)*14",
+      "y":"${inventory.y}+18+(${inventorymenu.index}/9)*14"
+    },
+    "inventorymenu2":
+    {
+      "type": "put_legacy_slot",
+      "range":"[0,8]",
+      "isFake":true,
+      "fakeContainer": [
+        "stone_pickaxe","iron_sword",{"item": "cobblestone", "count": 25},{"item": "dirt", "count": 30},{"item": "oak_log", "count": 15}, {"item": "torch", "count": 24}, "air", "air", "air"],
+      "width": 14,
+      "height": 14,
+      "x":"${inventorymenu.x}+0+(${inventorymenu2.index}%9)*14",
+      "y":"${inventorymenu.y}+6+(${inventorymenu2.index}/9)*14"
+    },
+    "inventory_label": {
+      "type":"draw_string",
+      "component": {"translate": "container.inventory"},
+      "color": "${commonColor.inventory_gray_text}",
+      "shadow": false,
+      "x":"${inventory.x}+(${inventory.width}-${inventory_label.component.width})/2",
+      "y":"${inventory.y}+5"
+    },
+    "craftingtable": {
+      "type": "blit_sprite",
+      "sprite": "legacy:tiles/square_recessed_panel",
+      "x": "${panel.x}+7",
+      "y": "${panel.y}+94",
+      "order": 4,
+      "width": 108,
+      "height": 82
+      },
+    "craftingtable_label": {
+      "type":"draw_string",
+      "component": {"translate": "block.minecraft.crafting_table"},
+      "color": "${commonColor.inventory_gray_text}",
+      "shadow": false,
+      "x":"${craftingtable.x}+(${craftingtable.width}-${craftingtable_label.component.width})/2",
+      "y":"${craftingtable.y}+5"
+    },
+    "craftingtable_grid":
+    {
+      "type": "put_legacy_slot",
+      "range":"[0,3]",
+      "isFake":true,
+      "fakeContainer": [
+        "oak_planks","oak_planks","oak_planks","oak_planks"],
+      "width": 21,
+      "height": 21,
+      "x":"${craftingtable.x}+7+(${craftingtable_grid.index}%2)*21",
+      "y":"${craftingtable.y}+26+(${craftingtable_grid.index}/2)*21"
+    },
+    "craft_result": {
+      "type": "put_legacy_slot",
+      "range":"[0,3]",
+      "isFake":true,
+      "fakeContainer": [
+        "crafting_table"],
+      "width": 31,
+      "height": 31,
+      "x":"${craftingtable.x}+72",
+      "y":"${craftingtable.y}+31"
+      },
+    "arrow": {
+      "type":"blit_sprite",
+      "sprite": "legacy:container/arrow",
+      "x": "${craftingtable.x}+53",
+      "y": "${craftingtable.y}+41",
+      "width": 13,
+      "height": 10
+    }
+  }
+}

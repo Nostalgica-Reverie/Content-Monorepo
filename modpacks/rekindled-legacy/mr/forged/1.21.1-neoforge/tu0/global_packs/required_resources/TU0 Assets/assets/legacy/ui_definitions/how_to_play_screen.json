@@ -1,0 +1,16 @@
+{
+    "targetUI": { "translate": "legacy.menu.how_to_play" },
+    "targetType": "screenTitle",
+    "elements":
+    {
+    "panel.width": {
+      "type": "put_number",
+      "value": 0
+    },
+    "panel.height":
+    {
+        "type": "put_number",
+        "value": 220
+    }
+    }
+}

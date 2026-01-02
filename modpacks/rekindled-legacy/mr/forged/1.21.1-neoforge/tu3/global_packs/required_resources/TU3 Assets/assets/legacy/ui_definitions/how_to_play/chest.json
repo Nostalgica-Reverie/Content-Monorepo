@@ -1,0 +1,81 @@
+{
+  "elements": {
+    "scrollable_renderer": {
+      "type": "put_scrollable_renderer",
+      "x": "${width}/2-215",
+      "y": "(${height}-${scrollable_renderer.height})/2 + 26",
+      "width": 200,
+      "height": 162,
+      "elements": {
+        "text": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.chest_message", "allowVariables": true, "args": ["controlIcon.key.use"]},
+          "width": 176,
+          "shadow": false
+        },
+        "text1": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.chest_message_1"},
+          "width": 176,
+          "shadow": false
+        }
+      }
+    },
+    "panel": {
+      "type":"blit_sprite",
+      "sprite":"legacy:tiles/small_panel",
+      "width":215,
+      "height":209,
+      "x":"${scrollable_renderer.x}+${scrollable_renderer.width}+13",
+      "y":"${scrollable_renderer.y}-22"
+    },
+    "chest_label": {
+      "type":"draw_string",
+      "component": {"translate": "container.chest"},
+      "color": "${commonColor.inventory_gray_text}",
+      "shadow": false,
+      "x":"${panel.x}+14",
+      "y":"${panel.y}+11"
+    },
+    "chest_inventory": {
+      "type":"put_legacy_slot",
+      "range":"[0,26]",
+      "isFake":true,
+      "fakeContainer": [
+        {"item": "oak_sapling", "count": 5},"air","air",{"item": "oak_log", "count": 11},"air","air","air","air","air",
+        "air",{"item": "dirt", "count": 32},"air","air","air","porkchop","air","air","air",
+        "air","air",{"item": "arrow", "count": 10},"air","air","air","air","air","air"
+      ],
+      "x":"${panel.x}+14+(${chest_inventory.index}%9)*21",
+      "y":"${panel.y}+26+(${chest_inventory.index}/9)*21"
+    },
+    "inventory_label": {
+      "type":"draw_string",
+      "component": {"translate": "container.inventory"},
+      "color": "${commonColor.inventory_gray_text}",
+      "shadow": false,
+      "x":"${panel.x}+14",
+      "y":"${panel.y}+94"
+    },
+    "inventory": {
+      "type":"put_legacy_slot",
+      "range":"[0,26]",
+      "isFake":true,
+      "fakeContainer": [
+        {"item": "dirt", "count": 60},{"item": "oak_planks", "count": 37},"bow","wheat_seeds","sand","air","air","air","air",
+        "air","air","air","air","air","air","air","air","air",
+        {"item": "oak_sapling", "count": 5},"air","air","air","air","air","air","air","air"
+      ],
+      "x":"${panel.x}+14+(${inventory.index}%9)*21",
+      "y":"${panel.y}+107+(${inventory.index}/9)*21"
+    },
+    "quick_select": {
+      "type":"put_legacy_slot",
+      "range":"[0,8]",
+      "isFake":true,
+      "fakeContainer": ["stone_pickaxe","iron_sword",{"item": "dirt", "count": 64},{"item": "cobblestone", "count": 14},{"item": "oak_log", "count": 32}, {"item": "torch", "count": 24}, "air", "air", {"item": "arrow", "count": 9}],
+      "x":"${panel.x}+14+(${quick_select.index}%9)*21",
+      "y":"${panel.y}+177"
+    }
+  }
+}
