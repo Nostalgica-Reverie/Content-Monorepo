@@ -1,10 +1,20 @@
 {
+  "icon": "legacy:comparisons/plastic/icon",
+  "background": "legacy:comparisons/plastic/comparison",
   "packs": [
     "vanilla",
     "fabric",
+    "file/rcr3.zip",
+    "file/Legacy Panorama",
+    "legacy:console_aspects",
+    "legacy:legacy_waters",
     "file/Plastic Texture Pack.zip"
   ],
   "id": "plastic",
-  "name": "Plastic Texture Pack",
-  "description": "A brightly colored, simple texture pack with chocolate block highlighting and simple icons."
+  "name": {
+    "translate": "legacy.menu.albums.resource.plastic"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.plastic.description"
+  }
 }

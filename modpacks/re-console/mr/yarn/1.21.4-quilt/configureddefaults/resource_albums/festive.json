@@ -1,10 +1,20 @@
 {
+  "icon": "legacy:comparisons/festive/icon",
+  "background": "legacy:comparisons/festive/comparison",
   "packs": [
     "vanilla",
     "fabric",
-    "file/Festive.zip"
+    "file/rcr3.zip",
+    "file/Legacy Panorama",
+    "legacy:console_aspects",
+    "legacy:legacy_waters",
+    "file/Festive Mash-up.zip"
   ],
   "id": "festive",
-  "name": "Festive",
-  "description": "Celebrate the Festive period with this wintery Mash-Up Pack! This pack contains a Festive style Texture Pack, Skin Pack, new music and a Festive world."
+  "name": {
+    "translate": "legacy.menu.albums.resource.festive"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.festive.description"
+  }
 }
