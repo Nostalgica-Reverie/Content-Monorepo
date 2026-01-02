@@ -9,8 +9,7 @@ This is the repository hosting all of the different versions of Re-Console, and 
 
 |                                            Icon                                             | Name                                                                                                                            | Developers                                                                                                                  | Download Count                                                                                                                                                                                                 |
 |:-------------------------------------------------------------------------------------------:|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    <img src="https://nostalgica.net/api/project/Re-Console/logo" width="64" height="64">    | [Re-Console](/versions/vanilla/src/re-console) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft)                 | [omo50/bowen](https://github.com/omo50)                                                                                     | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft?logo=Modrinth&label=Downloads) ![CurseForge Downloads](https://img.shields.io/curseforge/dt/1066411?logo=CurseForge&label=Downloads) |
-| <img src="https://nostalgica.net/api/project/Re-Console Lite/logo" width="64" height="64">  | [Re-Console Lite](/versions/vanilla/src/re-console-lite) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft-lite), | [omo50/bowen](https://github.com/omo50)                                                                                     | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft-lite?logo=Modrinth&label=Downloads)                                                                                                  |
+|    <img src="https://nostalgica.net/api/project/Re-Console/logo" width="64" height="64">    | [Re-Console](/versions/vanilla/src/re-console) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft)                 | [omo50/bowen](https://github.com/omo50)                                                                                     | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft?logo=Modrinth&label=Downloads) ![CurseForge Downloads](https://img.shields.io/curseforge/dt/1066411?logo=CurseForge&label=Downloads) |                                                                                             |
 |  <img src="https://nostalgica.net/api/project/Simply Legacy/logo" width="64" height="64">   | [Simply Legacy](/versions/vanilla/src/simply-legacy) [(View Mod Page)](https://modrinth.com/modpack/simply-legacy),             | [Cjnator38](https://github.com/cjnator38), [omo50/bowen](https://github.com/omo50)                                          | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/simply-legacy?logo=Modrinth&label=Downloads)                                                                                                          |
 | <img src="https://nostalgica.net/api/project/Rekindled Legacy/logo" width="64" height="64"> | [Rekindled Legacy](/versions/vanilla/src/rekindled-legacy) [(View Mod Page)](https://modrinth.com/modpack/rekindled-legacy),    | [omo50/bowen](https://github.com/omo50), [Panduino](https://github.com/Panduino), [agariLMAO](https://github.com/agariLMAO) | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/rekindled-legacy?logo=Modrinth&label=Downloads)                                                                                                       |
 
@@ -23,14 +22,10 @@ This is the repository hosting all of the different versions of Re-Console, and 
 
 The latest stable releases of these modpacks can be found on the [Modrinth Collection](https://modrinth.com/collection/sgxcMC60)
 
-#### Nightly builds
-
-Re-Console, and affiliated projects, now have nightly builds, produced at 0 UTC. You can download the versions [here](https://github.com/ViolaFlower/Re-Console-Monorepository/actions)
-
 ### 📬 Reporting Issues
 
 If you do not need tech support and would like to report an issue (bug, crash, etc.) or otherwise request a feature for any version of Re-Console, then we encourage you to open an issue on the
-[project issue tracker](https://github.com/ViolaFlower/Re-Console-Monorepository/issues).
+[project issue tracker](https://codeberg.org/Nostalgica-Reverie/Legacy-Modpack-Monorepository/issues).
 
 ### ✅ Hardware Compatibility
 Our modpacks, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium) mod, is only compatible with graphics cards that support ***OpenGL 4.5 or newer.***
@@ -51,6 +46,7 @@ Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW)
 
 ### 📝 Supported Versions
 - Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8 and 1.21.10
+- Rekindled Legacy currently has re-creations for Build 0033, Build 0035, GDC 2012, TU0, TU1, TU2, and TU3 on
 - Simply Legacy supports 1.21.10
 
 ### Versioning
