@@ -41,6 +41,19 @@ body:
       default: 0
     validations:
       required: true
+        - type: dropdown
+    id: loader
+    attributes:
+      label: Modloader
+      description: What Modloader are you using?
+      options:
+        - Fabric
+        - Forge
+        - Neoforge
+        - Quilt
+      default: 0
+    validations:
+      required: true
   - type: dropdown
     id: modpack
     attributes:
@@ -50,7 +63,13 @@ body:
         - Re-Console Modrinth
         - Re-Console Curseforge
         - Simply Legacy
-        - Rekindled Legacy
+        - Rekindled Legacy TU3
+        - Rekindled Legacy TU2
+        - Rekindled Legacy TU1
+        - Rekindled Legacy TU0
+        - Rekindled Legacy GDC 2012
+        - Rekindled Legacy Build 0035
+        - Rekindled Legacy Build 0033
       default: 0
     validations:
       required: true
