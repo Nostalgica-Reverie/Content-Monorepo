@@ -1,14 +1,20 @@
 {
+  "icon": "legacy:comparisons/super_mario/icon",
+  "background": "legacy:comparisons/super_mario/comparison",
   "packs": [
     "vanilla",
     "fabric",
+    "file/rcr3.zip",
+    "file/Legacy Panorama",
+    "legacy:console_aspects",
+    "legacy:legacy_waters",
     "file/Super Mario Mash-up.zip"
   ],
   "id": "super_mario",
   "name": {
-    "text": "Super Mario"
+    "translate": "legacy.menu.albums.resource.super_mario"
   },
   "description": {
-    "text": "Super Mario meets Minecraft! This Mash-Up Pack contains a Super Mario style Texture Pack, Skin Pack, and a Super Mario themed world to explore!"
+    "translate": "legacy.menu.albums.resource.super_mario.description"
   }
 }

@@ -1,10 +1,20 @@
 {
+  "icon": "legacy:comparisons/city/icon",
+  "background": "legacy:comparisons/city/comparison",
   "packs": [
     "vanilla",
     "fabric",
+    "file/rcr3.zip",
+    "file/Legacy Panorama",
+    "legacy:console_aspects",
+    "legacy:legacy_waters",
     "file/City Texture Pack.zip"
   ],
   "id": "city",
-  "name": "City Texture Pack",
-  "description": "A creative texture set, ideal for building structures. The perfect set for the focused builder."
+  "name": {
+    "translate": "legacy.menu.albums.resource.city"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.city.description"
+  }
 }

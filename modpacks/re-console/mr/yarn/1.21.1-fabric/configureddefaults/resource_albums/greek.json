@@ -1,10 +1,20 @@
 {
+  "icon": "legacy:comparisons/greek/icon",
+  "background": "legacy:comparisons/greek/comparison",
   "packs": [
     "vanilla",
     "fabric",
-    "file/Greek Mythology.zip"
+    "file/rcr3.zip",
+    "file/Legacy Panorama",
+    "legacy:console_aspects",
+    "legacy:legacy_waters",
+    "file/Greek Mythology Mash-up.zip"
   ],
   "id": "greek",
-  "name": "Greek Mythology",
-  "description": "Mythical Greece meets Minecraft! This Mash-Up Pack contains a Greek Mythology style Texture Pack, Skin Pack, and a themed world to explore."
+  "name": {
+    "translate": "legacy.menu.albums.resource.greek"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.greek.description"
+  }
 }
