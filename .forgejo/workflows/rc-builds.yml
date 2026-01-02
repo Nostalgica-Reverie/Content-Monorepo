@@ -213,7 +213,7 @@ jobs:
     - name: Build ${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}
       run: |
           mkdir RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp
-          cp -r ./versions/vanilla/src/re-console/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cp -r ./modpacks/re-console${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
           cd ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
           packwiz refresh
           mkdir -p ../$OUTPUT
