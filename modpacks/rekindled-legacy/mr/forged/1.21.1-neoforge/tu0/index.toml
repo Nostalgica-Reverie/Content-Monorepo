@@ -42,7 +42,7 @@ hash = "8816f1937f9c74d055ebfa5035ce033ad0f84929fa83312fb7e057bb959bfb0c"
 
 [[files]]
 file = "configureddefaults/config/WSCommands.toml"
-hash = "9798cf0f04eab108848189e404c189c7a6306f2949f759fdff588e943ea6eb28"
+hash = "d867a1b28705cc2c9285cd849d6912dd078ecfc66c0a84381975d5caa79599a2"
 
 [[files]]
 file = "configureddefaults/config/animatium.json"
@@ -98,11 +98,11 @@ hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
 
 [[files]]
 file = "configureddefaults/config/legacy/client_options.json"
-hash = "8c769eb7a90531f1d78e0a95157037ad1ed5e0697383c290a2bb7050a066d9fc"
+hash = "1e6c6658614fddfee15c2ac40cb21b37981b22b952fd5f36af65794428a4c3c0"
 
 [[files]]
 file = "configureddefaults/config/legacy/common.json"
-hash = "3b9b9361ed4ad964361358b210952bb01f4f30ff2d56c249d0ce517792244266"
+hash = "74ab57623ba51addd103699dbc2dc37556a02e02ae1fe77c767085f259b90343"
 
 [[files]]
 file = "configureddefaults/config/legacy/common_mixin.json"
@@ -150,7 +150,7 @@ hash = "beb51783002c46da1c609c40f31cd3a79773a1a0c2b63f7d6442c61b0bf9ae43"
 
 [[files]]
 file = "configureddefaults/config/ysns.json"
-hash = "6aca5c14a4198100075441607af9acda61609dbf8d303a91855adfa652a0509b"
+hash = "5d0505b02f0c8b552fc22227598ff756d673fd5e76c50341fedc1d2d4e13dce2"
 
 [[files]]
 file = "configureddefaults/options.txt"
@@ -1041,14 +1041,6 @@ file = "global_packs/required_resources/TU0 Assets/assets/legacy/creative_tab_li
 hash = "86bf0eab38158a67ac03fe07c923d9c52013957c88e8ada21b0fbba0b5b2ba54"
 
 [[files]]
-file = "global_packs/required_resources/TU0 Assets/assets/legacy/font/playstation_3.json"
-hash = "6adf6b7cc0bf2d1812850c295fdde734c1b767cbdae5aa49bbe98aa32f5089fd"
-
-[[files]]
-file = "global_packs/required_resources/TU0 Assets/assets/legacy/font/playstation_4.json"
-hash = "6adf6b7cc0bf2d1812850c295fdde734c1b767cbdae5aa49bbe98aa32f5089fd"
-
-[[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/font/playstation_5.json"
 hash = "319465c576ce468e420c79f7ab2aa7b3298c263059306462259f0ccb175623d1"
 
@@ -1061,8 +1053,12 @@ file = "global_packs/required_resources/TU0 Assets/assets/legacy/font/xbox_one.j
 hash = "c40979e815cc4579a2ccbff8694c61ed394aadb5a6be881c1c9e2260163fd035"
 
 [[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/how_to_play_sections.json"
+hash = "3f61388eef89a1e6ed9961fe1780c10413297acb594543865e4caf5233df4273"
+
+[[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/intro.json"
-hash = "19ae8bc2d5e7d45aecca1f56993efc5156f8848e49b4e841e4dd9965245feac3"
+hash = "333376f16cdf517423e30af8933c0021b3b019aa9b720764a21370fc4d0d264d"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/keyboard_layouts/en_us.json"
@@ -1086,7 +1082,7 @@ hash = "af1a2031355f2e9bde3f966b7a9407301db9cf6e4fa36a69aecef235aeb6f427"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/lang/en_us.json"
-hash = "ec6c39818d547ec3dbb60f897a10eb56f212c8a804b26dbdd73dcd27939af2e2"
+hash = "bddfa090b973ec099d641f23a40f756e451d4b3fb0cd39de683cd257a6b90c47"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/lang/es_mx.json"
@@ -1665,6 +1661,14 @@ file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sp
 hash = "62338cdd36974325f94d7bc1448eb36c4d707859cf4e18d25259a2c8b9f145b1"
 
 [[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/container/how_to_play/inventory_player.png"
+hash = "4c4e4c6870ed35bc6e77ae9efffb49aedd8cef53235dc817b6d34880e2333c0e"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/container/how_to_play/nether-portal.png"
+hash = "6c57d628f970adba2303a5b8cbb36efd77f1f28ecd9af2bca2e6f45e92e5cac1"
+
+[[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/container/icon_holder_360.png"
 hash = "937ef38fa8fa894e460d34f1ff50cd0e8403743eece9471b7d9d53069c508c9a"
 
@@ -1770,7 +1774,7 @@ hash = "4895acd147454771fd6a61ad294dfc12e13ff15d6018da26c9fa0e884fd9c14e"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/slider.png.mcmeta"
-hash = "69f09c0b7e9a79ba516beaf924ae1d44898a322616ea6a68a042903299e84f36"
+hash = "e8507d52f6981449d5466f56147f81c99c83c8460c1c7abf6aeddab6a1f32550"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/slider_handle.png"
@@ -1778,7 +1782,7 @@ hash = "e02be73348e0c465c30b81b02d3299a41db0ac3aeed87e5b64cd4cadedcda85f"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/slider_handle.png.mcmeta"
-hash = "f6d19fa9ad0d7be4c8342eaa00939dd10eb5bbac819d3e76a25a80594291f130"
+hash = "3692ec0d750a9993cdd6fc3a6a6c437a14153cbba5f79aa90c707717432f6db4"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/slider_handle_highlighted.png"
@@ -1786,7 +1790,7 @@ hash = "2e5668fba2344067e0824f4c6252080650e62aa2a2197d3ea3ee70c48dea8303"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/slider_handle_highlighted.png.mcmeta"
-hash = "f6d19fa9ad0d7be4c8342eaa00939dd10eb5bbac819d3e76a25a80594291f130"
+hash = "3692ec0d750a9993cdd6fc3a6a6c437a14153cbba5f79aa90c707717432f6db4"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/slider_highlighted.png"
@@ -1794,7 +1798,7 @@ hash = "016890e5e7e0a0f621f83aceac34223e01b36e5b97a23e58792d04a58c24fc7e"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/slider_highlighted.png.mcmeta"
-hash = "c9f015d6369ea7b4205359bec8c2daeccd8b6a91430ce1088f3847b5a50ada2f"
+hash = "ca75a9f830a64b899558f6512297369828e6cfe442942d4900e9cb3fa8ab4d80"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/text_field_highlighted.png"
@@ -1802,7 +1806,7 @@ hash = "b03521b53b287f566ec6fd42964d8f7283a93eae7af0ae829bccd666ec1a67cc"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/sprites/widget/text_field_highlighted.png.mcmeta"
-hash = "459a92a40930ff23bd216f01efb65c6b413e22176af772ec006dbc3073e1b047"
+hash = "2ddd21ca78719e9a97a900060f47ae5303abe9e8a5d8a54862e5b174b5c0f561"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/title/minecraft.png"
@@ -1810,7 +1814,7 @@ hash = "a85c932a23a54d45979a589d99c599492bdc745ece37cdc73062082b3e387709"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/title/minecraft.png.mcmeta"
-hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
+hash = "007952eb4d963c6964100b943126a3b34baf77d4b30067e6df8ae31c3a5d0ee5"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/title/panorama_day.png"
@@ -1818,7 +1822,7 @@ hash = "b098312f61c9cf7f53bb5b00cdb9be3abf92c919e7a14f7cd531cec3482aabff"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/title/panorama_day.png.mcmeta"
-hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
+hash = "14972e242987e4be84336806bc1f08e61480110a1668718688def1be06787f1b"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/title/panorama_night.png"
@@ -1826,7 +1830,7 @@ hash = "1a5f103e23679694ec6427b352186fb3f7c1a38674ccb076c094f80be332c0e5"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/textures/gui/title/panorama_night.png.mcmeta"
-hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
+hash = "14972e242987e4be84336806bc1f08e61480110a1668718688def1be06787f1b"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/tip_overrides/axes.json"
@@ -1945,20 +1949,68 @@ file = "global_packs/required_resources/TU0 Assets/assets/legacy/tutorial/tutori
 hash = "e228120f28ba46b146a865d6f8f8c54d0b49cfd803358a504ad6a68fcf54c2e7"
 
 [[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/create_world_screen.json"
+hash = "12d935452ef37ba3a56bc8129cad052f35255ec065353aefc344794785425b7e"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play/basics.json"
+hash = "7aa6159fdefbcff84ca704d70fd4dfabf7f126b61df815a4959fa0142b924ce1"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play/chest.json"
+hash = "b80f38176b3c13d9522c48ef490592e773c4129d2c955d17962d44b951c06ec1"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play/crafting.json"
+hash = "64e50e28d58003a077548c8d7a785c573883a070c7da0f773a4509388d78eaf9"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play/dispenser.json"
+hash = "bad467e44e5e6f86777d41c5ad31e933bc9c5a1fd7f737cd06a7a2617d4df5e0"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play/furnace.json"
+hash = "390e906d22aefcfac16e1c25e86d75aa40d862a7b63eb4ef9bc5f761e85ff998"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play/hud.json"
+hash = "b40d5f786a3ada1e366ea4d01d60b0ec44c551b9e2d489059a7c9f4135d57047"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play/inventory.json"
+hash = "33d224a21a9ae5d5d00217a65820ec4f1c713999cadb7743fdd62e8f32ce14a7"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play/nether-portal.json"
+hash = "42c9f972197ac629913ee1baab5efb408a1c4628ca0c61786fcde22c3f26f42b"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/how_to_play_screen.json"
+hash = "030c7bb2d16f9dfeab15430412c6bc56fe25e2f17864216e38813e8e7581437b"
+
+[[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/legacy_crafting_screen.json"
-hash = "629fc66b3746d84650dd708bd0ff02812e36089b12c9e3e4d76848aa814e9b55"
+hash = "2f70c8b9e5f082bb6fbcde6b256a686fcdbe8b587598257581fbff6ec74be94a"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/loading_screen.json"
-hash = "3e135b8ba5deb44d72764034f8f9b0e0ce4b2685853d100fa4d113f822c34df0"
+hash = "f52db1ec4ef9e07438ddf0973a9bba6f8490f8570fa016c47c20c28c6cd680c2"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/options_screen.json"
+hash = "ea0e5203fcea03a6c821cfd9bbe027fc3da2da38106bbdd5242a4ef46c3e0e21"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/pause_screen.json"
-hash = "b638cc745c83c5bd364a59e1993667f102d3363986781414e6fb4441b7f11ad7"
+hash = "d4ce9997a8336d3fa9a4cb4de9add15cd66d90e092568775f85b763054335ac9"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/play_game_screen.json"
-hash = "1417d85362869ceb2748a37d6f4bc73303377a780bdf8ec960bdc6c9e8549f29"
+hash = "47b0f7b9a5780b007b2355bb0f97810eeec9bf8b2063556d9e06b341f2e1b053"
+
+[[files]]
+file = "global_packs/required_resources/TU0 Assets/assets/legacy/ui_definitions/title_screen.json"
+hash = "3e5f52c53e5968c8f0c1fd4906114b0cda9fe9dc8764e3ea9c94af68df90eac4"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/legacy/world_templates.json"
@@ -3041,14 +3093,6 @@ file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/ent
 hash = "940ab4090277516dc948e3ad5cc83eca932cd1e496dcc2ba31ad7b194a518fae"
 
 [[files]]
-file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/entity/player/slim/alex.png"
-hash = "83cee5ca6afcdb171285aa00e8049c297b2dbeba0efb8ff970a5677a1b644032"
-
-[[files]]
-file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/entity/player/wide/steve.png"
-hash = "4c7b0468044bfecacc43d00a3a69335a834b73937688292c20d3988cae58248d"
-
-[[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/entity/signs/oak.png"
 hash = "e8a0e148d853670f675877a72eadffa2dcd5f13c50225009f4abd7a7195b185a"
 
@@ -3127,22 +3171,6 @@ hash = "c9f015d6369ea7b4205359bec8c2daeccd8b6a91430ce1088f3847b5a50ada2f"
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/gui/sprites/widget/unlocked_button_highlighted.png"
 hash = "98d6d1279847205f0db3dc16a9e814e0d7d4e3ca000ddb3c6a139671bf20d6d2"
-
-[[files]]
-file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/gui/title/edition.png"
-hash = "399c586829c787e4909cc460ddaa92f6aabeec866dacc200ed0f31fc04ea70cd"
-
-[[files]]
-file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/gui/title/edition.png.mcmeta"
-hash = "906e1e8734d7e6b3d69de0ae106c62067ccd574e13f6648f9c0c6a8dd1e9ce59"
-
-[[files]]
-file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/gui/title/minecraft.png"
-hash = "3cbcb7bca00b3ad43ac0cfe9672bd731f15ed42f50e5febb2e4975b0487163bb"
-
-[[files]]
-file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/gui/title/minecraft.png.mcmeta"
-hash = "906e1e8734d7e6b3d69de0ae106c62067ccd574e13f6648f9c0c6a8dd1e9ce59"
 
 [[files]]
 file = "global_packs/required_resources/TU0 Assets/assets/minecraft/textures/item/apple.png"
@@ -3341,7 +3369,7 @@ metafile = true
 
 [[files]]
 file = "mods/collective.pw.toml"
-hash = "cde21d14fcaf9495f0f5b3d8fb298dd60cb12badc21a27414c25ebf11dfb3fe1"
+hash = "a8be9178042bb285318c4c72b655551a49b4637d8e17942a637dfde80f36c4a1"
 metafile = true
 
 [[files]]
@@ -3426,7 +3454,7 @@ metafile = true
 
 [[files]]
 file = "mods/hide-experimental-warning.pw.toml"
-hash = "a369596a2f75e3f05871b416ddfd0419e2dc4b36576d8e2e2ccf08ee876f7d3c"
+hash = "4b1e027aa6561ecc8616145aa373d014c311719a1976982a112190ea81d59eb6"
 metafile = true
 
 [[files]]
