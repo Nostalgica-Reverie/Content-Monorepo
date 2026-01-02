@@ -3,25 +3,23 @@ name: RC Builds
 on:
   push:
     branches: [ "main" ]
-    paths:
+    paths: 
       - 'modpacks/re-console/cf/**'
       - 'modpacks/re-console/mr/**'
   pull_request:
     branches: [ "main" ]
-    paths:
+    paths: 
       - 'modpacks/re-console/cf/**'
       - 'modpacks/re-console/mr/**'
+
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: technocality
-
     strategy:
-      fail-fast: false
       matrix:
         include:
-          # modrinth
+          # modrinth fabric
           - version: "1.20.1"
             loader: "fabric"
             platform: "modrinth"
@@ -54,6 +52,7 @@ jobs:
             loader: "fabric"
             platform: "modrinth"
             file_ext: "mrpack"
+          # modrinth quilt
           - version: "1.20.1"
             loader: "quilt"
             platform: "modrinth"
@@ -86,15 +85,17 @@ jobs:
             loader: "quilt"
             platform: "modrinth"
             file_ext: "mrpack"
+          # modrinth forge
           - version: "1.20.1"
             loader: "forge"
             platform: "modrinth"
             file_ext: "mrpack"
+          # modrinth neoforge
           - version: "1.21.1"
             loader: "neoforge"
             platform: "modrinth"
             file_ext: "mrpack"
-          # curseforge
+          # curseforge fabric
           - version: "1.20.1"
             loader: "fabric"
             platform: "curseforge"
@@ -123,6 +124,7 @@ jobs:
             loader: "fabric"
             platform: "curseforge"
             file_ext: "zip"
+          # curseforge quilt
           - version: "1.20.1"
             loader: "quilt"
             platform: "curseforge"
@@ -151,84 +153,95 @@ jobs:
             loader: "quilt"
             platform: "curseforge"
             file_ext: "zip"
+          # curseforge forge
           - version: "1.20.1"
             loader: "forge"
             platform: "curseforge"
             file_ext: "zip"
+          # curseforge neoforge
           - version: "1.21.1"
             loader: "neoforge"
             platform: "curseforge"
             file_ext: "zip"
 
+
+    runs-on: technocality
     outputs:
       commit_sha: ${{ steps.vars.outputs.commit_sha }}
-
-    env:
-      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+    env:  
+      GITHUB_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
       PACK_NAME: Re-Console
       OUTPUT: artifacts
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          token: ${{ secrets.FORGEJO_TOKEN }}
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
 
-      - name: Cache Packwiz Binary
-        uses: actions/cache@v4
-        with:
-          path: ~/go/bin/packwiz
-          key: packwiz-${{ runner.os }}
+    # Cache Packwiz binary to avoid Go setup and compilation
+    - name: Cache Packwiz Binary
+      uses: actions/cache@v4
+      id: cache-packwiz
+      with:
+        path: ~/go/bin/packwiz
+        key: packwiz-binary-${{ runner.os }}-v1
+        restore-keys: |
+          packwiz-binary-${{ runner.os }}-
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: stable
+    # Only set up Go and install Packwiz if not cached
+    - name: Set up Go
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
+      uses: actions/setup-go@v5
+      with:
+        go-version: 'stable'
+        cache: false
 
-      - name: Install Packwiz
-        run: |
-          go install github.com/packwiz/packwiz@latest
-          echo "$HOME/go/bin" >> $FORGEJO_PATH
+    - name: Install Packwiz
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
+      run: go install github.com/packwiz/packwiz@latest
 
-      - name: Create short commit SHA
-        id: vars
-        run: |
-          short=$(git rev-parse --short ${{ forgejo.sha }})
-          echo "commit_sha=$short" >> $FORGEJO_OUTPUT
-          echo "COMMIT_SHORT_SHA=$short" >> $FORGEJO_ENV
+    # Add Packwiz to PATH (whether cached or freshly installed)
+    - name: Add Packwiz to PATH
+      run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
-      - name: Build pack
-        run: |
-          mkdir build
-          cp -r modpacks/re-console/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }} build/pack
-          cd build/pack
+    - name: Create short commit SHA
+      id: vars
+      run: |
+          shortSha=$(git rev-parse --short ${{ github.sha }})
+          echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
+          echo "commit_sha=$shortSha" >> $GITHUB_OUTPUT
+
+    - name: Build ${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}
+      run: |
+          mkdir RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp
+          cp -r ./modpacks/re-console/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
+          cd ./RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp/
           packwiz refresh
-          mkdir -p ../${OUTPUT}
-          packwiz ${{ matrix.platform }} export \
-            --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}-${COMMIT_SHORT_SHA}.${{ matrix.file_ext }}
+          mkdir -p ../$OUTPUT
+          packwiz ${{ matrix.platform }} export --output ../${OUTPUT}/${PACK_NAME}-${{ matrix.version }}-${{ matrix.loader }}-dev-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}.${{ matrix.file_ext }}
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: Re-Console-${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}
-          path: artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: "Re-Console-${{ matrix.version }}-${{ matrix.loader }}-${{ matrix.platform }}-dev-${{ env.COMMIT_SHORT_SHA }}"
+        path: artifacts
 
   combine:
     needs: build
     runs-on: technocality
-
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: downloaded
-
-      - name: Combine
-        run: |
-          mkdir combined
-          find downloaded -type f \( -name "*.mrpack" -o -name "*.zip" \) -exec cp {} combined/ \;
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Re-Console-dev-${{ needs.build.outputs.commit_sha }}
-          path: combined
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: downloaded-artifacts
+        
+    - name: Combine artifacts
+      run: |
+        mkdir combined-artifacts
+        find downloaded-artifacts -name "*.mrpack" -exec cp {} combined-artifacts/ \;
+        find downloaded-artifacts -name "*.zip" -exec cp {} combined-artifacts/ \;
+        
+    - name: Upload combined artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: "Re-Console-dev-${{ needs.build.outputs.commit_sha }}"
+        path: combined-artifacts
