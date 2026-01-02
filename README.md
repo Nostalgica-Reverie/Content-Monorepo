@@ -51,6 +51,7 @@ Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW)
 
 ### 📝 Supported Versions
 - Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8 and 1.21.10
+- Simply Legacy supports 1.21.10
 
 ### Versioning
 The versioning format is year.major.minor, where for example:
