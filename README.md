@@ -3,31 +3,31 @@
 
 
 ### Legacy Modpack Monorepository
-This is the repository hosting all of the different versions of Re-Console, and their source code.
+This is the repository hosting all of the different Nostalgica Reverie LCE modpacks, and their source code.
 
 ## Projects
 
 |                                            Icon                                             | Name                                                                                                                            | Developers                                                                                                                  | Download Count                                                                                                                                                                                                 |
 |:-------------------------------------------------------------------------------------------:|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    <img src="https://nostalgica.net/api/project/Re-Console/logo" width="64" height="64">    | [Re-Console](/versions/vanilla/src/re-console) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft)                 | [omo50/bowen](https://github.com/omo50)                                                                                     | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft?logo=Modrinth&label=Downloads) ![CurseForge Downloads](https://img.shields.io/curseforge/dt/1066411?logo=CurseForge&label=Downloads) |                                                                                             |
-|  <img src="https://nostalgica.net/api/project/Simply Legacy/logo" width="64" height="64">   | [Simply Legacy](/versions/vanilla/src/simply-legacy) [(View Mod Page)](https://modrinth.com/modpack/simply-legacy),             | [Cjnator38](https://github.com/cjnator38), [omo50/bowen](https://github.com/omo50)                                          | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/simply-legacy?logo=Modrinth&label=Downloads)                                                                                                          |
-| <img src="https://nostalgica.net/api/project/Rekindled Legacy/logo" width="64" height="64"> | [Rekindled Legacy](/versions/vanilla/src/rekindled-legacy) [(View Mod Page)](https://modrinth.com/modpack/rekindled-legacy),    | [omo50/bowen](https://github.com/omo50), [Panduino](https://github.com/Panduino), [agariLMAO](https://github.com/agariLMAO) | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/rekindled-legacy?logo=Modrinth&label=Downloads)                                                                                                       |
+|    <img src="https://nostalgica.net/api/project/Re-Console/logo" width="64" height="64">    | [Re-Console](/modpacks/re-console) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft)                 | [omo50](https://modrinth.com/user/rjxkenshin)                                                                                     | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft?logo=Modrinth&label=Downloads) ![CurseForge Downloads](https://img.shields.io/curseforge/dt/1066411?logo=CurseForge&label=Downloads) |                                                                                             |
+|  <img src="https://nostalgica.net/api/project/Simply Legacy/logo" width="64" height="64">   | [Simply Legacy](/modpacks/simply-legacy) [(View Mod Page)](https://modrinth.com/modpack/simply-legacy),             | [Cjnator38](https://modrinth.com/user/Cjnator38), [omo50](https://modrinth.com/user/rjxkenshin)                                          | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/simply-legacy?logo=Modrinth&label=Downloads)                                                                                                          |
+| <img src="https://nostalgica.net/api/project/Rekindled Legacy/logo" width="64" height="64"> | [Rekindled Legacy](/modpacks/rekindled-legacy) [(View Mod Page)](https://modrinth.com/modpack/rekindled-legacy),    | [omo50]https://modrinth.com/user/rjxkenshin), [Panduino](https://modrinth.com/user/Panduino-Dev), [agariLMAO](https://modrinth.com/user/Agarialo) | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/rekindled-legacy?logo=Modrinth&label=Downloads)                                                                                                       |
 
 
 ---
 
-### 📥 Downloads
+### Downloads
 
 #### Stable builds
 
-The latest stable releases of these modpacks can be found on the [Modrinth Collection](https://modrinth.com/collection/sgxcMC60)
+The latest stable releases of these modpacks can be found on the [Nostalgica Legacy Modpacks collection](https://modrinth.com/collection/72AM2FL7)
 
-### 📬 Reporting Issues
+### Reporting Issues
 
 If you do not need tech support and would like to report an issue (bug, crash, etc.) or otherwise request a feature for any version of Re-Console, then we encourage you to open an issue on the
 [project issue tracker](https://codeberg.org/Nostalgica-Reverie/Legacy-Modpack-Monorepository/issues).
 
-### ✅ Hardware Compatibility
+### Hardware Compatibility
 Our modpacks, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium) mod, is only compatible with graphics cards that support ***OpenGL 4.5 or newer.***
 Most graphics cards released in the past 12 years will meet these requirements, including the following:
 
@@ -37,25 +37,34 @@ Most graphics cards released in the past 12 years will meet these requirements, 
 
 If you are running into problems, you should make sure that your graphics drivers are up-to-date. I also recommend taking a look at [this page](https://github.com/CaffeineMC/sodium/wiki/Driver-Compatibility) on the Sodium wiki.
 
-# 💬 Nostalgica Reverie
+# Nostalgica Reverie
 Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW) for sneak peeks and updates on development! By joining, you can:
 - Get installation help and technical support for alot of nostalgic projects
 - Get the latest updates about development
 - Talk with and collaborate with our team
 - And just hang out with the rest of our community!
 
-### 📝 Supported Versions
+### Supported Versions
 - Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8 and 1.21.10
-- Rekindled Legacy currently has re-creations for Build 0033, Build 0035, GDC 2012, TU0, TU1, TU2, and TU3 on
+- Rekindled Legacy currently has re-creations for Build 0033, Build 0035, GDC 2012, TU0, TU1, TU2, and TU3
 - Simply Legacy supports 1.21.10
 
 ### Versioning
-The versioning format is year.major.minor, where for example:
+The versioning format for Re-Console is year.major.minor, where for example:
 ``25.15.12``
 ``25`` is the year (2025)
 ``15`` is the major version
 ``12`` is the minor patches
 This resets after the year changes to a different year.
 
-## 📜 License
+### Special Thanks
+Special thanks to:
+
+- jellysquid3 for creating Sodium
+- comp500 for packwiz 
+- Technocality for GitHub actions and consistent support
+- WilyIcaro for making the Legacy4J mod
+
+
+## License
 Unless otherwise stated, the Legacy Modpack Monorepository is licensed under the GPL-3.0 license or later.
