@@ -169,7 +169,7 @@ jobs:
     outputs:
       commit_sha: ${{ steps.vars.outputs.commit_sha }}
     env:  
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
       PACK_NAME: Re-Console
       OUTPUT: artifacts
     steps:
