@@ -1,6 +1,10 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/animatium.json"
+hash = "a2a51043cbe58ee14590fcd221dfd53c0a6bdacfa714c89706fb6f3afd31ba76"
+
+[[files]]
 file = "config/crash_assistant/config.toml"
 hash = "95bb10cbaf239da13d89d85c7f246856dd199844da199ea0df7dd512bff47ba7"
 
@@ -29,8 +33,12 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "ac39420512ece55a61087db09fe6c4375aa8bd02966b78716c3e3e404938f693"
 
 [[files]]
+file = "configureddefaults/animatium_utility.json"
+hash = "013bb87a1d68fdba744417b9591ed98e5e4c21c131868525967bca5e3a152c37"
+
+[[files]]
 file = "configureddefaults/config/animatium.json"
-hash = "024472d786957d5ef3b097b2c2feffcbb3b66bc76ebe0f08b5e9e57a8b357304"
+hash = "a2a51043cbe58ee14590fcd221dfd53c0a6bdacfa714c89706fb6f3afd31ba76"
 
 [[files]]
 file = "configureddefaults/config/badoptimizations.txt"
