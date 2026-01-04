@@ -23,7 +23,7 @@ defaultGlobalExecutorParallelismExpression = "max(1,min(if(is_client,(cpus/2.78+
 # 
 threadPoolPriority = "default"
 # (Default: 6) Configures the parallelism of global executor
-globalExecutorParallelism = "default"
+globalExecutorParallelism = 7
 
 	[clientSideConfig.modifyMaxVDConfig]
 		# (Default: true) Enable client-side support for extended render distance protocol (c2me:ext_render_distance_v1)
@@ -51,7 +51,7 @@ globalExecutorParallelism = "default"
 	enableExtRenderDistanceProtocol = false
 	# (Default: true) Whether to enable no-tick view distance
 	enabled = "default"
-	# (Default: 7) No-tick view distance max concurrent chunk loads 
+	# (Default: 8) No-tick view distance max concurrent chunk loads 
 	#  Lower this for a better latency and higher this for a faster loading
 	maxConcurrentChunkLoads = 12
 	# (Default: false) Whether to ensure correct chunks within normal render distance 
@@ -67,7 +67,7 @@ globalExecutorParallelism = "default"
 	# Whether to use the fast reduced allocation chunk serializer
 	# (may cause incompatibility with other mods)
 	# 
-	gcFreeChunkSerializer = false
+	gcFreeChunkSerializer = true
 	# (Default: 8192) Soft limit for io worker nbt cache
 	chunkDataCacheSoftLimit = "default"
 	# (Default: 32678) Hard limit for io worker nbt cache
