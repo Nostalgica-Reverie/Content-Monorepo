@@ -1,6 +1,10 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/animatium.json"
+hash = "8438963c798c70874f415080ea7fb285f4401dac8bd67d2546855136a155270a"
+
+[[files]]
 file = "config/crash_assistant/config.toml"
 hash = "cd92732ab9216126faaf6d52692033af59f9df3736ec83454ddb87e7b6f35b99"
 
@@ -29,8 +33,8 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
 
 [[files]]
-file = "config/modernfix-mixins.properties"
-hash = "c39a00d8ff6cf309088dfbef5952745193b7503c7982d74c89f6c59a57dc254e"
+file = "config/ok_zoomer/config.json5"
+hash = "a1c71dfd6f869aeaca529efbbeac78af15b71673af2f2d5a927ef9010a4b53d4"
 
 [[files]]
 file = "configureddefaults/animatium_utility.json"
@@ -111,6 +115,10 @@ hash = "d1acc7a2a70c555b24ed056951af542a16aeae3f0752f441135af4884fa6cb7c"
 [[files]]
 file = "configureddefaults/config/lithium.properties"
 hash = "818ed301a636eb596663a08b967fe77f563186eef682ee2753a0f07f44988708"
+
+[[files]]
+file = "configureddefaults/config/modernfix-mixins.properties"
+hash = "873b35cee37b3d16960880a7569c307f902793e16e04939042c96d7cc8b63103"
 
 [[files]]
 file = "configureddefaults/config/modmenu.json"
