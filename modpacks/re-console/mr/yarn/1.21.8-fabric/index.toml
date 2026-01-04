@@ -1,6 +1,10 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/animatium.json"
+hash = "8438963c798c70874f415080ea7fb285f4401dac8bd67d2546855136a155270a"
+
+[[files]]
 file = "config/crash_assistant/config.toml"
 hash = "cd92732ab9216126faaf6d52692033af59f9df3736ec83454ddb87e7b6f35b99"
 
@@ -27,6 +31,10 @@ hash = "db59a58e83101b70b8b6ba5d5cc1087f90f98e0edc410e776aee290511e65bd9"
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
 hash = "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3"
+
+[[files]]
+file = "config/ok_zoomer/config.json5"
+hash = "a1c71dfd6f869aeaca529efbbeac78af15b71673af2f2d5a927ef9010a4b53d4"
 
 [[files]]
 file = "configureddefaults/animatium_utility.json"
@@ -102,7 +110,7 @@ hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "401adb542c60dcbec5eea1c53cf4c7695a02f485c4b0a160424ac862e406191c"
+hash = "614801c4d11315cf9ebecc2b2995c35a2055a26aab718d377750bd271cf4db05"
 
 [[files]]
 file = "configureddefaults/config/lithium.properties"
