@@ -1,0 +1,15 @@
+mixin:
+  # Replace player login validation thread with virtual thread
+  loginVT: true
+  # Replace text filter thread with virtual thread
+  textFilterVT: true
+  # Replace download thread with virtual thread
+  utilVT: true
+  # Optimized VarLong implementation
+  bestVarLong: true
+fix:
+  issues128:
+    # Fix Traffic Statistics
+    enabled: false
+    # Run bandwidth statistics on sync thread, which is closer to Vanilla behavior.
+    sync: true

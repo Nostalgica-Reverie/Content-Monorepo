@@ -284,6 +284,11 @@ hash = "2d9e2221eb57235e6598c6e10e44ba8474259cb3ca1bea1310e8e04e1e01179e"
 metafile = true
 
 [[files]]
+file = "mods/bedrockoid.pw.toml"
+hash = "fc94a4f96f17edacad91baa175642b53ed2a9cf82da37d5fcd3e952210cd52eb"
+metafile = true
+
+[[files]]
 file = "mods/better-block-entities.pw.toml"
 hash = "8cd2dd758819be1efe2901eb187fd45aef3d1eba980659ab42559378de1b05ed"
 metafile = true
@@ -326,6 +331,11 @@ metafile = true
 [[files]]
 file = "mods/configured-defaults.pw.toml"
 hash = "bef102ceb7e7f20c58d108ff9e6f016556f35ffcf379d10280db660d58c832e4"
+metafile = true
+
+[[files]]
+file = "mods/configured.pw.toml"
+hash = "887692fff7bde49c34e88b6518a87d9c72545d073a23eb5e14ae0296bbba5bc5"
 metafile = true
 
 [[files]]
@@ -389,6 +399,11 @@ hash = "08a7da23c3533ff859cfbe0660630b2bce51e26b03a95ba4654a6184bf28a428"
 metafile = true
 
 [[files]]
+file = "mods/fabric-language-kotlin.pw.toml"
+hash = "61afd7af5c645ffd966b2bd86be944eacd1e48a8044e8f67082225d4d9989f0c"
+metafile = true
+
+[[files]]
 file = "mods/factory-api.pw.toml"
 hash = "2a3a9fc919e5930c845cd0aade77d3f9ba4b2a66addb37fa07aa5ae8176bf917"
 metafile = true
@@ -404,8 +419,23 @@ hash = "33cf6c7885bb2a0d2e95467b546565cad5bd2714e2e53601ab8011b6910eac26"
 metafile = true
 
 [[files]]
+file = "mods/forge-config-api-port.pw.toml"
+hash = "d74f72f3bf13c4ef7d60b6e2defecd3c7af77ed9be7764cf1ed10ea1fd707a1f"
+metafile = true
+
+[[files]]
+file = "mods/fzzy-config.pw.toml"
+hash = "6e6bd7a9eee2f733202beecd7ceecf8248542f3e043849ae954e928058927f35"
+metafile = true
+
+[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "1d9252498828918ec5eb9d3d6bad3b673019795a94c2909fe82757989b46cd08"
+metafile = true
+
+[[files]]
+file = "mods/iris-shader-folder.pw.toml"
+hash = "b615fd67bdae59fe637449a1e99ec1fd32f8a73e9a0f6079442ee54558633c23"
 metafile = true
 
 [[files]]
@@ -416,6 +446,11 @@ metafile = true
 [[files]]
 file = "mods/ixeris.pw.toml"
 hash = "191e1eccbbe15adaa52e063e552c0f2ee5e9e27fe529a80cf231d58ed4d73f6b"
+metafile = true
+
+[[files]]
+file = "mods/kryptonfnp-patcher.pw.toml"
+hash = "36d8480a7230d912ab593f0e0e2305f1adbf33dee4e192069330cfc6f4d5058b"
 metafile = true
 
 [[files]]
@@ -469,6 +504,16 @@ hash = "46477ba6f53a4caea5994c3ef167e7ba0651cf9df0308676d32bb8c9ebe08056"
 metafile = true
 
 [[files]]
+file = "mods/misctweaks.pw.toml"
+hash = "1badd31806dcb78155b5f19548c811def841116423f23d6cc5485b7516f51897"
+metafile = true
+
+[[files]]
+file = "mods/mixintrace.pw.toml"
+hash = "6cd55df8041a48cb7f5f95ea4520f5ed59064e71ff9dab8b0e02bb922b68c9cb"
+metafile = true
+
+[[files]]
 file = "mods/moderner-beta.pw.toml"
 hash = "b733fa140cb7e6c4d0c20d73ef68fbe16447dc420335ab91e9677ab4efe9d8b1"
 metafile = true
@@ -476,6 +521,11 @@ metafile = true
 [[files]]
 file = "mods/modernfix-mvus.pw.toml"
 hash = "84ca48611902643c3934139e0dce480294b2f2e891cf797fede0607d5b9f6dfa"
+metafile = true
+
+[[files]]
+file = "mods/modlistmemory.pw.toml"
+hash = "243427edf2eb0c9c4e86c216a3de959d881eb0baa31780e57d406a2e066aab6a"
 metafile = true
 
 [[files]]
@@ -504,6 +554,11 @@ hash = "6624d3788f1ba26d2a2e94445fcb7c02ed719921e1dddf7603c036332e5cdf52"
 metafile = true
 
 [[files]]
+file = "mods/packet-fixer.pw.toml"
+hash = "84cb0dcad9ac46d22adba4fb7924951affa6ac5e46027a3b25fa9a0db8d91b2b"
+metafile = true
+
+[[files]]
 file = "mods/ping-view.pw.toml"
 hash = "a25ff2b7f1fe489dcecbbcb67907f15f3e1b18892916615050fb1f741c57440c"
 metafile = true
@@ -514,8 +569,28 @@ hash = "9e38917511dcf9ca84d43004ef3ca2155010afbe4cc98e862c1a299d1c7d6ca4"
 metafile = true
 
 [[files]]
+file = "mods/preferred-gamerules.pw.toml"
+hash = "7337f07b427d7defbb70bd010cca7f90ee2e4f5fa8e63f13b938226e754af947"
+metafile = true
+
+[[files]]
+file = "mods/pro-placer.pw.toml"
+hash = "3e7c0d426bc56a1d0d1b5601c75e45570714fc524311989c458949fd87f66b73"
+metafile = true
+
+[[files]]
+file = "mods/puzzles-lib.pw.toml"
+hash = "bedbd2675abf6bdb06c80570ba63d88e08caf7bb431d01e446d8770a5c62a9fb"
+metafile = true
+
+[[files]]
 file = "mods/regsyncfix.pw.toml"
 hash = "8c5e091f9ba1228c91ce49d5da218751ba48522fd0d587aff8774fc2ba7c1bfc"
+metafile = true
+
+[[files]]
+file = "mods/resourcepackcached.pw.toml"
+hash = "ca54049ee9628ac46f75824deb805a2665716609d014221ce80539b4526be061"
 metafile = true
 
 [[files]]
@@ -529,8 +604,28 @@ hash = "936e9028071f4e49ecd551aadab4c161f9a7143764b4cc89f8077296bd8645a6"
 metafile = true
 
 [[files]]
+file = "mods/servercore.pw.toml"
+hash = "886b70d966a36dca61cbd19c4d3955ed657206ce9b8491aad7894c0a369355cd"
+metafile = true
+
+[[files]]
+file = "mods/shuttfup.pw.toml"
+hash = "83a18513cdc3ed6eb12f79b15cecaa7a41b88ab38ca8bae3374df9380d72371f"
+metafile = true
+
+[[files]]
+file = "mods/simple-resource-loader.pw.toml"
+hash = "072d663edf6434788b126994b7901a654efb279c4b7f503bcad4938d6d6396a5"
+metafile = true
+
+[[files]]
 file = "mods/simple-voice-chat.pw.toml"
-hash = "651064ccd1e110f0c68962db3c0ffbb921d0222c0f32c48ccca696041b59e198"
+hash = "a2f4d9dda96c16714c36b3ad813e1d720dd6d8d4bf87e5c0bbc7bf54ed62540e"
+metafile = true
+
+[[files]]
+file = "mods/sodium-shadowy-path-blocks.pw.toml"
+hash = "2d27a6e7c7e28a33b4e3d85106f80fd6629f060ec31a8be525f1c2ac9f769cf1"
 metafile = true
 
 [[files]]
@@ -539,8 +634,23 @@ hash = "279ea1bb4b776be9176fe34416e2132e37abfce4483def54177091cc0f2faade"
 metafile = true
 
 [[files]]
+file = "mods/stackdeobf.pw.toml"
+hash = "b97b297fab12e137c58874ae776402cfa29374c8ff50c9f18ef27442b65336e6"
+metafile = true
+
+[[files]]
 file = "mods/unilib.pw.toml"
 hash = "40d9c21a2f35536ef0cfe86a53def94d5f930bc973565beb46370637be64a6fb"
+metafile = true
+
+[[files]]
+file = "mods/variants-cit.pw.toml"
+hash = "a616e0482ede0efe6bcb0551453314812fbe7f67f190c7808baa59f80e2003dc"
+metafile = true
+
+[[files]]
+file = "mods/voice-chat-interaction.pw.toml"
+hash = "5df1792af4ba49d779050fe3d2e70bfa04deaade2b891f354e6efcc30baee8cb"
 metafile = true
 
 [[files]]
@@ -809,7 +919,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "1b518bf92841cfaf4e7627b11783970639e79b2e30fd819eda8e965064c14a57"
+hash = "641227dd11cd945bb8b3d035c85f48ec18440957a8b80a7cfc5a0b8becda7479"
 metafile = true
 
 [[files]]
