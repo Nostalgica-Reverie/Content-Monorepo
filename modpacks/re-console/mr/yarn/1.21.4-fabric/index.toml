@@ -330,6 +330,11 @@ hash = "a21de7c6a7a6abb387b42502a5e316f2982220bc36b57582b1a5f8f4a3e87f00"
 metafile = true
 
 [[files]]
+file = "mods/configured.pw.toml"
+hash = "76af00b0308421a01823cf23c50358177cb21bc513e3ceb5ceae24c7522cc7d8"
+metafile = true
+
+[[files]]
 file = "mods/continuity.pw.toml"
 hash = "25b65726921ae29689dddeb89556cb676386c76c9de3d155c72dbc4e750f4cd8"
 metafile = true
@@ -510,6 +515,11 @@ hash = "dd491b3e18a8f9013eaa9c60a1e3b98397f4addc4e5c959f2d78f00841c508c0"
 metafile = true
 
 [[files]]
+file = "mods/mixintrace.pw.toml"
+hash = "6cd55df8041a48cb7f5f95ea4520f5ed59064e71ff9dab8b0e02bb922b68c9cb"
+metafile = true
+
+[[files]]
 file = "mods/modelfix.pw.toml"
 hash = "46c66b453241e192d96167ebf5c20960374fd542202ffaed26ed4fdf48bc63a1"
 metafile = true
@@ -630,8 +640,18 @@ hash = "1cccf540047eeaebfbf3c25a198a0720d8ee4b7a34fe297f917f0a2fc6b0f240"
 metafile = true
 
 [[files]]
+file = "mods/sodium-shadowy-path-blocks.pw.toml"
+hash = "6a9b663f2cd6c3f6f35ee30831a8e577aacc27b1851688d2179c9a20b19bde92"
+metafile = true
+
+[[files]]
 file = "mods/sodium.pw.toml"
 hash = "4544ab75a39367be909a0f692a33c013424616132e8ee0356866216aaee278e6"
+metafile = true
+
+[[files]]
+file = "mods/stackdeobf.pw.toml"
+hash = "b97b297fab12e137c58874ae776402cfa29374c8ff50c9f18ef27442b65336e6"
 metafile = true
 
 [[files]]
