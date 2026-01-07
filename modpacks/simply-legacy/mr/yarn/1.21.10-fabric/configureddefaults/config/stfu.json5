@@ -1,5 +1,5 @@
 {
-	maxChatHistory: 250,
+	maxChatHistory: 5000,
 	announceAdvancements: false,
 	advancementToasts: true,
 	recipeToasts: false,
@@ -16,7 +16,7 @@
 	animateTextures: true,
 	renderWeather: true,
 	combineBars: false,
-	renderThreadPriority: 5,
-	serverThreadPriority: 5,
-	ioThreadPriority: 1
+	renderThreadPriority: 8,
+	serverThreadPriority: 8,
+	ioThreadPriority: 2
 }
