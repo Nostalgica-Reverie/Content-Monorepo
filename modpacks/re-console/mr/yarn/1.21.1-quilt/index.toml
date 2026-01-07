@@ -272,6 +272,11 @@ hash = "dd56ff2bcc4253d1d70c08333632743fb56cdc4cf5518dc6afc024164633145d"
 metafile = true
 
 [[files]]
+file = "mods/bedrockoid.pw.toml"
+hash = "72dad0618556a02eb228832d63313be152119e9c28522e7863c847801e333b99"
+metafile = true
+
+[[files]]
 file = "mods/bobby.pw.toml"
 hash = "8bc168948c5f92a10252f12ad4f41caeefbe508f0326fc4185217d60c4cb2292"
 metafile = true
@@ -309,6 +314,11 @@ metafile = true
 [[files]]
 file = "mods/configured-defaults.pw.toml"
 hash = "5aa21a41ab1745a18bef3d24f00a299fd47d1c5f6d868f754f2832736010ee7e"
+metafile = true
+
+[[files]]
+file = "mods/configured.pw.toml"
+hash = "b5bdeb1177654fc3914be329612778078231cd3dc1b9157669c641c905146690"
 metafile = true
 
 [[files]]
@@ -373,7 +383,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "7f53b315580609c3da12ae3338d201003eb54dfaf5dd6e1d4dafb168c8bda1f5"
+hash = "61afd7af5c645ffd966b2bd86be944eacd1e48a8044e8f67082225d4d9989f0c"
 metafile = true
 
 [[files]]
@@ -402,8 +412,23 @@ hash = "33cf6c7885bb2a0d2e95467b546565cad5bd2714e2e53601ab8011b6910eac26"
 metafile = true
 
 [[files]]
+file = "mods/forge-config-api-port.pw.toml"
+hash = "238b3ceb4214a682480ce00eefae5d34efa299ff6ff667e4b2f2ed503c6e76ee"
+metafile = true
+
+[[files]]
+file = "mods/fzzy-config.pw.toml"
+hash = "a1f1206514a1311c556b5e5542dac4acc1d239c9dc6120efe7b7495245376cfb"
+metafile = true
+
+[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "37e14a7a0b033feafd7fc1cb82842c128b1b2f2053dd1d11206834d7fcc6f597"
+metafile = true
+
+[[files]]
+file = "mods/iris-shader-folder.pw.toml"
+hash = "b615fd67bdae59fe637449a1e99ec1fd32f8a73e9a0f6079442ee54558633c23"
 metafile = true
 
 [[files]]
@@ -467,6 +492,16 @@ hash = "43b7544c0a49c9368caf33a1529a720c6fadb17f7d07db6a8e952b514b5a862c"
 metafile = true
 
 [[files]]
+file = "mods/misctweaks.pw.toml"
+hash = "097ca72345d52fc7939f9835ad22d5d59a247a0ce0b4e39e5224b0c38426598a"
+metafile = true
+
+[[files]]
+file = "mods/mixintrace.pw.toml"
+hash = "6cd55df8041a48cb7f5f95ea4520f5ed59064e71ff9dab8b0e02bb922b68c9cb"
+metafile = true
+
+[[files]]
 file = "mods/moderner-beta.pw.toml"
 hash = "587d5456301916a71e67cbc8f2d223d6558168c5956d280ed78cd2577bd69229"
 metafile = true
@@ -474,6 +509,11 @@ metafile = true
 [[files]]
 file = "mods/modernfix.pw.toml"
 hash = "941a5aac1b441e2b4bd0c8465ea7e9f5c6826b4f99aa8c4ba63b3b657b6e7530"
+metafile = true
+
+[[files]]
+file = "mods/modlistmemory.pw.toml"
+hash = "345277e04c4ddab8275c2fb4e46e287d18ab9053b4808984e19b3a6b21105c00"
 metafile = true
 
 [[files]]
@@ -507,13 +547,38 @@ hash = "bce5534831663381e721f47746e08976b7b3894ee73feb24dbbae96fa28f774e"
 metafile = true
 
 [[files]]
+file = "mods/packet-fixer.pw.toml"
+hash = "84cb0dcad9ac46d22adba4fb7924951affa6ac5e46027a3b25fa9a0db8d91b2b"
+metafile = true
+
+[[files]]
 file = "mods/polytone.pw.toml"
 hash = "9d68782624dadddacfd248604944572d450e4b90dcec55329829717b837af1db"
 metafile = true
 
 [[files]]
+file = "mods/preferred-gamerules.pw.toml"
+hash = "985ecc4a35a2feab6d51b6cd6b95e7efa3f6b49aa5f549c132f59217b7a2a5a5"
+metafile = true
+
+[[files]]
+file = "mods/pro-placer.pw.toml"
+hash = "558ec2f6577b4dfb1d1df537323e2efdec9936a607f1d879a68558ae5416301d"
+metafile = true
+
+[[files]]
+file = "mods/puzzles-lib.pw.toml"
+hash = "44a6662d6ac604b2173a8bc426a10c0d621c8ba99d37d1b72525c140c42cb358"
+metafile = true
+
+[[files]]
 file = "mods/regsyncfix.pw.toml"
 hash = "8c5e091f9ba1228c91ce49d5da218751ba48522fd0d587aff8774fc2ba7c1bfc"
+metafile = true
+
+[[files]]
+file = "mods/resourcepackcached.pw.toml"
+hash = "ca54049ee9628ac46f75824deb805a2665716609d014221ce80539b4526be061"
 metafile = true
 
 [[files]]
@@ -527,13 +592,38 @@ hash = "ceb180c764fa9c7c12c7e750cc7b726171277cb2b68e47370888c4ff4679a4ed"
 metafile = true
 
 [[files]]
+file = "mods/servercore.pw.toml"
+hash = "886b70d966a36dca61cbd19c4d3955ed657206ce9b8491aad7894c0a369355cd"
+metafile = true
+
+[[files]]
+file = "mods/shuttfup.pw.toml"
+hash = "e4891e76bc72c6b2cc0443679b7412506e32bddcb0648539cc7781d3bfb045c7"
+metafile = true
+
+[[files]]
+file = "mods/simple-resource-loader.pw.toml"
+hash = "072d663edf6434788b126994b7901a654efb279c4b7f503bcad4938d6d6396a5"
+metafile = true
+
+[[files]]
 file = "mods/simple-voice-chat.pw.toml"
 hash = "3fd12ab912d8e5f7e7e5a2db3c8b8ca9a4574a3457ddc97e00e1ade00b4a00a9"
 metafile = true
 
 [[files]]
+file = "mods/sodium-shadowy-path-blocks.pw.toml"
+hash = "6a9b663f2cd6c3f6f35ee30831a8e577aacc27b1851688d2179c9a20b19bde92"
+metafile = true
+
+[[files]]
 file = "mods/sodium.pw.toml"
 hash = "9a987bcd2646a2ab741e7f609b43cb2d9c9daba765323b5a77d506b0ac7f4207"
+metafile = true
+
+[[files]]
+file = "mods/stackdeobf.pw.toml"
+hash = "b97b297fab12e137c58874ae776402cfa29374c8ff50c9f18ef27442b65336e6"
 metafile = true
 
 [[files]]
@@ -544,6 +634,16 @@ metafile = true
 [[files]]
 file = "mods/unilib.pw.toml"
 hash = "cac44c83a36baf81fe83a3a23568df8ee1cfb262f907c313ae73bf1035a7ac56"
+metafile = true
+
+[[files]]
+file = "mods/variants-cit.pw.toml"
+hash = "b9297c611312d2ebf7e934aae8da31b696640fcadf3342f719ce5e31c543714e"
+metafile = true
+
+[[files]]
+file = "mods/voice-chat-interaction.pw.toml"
+hash = "388ad48f4bd97f7391bfcedd485fe5faa2c6ecffd3369dd7d3cbf031b7b04551"
 metafile = true
 
 [[files]]
@@ -763,7 +863,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "1b518bf92841cfaf4e7627b11783970639e79b2e30fd819eda8e965064c14a57"
+hash = "641227dd11cd945bb8b3d035c85f48ec18440957a8b80a7cfc5a0b8becda7479"
 metafile = true
 
 [[files]]

@@ -280,6 +280,11 @@ hash = "b373b42660178a0759a0d2e29e958bddf688cefca2de43bd773171c3057c7a1e"
 metafile = true
 
 [[files]]
+file = "mods/bedrockoid.pw.toml"
+hash = "e1e9b3c96281166fdb49e146a74baac8452acf0195e8391972baace44cc8ff38"
+metafile = true
+
+[[files]]
 file = "mods/bettergrassify.pw.toml"
 hash = "302131aa548d42e1ff6828ba6bb71ddac6f0e494d755705cfecae74e7738beed"
 metafile = true
@@ -322,6 +327,11 @@ metafile = true
 [[files]]
 file = "mods/configured-defaults.pw.toml"
 hash = "a21de7c6a7a6abb387b42502a5e316f2982220bc36b57582b1a5f8f4a3e87f00"
+metafile = true
+
+[[files]]
+file = "mods/configured.pw.toml"
+hash = "76af00b0308421a01823cf23c50358177cb21bc513e3ceb5ceae24c7522cc7d8"
 metafile = true
 
 [[files]]
@@ -430,8 +440,23 @@ hash = "33cf6c7885bb2a0d2e95467b546565cad5bd2714e2e53601ab8011b6910eac26"
 metafile = true
 
 [[files]]
+file = "mods/forge-config-api-port.pw.toml"
+hash = "1cfb594b2d6f9a922d95daa94d672ee115f4119de4e8248ec83994fb695bf27a"
+metafile = true
+
+[[files]]
+file = "mods/fzzy-config.pw.toml"
+hash = "e692b866e47d1ff9ae6ae615d85ff96e7aabcf9db0806a7c341b7f09fc734938"
+metafile = true
+
+[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "22f0504f66807f6fae2103924e98d990a0d547271f886b6fabaedafdb8045333"
+metafile = true
+
+[[files]]
+file = "mods/iris-shader-folder.pw.toml"
+hash = "b615fd67bdae59fe637449a1e99ec1fd32f8a73e9a0f6079442ee54558633c23"
 metafile = true
 
 [[files]]
@@ -442,6 +467,11 @@ metafile = true
 [[files]]
 file = "mods/ixeris.pw.toml"
 hash = "95af4a0a8a69e7c1be15c4d563ff3afd01a57ee4a7db77a54c49d313aec5acd1"
+metafile = true
+
+[[files]]
+file = "mods/kryptonfnp-patcher.pw.toml"
+hash = "a49d89ac5f05c6c59d2d52a461b94081f8b5883c3764ce54227e950751f32265"
 metafile = true
 
 [[files]]
@@ -485,6 +515,16 @@ hash = "43b7544c0a49c9368caf33a1529a720c6fadb17f7d07db6a8e952b514b5a862c"
 metafile = true
 
 [[files]]
+file = "mods/misctweaks.pw.toml"
+hash = "dd491b3e18a8f9013eaa9c60a1e3b98397f4addc4e5c959f2d78f00841c508c0"
+metafile = true
+
+[[files]]
+file = "mods/mixintrace.pw.toml"
+hash = "6cd55df8041a48cb7f5f95ea4520f5ed59064e71ff9dab8b0e02bb922b68c9cb"
+metafile = true
+
+[[files]]
 file = "mods/modelfix.pw.toml"
 hash = "46c66b453241e192d96167ebf5c20960374fd542202ffaed26ed4fdf48bc63a1"
 metafile = true
@@ -497,6 +537,11 @@ metafile = true
 [[files]]
 file = "mods/modernfix.pw.toml"
 hash = "b36a58a06c69455f391ab9ba6fecd3b6e63f3ea5b3258e0c1ccf9ebbd26aaea9"
+metafile = true
+
+[[files]]
+file = "mods/modlistmemory.pw.toml"
+hash = "4baa029859145e06389363a2397599f39bdd53857e6491a9975b40fc0e88adbf"
 metafile = true
 
 [[files]]
@@ -530,6 +575,11 @@ hash = "8811c7868792f6dbf4c43bbea286b7aab7906b13ea1a7b6eafd4d3a36360e22e"
 metafile = true
 
 [[files]]
+file = "mods/packet-fixer.pw.toml"
+hash = "84cb0dcad9ac46d22adba4fb7924951affa6ac5e46027a3b25fa9a0db8d91b2b"
+metafile = true
+
+[[files]]
 file = "mods/placeholder-api.pw.toml"
 hash = "fb865ad9a54fd7e6fe6f3423066fe42bb1b2043f3e5ce090d53e99f2bcaba247"
 metafile = true
@@ -537,6 +587,21 @@ metafile = true
 [[files]]
 file = "mods/polytone.pw.toml"
 hash = "11fa3bfee44f77d6505b0d46606f22c7e972aa3feb5cc65c126edc574d9dc3b1"
+metafile = true
+
+[[files]]
+file = "mods/preferred-gamerules.pw.toml"
+hash = "7337f07b427d7defbb70bd010cca7f90ee2e4f5fa8e63f13b938226e754af947"
+metafile = true
+
+[[files]]
+file = "mods/pro-placer.pw.toml"
+hash = "5851cea9644a40c76485bf633de388e971bae12a16676d7222e7063377ba762f"
+metafile = true
+
+[[files]]
+file = "mods/puzzles-lib.pw.toml"
+hash = "c161cb290f28a6353b3e7d5f496d0f2f8106bec4d6f141e57d4d1c5b8359ffd1"
 metafile = true
 
 [[files]]
@@ -550,6 +615,16 @@ hash = "8c5e091f9ba1228c91ce49d5da218751ba48522fd0d587aff8774fc2ba7c1bfc"
 metafile = true
 
 [[files]]
+file = "mods/resource-config-api.pw.toml"
+hash = "2f899384c5a572c8a887955a60458585f36fb47cfd3481a07d9b206755b42c66"
+metafile = true
+
+[[files]]
+file = "mods/resourcepackcached.pw.toml"
+hash = "ca54049ee9628ac46f75824deb805a2665716609d014221ce80539b4526be061"
+metafile = true
+
+[[files]]
 file = "mods/rsls.pw.toml"
 hash = "32c2ce6f7a0be327fb8341a82ee35768a3cecc186116d2f135e5fc95e2f56292"
 metafile = true
@@ -560,13 +635,38 @@ hash = "a49c64de0b78ec2b20fcf8710c3d978afe94470e401fd640f840a6418654b869"
 metafile = true
 
 [[files]]
+file = "mods/servercore.pw.toml"
+hash = "886b70d966a36dca61cbd19c4d3955ed657206ce9b8491aad7894c0a369355cd"
+metafile = true
+
+[[files]]
+file = "mods/shuttfup.pw.toml"
+hash = "d5aa4e16f5a7374e9af0db940862ec67f0275aa773e82b00a260b570ae78daa1"
+metafile = true
+
+[[files]]
+file = "mods/simple-resource-loader.pw.toml"
+hash = "072d663edf6434788b126994b7901a654efb279c4b7f503bcad4938d6d6396a5"
+metafile = true
+
+[[files]]
 file = "mods/simple-voice-chat.pw.toml"
 hash = "1cccf540047eeaebfbf3c25a198a0720d8ee4b7a34fe297f917f0a2fc6b0f240"
 metafile = true
 
 [[files]]
+file = "mods/sodium-shadowy-path-blocks.pw.toml"
+hash = "6a9b663f2cd6c3f6f35ee30831a8e577aacc27b1851688d2179c9a20b19bde92"
+metafile = true
+
+[[files]]
 file = "mods/sodium.pw.toml"
 hash = "4544ab75a39367be909a0f692a33c013424616132e8ee0356866216aaee278e6"
+metafile = true
+
+[[files]]
+file = "mods/stackdeobf.pw.toml"
+hash = "b97b297fab12e137c58874ae776402cfa29374c8ff50c9f18ef27442b65336e6"
 metafile = true
 
 [[files]]
@@ -577,6 +677,16 @@ metafile = true
 [[files]]
 file = "mods/unilib.pw.toml"
 hash = "0aaccb747baf1493c6d9e2084b532ab5cca71ed09387a21a502ab6363c05a18c"
+metafile = true
+
+[[files]]
+file = "mods/variants-cit.pw.toml"
+hash = "05f2d525618eeeaae59b6b9d2f3a3561e5e5d5a22a2827d919ea241260add9e9"
+metafile = true
+
+[[files]]
+file = "mods/voice-chat-interaction.pw.toml"
+hash = "ebd3a3662ac209ec89e11492634debacb9de226a06a1c38bea23975e2d6bd270"
 metafile = true
 
 [[files]]
@@ -636,7 +746,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/default-dark-mode-legacy4j.pw.toml"
-hash = "4f91bbb3088b6a0062648ced05c183c4e4dac3382a5e3ce7162ec4c05bb730c0"
+hash = "1eb4c99351566def04a8521b8ee7a35e2afd4304533417c642c29db583ce9ba1"
 metafile = true
 
 [[files]]
@@ -741,7 +851,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/legacy4j-modern-panoramas.pw.toml"
-hash = "d0004323caf620cbc5f680f2a6e84edd300e2eda645db7a5a7f8706675f19d4c"
+hash = "fa9f93e347fbc227cbdf8abee368e5f519d07346f725a7a306880f8db9f248ac"
 metafile = true
 
 [[files]]
@@ -796,7 +906,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "6e2599767e84b559b12763a1f95ac2bed644c16f1cd02a5aaedf35ceb93708e8"
+hash = "641227dd11cd945bb8b3d035c85f48ec18440957a8b80a7cfc5a0b8becda7479"
 metafile = true
 
 [[files]]
