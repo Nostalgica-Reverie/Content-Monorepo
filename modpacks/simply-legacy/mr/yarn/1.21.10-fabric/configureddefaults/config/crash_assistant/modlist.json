@@ -1,8 +1,8 @@
 {
-  "fabric-loader-0.18.2.jar (modloader)": {
-    "jarName": "fabric-loader-0.18.2.jar (modloader)",
+  "fabric-loader-0.18.4.jar (modloader)": {
+    "jarName": "fabric-loader-0.18.4.jar (modloader)",
     "modId": "fabric",
-    "version": "fabric-loader-0.18.2.jar"
+    "version": "fabric-loader-0.18.4.jar"
   },
   "animatium-3.0+1.21.10-fabric.jar": {
     "jarName": "animatium-3.0+1.21.10-fabric.jar",
@@ -95,6 +95,13 @@
     "curseForgeHash": 3410332389,
     "modrinthHash": "0345c20b71007521a25b393091adeb45328d7c57"
   },
+  "fabric-language-kotlin-1.13.8+kotlin.2.3.0.jar": {
+    "jarName": "fabric-language-kotlin-1.13.8+kotlin.2.3.0.jar",
+    "modId": "fabric-language-kotlin",
+    "version": "1.13.8+kotlin.2.3.0",
+    "curseForgeHash": 1908825025,
+    "modrinthHash": "05fe02fe61232c4ddea4059e8103281424d5a2bd"
+  },
   "FactoryAPI-1.21.10-2.2.7-fabric.jar": {
     "jarName": "FactoryAPI-1.21.10-2.2.7-fabric.jar",
     "modId": "factory_api",
@@ -109,12 +116,47 @@
     "curseForgeHash": 1268901300,
     "modrinthHash": "5ea50634ed19a5e10acb46258bab0c1ee20f64ca"
   },
+  "fnp_patcher-25.11.1+1.21.9.jar": {
+    "jarName": "fnp_patcher-25.11.1+1.21.9.jar",
+    "modId": "fnp_patcher",
+    "version": "25.11.1+1.21.9",
+    "curseForgeHash": 1448474850,
+    "modrinthHash": "135917f65c868f1fdb637823acfbd58e7e5c4bc6"
+  },
+  "fzzy_config-0.7.4-fix2+1.21.9.jar": {
+    "jarName": "fzzy_config-0.7.4-fix2+1.21.9.jar",
+    "modId": "fzzy_config",
+    "version": "0.7.4-fix2+1.21.9",
+    "curseForgeHash": 1840836558,
+    "modrinthHash": "55e341ff55690c9a7f2d43fc6c71d28a1f2f5332"
+  },
   "ImmediatelyFast-Fabric-1.13.4+1.21.10.jar": {
     "jarName": "ImmediatelyFast-Fabric-1.13.4+1.21.10.jar",
     "modId": "immediatelyfast",
     "version": "1.13.4+1.21.10",
     "curseForgeHash": 2771215168,
     "modrinthHash": "a6fc016add2a6cbb601f3d58c5981257c9486771"
+  },
+  "Ixeris-3.8.5+1.21.11-fabric.jar": {
+    "jarName": "Ixeris-3.8.5+1.21.11-fabric.jar",
+    "modId": "ixeris",
+    "version": "3.8.5+1.21.11-fabric",
+    "curseForgeHash": 3050589494,
+    "modrinthHash": "5ee237677933e7b8964c8c1609a5a7cfce00ad91"
+  },
+  "krypton-0.2.10.jar": {
+    "jarName": "krypton-0.2.10.jar",
+    "modId": "krypton",
+    "version": "0.2.10",
+    "curseForgeHash": 2945997157,
+    "modrinthHash": "94ddaeeae6ca7fecc79e54a0aa02a5438a775a99"
+  },
+  "lazy-ai-1.4.2.jar": {
+    "jarName": "lazy-ai-1.4.2.jar",
+    "modId": "lazy_ai_pixelindiedev",
+    "version": "1.4.2",
+    "curseForgeHash": 1618209321,
+    "modrinthHash": "a49238c75891b849de47a72231a36d344ae7989a"
   },
   "Legacy4J-1.21.10-1.8.7-fabric.jar": {
     "jarName": "Legacy4J-1.21.10-1.8.7-fabric.jar",
@@ -158,6 +200,20 @@
     "curseForgeHash": 3025365314,
     "modrinthHash": "3ab31aec861c6bcade87f7e9317d1ca2ac7a19f3"
   },
+  "NoPryingEyes-1.8.0+1.21.10.jar": {
+    "jarName": "NoPryingEyes-1.8.0+1.21.10.jar",
+    "modId": "npe",
+    "version": "1.8.0",
+    "curseForgeHash": 2942558589,
+    "modrinthHash": "20582d7ff749481a5b7dc4743b821b00ddedf432"
+  },
+  "particle_core-0.2.6+1.21.6.jar": {
+    "jarName": "particle_core-0.2.6+1.21.6.jar",
+    "modId": "particle_core",
+    "version": "0.2.6+1.21.6",
+    "curseForgeHash": 2492123415,
+    "modrinthHash": "f61cb096a811504079d3280e98bcf1eb40159504"
+  },
   "placeholder-api-2.8.1+1.21.10.jar": {
     "jarName": "placeholder-api-2.8.1+1.21.10.jar",
     "modId": "placeholder-api",
@@ -178,6 +234,13 @@
     "version": "0.1.6+fabric.c25518a",
     "curseForgeHash": 3734159435,
     "modrinthHash": "9df93ab6442fa374c17fab6b5181fe2c215d9d5b"
+  },
+  "servercore-fabric-1.5.14+1.21.9.jar": {
+    "jarName": "servercore-fabric-1.5.14+1.21.9.jar",
+    "modId": "servercore",
+    "version": "1.5.14+1.21.9",
+    "curseForgeHash": 3417754780,
+    "modrinthHash": "6a732327f7855aa64f820942031d6e4adeba68a6"
   },
   "sodium-fabric-0.7.3+mc1.21.10.jar": {
     "jarName": "sodium-fabric-0.7.3+mc1.21.10.jar",
@@ -200,11 +263,25 @@
     "curseForgeHash": 898318935,
     "modrinthHash": "8e78e44924895a67763b8bb69f593cb95f0d2092"
   },
+  "vmp-fabric-mc1.21.10-0.2.0+beta.7.217-all.jar": {
+    "jarName": "vmp-fabric-mc1.21.10-0.2.0+beta.7.217-all.jar",
+    "modId": "vmp",
+    "version": "0.2.0+beta.7.217+1.21.10",
+    "curseForgeHash": 1015960387,
+    "modrinthHash": "18d4b43bf68a3ebaa4e6d01d0781f63c20e81d58"
+  },
   "yet_another_config_lib_v3-3.8.1+1.21.10-fabric.jar": {
     "jarName": "yet_another_config_lib_v3-3.8.1+1.21.10-fabric.jar",
     "modId": "yet_another_config_lib_v3",
     "version": "3.8.1+1.21.10-fabric",
     "curseForgeHash": 3185090849,
     "modrinthHash": "eb2d58b0905ca4ee75207a214d41d36d1bc5d38d"
+  },
+  "zfastnoise-1.0.3+1.21.10.jar": {
+    "jarName": "zfastnoise-1.0.3+1.21.10.jar",
+    "modId": "zfastnoise",
+    "version": "1.0.3+1.21.10",
+    "curseForgeHash": 664567257,
+    "modrinthHash": "faccfde774c01745feb3e36227a54dd0c3aef41d"
   }
 }
