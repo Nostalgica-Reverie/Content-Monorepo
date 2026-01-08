@@ -33,6 +33,10 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "ac39420512ece55a61087db09fe6c4375aa8bd02966b78716c3e3e404938f693"
 
 [[files]]
+file = "config/ok_zoomer/config.json5"
+hash = "a1c71dfd6f869aeaca529efbbeac78af15b71673af2f2d5a927ef9010a4b53d4"
+
+[[files]]
 file = "configureddefaults/animatium_utility.json"
 hash = "013bb87a1d68fdba744417b9591ed98e5e4c21c131868525967bca5e3a152c37"
 
@@ -46,11 +50,39 @@ hash = "55c3e39708a0b83934ad67401e3b26ebdb5d05fea804730e67afbf36cfcca393"
 
 [[files]]
 file = "configureddefaults/config/c2me.toml"
-hash = "22d6267ba4c7cdcf5d55b692b36fd634aaf29953bc478fbf329f2b6ebfb5f224"
+hash = "84e829bfafe4b74ae0f299dbfb739a1b2d6b99c69a80d68c6c9c1e90e744918f"
 
 [[files]]
 file = "configureddefaults/config/cpm.json"
 hash = "12c93da2a62c130d771871bcc9ed1761c7d725eaa245e9f377a8ee9d78cb7088"
+
+[[files]]
+file = "configureddefaults/config/crash_assistant/config.toml"
+hash = "95bb10cbaf239da13d89d85c7f246856dd199844da199ea0df7dd512bff47ba7"
+
+[[files]]
+file = "configureddefaults/config/crash_assistant/lang/README.md"
+hash = "bd2631461374ee995478917064980edee09d5c300dfde1548264c1d9b6763349"
+
+[[files]]
+file = "configureddefaults/config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "configureddefaults/config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "configureddefaults/config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "configureddefaults/config/crash_assistant/modlist.json"
+hash = "0b6a03a23371dd88ade86ff3a3534180c98db973c654bbf356882bfa81cdf110"
+
+[[files]]
+file = "configureddefaults/config/crash_assistant/problematic_mods_config.json"
+hash = "b320a807454fecb40d611ea5c0d9f9c8547305a9f3b94a1434f7ecb6484aa2a3"
 
 [[files]]
 file = "configureddefaults/config/cubes-without-borders.json"
@@ -89,6 +121,14 @@ file = "configureddefaults/config/immediatelyfast.json"
 hash = "2718bb7c2762955bb9080c5cf992d3fd2dc46dee2e8167141eca76d8ee9849fd"
 
 [[files]]
+file = "configureddefaults/config/ixeris.toml"
+hash = "821e1920a05b593ca59a404b422b6e970138e614795ca5abde2ed326c2bd9154"
+
+[[files]]
+file = "configureddefaults/config/krypton_fnp.yaml"
+hash = "f2667a23b5f4a6be4de1631a0da2ce624351e321f67ed7e5da6648d3a0bc81a8"
+
+[[files]]
 file = "configureddefaults/config/legacy/client_mixin.json"
 hash = "b87f97b466cd28a298998cd36ef501d2c466131d7fc2e92727eea33a903eb3de"
 
@@ -118,7 +158,7 @@ hash = "7e02c1d587a4c011b0b18080b7ba7451bd44535159a52c4c0c9a94b863334678"
 
 [[files]]
 file = "configureddefaults/config/modernfix-mixins.properties"
-hash = "88e156ebea5860a21c27da03912948a7849f9dd0ba5c4ccc9c102f3c52208c81"
+hash = "873b35cee37b3d16960880a7569c307f902793e16e04939042c96d7cc8b63103"
 
 [[files]]
 file = "configureddefaults/config/modmenu.json"
@@ -127,6 +167,18 @@ hash = "ee8d1a6f11ea009f37abba6325d97766910e1786b0de848aa307771d8a87ed72"
 [[files]]
 file = "configureddefaults/config/moreculling.toml"
 hash = "20a7c9a9d1ec3c730f37af63357d6847afbb28fd37cd13657928c3d22feb055c"
+
+[[files]]
+file = "configureddefaults/config/ok_zoomer/config.json5"
+hash = "a1c71dfd6f869aeaca529efbbeac78af15b71673af2f2d5a927ef9010a4b53d4"
+
+[[files]]
+file = "configureddefaults/config/servercore/config.yml"
+hash = "a66a5df78f4e5b604a0d0a759f024e4013baf8c9b34ca758ea99996f4c2281dd"
+
+[[files]]
+file = "configureddefaults/config/servercore/optimizations.yml"
+hash = "b652ce75a0649d891aaa8351fb212801b8a15b701545760187032dfac24c00b9"
 
 [[files]]
 file = "configureddefaults/config/sodium-fingerprint.json"
@@ -146,7 +198,11 @@ hash = "25baba4e198fbefd6656a38dcf0cdc3e7ccef211221b4f5218d22a778d1853fa"
 
 [[files]]
 file = "configureddefaults/config/stfu.json5"
-hash = "5e78be3afec0eb190cb50b0e2f80c066a5c86d3812d7db2ad981a36021b5fd91"
+hash = "c3259429631217e29e91d60b663ee9c076b058268317a08d3a9fba866879b4f4"
+
+[[files]]
+file = "configureddefaults/config/threadtweak.json"
+hash = "b4c1cc5fc213225d64e685a3b632092e909386ab41bd9925f9cf7efd53d1ad46"
 
 [[files]]
 file = "configureddefaults/config/yacl.json5"
@@ -314,6 +370,11 @@ hash = "0345fbfa8542b5ec84535fe2aff0f5cc4e801ecc337f926d4e2310b53f458569"
 metafile = true
 
 [[files]]
+file = "mods/fabric-language-kotlin.pw.toml"
+hash = "61afd7af5c645ffd966b2bd86be944eacd1e48a8044e8f67082225d4d9989f0c"
+metafile = true
+
+[[files]]
 file = "mods/factory-api.pw.toml"
 hash = "589cba3d3b77a3f90de9a156486120b517a44a8e22ef39e3130c42e706fb2f88"
 metafile = true
@@ -324,8 +385,33 @@ hash = "186a261ded1911abf559dce21b22eadc1e96de7767982e58f458b82a89a924ba"
 metafile = true
 
 [[files]]
+file = "mods/fzzy-config.pw.toml"
+hash = "6e6bd7a9eee2f733202beecd7ceecf8248542f3e043849ae954e928058927f35"
+metafile = true
+
+[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "77364cc74f5c0819ef77e5e2fd11bd304ad98dc193348d3d875e23fae62f8f74"
+metafile = true
+
+[[files]]
+file = "mods/ixeris.pw.toml"
+hash = "0731319bb26b25441002d8d57136ab1fccd3f54719e0a4f0bd0c3b5956238c6b"
+metafile = true
+
+[[files]]
+file = "mods/krypton.pw.toml"
+hash = "8f6e0157b42ba668c0ba9aa7eff94b3b91a8f58bcd357e574d70a7b160d4337c"
+metafile = true
+
+[[files]]
+file = "mods/kryptonfnp-patcher.pw.toml"
+hash = "0f44302785dc1aab68c3cc6a6dc9a26332b4f487ded78831cfa25607701a98fb"
+metafile = true
+
+[[files]]
+file = "mods/lazyai.pw.toml"
+hash = "ce0eb166ad09c3d1576ee46308ab4004bc002e89e80bb78df6593bcbae879025"
 metafile = true
 
 [[files]]
@@ -359,6 +445,16 @@ hash = "204a4b3b041fad4bb4dc543c74d540fcf239710494d2130cebe700bf1d8a7805"
 metafile = true
 
 [[files]]
+file = "mods/no-prying-eyes.pw.toml"
+hash = "3817de523769c4d13a5d1e2eb28cfcde5f2f27c48301cad1a6b188efb2f6dbda"
+metafile = true
+
+[[files]]
+file = "mods/particle-core.pw.toml"
+hash = "4ed5bf9e808739ddeec2692fbd7c16b3df653f1b2823de3f07e5dced1c5fc439"
+metafile = true
+
+[[files]]
 file = "mods/placeholder-api.pw.toml"
 hash = "e674752dd4dd07c33d9b94f6e19c15ef893c356c3c5ed77aeaf35cf6d2325130"
 metafile = true
@@ -371,6 +467,11 @@ metafile = true
 [[files]]
 file = "mods/scalablelux.pw.toml"
 hash = "936e9028071f4e49ecd551aadab4c161f9a7143764b4cc89f8077296bd8645a6"
+metafile = true
+
+[[files]]
+file = "mods/servercore.pw.toml"
+hash = "886b70d966a36dca61cbd19c4d3955ed657206ce9b8491aad7894c0a369355cd"
 metafile = true
 
 [[files]]
@@ -389,8 +490,18 @@ hash = "279ea1bb4b776be9176fe34416e2132e37abfce4483def54177091cc0f2faade"
 metafile = true
 
 [[files]]
+file = "mods/vmp-fabric.pw.toml"
+hash = "1750b72e8ece77b5676ed18ffce81d0fd4df89e8bbde63ef8cc328df87bb9277"
+metafile = true
+
+[[files]]
 file = "mods/yacl.pw.toml"
 hash = "e71ac6769675de1d2338a13e116f2aefcc8965ab0bc18b75a53572531c1447dd"
+metafile = true
+
+[[files]]
+file = "mods/zfastnoise.pw.toml"
+hash = "128a97870f3e5b79368b94a90c020adf3c534b798620f6a2112a9e2543b1f7f0"
 metafile = true
 
 [[files]]
@@ -554,7 +665,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "1b518bf92841cfaf4e7627b11783970639e79b2e30fd819eda8e965064c14a57"
+hash = "96c6b60fc53d6241e06f09b7c74eec4245f23793feca581363a19a7ffb690695"
 metafile = true
 
 [[files]]
