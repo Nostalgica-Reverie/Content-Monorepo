@@ -71,7 +71,7 @@ globalExecutorParallelism = 7
 	# Whether to use the fast reduced allocation chunk serializer
 	# (may cause incompatibility with other mods)
 	# 
-	gcFreeChunkSerializer = true
+	gcFreeChunkSerializer = false
 	# (Default: 8192) Soft limit for io worker nbt cache
 	chunkDataCacheSoftLimit = "default"
 	# (Default: 32678) Hard limit for io worker nbt cache
