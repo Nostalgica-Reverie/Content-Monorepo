@@ -33,10 +33,6 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "b320a807454fecb40d611ea5c0d9f9c8547305a9f3b94a1434f7ecb6484aa2a3"
 
 [[files]]
-file = "config/ok_zoomer/config.json5"
-hash = "a1c71dfd6f869aeaca529efbbeac78af15b71673af2f2d5a927ef9010a4b53d4"
-
-[[files]]
 file = "configureddefaults/animatium_utility.json"
 hash = "013bb87a1d68fdba744417b9591ed98e5e4c21c131868525967bca5e3a152c37"
 
@@ -167,10 +163,6 @@ hash = "ee8d1a6f11ea009f37abba6325d97766910e1786b0de848aa307771d8a87ed72"
 [[files]]
 file = "configureddefaults/config/moreculling.toml"
 hash = "20a7c9a9d1ec3c730f37af63357d6847afbb28fd37cd13657928c3d22feb055c"
-
-[[files]]
-file = "configureddefaults/config/ok_zoomer/config.json5"
-hash = "a1c71dfd6f869aeaca529efbbeac78af15b71673af2f2d5a927ef9010a4b53d4"
 
 [[files]]
 file = "configureddefaults/config/servercore/config.yml"
@@ -310,6 +302,11 @@ hash = "c1ef16ca29f6fe46d06fba32f9f7d5cea38fc5b6ed3ac074e10c92a58ff74dc8"
 metafile = true
 
 [[files]]
+file = "mods/asyncparticles.pw.toml"
+hash = "d170ce4828b4b7fb7d21dc1dafd7e318e3f0cceea823f8d4f4e78f062baacc57"
+metafile = true
+
+[[files]]
 file = "mods/badoptimizations.pw.toml"
 hash = "f8805d3902fb3e31ea9e53f684e3d731b5ac7d2fd2507c475fd1f5f4da266a2f"
 metafile = true
@@ -385,11 +382,6 @@ hash = "186a261ded1911abf559dce21b22eadc1e96de7767982e58f458b82a89a924ba"
 metafile = true
 
 [[files]]
-file = "mods/fzzy-config.pw.toml"
-hash = "6e6bd7a9eee2f733202beecd7ceecf8248542f3e043849ae954e928058927f35"
-metafile = true
-
-[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "77364cc74f5c0819ef77e5e2fd11bd304ad98dc193348d3d875e23fae62f8f74"
 metafile = true
@@ -447,11 +439,6 @@ metafile = true
 [[files]]
 file = "mods/no-prying-eyes.pw.toml"
 hash = "3817de523769c4d13a5d1e2eb28cfcde5f2f27c48301cad1a6b188efb2f6dbda"
-metafile = true
-
-[[files]]
-file = "mods/particle-core.pw.toml"
-hash = "4ed5bf9e808739ddeec2692fbd7c16b3df653f1b2823de3f07e5dced1c5fc439"
 metafile = true
 
 [[files]]
