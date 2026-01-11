@@ -1,4 +1,5 @@
 {
+  "icon": "legacy:comparisons/alpha/icon",
   "packs": [
     "vanilla",
     "fabric",
@@ -8,9 +9,9 @@
   ],
   "id": "alpha",
   "name": {
-    "text": "Alpha Texture Pack"
+    "translate": "legacy.menu.albums.resource.alpha"
   },
   "description": {
-    "text": "Have a throwback to alpha with this Texture Pack!"
+    "translate": "legacy.menu.albums.resource.alpha.description"
   }
 }
