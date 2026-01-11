@@ -1,11 +1,17 @@
 {
+  "icon": "legacy:comparisons/alpha/icon",
   "packs": [
     "vanilla",
     "fabric",
     "programmer_art",
+    "file/golden-days-base-1.21.x-1.14.0.zip",
     "file/golden-days-alpha-1.21.x-1.13.0.zip"
   ],
   "id": "alpha",
-  "name": "Alpha Texture Pack",
-  "description": "Have a throwback to alpha with this Texture Pack!"
+  "name": {
+    "translate": "legacy.menu.albums.resource.alpha"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.alpha.description"
+  }
 }
