@@ -1,4 +1,5 @@
 {
+  "icon": "legacy:comparisons/beta/icon",
   "packs": [
     "vanilla",
     "fabric",
@@ -6,6 +7,10 @@
     "file/golden-days-base-1.21.x-1.14.0.zip"
   ],
   "id": "beta",
-  "name": "Beta Texture Pack",
-  "description": "Return to the golden age of Minecraft."
+  "name": {
+    "translate": "legacy.menu.albums.resource.beta"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.beta"
+  }
 }
