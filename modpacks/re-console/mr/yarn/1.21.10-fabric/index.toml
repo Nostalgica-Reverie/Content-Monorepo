@@ -142,7 +142,7 @@ hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "f213a563ccbf6a0f0665a7ae43302fcdb74cd18cc460f6150edece29d2ab0230"
+hash = "414bc643f99778ab89d9cecfa40394f4d4ecf4b51448ef50eb6a7c21e8992b12"
 
 [[files]]
 file = "configureddefaults/config/lithium.properties"
@@ -214,7 +214,7 @@ hash = "2ba5216207fb25e38ed189e4d62c641f1029f6a0671e86209683c8bbe4122d21"
 
 [[files]]
 file = "configureddefaults/resource_albums.json"
-hash = "aafdf3385bf7c5bc17fb76f236603131a8bbd850a1eb0259c8185ccd37782d57"
+hash = "a224ffc39102cf6dbef7efb7bbc96747c0c4ec3c2648b592c1ab5c2ca3c205b6"
 
 [[files]]
 file = "configureddefaults/resource_albums/alpha.json"
@@ -772,6 +772,22 @@ file = "resourcepacks/Ore Aspects/pack.png"
 hash = "a1291250d0bec94c5cd7c742a98f45f8bf8a80d79d396b2a360b1abcda97436a"
 
 [[files]]
+file = "resourcepacks/Panorama/assets/legacy/textures/gui/title/panorama_day.png"
+hash = "6f634e096f3daeb79089da19105c2653e16ab28e1fa436507c180134f528eb77"
+
+[[files]]
+file = "resourcepacks/Panorama/assets/legacy/textures/gui/title/panorama_night.png"
+hash = "f8f5512147234496216a7ae9c63eb92f4cee7e006fe88b2373e25a4325ced925"
+
+[[files]]
+file = "resourcepacks/Panorama/pack.mcmeta"
+hash = "0865bddc27e818890053950391dec4ffca489bc70a99e77f8bc444324d43214d"
+
+[[files]]
+file = "resourcepacks/Panorama/pack.png"
+hash = "ceb8eb65289969cc6357c186c6ca529560aae559decb13ae02b343c974d91fa6"
+
+[[files]]
 file = "resourcepacks/a-minecraft-movie-hero-pack.pw.toml"
 hash = "b192157ca5878d821d80ae59845e4085336a55124058e81f5154e512b8e18ba5"
 metafile = true
@@ -917,11 +933,6 @@ hash = "daebe8710fbb1a1f62172464ceb37e7d623fd5a25efe9382ce36f328dbd92702"
 metafile = true
 
 [[files]]
-file = "resourcepacks/legacy4j-modern-panoramas.pw.toml"
-hash = "aa231381faafe6fa5a7c9e26077546197578041a3462f60157fc239aa1207284"
-metafile = true
-
-[[files]]
 file = "resourcepacks/mass-effect-mash-up.pw.toml"
 hash = "b6f00481e12c41ecac740bf048f4a33bb8eab4ff93dc0cceb7dd2d4f57e21a40"
 metafile = true
@@ -968,7 +979,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "32cce84e36ba0c0dbfd6db0a690ae6af1a279e06ca5fb98b30d264f887300b66"
+hash = "e03f7f04730f7514d60f1fc8b0d3f7b8616a3a1a236c0a0a8978ca55d8294238"
 metafile = true
 
 [[files]]
@@ -1017,6 +1028,11 @@ hash = "54d5bd1c0cf31d7891c6d5d8bff38b3e7528fa5d76aefbe9d1387b2664fd7244"
 metafile = true
 
 [[files]]
+file = "shaderpacks/bliss-shader.pw.toml"
+hash = "8ffd81a5e0b4c3bc2daf0d86714ef56df4beb1ed87a5c41c4e9bbb94a7006bc1"
+metafile = true
+
+[[files]]
 file = "shaderpacks/bsl-shaders.pw.toml"
 hash = "5cffdc5b33eccb995140c39af59599ba277d0d18891a81fbbc2e6aa3f835ebb3"
 metafile = true
@@ -1032,6 +1048,21 @@ hash = "0e42af5a9f811367d5df2c21c8a37ef938b40d17db403c1d0f9947a1967c0010"
 metafile = true
 
 [[files]]
+file = "shaderpacks/kappa-shader.pw.toml"
+hash = "a01d824c592eebca3df5b5af6aed07839eb8b544de20a2e4f276cb0622b203c9"
+metafile = true
+
+[[files]]
+file = "shaderpacks/makeup-ultra-fast-shaders.pw.toml"
+hash = "315d537a57cebee64acfa9dc327255c0eee86d6b08611eec6d7c9326ffb03ad1"
+metafile = true
+
+[[files]]
+file = "shaderpacks/miniature-shader.pw.toml"
+hash = "3e1dabbdda0ccd24e816482cdecf0531ebf70ee775d98457d309cab831091a76"
+metafile = true
+
+[[files]]
 file = "shaderpacks/rethinking-voxels.pw.toml"
 hash = "8fcf644664b01b36c9ee953f526bedc218e857fe9984bfe8c8dad2ddd0a319b6"
 metafile = true
@@ -1039,4 +1070,9 @@ metafile = true
 [[files]]
 file = "shaderpacks/solas-shader.pw.toml"
 hash = "4b9fa848963dbf05b3e295ae91087adcd50e1fef6a92ad3af9b526c95d23cbb3"
+metafile = true
+
+[[files]]
+file = "shaderpacks/super-duper-vanilla.pw.toml"
+hash = "a8d349403d1c4b03c42f1962ba993e8b3dd65b9176176eec256f3fc6cbd9f40a"
 metafile = true
