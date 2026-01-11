@@ -1,14 +1,15 @@
 name: Bug Report
 description: File a bug report.
 title: "[Issue]: "
-labels: ["bug"]
+labels:
+  - bug
 body:
   - type: input
     id: issue
     attributes:
       label: What is the issue?
       description: Please describe what the issue is.
-      placeholder: ex. Game crashes when [...]
+      placeholder: "ex. Game crashes when [...]"
     validations:
       required: true
   - type: textarea
@@ -41,7 +42,7 @@ body:
       default: 0
     validations:
       required: true
-        - type: dropdown
+  - type: dropdown
     id: loader
     attributes:
       label: Modloader
@@ -84,7 +85,7 @@ body:
     id: extras
     attributes:
       label: Additional Context
-      description: Put any extra info you feel is neccessary here.
+      description: Put any extra info you feel is necessary here.
   - type: checkboxes
     id: terms
     attributes:
