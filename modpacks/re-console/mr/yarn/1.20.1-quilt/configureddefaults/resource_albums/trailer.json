@@ -1,14 +1,16 @@
 {
+  "icon": "legacy:comparisons/trailer/icon",
   "packs": [
     "vanilla",
     "fabric",
-    "file/Bare Bones 1.20.zip"
+    "file/Bare Bones 1.21.11.zip",
+    "file/Bare Bones x LambdaBetterGrass 1.21.8.zip"
   ],
   "id": "trailer",
   "name": {
-    "text": "Trailer-Style Texture Pack"
+    "translate": "legacy.menu.albums.resource.trailer"
   },
   "description": {
-    "text": "Experience LCE in the style of the MC trailers"
+    "translate": "legacy.menu.albums.resource.trailer.description"
   }
 }

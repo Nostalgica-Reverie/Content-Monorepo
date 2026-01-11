@@ -1,4 +1,5 @@
 {
+  "icon": "legacy:comparisons/beta/icon",
   "packs": [
     "vanilla",
     "fabric",
@@ -7,9 +8,9 @@
   ],
   "id": "beta",
   "name": {
-    "text": "Beta Texture Pack"
+    "translate": "legacy.menu.albums.resource.beta"
   },
   "description": {
-    "text": "Return to the golden age of Minecraft."
+    "translate": "legacy.menu.albums.resource.beta.description"
   }
 }

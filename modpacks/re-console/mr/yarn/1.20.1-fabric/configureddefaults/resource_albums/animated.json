@@ -1,16 +1,17 @@
 {
+  "icon": "legacy:comparisons/animated/icon",
   "packs": [
     "vanilla",
     "fabric",
-    "file/FreshAnimations_v1.9.2.zip",
-    "file/FA+All_Extensions-v1.4.zip",
-    "file/-1.21.2 Fresh Moves v3.1 (With Animated Eyes).zip"
+    "file/FA+All_Extensions-v1.7.zip",
+    "file/FreshAnimations_v1.10.3.zip",
+    "file/+1.21.3 Fresh Moves v3.1.1 (No Animated Eyes).zip"
   ],
   "id": "animated",
   "name": {
-    "text": "Animated Texture Pack"
+    "translate": "legacy.menu.albums.resource.animated"
   },
   "description": {
-    "text": "Start moving like a movie with the Animated Texture Pack!"
+    "translate": "legacy.menu.albums.resource.animated.description"
   }
 }

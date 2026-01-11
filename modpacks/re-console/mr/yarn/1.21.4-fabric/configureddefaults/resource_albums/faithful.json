@@ -1,4 +1,5 @@
 {
+  "icon": "legacy:comparisons/faithful/icon",
   "packs": [
     "vanilla",
     "fabric",
@@ -6,6 +7,10 @@
     "file/Faithful Legacy 2 beta 4.zip"
   ],
   "id": "faithful",
-  "name": "High-Resolution Texture Pack",
-  "description": "The original Minecraft texture feel, with double the resolution and double the fun!"
+  "name": {
+    "translate": "legacy.menu.albums.resource.faithful"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.faithful.description"
+  }
 }
