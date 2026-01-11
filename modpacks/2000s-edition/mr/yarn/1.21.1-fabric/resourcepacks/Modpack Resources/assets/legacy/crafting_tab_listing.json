@@ -1,0 +1,609 @@
+[
+    {
+        "name": {
+            "translate": "legacy.container.tab.structures"
+        },
+        "icon": "legacy:icon/structures",
+        "id": "structures",
+        "listing": [
+            {
+                "recipes": [
+                    "oak_planks",
+                    "birch_planks",
+                    "spruce_planks"
+                ],
+                "group": "planks"
+            },
+            {
+                "recipes": [
+                    "stick",
+                    "ladder"
+                ],
+                "group": "stick"
+            },
+            {
+                "recipes": [
+                    "stone_bricks",
+                    "chiseled_stone_bricks",
+                    "mossy_stone_bricks_from_vine",
+                    "mossy_stone_bricks_from_moss_block",
+                    "mossy_cobblestone_from_vine",
+                    "mossy_cobblestone_from_moss_block",
+                    "diorite",
+                    "granite",
+                    "andesite"
+                ],
+                "group": "compact_stone"
+            },
+            {
+                "recipes": [
+                    "sandstone",
+                    "nether_bricks",
+                    "chiseled_nether_bricks",
+                    "dark_prismarine",
+                    "snow_block",
+                    "snow",
+                    "clay",
+                    "bricks",
+                    "bone_block"
+                ],
+                "group": "compact"
+            },
+            {
+                "recipes": [
+                    "crafting_table",
+                    "furnace",
+                    "enchanting_table",
+                    "anvil",
+                    "brewing_stand"
+                ],
+                "group": "utility"
+            },
+            {
+                "recipes": [
+                    "chest",
+                    "trapped_chest",
+                    "ender_chest"
+                ],
+                "group": "chest"
+            },
+            {
+                "recipes": [
+                    "red_bed"
+                ],
+                "group": "bed"
+            },
+            {
+                "recipes": [
+                    "oak_fence",
+                    "birch_fence",
+                    "spruce_fence",
+                    "iron_bars"
+                ],
+                "group": "barrier"
+            },
+            {
+                "recipes": [
+                    "oak_fence_gate",
+                    "birch_fence_gate",
+                    "spruce_fence_gate"
+                ],
+                "group": "gate"
+            },
+            {
+                "recipes": [
+                    "oak_door",
+                    "birch_door",
+                    "spruce_door",
+                    "iron_door",
+                    "oak_trapdoor",
+                    "birch_trapdoor",
+                    "spruce_trapdoor",
+                    "iron_trapdoor"
+                ],
+                "group": "door"
+            },
+            {
+                "recipes": [
+                    "oak_stairs",
+                    "birch_stairs",
+                    "spruce_stairs",
+                    "cobblestone_stairs",
+                    "mossy_cobblestone_stairs",
+                    "granite_stairs",
+                    "diorite_stairs",
+                    "andesite_stairs",
+                    "brick_stairs",
+                    "stone_stairs",
+                    "stone_brick_stairs",
+                    "mossy_stone_brick_stairs",
+                    "nether_brick_stairs",
+                    "red_nether_brick_stairs",
+                    "sandstone_stairs",
+                    "smooth_sandstone_stairs",
+                    "red_sandstone_stairs",
+                    "smooth_red_sandstone_stairs",
+                    "purpur_stairs"
+                ],
+                "group": "stairs"
+            },
+            {
+                "recipes": [
+                    "cobblestone_slab",
+                    "smooth_stone_slab",
+                    "mossy_cobblestone_slab",
+                    "granite_slab",
+                    "diorite_slab",
+                    "andesite_slab",
+                    "brick_slab",
+                    "stone_slab",
+                    "stone_brick_slab",
+                    "mossy_stone_brick_slab",
+                    "nether_brick_slab",
+                    "red_nether_brick_slab",
+                    "sandstone_slab",
+                    "red_sandstone_slab",
+                    "quartz_slab",
+                    "smooth_quartz_slab",
+                    "purpur_slab",
+                    "oak_slab",
+                    "birch_slab",
+                    "spruce_slab"
+                ],
+                "group": "slab"
+            }
+        ]
+    },
+    {
+        "name": {
+            "translate": "legacy.container.tab.tools"
+        },
+        "icon": "legacy:icon/tools",
+        "id": "tools",
+        "listing": [
+            {
+                "recipes": [
+                    "wooden_pickaxe",
+                    "stone_pickaxe",
+                    "iron_pickaxe",
+                    "diamond_pickaxe",
+                    "golden_pickaxe"
+                ],
+                "group": "pickaxe"
+            },
+            {
+                "recipes": [
+                    "wooden_shovel",
+                    "stone_shovel",
+                    "iron_shovel",
+                    "diamond_shovel",
+                    "golden_shovel"
+                ],
+                "group": "shovel"
+            },
+            {
+                "recipes": [
+                    "wooden_axe",
+                    "stone_axe",
+                    "iron_axe",
+                    "diamond_axe",
+                    "golden_axe"
+                ],
+                "group": "axe"
+            },
+            {
+                "recipes": [
+                    "wooden_hoe",
+                    "stone_hoe",
+                    "iron_hoe",
+                    "diamond_hoe",
+                    "golden_hoe"
+                ],
+                "group": "hoe"
+            },
+            {
+                "recipes": [
+                    "shears",
+                    "tnt",
+                    "flint_and_steel"
+                ],
+                "group": "misc"
+            },
+            {
+                "recipes": [
+                    "fishing_rod"
+                ],
+                "group": "rod"
+            },
+            {
+                "recipes": [
+                    "bow",
+                    "arrow"
+                ],
+                "group": "archery"
+            },
+            {
+                "recipes": [
+                    "wooden_sword",
+                    "stone_sword",
+                    "iron_sword",
+                    "diamond_sword",
+                    "golden_sword"
+                ],
+                "group": "sword"
+            },
+            "shield",
+            {
+                "recipes": [
+                    "bucket",
+                    "bowl",
+                    "glass_bottle",
+                    "cauldron",
+                    "composter"
+                ],
+                "group": "container"
+            },
+            {
+                "recipes": [
+                    "torch",
+                    "glowstone",
+                    "fire_charge",
+                    "jack_o_lantern"
+                ],
+                "group": "lighting"
+            },
+            {
+                "recipes": [
+                    "clock",
+                    "ender_eye",
+                    "lead",
+                    "compass",
+                    "map"
+                ],
+                "group": "location"
+            }
+        ]
+    },
+    {
+        "name": {
+            "translate": "legacy.container.tab.food"
+        },
+        "icon": "legacy:icon/food",
+        "id": "food",
+        "listing": [
+            {
+                "recipes": [
+                    "legacy:enchanted_golden_apple",
+                    "glistering_melon_slice"
+                ],
+                "group": "golden"
+            },
+            {
+                "recipes": [
+                    "mushroom_stew",
+                    {
+                        "type": "item_id",
+                        "value": {
+                            "id": "suspicious_stew",
+                            "onlyFirstMatch": false
+                        }
+                    }
+                ],
+                "group": "stew"
+            },
+            "cookie",
+            "melon",
+            {
+                "recipes": [
+                    "melon_seeds",
+                    "pumpkin_seeds"
+                ],
+                "group": "seeds"
+            },
+            "pumpkin_pie",
+            "fermented_spider_eye",
+            "blaze_powder",
+            "magma_cream",
+            "cake",
+            {
+                "recipes": [
+                    "sugar_from_sugar_cane",
+                    "sugar_from_honey_bottle"
+                ],
+                "group": "sugar"
+            },
+            "bread"
+        ]
+    },
+    {
+        "name": {
+            "translate": "legacy.container.tab.armour"
+        },
+        "icon": "legacy:icon/armour",
+        "id": "armour",
+        "listing": [
+            {
+                "recipes": [
+                    "leather_helmet",
+                    "iron_helmet",
+                    "diamond_helmet",
+                    "golden_helmet",
+                    "turtle_helmet"
+                ],
+                "group": "helmet"
+            },
+            {
+                "recipes": [
+                    "leather_chestplate",
+                    "iron_chestplate",
+                    "diamond_chestplate",
+                    "golden_chestplate"
+                ],
+                "group": "chestplate"
+            },
+            {
+                "recipes": [
+                    "leather_leggings",
+                    "iron_leggings",
+                    "diamond_leggings",
+                    "golden_leggings"
+                ],
+                "group": "leggings"
+            },
+            {
+                "recipes": [
+                    "leather_boots",
+                    "iron_boots",
+                    "diamond_boots",
+                    "golden_boots"
+                ],
+                "group": "boots"
+            }
+        ]
+    },
+    {
+        "name": {
+            "translate": "legacy.container.tab.mechanisms"
+        },
+        "icon": "legacy:icon/mechanisms",
+        "id": "mechanisms",
+        "listing": [
+            {
+                "recipes": [
+                    "redstone_lamp",
+                    "note_block"
+                ],
+                "group": "activatable"
+            },
+            {
+                "recipes": [
+                    "beacon"
+                ],
+                "group": "effect"
+            },
+            {
+                "recipes": [
+                    "lever"
+                ],
+                "group": "emitter"
+            },
+            "redstone_torch",
+            {
+                "recipes": [
+                    "repeater",
+                    "comparator"
+                ],
+                "group": "utility"
+            },
+            "end_crystal",
+            {
+                "recipes": [
+                    "hopper",
+                    "dispenser"
+                ],
+                "group": "item_transport"
+            },
+            {
+                "recipes": [
+                    "stone_button",
+                    "oak_button",
+                    "birch_button",
+                    "spruce_button"
+                ],
+                "group": "button"
+            },
+            {
+                "recipes": [
+                    "oak_pressure_plate",
+                    "birch_pressure_plate",
+                    "spruce_pressure_plate",
+                    "stone_pressure_plate"
+                ],
+                "group": "pressure_plate"
+            },
+            "observer",
+            {
+                "recipes": [
+                    "piston",
+                    "sticky_piston"
+                ],
+                "group": "piston"
+            }
+        ]
+    },
+    {
+        "name": {
+            "translate": "legacy.container.tab.transport"
+        },
+        "icon": "legacy:icon/transport",
+        "id": "transport",
+        "listing": [
+            {
+                "recipes": [
+                    "rail",
+                    "powered_rail",
+                    "detector_rail",
+                    "activator_rail"
+                ],
+                "group": "rail"
+            },
+            "minecart",
+            "chest_minecart",
+            "furnace_minecart",
+            {
+                "recipes": [
+                    "oak_boat",
+                    "birch_boat",
+                    "spruce_boat"
+                ],
+                "group": "boat"
+            }
+        ]
+    },
+    {
+        "name": {
+            "translate": "legacy.container.tab.decoration"
+        },
+        "icon": "legacy:icon/decoration",
+        "id": "decoration",
+        "listing": [
+            {
+                "recipes": [
+                    "glass_pane"
+                ],
+                "group": "glass"
+            },
+            {
+                "recipes": [
+                    "purpur_block",
+                    "magma_block",
+                    "nether_wart_block",
+                    "gold_block",
+                    "iron_block",
+                    "diamond_block",
+                    "emerald_block",
+                    "lapis_block",
+                    "redstone_block",
+                    "coal_block",
+                    "slime_block"
+                ],
+                "group": "compact"
+            },
+            {
+                "recipes": [
+                    "black_terracotta",
+                    "red_terracotta",
+                    "green_terracotta",
+                    "brown_terracotta",
+                    "blue_terracotta",
+                    "purple_terracotta",
+                    "cyan_terracotta",
+                    "light_gray_terracotta",
+                    "gray_terracotta",
+                    "pink_terracotta",
+                    "lime_terracotta",
+                    "yellow_terracotta",
+                    "light_blue_terracotta",
+                    "magenta_terracotta",
+                    "orange_terracotta",
+                    "white_terracotta"
+                ],
+                "group": "stained_terracotta"
+            },
+            {
+                "recipes": [
+                    "dye_orange_wool",
+                    "dye_magenta_wool",
+                    "dye_light_blue_wool",
+                    "dye_yellow_wool",
+                    "dye_lime_wool",
+                    "dye_pink_wool",
+                    "dye_gray_wool",
+                    "dye_light_gray_wool",
+                    "dye_cyan_wool",
+                    "dye_purple_wool",
+                    "dye_blue_wool",
+                    "dye_brown_wool",
+                    "dye_green_wool",
+                    "dye_red_wool",
+                    "dye_black_wool",
+                    "dye_white_wool",
+                    "white_wool_from_string"
+                ],
+                "group": "wool"
+            },
+            {
+                "recipes": [
+                    "yellow_dye_from_dandelion",
+                    "red_dye_from_poppy",
+                    "white_dye",
+                    "orange_dye_from_red_yellow",
+                    "lime_dye",
+                    "brown_dye",
+                    "black_dye",
+                    "gray_dye",
+                    "light_gray_dye_from_gray_white_dye",
+                    "cyan_dye",
+                    "purple_dye",
+                    "magenta_dye_from_purple_and_pink",
+                    "blue_dye"
+                ],
+                "group": "dye"
+            },
+            {
+                "recipes": [
+                    "jukebox"
+                ],
+                "group": "misc"
+            },
+            {
+                "recipes": [
+                    "painting",
+                    "item_frame",
+                    "oak_sign",
+                    "birch_sign",
+                    "spruce_sign"
+                ],
+                "group": "utility"
+            },
+            {
+                "recipes": [
+                    "paper",
+                    "book",
+                    "writable_book",
+                    "bookshelf",
+                    "lectern",
+                    "leather",
+                    "creeper_banner_pattern",
+                    "flower_banner_pattern",
+                    "globe_banner_pattern",
+                    "mojang_banner_pattern",
+                    "piglin_banner_pattern",
+                    "skull_banner_pattern"
+                ],
+                "group": "library"
+            },
+            {
+                "recipes": [
+                    "gold_ingot_from_gold_block",
+                    "iron_ingot_from_iron_block",
+                    "diamond",
+                    "emerald",
+                    "lapis_lazuli",
+                    "redstone",
+                    "coal",
+                    "wheat",
+                    "slime_ball",
+                    "legacy:string",
+                    "bone_meal",
+                    "bone_meal_from_bone_block",
+                    "gold_ingot_from_nuggets",
+                    "gold_nugget",
+                    "iron_ingot_from_nuggets",
+                    "iron_nugget"
+                ],
+                "group": "unboxing"
+            }
+        ]
+    }
+]
