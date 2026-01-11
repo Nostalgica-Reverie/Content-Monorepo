@@ -45,6 +45,10 @@ file = "configureddefaults/config/animatium.json"
 hash = "edab9a722a8eae2215740e1fbc0e359b851a541bd674deef7c974f2dcd80592d"
 
 [[files]]
+file = "configureddefaults/config/betterblockentities.json"
+hash = "ddd6044d1a218483aa2e2d3e589f517a4994134c5d3dc284c07a54deb344aa88"
+
+[[files]]
 file = "configureddefaults/config/c2me.toml"
 hash = "dd19c6ca02140ba2197693fe8f9d7d4ffa9eb54007854ce2c92c56bd1fd7e8e4"
 
@@ -142,11 +146,11 @@ hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "414bc643f99778ab89d9cecfa40394f4d4ecf4b51448ef50eb6a7c21e8992b12"
+hash = "d6c676632dc67e2b2070939af0f4d8dbccddc8c7fed403bb47387c6cba5be5f7"
 
 [[files]]
 file = "configureddefaults/config/lithium.properties"
-hash = "818ed301a636eb596663a08b967fe77f563186eef682ee2753a0f07f44988708"
+hash = "e5b0cbdba61b5bb019e9bf19333ace14c2da739baa936d3506b5edab3186ecf4"
 
 [[files]]
 file = "configureddefaults/config/misctweaks/client_config.toml"
@@ -179,6 +183,10 @@ hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
 [[files]]
 file = "configureddefaults/config/nostalgic_tweaks/nostalgic_tweaks.json"
 hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
+
+[[files]]
+file = "configureddefaults/config/npe.json"
+hash = "b0350eba2ea7b8144c6c1b9982338993104232f8a4fea1d098ba88637e554110"
 
 [[files]]
 file = "configureddefaults/config/proplacer-client.toml"
@@ -348,11 +356,6 @@ hash = "2d9e2221eb57235e6598c6e10e44ba8474259cb3ca1bea1310e8e04e1e01179e"
 metafile = true
 
 [[files]]
-file = "mods/bedrockoid.pw.toml"
-hash = "fc94a4f96f17edacad91baa175642b53ed2a9cf82da37d5fcd3e952210cd52eb"
-metafile = true
-
-[[files]]
 file = "mods/better-block-entities.pw.toml"
 hash = "8cd2dd758819be1efe2901eb187fd45aef3d1eba980659ab42559378de1b05ed"
 metafile = true
@@ -404,7 +407,7 @@ metafile = true
 
 [[files]]
 file = "mods/console-advancement-sounds.pw.toml"
-hash = "5f25c1ccb8a3d316058bce180b34f38515252f2a3f14b515f414f23e3079b4c3"
+hash = "7abd2ebf8b8f74dbdd37253ff11cd1bfa514982fd2a467a10d2fc04610c6bb5a"
 metafile = true
 
 [[files]]
@@ -813,11 +816,6 @@ hash = "0784be630d4128e65fc946679346c89b70b3bcaba8bbfcf1e81755622fc1b06d"
 metafile = true
 
 [[files]]
-file = "resourcepacks/chat-reporting-helper.pw.toml"
-hash = "e8a4a5ded3fd3ad71f8882d870541a3edf5d8286d9182e9fd8c5990e570e7463"
-metafile = true
-
-[[files]]
 file = "resourcepacks/chinese-mythology-mash-up.pw.toml"
 hash = "9b5cdb2a6a458d0687f989b37166d75c694a3500221a1306a4c9369048761949"
 metafile = true
@@ -860,11 +858,6 @@ metafile = true
 [[files]]
 file = "resourcepacks/fantasy-texture-pack.pw.toml"
 hash = "b6885109600dec067a5ae8f5b69c08e8ae7dbb5c7860fd287fcce1c2bafd189c"
-metafile = true
-
-[[files]]
-file = "resourcepacks/fast-better-grass.pw.toml"
-hash = "5767aa2f71264d021e6a269250f68e6ba8149da3893a1ea2bfbfedbf0ea9598a"
 metafile = true
 
 [[files]]
