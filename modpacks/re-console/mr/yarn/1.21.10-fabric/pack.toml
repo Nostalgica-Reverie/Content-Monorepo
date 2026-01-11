@@ -1,16 +1,13 @@
 name = "Re-Console"
 author = "omo50, Technocality, Cjnator38"
-version = "v0.1-alpha.1.0"
+version = "v0.1-alpha.1.3"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "2f651f33956d1374a4dad6cd88a52c5f39a6dd3523730a9ddcc32ded9380a5eb"
+hash = "fe7091fca6700b6c1f14bb02fc1cf43bcc8885fa2c04b24cf79e709c25228143"
 
 [versions]
 fabric = "0.18.4"
 minecraft = "1.21.10"
-
-[pack-it-up]
-modpack-stage = "Alpha"
