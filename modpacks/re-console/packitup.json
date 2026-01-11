@@ -1,0 +1,42 @@
+{
+    "$schema": "packitup.schema.json",
+    "deleteChangelogs": false,
+    "modpacks": [
+        {
+            "name": "Re-Console",
+            "providers": [
+                {
+                    "type": "Modrinth",
+                    "token": {
+                        "type": "Environment",
+                        "name": "RECONSOLE_MODRINTH_TOKEN"
+                    },
+                    "id": "g9O0WaGR",
+                    "versionPlaceholder": "{ModpackVersion}-{ModpackLoaderId}-{MinecraftVersion}",
+                    "providerVersionPlaceholder": "{ModpackVersion}-{ModpackLoaderId}-{MinecraftVersion}",
+                    "providerNamePlaceholder": "RC {ModpackVersion} ({ModpackLoaderName})",
+                    "exportPlaceholder": "{ModpackName} v{ModpackVersion} ({ModpackLoaderName} - Minecraft {MinecraftVersion})",
+                    "packFolders": [
+                        "mr/yarn/1.20.1-quilt",
+                        "mr/yarn/1.20.1-fabric",
+                        "mr/forged/1.20.1-forge",
+                        "mr/yarn/1.20.4-quilt",
+                        "mr/yarn/1.20.4-fabric",
+                        "mr/forged/1.21.1-neoforge",
+                        "mr/yarn/1.21.1-quilt",
+                        "mr/yarn/1.21.1-fabric",
+                        "mr/yarn/1.21.3-quilt",
+                        "mr/yarn/1.21.3-fabric",
+                        "mr/yarn/1.21.4-quilt",
+                        "mr/yarn/1.21.4-fabric",
+                        "mr/yarn/1.21.5-quilt",
+                        "mr/yarn/1.21.5-fabric",
+                        "mr/yarn/1.21.8-quilt",
+                        "mr/yarn/1.21.8-fabric",
+                        "mr/yarn/1.21.10-fabric"
+                    ]
+                }
+            ]
+        }
+    ]
+}
