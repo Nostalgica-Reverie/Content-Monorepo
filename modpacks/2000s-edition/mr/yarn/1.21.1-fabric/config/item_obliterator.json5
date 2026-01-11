@@ -1,0 +1,72 @@
+{
+  // -----------------------------------------------------------
+  //              Item Obliterator by ElocinDev
+  // -----------------------------------------------------------
+  //  
+  // How to add items?
+  //   - They are json strings, so you need to separate each
+  //     entry with a comma, except the last
+  //   - If you start an entry with !, it will be treated as a regular expression
+  //     Example: "!minecraft:.*_sword" to disable all swords
+  //  
+  // -----------------------------------------------------------
+  // Do not touch this
+  "configVersion": 3,
+  // -----------------------------------------------------------
+  // Items here will be unusable completely
+  //    Example: minecraft:diamond
+  "blacklisted_items": [
+    "minecraft:.netherite_*",
+    "minecraft:shield",
+    "minecraft:smithing_table",
+    "minecraft:blast_furnace",
+    "minecraft:smoker",
+    "minecraft:crimson_*",
+    "minecraft:cherry_*",
+    "minecraft:mangrove_*",
+    "minecraft:*_armor_trim_smithing_template",
+    "minecraft:bamboo_*",
+    "minecraft:*_wood",
+    "minecraft:loom"
+  ],
+  // -----------------------------------------------------------
+  // Removes an item if it contains certain Component Data. If the whole entry (or expression) is present, the item gets removed.
+  // Use with caution! This is a very expensive operation and can cause lag if you have a lot of items blacklisted.
+  // 	
+  // 	 Example to disable a regeneration potion: Potion:"minecraft:regeneration"
+  // 	
+  // 	 You can also use regular expressions by starting the value with !
+  "blacklisted_component_data": [],
+  // -----------------------------------------------------------
+  // If true, the mod will log all components of your main hand item every second.
+  // This is useful for finding the specific component data of an item to blacklist it.
+  //  
+  // Only enable it if you need it, as this is only meant to be used for debugging.
+  "debug_print_components": false,
+  // -----------------------------------------------------------
+  // Items here will not be able to be right-clicked (Interact)
+  //    Example: minecraft:apple
+  "only_disable_interactions": [
+    "examplemod:example_item"
+  ],
+  // -----------------------------------------------------------
+  // Items here will not be able to be used to attack
+  //    Example: minecraft:diamond_sword
+  "only_disable_attacks": [
+    "examplemod:example_item"
+  ],
+  // -----------------------------------------------------------
+  // Items here will get their recipes disabled
+  // Keep in mind this already is applied to blacklisted items
+  "only_disable_recipes": [
+    "examplemod:example_item"
+  ],
+  // -----------------------------------------------------------
+  // If true, the mod will use a hashset to handle the blacklisted items
+  // This is a more optimized approach only if you have a lot of items blacklisted (20 or more is recommended)
+  // If you just have a small amount of items blacklisted, keep this false
+  //  
+  // [!] Enabling this will disable all regular expressions
+  // [!] Does not apply to NBT, only item blacklist / interaction / attack
+  "use_hashmap_optimizations": false
+}
