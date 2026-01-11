@@ -1,12 +1,16 @@
 {
+  "icon": "legacy:comparisons/trailer/icon",
   "packs": [
     "vanilla",
     "fabric",
-    "file/Ore4J v2.2.zip",
-    "file/Bare Bones 1.21.9.zip",
+    "file/Bare Bones 1.21.11.zip",
     "file/Bare Bones x LambdaBetterGrass 1.21.8.zip"
   ],
   "id": "trailer",
-  "name": "Trailer-Style Texture Pack",
-  "description": "Experience Minecraft like it is in the Trailers! With colorful textures, this pack is great for those looking to enjoy the game in a very vibrant fashion."
+  "name": {
+    "translate": "legacy.menu.albums.resource.trailer"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.trailer.description"
+  }
 }

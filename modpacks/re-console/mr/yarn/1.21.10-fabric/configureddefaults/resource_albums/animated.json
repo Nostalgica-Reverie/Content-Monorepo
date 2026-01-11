@@ -1,4 +1,5 @@
 {
+  "icon": "legacy:comparisons/animated/icon",
   "packs": [
     "vanilla",
     "fabric",
@@ -7,6 +8,10 @@
     "file/+1.21.3 Fresh Moves v3.1.1 (No Animated Eyes).zip"
   ],
   "id": "animated",
-  "name": "Animated Texture Pack",
-  "description": "Start moving like a movie with the Animated Texture Pack, bringing your game to life on your own system!"
+  "name": {
+    "translate": "legacy.menu.albums.resource.animated"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.animated.description"
+  }
 }
