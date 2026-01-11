@@ -142,7 +142,7 @@ hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "d1acc7a2a70c555b24ed056951af542a16aeae3f0752f441135af4884fa6cb7c"
+hash = "f213a563ccbf6a0f0665a7ae43302fcdb74cd18cc460f6150edece29d2ab0230"
 
 [[files]]
 file = "configureddefaults/config/lithium.properties"
@@ -218,15 +218,15 @@ hash = "aafdf3385bf7c5bc17fb76f236603131a8bbd850a1eb0259c8185ccd37782d57"
 
 [[files]]
 file = "configureddefaults/resource_albums/alpha.json"
-hash = "6933612dbc46f62446d7291cc802b2128a0e7158749c23c30819978d866a2fe7"
+hash = "8b4619f2d64e2a116a6837c871d1b770dafad428c9c8f10e52faf312e40c0768"
 
 [[files]]
 file = "configureddefaults/resource_albums/animated.json"
-hash = "aaae5f40f0b3bce85be8f3af694a84ac25e5b06e9f1ebba24b6d7deac52b9de3"
+hash = "2b531c388c1cfea9a758e3700ee704d5b400990cbaef204d6a45d5f05707d310"
 
 [[files]]
 file = "configureddefaults/resource_albums/beta.json"
-hash = "68be2476b56687882905a0389639bed20ab09be7960c5cd2ec4ef123fad49477"
+hash = "2c4f8daa8a9b6fd97c3bac1d00cc61e51e3d93a7f1547cfde5e1f0bfa8fdd975"
 
 [[files]]
 file = "configureddefaults/resource_albums/candy.json"
@@ -254,7 +254,7 @@ hash = "189ffd90a90418933989037e0073ab6c8df1cb32c96a4460b82f91a8899342d3"
 
 [[files]]
 file = "configureddefaults/resource_albums/faithful.json"
-hash = "824ab124efafff16fab8d498585d29ddbd667b3830026954874d517f6c59d884"
+hash = "410e72998be7a56c35535749586b803d134757d5e4d4b635ee38f93fd05e8e35"
 
 [[files]]
 file = "configureddefaults/resource_albums/fallout.json"
@@ -275,6 +275,10 @@ hash = "2608fff46af67e1b028a3e0de8e2936668d3de521d75fd73b8c2a1cdb868c6c2"
 [[files]]
 file = "configureddefaults/resource_albums/halloween.json"
 hash = "c6221347466621f75ca83669dd3af942aca746da537fd8219d9aa56d27b0bd5a"
+
+[[files]]
+file = "configureddefaults/resource_albums/live.json"
+hash = "f6a122e931f1d4b537cd63d1146e61dc770978fc0a147b1cbee0b2e6f1a848cb"
 
 [[files]]
 file = "configureddefaults/resource_albums/minecraft.json"
@@ -318,7 +322,7 @@ hash = "0bb5fca276b8adb244f8a1907ae58171df05f50349dbc31df71a8de8bd224075"
 
 [[files]]
 file = "configureddefaults/resource_albums/trailer.json"
-hash = "6e7fd0ef3e0cbd03997ef4e5bb0d363c65f6c2ced01bdc2648473009bf398fda"
+hash = "1b1ee04101fea91dd7207a08652ec6ca9f642b645548c3c76eb2cd1f3eda2614"
 
 [[files]]
 file = "configureddefaults/servers.dat"
@@ -335,7 +339,7 @@ metafile = true
 
 [[files]]
 file = "mods/animatium.pw.toml"
-hash = "c26d710ca7799b0d735dff96459577d9849fdee54cef2b41afc1290b683011fd"
+hash = "c1ef16ca29f6fe46d06fba32f9f7d5cea38fc5b6ed3ac074e10c92a58ff74dc8"
 metafile = true
 
 [[files]]
@@ -380,7 +384,7 @@ metafile = true
 
 [[files]]
 file = "mods/chunks-fade-in.pw.toml"
-hash = "ca12d4584b4926d5a18b2b6ad34e746fcb72e94bb66f03bca2a4aa0f7b427669"
+hash = "15c08dde04fffd47a23cd8f40065b8e04c5d392b8b008e64b479dd2f005c35bd"
 metafile = true
 
 [[files]]
@@ -430,7 +434,7 @@ metafile = true
 
 [[files]]
 file = "mods/dynamic-fps.pw.toml"
-hash = "42314599e5cfbc049abdaeb02a412a5f148d9af45d254ac3c8984d4474601a56"
+hash = "1adccdf12bf5475db4651b96574f9147fa5253e7c0116fffe02ab43b35261aff"
 metafile = true
 
 [[files]]
@@ -510,7 +514,7 @@ metafile = true
 
 [[files]]
 file = "mods/kryptonfnp-patcher.pw.toml"
-hash = "36d8480a7230d912ab593f0e0e2305f1adbf33dee4e192069330cfc6f4d5058b"
+hash = "a291d9264dfe62c4bc81ffade1fde5f06156c48e2d2bbcddcd95c07120411512"
 metafile = true
 
 [[files]]
@@ -530,7 +534,7 @@ metafile = true
 
 [[files]]
 file = "mods/lazyai.pw.toml"
-hash = "130e7fe3d1a9e7c478e5d38e53a4d83b50c5da30fb408cf47949ae16c5361ed0"
+hash = "6e416b50633c21509d8a26642cc5263f3639072a0e12cef6028be138ec9b0666"
 metafile = true
 
 [[files]]
@@ -541,6 +545,11 @@ metafile = true
 [[files]]
 file = "mods/legacy-nether-extended.pw.toml"
 hash = "ee6013e8beb4f88698f0086afd586edb85a85aec3bfa73dc7db767ba18a73b8c"
+metafile = true
+
+[[files]]
+file = "mods/legacy-world-sizes.pw.toml"
+hash = "0cc4bf21f9bea66f7e213ed9ffce185795b586b457dc6f1a04764c67eb1570c7"
 metafile = true
 
 [[files]]
@@ -560,7 +569,7 @@ metafile = true
 
 [[files]]
 file = "mods/minimega.pw.toml"
-hash = "46477ba6f53a4caea5994c3ef167e7ba0651cf9df0308676d32bb8c9ebe08056"
+hash = "7953ab291183cc19f8c6c865bb513e5f25058b216329b330742ebc795695f869"
 metafile = true
 
 [[files]]
@@ -590,7 +599,7 @@ metafile = true
 
 [[files]]
 file = "mods/modmenu.pw.toml"
-hash = "f1db9238a27e322bd83894bac0cf78ee75a3880ca42862642df8985e6068aa18"
+hash = "6f9c7fd82681111859ff63446dc8327447adeaad84e9cfb534955afb5eb6c81a"
 metafile = true
 
 [[files]]
@@ -710,7 +719,7 @@ metafile = true
 
 [[files]]
 file = "mods/yacl.pw.toml"
-hash = "b86a1f5fdb1bccc8d5f629a7e793e593766a56de28ea28c473a2d379509b6e7d"
+hash = "976682e613b79e310fe22c5ddc2322bfc76665295cd9fa885787dfa08b7764b2"
 metafile = true
 
 [[files]]
@@ -721,11 +730,6 @@ metafile = true
 [[files]]
 file = "rc-icon.png"
 hash = "47bb137dfbe2f18f76a42f9f0171a5bdc203dd614b285dcc17743f869442887e"
-
-[[files]]
-file = "resourcepacks/1080p-kbm-tooltips.pw.toml"
-hash = "7f33b842746b73ed35ddd97dc78641fa39df8304a4ab6d37e25eb7356822447e"
-metafile = true
 
 [[files]]
 file = "resourcepacks/Ore Aspects/assets/minecraft/textures/block/coal_ore.png"
@@ -794,7 +798,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/chat-reporting-helper.pw.toml"
-hash = "8df4154a6e955dbb60b44515414076324a06c9d539840157c5653d257642d134"
+hash = "e8a4a5ded3fd3ad71f8882d870541a3edf5d8286d9182e9fd8c5990e570e7463"
 metafile = true
 
 [[files]]
@@ -814,12 +818,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/default-dark-mode-legacy4j.pw.toml"
-hash = "4f91bbb3088b6a0062648ced05c183c4e4dac3382a5e3ce7162ec4c05bb730c0"
-metafile = true
-
-[[files]]
-file = "resourcepacks/default-skinpack.pw.toml"
-hash = "377d9f3d8afeb03582db8048c8acb28ab612c2541f48e65f1994bd02b381d119"
+hash = "1eb4c99351566def04a8521b8ee7a35e2afd4304533417c642c29db583ce9ba1"
 metafile = true
 
 [[files]]
@@ -898,11 +897,6 @@ hash = "abb33d78e21b4534f1a0454f21b3e3908ad5df02af8e985e0221e1804c96e530"
 metafile = true
 
 [[files]]
-file = "resourcepacks/legacy-mechanics-addon.pw.toml"
-hash = "4933120bb6f57f4c195ecdcba82c610736dd3953d61a200d218e82bd6acf6c57"
-metafile = true
-
-[[files]]
 file = "resourcepacks/legacy-skin-packs.pw.toml"
 hash = "11b0c66e2b294eab4ae270ed7d34e67986224a70974914ce18bf1374285580a1"
 metafile = true
@@ -910,11 +904,6 @@ metafile = true
 [[files]]
 file = "resourcepacks/legacy-skins-doctor-who-skin-pack-1.pw.toml"
 hash = "91ae0adb7510abb1409444ce55bfa6202cb358a8f1ff37a01dfb3267d57d315c"
-metafile = true
-
-[[files]]
-file = "resourcepacks/legacy-skins-pack-ordering.pw.toml"
-hash = "630caa688be90d27ad2953e835ffcc0e3034c011ee836cbd2a2901146efe474f"
 metafile = true
 
 [[files]]
@@ -979,7 +968,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "641227dd11cd945bb8b3d035c85f48ec18440957a8b80a7cfc5a0b8becda7479"
+hash = "32cce84e36ba0c0dbfd6db0a690ae6af1a279e06ca5fb98b30d264f887300b66"
 metafile = true
 
 [[files]]
@@ -1020,6 +1009,11 @@ metafile = true
 [[files]]
 file = "resourcepacks/tutorial-world-addon.pw.toml"
 hash = "c9a192e6b4cef1b47210d6506204eba70f43a3479efb09f40161f5b8e0cd75e2"
+metafile = true
+
+[[files]]
+file = "resourcepacks/vanilla-live-mc.pw.toml"
+hash = "54d5bd1c0cf31d7891c6d5d8bff38b3e7528fa5d76aefbe9d1387b2664fd7244"
 metafile = true
 
 [[files]]
