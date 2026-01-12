@@ -33,10 +33,6 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "b320a807454fecb40d611ea5c0d9f9c8547305a9f3b94a1434f7ecb6484aa2a3"
 
 [[files]]
-file = "config/legacy/global_packs.json"
-hash = "f69382af16ef352b7051684c47bef3478e3139af43f80957038d77fd2165020c"
-
-[[files]]
 file = "configureddefaults/animatium_utility.json"
 hash = "013bb87a1d68fdba744417b9591ed98e5e4c21c131868525967bca5e3a152c37"
 
@@ -416,6 +412,11 @@ metafile = true
 [[files]]
 file = "mods/lazyai.pw.toml"
 hash = "ce0eb166ad09c3d1576ee46308ab4004bc002e89e80bb78df6593bcbae879025"
+metafile = true
+
+[[files]]
+file = "mods/legacy-nether-extended.pw.toml"
+hash = "ee6013e8beb4f88698f0086afd586edb85a85aec3bfa73dc7db767ba18a73b8c"
 metafile = true
 
 [[files]]
