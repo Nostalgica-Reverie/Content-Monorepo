@@ -512,7 +512,11 @@ hash = "c830ab66cbd5d527a3fb84220eb85f6a3dc349a625b303ba0d20378d0f7ca9d2"
 
 [[files]]
 file = "resource_albums.json"
-hash = "6039d56201c1696838314bb7c44872547c81038803cd05547d31e62a4dec2171"
+hash = "6ae64185f371b4c62a03f6679ed049c15eb30c1c3124dbd4598f4c850e7933d4"
+
+[[files]]
+file = "resource_albums/dreamcast.json"
+hash = "2127c94a13ae461fe3c8b3f7445b4c72ac364919e0b48c2336b9f904b9bf8db8"
 
 [[files]]
 file = "resource_albums/gc.json"
@@ -533,6 +537,58 @@ hash = "e52ed1f053a457934a687faf27711230564bac5854a501c052d0bb51083329be"
 [[files]]
 file = "resource_albums/xbox.json"
 hash = "be34187e0d213b5ded6f04baf766869d10e2c7d16d5fa70944ed9180a434ed0f"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/intro.json"
+hash = "91732c615f81d68e89ca34fce32bb937e5d871a378e2fc544877c4fa7f0c30f2"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/lang/en_us.json"
+hash = "88032fcb3b94a75ab5e680419d5d46418274198729b9d7a908aa961c6949f9d4"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/intro/4j.png"
+hash = "f6322a16716e2e75de6f71f9e063ed17f920c74a0ca2a3fe534cd5ab47a45911"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/intro/background.png"
+hash = "e15fd389e3471aa4539d16121a1a2c871ccdb238933611074ffb310dc7e1e44e"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/intro/ce.png"
+hash = "c54b473e12cc4b229989b8e41dae882312841f0a2bc368de4605742906d25c2a"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/intro/eula.png"
+hash = "6a5e3c1bde851557b9684ae9716b41026af84bce1357d21df63466aac953c0f3"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/intro/mojang.png"
+hash = "0eb7a23202996f1c27221b78ead2ef394e72223e763ad62befd4b094641d9e48"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/intro/nr.png"
+hash = "9b60980b770ead84fedabf54589f84a20b0995d43d358441dd3881468d101821"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/intro/nsp.png"
+hash = "09fd107d3fd0463d3c478dbb34ebfa47c07203fe57b63a785d60447b3a5d5ec8"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/sprites/hud/save_arrow.png"
+hash = "2fc17a8d414966588f746283d21d3fad7e0e79f9d545b2117a0badfea44c2269"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/sprites/hud/save_chest.png"
+hash = "904a5c5f3ff365a0670fb82dc78f7f16e16effd44911ced81ef03a98f81d1ab0"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/pack.mcmeta"
+hash = "8f61fbd1b26513027d939992a17a376797c6e554c7cb00ccb309b070770a0934"
+
+[[files]]
+file = "resourcepacks/Dreamcast Edition/pack.png"
+hash = "ab88c14d7a73753b2ac807fe5bf69b21f6738eb8bbc8f7ddd5154c1e7a062b37"
 
 [[files]]
 file = "resourcepacks/GameCube Edition/assets/legacy/intro.json"
@@ -2060,31 +2116,11 @@ hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9.zip"
-hash = "1601518f8b84042b0a5463bb18760725b663ae8ffe80a86f8a3b1fcd94036697"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/legacy_crafting_screen.json"
-hash = "629fc66b3746d84650dd708bd0ff02812e36089b12c9e3e4d76848aa814e9b55"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/loading_screen.json"
-hash = "3e135b8ba5deb44d72764034f8f9b0e0ce4b2685853d100fa4d113f822c34df0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/pause_screen.json"
-hash = "b638cc745c83c5bd364a59e1993667f102d3363986781414e6fb4441b7f11ad7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/play_game_screen.json"
-hash = "1417d85362869ceb2748a37d6f4bc73303377a780bdf8ec960bdc6c9e8549f29"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/title_screen.json"
-hash = "fb33e9d3bfac975fd3d5a6a3ea4ce60073878dabf9cdff205c0470efaf3a595b"
+hash = "ed5f5e92aab38148270b2eb7d8b40cb90edf2adec9763abb4f84e68bcc4231c0"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/legacy/world_templates.json"
-hash = "f1e8dde2a7fa01ebc9dc98737b55441edf37742f1fd6d36291a494323e02a22a"
+hash = "9e20efe04273070f894608cdc385886e67ac36c99a276b4aa3a1f504a17604e2"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/minecraft/changelog/en_us.txt"
