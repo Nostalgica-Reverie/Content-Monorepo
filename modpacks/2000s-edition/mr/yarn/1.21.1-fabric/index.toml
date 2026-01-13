@@ -508,11 +508,15 @@ metafile = true
 
 [[files]]
 file = "options.txt"
-hash = "952b23ea49aa7047e9ce4864aa3a7226eaa9b440a078cc10a64df9ace262d07c"
+hash = "c830ab66cbd5d527a3fb84220eb85f6a3dc349a625b303ba0d20378d0f7ca9d2"
 
 [[files]]
 file = "resource_albums.json"
 hash = "6039d56201c1696838314bb7c44872547c81038803cd05547d31e62a4dec2171"
+
+[[files]]
+file = "resource_albums/gc.json"
+hash = "2000e34158e8a4b701d19847405d99dfe744da479da1794586d557e243239769"
 
 [[files]]
 file = "resource_albums/minecraft.json"
@@ -523,16 +527,12 @@ file = "resource_albums/minecraft_classic.json"
 hash = "6f1665c7367a07c0d3f4fe40d20cada49679c9d8b61bbd0a6196fc756d32cf15"
 
 [[files]]
-file = "resource_albums/template_album.json"
-hash = "be34187e0d213b5ded6f04baf766869d10e2c7d16d5fa70944ed9180a434ed0f"
-
-[[files]]
-file = "resource_albums/template_album_1.json"
+file = "resource_albums/ps2.json"
 hash = "e52ed1f053a457934a687faf27711230564bac5854a501c052d0bb51083329be"
 
 [[files]]
-file = "resource_albums/template_album_2.json"
-hash = "2000e34158e8a4b701d19847405d99dfe744da479da1794586d557e243239769"
+file = "resource_albums/xbox.json"
+hash = "be34187e0d213b5ded6f04baf766869d10e2c7d16d5fa70944ed9180a434ed0f"
 
 [[files]]
 file = "resourcepacks/GameCube Edition/assets/legacy/intro.json"
@@ -617,6 +617,10 @@ hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
 [[files]]
 file = "resourcepacks/Modern Titles/pack.mcmeta"
 hash = "a1183093ddbfe4c4de85a651aa06c29677cd6319ef5b2b27ec294703f41a720d"
+
+[[files]]
+file = "resourcepacks/Modpack Resources/assets/2000s/textures/gui/sprites/icons/jappa.png"
+hash = "b6e64bf95d98acb8bdd0481d05493eeba8c351a3e81f8ac83129c8f4250929b0"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/legacy/crafting_tab_listing.json"
@@ -2055,92 +2059,8 @@ file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/panoram
 hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
 
 [[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/DIM-1/region/r.-1.-1.mca"
-hash = "4d2ae4d1926cc8504a47df405150a9ae3b25f6f4d59da6a0835392a013a0d6b4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/DIM-1/region/r.-1.0.mca"
-hash = "161002aadaa7fcf5c789386b8817421103796fb96a3755f43cdc7b6aa61c5d01"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/DIM-1/region/r.0.-1.mca"
-hash = "04966d931d6edd707041505d10ae6ddb67ad38aebf0642660fb7cb50b904a59d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/DIM-1/region/r.0.0.mca"
-hash = "0c19bfab457e21dd93ed7bfd2e4403a5ad35c734c2401ed6d64c8c8ae0825c0b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/DIM1/region/r.-1.-1.mca"
-hash = "6e7dd6ea758b88dd6836b091303702dafc986472ecead4a92d638f75f97ab974"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/DIM1/region/r.-1.0.mca"
-hash = "999606651d0bef75459f72c8f25253d7a29e206c9334f1435b390c7e2124b9a7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/DIM1/region/r.0.-1.mca"
-hash = "79250c5518bcdddc6cbbac29f7626ab5c628949d65073388ae4d39f2610bb9c6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/DIM1/region/r.0.0.mca"
-hash = "74b3fa3e9e2f8dd9ced271dc3c9064bf827770139bcae98d2aab12a17234124c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/entities/r.-1.-1.mca"
-hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/entities/r.-1.0.mca"
-hash = "91f986ae4277e0ad1d39ad152a84e336d7ed67ac9a29d7f072410ad64ff7e081"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/entities/r.0.-1.mca"
-hash = "f0af80b20e3b2dab3995e9646ee6497ea19f7e53381e197d1fa5a74ce6cb0ab7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/entities/r.0.0.mca"
-hash = "f3c2b6fd47914a0abe83e8d57ed90e229fb744eecd45b58e9536a89fd800abdc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/icon.png"
-hash = "067c055d10f782f33cb2b2462996d9af60cbe67feae8cc3ed55cda1d3398d5b6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/level.dat"
-hash = "60ad17d36766dca519ce07f1fab61db3d0f4590c9fd14a2cfecdf257eb52de40"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/poi/r.-1.-1.mca"
-hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/poi/r.-1.0.mca"
-hash = "59d4154f0e1dea49cfc662217bcf53ef846fbd9de173432dc4a0ee0fb5927087"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/poi/r.0.-1.mca"
-hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/poi/r.0.0.mca"
-hash = "29be7428d4e35cdb5c9d5a7a685e22ca83ffb25b6a58b90ab38c44bef7b4c2ef"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/region/r.-1.-1.mca"
-hash = "1e4f8bcc91b48997a8aee9013e93668ebccc5535ebd4a9ee22466ec0223f64a2"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/region/r.-1.0.mca"
-hash = "fe075bd0887739dca0abc0a9bc1576638ac0ad49ec43783d7cef2c387a0c09bd"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/region/r.0.-1.mca"
-hash = "11a5c0349767fd339aec84eecafaba67b7c6c1dcf3704f6253dece8a702f3387"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9/region/r.0.0.mca"
-hash = "78bcbed398a053c17925e7fb678da3d1d8965328df58d4061c2c7badced5241c"
+file = "resourcepacks/Modpack Resources/assets/legacy/tutorial/tutorial9.zip"
+hash = "1601518f8b84042b0a5463bb18760725b663ae8ffe80a86f8a3b1fcd94036697"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/legacy_crafting_screen.json"
