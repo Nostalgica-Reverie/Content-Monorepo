@@ -12,6 +12,7 @@ This is the repository hosting all of the different Nostalgica Reverie LCE modpa
 |    <img src="https://nostalgica.net/api/project/Re-Console/logo" width="64" height="64">    | [Re-Console](/modpacks/re-console) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft)                 | [omo50](https://modrinth.com/user/rjxkenshin)                                                                                     | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft?logo=Modrinth&label=Downloads) ![CurseForge Downloads](https://img.shields.io/curseforge/dt/1066411?logo=CurseForge&label=Downloads) |                                                                                             |
 |  <img src="https://nostalgica.net/api/project/Simply%20Legacy/logo" width="64" height="64">   | [Simply Legacy](/modpacks/simply-legacy) [(View Mod Page)](https://modrinth.com/modpack/simply-legacy)              | [Cjnator38](https://modrinth.com/user/Cjnator38), [omo50](https://modrinth.com/user/rjxkenshin)                                          | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/simply-legacy?logo=Modrinth&label=Downloads)                                                                                                          |
 | <img src="https://nostalgica.net/api/project/Rekindled%20Legacy/logo" width="64" height="64"> | [Rekindled Legacy](/modpacks/rekindled-legacy) [(View Mod Page)](https://modrinth.com/modpack/rekindled-legacy)     | [omo50](https://modrinth.com/user/rjxkenshin), [Panduino](https://modrinth.com/user/Panduino-Dev), [agariLMAO](https://modrinth.com/user/Agarialo) | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/rekindled-legacy?logo=Modrinth&label=Downloads)                                                                                                       |
+| <img src="https://codeberg.org/NicSonic/NR_Steam_Grids/raw/branch/main/icons/2000s_edition/2k_icon.png" width="64" height="64"> | [2000s Edition](/modpacks/2000s-edition) [(View Mod Page)](https://modrinth.com/modpack/2000s-edition)     | [NicSonic](https://modrinth.com/user/NicSonic) | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/2000s-edition?logo=Modrinth&label=Downloads)                                                                                                       |
 
 
 ---
@@ -48,6 +49,7 @@ Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW)
 - Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8 and 1.21.10
 - Rekindled Legacy currently has re-creations for Build 0033, Build 0035, GDC 2012, TU0, TU1, TU2, and TU3
 - Simply Legacy supports 1.21.10
+- 2000s Edition currently has a recreation of TU9 for 1.21.1
 
 ### Versioning
 The versioning format for Re-Console is year.major.minor, where for example:
