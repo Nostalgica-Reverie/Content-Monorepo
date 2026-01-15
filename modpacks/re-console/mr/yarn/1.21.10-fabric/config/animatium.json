@@ -41,7 +41,7 @@
 		"held_item_visibility_in_boat": false,
 		"item_pickup_position": true,
 		"mob_head_icons": false,
-		"egg_snowball_particles": false
+		"egg_snowball_particles": true
 	},
 	"screen": {
 		"camera_version": "V1_9_V1_13_2",
@@ -77,7 +77,7 @@
 		"fix_high_attack_speed_indicator": false,
 		"fix_vertical_bobbing_tilt": true,
 		"up_min_pixel_transparency_limit": false,
-		"fix_equip_animation_on_item_use": true,
+		"fix_equip_animation_on_item_use": false,
 		"fix_item_usage_visual_in_g_u_i": true,
 		"fix_double_usage_visual": true,
 		"old_sky_rendering_check": true
