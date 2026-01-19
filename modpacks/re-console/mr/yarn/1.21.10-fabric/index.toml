@@ -5,6 +5,10 @@ file = "config/animatium.json"
 hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
+file = "config/c2me.toml"
+hash = "6fe186f9a8c87afd21357eddbc6dec2bf2d5cc25e36be093c94dd7adf50f47da"
+
+[[files]]
 file = "config/crash_assistant/config.toml"
 hash = "26b3d97ca256865f08b6b76542b0a78fb5d4bfcd0d965b8bd67533a6227d1b1f"
 
@@ -50,7 +54,7 @@ hash = "f2679f81df506c90690e2adff7137807a6ebb75d7b9b1283dc1d233a15f7cf98"
 
 [[files]]
 file = "configureddefaults/config/c2me.toml"
-hash = "2a91d880bf44272e0cbf7dd9cb29c2cf3802a2860bd63bad475f566364ee2546"
+hash = "6fe186f9a8c87afd21357eddbc6dec2bf2d5cc25e36be093c94dd7adf50f47da"
 
 [[files]]
 file = "configureddefaults/config/capes.json5"
@@ -162,7 +166,7 @@ hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "d6c676632dc67e2b2070939af0f4d8dbccddc8c7fed403bb47387c6cba5be5f7"
+hash = "aec3dc02daffed39b233c5d65b01202e768fda444d7945f226e7203d00201efc"
 
 [[files]]
 file = "configureddefaults/config/lithium.properties"
@@ -368,6 +372,11 @@ metafile = true
 [[files]]
 file = "mods/animatium.pw.toml"
 hash = "c1ef16ca29f6fe46d06fba32f9f7d5cea38fc5b6ed3ac074e10c92a58ff74dc8"
+metafile = true
+
+[[files]]
+file = "mods/architectury-api.pw.toml"
+hash = "1502d3ac2c2ce4d3dc4c2db6ca6e95fb2a5d4a279e6e1413f6c427be222887a0"
 metafile = true
 
 [[files]]
@@ -656,6 +665,11 @@ hash = "5feb5943b2d67736363b69cd5b14021573f835f7c9dd376f7597b03ba83030f7"
 metafile = true
 
 [[files]]
+file = "mods/playerculling.pw.toml"
+hash = "67e6a45f63d4293cad79d7e99664ff42e348978a7a2a04de056f9dd7fbcd3e89"
+metafile = true
+
+[[files]]
 file = "mods/polytone.pw.toml"
 hash = "9e38917511dcf9ca84d43004ef3ca2155010afbe4cc98e862c1a299d1c7d6ca4"
 metafile = true
@@ -888,6 +902,30 @@ hash = "c744cfbc5b6b5f76a7dac914f1a859a35431a449bbca382672e745277d879542"
 file = "resourcepacks/3d-crops.pw.toml"
 hash = "82e610917524c6f1af58e102a1be333665ee9af1649477aae0546a30d1ae3114"
 metafile = true
+
+[[files]]
+file = "resourcepacks/Legacy Panorama/assets/legacy/textures/gui/title/panorama_day.png"
+hash = "11a125b4fb3e9aa3b3b06b70ef42cea9aac3b3f6c44e36f8b601931706788f6f"
+
+[[files]]
+file = "resourcepacks/Legacy Panorama/assets/legacy/textures/gui/title/panorama_day.png.mcmeta"
+hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
+
+[[files]]
+file = "resourcepacks/Legacy Panorama/assets/legacy/textures/gui/title/panorama_night.png"
+hash = "4480792e1ad103b10f11a03259e0896f6a2c8fcd96d095e157ba702fa3793968"
+
+[[files]]
+file = "resourcepacks/Legacy Panorama/assets/legacy/textures/gui/title/panorama_night.png.mcmeta"
+hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
+
+[[files]]
+file = "resourcepacks/Legacy Panorama/pack.mcmeta"
+hash = "a7b0968dc03005f817eccfec166a6a80731b39dd08f86ed535830878761a8a12"
+
+[[files]]
+file = "resourcepacks/Legacy Panorama/pack.png"
+hash = "908cf8c10437c13f965bc4cc7587e6c3cf713711b367688880250bb2d24f0104"
 
 [[files]]
 file = "resourcepacks/Ore Aspects/assets/minecraft/textures/block/coal_ore.png"
@@ -1597,7 +1635,7 @@ metafile = true
 
 [[files]]
 file = "resources/resourcepack/required/Re-Console+ Language Files/assets/legacy/lang/en_us.json"
-hash = "7fd70ceba462040f633710b9cb4a524127cff30dfbd5d54009a8ca8da225bcca"
+hash = "f748d7d448394a778cb1476865791b8f7f180773df8ba95a20fbd57054dd63b8"
 
 [[files]]
 file = "resources/resourcepack/required/Re-Console+ Language Files/assets/legacy_world_sizes/lang/en_us.json"
