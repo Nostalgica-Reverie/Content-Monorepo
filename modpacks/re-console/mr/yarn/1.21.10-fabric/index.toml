@@ -166,7 +166,7 @@ hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "aec3dc02daffed39b233c5d65b01202e768fda444d7945f226e7203d00201efc"
+hash = "6c2bdfc1d9edb1a8948240589e29e2c5b483e6ee33c6b2199e5a296dc1e79f7f"
 
 [[files]]
 file = "configureddefaults/config/lithium.properties"
@@ -526,7 +526,7 @@ metafile = true
 
 [[files]]
 file = "mods/fzzy-config.pw.toml"
-hash = "6e6bd7a9eee2f733202beecd7ceecf8248542f3e043849ae954e928058927f35"
+hash = "4f035d7f09f1be8f35a3391c324abbb2b1a975a9bfde89a1d5f4f9357775f63c"
 metafile = true
 
 [[files]]
@@ -666,7 +666,7 @@ metafile = true
 
 [[files]]
 file = "mods/playerculling.pw.toml"
-hash = "67e6a45f63d4293cad79d7e99664ff42e348978a7a2a04de056f9dd7fbcd3e89"
+hash = "70c0a346402f019cc1a5f04e87e65fad03a7cb6848327a2c1ae2bc5d9d7ef88c"
 metafile = true
 
 [[files]]
@@ -697,11 +697,6 @@ metafile = true
 [[files]]
 file = "mods/resourcepackcached.pw.toml"
 hash = "ca54049ee9628ac46f75824deb805a2665716609d014221ce80539b4526be061"
-metafile = true
-
-[[files]]
-file = "mods/rsls.pw.toml"
-hash = "32c2ce6f7a0be327fb8341a82ee35768a3cecc186116d2f135e5fc95e2f56292"
 metafile = true
 
 [[files]]
@@ -775,10 +770,6 @@ hash = "b9a5352be0c7b6232b671c06495dba1f5f81c2a3028fe06d6a9a4c2bc0270120"
 metafile = true
 
 [[files]]
-file = "rc-icon.png"
-hash = "47bb137dfbe2f18f76a42f9f0171a5bdc203dd614b285dcc17743f869442887e"
-
-[[files]]
 file = "resource_albums/alpha.json"
 hash = "9c8e5896cc0c794a632eaa3b9a7bf5d793fbcfaa030ca1ad2be930807757de2e"
 
@@ -832,7 +823,7 @@ hash = "5a30fa5e2f3a912bac544a4964f682ca03a51e895b90ca302e311a558e23c9fc"
 
 [[files]]
 file = "resource_albums/festive.json"
-hash = "ca0368773cca23d55c950aed764d882e45d30f646df4060e273eff850eb6a9c8"
+hash = "fe5368eb3cbe17a85e280d6852e3446d1919c9798f0ac9de19b6d32820f0adf0"
 
 [[files]]
 file = "resource_albums/greek.json"
@@ -840,7 +831,7 @@ hash = "558fa96ab27798ba9b513cb06ae7a1fc2e25d08a9896462e94b3ac626fa5be53"
 
 [[files]]
 file = "resource_albums/halloween.json"
-hash = "04f17d84b7df4c3af8ad1bb38a92ac96152ef0e47af033aeddc7a6b88584b9ff"
+hash = "b2fbe9e194047c254192253125e333930699c6aa8963f6549346d350f8a458e6"
 
 [[files]]
 file = "resource_albums/live.json"
@@ -1399,28 +1390,33 @@ hash = "8c7078ef0c55b52fc9f45349536d67ffc1ce612c4e95224ac5f725395f4b95b8"
 metafile = true
 
 [[files]]
+file = "resourcepacks/bedrockflavor.pw.toml"
+hash = "be3853848425d500319814c5708491bdbfa9ba4e4bb2ca9ea2dbca0c91af2243"
+metafile = true
+
+[[files]]
 file = "resourcepacks/better-leaves.pw.toml"
 hash = "f23b343e4a4555895e697c5ce98971809056a721e4732e25ea5b6952d91c0180"
 metafile = true
 
 [[files]]
 file = "resourcepacks/candy-texture-pack.pw.toml"
-hash = "91f182a3feefa01996b8a589d298e13e1939205a4714bf7b0a942c22dac4b699"
+hash = "3f76b7ea44d4ae18cbba0b2854a8f49463f933c2f8126a272c4460bf3f44c0f4"
 metafile = true
 
 [[files]]
 file = "resourcepacks/cartoon-texture-pack.pw.toml"
-hash = "0784be630d4128e65fc946679346c89b70b3bcaba8bbfcf1e81755622fc1b06d"
+hash = "f505c81bbfec772de286e2d3bfccda7bab79f952a659e83d99d1e428aeb1e7ca"
 metafile = true
 
 [[files]]
 file = "resourcepacks/chinese-mythology-mash-up.pw.toml"
-hash = "9b5cdb2a6a458d0687f989b37166d75c694a3500221a1306a4c9369048761949"
+hash = "37afcd1e9435d88df534e5f51f4b59fdd96cfb7237fd9c77e31ce8c97c991b10"
 metafile = true
 
 [[files]]
 file = "resourcepacks/city-texture-pack.pw.toml"
-hash = "5c6e9f354d04ed48eeae15cbb4a897e9a6b93e25c5105de3d907c66f8d4422c9"
+hash = "4d632629d058666e537e8df7c9d66e5609b515a85a461b7b5139b8f18fe663ff"
 metafile = true
 
 [[files]]
@@ -1435,7 +1431,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/egyptian-mythology-mash-up.pw.toml"
-hash = "693d5732b7b4803eb5396f252f98f2b0d49df4a90315468a091e2e821858c93b"
+hash = "701c5e56a29b3eb72d4966518177bf737c3ee3aa25c9a26c43af562b43c8cd51"
 metafile = true
 
 [[files]]
@@ -1455,12 +1451,17 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/fantasy-texture-pack.pw.toml"
-hash = "b6885109600dec067a5ae8f5b69c08e8ae7dbb5c7860fd287fcce1c2bafd189c"
+hash = "55ec8fa7de4350a3f5150705bf64a5d475e80dd192af3bdb6c3c3d03e0abd09e"
 metafile = true
 
 [[files]]
 file = "resourcepacks/festive-mash-up.pw.toml"
 hash = "79e08fbf1d6070216a862e672d7c0489d59bfb46aa5ce96c82880921acc3e8cd"
+metafile = true
+
+[[files]]
+file = "resourcepacks/festive-mashup-concept-update.pw.toml"
+hash = "d64e8976782a98c7000613a5eb464e624600d7cfa2dbd0102fe8c64589749542"
 metafile = true
 
 [[files]]
@@ -1491,6 +1492,11 @@ metafile = true
 [[files]]
 file = "resourcepacks/halloween-mash-up.pw.toml"
 hash = "404f163983b314a694a5854d360066f92aa0a9fb032f2cd292c925f48d9608fa"
+metafile = true
+
+[[files]]
+file = "resourcepacks/halloween-mashup-2025-concept-update.pw.toml"
+hash = "f0268c1ee33c35a16919dfe46d81aacb084f4cd6557637ec11f7d2762d62b3bf"
 metafile = true
 
 [[files]]
@@ -1535,12 +1541,12 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/natural-texture-pack.pw.toml"
-hash = "50d5e65a657b32ef738b91c642696941d7522f649a17f4ece5f68547f5a1c3c4"
+hash = "53f20307ce039e851457ee0cfce02ede058e2395f8a5cd1a94373371990cb979"
 metafile = true
 
 [[files]]
 file = "resourcepacks/norse-mythology-mash-up.pw.toml"
-hash = "3ad623987b2dc78dc0cf9ff53cf81571bc3632c9a77bd518d1fd66e1689356af"
+hash = "8641240b6b98b9521ce028970a5177ac8c252760d035c4ab7d651805b0a0c619"
 metafile = true
 
 [[files]]
@@ -1555,7 +1561,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/pattern-texture-pack.pw.toml"
-hash = "d7c8de55bd593cbe99308f924a569f8ae54dcdcc84878781e198146c592936e1"
+hash = "bc81f57515539e2daecd3041973cb8b2375430133524029c7b376e5721bce322"
 metafile = true
 
 [[files]]
@@ -1590,12 +1596,12 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/steampunk-texture-pack.pw.toml"
-hash = "7f29d96e5630f3e9e712d666d666e4023a9fd813d3c64940464b7d7f725d0dec"
+hash = "3528a3dd40ed4d7cf1eac4af832c6173e06c4d0efb48b74cb62e68bf00fa60d9"
 metafile = true
 
 [[files]]
 file = "resourcepacks/super-cute.pw.toml"
-hash = "14b5ea0425c06109b0a00a5e23fe83d29c460a67604566ddb4e4fbcc875a2746"
+hash = "729f07725d697cab7a6117cb854d44e3cb5e1e9cf26fe741c4578a8c6ed1acb0"
 metafile = true
 
 [[files]]
@@ -1685,7 +1691,7 @@ metafile = true
 
 [[files]]
 file = "shaderpacks/miniature-shader.pw.toml"
-hash = "0b96b3e5c12ccbc321bbc47046138ddb85c5f2a8509a1314e1f45d763eeafc12"
+hash = "7e93335082f16c7e258e7c1cffada40164c38ca846e9f781ac7308e2fd018785"
 metafile = true
 
 [[files]]
