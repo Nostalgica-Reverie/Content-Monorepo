@@ -3,7 +3,7 @@
     "deleteChangelogs": false,
     "modpacks": [
         {
-            "name": "Re-Console",
+            "name": "Re-Console+",
             "providers": [
                 {
                     "type": "Modrinth",
@@ -14,8 +14,8 @@
                     "id": "g9O0WaGR",
                     "versionPlaceholder": "{ModpackVersion}-{ModpackLoaderId}-{MinecraftVersion}",
                     "providerVersionPlaceholder": "{ModpackVersion}-{ModpackLoaderId}-{MinecraftVersion}",
-                    "providerNamePlaceholder": "RC {ModpackVersion} ({ModpackLoaderName})",
-                    "exportPlaceholder": "{ModpackName} v{ModpackVersion} ({ModpackLoaderName} - Minecraft {MinecraftVersion})",
+                    "providerNamePlaceholder": "RC+ {ModpackVersion} ({ModpackLoaderName})",
+                    "exportPlaceholder": "{ModpackName} {ModpackVersion} for ({ModpackLoaderName} {MinecraftVersion})",
                     "packFolders": [
                         "mr/yarn/1.20.1-quilt",
                         "mr/yarn/1.20.1-fabric",
