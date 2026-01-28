@@ -1,34 +1,34 @@
 {
-    "essential-container": {
-        "msg": "⚠️ <strong>Essential Mod Not Supported</strong>\n\nEssential is in absolutely no way supported by Re-Console+. It introduces long-standing GUI issues, in-game issues, performance problems and a lot more. If you would like to play multiplayer for free, open to LAN and you will recieve a link you can use for your friends to play with you! We also object heavily to Essentials usage of in-game microtransactions, in an otherwise completely free and open source modding community.",
-        "should_crash_on_startup": true
-    },
-    "embeddium": {
-        "msg": "⚠️ <strong>Embeddium Not Supported</strong>\n\nEmbeddium is not supported by Re-Console+.",
-        "should_crash_on_startup": true
-    },
-    "notenoughcrashes": {
-        "msg": "⚠️ <strong>Not Enough Crashes installed</strong>\n\nYou have added the Not Enough Crashes mod. This may cause critical stability errors.",
-        "should_crash_on_startup": true
-    },
-    "zume": {
-        "msg": "⚠️ <strong>Zume installed</strong>\n\nZume is not supported.",
-        "should_crash_on_startup": true
-    },
-    "legacy-mipmaps": {
-        "msg": "⚠️ <strong>Legacy Mipmaps installed</strong>\n\nLegacy Mipmaps is abandoned and is not supported!",
-        "should_crash_on_startup": false
-    },
-    "noisium": {
-        "msg": "⚠️ <strong>Noisium not supported</strong>\n\nNoisium is not supported, as the mod does not have significant performance boost and is superseded by other mods.",
-        "should_crash_on_startup": true
-    },
-    "faster-random": {
-        "msg": "⚠️ <strong>Faster Random installed</strong>\n\nFaster Random is not supported.",
-        "should_crash_on_startup": false
-    },
-    "nochatreports": {
-        "msg": "⚠️ <strong>No Chat Reports installed</strong>\n\nNo Chat Reports is superseded by No Prying Eyes, and adding it will just introduce compatibility and performance issues.",
-        "should_crash_on_startup": true
-    }
+	"essential-container": {
+		"msg": "⚠️ <strong>Essential Mod Not Supported</strong>\n\nEssential is in absolutely no way supported by Re-Console+. It introduces long-standing GUI issues, in-game issues, performance problems and a lot more. If you would like to play multiplayer for free, open to LAN and you will recieve a link you can use for your friends to play with you! We also object heavily to Essentials usage of in-game microtransactions, in an otherwise completely free and open source modding community.",
+		"should_crash_on_startup": true
+	},
+	"embeddium": {
+		"msg": "⚠️ <strong>Embeddium Not Supported</strong>\n\nEmbeddium is not supported by Re-Console+.",
+		"should_crash_on_startup": true
+	},
+	"notenoughcrashes": {
+		"msg": "⚠️ <strong>Not Enough Crashes installed</strong>\n\nYou have added the Not Enough Crashes mod. This may cause critical stability errors.",
+		"should_crash_on_startup": true
+	},
+	"zume": {
+		"msg": "⚠️ <strong>Zume installed</strong>\n\nZume is not supported.",
+		"should_crash_on_startup": true
+	},
+	"legacy-mipmaps": {
+		"msg": "⚠️ <strong>Legacy Mipmaps installed</strong>\n\nLegacy Mipmaps is abandoned and is not supported!",
+		"should_crash_on_startup": false
+	},
+	"noisium": {
+		"msg": "⚠️ <strong>Noisium not supported</strong>\n\nNoisium is not supported, as the mod does not have significant performance boost and is superseded by other mods.",
+		"should_crash_on_startup": true
+	},
+	"faster-random": {
+		"msg": "⚠️ <strong>Faster Random installed</strong>\n\nFaster Random is not supported.",
+		"should_crash_on_startup": false
+	},
+	"nochatreports": {
+		"msg": "⚠️ <strong>No Chat Reports installed</strong>\n\nNo Chat Reports is superseded by No Prying Eyes, and adding it will just introduce compatibility and performance issues.",
+		"should_crash_on_startup": true
+	}
 }
