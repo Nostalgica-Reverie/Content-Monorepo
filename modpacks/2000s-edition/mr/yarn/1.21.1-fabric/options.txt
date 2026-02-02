@@ -1,9 +1,9 @@
 version:3955
-ao:true
-biomeBlendRadius:2
+ao:false
+biomeBlendRadius:1
 enableVsync:true
 entityDistanceScaling:1.0
-entityShadows:true
+entityShadows:false
 forceUnicodeFont:false
 japaneseGlyphVariants:false
 fov:0.0
@@ -16,8 +16,8 @@ fullscreen:false
 gamma:0.5
 graphicsMode:0
 guiScale:0
-maxFps:30
-mipmapLevels:4
+maxFps:40
+mipmapLevels:0
 narrator:0
 particles:0
 reducedDebugInfo:false
@@ -48,8 +48,8 @@ mouseSensitivity:0.5
 damageTiltStrength:1.0
 highContrast:false
 narratorHotkey:true
-resourcePacks:["vanilla","fabric","programmer_art","legacy:legacy_waters","file/Modpack Resources","file/Xbox Edition","file/Legacy Skins Pack Ordering v3.zip","legacy:legacy_resources"]
-incompatibleResourcePacks:["badoptimizations","cpm","entity_model_features","entity_sound_features","entity_texture_features","factory_api","legacy","modernfix","sodiumleafculling","yet_another_config_lib_v3"]
+resourcePacks:["vanilla","fabric","programmer_art","file/Modpack Resources","file/Pre 1.13 Water.zip","file/Legacy Skins Pack Ordering v3.zip","legacy:legacy_resources"]
+incompatibleResourcePacks:["cpm","entity_model_features","entity_sound_features","entity_texture_features","factory_api","legacy","sodiumleafculling","yet_another_config_lib_v3"]
 lastServer:
 lang:en_us
 chatVisibility:0

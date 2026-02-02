@@ -14,7 +14,7 @@ hash = "73dfe9a1e2d5358a66bf41e0e5fdbc344a5ed18c1a6c1cbb14a9c89f54c967ce"
 
 [[files]]
 file = "config/default_world_preset.txt"
-hash = "fe186ce93d10863b65e2707226b1f93305d6ac6b79b6518363e98dc03009ddc6"
+hash = "84bb8795cd63cffd5494f2fb04f479afa87ffb48f7819df378332b35eddb09b3"
 
 [[files]]
 file = "config/dynamic_fps.json"
@@ -254,7 +254,11 @@ hash = "744dbb0ecc355d30132401b33eb469732fddf7bf7d87f38a029836944488f06a"
 
 [[files]]
 file = "config/ysns.json"
-hash = "b2672fe63af0f3ef983f5223b4fed6d5a3a5cd194e0a1f8dbbb93d9a7e1c49f0"
+hash = "43afd22c59247e2e7b0df3c1cb634bc958ae2fab0d8558b9765a8555970c94ac"
+
+[[files]]
+file = "datapacks/tu9_recipes.zip"
+hash = "eecabf545de1ba0a24c7c01a12ab8e131128713bfab213809ac5bebcca25efec"
 
 [[files]]
 file = "mods/architectury-api.pw.toml"
@@ -412,6 +416,36 @@ hash = "228e7a759da788012e3133926bbb8745e5563425a8726900135c774624c256c5"
 metafile = true
 
 [[files]]
+file = "mods/no-more-amethyst-geodes.pw.toml"
+hash = "0912596bef6cffc18374d56bcdf9b607902c8f0744898bcda8edacc324b3d020"
+metafile = true
+
+[[files]]
+file = "mods/no-more-copper-ore.pw.toml"
+hash = "9705848877a5eb47aa48568ebbeebab8bc15db2670537826bfd7295d2150b814"
+metafile = true
+
+[[files]]
+file = "mods/no-more-deepslate.pw.toml"
+hash = "464e0b584b637a2017c9124c886f7daf24fa20ced9bd4a5e20bdfec9568a2cad"
+metafile = true
+
+[[files]]
+file = "mods/no-more-pillager-outposts.pw.toml"
+hash = "07a49db80650fd213aff2f5c1f6b25187027d1eadbf6f0d4ddb2d7e18e91a21d"
+metafile = true
+
+[[files]]
+file = "mods/no-more-ruined-portals.pw.toml"
+hash = "422e59ce6ade49c606a0b7a3237d8b484a0175dcdb672ead68b67fa5cfb5aee6"
+metafile = true
+
+[[files]]
+file = "mods/no-more-trail-ruins.pw.toml"
+hash = "6bee50d1845526f7ff66c5697bf6dd3486ca05147038411c5d511a6ee5dfa389"
+metafile = true
+
+[[files]]
 file = "mods/noisium.pw.toml"
 hash = "f5b974f1bd65a7a0d0230e820943ad90c3bfe42d07f2760ce4240505e2ef0736"
 metafile = true
@@ -467,11 +501,6 @@ hash = "125171299b2cd518eb3a27bb421ff39e5580b1eac900c9498df1d1a3cdb7a865"
 metafile = true
 
 [[files]]
-file = "mods/vmp-fabric.pw.toml"
-hash = "c492d9eba4252076fd4227bff4b059b5e2350217cf844df36f833a5b51a98c77"
-metafile = true
-
-[[files]]
 file = "mods/window-size.pw.toml"
 hash = "a34c5ca3c4807fb49d3574eafc133069b666e8ad5fc3dbfbca4f5d0326d69433"
 metafile = true
@@ -488,7 +517,7 @@ metafile = true
 
 [[files]]
 file = "mods/you-shall-not-spawn.pw.toml"
-hash = "214fbadaab7ca45a314e2aae14375a9ecb0138865215c39ac2deca645bc31e89"
+hash = "0872e0697edfd6cada47815488d210c623ef6ba6aba17cfd271b4faa4af54439"
 metafile = true
 
 [[files]]
@@ -498,7 +527,7 @@ metafile = true
 
 [[files]]
 file = "options.txt"
-hash = "55cacd7edd173163b17bb0d80e9f82416f91fdbec34729c725c17cf134d12d7a"
+hash = "ccb94d375e36bcbe9a74f521a05b3573dbecbc3899aa0f29dde867481ce11835"
 
 [[files]]
 file = "resource_albums.json"
@@ -682,7 +711,7 @@ hash = "6de3bf5fb376eb057abcd651e6eeb0ce64f464d25ae9c595fda8e71a300aed0a"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/legacy/creative_tab_listing.json"
-hash = "fceca0292f181bf809a16eccaa133e74c8919418985d8135262f8217f16fb987"
+hash = "c2055968529d754869d7c38f01a769a716fb60e6d1374d1b7b775c0a13b999fd"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/legacy/font/default_11.json"
@@ -2093,11 +2122,11 @@ file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecra
 hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
 
 [[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/xbox_one.png"
+file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/xbox_360.png"
 hash = "50f1a52f81d169ef621fede46feba51a5b57f87bfde405c25aaa0b4e71526566"
 
 [[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/xbox_one.png.mcmeta"
+file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/xbox_360.png.mcmeta"
 hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
 
 [[files]]
@@ -2146,7 +2175,7 @@ hash = "dbbf3454379baefef93d2099f6ec1b365f9df970854a890546aba9e75e7996a0"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/minecraft/lang/en_us.json"
-hash = "6057dba2a63fe2aebffcd563c0d113370fe9644cc4d7a1b5ff6023aba6e94aaa"
+hash = "05b012dbf21297cde8c8cbdb66206e71acb0139924bf28b269713fdb1c9055ac"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/deepslate1.ogg"
@@ -2291,6 +2320,10 @@ hash = "64aa4d363d98768e2e209901d4ef67451210a6680e7de58d93637e92a277edc5"
 [[files]]
 file = "resourcepacks/Modpack Resources/assets/minecraft/textures/block/spruce_log_top.png"
 hash = "64aa4d363d98768e2e209901d4ef67451210a6680e7de58d93637e92a277edc5"
+
+[[files]]
+file = "resourcepacks/Modpack Resources/assets/minecraft/textures/item/music_disc_wait.png"
+hash = "f95b6849639929d68145fca425e1e9c0d0d5377b20d664095e119b66c4cdf533"
 
 [[files]]
 file = "resourcepacks/Modpack Resources/pack.mcmeta"
