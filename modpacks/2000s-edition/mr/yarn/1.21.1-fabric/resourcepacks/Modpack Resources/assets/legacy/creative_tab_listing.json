@@ -22,6 +22,15 @@
             "minecraft:redstone_ore",
             "minecraft:iron_ore",
             "minecraft:gold_ore",
+            "minecraft:smooth_stone_slab",
+            "minecraft:sandstone_slab",
+            "minecraft:oak_slab",
+            "minecraft:spruce_slab",
+            "minecraft:birch_slab",
+            "minecraft:cobblestone_slab",
+            "minecraft:brick_slab",
+            "minecraft:stone_brick_slab",
+            "minecraft:nether_brick_slab",  
             "minecraft:bedrock",
             "minecraft:oak_planks",
             "minecraft:spruce_planks",
@@ -39,9 +48,6 @@
             "minecraft:netherrack",
             "minecraft:soul_sand",
             "minecraft:glowstone",
-            "minecraft:oak_fence",
-            "minecraft:spruce_fence",
-            "minecraft:birch_fence",
             "minecraft:stone_bricks",
             "minecraft:mossy_stone_bricks",
             "minecraft:cracked_stone_bricks",
@@ -50,32 +56,7 @@
             "minecraft:infested_stone_bricks",
             "minecraft:mycelium",
             "minecraft:nether_bricks",
-            "minecraft:end_stone",
-            "minecraft:oak_trapdoor",
-            "minecraft:spruce_trapdoor",
-            "minecraft:birch_trapdoor",
-            "minecraft:oak_fence_gate",
-            "minecraft:spruce_fence_gate",
-            "minecraft:birch_fence_gate",
-            "minecraft:oak_door",
-            "minecraft:iron_door",
-            "minecraft:spruce_door",
-            "minecraft:birch_door",
-            "minecraft:oak_slab",
-            "minecraft:spruce_slab",
-            "minecraft:birch_slab",
-            "minecraft:sandstone_slab",
-            "minecraft:brick_slab",
-            "minecraft:nether_brick_slab",
-            "minecraft:cobblestone_stairs",
-            "minecraft:stone_brick_stairs",
-            "minecraft:mossy_stone_brick_stairs",
-            "minecraft:oak_stairs",
-            "minecraft:spruce_stairs",
-            "minecraft:birch_stairs",
-            "minecraft:sandstone_stairs",
-            "minecraft:brick_stairs",
-            "minecraft:nether_brick_stairs"
+            "minecraft:end_stone"
         ]
     },
     {
@@ -89,7 +70,6 @@
             "minecraft:melon",
             "minecraft:carved_pumpkin",
             "minecraft:jack_o_lantern",
-            "minecraft:bamboo",
             "minecraft:oak_sapling",
             "minecraft:spruce_sapling",
             "minecraft:birch_sapling",
@@ -99,14 +79,12 @@
             "minecraft:vine",
             "minecraft:lily_pad",
             "minecraft:torch",
+            "legacy:shrub",
             "minecraft:short_grass",
             "minecraft:fern",
             "minecraft:dead_bush",
             "minecraft:dandelion",
             "minecraft:poppy",
-            "legacy:shrub",
-            "minecraft:tall_grass",
-            "minecraft:large_fern",
             "minecraft:brown_mushroom",
             "minecraft:red_mushroom",
             "minecraft:cactus",
@@ -117,25 +95,23 @@
             "minecraft:painting",
             "minecraft:item_frame",
             "minecraft:oak_sign",
-            "minecraft:spruce_sign",
-            "minecraft:birch_sign",
             "minecraft:bookshelf",
-            "minecraft:black_wool",
-            "minecraft:blue_wool",
+            "minecraft:red_wool",
+            "minecraft:orange_wool",
+            "minecraft:yellow_blue_wool",
+            "minecraft:lime_wool",
             "minecraft:light_blue_wool",
             "minecraft:cyan_wool",
-            "minecraft:green_wool",
-            "minecraft:lime_wool",
-            "minecraft:pink_wool",
-            "minecraft:magenta_wool",
+            "minecraft:blue_wool",
             "minecraft:purple_wool",
-            "minecraft:red_wool",
-            "minecraft:brown_wool",
-            "minecraft:orange_wool",
-            "minecraft:yellow_wool",
+            "minecraft:magenta_wool",
+            "minecraft:pink_wool",
             "minecraft:white_wool",
             "minecraft:light_gray_wool",
-            "minecraft:gray_wool"
+            "minecraft:gray_wool",
+            "minecraft:black_wool",
+            "minecraft:green_wool",
+            "minecraft:brown_wool"
         ]
     },
     {
@@ -155,8 +131,18 @@
             "minecraft:furnace_minecart",
             "minecraft:saddle",
             "minecraft:oak_boat",
-            "minecraft:spruce_boat",
-            "minecraft:birch_boat",
+            "minecraft:oak_trapdoor",
+            "minecraft:oak_fence_gate",
+            "minecraft:oak_door",
+            "minecraft:iron_door",
+            "minecraft:oak_stairs",
+            "minecraft:birch_stairs",
+            "minecraft:spruce_stairs",
+            "minecraft:cobblestone_stairs",
+            "minecraft:brick_stairs",
+            "minecraft:stone_brick_stairs",
+            "minecraft:nether_brick_stairs",
+            "minecraft:sandstone_stairs",  
             "minecraft:dispenser",
             "minecraft:note_block",
             "minecraft:piston",
@@ -165,18 +151,11 @@
             "minecraft:lever",
             "minecraft:stone_button",
             "minecraft:oak_button",
-            "minecraft:spruce_button",
-            "minecraft:birch_button",
             "minecraft:stone_pressure_plate",
             "minecraft:oak_pressure_plate",
-            "minecraft:spruce_pressure_plate",
-            "minecraft:birch_pressure_plate",
             "minecraft:redstone",
-            "minecraft:redstone_block",
             "minecraft:redstone_torch",
-            "minecraft:repeater",
-            "minecraft:redstone_lamp",
-            "minecraft:trapped_chest"
+            "minecraft:repeater"
         ]
     },
     {
@@ -189,7 +168,6 @@
             "minecraft:coal",
             "minecraft:charcoal",
             "minecraft:diamond",
-            "minecraft:emerald",
             "minecraft:iron_ingot",
             "minecraft:gold_ingot",
             "minecraft:brick",
@@ -203,6 +181,7 @@
             "minecraft:gunpowder",
             "minecraft:clay_ball",
             "minecraft:glowstone_dust",
+            "minecraft:wheat_seeds",
             "minecraft:melon_seeds",
             "minecraft:pumpkin_seeds",
             "minecraft:wheat",
@@ -212,26 +191,23 @@
             "minecraft:slime_ball",
             "minecraft:blaze_rod",
             "minecraft:gold_nugget",
-            "minecraft:ink_sac",
-            "minecraft:lapis_lazuli",
-            "minecraft:light_blue_dye",
-            "minecraft:cyan_dye",
-            "minecraft:green_dye",
-            "minecraft:lime_dye",
-            "minecraft:pink_dye",
-            "minecraft:magenta_dye",
-            "minecraft:purple_dye",
+            "minecraft:nether_wart",
             "minecraft:red_dye",
-            "minecraft:cocoa_beans",
             "minecraft:orange_dye",
             "minecraft:yellow_dye",
+            "minecraft:lime_dye",
+            "minecraft:light_blue_dye",
+            "minecraft:cyan_dye",
+            "minecraft:lapis_lazuli",
+            "minecraft:purple_dye",
+            "minecraft:magenta_dye",
+            "minecraft:pink_dye",
             "minecraft:bone_meal",
             "minecraft:light_gray_dye",
             "minecraft:gray_dye",
-            "minecraft:black_dye",
-            "minecraft:blue_dye",
-            "minecraft:brown_dye",
-            "minecraft:white_dye"
+            "minecraft:ink_sac",
+            "minecraft:green_dye",
+            "minecraft:cocoa_beans"
         ]
     },
     {
@@ -254,8 +230,8 @@
             "minecraft:porkchop",
             "minecraft:cooked_beef",
             "minecraft:beef",
-            "minecraft:cooked_chicken",
             "minecraft:chicken",
+            "minecraft:cooked_chicken",
             "minecraft:rotten_flesh",
             "minecraft:spider_eye"
         ]
@@ -330,15 +306,11 @@
         "icon": "legacy:icon/brewing",
         "id": "legacy:brewing",
         "listing": [
-            "minecraft:experience_bottle",
-            "minecraft:dragon_breath",
             "minecraft:ghast_tear",
             "minecraft:fermented_spider_eye",
             "minecraft:blaze_powder",
             "minecraft:magma_cream",
             "minecraft:glistering_melon_slice",
-            "minecraft:rabbit_foot",
-            "minecraft:phantom_membrane",
             "minecraft:glass_bottle",
             {
                 "item": "minecraft:potion",
@@ -1366,17 +1338,13 @@
         "id": "legacy:misc",
         "listing": [
             "minecraft:chest",
-            "minecraft:ender_chest",
             "minecraft:crafting_table",
             "minecraft:furnace",
             "minecraft:brewing_stand",
             "minecraft:enchanting_table",
-            "minecraft:beacon",
-            "minecraft:red_bed",
             "minecraft:end_portal_frame",
-            "minecraft:end_crystal",
             "minecraft:jukebox",
-            "minecraft:anvil",
+            "minecraft:red_bed",
             "minecraft:bucket",
             "minecraft:lava_bucket",
             "minecraft:water_bucket",
@@ -1385,53 +1353,9 @@
             "minecraft:snowball",
             "minecraft:paper",
             "minecraft:book",
-            "minecraft:writable_book",
             "minecraft:ender_pearl",
             "minecraft:ender_eye",
-            "minecraft:name_tag",
-            "minecraft:nether_star",
-            "minecraft:spawner",
-            "minecraft:creeper_spawn_egg",
-            "minecraft:skeleton_spawn_egg",
-            "minecraft:wither_skeleton_spawn_egg",
-            "minecraft:spider_spawn_egg",
-            "minecraft:cave_spider_spawn_egg",
-            "minecraft:zombie_spawn_egg",
-            "minecraft:zombie_villager_spawn_egg",
-            "minecraft:husk_spawn_egg",
-            "minecraft:drowned_spawn_egg",
-            "minecraft:slime_spawn_egg",
-            "minecraft:magma_cube_spawn_egg",
-            "minecraft:witch_spawn_egg",
-            "minecraft:silverfish_spawn_egg",
-            "minecraft:ghast_spawn_egg",
-            "minecraft:zombified_piglin_spawn_egg",
-            "minecraft:blaze_spawn_egg",
-            "minecraft:breeze_spawn_egg",
-            "minecraft:enderman_spawn_egg",
-            "minecraft:endermite_spawn_egg",
-            "minecraft:shulker_spawn_egg",
-            "minecraft:guardian_spawn_egg",
-            "minecraft:elder_guardian_spawn_egg",
-            "minecraft:evoker_spawn_egg",
-            "minecraft:vex_spawn_egg",
-            "minecraft:vindicator_spawn_egg",
-            "minecraft:villager_spawn_egg",
-            "minecraft:wandering_trader_spawn_egg",
-            "minecraft:bat_spawn_egg",
-            "minecraft:pig_spawn_egg",
-            "minecraft:sheep_spawn_egg",
-            "minecraft:cow_spawn_egg",
-            "minecraft:mooshroom_spawn_egg",
-            "minecraft:chicken_spawn_egg",
-            "minecraft:rabbit_spawn_egg",
-            "minecraft:squid_spawn_egg",
-            "minecraft:glow_squid_spawn_egg",
-            "minecraft:cod_spawn_egg",
-            "minecraft:salmon_spawn_egg",
-            "minecraft:pufferfish_spawn_egg",
-            "minecraft:tropical_fish_spawn_egg",
-            "minecraft:dragon_egg",
+            "minecraft:experience_bottle",
             "minecraft:music_disc_13",
             "minecraft:music_disc_cat",
             "minecraft:music_disc_blocks",
@@ -1439,104 +1363,31 @@
             "minecraft:music_disc_far",
             "minecraft:music_disc_mall",
             "minecraft:music_disc_mellohi",
+            "minecraft:music_disc_wait",
             "minecraft:music_disc_stal",
             "minecraft:music_disc_strad",
             "minecraft:music_disc_ward",
             "minecraft:music_disc_11",
-            "minecraft:music_disc_wait",
-            {
-                "item": "minecraft:firework_rocket",
-                "components": {
-                    "fireworks": {
-                        "explosions": [
-                            {
-                                "twinkle": true,
-                                "shape": "small_ball",
-                                "colors": [
-                                    6719955
-                                ]
-                            }
-                        ],
-                        "flight_duration": 1
-                    }
-                }
-            },
-            {
-                "item": "minecraft:firework_rocket",
-                "components": {
-                    "fireworks": {
-                        "explosions": [
-                            {
-                                "shape": "creeper",
-                                "colors": [
-                                    3887386
-                                ]
-                            }
-                        ],
-                        "flight_duration": 2
-                    }
-                }
-            },
-            {
-                "item": "minecraft:firework_rocket",
-                "components": {
-                    "fireworks": {
-                        "explosions": [
-                            {
-                                "fade_colors": [
-                                    15435844
-                                ],
-                                "shape": "burst",
-                                "colors": [
-                                    11743532
-                                ]
-                            }
-                        ],
-                        "flight_duration": 2
-                    }
-                }
-            },
-            {
-                "item": "minecraft:firework_rocket",
-                "components": {
-                    "fireworks": {
-                        "explosions": [
-                            {
-                                "fade_colors": [
-                                    2437522
-                                ],
-                                "twinkle": true,
-                                "shape": "burst",
-                                "colors": [
-                                    12801229
-                                ]
-                            }
-                        ],
-                        "flight_duration": 3
-                    }
-                }
-            },
-            {
-                "item": "minecraft:firework_rocket",
-                "components": {
-                    "fireworks": {
-                        "explosions": [
-                            {
-                                "fade_colors": [
-                                    15435844
-                                ],
-                                "trail": true,
-                                "shape": "star",
-                                "colors": [
-                                    14602026
-                                ]
-                            }
-                        ],
-                        "flight_duration": 2
-                    }
-                }
-            },
-            "]"
+            "minecraft:creeper_spawn_egg",
+            "minecraft:skeleton_spawn_egg",
+            "minecraft:spider_spawn_egg",
+            "minecraft:zombie_spawn_egg",
+            "minecraft:slime_spawn_egg",
+            "minecraft:ghast_spawn_egg",
+            "minecraft:zombified_piglin_spawn_egg",
+            "minecraft:enderman_spawn_egg",
+            "minecraft:cave_spider_spawn_egg",
+            "minecraft:silverfish_spawn_egg",
+            "minecraft:blaze_spawn_egg",
+            "minecraft:magma_cube_spawn_egg",
+            "minecraft:pig_spawn_egg",
+            "minecraft:sheep_spawn_egg",
+            "minecraft:cow_spawn_egg",
+            "minecraft:chicken_spawn_egg",
+            "minecraft:squid_spawn_egg",
+            "minecraft:wolf_spawn_egg",
+            "minecraft:mooshroom_spawn_egg",
+            "minecraft:villager_spawn_egg"
         ]
     }
 ]
