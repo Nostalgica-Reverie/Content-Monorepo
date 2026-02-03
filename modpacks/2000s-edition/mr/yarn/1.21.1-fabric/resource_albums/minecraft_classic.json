@@ -11,6 +11,10 @@
   "displayPack": "vanilla",
   "id": "minecraft_classic",
   "version": 2,
-  "name": "Minecraft Jappa Textures",
-  "description": "Experience the textures from the modern days with Jappa."
+  "name": {
+    "translate": "legacy.menu.albums.resource.minecraft_classic"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.minecraft_classic.description"
+  }
 }

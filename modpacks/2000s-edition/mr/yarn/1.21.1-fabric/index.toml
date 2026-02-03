@@ -125,28 +125,12 @@ file = "config/necronomicon.json5"
 hash = "c30e6610e97f02cef3ddaf0095a53524a7156732de70674da8759a74fb83edee"
 
 [[files]]
-file = "config/nochangethegame.toml"
-hash = "48a17959ba7452611f6848437ca2a7c4208c7807ca5dd19b3d20170ad0f62ec2"
-
-[[files]]
 file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
 hash = "6be6836c5c695c5613af1bd59c623376df34441ca7520143bd5c561e74f1288e"
 
 [[files]]
 file = "config/nostalgic_tweaks/nostalgic_tweaks.json"
 hash = "63f3121a91373101845a742759a50006195c8cb0adbd0b951140da77f59f3034"
-
-[[files]]
-file = "config/paxi-fabric-1_21.toml"
-hash = "33ec9d49f0f31dfe0e66fc28f280ba474574d0d94ca2a2a7c31fb665137aa6e0"
-
-[[files]]
-file = "config/paxi/datapack_load_order.json"
-hash = "89a86742f6110ea11b461860ec4eda79e3adf059272f1e1a0f2e1e6690dfd736"
-
-[[files]]
-file = "config/paxi/resourcepack_load_order.json"
-hash = "89a86742f6110ea11b461860ec4eda79e3adf059272f1e1a0f2e1e6690dfd736"
 
 [[files]]
 file = "config/servercore/config.yml"
@@ -171,10 +155,6 @@ hash = "c9ee0f5c579262a5ef13efefed248b8a1b280a59f8acd8e413767db20028d7f5"
 [[files]]
 file = "config/threadtweak.json"
 hash = "f3a3bbb0578d511ca36acf164115d2bf6daae77a6b35a6e74fb95f3722f96ead"
-
-[[files]]
-file = "config/vmp.properties"
-hash = "56a26e0a00befcc3fa4af5f904dda9030c4a9112710a54fc8ec02a1ecf5709ff"
 
 [[files]]
 file = "config/yacl.json5"
@@ -255,10 +235,6 @@ hash = "744dbb0ecc355d30132401b33eb469732fddf7bf7d87f38a029836944488f06a"
 [[files]]
 file = "config/ysns.json"
 hash = "43afd22c59247e2e7b0df3c1cb634bc958ae2fab0d8558b9765a8555970c94ac"
-
-[[files]]
-file = "datapacks/tu9_recipes.zip"
-hash = "eecabf545de1ba0a24c7c01a12ab8e131128713bfab213809ac5bebcca25efec"
 
 [[files]]
 file = "mods/architectury-api.pw.toml"
@@ -451,18 +427,8 @@ hash = "f5b974f1bd65a7a0d0230e820943ad90c3bfe42d07f2760ce4240505e2ef0736"
 metafile = true
 
 [[files]]
-file = "mods/nostalgic-bed.pw.toml"
-hash = "7ad0860f0b20b6e0e979d0ef7429a804131e310d7e4a86bb5a8b50f2f59b316d"
-metafile = true
-
-[[files]]
 file = "mods/nostalgic-tweaks.pw.toml"
 hash = "20c6047d5591f5c1893ea9aa6b5cba7c0d0e4ba74505f1ac4e28a587e300cdb5"
-metafile = true
-
-[[files]]
-file = "mods/paxi.pw.toml"
-hash = "c4272e671dece839d1a4bf4ad67498f19374ddbe93889a7d2509a6e0b27e72fa"
 metafile = true
 
 [[files]]
@@ -483,6 +449,11 @@ metafile = true
 [[files]]
 file = "mods/servercore.pw.toml"
 hash = "70110b1b90432f2736d176cbd1d51856b4d50945b22f40f7e6cae95dc65b2bf3"
+metafile = true
+
+[[files]]
+file = "mods/simple-resource-loader.pw.toml"
+hash = "072d663edf6434788b126994b7901a654efb279c4b7f503bcad4938d6d6396a5"
 metafile = true
 
 [[files]]
@@ -535,27 +506,27 @@ hash = "6ae64185f371b4c62a03f6679ed049c15eb30c1c3124dbd4598f4c850e7933d4"
 
 [[files]]
 file = "resource_albums/dreamcast.json"
-hash = "2127c94a13ae461fe3c8b3f7445b4c72ac364919e0b48c2336b9f904b9bf8db8"
+hash = "d5033f408d5c91f9b6893028914af38a91c0d4951ea489e7d27e7f7c1d5eac30"
 
 [[files]]
 file = "resource_albums/gc.json"
-hash = "2000e34158e8a4b701d19847405d99dfe744da479da1794586d557e243239769"
+hash = "c11d5658bd11b19dce5300e6939af5d208b704dafbc5eff1937310139541f7fb"
 
 [[files]]
 file = "resource_albums/minecraft.json"
-hash = "4eaffb7f7d5bac6f8ee8b391bb7fa7836dca63de08950afac50fab032f13fd97"
+hash = "fb95a38fdd68c3af0bca341ad52d5d2e413768459062fb330567771c5e15e852"
 
 [[files]]
 file = "resource_albums/minecraft_classic.json"
-hash = "6f1665c7367a07c0d3f4fe40d20cada49679c9d8b61bbd0a6196fc756d32cf15"
+hash = "7305bc8fb774faaa31569e781a2453b336bf7e9a43c10a547d120c90ae7fbe95"
 
 [[files]]
 file = "resource_albums/ps2.json"
-hash = "e52ed1f053a457934a687faf27711230564bac5854a501c052d0bb51083329be"
+hash = "ca2a598cd46f4405e6fbd8e90e48b12a254e3eefd95a7129e6f0f2f531158c04"
 
 [[files]]
 file = "resource_albums/xbox.json"
-hash = "be34187e0d213b5ded6f04baf766869d10e2c7d16d5fa70944ed9180a434ed0f"
+hash = "7449093f8f4f598fe959d49a9f7e9e9334a1f801d5641b09f0306360f630d28d"
 
 [[files]]
 file = "resourcepacks/Dreamcast Edition/assets/legacy/intro.json"
@@ -563,7 +534,7 @@ hash = "91732c615f81d68e89ca34fce32bb937e5d871a378e2fc544877c4fa7f0c30f2"
 
 [[files]]
 file = "resourcepacks/Dreamcast Edition/assets/legacy/lang/en_us.json"
-hash = "88032fcb3b94a75ab5e680419d5d46418274198729b9d7a908aa961c6949f9d4"
+hash = "131eeba03170c4b0bb1f280e5aa7f7442b2e0685de62bd892897f2d7828bf22c"
 
 [[files]]
 file = "resourcepacks/Dreamcast Edition/assets/legacy/textures/gui/intro/4j.png"
@@ -615,7 +586,7 @@ hash = "2eb119c6688707e6ca29d3dfae74c42605ed6c790a92c5be6fff223ea5c20f2c"
 
 [[files]]
 file = "resourcepacks/GameCube Edition/assets/legacy/lang/en_us.json"
-hash = "fb2e04baa271a9f273b0413d8b0767a83a9fe60a47cdc2859b6bef704ed21c51"
+hash = "b0cb08288af91534847145138109046d5ce0f908856e951c8f77c53973eb8d96"
 
 [[files]]
 file = "resourcepacks/GameCube Edition/assets/legacy/textures/gui/intro/4j.png"
@@ -694,1648 +665,8 @@ file = "resourcepacks/Modern Titles/pack.mcmeta"
 hash = "a1183093ddbfe4c4de85a651aa06c29677cd6319ef5b2b27ec294703f41a720d"
 
 [[files]]
-file = "resourcepacks/Modpack Resources/assets/2000s/lang/en_us.json"
-hash = "bec700e7b630b4fc283e5bea0508aaf01467d6430fc2c37252a1f36dc5688456"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/2000s/textures/gui/sprites/icons/jappa.png"
-hash = "b6e64bf95d98acb8bdd0481d05493eeba8c351a3e81f8ac83129c8f4250929b0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/2000s/ui_definitions/how_to_play/about_2000s.json"
-hash = "955e4792dbbf91c1b5d5992d7e2bf19c968f73be00324da060f53254c69b3f5b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/crafting_tab_listing.json"
-hash = "6de3bf5fb376eb057abcd651e6eeb0ce64f464d25ae9c595fda8e71a300aed0a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/creative_tab_listing.json"
-hash = "c2055968529d754869d7c38f01a769a716fb60e6d1374d1b7b775c0a13b999fd"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/default_11.json"
-hash = "f03cc4d8261972157fec11ab8dc824fbabf1a3a8b48ad8231caf2521fc72d262"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/java.json"
-hash = "3ba8711648993d8040543c286d58cc4bd224510425331b698b2728f4d49da417"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/mojangles_11.ttf"
-hash = "144fc1afb4f265c606f710b7ad1613ad67614e68528a3f3d347114dffa929cc9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/playstation_3.json"
-hash = "22cc2f41bc8ec29ae2e4fd1df6de1737042a2554f885bdce32bcd069ca84f02d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/playstation_4.json"
-hash = "a5f34c8b54650f39c09d9a2d14e8b34c1ecfe075fea3d9276ee2d05162e22cdf"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/playstation_5.json"
-hash = "e19ad9ff337913454f086f6527a57dfb2e2a1728141be7c631678051e8da405b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/playstation_vita.json"
-hash = "c2db485495a41b720b0d603eef363312f0651d3ac063c3bee224b9d51b1cea2a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/stadia.json"
-hash = "b3ccbf560b877f61bddd20c507696ca4a14be5de5d413d00b7cd93a9d1efd71d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/steam.json"
-hash = "e1dc5024ee26d46339f15e6fe6af7b192b3503312d456ea6981fa37f7e7d5b32"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/switch.json"
-hash = "3bdb1ea19aa8fe04f29362b41a5fb8193b195572a9ab08618200baf3905f1ff4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/wii_u.json"
-hash = "8ee62ad62ad69a900a5d6074ad1883ef268ccc75b38569b8b8181059ff34fd0d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/xbox_360.json"
-hash = "b21160ec8b9e12ab0878e15dcb1cc3047f36f4a0afeea55359b5e9f88b8dc5ed"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/font/xbox_one.json"
-hash = "181f71f3ca572e80ef390f2aa3eebd6627781253a42a1c10a47b15030f691d25"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/how_to_play_sections.json"
-hash = "43522524974b5ea4048db49c6f9cb4286c97a1ca4523a847072cb76e445cbc90"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/intro.json"
-hash = "2eb119c6688707e6ca29d3dfae74c42605ed6c790a92c5be6fff223ea5c20f2c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/lang/en_us.json"
-hash = "2d14beb0e8749672d5d39e9521703900b09e1e70d32282867e70a54b3586521c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/sounds/focus.ogg"
-hash = "5ff949467b40e6a329b14b5a9a89a9211dcb0b79a8f9900283d3383f84ba8938"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/back_button.png"
-hash = "c593f6143da406e01a94771a1fb9b62c4b7c02db2f22ae002a93995f3353f392"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/back_button_pressed.png"
-hash = "b8640409a7aed052005c6abeb1a4c558ef3573278bf7f9b8e00ae310fde4e783"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/down_button.png"
-hash = "773a72f8ae79a211f6266253808d65e0657cc1e0cf91bf2914404c545bf77475"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/down_button_pressed.png"
-hash = "862ccb35c6ff122b38d286847ef56cc72419e46cabc3d828c0ec85ae0a198110"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/dpad_down.png"
-hash = "27cfd95acb452d12c340ae7112adef03d701256308edb0ede33aeceb143c6505"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/dpad_down_pressed.png"
-hash = "f2cce4655cde50b6898da238d8ce01690881ff6d2bc512d8e7023e4ec2ee0b12"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/dpad_left.png"
-hash = "f3b59a538d462cf1742f93b744a64abc0c9bf2eef04daa1bd374d4ed0589e868"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/dpad_left_pressed.png"
-hash = "0c27ae38125075941248721b4b84f7d3178c301bb6f08816402996285ebb1cd7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/dpad_right.png"
-hash = "8144383ef5ecad678b7f0d00c019a3440776ecd1e48230c3d3bab2a54e71719f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/dpad_right_pressed.png"
-hash = "59247007453c604151b66cf6ec73d552c1fa013827026367d75d3222da7107d0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/dpad_up.png"
-hash = "bf620a52de2908871b6e4c3585f02001048c178f956c19ede3470ae6a9059327"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/dpad_up_pressed.png"
-hash = "614a67c012f17af22e7be3766b4811ed47b89975a556ac23d8489f6f32f39a40"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/guide_button.png"
-hash = "48a8501494f0a887a0ad86dd9c4378dde7edb3ac894f27f1d6e788fa8f09806b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_bumper.png"
-hash = "001e4a80a41308f6015c1d40ebd660df3e943695d30200ae035fe2982a062594"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_bumper_pressed.png"
-hash = "01dac8edeeb4c2e0d8abf7291f726c39cd6bb2ff29b77f9e6c3226dd5bbe5aef"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_button.png"
-hash = "23aaeae645246b53a9ad1a5e6bd0b24220511fda94ffa61dffbd64cf22ca3fba"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_button_pressed.png"
-hash = "86585b68f7342f8c15fd8e0ebb0581c62302f783f1c09c26dfa0af333f6f3b5f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_stick.png"
-hash = "8a6a3f5d9939b4dd574b569cf60b10210708398c5b774488469931f4e9a89875"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_stick_button.png"
-hash = "106384979b95043ec4b3278db49bd995135d6b21f5cc6a714be56bc4123cc3a7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_stick_button_pressed.png"
-hash = "0fbfed83b3d885dcd53a151d1587fd9d402dc9b770ec70813567bc1a530cbc97"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_stick_pressed_left.png"
-hash = "7b985997fdb61c54be5a1fc24cf7cf79e600f1074d7588ec17b533face51c06f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_stick_pressed_right.png"
-hash = "f91ffcb6694da45c4e3d3305724c1f41d622f656f152f25d626097d02a13cbb5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_trigger.png"
-hash = "c15d52e9a31566136218b8cfb3a839a4bb8620800398fdb36301ff8864eab029"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/left_trigger_pressed.png"
-hash = "c3a46ce2848396c7627bd2fdf5d696a8776bf29bf150cd80cbc272c09ea092f4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_bumper.png"
-hash = "d7786733b08cb365c1cfff780d5784a90b6a3e1fa3eea78d473dbde18212940c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_bumper_pressed.png"
-hash = "810bbf0cc795011d8352aaf60f38f18adcb15917b4383f8f04565b9a33f7151f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_button.png"
-hash = "843d71ddd356a0ad4b621c1934705a940032bdaa1786e648f0a4aa3ceeac16e6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_button_pressed.png"
-hash = "0979a9f1002e848f60d5f7a6b9983251f45e541f2102654af0b8f0fa0d0aee6a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_stick.png"
-hash = "9076782a15c6c7d52b212e2abffaf49d084035a96c1dd17bc7a6bad1137407b3"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_stick_button.png"
-hash = "921fe13a6e766097d6e7cd331e21b0cd6904fda65fe824204a63e9706da5852a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_stick_button_pressed.png"
-hash = "b8a22048183ea33505fc9568af8bc7b086677f4451a74cda47e582cc5f4ae95d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_stick_pressed_left.png"
-hash = "454f417b0babf2bf66cd9d22d9befd59075de5a4ae15b911a0bb4c1159b17cfb"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_stick_pressed_right.png"
-hash = "3cc4a82178a41aff4407cdff97490ac3200d6c96616c0d01bd976b6991136205"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_trigger.png"
-hash = "7b57a2604747c43797ac490520bac9a975309a91705c811aa7ca852e2ec672e1"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/right_trigger_pressed.png"
-hash = "5782be13c49fe06bcab7dc0244a487445ccbaa688d4f5d766ffe9ee8b9b98def"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/start_button.png"
-hash = "18aa857398c9c06690bac08132f925f73d7eeb884e88abc96fe319345c6ddf7a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/start_button_pressed.png"
-hash = "f34d7b15d5d04a062c2c86e41aaf99cbd2f69fb3780402c967bcef10fafc6bf9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/up_button.png"
-hash = "7d02ccfa79c841728cd5075ed15f8ccb7012fb91525b5bf343ea83c6e3820eb7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps3/up_button_pressed.png"
-hash = "48afff063a81d274c7676b29f90963fe56ec1a4927a353589ca1962f402a35cb"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/back_button.png"
-hash = "2576f08660ea258053310a22a71a1c2e79c57c27db5a611cdfdfabf93ccadc48"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/back_button_pressed.png"
-hash = "aa072abdd307944b753538d6905e220c93a1ebf88d9f456fe39b8878d1b07b36"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/down_button.png"
-hash = "8fddb6125f6c3b9a763060e6472928d10dac4f2c18996b52a3a420886b0bb7d6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/down_button_pressed.png"
-hash = "c3ef4beba410db8e1b61e395b9cef62a8f9a099b9d7dc9ceccb3c75931168a20"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/dpad_down.png"
-hash = "b80daf5b293ec7c861aac57457c3a196db281fdbdeae076ec62b10dbd66aa4b4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/dpad_down_pressed.png"
-hash = "657890e3041966c5d32ff8c3b3d8aee27bb2c391f632d3e1319a8aa67dbefe3b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/dpad_left.png"
-hash = "7d8400a05d7944c7372b9502e1d03e4e0a934d80ddcc2bc496ca762da8765c44"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/dpad_left_pressed.png"
-hash = "1abf051effd7d11ec6b9641b39db5baddfea980f8282e03b34003eae61e354ed"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/dpad_right.png"
-hash = "71d975e3fde7479abb6dfc5a5ae59e3c1da992f7edc394033904068bb930a008"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/dpad_right_pressed.png"
-hash = "e920f4e70dadb15276d0e4ae42dd397860c6056d61f0ca97682dec13ed489046"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/dpad_up.png"
-hash = "9f8cf80920413f97f4085ffb7fccc9e3e4c35b8dc0c74941720029790666233b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/dpad_up_pressed.png"
-hash = "b8b8555432bb93e4be446744c7450dc3075bc04b7c937bbcf9eeb5eef8339ba0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/guide_button.png"
-hash = "b8dfd3476026075fe470a45f0cfb6781b6ede1f7a6646731b17ca0bec98fd5ce"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_bumper.png"
-hash = "c52891f53ef90b44a4608a256322298915da7992f3c47d669588d418631b46dc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_bumper_pressed.png"
-hash = "78273d10adf2ff5475607a4a42a5d13805502923051b5ddf1cdeb48842c08880"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_button.png"
-hash = "9638143d8a378073ed92b058b8a9202233cd71617661ff02582cfefa57b01adb"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_button_pressed.png"
-hash = "fe3795ae74376be03a74c8c1a5e79b3866036643276bdbcd5d117a8401e03249"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_stick.png"
-hash = "b57b110ff783134663f90b1ba7ec869e47c2b85be9fe6c25b71cbab04354a247"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_stick_button.png"
-hash = "9dc323013aa8ddf5d2470de7d8b3306b89cad66657bfe412cfbafe8c471135a4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_stick_button_pressed.png"
-hash = "6a385f77fa9a433b6251be2bd2b3987076843cdc33a9e65ec0bd4d8969bd813d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_stick_pressed_left.png"
-hash = "d38e0a2ee8ff01e0517c32f0e9fad7493dffef61fba55c983f7c46b0971b317a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_stick_pressed_right.png"
-hash = "e57c9782a752e80ec583d30892138eca69c625dd40650e2a10ab9162eb90c383"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_trigger.png"
-hash = "0a1337c9a4d3d975f0fa60cd90d6df4cb5a2798a5ffeb507df59ea462a23cc12"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/left_trigger_pressed.png"
-hash = "7dc4a351bc016fff75d8d0d90266cfbeb20c14a50a633f0beaccb244ca510e80"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_bumper.png"
-hash = "a1dc0471058740c5a75231d02f39ca01899f83f42bd1e53c094e86b07553a59f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_bumper_pressed.png"
-hash = "5d8ee21668fe95352d070e44be44d1b258474bc1d583a57389bd129559dc1d2a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_button.png"
-hash = "4a84219859a933582038c774c0fbb9ddc86c62adb8ce226345c1609d27c8ad73"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_button_pressed.png"
-hash = "e4c4782cd00843ea371f3bb1e64bb4477905291484e8e150af9f0d9258643677"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_stick.png"
-hash = "1edc63903fa164ac764d67fb1735d918cab3947da71c7dad2bc715d204b03e7a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_stick_button.png"
-hash = "041d5a3548f8cc84100868e46b339906bdd7caa3abf4ab87518813a7ce92d7c7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_stick_button_pressed.png"
-hash = "65cf6bb67bd8bb84b2606fc95011f034eae2d8ed59180f863716688a5520075b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_stick_pressed_left.png"
-hash = "af1ff2bf8245833f9c97eba914678b01852be134c3ffef8a76a59863a1541877"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_stick_pressed_right.png"
-hash = "9ef9a95a5b9d2042b403a3c8fbc088bc73ace0a81b5f5f0ff2a3428b0df4c688"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_trigger.png"
-hash = "28c51a26ed48380448a04163fb2f55185513fa5a3aa1f3e82dec6e5ed0d088d4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/right_trigger_pressed.png"
-hash = "22748c22387985a4061e3cf740f185da49f456a6404cc978e90fda448e667f51"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/start_button.png"
-hash = "267a752f3ba54336a113d69a48cab6b8b0575b9116e10e1a7489ab77d0fdc8da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/start_button_pressed.png"
-hash = "906a639d8ecd1abc23db3e522dba400238ba9bf70ce867df14c9c2cc4eb1ebf7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/up_button.png"
-hash = "fe69b9ff95f2dd93c06dcc4acd18a1d4005f978b2c586198747e2a3edcfcf15f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps4/up_button_pressed.png"
-hash = "87f0504057efb1aa675bb2fbad76138cdfc5368083781c0673685e0bdae9b7f1"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/back_button.png"
-hash = "1f0bf6d153bcfdfa5285dc870e7eca8d1f5e4fcf670ad8dc03dfb3cba4c4649c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/back_button_pressed.png"
-hash = "7de1986416237462ebe834c17d055a37676cea27d9f551a82118cd4665679adb"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/down_button.png"
-hash = "93ef44354c9ca1945d27b21312cfdc70038cc411fb99d043a966be7e78585c5a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/down_button_pressed.png"
-hash = "d5af53ba691fb5cc8c8577e2d4f390df4d56f08e91c0b06ff0931fec09d7e2b5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/dpad_down.png"
-hash = "27f7555a9f4f353a8e36026a0b4b3c018b019194bf06be12d9d7dad4dc7578c6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/dpad_down_pressed.png"
-hash = "86a49d732a258a9f863b8317ab328724a93f2766e25e005fb21561ff4513678c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/dpad_left.png"
-hash = "956497aca79fa239214b6cc53b1863e2070f7370ede46fc847e120eaf801d253"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/dpad_left_pressed.png"
-hash = "c80795ebfffd9f07b584b2508d805fdcb2f96e2fb8f34e85076b4af3b38dc248"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/dpad_right.png"
-hash = "35d60474d0bad7115dd06aad93e97cecbd5f5400df3e1e479dc9ebebb3c65224"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/dpad_right_pressed.png"
-hash = "9364f053ff434c6c31658b2057dd3c53bc387a230612a53765f052bda5a36d3a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/dpad_up.png"
-hash = "0d22c3f9a4305d1c0ac9db727916d290b4a434c611fc605a8cba8e8b0e81b615"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/dpad_up_pressed.png"
-hash = "8980e06f74fa08703ee30ef4a143dbcbcb43a906c1c5b9905d30bc95b248fec9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/guide_button.png"
-hash = "a29a1f81beaa1332bffa37e974c27486580f66004ce1a5d694c43c6073400a48"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_bumper.png"
-hash = "c52891f53ef90b44a4608a256322298915da7992f3c47d669588d418631b46dc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_bumper_pressed.png"
-hash = "78273d10adf2ff5475607a4a42a5d13805502923051b5ddf1cdeb48842c08880"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_button.png"
-hash = "e2bc03b8fa5c7671fd04af29cb5c9cf2f2c4637d3744921552d85f61b032d8dc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_button_pressed.png"
-hash = "994747522f6c62025440902681ee5dbd664ebae58e7610e6abc5fd500cbf3abe"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_stick.png"
-hash = "b57b110ff783134663f90b1ba7ec869e47c2b85be9fe6c25b71cbab04354a247"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_stick_button.png"
-hash = "9dc323013aa8ddf5d2470de7d8b3306b89cad66657bfe412cfbafe8c471135a4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_stick_button_pressed.png"
-hash = "6a385f77fa9a433b6251be2bd2b3987076843cdc33a9e65ec0bd4d8969bd813d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_stick_pressed_left.png"
-hash = "d38e0a2ee8ff01e0517c32f0e9fad7493dffef61fba55c983f7c46b0971b317a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_stick_pressed_right.png"
-hash = "e57c9782a752e80ec583d30892138eca69c625dd40650e2a10ab9162eb90c383"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_trigger.png"
-hash = "5367084196e8213f49dc3f4d00ba7222dd478a90e0ea555f11a2468232f96b18"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/left_trigger_pressed.png"
-hash = "8ee0f6ef915ee601e1f61cc38470d8c8e2abb2c161ea0c71bda4c5f3a61b3aff"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_bumper.png"
-hash = "a1dc0471058740c5a75231d02f39ca01899f83f42bd1e53c094e86b07553a59f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_bumper_pressed.png"
-hash = "5d8ee21668fe95352d070e44be44d1b258474bc1d583a57389bd129559dc1d2a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_button.png"
-hash = "2ab6562f7f327e9b969f8c1852cedb236a66c40248259cf04cd75b38dbc5cb1e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_button_pressed.png"
-hash = "151c9c70e4d838e73ffb4eb419060d39311da0fc38a35de585351fd3c68fd841"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_stick.png"
-hash = "1edc63903fa164ac764d67fb1735d918cab3947da71c7dad2bc715d204b03e7a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_stick_button.png"
-hash = "041d5a3548f8cc84100868e46b339906bdd7caa3abf4ab87518813a7ce92d7c7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_stick_button_pressed.png"
-hash = "65cf6bb67bd8bb84b2606fc95011f034eae2d8ed59180f863716688a5520075b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_stick_pressed_left.png"
-hash = "af1ff2bf8245833f9c97eba914678b01852be134c3ffef8a76a59863a1541877"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_stick_pressed_right.png"
-hash = "9ef9a95a5b9d2042b403a3c8fbc088bc73ace0a81b5f5f0ff2a3428b0df4c688"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_trigger.png"
-hash = "8650b3bae0090c48d649f87b6e8c48333f60015f8022058f66afc02fea2b7579"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/right_trigger_pressed.png"
-hash = "23799f2ec53451b6cd534b3c54e7bc67eb3ad3870013292fec6d7d0ed2dc3ae9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/start_button.png"
-hash = "5a3b0d49782c46b5716bde831446dd35cc5a806da64df3568db6af3f6de0d089"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/start_button_pressed.png"
-hash = "4ff857dbbd796e0cd940092572ef8bf5e83ace83db59b82d057583503bc47279"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/up_button.png"
-hash = "4b61d8d9d31c472206e00a042de430bb85030be9a729c3056c6d729b2dacc027"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/ps5/up_button_pressed.png"
-hash = "a37da4ad21d27070c52c32aecf5ae1a12ab992b670a5fc929ac24228f63dee73"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/assistant_button.png"
-hash = "ccfc308ce49344e08b32438975e8974b9f904ea1745d3c820a82a1ed6a67f4d6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/assistant_button_pressed.png"
-hash = "41ad2a42e2bc625701592d4b1bd9a5ecdf97c2d1adf38a2085987c20231294be"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/back_button.png"
-hash = "88b83cfc9a72bba6702ac72af7f7accfebc40fceb324348a27a3e684371714da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/back_button_pressed.png"
-hash = "6289c7401e488a27ffe1af310f3a00dda02941813c30a5f72e2cf4be2343807b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/capture_button.png"
-hash = "3ac4c1ad4a0f61f4d79d6140a03803403257a07b45c55258128a0cd96e614823"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/capture_button_pressed.png"
-hash = "14a220c980c8066b3eee6e6f66cabebaf3308d0bd18f63f77d3761e0088ef3c4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/down_button.png"
-hash = "ac079f09ff4c2e0f48e515197f24026e25d39124aacb63ec8e9e2fbc28977a7c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/down_button_pressed.png"
-hash = "28ac6c092a0a7ff24e284372b6b60223b9d915ca9ebb2f4061e9126826ebeaff"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/dpad_down.png"
-hash = "7e8b860e35ca8ae862f27a1b4736b2c5c8fc58ac2fc4342461a629db8671be73"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/dpad_down_pressed.png"
-hash = "530f5d380be4637a29efb032965b0af086242ae7df31d4924fde71ec1982d1ff"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/dpad_left.png"
-hash = "31f9752f67daa7b8d34087a2f6dc52de3ffe441cb29740746e7819b485880923"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/dpad_left_pressed.png"
-hash = "5c8b32597503ff7c4aa8e07b4f754a52a2a442f540f7e18d4ac326e0943e2e15"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/dpad_right.png"
-hash = "776e9907b21b8f307481ed5843989f202dbe5786bf418e530caec897d2d23720"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/dpad_right_pressed.png"
-hash = "0df0b4ce26434528dcb25d3ad264ed7086d324759e0435c3b47719c05c3d165a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/dpad_up.png"
-hash = "6769877c29ff4ec136a5c9aaadf3b94fb38d92fc31e97ea9beaa6b48917966d5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/dpad_up_pressed.png"
-hash = "20422cd690d97225d12ab7e113035a5d0421ecc752b4e78ea4599b34281fb33f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/guide_button.png"
-hash = "61d3b9513d00913c0a000868f547d359e94d2e06173da625b616d8239fcf51f7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_bumper.png"
-hash = "e61848fc5b87f9a2f51651713fdbf7d197c79d3124f638532544bdc341b15bc2"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_bumper_pressed.png"
-hash = "a8c4a0403451e6680fd502008158cdbdfe55b62d9a33712859ef9fe3c971fddc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_button.png"
-hash = "9958ff33cd7c7f6a22de4e86e534f84487eb88f8f46a39237c106d72dfe014e0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_button_pressed.png"
-hash = "b589716c918681b32589e37257ab4e7764e1c4f2468e90ba96aa5405c858e919"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_stick.png"
-hash = "e7f5d28b683ee4a080291507569b3efc2234a5ac9fb79ab5bbac55205f747199"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_stick.png~"
-hash = "b57b110ff783134663f90b1ba7ec869e47c2b85be9fe6c25b71cbab04354a247"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_button.png"
-hash = "924324bf64019c68218b79cdf5e06101d54b0c8eeab35797d140817cc6815415"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_button_pressed.png"
-hash = "3336733619aafbfcc9e83e368da2f4a797c07394a20291f5d96303a66f328b49"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_pressed_left.png"
-hash = "bbb5987461221c4812f04473e00ee2820092a27ecd40f01903f9c29a9b6b2fcc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_pressed_left.png~"
-hash = "d38e0a2ee8ff01e0517c32f0e9fad7493dffef61fba55c983f7c46b0971b317a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_pressed_right.png"
-hash = "1fc1126b2d6ed21e3ff217e66bf695a3e060533c97e8491ca1cb55846ed1e011"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_pressed_right.png~"
-hash = "e57c9782a752e80ec583d30892138eca69c625dd40650e2a10ab9162eb90c383"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_trigger.png"
-hash = "1810c1b4428757b2df4f2ff2c11c2fa570c09c0ca342a87a67661ebe91ac55a1"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/left_trigger_pressed.png"
-hash = "2fb4a84071614abaebd385156dbf376b1bed1157c98a4f39af4207b476e5c07d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_bumper.png"
-hash = "f44fcfee2028ada6c8a2a764c2ec076a26aa1026e02d1fb2a2e0b4a1d3a4df42"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_bumper_pressed.png"
-hash = "25fcf9213edb7e3f077c9b0fc26522f96db80230eba32fe2a19e3e40b7239df7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_button.png"
-hash = "03128cb58db7559138625e232431536c003f01c3f4842d605b5fd95363247508"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_button_pressed.png"
-hash = "8608930d21af0889d12c011603716b8b67c3e980e6cfa5b1ea863fa0e8be2c61"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_stick.png"
-hash = "f84de89590fd1e3d00bd18c2525eb86cb7b45fc8b6961ff775fb7a064dddb68c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_stick_button.png"
-hash = "98e104f3e2338d2cb1252f64308d3a8b121b6a22079993ca61b01515ecd22594"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_stick_button_pressed.png"
-hash = "a96e876f1eef7dbf82bc64b6a9a5902c1e766fb4405e8f54848b81535cef076e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_stick_pressed_left.png"
-hash = "775c83bcb66f6a405c2e356fb47ad763d6993852d96e986fbdaaa99ebc76bf20"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_stick_pressed_right.png"
-hash = "509bb95f619ed942b70cbcc8a755dc68fd34e961e4f3c552afacf25e0c26ef37"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_trigger.png"
-hash = "65260dfd56c1459db128532f1f32408f903ffcbbaca130450aae56a66cc21f1c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/right_trigger_pressed.png"
-hash = "d9bddec2578a70abd6068d80d19677a9727eb54a7535b1fb008d71435f399cba"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/start_button.png"
-hash = "c65e1ad75f3527757984a73f58422acc7617a2ec3d0ed629d2c4aee1edfebbee"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/start_button_pressed.png"
-hash = "b10b5d2b243796aee174211e3c1c8321b3ae095c075630d80779bd93edfb7ac7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/up_button.png"
-hash = "8aa7d5e64cc65f28ecbbc87a762f00f5d6550305a2dbf27f9c0709f912eb43c2"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/stadia/up_button_pressed.png"
-hash = "341ab16f9a9f4ffc1a7bbf4690ebaa99ec8d9279f37e9bb32a6b9ff323fcf315"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/back_button.png"
-hash = "2576f08660ea258053310a22a71a1c2e79c57c27db5a611cdfdfabf93ccadc48"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/back_button_pressed.png"
-hash = "aa072abdd307944b753538d6905e220c93a1ebf88d9f456fe39b8878d1b07b36"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/down_button.png"
-hash = "5588bf502df1742507819466bc675a38f78157821d956443207c65fc16a2b5b1"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/down_button_pressed.png"
-hash = "0ae854d9aedf238ee97de8c72d50609b2de2947699f071cfbc68485602b284bc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/dpad_down.png"
-hash = "b80daf5b293ec7c861aac57457c3a196db281fdbdeae076ec62b10dbd66aa4b4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/dpad_down_pressed.png"
-hash = "657890e3041966c5d32ff8c3b3d8aee27bb2c391f632d3e1319a8aa67dbefe3b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/dpad_left.png"
-hash = "7d8400a05d7944c7372b9502e1d03e4e0a934d80ddcc2bc496ca762da8765c44"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/dpad_left_pressed.png"
-hash = "1abf051effd7d11ec6b9641b39db5baddfea980f8282e03b34003eae61e354ed"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/dpad_right.png"
-hash = "71d975e3fde7479abb6dfc5a5ae59e3c1da992f7edc394033904068bb930a008"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/dpad_right_pressed.png"
-hash = "e920f4e70dadb15276d0e4ae42dd397860c6056d61f0ca97682dec13ed489046"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/dpad_up.png"
-hash = "9f8cf80920413f97f4085ffb7fccc9e3e4c35b8dc0c74941720029790666233b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/dpad_up_pressed.png"
-hash = "b8b8555432bb93e4be446744c7450dc3075bc04b7c937bbcf9eeb5eef8339ba0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/guide_button.png"
-hash = "b8dfd3476026075fe470a45f0cfb6781b6ede1f7a6646731b17ca0bec98fd5ce"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_bumper.png"
-hash = "c52891f53ef90b44a4608a256322298915da7992f3c47d669588d418631b46dc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_bumper_pressed.png"
-hash = "78273d10adf2ff5475607a4a42a5d13805502923051b5ddf1cdeb48842c08880"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_button.png"
-hash = "d3dc254719daabc61671f7d6eae3a6d4c498884ba2ddbacf5f9546aebb132d88"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_button_pressed.png"
-hash = "fdbf2f3f040e00894f92e39711ca12cef536709c4a0bc77e0ab78716f77ef309"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_stick.png"
-hash = "bb0c2ce0390a2ba1b9afbe5f084364c2240fd1641939af2fde54e78d073235d5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_stick_button.png"
-hash = "bbd9fb5b822735686f8006c35e4c7e607d3cb4783fd4baa775ada64f23def470"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_stick_button_pressed.png"
-hash = "8117fbb36cbcfc13ee89c1105d9b90fb45e4feb7b85e59529b66eb00f8744980"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_stick_pressed_left.png"
-hash = "1822988abc40346b6ec90bfa99a7d591c96c109ed8527190d7807190e8408ba2"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_stick_pressed_right.png"
-hash = "28dfc3dfb8a52f3128107c63351c92151589c06b1e4e9e0350f4696625affa0d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_trigger.png"
-hash = "0a1337c9a4d3d975f0fa60cd90d6df4cb5a2798a5ffeb507df59ea462a23cc12"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/left_trigger_pressed.png"
-hash = "7dc4a351bc016fff75d8d0d90266cfbeb20c14a50a633f0beaccb244ca510e80"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_bumper.png"
-hash = "a1dc0471058740c5a75231d02f39ca01899f83f42bd1e53c094e86b07553a59f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_bumper_pressed.png"
-hash = "5d8ee21668fe95352d070e44be44d1b258474bc1d583a57389bd129559dc1d2a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_button.png"
-hash = "5b225d31f41664a39d14d645bff486623bae66837bb19efb088a74b5deb2e2a8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_button_pressed.png"
-hash = "90c89e17fc77974a1b4d6eaf76527b8693ba92650098c62175914f08017b749b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_stick.png"
-hash = "1edc63903fa164ac764d67fb1735d918cab3947da71c7dad2bc715d204b03e7a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_stick_button.png"
-hash = "041d5a3548f8cc84100868e46b339906bdd7caa3abf4ab87518813a7ce92d7c7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_stick_button_pressed.png"
-hash = "65cf6bb67bd8bb84b2606fc95011f034eae2d8ed59180f863716688a5520075b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_stick_pressed_left.png"
-hash = "af1ff2bf8245833f9c97eba914678b01852be134c3ffef8a76a59863a1541877"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_stick_pressed_right.png"
-hash = "9ef9a95a5b9d2042b403a3c8fbc088bc73ace0a81b5f5f0ff2a3428b0df4c688"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_trigger.png"
-hash = "28c51a26ed48380448a04163fb2f55185513fa5a3aa1f3e82dec6e5ed0d088d4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/right_trigger_pressed.png"
-hash = "22748c22387985a4061e3cf740f185da49f456a6404cc978e90fda448e667f51"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/start_button.png"
-hash = "267a752f3ba54336a113d69a48cab6b8b0575b9116e10e1a7489ab77d0fdc8da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/start_button_pressed.png"
-hash = "906a639d8ecd1abc23db3e522dba400238ba9bf70ce867df14c9c2cc4eb1ebf7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/unknown.png"
-hash = "f2d5553d833b86dcbcd4290c111d0d942f3957daf7f64712891a226c4f3b9d6f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/up_button.png"
-hash = "53f96ee1a9a7a79833877dead9e400505cf29db759c84915b5dfade48645b451"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/switch/up_button_pressed.png"
-hash = "6f8aad8b8c112ff3475779edb74c67c187877bf8cc721f85cc333a6bc5926dd8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/back_button.png"
-hash = "68795ad9eba9a2d3ec5814b9ab2b69d45fa71642335e165b4f32a9095ddf9705"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/back_button_pressed.png"
-hash = "f6566cd1959513bf70bdc2611242fe7b831c9dfbb21fae9d412d89e427816482"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/down_button.png"
-hash = "1beea40377d96d9a51526a2e4c6e900e5d781c37f8530ca3f3e0f2abaab00bf3"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/down_button_pressed.png"
-hash = "17be498408f1c9d5e9758db6484bd2c589c1c6edce90bc00a919497e3bdb5d32"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_down.png"
-hash = "d3f49d9fbd5ccd8e0a3fca909dd26a670a7dd1e290538c2f115900e0f237bfb1"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_down_pressed.png"
-hash = "105bf525a895f1e78a7c779765873178b4fd93d8b944dba5db7f008c8de996e3"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_left.png"
-hash = "09b181604938361fb4a4ae732fb911de1f01ecb1566fd8c6d93f34ae2431edf8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_left_pressed.png"
-hash = "568af289b9b83f9ef283568c276a802205806728fda9bd5ba0e5f6223a972fd2"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_right.png"
-hash = "bdb1c634e8ad525e29d9fac932e9244bf6bb8fe5ea339287ca4ddb75b003bf35"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_right_pressed.png"
-hash = "d922cca6006388fe8d4a45ac2d2125f0d4514475acbce2ceb256e234119c454d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_up.png"
-hash = "3e31cc1f0131dd1f52b951a26deedf290740c802207f295de8d69088b3738a97"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_up_pressed.png"
-hash = "87398138ce4805936298bddcb99958e6a04be92f71fe4d20bb4bc5c3b4dffa2a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_bumper.png"
-hash = "efaf5f99137ff3e97b93a936852a0732fd8f0554109ac59c8eae411f140c7843"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_bumper_pressed.png"
-hash = "2ec3c11c662ad94cb7d214aa96df6403066942cff704db3a31cfd30dddcb1886"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_button.png"
-hash = "7a9e67e9dbc3f9db66b3a4d1789e417710aab02ac726121dcbc77a64f45b8681"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_button_pressed.png"
-hash = "45d2191cc8db9aa42d42b330fd89d18a3ac7de0aa57f1f55bdfad4444d788a24"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick.png"
-hash = "9796364960fd5ebc02e2cfccebcefd395d0b12a0345b865ada6c104cd38793d3"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick_button.png"
-hash = "1cadd0e0c8e39c20b3bb5e5cf34a6713c25147c8e61f4ed767c1d83ee273df16"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick_button_pressed.png"
-hash = "f0bfb7d122f362b60968df91051b21c75e5dcba5fea9f8a50147e5ff87ae0ac0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick_pressed_left.png"
-hash = "ca8582377ce1e1472a8508222674045a660771ca7f83ccfbc0a5435bb24c19f2"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick_pressed_right.png"
-hash = "ca0e662370a6308019e60b410076f4716191f765ca6d3f92f8e44555ee092be5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_trigger.png"
-hash = "cd64c0712f0bc2de4cbe897965838ce576b8a74f8e3ec71b5c211ae4763bee6e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/left_trigger_pressed.png"
-hash = "bbeaa5047f1d3d2535919549a224a28867a83373c7aa755280716e8d79bb9765"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_bumper.png"
-hash = "6d20d37e17c84d83531411ae11637878753cddd0cf88137ad50df90f3bcf7156"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_bumper_pressed.png"
-hash = "f3b10c36e495ef66992b1b470786a16e0130af9cae21c4d008618d263eb3c61c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_button.png"
-hash = "5dc6321298267cc5d90ae81f6b292d0b81923e41c744c293f514e22d47be6e92"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_button_pressed.png"
-hash = "f923577497dc46d8524985fe7723479824bdbd184e08016a77f8129f0fad573c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick.png"
-hash = "c127d8f3e65a5480920086f6252484d40be84fc68458df4678022a76dae1727d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick_button.png"
-hash = "db778d447f6085b9be38fe47f5e47eb770450b81d8a675ff470196290df752a3"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick_button_pressed.png"
-hash = "625632aa8f6b90aa6a92ae920004ba77f155542e4949bf0304c760d3e1814181"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick_pressed_left.png"
-hash = "09bd4e4713b9788ea433948cc1dd53633325a03078f758e9d869bbdfdf7e2b5d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick_pressed_right.png"
-hash = "4d0fd5f4651c59e1c8524c0ac78dc17e1c3da6812ffab7536766c26cf075906d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_trigger.png"
-hash = "2b434419e545f29392720a99372013ffd35948c56a6673360909683b913ed16b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/right_trigger_pressed.png"
-hash = "2eeb1bb4e76e973eed0cf50d4859325e89a17b970ed96a254bab6e9f486500b7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/start_button.png"
-hash = "a62a323875d9a33cdde6f5983c80cd0269e9c9b48b58f9ea63575f839fc04920"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/start_button_pressed.png"
-hash = "6406c01d4eb4fd7018a8a358e61ce7d4bb72733772638c2a818d6a60800ed190"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/up_button.png"
-hash = "1493a2e832f66f2de212928d8e44bd371d513f88bf644d150e4cd4c891d2c123"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/wii_u/up_button_pressed.png"
-hash = "5250ad252c35a9c8823a0b3a5a847841e14ee485276c7833bb860c1557e613a8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/back_button.png"
-hash = "8c7e77a2e7ebe01e962e875348f0917c37b6aa1b4e508e4c774f81afcccc67fa"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/back_button_pressed.png"
-hash = "bb9c95a13b457dc19016088e5d6636dade6fa1b181f6ec1204390d8390070011"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/down_button.png"
-hash = "24c8ef30881e37699c0086ca757c0bada4fecf0e4db756df55589f1bd2892070"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/down_button_pressed.png"
-hash = "c4f55d209860badb8c3d5dc395ae519bda2e43d37b402a89d634d912662cd159"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/dpad_down.png"
-hash = "7ba6c653688c06327027d95ecc39240dd4d16ac5587c625e7f004c3b44e958e0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/dpad_down_pressed.png"
-hash = "ab0ca948e3808c13f0a71ed3ec7fa7215015fb93b414c89fe81af42dd9f42c9f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/dpad_left.png"
-hash = "c6bda3bdd85072a7518cadcda7ddafc454e70f52fd9937dc4598408f3ba052f5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/dpad_left_pressed.png"
-hash = "b7cec6a26db3a97f94e6631fa87d3eb92e251fe3538c24f5542cb4a433c5a80c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/dpad_right.png"
-hash = "e3da8b38ce8b52f477fc6651bf7b1a764b135008fae0a102a187829d6762404a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/dpad_right_pressed.png"
-hash = "71e925497f9a561313929922f774ce352b0dfa58600a8d4743dbb0b2e0412217"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/dpad_up.png"
-hash = "c4dfe2eaf1383ce3449079f0e041f275d91bdfbdb2709c2151d5300ba3613725"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/dpad_up_pressed.png"
-hash = "5a3bc67de081fc717512344bd0384f3fb77932bccf0414351b59b91d412652c8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/guide_button.png"
-hash = "127c7d58810399ebf8a33005d15c2081d51589c1a3874b4f72324d23c105dd87"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_bumper.png"
-hash = "876b814071cef6151a1b41f004ca412d6f1a683f8d44ae0231ce088b9559fb00"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_bumper_pressed.png"
-hash = "86765b85ba80fa7324a855e307ebd1042c0034ab86f4c9ba86a29d8277f2cc12"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_button.png"
-hash = "ee80bbe7aa7229c7d9b0a56f7a00c25916a48ddf42d7d8dcd31410067360190a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_button_pressed.png"
-hash = "f4d258161b44787c9a2382ff3f1587b5d19b3f22fb3950cd2a2a2dab2c752f09"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_stick.png"
-hash = "e5a25dc787e06d1b803f53e4e93af44e63163a168f4fc334d133b70f519f0e3e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_stick_button.png"
-hash = "a72795356cdaf6187ed1774078bb5d2279f8f0aa3ed241012b209e56162de159"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_stick_button_pressed.png"
-hash = "3c5e95679b60d6714f065105e2817282d43e8a54137cab13acf73f9cde702e20"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_stick_pressed_left.png"
-hash = "9d749f91401ba89ae498570e4d310c2cc2d38d66f9c32088c236bc5665f326a4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_stick_pressed_right.png"
-hash = "e0c4682e3bb7d6c85c8ac4fda5ab91643a13affbbf0b8c2b4cc83099bf30b5ca"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_trigger.png"
-hash = "5702da227e2825ee8fd09c55ab5a096d69a45434e047ee5f67c6aee14c364afe"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/left_trigger_pressed.png"
-hash = "eff48342b5585cac7d13f1b664a255f063691c88fd1251ec2d2c188355caaa58"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_bumper.png"
-hash = "6dfc035064b6790aae9de7d8d60e1f35572dc4335df6287d25e611a1037d22d7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_bumper_pressed.png"
-hash = "6fdbd9165912011f1208731bbfd490fb8e892116be50b572939586a95709944c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_button.png"
-hash = "aea8bffd427da989a6d00e9c48a0dfd08685ae000bc9d3428b82852db5e80bbe"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_button_pressed.png"
-hash = "48ad44e4481edaad8c0c70c1e9852f58950656c6544cd3b7f0b085684acc61f4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_stick.png"
-hash = "22647b7f5e3b887faabb4b5376d82aa1de98c4bd82d6aee87482c0cef645cf16"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_stick_button.png"
-hash = "20d4b52ec6e3015f07ba4e6c1852b9abdf41bece6bf36b2be43b526a1e6600f9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_stick_button_pressed.png"
-hash = "33a0b45fc654bb2b5c533fcb97fc66c10684a2362a9c5cd333301664099968f8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_stick_pressed_left.png"
-hash = "a954c59ef6cae0051d382822c982d96184b6be7a4804ddc6e0558035ca93f472"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_stick_pressed_right.png"
-hash = "cf604df70053d97866b4d7e42ae80ec6f40a8baa1dae79b126ae6a72ca712dec"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_trigger.png"
-hash = "26aac2af636071ec70866671f3676fd47a96b4337b4ab21d67d5e461731e050e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/right_trigger_pressed.png"
-hash = "2dd4b5e7a1b068ca1f928d14df098e840a0f6bdc201045a617b0efbae2e2c8e0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/start_button.png"
-hash = "0e166eb41b953ab785988b24f07db95cbeaca056205c37593790a17494666612"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/start_button_pressed.png"
-hash = "ddd5e733bfb19c8573841fcf546f66b84ead990b2fb283170528ded36266dabd"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/unknown.png"
-hash = "edc6e131abfa0c5983f51d11631ce354ef3c7f2b149a3d98c7191196a1a17d5a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/up_button.png"
-hash = "f656c3fe856e00585a637eea1a9d1611682d2c73e43e48d4d43bcfaecec43e55"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/x360/up_button_pressed.png"
-hash = "8730d76beb49f1c09f9a146a42aa11ef43e47ec4c2584c5778310b5c246ffc81"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/back_button.png"
-hash = "8380cf053a803f81025232722e02f33fe20e701e5972f24310314393946e570c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/back_button_pressed.png"
-hash = "6d510ee5e7b04c8ae42de3a1b39ef8b30bdb35fb8432a2dedd974dfe56c9b8c7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/down_button.png"
-hash = "35e16e96170a6c87326924d85a1bfdf70bfe6c0e660c317aed6995776229ce43"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/down_button_pressed.png"
-hash = "153bd88630f51ae386e001f591eb35742e070e8328a16666d1947d7f612f1ad5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/dpad_down.png"
-hash = "62dab75c1a378494827bf78ce9fc91d7069aba1014d5620accce64a5a7938ead"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/dpad_down_pressed.png"
-hash = "c35119d86bf836c2dee6d4406e56017dc15b0e82e23e68bcfc88a2b90086b7e6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/dpad_left.png"
-hash = "686664f8897f0efc0bc4cc6cc0df18dbf91b4a0a65b08a9fc2dd38487882f3c4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/dpad_left_pressed.png"
-hash = "cdf89af3b51a5489ed45a15146bdaec5885dbe810bc7bb4a282baa36eeff1e31"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/dpad_right.png"
-hash = "31909a9226974a850e0364363d3645910ad4f05eac59d9148126bcc970acb8ed"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/dpad_right_pressed.png"
-hash = "cf03fd2443f78e1b674c33df6a11a22ea3f7b8c96d15dc0aa99ddb7bb0a78313"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/dpad_up.png"
-hash = "11b6f583177017b20826335586fa9e0eb2a10786fed7c9c977bfa2c01e9a6d1a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/dpad_up_pressed.png"
-hash = "ff1f1a6ebd7bab19824b8fa602c9adfc406b9df2e4178b88c42e97e0d87b240b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_bumper.png"
-hash = "c59897810614618697261a24654dd3d98c9041648dc190a3d98e25e89d84ea6d"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_bumper_pressed.png"
-hash = "5bff9deb99592d5b7b7f23f29c9d4a3e83585ae15890049a64c34bd6c5ca6f8f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_button.png"
-hash = "24ec20cc638ad8cf05b611ded5efeded76891106e2f67c5d971e8abc7da5775e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_button_pressed.png"
-hash = "f19f09079f960e744394b2562f8c524c8f5d0d5812eb4f812a057a60ec9d7b67"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_stick.png"
-hash = "4553459aa8bb9c97ac34cde3aa9361604dbae35fbdd1348abd16a91eff838fc0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_stick_button.png"
-hash = "af951a30a99493c26ddb43bdb5c4b9f13f4dab6312ab5fba72e9219f154ff383"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_stick_button_pressed.png"
-hash = "fd283bed20174be0944ffe3ad285e8283a1fe21522b13f31b9c5d60f0ca437b0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_stick_pressed_left.png"
-hash = "baefde398fb8eb956b98ef82ee3e393db2fbe33493862466661aecc61693fcce"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_stick_pressed_right.png"
-hash = "dae45e90083446efb583cba7b822e3b9c018bdc9dc9dd3e52ff4d03bf2c932ba"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_trigger.png"
-hash = "71353bf6ab5586fad06f602c86e79270f9f025fdd9dc44cb28ae8bbbcfe08f5a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/left_trigger_pressed.png"
-hash = "c80678c5ab284e94817c161f3d12741f09321356508f00e111d351bdb6fd793c"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_bumper.png"
-hash = "39883b05ef0ecf0f437fc0ad9fd2addb4aec89f6383eb6c84e1836b996e4d354"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_bumper_pressed.png"
-hash = "89dc5a61cad31f06eccc158f8a4b96b29bee2bbbb598ebcce080e85e3be9eafe"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_button.png"
-hash = "2f1f0a9040d41a15a589a02022ec707d63d92bbb65cd01084019863f8632b3f9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_button_pressed.png"
-hash = "b85988caa514b8b344a95e791c163912aef5b1652ba87e198012dc9fa7c9f6e9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_stick.png"
-hash = "c1886bc4985187bbff86019e01e4823244f1f5d1f6077f34b6122e84e424c8f9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_stick_button.png"
-hash = "d1a24737f26ea8db74caee1025dcf05790c376ee17927152b05110bc13d08485"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_stick_button_pressed.png"
-hash = "87afdeadee6675cf10bcd129bfb554163238b8f1c11ac912440f12f13b0c1cf3"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_stick_pressed_left.png"
-hash = "21383547a6406833a3abda7b4c9010da50b9fae5a6c3db344427c762222e4be6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_stick_pressed_right.png"
-hash = "dfd929d6711be89c2fb2ff2650faaf2f8eb3339b23f13a2c48e9b44809218e64"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_trigger.png"
-hash = "2718a017cd1023ddb0adcf13bab7adcb4fa39d475e869b078973485b6c31a5e9"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/right_trigger_pressed.png"
-hash = "41c5dc498c10fc3702e1c6fdfe89397cdf2a7139dbb6255c28bf3ef52d45e1a6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/start_button.png"
-hash = "21e3f816d76955451a62d2b3a25934093a5a1780322830a87cf5be4c197f19cc"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/start_button_pressed.png"
-hash = "3d0e4f5aa5065beb4dd881c843733e47a3cca0218439ae877736bab86cf54971"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/up_button.png"
-hash = "b5b0ec87ac055bd88ecc5658c0c0b4a29c00b369e4f6358c8c7f9a68fe1f8dc4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/component/xone/up_button_pressed.png"
-hash = "8d619f1173153d0ae73e520e451a4182fd3e01c5f0d4f4623f18700cc16e1dc8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/intro/4j.png"
-hash = "f6322a16716e2e75de6f71f9e063ed17f920c74a0ca2a3fe534cd5ab47a45911"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/intro/background.png"
-hash = "e15fd389e3471aa4539d16121a1a2c871ccdb238933611074ffb310dc7e1e44e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/intro/eula.png"
-hash = "02b33029483c3c9a014fbc3d6e4b3f111b0e6ec40c7a2e7aeedbf96dafee5f7e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/intro/mojang.png"
-hash = "0eb7a23202996f1c27221b78ead2ef394e72223e763ad62befd4b094641d9e48"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/intro/nr.png"
-hash = "9b60980b770ead84fedabf54589f84a20b0995d43d358441dd3881468d101821"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/intro/nsp.png"
-hash = "09fd107d3fd0463d3c478dbb34ebfa47c07203fe57b63a785d60447b3a5d5ec8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/sprites/hud/save_arrow.png"
-hash = "40c77074dae447ae8c2f528d487388600a9be3416767383a9962a160cf7ce9a6"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/sprites/hud/save_chest.png"
-hash = "ac9d654ce3cd79ab99b3c06b05790872936537483eb426054d3eef3407dfcb64"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/sprites/widget/loading_background.png"
-hash = "cf0f6f8a53028febe30231f757af58db3fc393bbf4b90eafb0540a2dd275dfab"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/sprites/widget/loading_bar.png"
-hash = "fe8a0a45eac0a86bbfafbe7ca6429efee0e401a6c37f54a3b6e96696a2808b38"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/java.png"
-hash = "89f8a9a09fd553295147845404539b853908025b62af928fdd3491f82b496fd4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/java.png.mcmeta"
-hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/playstation_3.png"
-hash = "0efb963dbaad22529f95d4cd22752d83522c3d8284a925b7a59c9efeb882c4c5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/playstation_3.png.mcmeta"
-hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/switch.png"
-hash = "38f8f4266957217381741df071b940e5f2d6439136c4ffb034037fc462bd5e52"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/switch.png.mcmeta"
-hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/xbox_360.png"
-hash = "50f1a52f81d169ef621fede46feba51a5b57f87bfde405c25aaa0b4e71526566"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/minecraft/xbox_360.png.mcmeta"
-hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/panorama_day.png"
-hash = "6f6830e9714a8a17b0cea8ecddbb4dd8334ba59325bf6aabbeeef9d5b986af2b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/panorama_day.png.mcmeta"
-hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/panorama_night.png"
-hash = "05c6b6144e1ba6e3e5e24a9013d89576b0e2e50c25329a5c252a772362cdfa22"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/textures/gui/title/panorama_night.png.mcmeta"
-hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/legacy_crafting_screen.json"
-hash = "629fc66b3746d84650dd708bd0ff02812e36089b12c9e3e4d76848aa814e9b55"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/loading_screen.json"
-hash = "3e135b8ba5deb44d72764034f8f9b0e0ce4b2685853d100fa4d113f822c34df0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/pause_screen.json"
-hash = "b638cc745c83c5bd364a59e1993667f102d3363986781414e6fb4441b7f11ad7"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/play_game_screen.json"
-hash = "1417d85362869ceb2748a37d6f4bc73303377a780bdf8ec960bdc6c9e8549f29"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/ui_definitions/title_screen.json"
-hash = "fb33e9d3bfac975fd3d5a6a3ea4ce60073878dabf9cdff205c0470efaf3a595b"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/legacy/world_templates.json"
-hash = "9e20efe04273070f894608cdc385886e67ac36c99a276b4aa3a1f504a17604e2"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/changelog/en_us.txt"
-hash = "dbbf3454379baefef93d2099f6ec1b365f9df970854a890546aba9e75e7996a0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/lang/en_us.json"
-hash = "05b012dbf21297cde8c8cbdb66206e71acb0139924bf28b269713fdb1c9055ac"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/deepslate1.ogg"
-hash = "4ee99346bd043722daee554438d1ea8e61018223a67e3fb1032fb337884d8e49"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/deepslate2.ogg"
-hash = "ad261d8c4c5a3104c2b4b08d17b6227da13e131defb0c5757fc336004de429b5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/deepslate3.ogg"
-hash = "f84f835c2855382bedd4ad40488dda8cd2c0d837e0dc01df7370e69c3111a6ab"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/deepslate4.ogg"
-hash = "8ea19801ac665f2ca19a7745dce27fddec0a27d57dae45227d70623fc6097baf"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/sand1.ogg"
-hash = "55a610c8739c045a65343b8447c6b95c1e54465939aab666001af2d4869c1e83"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/sand2.ogg"
-hash = "60ebf0ed49f258a62adb9849386b2795f7e409d21ff958a803eb0727d7e98913"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/sand3.ogg"
-hash = "ab5e4b408d1eca44546e86c11f5fcc66d3a4c035910ab14736f952d1e8ce98fd"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/dig/sand4.ogg"
-hash = "fd4aa7553a4f99fe435b2df57bf9ec1040ee2409d09fbd15dbc7049f0e261ddb"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/liquid/lava.ogg"
-hash = "018aad624cd42452fb62de54d5e5481635534729d73c3400616bb49d50d3c69a"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/liquid/lavapop.ogg"
-hash = "36ea4ed27e7ccee174e560e89bb5b1686d49f98136463b9ca1bccfa0d6c37f71"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/liquid/splash.ogg"
-hash = "7a04c68c956f4fe67935e6665666e603de918f64683a79f9e5d5700e6a4c2765"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/liquid/splash2.ogg"
-hash = "7a04c68c956f4fe67935e6665666e603de918f64683a79f9e5d5700e6a4c2765"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/liquid/swim1.ogg"
-hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/liquid/swim2.ogg"
-hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/liquid/swim3.ogg"
-hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/liquid/swim4.ogg"
-hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/cow/hurt1.ogg"
-hash = "42fdeeb8399a471796ae1c74713aed0da91ff038fd8f5d85cc2cb3db3b8b5ed8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/cow/hurt2.ogg"
-hash = "7e02494277841c6cadc677df078ce81876cc8652a734179dc54d75d5ac4f8c1e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/cow/hurt3.ogg"
-hash = "3a3d0416e0aa63b3314b499f36a3334a23e945029a8ebfb3a357948c87db6ffe"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/cow/say1.ogg"
-hash = "5179706ef6f6afe0fa548568b8221c9967d31d0b3579ee7d5b6ff4fab4d4b09e"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/cow/say2.ogg"
-hash = "748c848476f631946c329b451a2f841f2f1aa5c2ed418f89f87eb9ae597ad076"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/cow/say3.ogg"
-hash = "70883b349cbbdfab28dc354def4cc604585c3023395b094713f8f095f7699cb0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/cow/say4.ogg"
-hash = "e578c5ac24d6c931a24f4c8506739310a5aaf0feac2758dc7f60ea79aaa551e8"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/endermen/stare.ogg"
-hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/sheep/shear.ogg"
-hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/skeleton/death.ogg"
-hash = "5ea5e1cc0edf0b6093210a7440a5cec43f8a9ef906e258795fe4160a1a102ec5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/skeleton/hurt1.ogg"
-hash = "e1cb8cb6a5d8dc85243c16b9bdaafe9b44f9503e53607a61a937ffa66908636f"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/skeleton/hurt2.ogg"
-hash = "0591a9b410107d7f1eb6b2406dd3c1e1c76095f7c1b675b42ad6d97b087bf123"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/skeleton/hurt3.ogg"
-hash = "216ae23e644725fadafdfa1b329d0ac7741013447cc9e8f9bcf6d84bd51a4fe0"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/skeleton/hurt4.ogg"
-hash = "9dfaae48099c2cd82b1687c56ab79ba3c09e74302b901840dc1c34a9dbe919db"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/slime/big1.ogg"
-hash = "b8e870bb9d5416191ac0e90ca494c8e35bfcc2ad4181518c30184666495aa5e1"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/slime/big2.ogg"
-hash = "5e715b90d8ea3b7b76c9f9e225b36da10a14c989b7a7a0b13ce204506c2d9aee"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/slime/big3.ogg"
-hash = "6b450a567cf7556e7ed9c21854a5ceec3ad3db45b28ce3255962b7ba35021c54"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/sounds/mob/slime/big4.ogg"
-hash = "8b4d703ebb6d41ec9249d0247316a43f20cca82f515a7a069341dadde0d14cf2"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/textures/block/birch_log_top.png"
-hash = "64aa4d363d98768e2e209901d4ef67451210a6680e7de58d93637e92a277edc5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/textures/block/spruce_log_top.png"
-hash = "64aa4d363d98768e2e209901d4ef67451210a6680e7de58d93637e92a277edc5"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/assets/minecraft/textures/item/music_disc_wait.png"
-hash = "f95b6849639929d68145fca425e1e9c0d0d5377b20d664095e119b66c4cdf533"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/pack.mcmeta"
-hash = "e0cb8f03c93244196894fe471bdf5d012108b12087e91f7cb6507bf44c710034"
-
-[[files]]
-file = "resourcepacks/Modpack Resources/pack.png"
-hash = "15ffdb7bc7d497a51fb283286920e403bb59298fa357cebdba87a5b70c5bfdfa"
-
-[[files]]
 file = "resourcepacks/PlayStation®2 Edition/assets/legacy/lang/en_us.json"
-hash = "5c38de7945b90c77d8934e074e51ad267e28fcf463d96cadfea7c561aa1e5340"
+hash = "81406358340e3344bb17bcdcecdc6187ddd2dca16c670c876800ac5977c2d47a"
 
 [[files]]
 file = "resourcepacks/PlayStation®2 Edition/assets/legacy/textures/gui/sprites/hud/save_arrow.png"
@@ -2359,7 +690,7 @@ hash = "6922c907b34903ef924d75cfb83ab580b02c27402ac29e1f5ae89f4e4abe3cff"
 
 [[files]]
 file = "resourcepacks/Xbox Edition/assets/legacy/lang/en_us.json"
-hash = "58af0d564a2697b7e9cb209a08140d54e08ed518fa2ff1322f5615b944b74899"
+hash = "3e96d770e641beb37806dcfdabb1dc132a6fc2db29d8adc32d96f614c9a439d7"
 
 [[files]]
 file = "resourcepacks/Xbox Edition/assets/legacy/textures/gui/intro/4j.png"
@@ -2433,6 +764,1650 @@ metafile = true
 file = "resourcepacks/pre-1.13-water.pw.toml"
 hash = "5c17228008cd799ea4aa2a76b0203f0e6d290abafdd7153b9f296860d63668ef"
 metafile = true
+
+[[files]]
+file = "resources/datapack/required/tu9_recipes.zip"
+hash = "37ab941bd758f0480adc5b034ffa2caaa423358b5e267be9b923263f994d3bdf"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/2000s/lang/en_us.json"
+hash = "bec700e7b630b4fc283e5bea0508aaf01467d6430fc2c37252a1f36dc5688456"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/2000s/textures/gui/sprites/icons/jappa.png"
+hash = "b6e64bf95d98acb8bdd0481d05493eeba8c351a3e81f8ac83129c8f4250929b0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/2000s/ui_definitions/how_to_play/about_2000s.json"
+hash = "955e4792dbbf91c1b5d5992d7e2bf19c968f73be00324da060f53254c69b3f5b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/crafting_tab_listing.json"
+hash = "6de3bf5fb376eb057abcd651e6eeb0ce64f464d25ae9c595fda8e71a300aed0a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/creative_tab_listing.json"
+hash = "c2055968529d754869d7c38f01a769a716fb60e6d1374d1b7b775c0a13b999fd"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/default_11.json"
+hash = "f03cc4d8261972157fec11ab8dc824fbabf1a3a8b48ad8231caf2521fc72d262"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/java.json"
+hash = "3ba8711648993d8040543c286d58cc4bd224510425331b698b2728f4d49da417"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/mojangles_11.ttf"
+hash = "144fc1afb4f265c606f710b7ad1613ad67614e68528a3f3d347114dffa929cc9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/playstation_3.json"
+hash = "22cc2f41bc8ec29ae2e4fd1df6de1737042a2554f885bdce32bcd069ca84f02d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/playstation_4.json"
+hash = "a5f34c8b54650f39c09d9a2d14e8b34c1ecfe075fea3d9276ee2d05162e22cdf"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/playstation_5.json"
+hash = "e19ad9ff337913454f086f6527a57dfb2e2a1728141be7c631678051e8da405b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/playstation_vita.json"
+hash = "c2db485495a41b720b0d603eef363312f0651d3ac063c3bee224b9d51b1cea2a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/stadia.json"
+hash = "b3ccbf560b877f61bddd20c507696ca4a14be5de5d413d00b7cd93a9d1efd71d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/steam.json"
+hash = "e1dc5024ee26d46339f15e6fe6af7b192b3503312d456ea6981fa37f7e7d5b32"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/switch.json"
+hash = "3bdb1ea19aa8fe04f29362b41a5fb8193b195572a9ab08618200baf3905f1ff4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/wii_u.json"
+hash = "8ee62ad62ad69a900a5d6074ad1883ef268ccc75b38569b8b8181059ff34fd0d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/xbox_360.json"
+hash = "b21160ec8b9e12ab0878e15dcb1cc3047f36f4a0afeea55359b5e9f88b8dc5ed"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/font/xbox_one.json"
+hash = "181f71f3ca572e80ef390f2aa3eebd6627781253a42a1c10a47b15030f691d25"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/how_to_play_sections.json"
+hash = "43522524974b5ea4048db49c6f9cb4286c97a1ca4523a847072cb76e445cbc90"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/intro.json"
+hash = "2eb119c6688707e6ca29d3dfae74c42605ed6c790a92c5be6fff223ea5c20f2c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/lang/en_us.json"
+hash = "6386e71e1f5dfd2e6b932325336d05718712dc2e51e2c96aa1ffde02b4f01288"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/sounds/focus.ogg"
+hash = "5ff949467b40e6a329b14b5a9a89a9211dcb0b79a8f9900283d3383f84ba8938"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/back_button.png"
+hash = "c593f6143da406e01a94771a1fb9b62c4b7c02db2f22ae002a93995f3353f392"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/back_button_pressed.png"
+hash = "b8640409a7aed052005c6abeb1a4c558ef3573278bf7f9b8e00ae310fde4e783"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/down_button.png"
+hash = "773a72f8ae79a211f6266253808d65e0657cc1e0cf91bf2914404c545bf77475"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/down_button_pressed.png"
+hash = "862ccb35c6ff122b38d286847ef56cc72419e46cabc3d828c0ec85ae0a198110"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/dpad_down.png"
+hash = "27cfd95acb452d12c340ae7112adef03d701256308edb0ede33aeceb143c6505"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/dpad_down_pressed.png"
+hash = "f2cce4655cde50b6898da238d8ce01690881ff6d2bc512d8e7023e4ec2ee0b12"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/dpad_left.png"
+hash = "f3b59a538d462cf1742f93b744a64abc0c9bf2eef04daa1bd374d4ed0589e868"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/dpad_left_pressed.png"
+hash = "0c27ae38125075941248721b4b84f7d3178c301bb6f08816402996285ebb1cd7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/dpad_right.png"
+hash = "8144383ef5ecad678b7f0d00c019a3440776ecd1e48230c3d3bab2a54e71719f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/dpad_right_pressed.png"
+hash = "59247007453c604151b66cf6ec73d552c1fa013827026367d75d3222da7107d0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/dpad_up.png"
+hash = "bf620a52de2908871b6e4c3585f02001048c178f956c19ede3470ae6a9059327"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/dpad_up_pressed.png"
+hash = "614a67c012f17af22e7be3766b4811ed47b89975a556ac23d8489f6f32f39a40"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/guide_button.png"
+hash = "48a8501494f0a887a0ad86dd9c4378dde7edb3ac894f27f1d6e788fa8f09806b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_bumper.png"
+hash = "001e4a80a41308f6015c1d40ebd660df3e943695d30200ae035fe2982a062594"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_bumper_pressed.png"
+hash = "01dac8edeeb4c2e0d8abf7291f726c39cd6bb2ff29b77f9e6c3226dd5bbe5aef"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_button.png"
+hash = "23aaeae645246b53a9ad1a5e6bd0b24220511fda94ffa61dffbd64cf22ca3fba"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_button_pressed.png"
+hash = "86585b68f7342f8c15fd8e0ebb0581c62302f783f1c09c26dfa0af333f6f3b5f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_stick.png"
+hash = "8a6a3f5d9939b4dd574b569cf60b10210708398c5b774488469931f4e9a89875"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_stick_button.png"
+hash = "106384979b95043ec4b3278db49bd995135d6b21f5cc6a714be56bc4123cc3a7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_stick_button_pressed.png"
+hash = "0fbfed83b3d885dcd53a151d1587fd9d402dc9b770ec70813567bc1a530cbc97"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_stick_pressed_left.png"
+hash = "7b985997fdb61c54be5a1fc24cf7cf79e600f1074d7588ec17b533face51c06f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_stick_pressed_right.png"
+hash = "f91ffcb6694da45c4e3d3305724c1f41d622f656f152f25d626097d02a13cbb5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_trigger.png"
+hash = "c15d52e9a31566136218b8cfb3a839a4bb8620800398fdb36301ff8864eab029"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/left_trigger_pressed.png"
+hash = "c3a46ce2848396c7627bd2fdf5d696a8776bf29bf150cd80cbc272c09ea092f4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_bumper.png"
+hash = "d7786733b08cb365c1cfff780d5784a90b6a3e1fa3eea78d473dbde18212940c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_bumper_pressed.png"
+hash = "810bbf0cc795011d8352aaf60f38f18adcb15917b4383f8f04565b9a33f7151f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_button.png"
+hash = "843d71ddd356a0ad4b621c1934705a940032bdaa1786e648f0a4aa3ceeac16e6"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_button_pressed.png"
+hash = "0979a9f1002e848f60d5f7a6b9983251f45e541f2102654af0b8f0fa0d0aee6a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_stick.png"
+hash = "9076782a15c6c7d52b212e2abffaf49d084035a96c1dd17bc7a6bad1137407b3"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_stick_button.png"
+hash = "921fe13a6e766097d6e7cd331e21b0cd6904fda65fe824204a63e9706da5852a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_stick_button_pressed.png"
+hash = "b8a22048183ea33505fc9568af8bc7b086677f4451a74cda47e582cc5f4ae95d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_stick_pressed_left.png"
+hash = "454f417b0babf2bf66cd9d22d9befd59075de5a4ae15b911a0bb4c1159b17cfb"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_stick_pressed_right.png"
+hash = "3cc4a82178a41aff4407cdff97490ac3200d6c96616c0d01bd976b6991136205"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_trigger.png"
+hash = "7b57a2604747c43797ac490520bac9a975309a91705c811aa7ca852e2ec672e1"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/right_trigger_pressed.png"
+hash = "5782be13c49fe06bcab7dc0244a487445ccbaa688d4f5d766ffe9ee8b9b98def"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/start_button.png"
+hash = "18aa857398c9c06690bac08132f925f73d7eeb884e88abc96fe319345c6ddf7a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/start_button_pressed.png"
+hash = "f34d7b15d5d04a062c2c86e41aaf99cbd2f69fb3780402c967bcef10fafc6bf9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/up_button.png"
+hash = "7d02ccfa79c841728cd5075ed15f8ccb7012fb91525b5bf343ea83c6e3820eb7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps3/up_button_pressed.png"
+hash = "48afff063a81d274c7676b29f90963fe56ec1a4927a353589ca1962f402a35cb"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/back_button.png"
+hash = "2576f08660ea258053310a22a71a1c2e79c57c27db5a611cdfdfabf93ccadc48"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/back_button_pressed.png"
+hash = "aa072abdd307944b753538d6905e220c93a1ebf88d9f456fe39b8878d1b07b36"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/down_button.png"
+hash = "8fddb6125f6c3b9a763060e6472928d10dac4f2c18996b52a3a420886b0bb7d6"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/down_button_pressed.png"
+hash = "c3ef4beba410db8e1b61e395b9cef62a8f9a099b9d7dc9ceccb3c75931168a20"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/dpad_down.png"
+hash = "b80daf5b293ec7c861aac57457c3a196db281fdbdeae076ec62b10dbd66aa4b4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/dpad_down_pressed.png"
+hash = "657890e3041966c5d32ff8c3b3d8aee27bb2c391f632d3e1319a8aa67dbefe3b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/dpad_left.png"
+hash = "7d8400a05d7944c7372b9502e1d03e4e0a934d80ddcc2bc496ca762da8765c44"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/dpad_left_pressed.png"
+hash = "1abf051effd7d11ec6b9641b39db5baddfea980f8282e03b34003eae61e354ed"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/dpad_right.png"
+hash = "71d975e3fde7479abb6dfc5a5ae59e3c1da992f7edc394033904068bb930a008"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/dpad_right_pressed.png"
+hash = "e920f4e70dadb15276d0e4ae42dd397860c6056d61f0ca97682dec13ed489046"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/dpad_up.png"
+hash = "9f8cf80920413f97f4085ffb7fccc9e3e4c35b8dc0c74941720029790666233b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/dpad_up_pressed.png"
+hash = "b8b8555432bb93e4be446744c7450dc3075bc04b7c937bbcf9eeb5eef8339ba0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/guide_button.png"
+hash = "b8dfd3476026075fe470a45f0cfb6781b6ede1f7a6646731b17ca0bec98fd5ce"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_bumper.png"
+hash = "c52891f53ef90b44a4608a256322298915da7992f3c47d669588d418631b46dc"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_bumper_pressed.png"
+hash = "78273d10adf2ff5475607a4a42a5d13805502923051b5ddf1cdeb48842c08880"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_button.png"
+hash = "9638143d8a378073ed92b058b8a9202233cd71617661ff02582cfefa57b01adb"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_button_pressed.png"
+hash = "fe3795ae74376be03a74c8c1a5e79b3866036643276bdbcd5d117a8401e03249"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_stick.png"
+hash = "b57b110ff783134663f90b1ba7ec869e47c2b85be9fe6c25b71cbab04354a247"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_stick_button.png"
+hash = "9dc323013aa8ddf5d2470de7d8b3306b89cad66657bfe412cfbafe8c471135a4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_stick_button_pressed.png"
+hash = "6a385f77fa9a433b6251be2bd2b3987076843cdc33a9e65ec0bd4d8969bd813d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_stick_pressed_left.png"
+hash = "d38e0a2ee8ff01e0517c32f0e9fad7493dffef61fba55c983f7c46b0971b317a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_stick_pressed_right.png"
+hash = "e57c9782a752e80ec583d30892138eca69c625dd40650e2a10ab9162eb90c383"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_trigger.png"
+hash = "0a1337c9a4d3d975f0fa60cd90d6df4cb5a2798a5ffeb507df59ea462a23cc12"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/left_trigger_pressed.png"
+hash = "7dc4a351bc016fff75d8d0d90266cfbeb20c14a50a633f0beaccb244ca510e80"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_bumper.png"
+hash = "a1dc0471058740c5a75231d02f39ca01899f83f42bd1e53c094e86b07553a59f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_bumper_pressed.png"
+hash = "5d8ee21668fe95352d070e44be44d1b258474bc1d583a57389bd129559dc1d2a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_button.png"
+hash = "4a84219859a933582038c774c0fbb9ddc86c62adb8ce226345c1609d27c8ad73"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_button_pressed.png"
+hash = "e4c4782cd00843ea371f3bb1e64bb4477905291484e8e150af9f0d9258643677"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_stick.png"
+hash = "1edc63903fa164ac764d67fb1735d918cab3947da71c7dad2bc715d204b03e7a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_stick_button.png"
+hash = "041d5a3548f8cc84100868e46b339906bdd7caa3abf4ab87518813a7ce92d7c7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_stick_button_pressed.png"
+hash = "65cf6bb67bd8bb84b2606fc95011f034eae2d8ed59180f863716688a5520075b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_stick_pressed_left.png"
+hash = "af1ff2bf8245833f9c97eba914678b01852be134c3ffef8a76a59863a1541877"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_stick_pressed_right.png"
+hash = "9ef9a95a5b9d2042b403a3c8fbc088bc73ace0a81b5f5f0ff2a3428b0df4c688"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_trigger.png"
+hash = "28c51a26ed48380448a04163fb2f55185513fa5a3aa1f3e82dec6e5ed0d088d4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/right_trigger_pressed.png"
+hash = "22748c22387985a4061e3cf740f185da49f456a6404cc978e90fda448e667f51"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/start_button.png"
+hash = "267a752f3ba54336a113d69a48cab6b8b0575b9116e10e1a7489ab77d0fdc8da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/start_button_pressed.png"
+hash = "906a639d8ecd1abc23db3e522dba400238ba9bf70ce867df14c9c2cc4eb1ebf7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/up_button.png"
+hash = "fe69b9ff95f2dd93c06dcc4acd18a1d4005f978b2c586198747e2a3edcfcf15f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps4/up_button_pressed.png"
+hash = "87f0504057efb1aa675bb2fbad76138cdfc5368083781c0673685e0bdae9b7f1"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/back_button.png"
+hash = "1f0bf6d153bcfdfa5285dc870e7eca8d1f5e4fcf670ad8dc03dfb3cba4c4649c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/back_button_pressed.png"
+hash = "7de1986416237462ebe834c17d055a37676cea27d9f551a82118cd4665679adb"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/down_button.png"
+hash = "93ef44354c9ca1945d27b21312cfdc70038cc411fb99d043a966be7e78585c5a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/down_button_pressed.png"
+hash = "d5af53ba691fb5cc8c8577e2d4f390df4d56f08e91c0b06ff0931fec09d7e2b5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/dpad_down.png"
+hash = "27f7555a9f4f353a8e36026a0b4b3c018b019194bf06be12d9d7dad4dc7578c6"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/dpad_down_pressed.png"
+hash = "86a49d732a258a9f863b8317ab328724a93f2766e25e005fb21561ff4513678c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/dpad_left.png"
+hash = "956497aca79fa239214b6cc53b1863e2070f7370ede46fc847e120eaf801d253"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/dpad_left_pressed.png"
+hash = "c80795ebfffd9f07b584b2508d805fdcb2f96e2fb8f34e85076b4af3b38dc248"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/dpad_right.png"
+hash = "35d60474d0bad7115dd06aad93e97cecbd5f5400df3e1e479dc9ebebb3c65224"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/dpad_right_pressed.png"
+hash = "9364f053ff434c6c31658b2057dd3c53bc387a230612a53765f052bda5a36d3a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/dpad_up.png"
+hash = "0d22c3f9a4305d1c0ac9db727916d290b4a434c611fc605a8cba8e8b0e81b615"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/dpad_up_pressed.png"
+hash = "8980e06f74fa08703ee30ef4a143dbcbcb43a906c1c5b9905d30bc95b248fec9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/guide_button.png"
+hash = "a29a1f81beaa1332bffa37e974c27486580f66004ce1a5d694c43c6073400a48"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_bumper.png"
+hash = "c52891f53ef90b44a4608a256322298915da7992f3c47d669588d418631b46dc"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_bumper_pressed.png"
+hash = "78273d10adf2ff5475607a4a42a5d13805502923051b5ddf1cdeb48842c08880"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_button.png"
+hash = "e2bc03b8fa5c7671fd04af29cb5c9cf2f2c4637d3744921552d85f61b032d8dc"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_button_pressed.png"
+hash = "994747522f6c62025440902681ee5dbd664ebae58e7610e6abc5fd500cbf3abe"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_stick.png"
+hash = "b57b110ff783134663f90b1ba7ec869e47c2b85be9fe6c25b71cbab04354a247"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_stick_button.png"
+hash = "9dc323013aa8ddf5d2470de7d8b3306b89cad66657bfe412cfbafe8c471135a4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_stick_button_pressed.png"
+hash = "6a385f77fa9a433b6251be2bd2b3987076843cdc33a9e65ec0bd4d8969bd813d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_stick_pressed_left.png"
+hash = "d38e0a2ee8ff01e0517c32f0e9fad7493dffef61fba55c983f7c46b0971b317a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_stick_pressed_right.png"
+hash = "e57c9782a752e80ec583d30892138eca69c625dd40650e2a10ab9162eb90c383"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_trigger.png"
+hash = "5367084196e8213f49dc3f4d00ba7222dd478a90e0ea555f11a2468232f96b18"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/left_trigger_pressed.png"
+hash = "8ee0f6ef915ee601e1f61cc38470d8c8e2abb2c161ea0c71bda4c5f3a61b3aff"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_bumper.png"
+hash = "a1dc0471058740c5a75231d02f39ca01899f83f42bd1e53c094e86b07553a59f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_bumper_pressed.png"
+hash = "5d8ee21668fe95352d070e44be44d1b258474bc1d583a57389bd129559dc1d2a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_button.png"
+hash = "2ab6562f7f327e9b969f8c1852cedb236a66c40248259cf04cd75b38dbc5cb1e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_button_pressed.png"
+hash = "151c9c70e4d838e73ffb4eb419060d39311da0fc38a35de585351fd3c68fd841"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_stick.png"
+hash = "1edc63903fa164ac764d67fb1735d918cab3947da71c7dad2bc715d204b03e7a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_stick_button.png"
+hash = "041d5a3548f8cc84100868e46b339906bdd7caa3abf4ab87518813a7ce92d7c7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_stick_button_pressed.png"
+hash = "65cf6bb67bd8bb84b2606fc95011f034eae2d8ed59180f863716688a5520075b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_stick_pressed_left.png"
+hash = "af1ff2bf8245833f9c97eba914678b01852be134c3ffef8a76a59863a1541877"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_stick_pressed_right.png"
+hash = "9ef9a95a5b9d2042b403a3c8fbc088bc73ace0a81b5f5f0ff2a3428b0df4c688"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_trigger.png"
+hash = "8650b3bae0090c48d649f87b6e8c48333f60015f8022058f66afc02fea2b7579"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/right_trigger_pressed.png"
+hash = "23799f2ec53451b6cd534b3c54e7bc67eb3ad3870013292fec6d7d0ed2dc3ae9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/start_button.png"
+hash = "5a3b0d49782c46b5716bde831446dd35cc5a806da64df3568db6af3f6de0d089"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/start_button_pressed.png"
+hash = "4ff857dbbd796e0cd940092572ef8bf5e83ace83db59b82d057583503bc47279"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/up_button.png"
+hash = "4b61d8d9d31c472206e00a042de430bb85030be9a729c3056c6d729b2dacc027"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/ps5/up_button_pressed.png"
+hash = "a37da4ad21d27070c52c32aecf5ae1a12ab992b670a5fc929ac24228f63dee73"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/assistant_button.png"
+hash = "ccfc308ce49344e08b32438975e8974b9f904ea1745d3c820a82a1ed6a67f4d6"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/assistant_button_pressed.png"
+hash = "41ad2a42e2bc625701592d4b1bd9a5ecdf97c2d1adf38a2085987c20231294be"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/back_button.png"
+hash = "88b83cfc9a72bba6702ac72af7f7accfebc40fceb324348a27a3e684371714da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/back_button_pressed.png"
+hash = "6289c7401e488a27ffe1af310f3a00dda02941813c30a5f72e2cf4be2343807b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/capture_button.png"
+hash = "3ac4c1ad4a0f61f4d79d6140a03803403257a07b45c55258128a0cd96e614823"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/capture_button_pressed.png"
+hash = "14a220c980c8066b3eee6e6f66cabebaf3308d0bd18f63f77d3761e0088ef3c4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/down_button.png"
+hash = "ac079f09ff4c2e0f48e515197f24026e25d39124aacb63ec8e9e2fbc28977a7c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/down_button_pressed.png"
+hash = "28ac6c092a0a7ff24e284372b6b60223b9d915ca9ebb2f4061e9126826ebeaff"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/dpad_down.png"
+hash = "7e8b860e35ca8ae862f27a1b4736b2c5c8fc58ac2fc4342461a629db8671be73"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/dpad_down_pressed.png"
+hash = "530f5d380be4637a29efb032965b0af086242ae7df31d4924fde71ec1982d1ff"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/dpad_left.png"
+hash = "31f9752f67daa7b8d34087a2f6dc52de3ffe441cb29740746e7819b485880923"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/dpad_left_pressed.png"
+hash = "5c8b32597503ff7c4aa8e07b4f754a52a2a442f540f7e18d4ac326e0943e2e15"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/dpad_right.png"
+hash = "776e9907b21b8f307481ed5843989f202dbe5786bf418e530caec897d2d23720"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/dpad_right_pressed.png"
+hash = "0df0b4ce26434528dcb25d3ad264ed7086d324759e0435c3b47719c05c3d165a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/dpad_up.png"
+hash = "6769877c29ff4ec136a5c9aaadf3b94fb38d92fc31e97ea9beaa6b48917966d5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/dpad_up_pressed.png"
+hash = "20422cd690d97225d12ab7e113035a5d0421ecc752b4e78ea4599b34281fb33f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/guide_button.png"
+hash = "61d3b9513d00913c0a000868f547d359e94d2e06173da625b616d8239fcf51f7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_bumper.png"
+hash = "e61848fc5b87f9a2f51651713fdbf7d197c79d3124f638532544bdc341b15bc2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_bumper_pressed.png"
+hash = "a8c4a0403451e6680fd502008158cdbdfe55b62d9a33712859ef9fe3c971fddc"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_button.png"
+hash = "9958ff33cd7c7f6a22de4e86e534f84487eb88f8f46a39237c106d72dfe014e0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_button_pressed.png"
+hash = "b589716c918681b32589e37257ab4e7764e1c4f2468e90ba96aa5405c858e919"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_stick.png"
+hash = "e7f5d28b683ee4a080291507569b3efc2234a5ac9fb79ab5bbac55205f747199"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_stick.png~"
+hash = "b57b110ff783134663f90b1ba7ec869e47c2b85be9fe6c25b71cbab04354a247"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_button.png"
+hash = "924324bf64019c68218b79cdf5e06101d54b0c8eeab35797d140817cc6815415"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_button_pressed.png"
+hash = "3336733619aafbfcc9e83e368da2f4a797c07394a20291f5d96303a66f328b49"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_pressed_left.png"
+hash = "bbb5987461221c4812f04473e00ee2820092a27ecd40f01903f9c29a9b6b2fcc"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_pressed_left.png~"
+hash = "d38e0a2ee8ff01e0517c32f0e9fad7493dffef61fba55c983f7c46b0971b317a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_pressed_right.png"
+hash = "1fc1126b2d6ed21e3ff217e66bf695a3e060533c97e8491ca1cb55846ed1e011"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_stick_pressed_right.png~"
+hash = "e57c9782a752e80ec583d30892138eca69c625dd40650e2a10ab9162eb90c383"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_trigger.png"
+hash = "1810c1b4428757b2df4f2ff2c11c2fa570c09c0ca342a87a67661ebe91ac55a1"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/left_trigger_pressed.png"
+hash = "2fb4a84071614abaebd385156dbf376b1bed1157c98a4f39af4207b476e5c07d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_bumper.png"
+hash = "f44fcfee2028ada6c8a2a764c2ec076a26aa1026e02d1fb2a2e0b4a1d3a4df42"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_bumper_pressed.png"
+hash = "25fcf9213edb7e3f077c9b0fc26522f96db80230eba32fe2a19e3e40b7239df7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_button.png"
+hash = "03128cb58db7559138625e232431536c003f01c3f4842d605b5fd95363247508"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_button_pressed.png"
+hash = "8608930d21af0889d12c011603716b8b67c3e980e6cfa5b1ea863fa0e8be2c61"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_stick.png"
+hash = "f84de89590fd1e3d00bd18c2525eb86cb7b45fc8b6961ff775fb7a064dddb68c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_stick_button.png"
+hash = "98e104f3e2338d2cb1252f64308d3a8b121b6a22079993ca61b01515ecd22594"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_stick_button_pressed.png"
+hash = "a96e876f1eef7dbf82bc64b6a9a5902c1e766fb4405e8f54848b81535cef076e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_stick_pressed_left.png"
+hash = "775c83bcb66f6a405c2e356fb47ad763d6993852d96e986fbdaaa99ebc76bf20"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_stick_pressed_right.png"
+hash = "509bb95f619ed942b70cbcc8a755dc68fd34e961e4f3c552afacf25e0c26ef37"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_trigger.png"
+hash = "65260dfd56c1459db128532f1f32408f903ffcbbaca130450aae56a66cc21f1c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/right_trigger_pressed.png"
+hash = "d9bddec2578a70abd6068d80d19677a9727eb54a7535b1fb008d71435f399cba"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/start_button.png"
+hash = "c65e1ad75f3527757984a73f58422acc7617a2ec3d0ed629d2c4aee1edfebbee"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/start_button_pressed.png"
+hash = "b10b5d2b243796aee174211e3c1c8321b3ae095c075630d80779bd93edfb7ac7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/up_button.png"
+hash = "8aa7d5e64cc65f28ecbbc87a762f00f5d6550305a2dbf27f9c0709f912eb43c2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/stadia/up_button_pressed.png"
+hash = "341ab16f9a9f4ffc1a7bbf4690ebaa99ec8d9279f37e9bb32a6b9ff323fcf315"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/back_button.png"
+hash = "2576f08660ea258053310a22a71a1c2e79c57c27db5a611cdfdfabf93ccadc48"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/back_button_pressed.png"
+hash = "aa072abdd307944b753538d6905e220c93a1ebf88d9f456fe39b8878d1b07b36"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/down_button.png"
+hash = "5588bf502df1742507819466bc675a38f78157821d956443207c65fc16a2b5b1"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/down_button_pressed.png"
+hash = "0ae854d9aedf238ee97de8c72d50609b2de2947699f071cfbc68485602b284bc"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/dpad_down.png"
+hash = "b80daf5b293ec7c861aac57457c3a196db281fdbdeae076ec62b10dbd66aa4b4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/dpad_down_pressed.png"
+hash = "657890e3041966c5d32ff8c3b3d8aee27bb2c391f632d3e1319a8aa67dbefe3b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/dpad_left.png"
+hash = "7d8400a05d7944c7372b9502e1d03e4e0a934d80ddcc2bc496ca762da8765c44"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/dpad_left_pressed.png"
+hash = "1abf051effd7d11ec6b9641b39db5baddfea980f8282e03b34003eae61e354ed"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/dpad_right.png"
+hash = "71d975e3fde7479abb6dfc5a5ae59e3c1da992f7edc394033904068bb930a008"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/dpad_right_pressed.png"
+hash = "e920f4e70dadb15276d0e4ae42dd397860c6056d61f0ca97682dec13ed489046"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/dpad_up.png"
+hash = "9f8cf80920413f97f4085ffb7fccc9e3e4c35b8dc0c74941720029790666233b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/dpad_up_pressed.png"
+hash = "b8b8555432bb93e4be446744c7450dc3075bc04b7c937bbcf9eeb5eef8339ba0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/guide_button.png"
+hash = "b8dfd3476026075fe470a45f0cfb6781b6ede1f7a6646731b17ca0bec98fd5ce"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_bumper.png"
+hash = "c52891f53ef90b44a4608a256322298915da7992f3c47d669588d418631b46dc"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_bumper_pressed.png"
+hash = "78273d10adf2ff5475607a4a42a5d13805502923051b5ddf1cdeb48842c08880"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_button.png"
+hash = "d3dc254719daabc61671f7d6eae3a6d4c498884ba2ddbacf5f9546aebb132d88"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_button_pressed.png"
+hash = "fdbf2f3f040e00894f92e39711ca12cef536709c4a0bc77e0ab78716f77ef309"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_stick.png"
+hash = "bb0c2ce0390a2ba1b9afbe5f084364c2240fd1641939af2fde54e78d073235d5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_stick_button.png"
+hash = "bbd9fb5b822735686f8006c35e4c7e607d3cb4783fd4baa775ada64f23def470"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_stick_button_pressed.png"
+hash = "8117fbb36cbcfc13ee89c1105d9b90fb45e4feb7b85e59529b66eb00f8744980"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_stick_pressed_left.png"
+hash = "1822988abc40346b6ec90bfa99a7d591c96c109ed8527190d7807190e8408ba2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_stick_pressed_right.png"
+hash = "28dfc3dfb8a52f3128107c63351c92151589c06b1e4e9e0350f4696625affa0d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_trigger.png"
+hash = "0a1337c9a4d3d975f0fa60cd90d6df4cb5a2798a5ffeb507df59ea462a23cc12"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/left_trigger_pressed.png"
+hash = "7dc4a351bc016fff75d8d0d90266cfbeb20c14a50a633f0beaccb244ca510e80"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_bumper.png"
+hash = "a1dc0471058740c5a75231d02f39ca01899f83f42bd1e53c094e86b07553a59f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_bumper_pressed.png"
+hash = "5d8ee21668fe95352d070e44be44d1b258474bc1d583a57389bd129559dc1d2a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_button.png"
+hash = "5b225d31f41664a39d14d645bff486623bae66837bb19efb088a74b5deb2e2a8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_button_pressed.png"
+hash = "90c89e17fc77974a1b4d6eaf76527b8693ba92650098c62175914f08017b749b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_stick.png"
+hash = "1edc63903fa164ac764d67fb1735d918cab3947da71c7dad2bc715d204b03e7a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_stick_button.png"
+hash = "041d5a3548f8cc84100868e46b339906bdd7caa3abf4ab87518813a7ce92d7c7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_stick_button_pressed.png"
+hash = "65cf6bb67bd8bb84b2606fc95011f034eae2d8ed59180f863716688a5520075b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_stick_pressed_left.png"
+hash = "af1ff2bf8245833f9c97eba914678b01852be134c3ffef8a76a59863a1541877"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_stick_pressed_right.png"
+hash = "9ef9a95a5b9d2042b403a3c8fbc088bc73ace0a81b5f5f0ff2a3428b0df4c688"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_trigger.png"
+hash = "28c51a26ed48380448a04163fb2f55185513fa5a3aa1f3e82dec6e5ed0d088d4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/right_trigger_pressed.png"
+hash = "22748c22387985a4061e3cf740f185da49f456a6404cc978e90fda448e667f51"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/start_button.png"
+hash = "267a752f3ba54336a113d69a48cab6b8b0575b9116e10e1a7489ab77d0fdc8da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/start_button_pressed.png"
+hash = "906a639d8ecd1abc23db3e522dba400238ba9bf70ce867df14c9c2cc4eb1ebf7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/unknown.png"
+hash = "f2d5553d833b86dcbcd4290c111d0d942f3957daf7f64712891a226c4f3b9d6f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/up_button.png"
+hash = "53f96ee1a9a7a79833877dead9e400505cf29db759c84915b5dfade48645b451"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/switch/up_button_pressed.png"
+hash = "6f8aad8b8c112ff3475779edb74c67c187877bf8cc721f85cc333a6bc5926dd8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/back_button.png"
+hash = "68795ad9eba9a2d3ec5814b9ab2b69d45fa71642335e165b4f32a9095ddf9705"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/back_button_pressed.png"
+hash = "f6566cd1959513bf70bdc2611242fe7b831c9dfbb21fae9d412d89e427816482"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/down_button.png"
+hash = "1beea40377d96d9a51526a2e4c6e900e5d781c37f8530ca3f3e0f2abaab00bf3"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/down_button_pressed.png"
+hash = "17be498408f1c9d5e9758db6484bd2c589c1c6edce90bc00a919497e3bdb5d32"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_down.png"
+hash = "d3f49d9fbd5ccd8e0a3fca909dd26a670a7dd1e290538c2f115900e0f237bfb1"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_down_pressed.png"
+hash = "105bf525a895f1e78a7c779765873178b4fd93d8b944dba5db7f008c8de996e3"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_left.png"
+hash = "09b181604938361fb4a4ae732fb911de1f01ecb1566fd8c6d93f34ae2431edf8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_left_pressed.png"
+hash = "568af289b9b83f9ef283568c276a802205806728fda9bd5ba0e5f6223a972fd2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_right.png"
+hash = "bdb1c634e8ad525e29d9fac932e9244bf6bb8fe5ea339287ca4ddb75b003bf35"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_right_pressed.png"
+hash = "d922cca6006388fe8d4a45ac2d2125f0d4514475acbce2ceb256e234119c454d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_up.png"
+hash = "3e31cc1f0131dd1f52b951a26deedf290740c802207f295de8d69088b3738a97"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/dpad_up_pressed.png"
+hash = "87398138ce4805936298bddcb99958e6a04be92f71fe4d20bb4bc5c3b4dffa2a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_bumper.png"
+hash = "efaf5f99137ff3e97b93a936852a0732fd8f0554109ac59c8eae411f140c7843"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_bumper_pressed.png"
+hash = "2ec3c11c662ad94cb7d214aa96df6403066942cff704db3a31cfd30dddcb1886"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_button.png"
+hash = "7a9e67e9dbc3f9db66b3a4d1789e417710aab02ac726121dcbc77a64f45b8681"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_button_pressed.png"
+hash = "45d2191cc8db9aa42d42b330fd89d18a3ac7de0aa57f1f55bdfad4444d788a24"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick.png"
+hash = "9796364960fd5ebc02e2cfccebcefd395d0b12a0345b865ada6c104cd38793d3"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick_button.png"
+hash = "1cadd0e0c8e39c20b3bb5e5cf34a6713c25147c8e61f4ed767c1d83ee273df16"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick_button_pressed.png"
+hash = "f0bfb7d122f362b60968df91051b21c75e5dcba5fea9f8a50147e5ff87ae0ac0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick_pressed_left.png"
+hash = "ca8582377ce1e1472a8508222674045a660771ca7f83ccfbc0a5435bb24c19f2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_stick_pressed_right.png"
+hash = "ca0e662370a6308019e60b410076f4716191f765ca6d3f92f8e44555ee092be5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_trigger.png"
+hash = "cd64c0712f0bc2de4cbe897965838ce576b8a74f8e3ec71b5c211ae4763bee6e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/left_trigger_pressed.png"
+hash = "bbeaa5047f1d3d2535919549a224a28867a83373c7aa755280716e8d79bb9765"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_bumper.png"
+hash = "6d20d37e17c84d83531411ae11637878753cddd0cf88137ad50df90f3bcf7156"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_bumper_pressed.png"
+hash = "f3b10c36e495ef66992b1b470786a16e0130af9cae21c4d008618d263eb3c61c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_button.png"
+hash = "5dc6321298267cc5d90ae81f6b292d0b81923e41c744c293f514e22d47be6e92"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_button_pressed.png"
+hash = "f923577497dc46d8524985fe7723479824bdbd184e08016a77f8129f0fad573c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick.png"
+hash = "c127d8f3e65a5480920086f6252484d40be84fc68458df4678022a76dae1727d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick_button.png"
+hash = "db778d447f6085b9be38fe47f5e47eb770450b81d8a675ff470196290df752a3"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick_button_pressed.png"
+hash = "625632aa8f6b90aa6a92ae920004ba77f155542e4949bf0304c760d3e1814181"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick_pressed_left.png"
+hash = "09bd4e4713b9788ea433948cc1dd53633325a03078f758e9d869bbdfdf7e2b5d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_stick_pressed_right.png"
+hash = "4d0fd5f4651c59e1c8524c0ac78dc17e1c3da6812ffab7536766c26cf075906d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_trigger.png"
+hash = "2b434419e545f29392720a99372013ffd35948c56a6673360909683b913ed16b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/right_trigger_pressed.png"
+hash = "2eeb1bb4e76e973eed0cf50d4859325e89a17b970ed96a254bab6e9f486500b7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/start_button.png"
+hash = "a62a323875d9a33cdde6f5983c80cd0269e9c9b48b58f9ea63575f839fc04920"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/start_button_pressed.png"
+hash = "6406c01d4eb4fd7018a8a358e61ce7d4bb72733772638c2a818d6a60800ed190"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/up_button.png"
+hash = "1493a2e832f66f2de212928d8e44bd371d513f88bf644d150e4cd4c891d2c123"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/wii_u/up_button_pressed.png"
+hash = "5250ad252c35a9c8823a0b3a5a847841e14ee485276c7833bb860c1557e613a8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/back_button.png"
+hash = "8c7e77a2e7ebe01e962e875348f0917c37b6aa1b4e508e4c774f81afcccc67fa"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/back_button_pressed.png"
+hash = "bb9c95a13b457dc19016088e5d6636dade6fa1b181f6ec1204390d8390070011"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/down_button.png"
+hash = "24c8ef30881e37699c0086ca757c0bada4fecf0e4db756df55589f1bd2892070"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/down_button_pressed.png"
+hash = "c4f55d209860badb8c3d5dc395ae519bda2e43d37b402a89d634d912662cd159"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/dpad_down.png"
+hash = "7ba6c653688c06327027d95ecc39240dd4d16ac5587c625e7f004c3b44e958e0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/dpad_down_pressed.png"
+hash = "ab0ca948e3808c13f0a71ed3ec7fa7215015fb93b414c89fe81af42dd9f42c9f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/dpad_left.png"
+hash = "c6bda3bdd85072a7518cadcda7ddafc454e70f52fd9937dc4598408f3ba052f5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/dpad_left_pressed.png"
+hash = "b7cec6a26db3a97f94e6631fa87d3eb92e251fe3538c24f5542cb4a433c5a80c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/dpad_right.png"
+hash = "e3da8b38ce8b52f477fc6651bf7b1a764b135008fae0a102a187829d6762404a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/dpad_right_pressed.png"
+hash = "71e925497f9a561313929922f774ce352b0dfa58600a8d4743dbb0b2e0412217"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/dpad_up.png"
+hash = "c4dfe2eaf1383ce3449079f0e041f275d91bdfbdb2709c2151d5300ba3613725"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/dpad_up_pressed.png"
+hash = "5a3bc67de081fc717512344bd0384f3fb77932bccf0414351b59b91d412652c8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/guide_button.png"
+hash = "127c7d58810399ebf8a33005d15c2081d51589c1a3874b4f72324d23c105dd87"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_bumper.png"
+hash = "876b814071cef6151a1b41f004ca412d6f1a683f8d44ae0231ce088b9559fb00"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_bumper_pressed.png"
+hash = "86765b85ba80fa7324a855e307ebd1042c0034ab86f4c9ba86a29d8277f2cc12"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_button.png"
+hash = "ee80bbe7aa7229c7d9b0a56f7a00c25916a48ddf42d7d8dcd31410067360190a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_button_pressed.png"
+hash = "f4d258161b44787c9a2382ff3f1587b5d19b3f22fb3950cd2a2a2dab2c752f09"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_stick.png"
+hash = "e5a25dc787e06d1b803f53e4e93af44e63163a168f4fc334d133b70f519f0e3e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_stick_button.png"
+hash = "a72795356cdaf6187ed1774078bb5d2279f8f0aa3ed241012b209e56162de159"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_stick_button_pressed.png"
+hash = "3c5e95679b60d6714f065105e2817282d43e8a54137cab13acf73f9cde702e20"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_stick_pressed_left.png"
+hash = "9d749f91401ba89ae498570e4d310c2cc2d38d66f9c32088c236bc5665f326a4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_stick_pressed_right.png"
+hash = "e0c4682e3bb7d6c85c8ac4fda5ab91643a13affbbf0b8c2b4cc83099bf30b5ca"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_trigger.png"
+hash = "5702da227e2825ee8fd09c55ab5a096d69a45434e047ee5f67c6aee14c364afe"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/left_trigger_pressed.png"
+hash = "eff48342b5585cac7d13f1b664a255f063691c88fd1251ec2d2c188355caaa58"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_bumper.png"
+hash = "6dfc035064b6790aae9de7d8d60e1f35572dc4335df6287d25e611a1037d22d7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_bumper_pressed.png"
+hash = "6fdbd9165912011f1208731bbfd490fb8e892116be50b572939586a95709944c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_button.png"
+hash = "aea8bffd427da989a6d00e9c48a0dfd08685ae000bc9d3428b82852db5e80bbe"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_button_pressed.png"
+hash = "48ad44e4481edaad8c0c70c1e9852f58950656c6544cd3b7f0b085684acc61f4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_stick.png"
+hash = "22647b7f5e3b887faabb4b5376d82aa1de98c4bd82d6aee87482c0cef645cf16"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_stick_button.png"
+hash = "20d4b52ec6e3015f07ba4e6c1852b9abdf41bece6bf36b2be43b526a1e6600f9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_stick_button_pressed.png"
+hash = "33a0b45fc654bb2b5c533fcb97fc66c10684a2362a9c5cd333301664099968f8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_stick_pressed_left.png"
+hash = "a954c59ef6cae0051d382822c982d96184b6be7a4804ddc6e0558035ca93f472"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_stick_pressed_right.png"
+hash = "cf604df70053d97866b4d7e42ae80ec6f40a8baa1dae79b126ae6a72ca712dec"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_trigger.png"
+hash = "26aac2af636071ec70866671f3676fd47a96b4337b4ab21d67d5e461731e050e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/right_trigger_pressed.png"
+hash = "2dd4b5e7a1b068ca1f928d14df098e840a0f6bdc201045a617b0efbae2e2c8e0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/start_button.png"
+hash = "0e166eb41b953ab785988b24f07db95cbeaca056205c37593790a17494666612"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/start_button_pressed.png"
+hash = "ddd5e733bfb19c8573841fcf546f66b84ead990b2fb283170528ded36266dabd"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/unknown.png"
+hash = "edc6e131abfa0c5983f51d11631ce354ef3c7f2b149a3d98c7191196a1a17d5a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/up_button.png"
+hash = "f656c3fe856e00585a637eea1a9d1611682d2c73e43e48d4d43bcfaecec43e55"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/x360/up_button_pressed.png"
+hash = "8730d76beb49f1c09f9a146a42aa11ef43e47ec4c2584c5778310b5c246ffc81"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/back_button.png"
+hash = "8380cf053a803f81025232722e02f33fe20e701e5972f24310314393946e570c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/back_button_pressed.png"
+hash = "6d510ee5e7b04c8ae42de3a1b39ef8b30bdb35fb8432a2dedd974dfe56c9b8c7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/down_button.png"
+hash = "35e16e96170a6c87326924d85a1bfdf70bfe6c0e660c317aed6995776229ce43"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/down_button_pressed.png"
+hash = "153bd88630f51ae386e001f591eb35742e070e8328a16666d1947d7f612f1ad5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/dpad_down.png"
+hash = "62dab75c1a378494827bf78ce9fc91d7069aba1014d5620accce64a5a7938ead"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/dpad_down_pressed.png"
+hash = "c35119d86bf836c2dee6d4406e56017dc15b0e82e23e68bcfc88a2b90086b7e6"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/dpad_left.png"
+hash = "686664f8897f0efc0bc4cc6cc0df18dbf91b4a0a65b08a9fc2dd38487882f3c4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/dpad_left_pressed.png"
+hash = "cdf89af3b51a5489ed45a15146bdaec5885dbe810bc7bb4a282baa36eeff1e31"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/dpad_right.png"
+hash = "31909a9226974a850e0364363d3645910ad4f05eac59d9148126bcc970acb8ed"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/dpad_right_pressed.png"
+hash = "cf03fd2443f78e1b674c33df6a11a22ea3f7b8c96d15dc0aa99ddb7bb0a78313"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/dpad_up.png"
+hash = "11b6f583177017b20826335586fa9e0eb2a10786fed7c9c977bfa2c01e9a6d1a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/dpad_up_pressed.png"
+hash = "ff1f1a6ebd7bab19824b8fa602c9adfc406b9df2e4178b88c42e97e0d87b240b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_bumper.png"
+hash = "c59897810614618697261a24654dd3d98c9041648dc190a3d98e25e89d84ea6d"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_bumper_pressed.png"
+hash = "5bff9deb99592d5b7b7f23f29c9d4a3e83585ae15890049a64c34bd6c5ca6f8f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_button.png"
+hash = "24ec20cc638ad8cf05b611ded5efeded76891106e2f67c5d971e8abc7da5775e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_button_pressed.png"
+hash = "f19f09079f960e744394b2562f8c524c8f5d0d5812eb4f812a057a60ec9d7b67"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_stick.png"
+hash = "4553459aa8bb9c97ac34cde3aa9361604dbae35fbdd1348abd16a91eff838fc0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_stick_button.png"
+hash = "af951a30a99493c26ddb43bdb5c4b9f13f4dab6312ab5fba72e9219f154ff383"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_stick_button_pressed.png"
+hash = "fd283bed20174be0944ffe3ad285e8283a1fe21522b13f31b9c5d60f0ca437b0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_stick_pressed_left.png"
+hash = "baefde398fb8eb956b98ef82ee3e393db2fbe33493862466661aecc61693fcce"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_stick_pressed_right.png"
+hash = "dae45e90083446efb583cba7b822e3b9c018bdc9dc9dd3e52ff4d03bf2c932ba"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_trigger.png"
+hash = "71353bf6ab5586fad06f602c86e79270f9f025fdd9dc44cb28ae8bbbcfe08f5a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/left_trigger_pressed.png"
+hash = "c80678c5ab284e94817c161f3d12741f09321356508f00e111d351bdb6fd793c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_bumper.png"
+hash = "39883b05ef0ecf0f437fc0ad9fd2addb4aec89f6383eb6c84e1836b996e4d354"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_bumper_pressed.png"
+hash = "89dc5a61cad31f06eccc158f8a4b96b29bee2bbbb598ebcce080e85e3be9eafe"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_button.png"
+hash = "2f1f0a9040d41a15a589a02022ec707d63d92bbb65cd01084019863f8632b3f9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_button_pressed.png"
+hash = "b85988caa514b8b344a95e791c163912aef5b1652ba87e198012dc9fa7c9f6e9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_stick.png"
+hash = "c1886bc4985187bbff86019e01e4823244f1f5d1f6077f34b6122e84e424c8f9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_stick_button.png"
+hash = "d1a24737f26ea8db74caee1025dcf05790c376ee17927152b05110bc13d08485"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_stick_button_pressed.png"
+hash = "87afdeadee6675cf10bcd129bfb554163238b8f1c11ac912440f12f13b0c1cf3"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_stick_pressed_left.png"
+hash = "21383547a6406833a3abda7b4c9010da50b9fae5a6c3db344427c762222e4be6"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_stick_pressed_right.png"
+hash = "dfd929d6711be89c2fb2ff2650faaf2f8eb3339b23f13a2c48e9b44809218e64"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_trigger.png"
+hash = "2718a017cd1023ddb0adcf13bab7adcb4fa39d475e869b078973485b6c31a5e9"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/right_trigger_pressed.png"
+hash = "41c5dc498c10fc3702e1c6fdfe89397cdf2a7139dbb6255c28bf3ef52d45e1a6"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/start_button.png"
+hash = "21e3f816d76955451a62d2b3a25934093a5a1780322830a87cf5be4c197f19cc"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/start_button_pressed.png"
+hash = "3d0e4f5aa5065beb4dd881c843733e47a3cca0218439ae877736bab86cf54971"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/up_button.png"
+hash = "b5b0ec87ac055bd88ecc5658c0c0b4a29c00b369e4f6358c8c7f9a68fe1f8dc4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/component/xone/up_button_pressed.png"
+hash = "8d619f1173153d0ae73e520e451a4182fd3e01c5f0d4f4623f18700cc16e1dc8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/4j.png"
+hash = "f6322a16716e2e75de6f71f9e063ed17f920c74a0ca2a3fe534cd5ab47a45911"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/background.png"
+hash = "e15fd389e3471aa4539d16121a1a2c871ccdb238933611074ffb310dc7e1e44e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/eula.png"
+hash = "02b33029483c3c9a014fbc3d6e4b3f111b0e6ec40c7a2e7aeedbf96dafee5f7e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/mojang.png"
+hash = "0eb7a23202996f1c27221b78ead2ef394e72223e763ad62befd4b094641d9e48"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/nr.png"
+hash = "9b60980b770ead84fedabf54589f84a20b0995d43d358441dd3881468d101821"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/nsp.png"
+hash = "09fd107d3fd0463d3c478dbb34ebfa47c07203fe57b63a785d60447b3a5d5ec8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/sprites/hud/save_arrow.png"
+hash = "40c77074dae447ae8c2f528d487388600a9be3416767383a9962a160cf7ce9a6"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/sprites/hud/save_chest.png"
+hash = "ac9d654ce3cd79ab99b3c06b05790872936537483eb426054d3eef3407dfcb64"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/sprites/widget/loading_background.png"
+hash = "cf0f6f8a53028febe30231f757af58db3fc393bbf4b90eafb0540a2dd275dfab"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/sprites/widget/loading_bar.png"
+hash = "fe8a0a45eac0a86bbfafbe7ca6429efee0e401a6c37f54a3b6e96696a2808b38"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/minecraft/java.png"
+hash = "89f8a9a09fd553295147845404539b853908025b62af928fdd3491f82b496fd4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/minecraft/java.png.mcmeta"
+hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/minecraft/playstation_3.png"
+hash = "0efb963dbaad22529f95d4cd22752d83522c3d8284a925b7a59c9efeb882c4c5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/minecraft/playstation_3.png.mcmeta"
+hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/minecraft/switch.png"
+hash = "38f8f4266957217381741df071b940e5f2d6439136c4ffb034037fc462bd5e52"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/minecraft/switch.png.mcmeta"
+hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/minecraft/xbox_360.png"
+hash = "50f1a52f81d169ef621fede46feba51a5b57f87bfde405c25aaa0b4e71526566"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/minecraft/xbox_360.png.mcmeta"
+hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/panorama_day.png"
+hash = "6f6830e9714a8a17b0cea8ecddbb4dd8334ba59325bf6aabbeeef9d5b986af2b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/panorama_day.png.mcmeta"
+hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/panorama_night.png"
+hash = "05c6b6144e1ba6e3e5e24a9013d89576b0e2e50c25329a5c252a772362cdfa22"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/title/panorama_night.png.mcmeta"
+hash = "3a6ff34246a85cde1c0c18dab595318cc54d6fb603311292ebd22e8017f2d556"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/ui_definitions/legacy_crafting_screen.json"
+hash = "629fc66b3746d84650dd708bd0ff02812e36089b12c9e3e4d76848aa814e9b55"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/ui_definitions/loading_screen.json"
+hash = "3e135b8ba5deb44d72764034f8f9b0e0ce4b2685853d100fa4d113f822c34df0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/ui_definitions/pause_screen.json"
+hash = "b638cc745c83c5bd364a59e1993667f102d3363986781414e6fb4441b7f11ad7"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/ui_definitions/play_game_screen.json"
+hash = "1417d85362869ceb2748a37d6f4bc73303377a780bdf8ec960bdc6c9e8549f29"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/ui_definitions/title_screen.json"
+hash = "fb33e9d3bfac975fd3d5a6a3ea4ce60073878dabf9cdff205c0470efaf3a595b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/world_templates.json"
+hash = "9e20efe04273070f894608cdc385886e67ac36c99a276b4aa3a1f504a17604e2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/changelog/en_us.txt"
+hash = "dbbf3454379baefef93d2099f6ec1b365f9df970854a890546aba9e75e7996a0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/lang/en_us.json"
+hash = "05b012dbf21297cde8c8cbdb66206e71acb0139924bf28b269713fdb1c9055ac"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/deepslate1.ogg"
+hash = "4ee99346bd043722daee554438d1ea8e61018223a67e3fb1032fb337884d8e49"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/deepslate2.ogg"
+hash = "ad261d8c4c5a3104c2b4b08d17b6227da13e131defb0c5757fc336004de429b5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/deepslate3.ogg"
+hash = "f84f835c2855382bedd4ad40488dda8cd2c0d837e0dc01df7370e69c3111a6ab"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/deepslate4.ogg"
+hash = "8ea19801ac665f2ca19a7745dce27fddec0a27d57dae45227d70623fc6097baf"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/sand1.ogg"
+hash = "55a610c8739c045a65343b8447c6b95c1e54465939aab666001af2d4869c1e83"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/sand2.ogg"
+hash = "60ebf0ed49f258a62adb9849386b2795f7e409d21ff958a803eb0727d7e98913"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/sand3.ogg"
+hash = "ab5e4b408d1eca44546e86c11f5fcc66d3a4c035910ab14736f952d1e8ce98fd"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/sand4.ogg"
+hash = "fd4aa7553a4f99fe435b2df57bf9ec1040ee2409d09fbd15dbc7049f0e261ddb"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/liquid/lava.ogg"
+hash = "018aad624cd42452fb62de54d5e5481635534729d73c3400616bb49d50d3c69a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/liquid/lavapop.ogg"
+hash = "36ea4ed27e7ccee174e560e89bb5b1686d49f98136463b9ca1bccfa0d6c37f71"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/liquid/splash.ogg"
+hash = "7a04c68c956f4fe67935e6665666e603de918f64683a79f9e5d5700e6a4c2765"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/liquid/splash2.ogg"
+hash = "7a04c68c956f4fe67935e6665666e603de918f64683a79f9e5d5700e6a4c2765"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/liquid/swim1.ogg"
+hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/liquid/swim2.ogg"
+hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/liquid/swim3.ogg"
+hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/liquid/swim4.ogg"
+hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/cow/hurt1.ogg"
+hash = "42fdeeb8399a471796ae1c74713aed0da91ff038fd8f5d85cc2cb3db3b8b5ed8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/cow/hurt2.ogg"
+hash = "7e02494277841c6cadc677df078ce81876cc8652a734179dc54d75d5ac4f8c1e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/cow/hurt3.ogg"
+hash = "3a3d0416e0aa63b3314b499f36a3334a23e945029a8ebfb3a357948c87db6ffe"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/cow/say1.ogg"
+hash = "5179706ef6f6afe0fa548568b8221c9967d31d0b3579ee7d5b6ff4fab4d4b09e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/cow/say2.ogg"
+hash = "748c848476f631946c329b451a2f841f2f1aa5c2ed418f89f87eb9ae597ad076"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/cow/say3.ogg"
+hash = "70883b349cbbdfab28dc354def4cc604585c3023395b094713f8f095f7699cb0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/cow/say4.ogg"
+hash = "e578c5ac24d6c931a24f4c8506739310a5aaf0feac2758dc7f60ea79aaa551e8"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/endermen/stare.ogg"
+hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/sheep/shear.ogg"
+hash = "57b1f2dbaf940b30f9aa95c85ad6be8008dc50f2e893aa502033c3ab0d2053da"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/skeleton/death.ogg"
+hash = "5ea5e1cc0edf0b6093210a7440a5cec43f8a9ef906e258795fe4160a1a102ec5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/skeleton/hurt1.ogg"
+hash = "e1cb8cb6a5d8dc85243c16b9bdaafe9b44f9503e53607a61a937ffa66908636f"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/skeleton/hurt2.ogg"
+hash = "0591a9b410107d7f1eb6b2406dd3c1e1c76095f7c1b675b42ad6d97b087bf123"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/skeleton/hurt3.ogg"
+hash = "216ae23e644725fadafdfa1b329d0ac7741013447cc9e8f9bcf6d84bd51a4fe0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/skeleton/hurt4.ogg"
+hash = "9dfaae48099c2cd82b1687c56ab79ba3c09e74302b901840dc1c34a9dbe919db"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/slime/big1.ogg"
+hash = "b8e870bb9d5416191ac0e90ca494c8e35bfcc2ad4181518c30184666495aa5e1"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/slime/big2.ogg"
+hash = "5e715b90d8ea3b7b76c9f9e225b36da10a14c989b7a7a0b13ce204506c2d9aee"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/slime/big3.ogg"
+hash = "6b450a567cf7556e7ed9c21854a5ceec3ad3db45b28ce3255962b7ba35021c54"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/mob/slime/big4.ogg"
+hash = "8b4d703ebb6d41ec9249d0247316a43f20cca82f515a7a069341dadde0d14cf2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/birch_log_top.png"
+hash = "64aa4d363d98768e2e209901d4ef67451210a6680e7de58d93637e92a277edc5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/spruce_log_top.png"
+hash = "64aa4d363d98768e2e209901d4ef67451210a6680e7de58d93637e92a277edc5"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/music_disc_wait.png"
+hash = "f95b6849639929d68145fca425e1e9c0d0d5377b20d664095e119b66c4cdf533"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/pack.mcmeta"
+hash = "e0cb8f03c93244196894fe471bdf5d012108b12087e91f7cb6507bf44c710034"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/pack.png"
+hash = "15ffdb7bc7d497a51fb283286920e403bb59298fa357cebdba87a5b70c5bfdfa"
 
 [[files]]
 file = "shaderpacks/[BTB] Back To Basics 1.1.1.zip.txt"
