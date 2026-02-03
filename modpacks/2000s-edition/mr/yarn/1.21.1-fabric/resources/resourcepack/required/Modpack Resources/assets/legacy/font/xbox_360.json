@@ -1,60 +1,116 @@
 {
     "providers":[
-    {
+        {
             "type": "bitmap",
             "file": "legacy:component/x360/down_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 17,
             "chars": ["\uE735"]
+        },
+            {
+            "type": "bitmap",
+            "file": "legacy:component/x360/down_button_icon.png",
+            "ascent": 12,
+            "height": 17,
+            "chars": ["\uF735"]
         },
         {
             "type": "bitmap",
             "file": "legacy:component/x360/down_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 17,
             "chars": ["\uE001"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/x360/down_overlay.png",
+            "ascent": 7,
+            "height": 8,
+            "chars": ["\uF002"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/x360/right_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 17,
             "chars": ["\uE736"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/x360/right_button_icon.png",
+            "ascent": 12,
+            "height": 17,
+            "chars": ["\uF736"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/x360/right_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 17,
             "chars": ["\uE002"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/x360/right_overlay.png",
+            "ascent": 7,
+            "height": 8,
+            "chars": ["\uF003"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/x360/left_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 17,
             "chars": ["\uE737"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/x360/left_button_icon.png",
+            "ascent": 12,
+            "height": 17,
+            "chars": ["\uF737"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/x360/left_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 17,
             "chars": ["\uE003"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/x360/left_overlay.png",
+            "ascent": 7,
+            "height": 8,
+            "chars": ["\uF004"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/x360/up_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 17,
             "chars": ["\uE738"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/x360/up_button_icon.png",
+            "ascent": 12,
+            "height": 17,
+            "chars": ["\uF738"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/x360/up_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 17,
             "chars": ["\uE004"]
+        },
+        {
+            "type": "bitmap",
+            "file": "legacy:component/x360/up_overlay.png",
+            "ascent": 7,
+            "height": 8,
+            "chars": ["\uF005"]
         },
         {
             "type": "bitmap",
@@ -62,13 +118,6 @@
             "ascent": 11,
             "height": 15,
             "chars": ["\uE73E"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/back_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE005"]
         },
         {
             "type": "bitmap",
@@ -83,13 +132,6 @@
             "ascent": 11,
             "height": 15,
             "chars": ["\uE73D"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/start_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE006"]
         },
         {
             "type": "bitmap",
@@ -142,7 +184,7 @@
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/x360/left_stick_button_pressed.png",
+            "file": "legacy:component/x360/right_stick_button_pressed.png",
             "ascent": 11,
             "height": 15,
             "chars": ["\uE00F"]
@@ -164,58 +206,30 @@
         {
             "type": "bitmap",
             "file": "legacy:component/x360/left_bumper.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 16,
+            "height": 25,
             "chars": ["\uE739"]
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/x360/left_bumper_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE74A"]
-        },
-        {
-            "type": "bitmap",
             "file": "legacy:component/x360/right_bumper.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 16,
+            "height": 25,
             "chars": ["\uE73A"]
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/x360/right_bumper_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE74B"]
-        },
-        {
-            "type": "bitmap",
             "file": "legacy:component/x360/left_trigger.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 16,
+            "height": 25,
             "chars": ["\uE73B"]
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/x360/left_trigger_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE74C"]
-        },
-        {
-            "type": "bitmap",
             "file": "legacy:component/x360/right_trigger.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 16,
+            "height": 25,
             "chars": ["\uE73C"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/right_trigger_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE74D"]
         },
         {
             "type": "bitmap",
@@ -272,83 +286,6 @@
             "ascent": 11,
             "height": 15,
             "chars": ["\uE00F"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE750"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE752"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE753"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE754"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE755"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE756"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE757"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE758"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE759"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE75A"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/x360/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE75B"]
         }
     ]    
 }
