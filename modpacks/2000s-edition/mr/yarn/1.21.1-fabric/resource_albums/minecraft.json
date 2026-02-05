@@ -5,12 +5,17 @@
     "vanilla",
     "fabric",
     "programmer_art",
+    "file/PACP_Base_Release.zip",
     "file/Modpack Resources",
     "file/Pre 1.13 Water.zip"
   ],
   "displayPack": "legacy:icon/minecraft_classic",
   "id": "minecraft",
   "version": 2,
-  "name": "Minecraft",
-  "description": "The classic Minecraft textures, icons, and user interface."
+  "name": {
+    "translate": "legacy.menu.albums.resource.minecraft"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.minecraft.description"
+  }
 }
