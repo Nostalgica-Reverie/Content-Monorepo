@@ -46,11 +46,11 @@ hash = "a5ba22e63061c1fb67f0f895f17681351eaeccc225faef966c29ee630593275e"
 
 [[files]]
 file = "config/fabric/indigo-renderer.properties"
-hash = "7452f2f64c27c84579f3853468839eb34eed578c7fbe78131071fd8e30a6e8b7"
+hash = "0a559ea1f59b5e151fbcd8f89095231dcd3dcb0e49dbe3ec0af88278e474b78a"
 
 [[files]]
 file = "config/factory_api/client_options.json"
-hash = "f863472a014971015df6386821a73412174ee1bfea7e70893b71890d1da95780"
+hash = "a4027b04bcbb14b45e0d6988bfbf512c918c14896dd4e087e1ada7d4ea5e72cb"
 
 [[files]]
 file = "config/factory_api/common_options.json"
@@ -70,7 +70,7 @@ hash = "4d3264b58c502afaeca3f44e8d2db0843c54b8ba957afd21a2d450fe10dafefb"
 
 [[files]]
 file = "config/iris.properties"
-hash = "d774e22fbe70bcfda7c72a3cae77e525d1dd82985c8a777df436ea912ceae7e4"
+hash = "7fa9bad401fdad7b27657e3cdc99660260f052b6c58975410edf5e948b8f3a14"
 
 [[files]]
 file = "config/item_obliterator.json5"
@@ -78,27 +78,27 @@ hash = "ef6fa4db41f89eaef5f9c2a77792fa2053246b3888cade50798f0cfbb87a3401"
 
 [[files]]
 file = "config/legacy/client_mixin.json"
-hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
+hash = "7517db3ae8feed5e4beef66ac73788c1ca876fbb016eace02c694f3bde676de5"
 
 [[files]]
 file = "config/legacy/client_options.json"
-hash = "2c7666b19c26a8d65b4454defd39356eade4488fec399931d5d40d97abddacbf"
+hash = "68c8422c36e66d303c61b7228aaedeb7e3cd3bb5508a2e0546bf5bb00971ad47"
 
 [[files]]
 file = "config/legacy/common.json"
-hash = "74ab57623ba51addd103699dbc2dc37556a02e02ae1fe77c767085f259b90343"
+hash = "1524ad6d1b93cb590078c4c7a58856bcba0b1f456762be9176916bff16d560d7"
 
 [[files]]
 file = "config/legacy/common_mixin.json"
-hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
+hash = "ac3edb71a34943ff3eb030cc8372802159e8015d3d00f1167ae0761c2eb9d5b8"
 
 [[files]]
 file = "config/legacy/global_packs.json"
-hash = "886fcfb14f91d48bbb8517cd4ddc9512d76cb712187ec8d23f12ead9d30dba86"
+hash = "bd92402ded0d7432327ee73edefb1a5117f3f8114725fb58e121d066d28645e4"
 
 [[files]]
 file = "config/legacyskins.json"
-hash = "d8c7345c4160b25e2f85d0fd99de9e5337444a8fa5fe0e14b9d6194fe4e82c4e"
+hash = "db91ac158fc1940a96c26b94ad761fae5f88a8593d1fb210734643fce31a6b85"
 
 [[files]]
 file = "config/lithium.properties"
@@ -126,11 +126,15 @@ hash = "c30e6610e97f02cef3ddaf0095a53524a7156732de70674da8759a74fb83edee"
 
 [[files]]
 file = "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
-hash = "63f3121a91373101845a742759a50006195c8cb0adbd0b951140da77f59f3034"
+hash = "dff570e21bbd515b07b577dd99323f76b3ad96bfb11ae6942c3b0ac9ed0fa25b"
 
 [[files]]
 file = "config/nostalgic_tweaks/nostalgic_tweaks.json"
-hash = "8c477723045271d4c103a966caba472cdb3f514937e4b64cf6ea125c91071417"
+hash = "9024eed5ce4e5551f7cd2f394917e8882344c50943a64a2ab3aa09a5a21f09f3"
+
+[[files]]
+file = "config/preferred-gamerules.properties"
+hash = "e927545584f9932f8d2fc3f05757bfd397104a07b3047c195611d1ce2b6cbc60"
 
 [[files]]
 file = "config/servercore/config.yml"
@@ -450,6 +454,11 @@ hash = "a69852f62b7c53b1eeb0dee07898dd142ed980be6caa2b9b4c72c90548fc8c3b"
 metafile = true
 
 [[files]]
+file = "mods/preferred-gamerules.pw.toml"
+hash = "985ecc4a35a2feab6d51b6cd6b95e7efa3f6b49aa5f549c132f59217b7a2a5a5"
+metafile = true
+
+[[files]]
 file = "mods/scalablelux.pw.toml"
 hash = "e0bec3ba0a82933ef1143af3782021f14b544d91cee9edd0344cb26a697bd982"
 metafile = true
@@ -506,7 +515,7 @@ metafile = true
 
 [[files]]
 file = "options.txt"
-hash = "ccb94d375e36bcbe9a74f521a05b3573dbecbc3899aa0f29dde867481ce11835"
+hash = "2223aec316dd995e0a0b5ab89ce98aa1d1a5343fbdfcf0db9d4a95784a199c1b"
 
 [[files]]
 file = "resource_albums.json"
@@ -514,11 +523,11 @@ hash = "6ae64185f371b4c62a03f6679ed049c15eb30c1c3124dbd4598f4c850e7933d4"
 
 [[files]]
 file = "resource_albums/dreamcast.json"
-hash = "d5033f408d5c91f9b6893028914af38a91c0d4951ea489e7d27e7f7c1d5eac30"
+hash = "795082dd7a368b636be6a3c2a512b68a573db1b36e6d7b69b15039faaafbe502"
 
 [[files]]
 file = "resource_albums/gc.json"
-hash = "c11d5658bd11b19dce5300e6939af5d208b704dafbc5eff1937310139541f7fb"
+hash = "4a403e695e3a394e6c7b8734bbe9105b422575bcfeb4d7b4fd69f5e6193532e5"
 
 [[files]]
 file = "resource_albums/minecraft.json"
@@ -530,11 +539,11 @@ hash = "7305bc8fb774faaa31569e781a2453b336bf7e9a43c10a547d120c90ae7fbe95"
 
 [[files]]
 file = "resource_albums/ps2.json"
-hash = "ca2a598cd46f4405e6fbd8e90e48b12a254e3eefd95a7129e6f0f2f531158c04"
+hash = "7dab00d9c94e654220eff771c2103b4e88fbbb06d7a79a5d11d76168a04e2e91"
 
 [[files]]
 file = "resource_albums/xbox.json"
-hash = "7449093f8f4f598fe959d49a9f7e9e9334a1f801d5641b09f0306360f630d28d"
+hash = "34d383720258ae81f4d5e3cbff67d10cec6b2e63720aa9326554292a797c7172"
 
 [[files]]
 file = "resourcepacks/Dreamcast Edition/assets/legacy/intro.json"
@@ -638,7 +647,7 @@ hash = "69303dcd618d7634bcad97dbb937126e1ac6962d3a6458d713ba5362db1e0522"
 
 [[files]]
 file = "resourcepacks/Modern Titles/assets/legacy/textures/gui/title/minecraft/java.png"
-hash = "2f6822f178402486a449d500f340b885d1f0e099ca3e007464de4b423f2d2a83"
+hash = "b252654bc1352f69b74b0fd2ec96386c3e8406f642fbb4c313681a09060aca89"
 
 [[files]]
 file = "resourcepacks/Modern Titles/assets/legacy/textures/gui/title/minecraft/java.png.mcmeta"
@@ -646,7 +655,7 @@ hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
 
 [[files]]
 file = "resourcepacks/Modern Titles/assets/legacy/textures/gui/title/minecraft/playstation_3.png"
-hash = "5cf4d9257e36d7b56e2a56352ac5db9c136278060bc883b4be72ec4c28408423"
+hash = "2bbfe3a9694c1f9164136bd284fc1f59ad219d820d77ba1b9444dc6b22776fba"
 
 [[files]]
 file = "resourcepacks/Modern Titles/assets/legacy/textures/gui/title/minecraft/playstation_3.png.mcmeta"
@@ -654,7 +663,7 @@ hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
 
 [[files]]
 file = "resourcepacks/Modern Titles/assets/legacy/textures/gui/title/minecraft/switch.png"
-hash = "1267dc5330c5a1a8e75dedda6c17b3bec823593f8702c353ac73525ff9ba44d0"
+hash = "befa0f6af944467a98eee29733a32891e88304d86ed255b23a58b4a7cb654ebf"
 
 [[files]]
 file = "resourcepacks/Modern Titles/assets/legacy/textures/gui/title/minecraft/switch.png.mcmeta"
@@ -662,7 +671,7 @@ hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
 
 [[files]]
 file = "resourcepacks/Modern Titles/assets/legacy/textures/gui/title/minecraft/xbox_one.png"
-hash = "52685e3057b24b2708ee9ecbf0c50773e4f8ba2c60bb70366122f8bdc82c1046"
+hash = "1ccc47eff0ef8562b96362250d9941651763686c742b63dfb312b9a57a002cd5"
 
 [[files]]
 file = "resourcepacks/Modern Titles/assets/legacy/textures/gui/title/minecraft/xbox_one.png.mcmeta"
@@ -670,26 +679,26 @@ hash = "97b2da6518ae6da13b70f983f5538f30be0928f25bb6431fcb72d11af528ecd4"
 
 [[files]]
 file = "resourcepacks/Modern Titles/pack.mcmeta"
-hash = "a1183093ddbfe4c4de85a651aa06c29677cd6319ef5b2b27ec294703f41a720d"
+hash = "63a19bf7ba563f46673546e5a4f1fe6c65d9f268fe34fbf0a6393393cd367244"
 
 [[files]]
-file = "resourcepacks/PlayStation®2 Edition/assets/legacy/lang/en_us.json"
+file = "resourcepacks/PlayStation 2 Edition/assets/legacy/lang/en_us.json"
 hash = "81406358340e3344bb17bcdcecdc6187ddd2dca16c670c876800ac5977c2d47a"
 
 [[files]]
-file = "resourcepacks/PlayStation®2 Edition/assets/legacy/textures/gui/sprites/hud/save_arrow.png"
+file = "resourcepacks/PlayStation 2 Edition/assets/legacy/textures/gui/sprites/hud/save_arrow.png"
 hash = "30053351640253411a91ec9ce2b91fe9cc052d371754b69e9f0d907638e87ef6"
 
 [[files]]
-file = "resourcepacks/PlayStation®2 Edition/assets/legacy/textures/gui/sprites/hud/save_chest.png"
+file = "resourcepacks/PlayStation 2 Edition/assets/legacy/textures/gui/sprites/hud/save_chest.png"
 hash = "fa63d65793600cdb129f78027f292ecf4caeee9862587fb67bc8f80f8ee97728"
 
 [[files]]
-file = "resourcepacks/PlayStation®2 Edition/pack.mcmeta"
+file = "resourcepacks/PlayStation 2 Edition/pack.mcmeta"
 hash = "e2d14b3d8ee944416fd86373364ae482c7f7151c16e8f0310cec38558d73bb12"
 
 [[files]]
-file = "resourcepacks/PlayStation®2 Edition/pack.png"
+file = "resourcepacks/PlayStation 2 Edition/pack.png"
 hash = "07643b3a3eadc8114440c227493e6f01766e109d09d0301d328bf438f1ebef52"
 
 [[files]]
@@ -868,7 +877,7 @@ hash = "2eb119c6688707e6ca29d3dfae74c42605ed6c790a92c5be6fff223ea5c20f2c"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/legacy/lang/en_us.json"
-hash = "6386e71e1f5dfd2e6b932325336d05718712dc2e51e2c96aa1ffde02b4f01288"
+hash = "08630ed7f11c5d3ba6739a0feaa71e62e453b52b0e5c77c635b26de495cd4880"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/legacy/sounds/focus.ogg"
@@ -2211,6 +2220,10 @@ file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures
 hash = "09fd107d3fd0463d3c478dbb34ebfa47c07203fe57b63a785d60447b3a5d5ec8"
 
 [[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/sprites/hud/hotbar_selection.png"
+hash = "bb28d12f866e255732116be2aa6596cf0a77f7e7e8adffea73e82a0b791b6ff7"
+
+[[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/sprites/hud/save_arrow.png"
 hash = "40c77074dae447ae8c2f528d487388600a9be3416767383a9962a160cf7ce9a6"
 
@@ -2304,7 +2317,7 @@ hash = "dbbf3454379baefef93d2099f6ec1b365f9df970854a890546aba9e75e7996a0"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/lang/en_us.json"
-hash = "05b012dbf21297cde8c8cbdb66206e71acb0139924bf28b269713fdb1c9055ac"
+hash = "4826ad7ed1bff3c9e61b127592b6e9082dd9143d705a222396d044ee91b645b4"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/sounds/dig/deepslate1.ogg"
@@ -2444,11 +2457,71 @@ hash = "8b4d703ebb6d41ec9249d0247316a43f20cca82f515a7a069341dadde0d14cf2"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/birch_log_top.png"
-hash = "64aa4d363d98768e2e209901d4ef67451210a6680e7de58d93637e92a277edc5"
+hash = "b8d47ad712a58e0d453d0fd21908edfe57db9efd0d4b5c9022b593ef5ba8bb41"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/black_wool.png"
+hash = "ac4e76ef4cf9af631bb407226df0a75554d1ce3a1f872d300c13464446b1f672"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/blue_wool.png"
+hash = "e2e9dd4c8e9fe899a23874a851660ef611606f0f9422f197e44e02bd5ef69c64"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/cyan_wool.png"
+hash = "c19c7d6e713b995e7851eba5ee131605a32e142a467d4f06e0334ff904b71d67"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/gray_wool.png"
+hash = "5bfad831b4ec9265c6a38c3ca39ff3015341ae4239982aa311975f5941b7738a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/green_wool.png"
+hash = "83317d80d5283eb6c3f9a5c8ccee2a9a35252a1e770287e04ae2d538e52194b2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/light_blue_wool.png"
+hash = "744b4db03b24cd660d7e88e2ef278e480b63192d1747895bf35848de87978a83"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/light_gray_wool.png"
+hash = "0a691d7d24ac6e9e13a8e96ddc24d8c83d817d1404b6580ea1fc3be1ce5191e2"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/lime_wool.png"
+hash = "dd69dc0d2d245b47abcda4eb822c97d4f9c2b0d0e335e9b94c0726f21c1f2aef"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/magenta_wool.png"
+hash = "0b6cc9854c8edd9891bf2a65fef89f3c80b157f6ef0c449779f99b91ebd250d0"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/orange_wool.png"
+hash = "694e2e6b820a385f451b30d4238b8c55f29063eb0f579ddc25ce0b261402cf4c"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/pink_wool.png"
+hash = "147a08ae6483532d6e5a5f27c3db5ea0f4618d470d38c15e5e3d1c9efd707642"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/purple_wool.png"
+hash = "b8e1ba9996396eaabd591893d3809207d48b42bc1b6648513b850ff651b5d37a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/red_wool.png"
+hash = "b51ad36ae77f87b7fe0ce7b4cbba790c4d50cc7326c55b04ccdb2a4e6703a9b9"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/spruce_log_top.png"
-hash = "64aa4d363d98768e2e209901d4ef67451210a6680e7de58d93637e92a277edc5"
+hash = "b8d47ad712a58e0d453d0fd21908edfe57db9efd0d4b5c9022b593ef5ba8bb41"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/white_wool.png"
+hash = "a9a1f22228a1272c2907a8267646dd68a9ed31e3a709429a163d1bba6683cc4b"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/block/yellow_wool.png"
+hash = "c90a321cb5dbe95be6ee8e7ddb4b594b5f0b4afc5fb7ea9a5a0d4b0120b16030"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/apple.png"
@@ -2471,12 +2544,12 @@ file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textu
 hash = "f43215dbe23339de874230cca18d75c7f7b86881d3518ad099515f9861f1f4fc"
 
 [[files]]
-file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/cocoa_beans.png"
-hash = "21a07d715dee1cfd0422e5ea50900c0f77186860bd21c2207a586ff564c04774"
-
-[[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/cod.png"
 hash = "6d69e1594b26d78a1114b15d94e4ecb2b45bdbe86590e45c38e3c48947af346a"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/cooked_beef.png"
+hash = "f49c95bef5a5cf1bc84f94e81b9eb40c392287fb020d15879ef81e43dd8c6cfd"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/cooked_cod.png"
@@ -2484,11 +2557,7 @@ hash = "1fb086271879541816b94924c46afa8d2fd4deceb54ccdfce0c0b62f5021272c"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/cooked_porkchop.png"
-hash = "f49c95bef5a5cf1bc84f94e81b9eb40c392287fb020d15879ef81e43dd8c6cfd"
-
-[[files]]
-file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/cooked_salmon.png"
-hash = "787175b39e99d2e001b9d4dab3483db0bc32a1bb7d6ddba998e1aa95e23f64de"
+hash = "bb22d67d63ea5a030d4f5cf22effaebb9ceee791cbedfc458f265edc3efba35c"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/textures/item/cookie.png"
