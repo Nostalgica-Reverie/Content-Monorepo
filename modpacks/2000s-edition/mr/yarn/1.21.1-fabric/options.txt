@@ -48,8 +48,8 @@ mouseSensitivity:0.5
 damageTiltStrength:1.0
 highContrast:false
 narratorHotkey:true
-resourcePacks:["vanilla","fabric","programmer_art","file/Modpack Resources","file/Pre 1.13 Water.zip","file/Legacy Skins Pack Ordering v3.zip","legacy:legacy_resources"]
-incompatibleResourcePacks:["cpm","entity_model_features","entity_sound_features","entity_texture_features","factory_api","legacy","sodiumleafculling","yet_another_config_lib_v3"]
+resourcePacks:["vanilla","fabric","programmer_art","file/PACP_Base_Release.zip","file/Pre 1.13 Water.zip","legacy:legacy_resources","srl_rp/Modpack Resources"]
+incompatibleResourcePacks:["badoptimizations","cpm","entity_model_features","entity_sound_features","entity_texture_features","factory_api","legacy","modernfix","sodiumleafculling","yet_another_config_lib_v3"]
 lastServer:
 lang:en_us
 chatVisibility:0
@@ -86,7 +86,7 @@ onlyShowSecureChat:false
 panoramaScrollSpeed:1.0
 telemetryOptInExtra:false
 onboardAccessibility:false
-menuBackgroundBlurriness:5
+menuBackgroundBlurriness:0
 key_key.attack:key.mouse.left
 key_key.use:key.mouse.right
 key_key.forward:key.keyboard.w
