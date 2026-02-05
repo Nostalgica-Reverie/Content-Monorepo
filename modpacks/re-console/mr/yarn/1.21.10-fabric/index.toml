@@ -438,11 +438,6 @@ hash = "bef102ceb7e7f20c58d108ff9e6f016556f35ffcf379d10280db660d58c832e4"
 metafile = true
 
 [[files]]
-file = "mods/configured.pw.toml"
-hash = "887692fff7bde49c34e88b6518a87d9c72545d073a23eb5e14ae0296bbba5bc5"
-metafile = true
-
-[[files]]
 file = "mods/console-advancement-sounds.pw.toml"
 hash = "7abd2ebf8b8f74dbdd37253ff11cd1bfa514982fd2a467a10d2fc04610c6bb5a"
 metafile = true
@@ -534,7 +529,7 @@ metafile = true
 
 [[files]]
 file = "mods/fzzy-config.pw.toml"
-hash = "4f035d7f09f1be8f35a3391c324abbb2b1a975a9bfde89a1d5f4f9357775f63c"
+hash = "e27ebce7267fbba8f0216424b21f041bc6c77a773d71848963c41d7a93e02c51"
 metafile = true
 
 [[files]]
@@ -638,11 +633,6 @@ hash = "84ca48611902643c3934139e0dce480294b2f2e891cf797fede0607d5b9f6dfa"
 metafile = true
 
 [[files]]
-file = "mods/modlistmemory.pw.toml"
-hash = "243427edf2eb0c9c4e86c216a3de959d881eb0baa31780e57d406a2e066aab6a"
-metafile = true
-
-[[files]]
 file = "mods/modmenu.pw.toml"
 hash = "6f9c7fd82681111859ff63446dc8327447adeaad84e9cfb534955afb5eb6c81a"
 metafile = true
@@ -675,6 +665,11 @@ metafile = true
 [[files]]
 file = "mods/packet-fixer.pw.toml"
 hash = "4549e2a768f2a3d307e7be44d3e3ae620315666810f2ceb77e0c5f7d677195c2"
+metafile = true
+
+[[files]]
+file = "mods/particle-core.pw.toml"
+hash = "6e950bf32b4589d8c966b9e6a2a0a268000897db09dc093f0cabd0ea77bb95a6"
 metafile = true
 
 [[files]]
