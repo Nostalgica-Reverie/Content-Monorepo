@@ -1,9 +1,9 @@
 version:3955
-ao:true
-biomeBlendRadius:2
+ao:false
+biomeBlendRadius:1
 enableVsync:true
 entityDistanceScaling:1.0
-entityShadows:true
+entityShadows:false
 forceUnicodeFont:false
 japaneseGlyphVariants:false
 fov:0.0
@@ -16,8 +16,8 @@ fullscreen:false
 gamma:0.5
 graphicsMode:0
 guiScale:0
-maxFps:30
-mipmapLevels:4
+maxFps:40
+mipmapLevels:0
 narrator:0
 particles:0
 reducedDebugInfo:false
@@ -48,7 +48,7 @@ mouseSensitivity:0.5
 damageTiltStrength:1.0
 highContrast:false
 narratorHotkey:true
-resourcePacks:["vanilla","fabric","programmer_art","legacy:legacy_waters","file/Modpack Resources","file/Xbox Edition","file/Legacy Skins Pack Ordering v3.zip","legacy:legacy_resources"]
+resourcePacks:["vanilla","fabric","programmer_art","file/PACP_Base_Release.zip","file/Pre 1.13 Water.zip","legacy:legacy_resources","srl_rp/Modpack Resources"]
 incompatibleResourcePacks:["badoptimizations","cpm","entity_model_features","entity_sound_features","entity_texture_features","factory_api","legacy","modernfix","sodiumleafculling","yet_another_config_lib_v3"]
 lastServer:
 lang:en_us
@@ -86,7 +86,7 @@ onlyShowSecureChat:false
 panoramaScrollSpeed:1.0
 telemetryOptInExtra:false
 onboardAccessibility:false
-menuBackgroundBlurriness:5
+menuBackgroundBlurriness:0
 key_key.attack:key.mouse.left
 key_key.use:key.mouse.right
 key_key.forward:key.keyboard.w
@@ -108,7 +108,7 @@ key_key.togglePerspective:key.keyboard.f5
 key_key.smoothCamera:key.keyboard.unknown
 key_key.fullscreen:key.keyboard.f11
 key_key.spectatorOutlines:key.keyboard.unknown
-key_key.swapOffhand:key.keyboard.f
+key_key.swapOffhand:key.keyboard.unknown
 key_key.saveToolbarActivator:key.keyboard.c
 key_key.loadToolbarActivator:key.keyboard.x
 key_key.advancements:key.keyboard.l
