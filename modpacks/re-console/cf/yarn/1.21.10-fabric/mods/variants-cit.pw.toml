@@ -1,13 +1,13 @@
 name = "Variants-CIT"
 filename = "variants-cit-4.11.1+1.21.9.jar"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/jURjbCaq/versions/1O3S9C68/variants-cit-4.11.1%2B1.21.9.jar"
-hash-format = "sha512"
-hash = "15b2a8ae247efe9ef87c79bbbe1d067f2d51f51133718b9086f008b6a15d343a2ceb3600750e5e329e0af9af8125dfc2656472e0877be337d594aca858b51d36"
+hash-format = "sha1"
+hash = "487946f75c43f2f43883dcf0a67aa1d2fe3e0cb6"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "jURjbCaq"
-version = "1O3S9C68"
+[update.curseforge]
+file-id = 7525498
+project-id = 1248768

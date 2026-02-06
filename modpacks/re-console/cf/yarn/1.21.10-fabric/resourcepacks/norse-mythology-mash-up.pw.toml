@@ -1,13 +1,13 @@
 name = "Norse Mythology Mash-up"
 filename = "Norse Mythology Mash-up.zip"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/1COPjvze/versions/kMvJXHr3/Norse%20Mythology%20Mash-up.zip"
-hash-format = "sha512"
-hash = "861ac7febc273e23cd21a016a6aa758abd98cec0539bc58eb42e7ae19c65df22fce1babe071fd3e105d7a8088b245e3a8105f2144abd6c5608304e1bc7066088"
+hash-format = "sha1"
+hash = "07f8c9766995e8c5cf208e04f08af52c67a0533b"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "1COPjvze"
-version = "kMvJXHr3"
+[update.curseforge]
+file-id = 7488006
+project-id = 1436050

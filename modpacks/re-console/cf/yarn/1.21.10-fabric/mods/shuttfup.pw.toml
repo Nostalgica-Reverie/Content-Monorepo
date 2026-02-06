@@ -1,13 +1,13 @@
-name = "Stfu"
-filename = "Stfu-2.7.1-1.21.9.jar"
-side = "client"
+name = "Shuttfup"
+filename = "Stfu-2.8.1-1.21.9.jar"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/Rg9WdvvR/versions/jNuFLUMH/Stfu-2.7.1-1.21.9.jar"
-hash-format = "sha512"
-hash = "6841d100142bec56b78230603b8711789b356e01ca72024215f0f015caa9747b832274a8be46e3cd4d70f385891af994b79b1eb8a717443ec67b8d592f559da2"
+hash-format = "sha1"
+hash = "188a14e813c8f2447efe97b086dd4a053490dc92"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "Rg9WdvvR"
-version = "jNuFLUMH"
+[update.curseforge]
+file-id = 7312300
+project-id = 1111802

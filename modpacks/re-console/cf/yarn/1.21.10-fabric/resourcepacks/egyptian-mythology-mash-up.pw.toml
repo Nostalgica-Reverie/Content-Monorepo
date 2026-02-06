@@ -1,13 +1,13 @@
 name = "Egyptian Mythology Mash-up"
 filename = "Egyptian Mythology Mash-up.zip"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/1Ee44YG5/versions/NQfrfcdm/Egyptian%20Mythology%20Mash-up.zip"
-hash-format = "sha512"
-hash = "2fedd54a1ed3b617cf44b946b90d7f511614fd821bbabe4824f02a9fdfac4a6e7b9b57842f672403a9916c1d923eb6bf3d01928fceb92eb25cca8807744cb8f7"
+hash-format = "sha1"
+hash = "bb3275ccad23db4630a8fa2057fd2c02b2a4c821"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "1Ee44YG5"
-version = "NQfrfcdm"
+[update.curseforge]
+file-id = 7486896
+project-id = 1436057

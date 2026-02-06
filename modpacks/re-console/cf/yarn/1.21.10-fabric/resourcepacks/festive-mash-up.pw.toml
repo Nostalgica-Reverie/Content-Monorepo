@@ -1,13 +1,13 @@
 name = "Festive Mash-up"
 filename = "Festive Mash-up.zip"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/pE8Ji9UH/versions/1QQ6n2Rm/Festive%20Mash-up.zip"
-hash-format = "sha512"
-hash = "a00e9f04aaf2478bb1c1cb3d226509281403b1b24b74dd0d047dfe7e3a911002219eb82cfc277382b0d5e92af5d481da3cf8d5bf35ed48d0b98dee2312735347"
+hash-format = "sha1"
+hash = "451422e3bd6b0ff5a633c16dd33980cc10ac2f99"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "pE8Ji9UH"
-version = "1QQ6n2Rm"
+[update.curseforge]
+file-id = 7478875
+project-id = 1434767

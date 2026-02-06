@@ -1,13 +1,13 @@
-name = "Fantasy Texture Pack"
+name = "Fantasy"
 filename = "Fantasy Texture Pack.zip"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/kFbEIMmd/versions/kVfBtnvh/Fantasy%20Texture%20Pack.zip"
-hash-format = "sha512"
-hash = "56dd761914376fbb588e4d415beba67625125885a220321ecd11cd8c92d707dc19bc2b4531ac73fbd0d3970438f7c19bcd36ae24d9d164e974bb0aa5e672eb73"
+hash-format = "sha1"
+hash = "ddd99350dd26b6c883d4395e45bea96ee83faf0a"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "kFbEIMmd"
-version = "kVfBtnvh"
+[update.curseforge]
+file-id = 7486998
+project-id = 1435083

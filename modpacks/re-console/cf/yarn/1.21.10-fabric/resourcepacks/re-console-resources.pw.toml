@@ -1,13 +1,13 @@
 name = "Legacy Modpack Resources"
 filename = "Legacy-Modpack-Resources.zip"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/WUq4Lff9/versions/p6Jg9GMy/Legacy-Modpack-Resources.zip"
-hash-format = "sha512"
-hash = "c15be5c77866f83b8adebd2ed9407af265b1e6662f2ceedfcf55262975c67c197eb6a86ad1e0c6ae63373ad61bb2f0af0ac68bc45699d844b4c605f0dd8f8d46"
+hash-format = "sha1"
+hash = "18ae6bfad684c4664a55572c60e997e0be05d512"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "WUq4Lff9"
-version = "p6Jg9GMy"
+[update.curseforge]
+file-id = 7582693
+project-id = 1068239
