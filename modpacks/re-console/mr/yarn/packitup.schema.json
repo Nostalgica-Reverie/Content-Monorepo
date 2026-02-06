@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "PackItUp configuration",
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "$schema": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "modpacks": {
+      "description": "List of modpacks for PackItUp to use",
+      "type": "array",
+      "items": {
+        "description": "Modpack configuration",
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "name": {
+            "description": "Modpack name",
+            "type": "string"
+          },
+          "providers": {
+            "description": "Modpack providers to upload new versions to",
+            "type": "array",
+            "items": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "type"
+              ],
+              "anyOf": [
+                {
+                  "properties": {
+                    "type": {
+                      "const": "Modrinth"
+                    },
+                    "id": {
+                      "description": "The ID of the project to upload versions to",
+                      "type": "string"
+                    },
+                    "token": {
+                      "description": "The authentication token for this provider",
+                      "type": "object",
+                      "required": [
+                        "type"
+                      ],
+                      "anyOf": [
+                        {
+                          "description": "A modpack provider auth token",
+                          "properties": {
+                            "type": {
+                              "const": "Environment"
+                            },
+                            "name": {
+                              "description": "The environment variable name",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ]
+                        },
+                        {
+                          "description": "A modpack provider auth token",
+                          "properties": {
+                            "type": {
+                              "const": "Inline"
+                            },
+                            "value": {
+                              "description": "The authentication token",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "value"
+                          ]
+                        }
+                      ]
+                    },
+                    "packFolders": {
+                      "description": "List of PackWiz root folders to include in this ModpackProvider.\nPath can be either relative from the config file root or absolute.",
+                      "type": "array",
+                      "items": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "versionPlaceholder": {
+                      "description": "Placeholder that gets filled in with various Packwiz metadata, we check if the provider has a version matching this template",
+                      "type": "string"
+                    },
+                    "exportPlaceholder": {
+                      "description": "Placeholder that gets filled in with various Packwiz metadata, this gets used for the output pack filename",
+                      "type": "string"
+                    },
+                    "providerVersionPlaceholder": {
+                      "description": "Placeholder that gets filled in with various Packwiz metadata, this gets used for the pack version on the provider\u0027s website",
+                      "type": "string"
+                    },
+                    "providerNamePlaceholder": {
+                      "description": "Placeholder that gets filled in with various Packwiz metadata, this gets used for the pack release\u0027s name on the provider\u0027s website",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "token",
+                    "packFolders"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "name",
+          "providers"
+        ]
+      }
+    },
+    "deleteChangelogs": {
+      "description": "Delete changelog files after publish",
+      "type": "boolean"
+    }
+  }
+}

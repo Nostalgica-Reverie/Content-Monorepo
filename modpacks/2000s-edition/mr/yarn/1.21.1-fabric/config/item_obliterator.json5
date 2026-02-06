@@ -16,18 +16,20 @@
   // Items here will be unusable completely
   //    Example: minecraft:diamond
   "blacklisted_items": [
-    "minecraft:.netherite_*",
+    "!minecraft:.netherite_*",
     "minecraft:shield",
     "minecraft:smithing_table",
     "minecraft:blast_furnace",
     "minecraft:smoker",
     "minecraft:crimson_*",
-    "minecraft:cherry_*",
+    "!minecraft:cherry_*",
     "minecraft:mangrove_*",
-    "minecraft:*_armor_trim_smithing_template",
+    "!minecraft:*_armor_trim_smithing_template",
     "minecraft:bamboo_*",
-    "minecraft:*_wood",
-    "minecraft:loom"
+    "!minecraft:*_wood",
+    "minecraft:loom",
+    "minecraft:lectern",
+    "minecraft:raw_mutton"
   ],
   // -----------------------------------------------------------
   // Removes an item if it contains certain Component Data. If the whole entry (or expression) is present, the item gets removed.

@@ -1,0 +1,185 @@
+{
+	"general": {
+		"disable_mod": false,
+		"hide_bossbar": true,
+		"shadow_text": true,
+		"auto_start": false,
+		"animationSpeed": 1.0,
+		"always_show_ping": false,
+		"hide_debug_crosshair": false,
+		"background_color": 1867534416,
+		"space_modules": false,
+		"always_show_profiler": false,
+		"animations": false,
+		"fontScale": 0.7,
+		"hide_sidebar": true,
+		"always_show_tps": false
+	},
+	"modules_right": [
+		{
+			"name": "system",
+			"name_color": 16755200,
+			"value_color": 10944452,
+			"lines": {
+				"opengl_version": false,
+				"allocation_rate": true,
+				"display": true,
+				"java_version": true,
+				"gpu_driver": true,
+				"memory_usage": true,
+				"allocated_memory": true,
+				"cpu": true,
+				"gpu_utilization": true,
+				"time": true,
+				"gpu": true
+			},
+			"enabled": true
+		}, 
+		{
+			"empty_lines": 1,
+			"name": "empty",
+			"lines": {
+				"nothing": true
+			},
+			"enabled": true
+		}, 
+		{
+			"name": "target",
+			"name_color": 43775,
+			"value_color": 15658734,
+			"lines": {
+				"id_fluid": true,
+				"fluid_tags": true,
+				"block_states": true,
+				"targeted_block": true,
+				"block_tags": true,
+				"id_block": true,
+				"nothing": true,
+				"nothing2": true,
+				"targeted_fluid": true,
+				"targeted_entity": true,
+				"fluid_states": true
+			},
+			"enabled": true
+		}
+	],
+	"modules_left": [
+		{
+			"name": "minecraft",
+			"name_color": 52431,
+			"value_color": 15658734,
+			"lines": {
+				"minecraft": true
+			},
+			"enabled": true
+		}, 
+		{
+			"color_high": 5635925,
+			"color_med": 16777045,
+			"name": "fps",
+			"lines": {
+				"fps": true
+			},
+			"enabled": true,
+			"color_low": 16733525
+		}, 
+		{
+			"name": "graphics",
+			"name_color": 16755200,
+			"value_color": 5636095,
+			"lines": {
+				"shader": true,
+				"render_distance": true,
+				"graphics": true,
+				"clouds": true,
+				"biome_blend_radius": true
+			},
+			"enabled": true
+		}, 
+		{
+			"empty_lines": 2,
+			"name": "empty",
+			"lines": {
+				"nothing": true
+			},
+			"enabled": true
+		}, 
+		{
+			"name": "server",
+			"name_color": 10944452,
+			"value_color": 16777045,
+			"lines": {
+				"server_tick": true,
+				"packets_sent": true,
+				"packets_received": true,
+				"tick_manager_status": true
+			},
+			"enabled": true
+		}, 
+		{
+			"empty_lines": 2,
+			"name": "empty",
+			"lines": {
+				"nothing": true
+			},
+			"enabled": true
+		}, 
+		{
+			"name": "location",
+			"name_color": 43520,
+			"value_color": 10944452,
+			"lines": {
+				"light": true,
+				"biome": true,
+				"rotation": true,
+				"facing": true,
+				"slime_chunk": true,
+				"local_difficulty": true,
+				"day_ticks": true,
+				"days_played": true,
+				"dimension": true,
+				"highest_block": true,
+				"highest_block_server": false,
+				"light_server": true
+			},
+			"enabled": true
+		}, 
+		{
+			"maximum_color": 43690,
+			"name": "sound",
+			"name_color": 16755200,
+			"value_color": 15658734,
+			"lines": {
+				"ambient_sounds": true,
+				"sounds": true,
+				"mood": true
+			},
+			"enabled": true
+		}, 
+		{
+			"empty_lines": 2,
+			"name": "empty",
+			"lines": {
+				"nothing": true
+			},
+			"enabled": true
+		}, 
+		{
+			"color_x": 10944452,
+			"color_y": 10944452,
+			"color_z": 10944452,
+			"name": "coords",
+			"name_color": 15658734,
+			"lines": {
+				"chunk_coords": true,
+				"player_coords": true,
+				"block_coords": true,
+				"absolute_velocity": false,
+				"velocity": true,
+				"chunk_relative_coords": true,
+				"horizontal_velocity": false
+			},
+			"enabled": true
+		}
+	]
+}
