@@ -1,13 +1,13 @@
-name = "Super Cute Texture Pack"
+name = "Super Cute"
 filename = "Super Cute Texture Pack.zip"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/ohS9Jkb7/versions/60KASEA3/Super%20Cute%20Texture%20Pack.zip"
-hash-format = "sha512"
-hash = "5051e08e5db2f94651a1be078cfcaff04b8a1d72d015cc5838489d8f2e8bd9bd1cf263877bfdf38be4ebd22c54d04921e361df844f157384ed34a69ba9039c77"
+hash-format = "sha1"
+hash = "71f988bd655542957b1721ccf80578a7d9631536"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "ohS9Jkb7"
-version = "60KASEA3"
+[update.curseforge]
+file-id = 7487995
+project-id = 1436051

@@ -1,13 +1,13 @@
 name = "Bobby"
 filename = "bobby-5.2.10+mc1.21.9.jar"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/M08ruV16/versions/xiXouhmS/bobby-5.2.10%2Bmc1.21.9.jar"
-hash-format = "sha512"
-hash = "985e62045f5d4d1a7c77f542608509addf6c6f5f4b4f90f118fa70c1b7d36e4d4e2605d44f134fac75ef0e0da1c903fb79a25e53d9e10c5c1a5898a445ed58c9"
+hash-format = "sha1"
+hash = "7f26b57f1c74426e832775bdbd218ec4afc425fe"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "M08ruV16"
-version = "xiXouhmS"
+[update.curseforge]
+file-id = 7049851
+project-id = 409301

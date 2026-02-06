@@ -1,13 +1,13 @@
 name = "Halloween Mash-up"
 filename = "Halloween Mash-up.zip"
-side = "client"
+side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/mXZavX3c/versions/ZW2YDeII/Halloween%20Mash-up.zip"
-hash-format = "sha512"
-hash = "66c2beb39f8c10659549fb6babe946bfa1203eb6df654962485bf85c6366738f1cddfb4dfa3dc43e46df9a814050874e18bb817632f457c258c8dbcc18ab62fb"
+hash-format = "sha1"
+hash = "45ac287f68e8c0506795e8e3b46b0c27e781adb5"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "mXZavX3c"
-version = "ZW2YDeII"
+[update.curseforge]
+file-id = 7478962
+project-id = 1434786
