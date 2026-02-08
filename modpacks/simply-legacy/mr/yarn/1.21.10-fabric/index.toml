@@ -30,7 +30,7 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "config/crash_assistant/modlist.json"
-hash = "ed6c717d1e660895bb61a1c7d1f1f129d6b3db94cc4d04b261cb12acc7520929"
+hash = "4e181461a0e6eed8dacd68d8ad38351b712bae2c847411a6ca88698de52de99a"
 
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
@@ -51,6 +51,10 @@ hash = "f83e8176ccda0689fb95e7c8724e3a9f86daa305772880bb419dde5e28d299c1"
 [[files]]
 file = "configureddefaults/config/badoptimizations.txt"
 hash = "55c3e39708a0b83934ad67401e3b26ebdb5d05fea804730e67afbf36cfcca393"
+
+[[files]]
+file = "configureddefaults/config/bobby.conf"
+hash = "31c8245ab721c4ddec0658274a0439a2546764e09fd7fa8bd37e09a4263f2032"
 
 [[files]]
 file = "configureddefaults/config/c2me.toml"
@@ -82,7 +86,7 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "configureddefaults/config/crash_assistant/modlist.json"
-hash = "ed6c717d1e660895bb61a1c7d1f1f129d6b3db94cc4d04b261cb12acc7520929"
+hash = "4e181461a0e6eed8dacd68d8ad38351b712bae2c847411a6ca88698de52de99a"
 
 [[files]]
 file = "configureddefaults/config/crash_assistant/problematic_mods_config.json"
@@ -306,7 +310,7 @@ hash = "9ac4d3d1359d076ec48785f0e611749cdf3e636d4365cfed6a1bef0fb17bb49d"
 
 [[files]]
 file = "configureddefaults/resource_albums/super_mario.json"
-hash = "7797ed7767b2dc7fae1fe45a4561ff24ff55de1e39b25d8631d1134fc4c6593a"
+hash = "080dc282a19899862434f716dae427dff73e93a5808b9ae62c8e5cb50acacae7"
 
 [[files]]
 file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/intro.json"
@@ -571,13 +575,13 @@ hash = "f8805d3902fb3e31ea9e53f684e3d731b5ac7d2fd2507c475fd1f5f4da266a2f"
 metafile = true
 
 [[files]]
-file = "mods/bobby.pw.toml"
-hash = "6088be62ff0bc4e93388ba995418a376a1b7dfd062cce84bc36349b34ffa4af6"
+file = "mods/bedrock-skins.pw.toml"
+hash = "b897356455c1cc48f850cfb1c19592ac5ca2ed05665f1779c82955855e35cab2"
 metafile = true
 
 [[files]]
-file = "mods/c2me-fabric.pw.toml"
-hash = "4ee1808a7fb319d469dece5752cedb05dacb9afbe48021fa664f54b8c83fdc45"
+file = "mods/bobby.pw.toml"
+hash = "6088be62ff0bc4e93388ba995418a376a1b7dfd062cce84bc36349b34ffa4af6"
 metafile = true
 
 [[files]]
@@ -632,7 +636,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "61afd7af5c645ffd966b2bd86be944eacd1e48a8044e8f67082225d4d9989f0c"
+hash = "408151861cc1b1a4c4e9c8a3550662a2fc36d0ea96ee07b7e96c5d2a6afacf6f"
 metafile = true
 
 [[files]]
@@ -667,7 +671,7 @@ metafile = true
 
 [[files]]
 file = "mods/lazyai.pw.toml"
-hash = "ce0eb166ad09c3d1576ee46308ab4004bc002e89e80bb78df6593bcbae879025"
+hash = "05c9681cc413851881625f1a1f401e9edb9ebfc68a7f521f5e72c06bc8556251"
 metafile = true
 
 [[files]]
@@ -692,7 +696,7 @@ metafile = true
 
 [[files]]
 file = "mods/minimega.pw.toml"
-hash = "4f8efa5b2a9dfcb464eecceec3cdd140fa7b9c8e4f52344f38bab984b83535db"
+hash = "4c69638401e57593f255c5825d0146cfd5bb7d1f1afca421d0c0518cd77b8b90"
 metafile = true
 
 [[files]]
@@ -842,7 +846,7 @@ hash = "9ac4d3d1359d076ec48785f0e611749cdf3e636d4365cfed6a1bef0fb17bb49d"
 
 [[files]]
 file = "resource_albums/super_mario.json"
-hash = "7797ed7767b2dc7fae1fe45a4561ff24ff55de1e39b25d8631d1134fc4c6593a"
+hash = "080dc282a19899862434f716dae427dff73e93a5808b9ae62c8e5cb50acacae7"
 
 [[files]]
 file = "resourcepacks/Hybrid Aspects/assets/legacy/biome_overrides.json"
@@ -1872,7 +1876,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/super-mario-mash-up.pw.toml"
-hash = "398c16fe6335b061aab2f580fc4640ac07da96eda320bf3ffe543e86c2208c71"
+hash = "a6fdf3214aad668050039ceea78bfc0a76b9411f2493424e4f3760a1eb97ea54"
 metafile = true
 
 [[files]]
@@ -1881,7 +1885,7 @@ hash = "03b1631602ddde14a6e68dc27fd8883ade0b851cbe48b58a1f238855fc592130"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_us.json"
-hash = "8c95bdab20d972a80bc3c22e863d9bcc29852482dd8a1a3fc8fc52aac47ed22e"
+hash = "05ffa219c19c124292b528847a4cc5b71c02b4d237a99cc4f1d68e9ee03f1a6a"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/texts/tips.json"
@@ -2109,7 +2113,7 @@ hash = "ada1b7cc1eb8ee561d3df78f82aab0603fe14c74b9f8c28de514b2a06f7f1415"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy_world_sizes/lang/en_us.json"
-hash = "ef64f23b85677454de6d663044ae06e7bddc8ed088a9b1dbadbf43598cb922b7"
+hash = "01c69199f2a7d0d63f38b67ebd222eb599b95561f3dd9064eea15aedcc414bd3"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/minecraft/lang/en_us.json"
