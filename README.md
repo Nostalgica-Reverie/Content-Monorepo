@@ -1,42 +1,51 @@
-![649da799-9091-4ac4-b414-ed6e2c2b94be](https://github.com/user-attachments/assets/ab1cb580-c656-4eaa-a7b9-01e4fb28d526)
 
-
-
-### Legacy Modpack Monorepository
-This is the repository hosting all of the different Nostalgica Reverie LCE modpacks, and their source code.
+### Modpack-Monorepository
+This is the repository hosting all of the different Reverie modpacks, and their source code.
 
 ## Projects
-
-|                                            Icon                                             | Name                                                                                                                            | Developers                                                                                                                  | Download Count                                                                                                                                                                                                 |
-|:-------------------------------------------------------------------------------------------:|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    <img src="https://nostalgica.net/api/project/Re-Console/logo" width="64" height="64">    | [Re-Console](https://codeberg.org/Nostalgica-Reverie/Legacy-Modpack-Monorepository/src/branch/main/modpacks/re-console) [(View Mod Page)](https://modrinth.com/modpack/legacy-minecraft)                 | [omo50](https://modrinth.com/user/rjxkenshin)                                                                                     | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/legacy-minecraft?logo=Modrinth&label=Downloads) ![CurseForge Downloads](https://img.shields.io/curseforge/dt/1066411?logo=CurseForge&label=Downloads) |                                                                                             |
-|  <img src="https://nostalgica.net/api/project/Simply%20Legacy/logo" width="64" height="64">   | [Simply Legacy](https://codeberg.org/Nostalgica-Reverie/Legacy-Modpack-Monorepository/src/branch/main/modpacks/simply-legacy) [(View Mod Page)](https://modrinth.com/modpack/simply-legacy)              | [Cjnator38](https://modrinth.com/user/Cjnator38), [omo50](https://modrinth.com/user/rjxkenshin)                                          | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/simply-legacy?logo=Modrinth&label=Downloads)                                                                                                          |
-| <img src="https://nostalgica.net/api/project/Rekindled%20Legacy/logo" width="64" height="64"> | [Rekindled Legacy](https://codeberg.org/Nostalgica-Reverie/Legacy-Modpack-Monorepository/src/branch/main/modpacks/rekindled-legacy) [(View Mod Page)](https://modrinth.com/modpack/rekindled-legacy)     | [omo50](https://modrinth.com/user/rjxkenshin), [Panduino](https://modrinth.com/user/Panduino-Dev), [agariLMAO](https://modrinth.com/user/Agarialo) | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/rekindled-legacy?logo=Modrinth&label=Downloads)                                                                                                       |
-| <img src="https://codeberg.org/NicSonic/NR_Steam_Grids/raw/branch/main/icons/2000s_edition/2k_icon.png" width="64" height="64"> | [2000s Edition](https://codeberg.org/Nostalgica-Reverie/Legacy-Modpack-Monorepository/src/branch/main/modpacks/2000s-edition) [(View Mod Page)](https://modrinth.com/modpack/2000s-edition)     | [NicSonic](https://modrinth.com/user/NicSonic) | ![Modrinth Downloads](https://img.shields.io/modrinth/dt/2000s-edition?logo=Modrinth&label=Downloads)                                                                                                       |
-
-
----
+This repository currently holds the source for these modpacks:
+- Create & Destroy
+- Re-Console+
+- Re-Console
+- Rekindled Legacy
+- Simply Legacy
+- Silver Lining
+- 2000s Edition
+- OptiVulkan
 
 ### Downloads
 
 #### Stable builds
 
-The latest stable releases of these modpacks can be found on the [Nostalgica Legacy Modpacks collection](https://modrinth.com/collection/72AM2FL7)
+The latest stable releases of these modpacks can be found on our dedicated Modrinth pages.
 
 ### Reporting Issues
 
-If you do not need tech support and would like to report an issue (bug, crash, etc.) or otherwise request a feature for any version of Re-Console, then we encourage you to open an issue on the
+If you do not need tech support and would like to report an issue (bug, crash, etc.) or otherwise request a feature for any modpack, then we encourage you to open an issue on the
 [project issue tracker](https://codeberg.org/Nostalgica-Reverie/Legacy-Modpack-Monorepository/issues).
 
 ### Hardware Compatibility
-Our modpacks, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium) mod, is only compatible with graphics cards that support ***OpenGL 4.5 or newer.***
-Most graphics cards released in the past 12 years will meet these requirements, including the following:
+Our modpacks, due to utilizing the powerful [Sodium](https://modrinth.com/mod/sodium), [Embeddium](https://modrinth.com/mod/embeddium) or even [Vulkan](https://modrinth.com/mod/vulkanmod) mod, is only compatible with specific graphics cards or other hardware variants.
+
+All of our Sodium/Embeddium packs will work with any GPU that supports ***OpenGL 4.5 or newer.***
+Most graphics cards released in the past 12 years will meet these requirements.
+
+### Minimum Requirements (Sodium)
 
 -  INTEL HD Graphics 500 Series (Skylake) or newer
 -  NVIDIA GeForce 400 Series (Fermi) or newer
 -  AMD Radeon HD 7000 Series (GCN 1) or newer
 
 If you are running into problems, you should make sure that your graphics drivers are up-to-date. I also recommend taking a look at [this page](https://github.com/CaffeineMC/sodium/wiki/Driver-Compatibility) on the Sodium wiki.
+
+For our Vulkan modpacks, they will support any GPU that supports Vulkan 1.2 or above.
+
+### Minimum Requirements (Vulkan)
+
+- Vulkan 1.2 capable discrete GPU (GTX 900+ / RX 400+ / Intel Arc A-series)
+- AMD RDNA or NVIDIA Turing architecture with the most up-to-date drivers
+
+If you are running into problems, you should make sure that your graphics drivers are up-to-date. I also recommend taking a look at [the VulkanMod wiki](https://github.com/xCollateral/VulkanMod/wiki).
 
 # Nostalgica Reverie
 Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW) for sneak peeks and updates on development! By joining, you can:
@@ -45,28 +54,33 @@ Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW)
 - Talk with and collaborate with our team
 - And just hang out with the rest of our community!
 
-### Supported Versions
-- Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8 and 1.21.10
-- Rekindled Legacy currently has re-creations for Build 0033, Build 0035, GDC 2012, TU0, TU1, TU2, and TU3
-- Simply Legacy supports 1.21.10
-- 2000s Edition currently has a recreation of TU9 for 1.21.1
+## Supported Versions
+Our modpacks support a wide array of versions.
+
+### LCE Modpack
+- Re-Console+ supports 1.21.10.
+- Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8, and formerly 1.21.10.
+- Rekindled Legacy currently has re-creations for Build 0033, Build 0035, GDC 2012, TU0, TU1, TU2, and TU3 on 1.21.1.
+- Simply Legacy supports 1.21.10.
+- 2000s Edition currently has a recreation of TU9 for 1.21.1.
+
+### Performance Modpacks
+- OptiVulkan supports 1.21.11
+
+### Modded-style packs
+- Silver Lining supports 1.21.1
+- Create & Destroy supports 1.21.1
 
 ### Versioning
-The versioning format for Re-Console is year.major.minor, where for example:
-``25.15.12``
-``25`` is the year (2025)
-``15`` is the major version
-``12`` is the minor patches
-This resets after the year changes to a different year.
+Versioning is project specific, which is up to each individual developer to choose.
 
 ### Special Thanks
 Special thanks to:
 
 - jellysquid3 for creating Sodium
 - comp500 for packwiz 
-- Technocality for GitHub actions and consistent support
-- WilyIcaro for making the Legacy4J mod
-
+- DexrnZacAttack for making PackItUp
+- Technocality for GitHub actions
 
 ## License
-Unless otherwise stated, the Legacy Modpack Monorepository is licensed under the GPL-3.0 license or later.
+As all of these modpacks are different, the license may vary. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
