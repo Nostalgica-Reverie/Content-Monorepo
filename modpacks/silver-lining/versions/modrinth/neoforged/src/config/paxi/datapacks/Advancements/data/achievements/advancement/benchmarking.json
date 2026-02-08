@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:getting_wood",
+    "display": {
+        "title": {
+            "text": "Benchmarking"
+        },
+        "description": {
+            "text": "Craft a workbench with four blocks of planks",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:crafting_table"
+        }
+    },
+    "criteria": {
+        "crafting_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                    "items": "minecraft:crafting_table"
+                    }]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "crafting_table"
+        ]
+      ]
+}

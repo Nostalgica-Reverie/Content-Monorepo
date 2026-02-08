@@ -1,0 +1,32 @@
+{
+    "parent": "achievements:enchanter",
+    "display": {
+        "title": {
+            "text": "We Need to Go Deeper"
+        },
+        "description": {
+            "text": "Build a portal to the nether",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:obsidian"
+        }
+    },
+    "criteria": {
+        "nether": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "player": {
+                    "location": {
+                        "dimension": "minecraft:the_nether"
+                    }
+                }
+            }
+        }
+    },
+    "requirements": [
+        [
+          "nether"
+        ]
+      ]
+}

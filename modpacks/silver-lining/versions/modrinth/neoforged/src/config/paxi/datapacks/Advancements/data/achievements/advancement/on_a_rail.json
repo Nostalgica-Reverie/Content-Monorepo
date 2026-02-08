@@ -1,0 +1,26 @@
+{
+    "parent": "achievements:acquire_hardware",
+    "display": {
+        "title": {
+            "text": "On a Rail",
+            "color": "yellow"
+        },
+        "description": {
+            "text": "Travel by minecart at least 1km from where you started",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:rail"
+        }
+    },
+    "criteria": {
+        "impossible": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "requirements": [
+        [
+          "impossible"
+        ]
+      ]
+}

@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:time_to_farm",
+    "display": {
+      "icon": {
+        "id": "minecraft:bread"
+      },
+      "title": {
+        "text": "Bake Bread"
+      },
+      "description": {
+        "text": "Turn wheat into bread",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+      "bread": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [{
+              "items": "minecraft:bread"
+            }]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "bread"
+      ]
+    ]
+  }

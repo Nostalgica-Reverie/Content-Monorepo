@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:time_to_mine",
+    "display": {
+        "title": {
+            "text": "Getting an Upgrade"
+        },
+        "description": {
+            "text": "Construct a better pickaxe",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:stone_pickaxe"
+        }
+    },
+    "criteria": {
+        "better_pickaxe": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                    "items": "#achievements:better_pickaxes"
+                    }]
+            }
+        }
+    },
+    "requirements": [
+        [
+        "better_pickaxe"
+        ]
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:hot_topic",
+    "display": {
+      "icon": {
+        "id": "minecraft:iron_ingot"
+      },
+      "title": {
+        "text": "Acquire Hardware"
+      },
+      "description": {
+        "text": "Smelt an iron ingot",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+      "iron": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [{
+              "items": "minecraft:iron_ingot"
+            }]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "iron"
+      ]
+    ]
+  }

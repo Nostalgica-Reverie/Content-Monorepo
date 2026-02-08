@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:cow_tipper",
+    "display": {
+      "icon": {
+        "id": "minecraft:wheat"
+      },
+      "title": {
+        "text": "Repopulation"
+      },
+      "description": {
+        "text": "Breed two cows with wheat",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+        "bred": {
+            "trigger": "minecraft:bred_animals",
+            "conditions": {
+                "child": {
+                    "type": "minecraft:cow"
+                }
+            }
+        }
+    },
+    "requirements": [
+      [
+        "bred"
+      ]
+    ]
+  }

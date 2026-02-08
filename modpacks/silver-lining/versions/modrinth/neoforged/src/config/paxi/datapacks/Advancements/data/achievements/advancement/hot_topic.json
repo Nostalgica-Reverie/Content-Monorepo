@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:time_to_mine",
+    "display": {
+        "title": {
+            "text": "Hot Topic"
+        },
+        "description": {
+            "text": "Construct a furnace out of eight cobblestone blocks",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:furnace"
+        }
+    },
+    "criteria": {
+        "furnace": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+				"items": [{
+					"items": "minecraft:furnace"
+				}]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "furnace"
+        ]
+      ]
+}

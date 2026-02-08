@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "minecraft:slime_ball"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " / ",
+    "/O/",
+    " / "
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:honeycomb"
+  }
+}

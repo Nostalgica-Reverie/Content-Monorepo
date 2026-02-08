@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:time_to_farm",
+    "display": {
+      "icon": {
+        "id": "minecraft:cake"
+      },
+      "title": {
+        "text": "The Lie"
+      },
+      "description": {
+        "text": "Wheat, sugar, milk and eggs!",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+      "cake": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [{
+              "items": "minecraft:cake"
+            }]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "cake"
+      ]
+    ]
+  }

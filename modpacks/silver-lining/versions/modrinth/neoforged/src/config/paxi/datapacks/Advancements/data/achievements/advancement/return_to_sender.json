@@ -1,0 +1,47 @@
+{
+    "parent": "achievements:we_need_to_go_deeper",
+    "display": {
+      "icon": {
+        "id": "minecraft:ghast_tear"
+      },
+      "title": {
+        "text": "Return to Sender",
+        "color": "yellow"
+      },
+      "description": {
+        "text": "Destroy a Ghast with a fireball",
+        "color": "gray"
+      },
+      "frame": "challenge"
+    },
+    "rewards": {
+      "experience": 50
+    },
+    "criteria": {
+      "killed_ghast": {
+        "trigger": "minecraft:player_killed_entity",
+        "conditions": {
+          "entity": [
+            {
+              "condition": "minecraft:entity_properties",
+              "predicate": {
+                "type": "minecraft:ghast"
+              },
+              "entity": "this"
+            }
+          ],
+          "killing_blow": {
+            "is_projectile": true,
+            "direct_entity": {
+              "type": "minecraft:fireball"
+            }
+          }
+        }
+      }
+    },
+    "requirements": [
+      [
+        "killed_ghast"
+      ]
+    ]
+  }

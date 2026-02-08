@@ -1,0 +1,36 @@
+{
+    "parent": "achievements:kill_dragon",
+    "display": {
+      "icon": {
+        "id": "minecraft:wither_skeleton_skull"
+      },
+      "title": {
+        "text": "The Beggining?"
+      },
+      "description": {
+        "text": "Spawn the Wither",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+      "summoned": {
+        "trigger": "minecraft:summoned_entity",
+        "conditions": {
+          "entity": [
+            {
+              "condition": "minecraft:entity_properties",
+              "predicate": {
+                "type": "minecraft:wither"
+              },
+              "entity": "this"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "summoned"
+      ]
+    ]
+  }

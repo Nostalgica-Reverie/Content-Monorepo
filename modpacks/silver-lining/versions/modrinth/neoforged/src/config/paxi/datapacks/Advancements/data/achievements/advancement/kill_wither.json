@@ -1,0 +1,36 @@
+{
+    "parent": "achievements:the_beggining",
+    "display": {
+      "icon": {
+        "id": "minecraft:nether_star"
+      },
+      "title": {
+        "text": "The Beggining."
+      },
+      "description": {
+        "text": "Kill the Wither",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+      "killed_wither": {
+        "trigger": "minecraft:player_killed_entity",
+        "conditions": {
+          "entity": [
+            {
+              "condition": "minecraft:entity_properties",
+              "predicate": {
+                "type": "minecraft:wither"
+              },
+              "entity": "this"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "killed_wither"
+      ]
+    ]
+  }

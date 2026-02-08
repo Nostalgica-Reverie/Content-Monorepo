@@ -1,0 +1,83 @@
+{
+  "type": "terrestria:quartered_mega_tree",
+  "config": {
+    "decorators": [],
+    "dirt_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:dirt"
+      }
+    },
+    "foliage_placer": {
+      "type": "terrestria:predictive_spruce",
+      "offset": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 2,
+        "min_inclusive": 0
+      },
+      "radius": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 3,
+        "min_inclusive": 2
+      },
+      "trunk_height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 19,
+        "min_inclusive": 12
+      }
+    },
+    "foliage_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "traverse:brown_autumnal_leaves",
+        "Properties": {
+          "distance": "14",
+          "persistent": "false",
+          "waterlogged": "false"
+        }
+      }
+    },
+    "force_dirt": false,
+    "ignore_vines": true,
+    "minimum_size": {
+      "type": "minecraft:two_layers_feature_size",
+      "limit": 2,
+      "lower_size": 1,
+      "upper_size": 2
+    },
+    "quartered_trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "terrestria:redwood_quarter_log",
+        "Properties": {
+          "axis": "y",
+          "bark_side": "northeast"
+        }
+      }
+    },
+    "roots_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "terrestria:redwood_wood",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    },
+    "trunk_placer": {
+      "type": "terrestria:mega_trunk_placer",
+      "base_height": 32,
+      "height_rand_a": 8,
+      "height_rand_b": 7
+    },
+    "trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "terrestria:redwood_log",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    }
+  }
+}

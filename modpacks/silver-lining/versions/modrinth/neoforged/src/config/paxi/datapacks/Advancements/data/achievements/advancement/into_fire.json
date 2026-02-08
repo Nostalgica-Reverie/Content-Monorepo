@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:we_need_to_go_deeper",
+    "display": {
+      "icon": {
+        "id": "minecraft:blaze_rod"
+      },
+      "title": {
+        "text": "Into Fire"
+      },
+      "description": {
+        "text": "Relieve a Blaze of its rod",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+      "blaze_rod": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [{
+              "items": "minecraft:blaze_rod"
+            }]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "blaze_rod"
+      ]
+    ]
+  }

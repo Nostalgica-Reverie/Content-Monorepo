@@ -1,0 +1,30 @@
+{
+    "display": {
+        "title": {
+            "text": "Achievements!"
+        },
+        "description": {
+            "text": "Datapack by Švára",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:grass_block"
+        },
+        "show_toast": false,
+        "announce_to_chat": false,
+        "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+    },
+    "criteria": {
+        "start": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "dimension": "overworld"
+            }
+        }
+    },
+    "requirements": [
+        [
+          "start"
+        ]
+      ]
+}

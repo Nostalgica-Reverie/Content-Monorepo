@@ -1,0 +1,18 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "#pane"
+	},
+	"elements": [
+		{
+			"from": [8, 0, 7],
+			"to": [8, 16, 9],
+			"shade": false,
+			"faces": {
+				"east": {"uv": [7, 0, 9, 16], "texture": "#pane"},
+				"west": {"uv": [7, 0, 9, 16], "texture": "#pane"}
+			}
+		}
+	]
+}

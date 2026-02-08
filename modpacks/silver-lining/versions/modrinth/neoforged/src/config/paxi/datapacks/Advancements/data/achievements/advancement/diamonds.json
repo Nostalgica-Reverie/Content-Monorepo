@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:acquire_hardware",
+    "display": {
+      "icon": {
+        "id": "minecraft:diamond_ore"
+      },
+      "title": {
+        "text": "DIAMONDS!"
+      },
+      "description": {
+        "text": "Acquire diamonds with your iron tools",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+      "diamond": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [{
+            "items": "minecraft:diamond"
+            }]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "diamond"
+      ]
+    ]
+  }
