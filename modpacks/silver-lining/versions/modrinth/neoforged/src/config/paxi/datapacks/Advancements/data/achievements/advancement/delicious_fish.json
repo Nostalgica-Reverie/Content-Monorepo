@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:hot_topic",
+    "display": {
+        "title": {
+            "text": "Delicious Fish"
+        },
+        "description": {
+            "text": "Catch and cook fish!",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:cooked_cod"
+        }
+    },
+    "criteria": {
+        "delicious_fish": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                        "items": "#achievements:cooked_fish"
+                    }]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "delicious_fish"
+        ]
+      ]
+}

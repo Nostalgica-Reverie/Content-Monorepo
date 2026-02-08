@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:taking_inventory",
+    "display": {
+        "title": {
+            "text": "Getting Wood"
+        },
+        "description": {
+            "text": "Attack a tree untill a block of wood pops out",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:oak_log"
+        }
+    },
+    "criteria": {
+        "log": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+				"items": [{
+					"items": "#minecraft:logs"
+				}]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "log"
+        ]
+      ]
+}

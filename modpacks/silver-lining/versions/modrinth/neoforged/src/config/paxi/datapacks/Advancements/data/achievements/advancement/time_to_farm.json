@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:benchmarking",
+"display": {
+    "title": {
+        "text": "Time to Farm!"
+    },
+    "description": {
+        "text": "Use planks and sticks to make a hoe",
+        "color": "gray"
+    },
+    "icon": {
+        "id": "minecraft:wooden_hoe"
+    }
+},
+"criteria": {
+    "hoe": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+            "items": [{
+                "items": "#achievements:hoes"
+            }]
+        }
+    }
+},
+"requirements": [
+    [
+      "hoe"
+    ]
+  ]
+}

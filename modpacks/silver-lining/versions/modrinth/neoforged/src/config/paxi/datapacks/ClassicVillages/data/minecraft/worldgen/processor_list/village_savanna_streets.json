@@ -1,0 +1,36 @@
+{
+  "processors": [
+    {
+      "processor_type": "lithostitched:condition",
+      "if_true": {
+        "type": "lithostitched:any_of",
+        "conditions": [
+          {
+            "type": "lithostitched:matching_blocks",
+            "blocks": "minecraft:water",
+            "match_type": "location"
+          },
+          {
+            "type": "lithostitched:matching_blocks",
+            "blocks": "minecraft:lava",
+            "match_type": "location"
+          }
+        ]
+      },
+      "then": {
+        "processor_type": "lithostitched:block_swap",
+        "blocks": {
+          "minecraft:gravel": "minecraft:acacia_planks"
+        }
+      }
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:barrier"
+        }
+      ]
+    }
+  ]
+}

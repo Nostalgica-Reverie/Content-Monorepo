@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:diamonds",
+    "display": {
+        "title": {
+            "text": "Diamonds to you!"
+        },
+        "description": {
+            "text": "Throw diamonds at another player",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:diamond"
+        }
+    },
+    "criteria": {
+        "diamond_pickup": {
+            "trigger": "minecraft:thrown_item_picked_up_by_player",
+            "conditions": {
+                "item": {
+                    "items": "minecraft:diamond"
+                }
+            }
+        }
+    },
+    "requirements": [
+        [
+            "diamond_pickup"
+        ]
+    ]
+}

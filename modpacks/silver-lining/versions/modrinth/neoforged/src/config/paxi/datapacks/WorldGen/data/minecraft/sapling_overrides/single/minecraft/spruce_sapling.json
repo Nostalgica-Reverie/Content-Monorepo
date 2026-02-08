@@ -1,0 +1,19 @@
+{
+  "replace": true,
+  "values": {
+    "treeplacer:all_biomes": [
+      {
+        "feature": "geophilic:tree/spruce/short",
+        "weight": 30
+      },
+      {
+        "feature": "geophilic:tree/spruce/tall",
+        "weight": 14
+      },
+      {
+        "feature": "geophilic:tree/spruce/classic",
+        "weight": 56
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "parent": "achievements:into_fire",
+    "display": {
+      "icon": {
+        "id": "minecraft:potion"
+      },
+      "title": {
+        "text": "Local Brewery"
+      },
+      "description": {
+        "text": "Brew a potion",
+        "color": "gray"
+      }
+    },
+    "criteria": {
+      "potion": {
+        "trigger": "minecraft:brewed_potion"
+      }
+    },
+    "requirements": [
+      [
+        "potion"
+      ]
+    ]
+  }

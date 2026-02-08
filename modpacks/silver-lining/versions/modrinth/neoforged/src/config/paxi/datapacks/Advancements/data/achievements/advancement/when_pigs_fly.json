@@ -1,0 +1,27 @@
+{
+    "parent": "achievements:cow_tipper",
+    "display": {
+        "title": {
+            "text": "When Pigs Fly",
+            "color": "yellow"
+        },
+        "description": {
+            "text": "Fly a pig off a cliff",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:saddle"
+        },
+        "frame": "challenge"
+    },
+    "criteria": {
+        "impossible": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "requirements": [
+        [
+          "impossible"
+        ]
+      ]
+}

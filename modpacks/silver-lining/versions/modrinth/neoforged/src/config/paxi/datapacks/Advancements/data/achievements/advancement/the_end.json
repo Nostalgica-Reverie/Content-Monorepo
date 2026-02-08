@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:into_fire",
+    "display": {
+      "icon": {
+        "id": "minecraft:ender_eye"
+      },
+      "title": {
+        "text": "The End?",
+        "color": "yellow"
+      },
+      "description": {
+        "text": "Locate the End",
+        "color": "gray"
+      },
+      "frame": "challenge"
+    },
+    "criteria": {
+      "entered_end": {
+        "trigger": "minecraft:changed_dimension",
+        "conditions": {
+          "to": "minecraft:the_end"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "entered_end"
+      ]
+    ]
+  }

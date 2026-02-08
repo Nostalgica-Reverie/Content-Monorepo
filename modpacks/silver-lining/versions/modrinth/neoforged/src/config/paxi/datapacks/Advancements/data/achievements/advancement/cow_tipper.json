@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:time_to_strike",
+    "display": {
+        "title": {
+            "text": "Cow Tipper"
+        },
+        "description": {
+            "text": "Harvest some leather",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:leather"
+        }
+    },
+    "criteria": {
+        "leather": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [{
+                    "items": "minecraft:leather"
+                    }]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "leather"
+        ]
+      ]
+}

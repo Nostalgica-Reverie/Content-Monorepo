@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:kill_wither",
+    "display": {
+      "icon": {
+        "id": "minecraft:beacon"
+      },
+      "title": {
+        "text": "Beaconator",
+        "color": "yellow"
+      },
+      "description": {
+        "text": "Create a full beacon",
+        "color": "gray"
+      },
+      "frame": "challenge"
+    },
+    "criteria": {
+      "beacon": {
+        "trigger": "minecraft:construct_beacon",
+        "conditions": {
+          "level": 4
+        }
+      }
+    },
+    "requirements": [
+      [
+        "beacon"
+      ]
+    ]
+  }

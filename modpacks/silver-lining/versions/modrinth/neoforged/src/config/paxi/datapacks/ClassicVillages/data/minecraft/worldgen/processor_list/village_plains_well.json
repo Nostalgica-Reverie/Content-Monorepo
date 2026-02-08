@@ -1,0 +1,23 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:barrier"
+        }
+      ]
+    },
+    {
+      "processor_type": "lithostitched:condition",
+      "if_true": {
+        "type": "lithostitched:matching_blocks",
+        "blocks": "#c:gravels",
+        "match_type": "input"
+      },
+      "then": {
+        "processor_type": "lithostitched:schedule_tick"
+      }
+    }
+  ]
+}

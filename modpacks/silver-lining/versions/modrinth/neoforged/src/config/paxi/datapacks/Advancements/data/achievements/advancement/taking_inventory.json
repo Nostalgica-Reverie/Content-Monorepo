@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:root",
+    "display": {
+        "title": {
+            "text": "Taking Inventory"
+        },
+        "description": {
+            "text": "Press 'E' to open your inventory",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:book"
+        },
+        "show_toast": false,
+        "announce_to_chat": false
+    },
+    "criteria": {
+        "inventory": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "dimension": "overworld"
+            }
+        }
+    },
+    "requirements": [
+        [
+          "inventory"
+        ]
+      ]
+}

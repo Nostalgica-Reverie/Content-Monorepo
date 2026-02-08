@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:enchanter",
+    "display": {
+        "title": {
+            "text": "Librarian"
+        },
+        "description": {
+            "text": "Build some bookshelves to improve your enchantment table",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:bookshelf"
+        }
+    },
+    "criteria": {
+        "bookshelf": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+				"items": [{
+					"items": "minecraft:bookshelf"
+				}]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "bookshelf"
+        ]
+      ]
+}

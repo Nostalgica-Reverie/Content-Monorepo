@@ -1,0 +1,35 @@
+{
+    "parent": "achievements:getting_an_upgrade",
+    "display": {
+        "title": {
+            "text": "Overpowered",
+            "color": "yellow"
+        },
+        "description": {
+            "text": "Eat a Notch apple",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:enchanted_golden_apple"
+        },
+        "frame": "challenge"
+    },
+    "criteria": {
+        "napple": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "items": "minecraft:enchanted_golden_apple"
+                }
+            }
+        }
+    },
+    "rewards": {
+        "experience": 10
+    },
+    "requirements": [
+        [
+          "napple"
+        ]
+      ]
+}

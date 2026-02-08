@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:benchmarking",
+"display": {
+    "title": {
+        "text": "Time to Strike!"
+    },
+    "description": {
+        "text": "Use planks and sticks to make a sword",
+        "color": "gray"
+    },
+    "icon": {
+        "id": "minecraft:wooden_sword"
+    }
+},
+"criteria": {
+    "sword": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+            "items": [{
+                "items": "#achievements:swords"
+                }]
+        }
+    }
+},
+"requirements": [
+    [
+      "sword"
+    ]
+  ]
+}

@@ -1,0 +1,40 @@
+{
+    "parent": "achievements:monster_hunter",
+    "display": {
+        "title": {
+            "text": "Sniper Duel",
+            "color": "yellow"
+        },
+        "description": {
+            "text": "Kill a skeleton with an arrow from more than 50 meters",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:bow"
+        },
+        "frame": "challenge"
+    },
+    "criteria": {
+        "killskeleton": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:skeleton",
+                    "distance": {
+                        "absolute": {
+                            "min": 50
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "requirements": [
+        [
+            "killskeleton"
+        ]
+    ],
+    "rewards": {
+        "experience": 10
+    }
+}

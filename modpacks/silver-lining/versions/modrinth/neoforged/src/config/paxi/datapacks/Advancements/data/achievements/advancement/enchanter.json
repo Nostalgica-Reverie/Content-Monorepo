@@ -1,0 +1,30 @@
+{
+    "parent": "achievements:diamonds",
+    "display": {
+        "title": {
+            "text": "Enchanter"
+        },
+        "description": {
+            "text": "Use a book, obsidian and diamonds to construct an enchantment table",
+            "color": "gray"
+        },
+        "icon": {
+            "id": "minecraft:enchanting_table"
+        }
+    },
+    "criteria": {
+        "ench_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+				"items": [{
+					"items": "minecraft:enchanting_table"
+				}]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "ench_table"
+        ]
+      ]
+}
