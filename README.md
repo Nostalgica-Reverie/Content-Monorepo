@@ -1,8 +1,8 @@
 
-### Modpack-Monorepository
+### Content-Monorepo
 This is the repository hosting all of the different Reverie modpacks, and their source code.
 
-## Projects
+## Modpack Projects
 This repository currently holds the source for these modpacks:
 - Create & Destroy
 - Re-Console+
@@ -12,6 +12,18 @@ This repository currently holds the source for these modpacks:
 - Silver Lining
 - 2000s Edition
 - OptiVulkan
+
+## Resource Pack Projects
+This repository currently holds the source for these resource-packs:
+- Extra Controller Tooltips
+- Faithful Legacy
+- Hybrid Aspects
+- Legacy Modpack Resources
+- Legacy Panorama
+- Legacy Titles
+- Ore4J
+- Tutorial World Addon
+
 
 ### Downloads
 
