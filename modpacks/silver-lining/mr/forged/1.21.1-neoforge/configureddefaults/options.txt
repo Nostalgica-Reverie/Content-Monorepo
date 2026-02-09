@@ -1,0 +1,26 @@
+__DO_NOT_ADD__:Do not add "syncChunkWrites". It only works on Windows and breaks world saving on other systems. Do not add it.
+version:3955
+ao:true
+biomeBlendRadius:2
+enableVsync:true
+entityDistanceScaling:1.0
+entityShadows:true
+forceUnicodeFont:false
+japaneseGlyphVariants:false
+fov:0.0
+fovEffectScale:1.0
+darknessEffectScale:1.0
+glintSpeed:1.0
+glintStrength:1.0
+prioritizeChunkUpdates:0
+fullscreen:false
+guiScale:0
+maxFps:240
+mipmapLevels:0
+narrator:0
+particles:0
+reducedDebugInfo:false
+renderClouds:"true"
+renderDistance:12
+simulationDistance:8
+
