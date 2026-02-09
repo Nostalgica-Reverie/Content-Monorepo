@@ -31,6 +31,7 @@ body:
       label: Minecraft Version
       description: What version of Minecraft are you running?
       options:
+        - 1.21.11
         - 1.21.10
         - 1.21.8
         - 1.21.5
@@ -45,8 +46,8 @@ body:
   - type: dropdown
     id: loader
     attributes:
-      label: Modloader
-      description: What Modloader are you using?
+      label: ModLoader
+      description: What ModLoader are you using?
       options:
         - Fabric
         - Forge
@@ -61,19 +62,34 @@ body:
       label: Modpack
       description: What Modpack and what version are you on?
       options:
+        - Re-Console+ Modrinth
+        - Re-Console+ Curseforge
         - Re-Console Modrinth
         - Re-Console Curseforge
+        - Rekindled Legacy (List TU in your bug report)
         - Simply Legacy
-        - Rekindled Legacy TU3
-        - Rekindled Legacy TU2
-        - Rekindled Legacy TU1
-        - Rekindled Legacy TU0
-        - Rekindled Legacy GDC 2012
-        - Rekindled Legacy Build 0035
-        - Rekindled Legacy Build 0033
+        - Silver Lining
+        - OptiVulkan
+        - Create & Destroy
       default: 0
     validations:
       required: true
+  - type: dropdown
+    id: rp
+    attributes:
+      label: Modpack
+      description: What Resource Pack are you using?
+      options:
+        - Extra Controller Tooltips
+        - Faithful Legacy
+        - Hybrid Aspects
+        - Legacy Modpack Resources
+        - Legacy Panorama
+        - Legacy Titles
+        - Modern How to Play
+        - Ore4J
+        - Tutorial World Add-on
+      default: 0
   - type: textarea
     id: logs
     attributes:
