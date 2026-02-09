@@ -1,0 +1,48 @@
+{
+  "elements": {
+    "scrollable_renderer": {
+      "type": "put_scrollable_renderer",
+      "x": "(${width}-${scrollable_renderer.width})/2",
+      "y": "(${height}-${scrollable_renderer.height})/2 + 31",
+      "width": 456,
+      "height": 222,
+      "elements": {
+        "text": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.illagers_message"},
+          "width": 433
+        },
+        "evoker": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.illagers_evoker"},
+          "width": 433
+        },
+        "pillager": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.illagers_pillager"},
+          "width": 433
+        },
+        "vindicator": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.illagers_vindicator"},
+          "width": 433
+        },
+        "ravager": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.illagers_ravager"},
+          "width": 433
+        },
+        "vex": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.illagers_vex"},
+          "width": 433
+        },
+        "witch": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.illagers_witch"},
+          "width": 433
+        }
+      }
+    }
+  }
+}
