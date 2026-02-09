@@ -8,7 +8,10 @@
   },
   "pack": {
     "description": "Legacy Modpack Resources is a utility resource pack used to modify the Legacy4J mod.",
-    "pack_format": 15,
-    "supported_formats": {"max_inclusive": 420, "min_inclusive": 15}
+    "pack_format": 69,
+    "pack_format": 16,
+    "min_format": 16,
+    "max_format": 999,
+    "supported_formats": [ 16, 999 ]
   }
 }

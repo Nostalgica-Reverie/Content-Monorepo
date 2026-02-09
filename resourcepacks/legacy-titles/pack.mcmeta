@@ -2,9 +2,10 @@
   "pack": {
     "description": "A collection of titles in the style of, or directly extracted from Legacy Console Edition",
     "pack_format": 69,
-    "supported_formats": {
-        "min_inclusive": 15,
-        "max_inclusive": 69
+    "pack_format": 16,
+    "min_format": 16,
+    "max_format": 999,
+    "supported_formats": [ 16, 999 ]
     }
   }
 }
