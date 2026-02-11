@@ -3,37 +3,50 @@ This is the repository hosting all of the different Reverie modpacks, and their 
 
 ## Modpack Projects
 This repository currently holds the source for these modpacks:
+- 2000s Edition
 - Create & Destroy
-- Re-Console+
+- OptiVulkan
 - Re-Console
+- Re-Console+
 - Rekindled Legacy
-- Simply Legacy
 - Silver Lining
+- Simply Legacy
 - Simply Optimized Forked
 - Simply Serverside
-- 2000s Edition
-- OptiVulkan
 
 Each of these packs can be found in their respective folders in the ``modpacks`` directory. Each modpack may be under a different license, so if you are looking to fork or PR, please read the LICENSE file in the respective folder.
 
 ## Resource Pack Projects
-This repository currently holds the source for these resource-packs:
+This repository currently holds the source for these resource packs:
 - 1080p KBM Tooltips
 - Extra Controller Tooltips
 - Faithful Legacy
 - Fixed Chest Models
 - Hybrid Aspects
-- Legacy Modpack Resources
 - Legacy Modpack Lang
+- Legacy Modpack Resources
 - Legacy Panorama
+- Legacy Skin Packs
 - Legacy Titles
 - Modern How to Play
+- Modern Skin Packs
 - Ore4J
-- Tutorial World Addon
+- Playstation Skin Packs
 - Tooltips Enhanced
 - TU0 GUI
+- Tutorial World Addon
+- Vanilla Live
+- Xbox Skin Packs
 
-Each of these packs can be found in their respective folders in the ``resourcepacks`` directory. Each modpack may be under a different license, so if you are looking to fork or PR, please read the LICENSE file in the respective folder. Internal packs are generally internally used among modpacks, and External are published to sites.
+Each of these packs can be found in their respective folders in the ``resourcepacks`` directory. Each pack may be under a different license, so if you are looking to fork or PR, please read the LICENSE file in the respective folder. Internal packs are generally internally used among modpacks, and External are published to sites.
+
+## Datapack Projects
+This repository currently holds the source for these data packs:
+- Legacy Nether
+- Legacy Nether: Extended
+- Legacy Mechanics
+
+Each of these packs can be found in their respective folders in the ``datapacks`` directory. Each pack may be under a different license, so if you are looking to fork or PR, please read the LICENSE file in the respective folder. Internal packs are generally internally used among modpacks, and External are published to sites.
 
 ### Downloads
 
