@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:wooden_sword"
+    },
+    "title": "Time to Strike!",
+    "description": "Use planks and sticks to make a sword.",
+    "frame": "task"
+  },
+  "parent": "minecraft:minecraft/onarail",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:wooden_sword",
+              "minecraft:diamond_sword",
+              "minecraft:golden_sword",
+              "minecraft:iron_sword",
+              "minecraft:netherite_sword",
+              "minecraft:stone_sword"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

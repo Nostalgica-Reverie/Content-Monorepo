@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:minecraft/gettingwood",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:crafting_table"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "description": "Craft a workbench with four blocks of wooden planks.",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:crafting_table"
+    },
+    "title": "Benchmaking"
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

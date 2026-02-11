@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:story/enter_the_nether",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "minecraft:shipwreck"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "description": "Discover a shipwreck.",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:heart_of_the_sea"
+    },
+    "title": "Ahoy!"
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

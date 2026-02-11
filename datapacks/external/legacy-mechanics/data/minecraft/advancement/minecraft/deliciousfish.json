@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:cod"
+    },
+    "title": "Delicious Fish",
+    "description": "Catch and cook a fish!",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/upgrade_tools",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:cooked_cod",
+              "minecraft:cooked_salmon"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
+}

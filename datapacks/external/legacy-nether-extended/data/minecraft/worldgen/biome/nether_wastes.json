@@ -1,0 +1,112 @@
+{
+  "temperature": 2,
+  "downfall": 0,
+  "has_precipitation": false,
+  "effects": {
+    "sky_color": 7254527,
+    "fog_color": 3344392,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "ambient_sound": "minecraft:ambient.nether_wastes.loop",
+    "mood_sound": {
+      "sound": "minecraft:ambient.nether_wastes.mood",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2
+    },
+    "additions_sound": {
+      "sound": "minecraft:ambient.nether_wastes.additions",
+      "tick_chance": 0.0111
+    },
+    "music": [
+      {
+        "weight": 1,
+        "data": {
+          "sound": "minecraft:music.nether.nether_wastes",
+          "min_delay": 12000,
+          "max_delay": 24000,
+          "replace_current_music": false
+        }
+      }
+    ],
+    "music_volume": 1
+  },
+  "carvers": "minecraft:nether_cave",
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:spring_open",
+      "minecraft:patch_fire",
+      "minecraft:glowstone_extra",
+      "minecraft:glowstone",
+      "minecraft:brown_mushroom_nether",
+      "minecraft:red_mushroom_nether",
+      "minecraft:ore_magma",
+      "minecraft:spring_closed",
+      "minecraft:ore_gravel_nether",
+      "minecraft:ore_gold_nether",
+      "minecraft:ore_quartz_nether",
+      "minecraft:ore_ancient_debris_large",
+      "minecraft:ore_debris_small",
+      "minecraft:patch_nether_wart"
+    ],
+    [],
+    [
+      "minecraft:spring_lava",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:red_mushroom_normal"
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:zombified_piglin",
+        "weight": 100,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:ghast",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:magma_cube",
+        "weight": 25,
+        "minCount": 1,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:wither_skeleton",
+        "weight": 80,
+        "minCount": 1,
+        "maxCount": 2
+      },
+      {
+        "type": "minecraft:enderman",
+        "weight": 1,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:piglin",
+        "weight": 15,
+        "minCount": 4,
+        "maxCount": 4
+      }
+    ],
+    "creature": [],
+    "ambient": [],
+    "water_ambient": [],
+    "water_creature": [],
+    "misc": []
+  },
+  "spawn_costs": {}
+}
