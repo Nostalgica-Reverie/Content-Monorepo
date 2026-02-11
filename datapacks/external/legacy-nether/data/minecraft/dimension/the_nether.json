@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:the_nether",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:nether_wastes"
+    },
+    "settings": "minecraft:nether"
+  }
+}

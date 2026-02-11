@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:minecraft/takinginventory",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:logs"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "description": "Punch a tree until a block of wood pops out.",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:oak_log"
+    },
+    "title": "Getting Wood"
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
