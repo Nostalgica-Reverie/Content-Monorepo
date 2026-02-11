@@ -1,4 +1,3 @@
-
 ### Content-Monorepo
 This is the repository hosting all of the different Reverie modpacks, and their source code.
 
@@ -10,20 +9,31 @@ This repository currently holds the source for these modpacks:
 - Rekindled Legacy
 - Simply Legacy
 - Silver Lining
+- Simply Optimized Forked
+- Simply Serverside
 - 2000s Edition
 - OptiVulkan
 
+Each of these packs can be found in their respective folders in the ``modpacks`` directory. Each modpack may be under a different license, so if you are looking to fork or PR, please read the LICENSE file in the respective folder.
+
 ## Resource Pack Projects
 This repository currently holds the source for these resource-packs:
+- 1080p KBM Tooltips
 - Extra Controller Tooltips
 - Faithful Legacy
+- Fixed Chest Models
 - Hybrid Aspects
 - Legacy Modpack Resources
+- Legacy Modpack Lang
 - Legacy Panorama
 - Legacy Titles
+- Modern How to Play
 - Ore4J
 - Tutorial World Addon
+- Tooltips Enhanced
+- TU0 GUI
 
+Each of these packs can be found in their respective folders in the ``resourcepacks`` directory. Each modpack may be under a different license, so if you are looking to fork or PR, please read the LICENSE file in the respective folder. Internal packs are generally internally used among modpacks, and External are published to sites.
 
 ### Downloads
 
@@ -67,21 +77,24 @@ Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW)
 - And just hang out with the rest of our community!
 
 ## Supported Versions
-Our modpacks support a wide array of versions.
+Our modpacks support a wide array of versions and modloaders.
 
-### LCE Modpack
-- Re-Console+ supports 1.21.10.
-- Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8, and formerly 1.21.10.
-- Rekindled Legacy currently has re-creations for Build 0033, Build 0035, GDC 2012, TU0, TU1, TU2, and TU3 on 1.21.1.
-- Simply Legacy supports 1.21.10.
-- 2000s Edition currently has a recreation of TU9 for 1.21.1.
+### LCE Modpacks
+- Re-Console+ supports 1.21.10 on Fabric.
+- Re-Console supports 1.20.1, 1.20.4, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8, and formerly 1.21.10, on Fabric, NeoForge, Forge and Quilt.
+- Rekindled Legacy currently has re-creations for Build 0033, Build 0035, GDC 2012, TU0, TU1, TU2, and TU3, on 1.21.1 NeoForge.
+- Simply Legacy supports 1.21.10 on Fabric
+- 2000s Edition currently has a recreation of TU9 for 1.21.1 on Fabric.
 
 ### Performance Modpacks
-- OptiVulkan supports 1.21.11
+- OptiVulkan supports 1.21.11 on Fabric.
+- Simply Optimized Forked supports 1.20.1, 1.21.1 and 1.21.11 on Fabric.
+- Simply Serverside supports 1.20.1, 1.21.1 and 1.21.11 on Fabric.
 
 ### Modded-style packs
-- Silver Lining supports 1.21.1
-- Create & Destroy supports 1.21.1
+- Create & Destroy supports 1.21.1 on NeoForge.
+- Silver Lining supports 1.21.1 on NeoForge.
+- Tooth & Nail supports 1.20.1 on Forge.
 
 ### Versioning
 Versioning is project specific, which is up to each individual developer to choose.
@@ -95,4 +108,4 @@ Special thanks to:
 - Technocality for GitHub actions
 
 ## License
-As all of these modpacks are different, the license may vary. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
+As all of these modpacks are different, the license may vary. Most packs are under GPL-3.0, or MIT. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
