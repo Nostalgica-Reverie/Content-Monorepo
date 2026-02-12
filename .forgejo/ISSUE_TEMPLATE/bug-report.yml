@@ -62,6 +62,7 @@ body:
       label: Modpack
       description: What Modpack and what version are you on?
       options:
+        - None
         - Re-Console+ Modrinth
         - Re-Console+ Curseforge
         - Re-Console Modrinth
@@ -81,16 +82,35 @@ body:
       description: What Resource Pack are you using?
       options:
         - None
+        - 1080p KBM tooltips
         - Extra Controller Tooltips
         - Faithful Legacy
         - Hybrid Aspects
         - Legacy Modpack Resources
         - Legacy Panorama
         - Legacy Titles
+        - Legacy Skin Packs
+        - Modern Skin Packs
         - Modern How to Play
         - Ore4J
         - Tutorial World Add-on
+        - Vanilla Live
       default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: dp
+    attributes:
+      label: Datapack Pack
+      description: What Resource Pack are you using?
+      options:
+        - None
+        - Legacy Nether
+        - Legacy Nether Extended
+        - Legacy Mechanics
+      default: 0
+    validations:
+      required: true
   - type: textarea
     id: logs
     attributes:
