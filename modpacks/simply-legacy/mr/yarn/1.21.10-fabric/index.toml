@@ -50,7 +50,7 @@ hash = "f83e8176ccda0689fb95e7c8724e3a9f86daa305772880bb419dde5e28d299c1"
 
 [[files]]
 file = "configureddefaults/config/badoptimizations.txt"
-hash = "55c3e39708a0b83934ad67401e3b26ebdb5d05fea804730e67afbf36cfcca393"
+hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
 
 [[files]]
 file = "configureddefaults/config/bobby.conf"
@@ -102,11 +102,15 @@ hash = "0554c0e7816266477c65c18d2ada9fdddf1c6750787efd329056223ca4a073b2"
 
 [[files]]
 file = "configureddefaults/config/entityculling.json"
-hash = "dc7598cff8d5128cabb1757c5e38a9cbf492ac2d195ed403bc47c679b4a1d4dc"
+hash = "6bb3b6b65f728d5c3d06dd986b85d21370e3b78a30629b7a1ab7a0a46e033768"
 
 [[files]]
 file = "configureddefaults/config/etf_warnings.json"
 hash = "a5ba22e63061c1fb67f0f895f17681351eaeccc225faef966c29ee630593275e"
+
+[[files]]
+file = "configureddefaults/config/fabric/indigo-renderer.properties"
+hash = "0a776bd94413087200e0cd1a0bd72cbfe5c1a69002c1c625236233c2183c301c"
 
 [[files]]
 file = "configureddefaults/config/factory_api/client_options.json"
@@ -122,7 +126,7 @@ hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
 
 [[files]]
 file = "configureddefaults/config/immediatelyfast.json"
-hash = "2718bb7c2762955bb9080c5cf992d3fd2dc46dee2e8167141eca76d8ee9849fd"
+hash = "76aa2fb300513b5e5ce592c606da18a59ad07cc7d98b9a7cd3abc420fdddce13"
 
 [[files]]
 file = "configureddefaults/config/ixeris.toml"
@@ -170,7 +174,7 @@ hash = "7e02c1d587a4c011b0b18080b7ba7451bd44535159a52c4c0c9a94b863334678"
 
 [[files]]
 file = "configureddefaults/config/modernfix-mixins.properties"
-hash = "b2a1ba6803616a613ab19c481954f40a89ad87c8721cb75c96fd37620f5fcf50"
+hash = "a9c2f9afa2be29cb581d6a49921e745618d429917c2b8d2f41b413b0caa46b87"
 
 [[files]]
 file = "configureddefaults/config/modmenu.json"
@@ -181,8 +185,12 @@ file = "configureddefaults/config/moreculling.toml"
 hash = "20a7c9a9d1ec3c730f37af63357d6847afbb28fd37cd13657928c3d22feb055c"
 
 [[files]]
+file = "configureddefaults/config/npe.json"
+hash = "128a7016ca5bfd22277f4ad447ea0db0863fc2e039c5c3dfb6e39e8c25766bbb"
+
+[[files]]
 file = "configureddefaults/config/particle_core_config.toml"
-hash = "6f7b66b8ad090ab7c8c7d9906e8d5febc5bc06e4004064864b8ff07d72cf34bb"
+hash = "33e7f3efbf55c2e28e05b3055be90a55f6bb7267dafedd5ddd3ed587a775a7c5"
 
 [[files]]
 file = "configureddefaults/config/particle_core_disabled_optimizations_v2.json"
@@ -190,11 +198,11 @@ hash = "3d731115173b34dd0fe9de6f52fa14dc271c848495a52f66c0016e24150f59d6"
 
 [[files]]
 file = "configureddefaults/config/servercore/config.yml"
-hash = "a66a5df78f4e5b604a0d0a759f024e4013baf8c9b34ca758ea99996f4c2281dd"
+hash = "7aa4761cc751f6df10d32f053a009953fabfb6649670b253199dd6bbd7aa3f9d"
 
 [[files]]
 file = "configureddefaults/config/servercore/optimizations.yml"
-hash = "b652ce75a0649d891aaa8351fb212801b8a15b701545760187032dfac24c00b9"
+hash = "0e7fde302ae1f9cbe3c507b8f4bc23ebc51acae005de2c4f69933893d037894a"
 
 [[files]]
 file = "configureddefaults/config/sodium-fingerprint.json"
@@ -206,7 +214,7 @@ hash = "8939df3a10627cf3b9a3cc0e2824337923e9a26d11e60f5a1f7c0cfbd171a574"
 
 [[files]]
 file = "configureddefaults/config/sodium-options.json"
-hash = "81beb3f57abbd189da64708f8436d9568d816278b08c4883a1c6151c9e69d184"
+hash = "068fc165435c8734b43d5f735cfbe42d015356d157222d577012e45b3bf0a989"
 
 [[files]]
 file = "configureddefaults/config/sodium-shadowy-path-blocks-options.json"

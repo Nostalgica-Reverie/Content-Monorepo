@@ -2,14 +2,11 @@
 version = 1
 disableParticles = false
 byTypeReductions = {  }
-maxParticlesPerSheet = 8417
+maxParticlesPerSheet = 8192
 particleRenderDistanceMultiplier = 1.0
 asynchronousTicking = true
 cullingBlacklist = [  ]
 cullingBehavior = "AGGRESSIVE"
-reduceAllChance = 0.1985294
-reduceDecreasedChance = 0.1495098
-turnOffPotionParticlesV2 = [
-    "MOBS",
-    "OTHER_PLAYER"
-]
+reduceAllChance = 0.30
+reduceDecreasedChance = 0.10
+turnOffPotionParticlesV2 = [  ]
