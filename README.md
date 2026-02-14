@@ -1,5 +1,8 @@
-### Content-Monorepo
+# Content-Monorepo
 This is the repository hosting all of the different Reverie modpacks, and their source code.
+
+## Notice
+Development is held on [git.nostalgica.net](https://git.nostalgica.net/Lasting-Legacy/Content-Monorepo), GitHub and Codeberg are mirrors. Please go to our [GitHub Issues](https://github.com/Nostalgica-Reverie/Content-Monorepo/issues) page to report any issues.
 
 ## Modpack Projects
 This repository currently holds the source for these modpacks:
