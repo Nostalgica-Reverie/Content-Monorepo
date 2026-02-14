@@ -1,0 +1,24 @@
+{
+  "icon": "legacy:icon/minecraft_classic",
+  "background": "legacy:icon/minecraft_classic_background",
+  "packs": [
+    "variants-cit:assetgen",
+    "vanilla",
+    "fabric",
+    "programmer_art",
+    "file/PACP_Base_Release.zip",
+    "legacy:legacy_waters",
+    "file/Legacy-Modpack-Resources.zip",
+    "srl_rp/Re-Console+ Language Files",
+    "file/Legacy Panorama",
+    "betterblockentities-generated"
+  ],
+  "id": "minecraft_classic",
+  "version": 1,
+  "name": {
+    "translate": "legacy.menu.albums.resource.minecraft_classic"
+  },
+  "description": {
+    "translate": "legacy.menu.albums.resource.minecraft_classic.description"
+  }
+}
