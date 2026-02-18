@@ -81,7 +81,7 @@ For our Vulkan modpacks, they will support any GPU that supports Vulkan 1.2 or a
 ### Minimum Requirements (Vulkan)
 
 - Vulkan 1.2 capable discrete GPU (GTX 900+ / RX 400+ / Intel Arc A-series)
-- AMD RDNA or NVIDIA Turing architecture with the most up-to-date drivers
+We recommend that you have at least a AMD RDNA or NVIDIA RTX 2000 series (and above) architecture with the most up-to-date drivers to get the best performance.
 
 If you are running into problems, you should make sure that your graphics drivers are up-to-date. I also recommend taking a look at [the VulkanMod wiki](https://github.com/xCollateral/VulkanMod/wiki).
 
