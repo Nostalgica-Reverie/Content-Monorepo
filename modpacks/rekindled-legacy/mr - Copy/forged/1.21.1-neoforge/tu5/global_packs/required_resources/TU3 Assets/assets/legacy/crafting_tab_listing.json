@@ -1,0 +1,102 @@
+{
+  "structures": {
+    "icon": "legacy:icon/structures",
+    "displayName": "legacy.container.tab.structures",
+    "listing": {
+      "planks": ["oak_planks"],
+      "stick": ["stick"],
+      "compact_stone": ["sandstone","bricks","snow_block","clay"],
+      "utility": ["crafting_table"],
+      "furnace": ["furnace"],
+      "chest": ["chest"],
+      "red_bed": ["red_bed"],
+      "ladder": ["ladder"],
+      "barrier": ["oak_fence"],
+      "door": ["oak_door","oak_trapdoor","iron_door"],
+      "stairs": ["oak_stairs","cobblestone_stairs"],
+      "slab": ["oak_slab","stone_slab","cobblestone_slab","sandstone_slab"]
+    }
+  },
+  "tools": {
+    "icon": "legacy:icon/tools",
+    "displayName": "legacy.container.tab.tools",
+    "listing": {
+      "pickaxe": ["wooden_pickaxe","stone_pickaxe","iron_pickaxe","diamond_pickaxe","golden_pickaxe"],
+      "shovel": ["wooden_shovel","stone_shovel","iron_shovel","diamond_shovel","golden_shovel"],
+      "axe": ["wooden_axe","stone_axe","iron_axe","diamond_axe","golden_axe"],
+      "hoe": ["wooden_hoe","stone_hoe","iron_hoe","diamond_hoe","golden_hoe"],
+      "shears": ["shears"],
+      "misc": ["flint_and_steel"],
+      "tnt": ["tnt"],
+      "fishing_rod": ["fishing_rod"],
+      "archery": ["bow","arrow"],
+      "container": ["bucket", "bowl"],
+      "sword": ["wooden_sword","stone_sword","iron_sword","diamond_sword","golden_sword"],
+      "lighting": ["torch","glowstone","jack_o_lantern"],
+      "location": ["clock","compass","map"]
+    }
+  },
+  "food": {
+    "icon": "legacy:icon/food",
+    "displayName": "legacy.container.tab.food",
+    "listing": [
+      {"group":"mushroom_stew","recipes": ["mushroom_stew"]},
+      {"group":"cookie","recipes": ["cookie"]},
+      {"group":"cake","recipes": ["cake"]},
+      {"group":"sugar","recipes": ["sugar_from_sugar_cane"]},
+      {"group":"bread","recipes": ["bread"]}
+    ]
+  },
+  "armour": {
+    "icon": "legacy:icon/armour",
+    "displayName": "legacy.container.tab.armour",
+    "listing": {
+      "helmet": ["leather_helmet","iron_helmet","diamond_helmet","golden_helmet"],
+      "chestplate": ["leather_chestplate","iron_chestplate","diamond_chestplate","golden_chestplate"],
+      "leggings": ["leather_leggings","iron_leggings","diamond_leggings","golden_leggings"],
+      "boots": ["leather_boots","iron_boots","diamond_boots","golden_boots"]
+    }
+  },
+  "mechanisms": {
+    "icon": "legacy:icon/mechanisms",
+    "displayName": "legacy.container.tab.mechanisms",
+    "listing": [
+      {"group":"lever","recipes": ["lever"]},
+      {"group":"redstone_torch","recipes": ["redstone_torch"]},
+      {"group":"repeater","recipes": ["repeater"]},
+      {"group":"button","recipes": ["stone_button"]},
+      {"group": "pressure_plate", "recipes": ["oak_pressure_plate","stone_pressure_plate"]},
+      {"group":"dispenser","recipes": ["dispenser"]},
+      {"group":"note_block","recipes": ["note_block"]},
+      {"group": "piston","recipes": ["piston","sticky_piston"]}
+    ]
+  },
+  "transport": {
+    "icon": "legacy:icon/transport",
+    "displayName": "legacy.container.tab.transport",
+    "listing": {
+      "rail": ["rail","powered_rail","detector_rail"],
+      "minecart": ["minecart"],
+      "chest_minecart": ["chest_minecart"],
+      "furnace_minecart": ["furnace_minecart"],
+      "oak_boat": ["oak_boat"]
+    }
+  },
+  "decoration": {
+    "icon": "legacy:icon/decoration",
+    "displayName": "legacy.container.tab.decoration",
+    "listing": {
+      "wool": ["dye_orange_wool","dye_magenta_wool","dye_light_blue_wool","dye_yellow_wool","dye_lime_wool","dye_pink_wool","dye_gray_wool","dye_light_gray_wool","dye_cyan_wool","dye_purple_wool","blue_wool","brown_wool","dye_green_wool","dye_red_wool","black_wool","white_wool","white_wool_from_string"],
+      "dye": ["yellow_dye_from_dandelion","red_dye_from_poppy","bone_meal","pink_dye_from_red_white_dye","orange_dye","lime_dye","gray_dye","light_gray_dye_from_gray_white_dye","light_gray_dye_from_black_white_dye","light_blue_dye_from_blue_white_dye","cyan_dye","purple_dye","magenta_dye_from_purple_and_pink","magenta_dye_from_blue_red_pink","magenta_dye_from_blue_red_white_dye","lapis_lazuli"],
+      "compact": ["gold_block","iron_block","diamond_block","lapis_block"],
+      "unboxing": ["gold_ingot_from_gold_block","iron_ingot_from_iron_block"],
+      "diamond": ["diamond"],
+      "jukebox": ["jukebox"],
+      "paper": ["paper"],
+      "book": ["book"],
+      "bookshelf": ["bookshelf"],
+      "painting": ["painting"],
+      "oak_sign": ["oak_sign"]
+    }
+  }
+}

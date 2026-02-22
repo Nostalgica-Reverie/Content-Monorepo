@@ -1,0 +1,49 @@
+{
+  "elements": {
+    "scrollable_renderer": {
+      "type": "put_scrollable_renderer",
+      "x": "${width}/2-240",
+      "y": "(${height}-${scrollable_renderer.height})/2 + 23",
+      "width": 210,
+      "height": 174,
+      "elements": {
+        "text": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.nether-portal_message"},
+          "width": 176,
+          "shadow": false
+        },
+        "text1": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.nether-portal_message_1"},
+          "width": 176,
+          "shadow": false
+        }
+      }
+    },
+    "panel": {
+      "type":"blit_sprite",
+      "sprite":"legacy:tiles/panel",
+      "width":260,
+      "height":152,
+      "x":"${width}/2-21",
+      "y":"(${height}-${panel.height})/2+23"
+    },
+    "frame": {
+      "type":"blit_sprite",
+      "sprite":"legacy:tiles/square_recessed_panel",
+      "width":"${panel.width}-21",
+      "height":"${panel.height}-24",
+      "x":"${panel.x}+11",
+      "y":"${panel.y}+12"
+    },
+    "portal": {
+      "type":"blit_sprite",
+      "sprite": "legacy:container/how_to_play/nether-portal",
+      "x":"${panel.x}+12",
+      "y":"${panel.y}+13",
+      "width":"${panel.width}-23",
+      "height":"${panel.height}-26"
+    }
+  }
+}

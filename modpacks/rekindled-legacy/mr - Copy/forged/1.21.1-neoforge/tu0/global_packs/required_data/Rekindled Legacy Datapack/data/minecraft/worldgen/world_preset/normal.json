@@ -1,0 +1,44 @@
+{
+  "dimensions": {
+    "minecraft:overworld": {
+      "type": "minecraft:overworld",
+      "generator": {
+        "type": "moderner_beta:moderner_beta",
+        "biome_source": {
+          "type": "moderner_beta:moderner_beta",
+          "cave_provider_settings": {
+            "moderner_beta:provider": "moderner_beta:none"
+          },
+          "provider_settings": {
+            "moderner_beta:preset": "moderner_beta:beta_xbox_legacy"
+          }
+        },
+        "provider_settings": {
+          "moderner_beta:preset": "moderner_beta:beta_xbox_legacy"
+        },
+        "settings": "moderner_beta:beta"
+      }
+    },
+    "minecraft:the_end": {
+      "type": "minecraft:the_end",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "minecraft:the_end"
+        },
+        "settings": "minecraft:end"
+      }
+    },
+    "minecraft:the_nether": {
+      "type": "minecraft:the_nether",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "minecraft:multi_noise",
+          "preset": "minecraft:nether"
+        },
+        "settings": "minecraft:nether"
+      }
+    }
+  }
+}

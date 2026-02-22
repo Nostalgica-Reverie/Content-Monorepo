@@ -1,0 +1,14 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+	 "layer0": "item/diamond"
+	},
+	"overrides":[
+	 {"predicate": {"custom_model_data":1}, "model": "item/intothenether" },
+	 {"predicate": {"custom_model_data":2}, "model": "item/moartools" },
+	 {"predicate": {"custom_model_data":3}, "model": "item/leaderofthepack" }
+	]
+}
+
+
+

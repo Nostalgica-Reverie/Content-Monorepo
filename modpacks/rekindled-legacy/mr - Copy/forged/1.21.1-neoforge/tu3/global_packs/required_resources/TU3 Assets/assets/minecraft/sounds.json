@@ -1,0 +1,1028 @@
+{
+    "game.player.hurt.fall.big": {
+      "category": "player",
+      "sounds": [
+        "damage/fallbigclassic"
+      ]
+    },
+    "game.player.hurt.fall.small": {
+      "category": "player",
+      "sounds": [
+        "damage/fallsmallclassic"
+      ]
+    },
+    "game.neutral.hurt.fall.big": {
+      "category": "neutral",
+      "sounds": [
+        "damage/fallbigclassic"
+      ]
+    },
+    "game.neutral.hurt.fall.small": {
+      "category": "neutral",
+      "sounds": [
+        "damage/fallsmallclassic"
+      ]
+    },
+    "game.hostile.hurt.fall.big": {
+      "category": "hostile",
+      "sounds": [
+        "damage/fallbigclassic"
+      ]
+    },
+    "game.hostile.hurt.fall.small": {
+      "category": "hostile",
+      "sounds": [
+        "damage/fallsmallclassic"
+      ]
+    },
+    "entity.player.attack.crit": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.crop.plant": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "block.crop.break": {
+        "replace": "true",
+        "sounds": [
+            "dig/grass1",
+            "dig/grass2",
+            "dig/grass3",
+            "dig/grass4"
+        ]
+    },
+    "entity.player.attack.knockback": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.player.attack.nodamage": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.player.attack.strong": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.player.attack.sweep": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.player.attack.weak": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.player.hurt_drown": {
+        "replace": "true",
+        "sounds": [
+            "damage/hit1classic",
+            "damage/hit2classic",
+            "damage/hit3classic"
+        ]
+    },
+    "entity.player.hurt": {
+        "replace": "true",
+        "sounds": [
+            "damage/hit1classic",
+            "damage/hit2classic",
+            "damage/hit3classic"
+        ]
+    },
+    "entity.player.hurt_on_fire": {
+        "replace": "true",
+        "sounds": [
+            "damage/hit1classic",
+            "damage/hit2classic",
+            "damage/hit3classic"
+        ]
+    },
+    "entity.enderman.hurt": {
+        "replace": "true",
+        "sounds": [
+            "mob/zombie/hurt1",
+            "mob/zombie/hurt2"
+        ]
+    },
+    "entity.enderman.ambient": {
+        "replace": "true",
+        "sounds": [
+            "mob/zombie/say1",
+            "mob/zombie/say2",
+            "mob/zombie/say3"
+        ]
+    },
+    "entity.enderman.death": {
+        "replace": "true",
+        "sounds": [
+            "mob/zombie/death"
+        ]
+    },
+    "entity.boat.paddle_land": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.boat.paddle_water": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "ambient.underwater.exit": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "ambient.underwater.enter": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "ambient.underwater.loop": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "ambient.underwater.loop.additions": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "ambient.underwater.loop.additions.rare": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "ambient.underwater.loop.additions.ultra_rare": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.generic.swim": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.hostile.swim": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.player.swim": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "block.ladder.step": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "block.vine.step": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.minecart.inside": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.bucket.empty": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.bucket.empty_fish": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.bucket.empty_lava": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.bucket.fill": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.bucket.fill_fish": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.bucket.fill_lava": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "block.lava.pop": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "block.lava.ambient": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "block.netherrack.break": {
+        "replace": "true",
+        "sounds": [
+            "dig/stone1",
+            "dig/stone2",
+            "dig/stone3",
+            "dig/stone4"
+        ]
+    },
+    "block.netherrack.place": {
+        "replace": "true",
+        "sounds": [
+            "dig/stone1",
+            "dig/stone2",
+            "dig/stone3",
+            "dig/stone4"
+        ]
+    },
+    "block.netherrack.hit": {
+        "replace": "true",
+        "sounds": [
+            "step/stone1",
+            "step/stone2",
+            "step/stone3",
+            "step/stone4",
+            "step/stone5",
+            "step/stone6"
+        ]
+    },
+    "block.netherrack.step": {
+        "replace": "true",
+        "sounds": [
+            "step/stone1",
+            "step/stone2",
+            "step/stone3",
+            "step/stone4",
+            "step/stone5",
+            "step/stone6"
+        ]
+    },
+    "block.ladder.hit": {
+        "replace": "true",
+        "sounds": [
+            "dig/wood1",
+            "dig/wood2",
+            "dig/wood3",
+            "dig/wood4"
+        ]
+    },
+    "block.soul_sand.break": {
+        "replace": "true",
+        "sounds": [
+            "step/gravel1",
+            "step/gravel2",
+            "step/gravel3",
+            "step/gravel4"
+        ]
+    },
+    "block.soul_sand.place": {
+        "replace": "true",
+        "sounds": [
+            "step/sand1",
+            "step/sand2",
+            "step/sand3",
+            "step/sand4"
+        ]
+    },
+    "block.soul_sand.hit": {
+        "replace": "true",
+        "sounds": [
+            "step/sand1",
+            "step/sand2",
+            "step/sand3",
+            "step/sand4"
+        ]
+    },
+    "block.soul_sand.step": {
+        "replace": "true",
+        "sounds": [
+            "step/sand1",
+            "step/sand2",
+            "step/sand3",
+            "step/sand4"
+        ]
+    },
+    "block.lily_pad.break": {
+        "replace": "true",
+        "sounds": [
+            "dig/grass1",
+            "dig/grass2",
+            "dig/grass3",
+            "dig/grass4"
+        ]
+    },
+    "block.lily_pad.place": {
+        "replace": "true",
+        "sounds": [
+            "dig/grass1",
+            "dig/grass2",
+            "dig/grass3",
+            "dig/grass4"
+        ]
+    },
+    "block.fungus.break": {
+        "replace": "true",
+        "sounds": [
+            "dig/grass1",
+            "dig/grass2",
+            "dig/grass3",
+            "dig/grass4"
+        ]
+    },
+    "block.fungus.place": {
+        "replace": "true",
+        "sounds": [
+            "dig/grass1",
+            "dig/grass2",
+            "dig/grass3",
+            "dig/grass4"
+        ]
+    },
+    "block.fungus.hit": {
+        "replace": "true",
+        "sounds": [
+            "dig/grass1",
+            "dig/grass2",
+            "dig/grass3",
+            "dig/grass4"
+        ]
+    },
+    "block.fungus.step": {
+        "replace": "true",
+        "sounds": [
+            "dig/grass1",
+            "dig/grass2",
+            "dig/grass3",
+            "dig/grass4"
+        ]
+    },
+    "block.chest.close": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/chest/close"
+            }
+        ]
+    },
+    "block.chest.open": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/chest/open"
+            }
+        ]
+    },
+    "block.ender_chest.close": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/chest/close"
+            }
+        ]
+    },
+    "block.ender_chest.open": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/chest/open"
+            }
+        ]
+    },
+    "block.stem.break": {
+        "replace": "true",
+        "sounds": [
+            "step/wood1",
+            "step/wood2",
+            "step/wood3",
+            "step/wood4"
+        ]
+    },
+    "block.stem.place": {
+        "replace": "true",
+        "sounds": [
+            "step/wood1",
+            "step/wood2",
+            "step/wood3",
+            "step/wood4"
+        ]
+    },
+    "block.stem.hit": {
+        "replace": "true",
+        "sounds": [
+            "step/wood1",
+            "step/wood2",
+            "step/wood3",
+            "step/wood4"
+        ]
+    },
+    "block.nether_bricks.break": {
+        "replace": "true",
+        "sounds": [
+            "step/stone1",
+            "step/stone2",
+            "step/stone3",
+            "step/stone4"
+        ]
+    },
+    "block.nether_bricks.place": {
+        "replace": "true",
+        "sounds": [
+            "step/stone1",
+            "step/stone2",
+            "step/stone3",
+            "step/stone4"
+        ]
+    },
+    "block.nether_bricks.hit": {
+        "replace": "true",
+        "sounds": [
+            "step/stone1",
+            "step/stone2",
+            "step/stone3",
+            "step/stone4"
+        ]
+    },
+    "block.nether_bricks.step": {
+        "replace": "true",
+        "sounds": [
+            "dig/stone1",
+            "dig/stone2",
+            "dig/stone3",
+            "dig/stone4"
+        ]
+    },
+    "item.nether_wart.plant": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "block.sand.place": {
+        "replace": "true",
+        "sounds": [
+            "step/sand1",
+            "step/sand2",
+            "step/sand3",
+            "step/sand4"
+        ]
+    },
+    "entity.minecart.riding": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "entity.player.splash.high_speed": {
+        "replace": "true",
+        "sounds": [
+            "liquid/splash",
+            "liquid/splash2"
+        ]
+    },
+    "entity.experience_orb.pickup": {
+        "replace": "true",
+        "sounds": [{
+                "name": "random/pop"
+            }
+        ]
+    },
+    "block.iron_door.open": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/open"
+            }
+        ]
+    },
+    "block.iron_door.close": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/close"
+            }
+        ]
+    },
+    "block.iron_trapdoor.open": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/open"
+            }
+        ]
+    },
+    "block.iron_trapdoor.close": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/close"
+            }
+        ]
+    },
+    "block.wooden_door.open": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/open"
+            }
+        ]
+    },
+    "block.wooden_door.close": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/close"
+            }
+        ]
+    },
+    "block.wooden_trapdoor.open": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/open"
+            }
+        ]
+    },
+    "block.wooden_trapdoor.close": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/close"
+            }
+        ]
+    },
+    "block.fence_gate.open": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/open1"
+            }
+        ]
+    },
+    "block.fence_gate.close": {
+        "replace": "true",
+        "sounds": [{
+                "name": "block/door/close1"
+            }
+        ]
+    },
+    "item.armor.equip_generic": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.armor.equip_elytra": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.armor.equip_diamond": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.armor.equip_chain": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.armor.equip_gold": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.armor.equip_iron": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.armor.equip_leather": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.armor.equip_netherite": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "item.armor.equip_turtle": {
+        "replace": "true",
+        "sounds": [{
+                "name": "blank"
+            }
+        ]
+    },
+    "weather.rain": {
+        "replace": "true",
+        "sounds": [
+            "ambient/weather/rain/rain1",
+            "ambient/weather/rain/rain2",
+            "ambient/weather/rain/rain3",
+            "ambient/weather/rain/rain4"
+        ]
+    },
+    "music.game": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music/game/calm1",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/minecraft",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/calm2",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/clark",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/calm3",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/sweden",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/hal1",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/subwoofer_lullaby",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/hal2",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/living_mice",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/hal3",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/haggstrom",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/hal4",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/danny",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/nuance1",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/key",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/nuance2",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/oxygene",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/piano1",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/dry_hands",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/piano2",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/wet_hands",
+			  "stream": true
+			},
+      
+			{
+			  "name": "music/game/piano3",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/mice_on_venus",
+			  "stream": true
+			}
+		]
+	},
+	"music.menu": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.creative": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.badlands": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.bamboo_jungle": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.cherry_grove": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.deep_dark": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.desert": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.dripstone_caves": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.flower_forest": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.forest": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.frozen_peaks": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.grove": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.jagged_peaks": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.jungle": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.lush_caves": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.meadow": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.old_growth_taiga": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.snowy_slopes": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.sparse_jungle": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.stony_peaks": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+	"music.overworld.swamp": {
+		"replace": "true",
+		"sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			}
+		]
+	},
+        "music.under_water": {
+                "sounds": [
+			{
+			  "name": "music.game",
+			  "type": "event"
+			},
+      			{
+        		  "name": "music/game/water/axolotl",
+        		  "stream": true,
+        		  "volume": 0.4
+      			},
+      			{
+        		  "name": "music/game/water/dragon_fish",
+        		  "stream": true,
+        		  "volume": 0.4
+      			},
+      			{
+        		  "name": "music/game/water/shuniji",
+        	  	  "stream": true,
+        		  "volume": 0.4
+      			}
+    		]
+  	}
+}
