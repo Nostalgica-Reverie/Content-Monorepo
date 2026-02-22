@@ -3,11 +3,11 @@ filename = "ConfiguredDefaults-v21.11.0-mc1.21.11-Fabric.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/SISoSFPP/versions/QVEzCVXp/ConfiguredDefaults-v21.11.0-mc1.21.11-Fabric.jar"
-hash-format = "sha512"
-hash = "117e305c77d20e2b57d787e223e27e9b8e4dfa3e68dfd7b2a180a2390315b21a0b615a1683dc8cfa167bd17dedbea4f230bb64c40a6cf85458104ba9bbdc6374"
+hash-format = "sha1"
+hash = "2b2a3b484bc5f98c41ef6175dbdb8f874cfff132"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "SISoSFPP"
-version = "QVEzCVXp"
+[update.curseforge]
+file-id = 7349689
+project-id = 930131

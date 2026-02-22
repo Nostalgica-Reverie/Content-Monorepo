@@ -3,11 +3,11 @@ filename = "modernfix-5.25.2-build.4.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/TjSm1wrD/versions/JwSO8JCN/modernfix-5.25.2-build.4.jar"
-hash-format = "sha512"
-hash = "0d65c05ac0475408c58ef54215714e6301113101bf98bfe4bb2ba949fbfddd98225ac4e2093a5f9206a9e01ba80a931424b237bdfa3b6e178c741ca6f7f8c6a3"
+hash-format = "sha1"
+hash = "2ed10989c8ece2460413ed35538972157732a339"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "TjSm1wrD"
-version = "JwSO8JCN"
+[update.curseforge]
+file-id = 7415809
+project-id = 1367508
