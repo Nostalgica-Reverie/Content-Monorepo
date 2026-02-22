@@ -8,14 +8,11 @@ Development is held on [git.nostalgica.net](https://git.nostalgica.net/Lasting-L
 This repository currently holds the source for these modpacks:
 - 2000s Edition
 - Create & Destroy
-- OptiVulkan
 - Re-Console
 - Re-Console+
 - Rekindled Legacy
 - Silver Lining
 - Simply Legacy
-- Simply Optimized Forked
-- Simply Serverside
 
 Each of these packs can be found in their respective folders in the ``modpacks`` directory. Each modpack may be under a different license, so if you are looking to fork or PR, please read the LICENSE file in the respective folder.
 
