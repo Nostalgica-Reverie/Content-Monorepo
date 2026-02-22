@@ -1,0 +1,19 @@
+{
+  "targetUI": "create_world_screen",
+  "elements": {
+    "hasTooltipBox": {
+      "type": "put_boolean",
+      "value": false
+    },
+    "removeResourceAlbumSelector": {
+    "type": "modify_widget",
+    "index": 6,
+    "isVisible": false
+  },
+  "removeMoreWorldOptionsButton": {
+    "type": "modify_widget",
+    "index": 3,
+    "isVisible": false
+}
+  }
+}

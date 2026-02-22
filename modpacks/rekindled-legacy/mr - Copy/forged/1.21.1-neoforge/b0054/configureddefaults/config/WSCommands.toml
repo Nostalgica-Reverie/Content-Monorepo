@@ -1,0 +1,25 @@
+[1]
+	#If true, commands will run each time the world is joined instead of just once
+	Repeat = false
+	#If true, commands will run for each player instead of just for the first join
+	DedicatedMode = false
+	#If true, commands will only run if the game is fully restarted
+	OnFullRestart = false
+	#list of all the commands to run, in order
+	Commands = ["worldborder center 0 0", "worldborder set 864", "gamerule doInsomnia false", "gamerule doPatrolSpawning false", "gamerule doTraderSpawning false", "gamerule doWardenSpawning false"]
+
+[2]
+	#this new set of commands uses different settings from the other 2 and will run second
+	Repeat = false
+	DedicatedMode = false
+	OnFullRestart = false
+	#command "wsc null" does not do anything
+	Commands = ["wsc null"]
+
+[3]
+	#this new set of commands uses different settings from the other 2 and will run third, you cannot add new ones after this for now, this is badly programmed I know I'll make it more consistent one day
+	Repeat = false
+	DedicatedMode = false
+	OnFullRestart = false
+	#command "wsc null" does not do anything
+	Commands = ["wsc null"]

@@ -1,0 +1,11 @@
+{
+  "targetUI": "pause_screen",
+  "elements": {
+    "oldButtonsWidth": {
+      "type": "modify_widget",
+      "range": "[0,5]",
+      "width": "200",
+      "x": "(${width}-200)/2"
+    }
+  }
+}

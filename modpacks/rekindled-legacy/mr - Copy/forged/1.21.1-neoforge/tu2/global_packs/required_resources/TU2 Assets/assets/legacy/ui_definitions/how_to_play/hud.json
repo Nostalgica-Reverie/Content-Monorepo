@@ -1,0 +1,160 @@
+{
+    "elements": [
+        {
+            "elements": {
+                "text": {
+                    "width": 334,
+                    "component": {
+                        "translate": "legacy.menu.how_to_play.hud_message"
+                    },
+                    "type": "draw_multiline_string",
+                    "shadow": false
+                },
+                "text1": {
+                    "width": 334,
+                    "component": {
+                        "allowVariables": true,
+                        "args": [
+                            "controlIcon.legacy.key.cycleHeldLeft",
+                            "controlIcon.legacy.key.cycleHeldRight"
+                        ],
+                        "translate": "legacy.menu.how_to_play.hud_message_1"
+                    },
+                    "type": "draw_multiline_string",
+                    "shadow": false
+                }
+            },
+            "name": "scrollable_renderer",
+            "x": "(${width}-${scrollable_renderer.width})/2+1",
+            "width": 373,
+            "y": "(${height}-${scrollable_renderer.height})/2 - 21",
+            "type": "put_scrollable_renderer",
+            "height": 120
+        },
+        {
+            "name": "hotbar",
+            "sprite": "hud/hotbar",
+            "x": "(${width}-${hotbar.width})/2",
+            "width": 273,
+            "y": "${height}-102",
+            "type": "blit_sprite",
+            "height": 33
+        },
+        {
+            "translateY": -1.5,
+            "translateX": -1.5,
+            "name": "hotbar_selection",
+            "sprite": "legacy:hud/hotbar_selection",
+            "x": "${hotbar.x}+30",
+            "width": 36,
+            "y": "${hotbar.y}",
+            "type": "blit_sprite",
+            "height": 36
+        },
+        {
+            "scaleX": 1.5,
+            "scaleY": 1.5,
+            "translateY": "${hotbar.y}",
+            "translateX": "${hotbar.x}",
+            "name": "quick_select",
+            "x": "3+(${quick_select.index}%9)*20",
+            "y": 3,
+            "type": "render_items",
+            "isFake": true,
+            "items": [
+                "stone_pickaxe",
+                "iron_sword",
+                
+                {
+                    "count": 64,
+                    "item": "dirt"
+
+                },
+
+                {
+                    "count": 14,
+                    "item": "cobblestone"
+                },
+
+                {
+                    "count": 32,
+                    "item": "oak_log"
+                },
+                {
+                    "count": 24,
+                    "item": "torch"
+                }
+            ]
+        },
+        {
+            "amount": 10,
+            "type": "blit_sprite",
+            "scaleX": 1.5,
+            "scaleY": 1.5,
+            "translateY": "${hotbar.y}",
+            "translateX": "${hotbar.x}",
+            "name": "heart_containers",
+            "sprite": "hud/heart/container",
+            "width": 9,
+            "x": "${heart_containers.index}*8",
+            "y": "-10",
+            "height": 9
+        },
+        {
+            "amount": 9,
+            "type": "blit_sprite",
+            "scaleX": 1.5,
+            "scaleY": 1.5,
+            "translateY": "${hotbar.y}",
+            "translateX": "${hotbar.x}",
+            "name": "hearts",
+            "sprite": "hud/heart/full",
+            "width": 9,
+            "x": "${hearts.index}*8",
+            "y": "-10",
+            "height": 9
+        },
+        {
+            "amount": 10,
+            "type": "blit_sprite",
+            "scaleX": 1.5,
+            "scaleY": 1.5,
+            "translateY": "${hotbar.y}",
+            "translateX": "${hotbar.x}",
+            "name": "armor_empty",
+            "sprite": "hud/armor_empty",
+            "width": 9,
+            "x": "${armor_empty.index}*8 + 101",
+            "y": "-10",
+            "height": 9
+        },
+        {
+            "amount": 5,
+            "type": "blit_sprite",
+            "scaleX": 1.5,
+            "scaleY": 1.5,
+            "translateY": "${hotbar.y}",
+            "translateX": "${hotbar.x}",
+            "name": "armor",
+            "sprite": "hud/armor_full",
+            "width": 9,
+            "x": "${armor.index}*8 + 141",
+            "y": "-10",
+            "height": 9
+        },
+        {
+            "amount": 10,
+            "type": "blit_sprite",
+            "scaleX": 1.5,
+            "scaleY": 1.5,
+            "translateY": "${hotbar.y}",
+            "translateX": "${hotbar.x}+${hotbar.width}",
+            "name": "air",
+            "sprite": "hud/air",
+            "width": 9,
+            "x": "-(${air.index}+1)*8-102",
+            "y": "-19",
+            "height": 9
+        }
+    ]
+}
