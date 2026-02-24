@@ -34,7 +34,7 @@ hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
 
 [[files]]
 file = "config/crash_assistant/modlist.json"
-hash = "47b95af77497469042514580c1242731c568f5a140ea8d37e032b2213d0dc7f2"
+hash = "1a434343157b5d02966ddeae47fe1687360a097d2f55448e7f5f711b299ee9f0"
 
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
@@ -47,6 +47,10 @@ hash = "2d4267428332dc690ad8081bb7aea0b2e3f8c879d2d4c17dec13ae578efdf4f4"
 [[files]]
 file = "config/fabric/indigo-renderer.properties"
 hash = "aa272c538cfdf8b1b6bc75a35f6fa056869c131056604308f06d06beeac80e04"
+
+[[files]]
+file = "config/fabric_loader_dependencies.json"
+hash = "51631d4fc7768aa448546665821ff26e41583f4b50243d18027f0812fcbd4096"
 
 [[files]]
 file = "config/ferritecore.mixin.properties"
@@ -150,7 +154,7 @@ hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
 
 [[files]]
 file = "configureddefaults/config/crash_assistant/modlist.json"
-hash = "47b95af77497469042514580c1242731c568f5a140ea8d37e032b2213d0dc7f2"
+hash = "1a434343157b5d02966ddeae47fe1687360a097d2f55448e7f5f711b299ee9f0"
 
 [[files]]
 file = "configureddefaults/config/crash_assistant/problematic_mods_config.json"
@@ -218,7 +222,7 @@ hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "480606783c9a0a793354a031ea79de072766f745c1113d8882734f7fca330bad"
+hash = "15601ed9726037c971da43a4363b1ff55f87df47c7d8842b2cd5def08b514d70"
 
 [[files]]
 file = "configureddefaults/config/legacy_world_sizes/common.json"
@@ -394,19 +398,31 @@ hash = "b7b3bab3868a8b06d68d6850cae50bcd6af5fb70606bb86f462ddf08109be208"
 
 [[files]]
 file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/intro.json"
-hash = "03b1631602ddde14a6e68dc27fd8883ade0b851cbe48b58a1f238855fc592130"
+hash = "e9644b2f42a30a423ec98ecd4e2ce521d71db140a25c22c9c0700d489fee6f75"
 
 [[files]]
 file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_us.json"
-hash = "8c95bdab20d972a80bc3c22e863d9bcc29852482dd8a1a3fc8fc52aac47ed22e"
+hash = "05ffa219c19c124292b528847a4cc5b71c02b4d237a99cc4f1d68e9ee03f1a6a"
 
 [[files]]
 file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/texts/tips.json"
 hash = "1056d6424343c9cd5701d8e319656735dd39435b202b8cc88ab9ba2dc6cd1754"
 
 [[files]]
-file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/nr-fab-mr.png"
-hash = "20834e67fd2402710bffe434c5745bb9dbd3b097d5f15b7ae41b98806367983b"
+file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "8fc81e72943898a506df6be8d06abefd90048fbac90b453c0a2c0a9b6b863776"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "eed6bf9e1e4ae87528a953dfe7e6d15436d0dddda523392a3ed30c54c383f5df"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "bb19046cb7f18b0d00abbcf897107eed0bb92165bc56942dbb2f0cbf9d4c0d62"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "840585d7d4613a2ffc6f597d706d575156f702d7eef703baf7c627ec7f82cfbb"
 
 [[files]]
 file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/comparison.png"
@@ -626,7 +642,7 @@ hash = "ada1b7cc1eb8ee561d3df78f82aab0603fe14c74b9f8c28de514b2a06f7f1415"
 
 [[files]]
 file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy_world_sizes/lang/en_us.json"
-hash = "aee93a6343aa43d0163c1d0e9b0371a665ecd1d17a4da8a913e82990e61fa34e"
+hash = "7b5a42e025754f8b3df1c3095c01978505260727780c49633f654f327bc6181c"
 
 [[files]]
 file = "configureddefaults/resources/resourcepack/required/Simply Legacy Resources/assets/minecraft/lang/en_us.json"
@@ -651,7 +667,7 @@ metafile = true
 
 [[files]]
 file = "mods/bedrock-skins.pw.toml"
-hash = "9c2f1fd4c7124a7e2713870270eca3b95bf98437d8d57f7d1ce171c74acfc775"
+hash = "3e8a8847f8a74e985a387cc8eb76c0b2546172350a9c9cd1b137aac502144c85"
 metafile = true
 
 [[files]]
@@ -866,7 +882,7 @@ metafile = true
 
 [[files]]
 file = "mods/zfastnoise.pw.toml"
-hash = "d835f8742c652bcfc2ea6d6986e4be14e05cf474e05fcb428acfdbc34b259c51"
+hash = "76eed48ad45f7372f9c1843ea3b3e1376d2b7cfff28a53ed5e2620e2e0a4d80e"
 metafile = true
 
 [[files]]
@@ -8126,7 +8142,7 @@ metafile = true
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/intro.json"
-hash = "03b1631602ddde14a6e68dc27fd8883ade0b851cbe48b58a1f238855fc592130"
+hash = "e9644b2f42a30a423ec98ecd4e2ce521d71db140a25c22c9c0700d489fee6f75"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_us.json"
@@ -8137,8 +8153,20 @@ file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/te
 hash = "1056d6424343c9cd5701d8e319656735dd39435b202b8cc88ab9ba2dc6cd1754"
 
 [[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/nr-fab-mr.png"
-hash = "20834e67fd2402710bffe434c5745bb9dbd3b097d5f15b7ae41b98806367983b"
+file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "8fc81e72943898a506df6be8d06abefd90048fbac90b453c0a2c0a9b6b863776"
+
+[[files]]
+file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "eed6bf9e1e4ae87528a953dfe7e6d15436d0dddda523392a3ed30c54c383f5df"
+
+[[files]]
+file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "bb19046cb7f18b0d00abbcf897107eed0bb92165bc56942dbb2f0cbf9d4c0d62"
+
+[[files]]
+file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "840585d7d4613a2ffc6f597d706d575156f702d7eef703baf7c627ec7f82cfbb"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/comparison.png"
