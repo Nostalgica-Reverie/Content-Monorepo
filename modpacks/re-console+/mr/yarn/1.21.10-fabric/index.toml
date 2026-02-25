@@ -5,8 +5,12 @@ file = "config/animatium.json"
 hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
+file = "config/badoptimizations.txt"
+hash = "f67df14f16e90a8e83ccfac0abf935673048e9b43bb7f3ddb664e0c0a26adc1b"
+
+[[files]]
 file = "config/c2me.toml"
-hash = "6fe186f9a8c87afd21357eddbc6dec2bf2d5cc25e36be093c94dd7adf50f47da"
+hash = "01511f429e0b1e4da3a8c89f7c0189f482a640bb12c5ed9f45cc1aa9c7fa2cfa"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
@@ -37,16 +41,72 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "9e40cdfe72fb74113c0cbd80dbfb2a504c5499b4e146a68589d9b0a3ab60c52d"
 
 [[files]]
+file = "config/entityculling.json"
+hash = "2d4267428332dc690ad8081bb7aea0b2e3f8c879d2d4c17dec13ae578efdf4f4"
+
+[[files]]
+file = "config/fabric/indigo-renderer.properties"
+hash = "aa272c538cfdf8b1b6bc75a35f6fa056869c131056604308f06d06beeac80e04"
+
+[[files]]
 file = "config/fabric_loader_dependencies.json"
 hash = "51631d4fc7768aa448546665821ff26e41583f4b50243d18027f0812fcbd4096"
 
 [[files]]
+file = "config/ferritecore.mixin.properties"
+hash = "fee5dbdc8bdd6a22ae321282a6c7134624c3a318a3953718b65ca67b66683a13"
+
+[[files]]
+file = "config/immediatelyfast.json"
+hash = "bdec86c73b09aa65eefbd7cfff81b4b09bc8688b20d618da208a49265995396f"
+
+[[files]]
+file = "config/lithium.properties"
+hash = "caf4dfdb8635b29017625a08f57d0f4d5d3d4f6cb75bfeefd0993bca0f522405"
+
+[[files]]
 file = "config/modernfix-mixins.properties"
-hash = "bd45c1ecc81e52b4adad97742955070852326d11e73ee1ed0214647848a9f8d0"
+hash = "3e2d13b90d597115454f99120c838e01c3192165917d6cc7cd0083d4f545ee4f"
+
+[[files]]
+file = "config/moreculling.toml"
+hash = "66e97b425b9ed294299b2613dcde72c3aba7b6af777a7b0660d6f9471a99c777"
+
+[[files]]
+file = "config/npe.json"
+hash = "b923571aa9f53f13cb31f652995462890c5116fd78b79fb88365106ba81ae565"
+
+[[files]]
+file = "config/particle_core_config.toml"
+hash = "37a89abcc28d54c250e2cc12d05864cb3474411b84d22f38b23f758c496c178a"
+
+[[files]]
+file = "config/particle_core_disabled_optimizations_v2.json"
+hash = "e05799551de2a915cef7e6223357f253dc69163ae1d2d6e2d1670089585d0c23"
+
+[[files]]
+file = "config/servercore/config.yml"
+hash = "8f2a0beab110717038219622c49fb764f71122040cb52d8a4d06c0c60fd286f1"
+
+[[files]]
+file = "config/servercore/optimizations.yml"
+hash = "d46be0ff848f3c12326fb5306ba6be295769af256326bd931f8424582e617779"
+
+[[files]]
+file = "config/sodium-mixins.properties"
+hash = "35d3939d1bc306839c6ad538803288b3d2bc8a2dfed4948eae569d540d6b8058"
+
+[[files]]
+file = "config/sodium-options.json"
+hash = "48036fe91ca4e16400437b8470775c5c801ce543fe0c6254421882f479d96052"
 
 [[files]]
 file = "config/stfu.json5"
 hash = "9dfd510cc87aa55435c48bb549e58a06b9dd21f4bebc7860120e8d6479b68c55"
+
+[[files]]
+file = "config/vmp.properties"
+hash = "da154394968a0e7996e7815e91bafec989f77fa7fae118b69b8c1055c3e316a7"
 
 [[files]]
 file = "configureddefaults/animatium_utility.json"
@@ -604,6 +664,11 @@ metafile = true
 [[files]]
 file = "mods/legacy-nether-extended.pw.toml"
 hash = "b16bd6a155079913cc7423e550183b689f79b3358ecbc7c26aa0bb4d9716b71d"
+metafile = true
+
+[[files]]
+file = "mods/legacy-skins.pw.toml"
+hash = "359ab279af5bdc1cefcc41058c37a1341b26b843909aa67697bf2fcedb257325"
 metafile = true
 
 [[files]]
