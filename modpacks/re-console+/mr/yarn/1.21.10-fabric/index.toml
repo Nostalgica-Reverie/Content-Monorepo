@@ -5,8 +5,12 @@ file = "config/animatium.json"
 hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
+file = "config/badoptimizations.txt"
+hash = "f67df14f16e90a8e83ccfac0abf935673048e9b43bb7f3ddb664e0c0a26adc1b"
+
+[[files]]
 file = "config/c2me.toml"
-hash = "6fe186f9a8c87afd21357eddbc6dec2bf2d5cc25e36be093c94dd7adf50f47da"
+hash = "01511f429e0b1e4da3a8c89f7c0189f482a640bb12c5ed9f45cc1aa9c7fa2cfa"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
@@ -37,16 +41,72 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "9e40cdfe72fb74113c0cbd80dbfb2a504c5499b4e146a68589d9b0a3ab60c52d"
 
 [[files]]
+file = "config/entityculling.json"
+hash = "2d4267428332dc690ad8081bb7aea0b2e3f8c879d2d4c17dec13ae578efdf4f4"
+
+[[files]]
+file = "config/fabric/indigo-renderer.properties"
+hash = "aa272c538cfdf8b1b6bc75a35f6fa056869c131056604308f06d06beeac80e04"
+
+[[files]]
 file = "config/fabric_loader_dependencies.json"
 hash = "51631d4fc7768aa448546665821ff26e41583f4b50243d18027f0812fcbd4096"
 
 [[files]]
+file = "config/ferritecore.mixin.properties"
+hash = "fee5dbdc8bdd6a22ae321282a6c7134624c3a318a3953718b65ca67b66683a13"
+
+[[files]]
+file = "config/immediatelyfast.json"
+hash = "bdec86c73b09aa65eefbd7cfff81b4b09bc8688b20d618da208a49265995396f"
+
+[[files]]
+file = "config/lithium.properties"
+hash = "caf4dfdb8635b29017625a08f57d0f4d5d3d4f6cb75bfeefd0993bca0f522405"
+
+[[files]]
 file = "config/modernfix-mixins.properties"
-hash = "bd45c1ecc81e52b4adad97742955070852326d11e73ee1ed0214647848a9f8d0"
+hash = "3e2d13b90d597115454f99120c838e01c3192165917d6cc7cd0083d4f545ee4f"
+
+[[files]]
+file = "config/moreculling.toml"
+hash = "66e97b425b9ed294299b2613dcde72c3aba7b6af777a7b0660d6f9471a99c777"
+
+[[files]]
+file = "config/npe.json"
+hash = "b923571aa9f53f13cb31f652995462890c5116fd78b79fb88365106ba81ae565"
+
+[[files]]
+file = "config/particle_core_config.toml"
+hash = "37a89abcc28d54c250e2cc12d05864cb3474411b84d22f38b23f758c496c178a"
+
+[[files]]
+file = "config/particle_core_disabled_optimizations_v2.json"
+hash = "e05799551de2a915cef7e6223357f253dc69163ae1d2d6e2d1670089585d0c23"
+
+[[files]]
+file = "config/servercore/config.yml"
+hash = "8f2a0beab110717038219622c49fb764f71122040cb52d8a4d06c0c60fd286f1"
+
+[[files]]
+file = "config/servercore/optimizations.yml"
+hash = "d46be0ff848f3c12326fb5306ba6be295769af256326bd931f8424582e617779"
+
+[[files]]
+file = "config/sodium-mixins.properties"
+hash = "35d3939d1bc306839c6ad538803288b3d2bc8a2dfed4948eae569d540d6b8058"
+
+[[files]]
+file = "config/sodium-options.json"
+hash = "48036fe91ca4e16400437b8470775c5c801ce543fe0c6254421882f479d96052"
 
 [[files]]
 file = "config/stfu.json5"
 hash = "9dfd510cc87aa55435c48bb549e58a06b9dd21f4bebc7860120e8d6479b68c55"
+
+[[files]]
+file = "config/vmp.properties"
+hash = "da154394968a0e7996e7815e91bafec989f77fa7fae118b69b8c1055c3e316a7"
 
 [[files]]
 file = "configureddefaults/animatium_utility.json"
@@ -142,7 +202,7 @@ hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
 
 [[files]]
 file = "configureddefaults/config/gnetum.json"
-hash = "15c853eb14b783100cd2a9942345fd8d9ccda338bac20b5bdfb097541ba6c8b1"
+hash = "42b3e43aea856749a716f806f31ea472e041b90b66188bed8f4b3b44452292ad"
 
 [[files]]
 file = "configureddefaults/config/idletweaks.config"
@@ -262,7 +322,7 @@ hash = "9dfd510cc87aa55435c48bb549e58a06b9dd21f4bebc7860120e8d6479b68c55"
 
 [[files]]
 file = "configureddefaults/options.txt"
-hash = "3f21a435a5dba5e3c746d2076418581bfd5451a4f754a1c8775d6b7ce8befc71"
+hash = "647b05a9fe206023270a6d40e954e978c90a823bb69c4ed9a271bfee0246c5fc"
 
 [[files]]
 file = "configureddefaults/resource_albums.json"
@@ -412,11 +472,6 @@ hash = "f8805d3902fb3e31ea9e53f684e3d731b5ac7d2fd2507c475fd1f5f4da266a2f"
 metafile = true
 
 [[files]]
-file = "mods/bedrock-skins.pw.toml"
-hash = "9c2f1fd4c7124a7e2713870270eca3b95bf98437d8d57f7d1ce171c74acfc775"
-metafile = true
-
-[[files]]
 file = "mods/better-block-entities.pw.toml"
 hash = "c8d6bda044475105c02984665f1205537241931d927f825cd8af9699264c1025"
 metafile = true
@@ -479,6 +534,11 @@ metafile = true
 [[files]]
 file = "mods/cubes-without-borders.pw.toml"
 hash = "e1879d997a12a832043c0380df086748a51de9688718bfa9c323e68520014858"
+metafile = true
+
+[[files]]
+file = "mods/custom-player-models.pw.toml"
+hash = "7d01ecf658f7a6934005a79ebb955da8d636ba3fbbf718c957d5a5071dbec018"
 metafile = true
 
 [[files]]
@@ -547,11 +607,6 @@ hash = "e27ebce7267fbba8f0216424b21f041bc6c77a773d71848963c41d7a93e02c51"
 metafile = true
 
 [[files]]
-file = "mods/gnetum.pw.toml"
-hash = "e74257fc8ccf581f162f8d778fbb86e37ac685be225e38922785193664ac5ace"
-metafile = true
-
-[[files]]
 file = "mods/idletweaks.pw.toml"
 hash = "4937bdc5c572cea9f1c74f2f0ee1eb8cf979c7b217899bed7b37db786d7aac50"
 metafile = true
@@ -569,11 +624,6 @@ metafile = true
 [[files]]
 file = "mods/ixeris.pw.toml"
 hash = "10fc881ee3e588b90741540e53e72fcd4d055165bc9021ea362359118e338644"
-metafile = true
-
-[[files]]
-file = "mods/krypton.pw.toml"
-hash = "ee8cbde93306796c1a4a3535672b364c27a1eebd75185838c7961cc2895027a0"
 metafile = true
 
 [[files]]
@@ -604,6 +654,11 @@ metafile = true
 [[files]]
 file = "mods/legacy-nether-extended.pw.toml"
 hash = "b16bd6a155079913cc7423e550183b689f79b3358ecbc7c26aa0bb4d9716b71d"
+metafile = true
+
+[[files]]
+file = "mods/legacy-skins.pw.toml"
+hash = "359ab279af5bdc1cefcc41058c37a1341b26b843909aa67697bf2fcedb257325"
 metafile = true
 
 [[files]]
@@ -782,7 +837,7 @@ hash = "6e17daf02f3e72e223a51ada6e160b179e83ea87c3a925207edd9532f86a4ef7"
 
 [[files]]
 file = "resource_albums/animated.json"
-hash = "2d9ad5a58330e2646bbcb92640a025f8c71eb124afca60fb78c0e4d6cfa34611"
+hash = "c9e8eef0262e0041d5f33f8db34239d8e787af3c23a2393b0a55348543315d30"
 
 [[files]]
 file = "resource_albums/beta.json"
@@ -8460,12 +8515,12 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/fresh-animations-extensions.pw.toml"
-hash = "602f59aa2b1bc37a1d9cee47a053a379583bc8d2fec1e4776ca79e19335bd536"
+hash = "4393c628d194dcfe084323cd6da87839501af63397f29f2a28f67c85cce5a338"
 metafile = true
 
 [[files]]
 file = "resourcepacks/fresh-animations.pw.toml"
-hash = "5b17b0c0b1c8352490f9d0e2798ef82fa1a7042b6a816eecfbbd6a0fb20c5d3b"
+hash = "6a1556a0e4fcb411b33efafc3382b4abd9a6e671f140dc0d42e9aad2808e24f3"
 metafile = true
 
 [[files]]
@@ -8585,7 +8640,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/round-trees.pw.toml"
-hash = "cdd870fc47bf4272a16513c97abb06344b24415edb6ca57849254e0f4a4f2256"
+hash = "be9af28ed4a6ddcc3a1df4c353ddae9f81a15f444b942565c76fb36c195e3eca"
 metafile = true
 
 [[files]]
