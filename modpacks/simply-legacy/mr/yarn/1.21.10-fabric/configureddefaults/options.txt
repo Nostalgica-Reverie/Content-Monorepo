@@ -56,8 +56,6 @@ damageTiltStrength:1.0
 highContrast:false
 highContrastBlockOutline:false
 narratorHotkey:true
-resourcePacks:["vanilla","fabric","legacy:console_aspects","legacy:legacy_waters","legacy:legacy_resources","file/Legacy Worlds.zip"]
-incompatibleResourcePacks:["badoptimizations","cpm","entity_model_features","entity_texture_features","factory_api","legacy","legacy_world_sizes","modernfix","yet_another_config_lib_v3","file/Ore Aspects","file/Legacy Titles.zip","file/rcr3.zip","file/Legacy Panorama"]
 lastServer:
 lang:en_us
 chatVisibility:0
@@ -98,7 +96,7 @@ onboardAccessibility:false
 menuBackgroundBlurriness:5
 startedCleanly:true
 showNowPlayingToast:false
-musicFrequency:"DEFAULT"
+musicFrequency:"FREQUENT"
 key_key.attack:key.mouse.left
 key_key.use:key.mouse.right
 key_key.forward:key.keyboard.w
@@ -109,7 +107,7 @@ key_key.jump:key.keyboard.space
 key_key.sneak:key.keyboard.left.shift
 key_key.sprint:key.keyboard.left.control
 key_key.drop:key.keyboard.q
-key_legacy.key.inventory:key.keyboard.i
+key_legacy.key.inventory:key.keyboard.e
 key_key.chat:key.keyboard.t
 key_key.playerlist:key.keyboard.tab
 key_key.pickItem:key.mouse.middle
@@ -156,7 +154,7 @@ key_key.cpm.qa_15:key.keyboard.unknown
 key_key.cpm.qa_16:key.keyboard.unknown
 key_key.entityculling.toggle:key.keyboard.unknown
 key_key.entityculling.toggleBoxes:key.keyboard.unknown
-key_legacy.key.crafting:key.keyboard.e
+key_legacy.key.crafting:key.keyboard.r
 key_legacy.key.host_options:key.keyboard.h
 key_legacy.key.legacy4JSettings:key.keyboard.y
 key_legacy.key.cycleHeldLeft:key.keyboard.page.down
