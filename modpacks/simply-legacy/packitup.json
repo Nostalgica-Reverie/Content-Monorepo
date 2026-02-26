@@ -12,10 +12,10 @@
             "name": "SIMPLY_LEGACY_MODRINTH_TOKEN"
           },
           "id": "f63ynpri",
-           "versionPlaceholder": "{ModpackVersion}+{MinecraftVersion}",
-          "providerVersionPlaceholder": "{ModpackVersion}+{MinecraftVersion}",
+          "versionPlaceholder": "{ModpackVersion}+mc{MinecraftVersion}",
+          "providerVersionPlaceholder": "{ModpackVersion}+mc{MinecraftVersion}",
           "providerNamePlaceholder": "Simply Legacy {ModpackVersion}",
-          "exportPlaceholder": "{ModpackName} {ModpackVersion} for {MinecraftVersion}",
+          "exportPlaceholder": "{ModpackName} {ModpackVersion} ({ModpackLoaderName} {MinecraftVersion})",
           "packFolders": [
             "mr/yarn/1.21.10-fabric"
           ]
