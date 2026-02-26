@@ -12,9 +12,9 @@
                         "name": "RECONSOLE_MODRINTH_TOKEN"
                     },
                     "id": "g9O0WaGR",
-                    "versionPlaceholder": "{ModpackVersion}+{MinecraftVersion}",
-                    "providerVersionPlaceholder": "{ModpackVersion}+{MinecraftVersion}",
-                    "providerNamePlaceholder": "Re-Console Plus {ModpackVersion}",
+                    "versionPlaceholder": "{ModpackVersion}+mc{MinecraftVersion}",
+                    "providerVersionPlaceholder": "{ModpackVersion}+mc{MinecraftVersion}",
+                    "providerNamePlaceholder": "Re-Console+ {ModpackVersion}",
                     "exportPlaceholder": "{ModpackName} {ModpackVersion} for {MinecraftVersion}",
                     "packFolders": [
                         "mr/yarn/1.21.10-fabric"
