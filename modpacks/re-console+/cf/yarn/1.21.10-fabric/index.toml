@@ -711,6 +711,11 @@ hash = "8bb3d9375416d1864b588cd2ae1dae5c9328b6aa77b444c498c03339d09d7373"
 metafile = true
 
 [[files]]
+file = "mods/ok-zoomer.pw.toml"
+hash = "23da6772a098dbcc62021940703689e3cc4003c4fb8873fa2d5fff873c3059f8"
+metafile = true
+
+[[files]]
 file = "mods/owo-lib.pw.toml"
 hash = "4c47a7315062ef8f9087e1ab98edf783417b1e8cf286d39faa5d83dc9c8028cd"
 metafile = true
@@ -798,11 +803,6 @@ metafile = true
 [[files]]
 file = "mods/unilib.pw.toml"
 hash = "3bb1c4200846f39b5ebbecf43c80dabc6fd294906c37a12a7a657d5651502407"
-metafile = true
-
-[[files]]
-file = "mods/variants-cit.pw.toml"
-hash = "ffe6d6a4eaffa6ef5a5b361708c295d8ee31a95a48eef0ca1ee661d622e8f5bf"
 metafile = true
 
 [[files]]
@@ -2191,6 +2191,34 @@ metafile = true
 file = "resourcepacks/festive-mash-up.pw.toml"
 hash = "a15cf0e3ceff4d2c206cd06868302a3000f7e3fbf6600c6d7d2d87363bc7cc7b"
 metafile = true
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/chest_large.jem"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/ender_chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/trapped_chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/trapped_chest_large.jem"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/pack.mcmeta"
+hash = "da77d6004687edd35428a7a5c5568fe9a01f799c037d171b5be0e94dc9dfac96"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/pack.png"
+hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
 
 [[files]]
 file = "resourcepacks/greek-mythology-mash-up.pw.toml"

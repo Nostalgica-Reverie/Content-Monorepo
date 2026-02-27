@@ -757,6 +757,11 @@ hash = "5ba6db6a41f7c289b2b3ef6cea1826b875efe13dd409b84e4ea4c169305cff3d"
 metafile = true
 
 [[files]]
+file = "mods/ok-zoomer.pw.toml"
+hash = "348284f9e32f1827364efbf0053cee3b127c3d1db371554b118ab35c965d4c3d"
+metafile = true
+
+[[files]]
 file = "mods/optiboxes.pw.toml"
 hash = "260c5d458a366d423514d012610fb6103d468e33ec91e3b5259676fedcd8e2e9"
 metafile = true
@@ -842,11 +847,6 @@ hash = "63da1b00d1fae45e5f40121e9deeb243e04ca856a9d60513658bfca9207707ce"
 metafile = true
 
 [[files]]
-file = "mods/variants-cit.pw.toml"
-hash = "3156c0ba1741e9764ae21d1f635d9583f11d2204faee91afebe0a3e8bd832167"
-metafile = true
-
-[[files]]
 file = "mods/vmp-fabric.pw.toml"
 hash = "1750b72e8ece77b5676ed18ffce81d0fd4df89e8bbde63ef8cc328df87bb9277"
 metafile = true
@@ -864,11 +864,6 @@ metafile = true
 [[files]]
 file = "mods/zfastnoise.pw.toml"
 hash = "d835f8742c652bcfc2ea6d6986e4be14e05cf474e05fcb428acfdbc34b259c51"
-metafile = true
-
-[[files]]
-file = "mods/zoomify.pw.toml"
-hash = "9190014654c3a01d217640032fccd571bf7d2e63b3f83d5b555da5e5e83f63ac"
 metafile = true
 
 [[files]]
@@ -8552,6 +8547,34 @@ metafile = true
 file = "resourcepacks/festive-mashup-concept-update.pw.toml"
 hash = "fa60526d7c82ff286860d18c555948dae057eb36f59c8a0f0fab4b89289ae35e"
 metafile = true
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/chest_large.jem"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/ender_chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/trapped_chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/assets/cem/trapped_chest_large.jem"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/pack.mcmeta"
+hash = "da77d6004687edd35428a7a5c5568fe9a01f799c037d171b5be0e94dc9dfac96"
+
+[[files]]
+file = "resourcepacks/fixed-chest-models/pack.png"
+hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
 
 [[files]]
 file = "resourcepacks/fresh-animations-extensions.pw.toml"
