@@ -254,7 +254,7 @@ hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
 
 [[files]]
 file = "configureddefaults/config/legacy/global_packs.json"
-hash = "9f15a4b50fd6a8f9c753e3cdca48a43dfb1733265ef0f5d1842a5de3eb0288af"
+hash = "305413427f71e132023d905c8fabd3a50ef95e503089b4f0d26d578923bc1d72"
 
 [[files]]
 file = "configureddefaults/config/lithium.properties"
@@ -326,7 +326,7 @@ hash = "9dfd510cc87aa55435c48bb549e58a06b9dd21f4bebc7860120e8d6479b68c55"
 
 [[files]]
 file = "configureddefaults/options.txt"
-hash = "647b05a9fe206023270a6d40e954e978c90a823bb69c4ed9a271bfee0246c5fc"
+hash = "07e64c1956b5b541024b924999a8852a14b51e90febbccdcf12578627a2b605a"
 
 [[files]]
 file = "configureddefaults/resource_albums.json"
@@ -411,6 +411,46 @@ hash = "158e46f66f2971df7a6affdc953f8e8fc1e372f52acc21faeaf2146d05490b4d"
 [[files]]
 file = "configureddefaults/resource_albums/super_cute.json"
 hash = "54b20ca5f2d913dab514beb22ffc323af1d330de256c6f8967345daf517e08dd"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/intro.json"
+hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_us.json"
+hash = "43c673c239bbc8dbd53f729020cae6a372b82daee089d0d87aceda46458b1102"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "7005196a8c4446f44d2c9044be5f8cf6cace1afde83f3702bc7d0bce4fb7e38f"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "c797ed0959bee5a22f4289f2fb8c25b994b9a6e6caffa808d2fe6d363c349998"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "ef45bbbe597e4b69d121327570f11f1408ed88dbdd624a491d51252df8cc2409"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "3f6a7e313057c18ca80c09a310d45a10c64887ab355a388ba21560de23d692f5"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy_world_sizes/lang/en_us.json"
+hash = "7b5a42e025754f8b3df1c3095c01978505260727780c49633f654f327bc6181c"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/minecraft/lang/en_us.json"
+hash = "34407e21e7465a56cf6d9143a6f9b5c31dff5f60e00f0979fc8f21dca0d1f840"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/pack.mcmeta"
+hash = "87eddc80fa8fb4ae73680203826dacbd733d4b610bd4df57c96531d65da368c2"
+
+[[files]]
+file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/pack.png"
+hash = "ceb8eb65289969cc6357c186c6ca529560aae559decb13ae02b343c974d91fa6"
 
 [[files]]
 file = "configureddefaults/servers.dat"
@@ -2213,21 +2253,41 @@ hash = "b7954e05b46139cb1c924a1f70fde123d1cac5550bafc55171970ad1ab60b64f"
 metafile = true
 
 [[files]]
-file = "resources/resourcepack/required/Re-Console+ Language Files/assets/legacy/lang/en_us.json"
-hash = "f174ee99f0d860956d20ee7862ac87600f8a23dcf69040e78a2a5951435f39e9"
+file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/intro.json"
+hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
 
 [[files]]
-file = "resources/resourcepack/required/Re-Console+ Language Files/assets/legacy_world_sizes/lang/en_us.json"
-hash = "aee93a6343aa43d0163c1d0e9b0371a665ecd1d17a4da8a913e82990e61fa34e"
+file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_us.json"
+hash = "43c673c239bbc8dbd53f729020cae6a372b82daee089d0d87aceda46458b1102"
 
 [[files]]
-file = "resources/resourcepack/required/Re-Console+ Language Files/assets/minecraft/lang/en_us.json"
+file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "7005196a8c4446f44d2c9044be5f8cf6cace1afde83f3702bc7d0bce4fb7e38f"
+
+[[files]]
+file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "c797ed0959bee5a22f4289f2fb8c25b994b9a6e6caffa808d2fe6d363c349998"
+
+[[files]]
+file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "ef45bbbe597e4b69d121327570f11f1408ed88dbdd624a491d51252df8cc2409"
+
+[[files]]
+file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "3f6a7e313057c18ca80c09a310d45a10c64887ab355a388ba21560de23d692f5"
+
+[[files]]
+file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy_world_sizes/lang/en_us.json"
+hash = "7b5a42e025754f8b3df1c3095c01978505260727780c49633f654f327bc6181c"
+
+[[files]]
+file = "resources/resourcepack/required/Re-Console+ Resources/assets/minecraft/lang/en_us.json"
 hash = "34407e21e7465a56cf6d9143a6f9b5c31dff5f60e00f0979fc8f21dca0d1f840"
 
 [[files]]
-file = "resources/resourcepack/required/Re-Console+ Language Files/pack.mcmeta"
+file = "resources/resourcepack/required/Re-Console+ Resources/pack.mcmeta"
 hash = "87eddc80fa8fb4ae73680203826dacbd733d4b610bd4df57c96531d65da368c2"
 
 [[files]]
-file = "resources/resourcepack/required/Re-Console+ Language Files/pack.png"
+file = "resources/resourcepack/required/Re-Console+ Resources/pack.png"
 hash = "ceb8eb65289969cc6357c186c6ca529560aae559decb13ae02b343c974d91fa6"
