@@ -1,6 +1,5 @@
 {
   "legacy.menu.mods": "Modifications",
-  "generator.moderner_beta.moderner_beta": "Classic World Generation",
   "legacy.menu.download_natives_message": "Would you like to download these libraries to be able to play on Controller?",
   "legacy.menu.downloading_natives": "Downloading Libraries",
   "legacy.menu.loading_natives": "Loading Libraries",
@@ -86,20 +85,19 @@
   "legacy.menu.albums.resource.steven_uni.description": "Steven enters the Minecraft universe in this Diamond-worthy Mash-up! Contains Steven Universe themed skins, textures, original music from the show, and all your favorite locations, from Beach City to Homeworld. Believe in Steven!",
   "legacy.menu.albums.resource.super_cute": "Super Cute Texture Pack",
   "legacy.menu.albums.resource.super_cute.description": "The Super Cute Texture Pack lets you create a cheerful world full of the cutest and cuddliest mobs! Bouncing bunnies, ultra-adorable unicorns, brilliant bumblebees and, er, burgers? Yes, burgers! Even the squid will make you Squeee! This texture pack comes with 15 skins!",
-  "legacy.menu.albums.resource.super_mario": "Super Mario Mash-up",
+  "legacy.menu.albums.resource.super_mario": "Super Mario",
   "legacy.menu.albums.resource.super_mario.description": "Super Mario meets Minecraft! This Mash-Up Pack contains a Super Mario-style Texture Pack, Skin Pack and a Super Mario-themed world to explore!",
   "legacy.menu.albums.resource.toy": "Toy Story Mash-Up",
   "legacy.menu.albums.resource.toy.description": "Open up the toy box! Woody, Buzz, Bo Peep and many of your favorite toys come to life in this oversized Mash-up based on all the Toy Story movies! To infinity and beyond!",
   "legacy.menu.albums.resource.unavailable": "This texture pack is currently not available. Applying this will fallback to the Minecraft Texture Pack.",
   "legacy.menu.albums.resource.template": "Texture Pack %s",
-  "legacy.menu.albums.resource.template.description": "A custom texture pack saved with the resource packs that were selected in the Resource Packs Screen! You can edit it in the resource_assorts.json file in the game directory.",
+  "legacy.menu.albums.resource.template.description": "A custom texture pack saved with the resource packs that were selected in the Resource Packs Screen! You can edit it in the resource_albums.json file in the game directory.",
   "legacy.menu.add_album": "Add Texture Pack",
   "legacy.menu.edit_album": "Edit Pack Properties",
   "legacy.menu.album_info": "Enter the information for your pack",
   "legacy.menu.album_options": "Texture Pack Options",
   "legacy.menu.remove_album": "Remove Texture Pack",
   "legacy.menu.create_world": "Create New World",
-
   "legacy.options.optionsPreset.lmr_6th": "Very Low (XB/PS2*)",
   "legacy.options.optionsPreset.lmr_6th.tooltip": "A preset based on a what-if* idea where the Legacy Console Edition came to the 6th Generation of Consoles (PlayStation® 2, GameCube, Xbox)",
   "legacy.options.optionsPreset.handheld": "Handheld (Switch/Vita)",
@@ -117,5 +115,6 @@
   "legacy.options.optionsPreset.lmr_extrene": "Extreme",
   "legacy.options.optionsPreset.lmr_extreme.tooltip": "A preset prepared for powerful 'puters, having aspects of modern console editions, but instead having a 64 chunk render distance. Requires a beefy computer. Here be dragons!",
   "legacy.loadingTip.sweepingEdge": "Enchanting a sword with Sweeping Edge enables sweep attacks.",
-  "legacy.finding_seed": "Finding Seed for the World Generator"
+  "legacy.finding_seed": "Finding Seed for the World Generator",
+  "legacy.action.all_recipes": "Show All Recipes"
 }
