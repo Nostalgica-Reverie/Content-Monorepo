@@ -25,6 +25,10 @@ file = "configureddefaults/config/badoptimizations.txt"
 hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
 
 [[files]]
+file = "configureddefaults/config/enchanteds_sodium_options.json"
+hash = "f6e04d1b3f1d3ed51f19dce976ebe36c762e2e5811e1785ba1bb0253dfadfbfb"
+
+[[files]]
 file = "configureddefaults/config/entity_model_features.json"
 hash = "15c848d74bff5ea17fb47016ce0ceda55f97274592b2c9f0440a3daee374466b"
 
@@ -217,6 +221,11 @@ metafile = true
 [[files]]
 file = "mods/dynamic-fps.pw.toml"
 hash = "7b83af5380faba6641a6fdf27e239eba79846f6b66a65da810860a8cb1e86ee4"
+metafile = true
+
+[[files]]
+file = "mods/enchanteds-sodium-options.pw.toml"
+hash = "2632c0d333a46c2114e9baf648618918678af46747a5def49dff48aa71e9c8ee"
 metafile = true
 
 [[files]]
