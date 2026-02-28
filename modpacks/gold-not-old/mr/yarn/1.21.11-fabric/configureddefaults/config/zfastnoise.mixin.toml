@@ -1,0 +1,26 @@
+	[mixin.perf]
+		#Replace buildSurface with optimized implementation
+		#default: false
+		surface = false
+		#Replace populateNoise with optimized implementation
+		#default: true
+		noise = true
+		#Replace populateBiomes with optimized implementation
+		#default: true
+		biome = true
+
+	[perf.surface]
+		#Predict biomes in advance in surface builder. Major speedup for surface builder but may cause mod incompatibility
+		#default: false
+		biome = false
+		#Skip trivial surface builder. Major speedup for end dimension. Depends on surface builder
+		#default: true
+		trivial = true
+
+	[perf.biomes]
+		#Optimize end biome generation (2x speed) but may cause mod incompatibility
+		#default: false
+		end = false
+		#Optimize single biome generation (major speedup) but may cause mod incompatibility
+		#default: false
+		fixed = false
