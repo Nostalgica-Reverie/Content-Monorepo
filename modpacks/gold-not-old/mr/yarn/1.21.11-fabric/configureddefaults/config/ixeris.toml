@@ -1,0 +1,26 @@
+#Specifies whether to enable the mod on Windows
+enabledOnWindows = true
+#Specifies whether to enable the mod on macOS
+enabledOnMacOS = false
+#Specifies whether to enable the mod on Linux
+enabledOnLinux = true
+#Specifies whether to enable the mod on other platforms
+enabledOnOtherPlatforms = true
+#Enable to use some experimental GLFW state cache, which may improve performance with some mods
+aggressiveCaching = false
+#Enable to use a more flexible threading model, which improves performance while obeying threading requirements of the underlying operating system.
+flexibleThreading = true
+#Enable to disallow delaying of any GLFW call. Might reduce performance considerably.
+fullyBlockingMode = false
+#Specifies the priority of the event polling thread. Valid values are 0~10, where 0 = auto decide.
+eventPollingThreadPriority = 0
+#Enables logging of blocking calls and stacktrace. Debug Only.
+logBlockingCalls = false
+#Enables logging of cache issues. Debug Only.
+logCacheIssues = false
+#Enable to use buffered raw input when supported, which can greatly improve event polling performance.
+bufferedRawInput = false
+#Specifies the initial raw input buffer size.
+minRawInputBufferSize = 32
+#Specifies the maximum raw input buffer size.
+maxRawInputBufferSize = 1024

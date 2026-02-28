@@ -1,0 +1,31 @@
+{
+
+  "schema_version": 2,
+  "failed_reloads_per_session": 5,
+  "default_overrides": {
+    "force_compatible": true
+  },
+  "default_packs": [
+    "vanilla",
+    "programmer_art",
+    "file/PACP_Base_Release.zip",
+    "animatium:classic_textures",
+    "animatium:classic_water",
+    "file/golden-days-base-1.21.x-1.15.0.zip",
+    "file/Gold Not Old Resources"
+  ],
+  "pack_overrides": {
+    "1": [
+      "vanilla",
+      "programmer_art",
+      "file/PACP_Base_Release.zip",
+      "animatium:classic_textures",
+      "animatium:classic_water",
+      "file/golden-days-base-1.21.x-1.15.0.zip",
+      "file/Gold Not Old Resources"
+    ],
+    "$$1": {
+      "required": true
+    }
+  }
+}
