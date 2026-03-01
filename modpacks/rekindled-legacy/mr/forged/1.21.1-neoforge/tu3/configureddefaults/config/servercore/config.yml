@@ -1,0 +1,54 @@
+commands:
+  status-enabled: false
+  mobcaps-enabled: false
+  
+activation-range:
+  enabled: true
+  tick-new-entities: false
+  use-vertical-range: true
+  excluded-entity-types:
+    - 'minecraft:hopper_minecart'
+    - 'minecraft:warden'
+    - 'minecraft:ghast'
+    - 'minecraft:jungle_boat'
+    - 'minecraft:spruce_boat'
+    - 'minecraft:mangrove_boat'
+    - 'minecraft:acacia_boat'
+    - 'minecraft:birch_chest_boat'
+    - 'minecraft:birch_boat'
+    - 'minecraft:cherry_boat'
+    - 'minecraft:spruce_chest_boat'
+    - 'minecraft:dark_oak_boat'
+    - 'minecraft:oak_chest_boat'
+    - 'minecraft:dark_oak_chest_boat'
+    - 'minecraft:oak_boat'
+    - 'minecraft:pale_oak_boat'
+    - 'minecraft:acacia_chest_boat'
+    - 'minecraft:cherry_chest_boat'
+    - 'minecraft:bamboo_raft'
+    - 'minecraft:jungle_chest_boat'
+    - 'minecraft:pale_oak_chest_boat'
+    - 'minecraft:bamboo_chest_raft'
+    - 'minecraft:mangrove_chest_boat'
+    - 'create:stationary_contraption'
+    - 'create:carriage_contraption'
+    - 'create:gantry_contraption'
+    - 'create:contraption'
+  default-activation-type:
+    activation-range: 16
+    tick-interval: 20
+    wakeup-interval: -1
+    extra-height-up: false
+    extra-height-down: false
+
+  custom-activation-types:
+    - name: 'mob'
+      activation-range: 20
+      tick-interval: 6
+      wakeup-interval: -1
+      extra-height-up: false
+      extra-height-down: false
+      entity-matcher:
+        - 'typeof:mob'
+
+
