@@ -1,12 +1,24 @@
 hash-format = "sha256"
 
 [[files]]
+file = "animatium_utility.json"
+hash = "013bb87a1d68fdba744417b9591ed98e5e4c21c131868525967bca5e3a152c37"
+
+[[files]]
+file = "configureddefaults/animatium_utility.json"
+hash = "013bb87a1d68fdba744417b9591ed98e5e4c21c131868525967bca5e3a152c37"
+
+[[files]]
 file = "configureddefaults/config/animatium.json"
 hash = "e3a98011959f9731946c0b2b620d6537a4a9d817ee63688387fde2fda4504af7"
 
 [[files]]
 file = "configureddefaults/config/badoptimizations.txt"
 hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
+
+[[files]]
+file = "configureddefaults/config/enchanteds_sodium_options.json"
+hash = "f6e04d1b3f1d3ed51f19dce976ebe36c762e2e5811e1785ba1bb0253dfadfbfb"
 
 [[files]]
 file = "configureddefaults/config/entity_model_features.json"
@@ -46,7 +58,7 @@ hash = "3a081fd7c26a859da4d06b4d882bc91d648008d8dbbc6320ac079b0af106b3a9"
 
 [[files]]
 file = "configureddefaults/config/goldenagecombat-common.toml"
-hash = "9ea8bdf2f2ed6efb565a04385afe1af40485e895a1c9f3f0c504e5e46feca2e2"
+hash = "63f1f18b391f5807675d66c01239544a043b640d41245fd030ecd13b3b6d4c91"
 
 [[files]]
 file = "configureddefaults/config/goldenagecombat-server.toml"
@@ -138,7 +150,7 @@ hash = "e96438af51e995d5f15d0053af921e778a854ca72b147839b150172305d73be3"
 
 [[files]]
 file = "configureddefaults/config/timeless.json"
-hash = "63dbef4c07c7aa6a78c18dcfc6ccaa7432885b22277328ba08e9581b585d4b1e"
+hash = "6b26fa2994136aa908856782fe3608c05ba646bdf7d9aaa2c2e983e5a32c2b00"
 
 [[files]]
 file = "configureddefaults/config/transition.json"
@@ -161,8 +173,12 @@ file = "configureddefaults/config/zfastnoise.mixin.toml"
 hash = "c92d12aa6f71c3b42206ec41ab20fcfe5f83a177d8a7fffcad31995b66c8f298"
 
 [[files]]
+file = "configureddefaults/debug-profile.json"
+hash = "c20cd4a591dfa9e5b16ff93ca525a338ef9cdfb35dd045b5abdce51e71a3fce3"
+
+[[files]]
 file = "configureddefaults/options.txt"
-hash = "89dcaed81fc762e0c2923050a2c4669208216062f7c52f6bcfa65a4afae974c6"
+hash = "5bcdd05f4875717a41538ed03e9832a2d268c6189e745ada72dcf546ac0ed3db"
 
 [[files]]
 file = "mods/animatium.pw.toml"
@@ -180,11 +196,6 @@ hash = "7b587cd143d5f24804b6f20c6adb51816afd1f8167ab15f434d8b19ad725b7c6"
 metafile = true
 
 [[files]]
-file = "mods/c2me-fabric.pw.toml"
-hash = "a8f073ab0640d9e501fe3fc95d282306000fd6eab3186fd682269c0d0913b307"
-metafile = true
-
-[[files]]
 file = "mods/cloth-config.pw.toml"
 hash = "a06ef129798265e0d7249426fb0ed5c506725b0460dc3dfdb975b8978480895e"
 metafile = true
@@ -195,8 +206,18 @@ hash = "cb07f1e3b039be7c3e0e2fe4ad8289e9e800c66a4c4f4e5eb244d1a26dd542d3"
 metafile = true
 
 [[files]]
+file = "mods/cubes-without-borders.pw.toml"
+hash = "982801b4473e11e6f8c5899f18a260515239dfce397c650c6920fc6ae03f6abb"
+metafile = true
+
+[[files]]
 file = "mods/dynamic-fps.pw.toml"
 hash = "7b83af5380faba6641a6fdf27e239eba79846f6b66a65da810860a8cb1e86ee4"
+metafile = true
+
+[[files]]
+file = "mods/enchanteds-sodium-options.pw.toml"
+hash = "2632c0d333a46c2114e9baf648618918678af46747a5def49dff48aa71e9c8ee"
 metafile = true
 
 [[files]]
@@ -250,11 +271,6 @@ hash = "d041ca6e2e8b56d32c158b352a20dec7f3cdfcb726602e2e441e7b0a0e04e68e"
 metafile = true
 
 [[files]]
-file = "mods/hybrid-beta.pw.toml"
-hash = "d67b806cc204b4fbbb51a3f3ce56ac8707c991e0012720eb8e8b39448f782e2b"
-metafile = true
-
-[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "9e7bacd24307639764f3b74ae35a562b6becf2701637b816de0eaae15ab714c0"
 metafile = true
@@ -267,6 +283,11 @@ metafile = true
 [[files]]
 file = "mods/lithium.pw.toml"
 hash = "9a74f9345a91af6a0e2c1975e1dd1d26cfcae6fb072a3a0d68fd9de110ab6327"
+metafile = true
+
+[[files]]
+file = "mods/moderner-beta.pw.toml"
+hash = "f112d461fdbcdd1c69be89f7e0f0bd3658778fcd48135f045aeae16812efac2f"
 metafile = true
 
 [[files]]
@@ -330,6 +351,11 @@ hash = "0302319c1726588bd1033375dee9b72fa4dd6ebf0257d5a77713644946020b7d"
 metafile = true
 
 [[files]]
+file = "mods/shuttfup.pw.toml"
+hash = "d1526cf875839005b3e0cfc3580826829c99d348704b82cccff1ce0306063621"
+metafile = true
+
+[[files]]
 file = "mods/simple-resource-loader.pw.toml"
 hash = "072d663edf6434788b126994b7901a654efb279c4b7f503bcad4938d6d6396a5"
 metafile = true
@@ -350,8 +376,8 @@ hash = "7c3e4630b35b3525d740be5b81b69af1462c8431a617233f9b0dadebb28a4f54"
 metafile = true
 
 [[files]]
-file = "mods/toast-control-fabric.pw.toml"
-hash = "c2e1831757d1bc456ed6a1eaef0f90c45cb3018d25a09fb996ca0d347e5c96ad"
+file = "mods/timeless.pw.toml"
+hash = "0f8233237743c0409a581240b9143ebff3411eaf5db09997ce8b0a595029c321"
 metafile = true
 
 [[files]]
@@ -374,6 +400,10 @@ file = "resourcepacks/Gold Not Old Resources/assets/minecraft/lang/en_us.json"
 hash = "5f61263af85321b83dfe3a4c79390897cec66984a07c1e580be2499a30b4409b"
 
 [[files]]
+file = "resourcepacks/Gold Not Old Resources/assets/minecraft/textures/gui/title/mojang.png"
+hash = "6294e3effcb001a27a1a71da171140048d4ca733f0bfa5df763e8c1c166c8043"
+
+[[files]]
 file = "resourcepacks/Gold Not Old Resources/pack.mcmeta"
 hash = "0baf4cee3022ddc7a196fb00e564ac6fcbcd66b400efa26c6ab2094c039693a6"
 
@@ -388,6 +418,6 @@ hash = "a293158595c142acaf88c3d88e62ac7d76b51a5c0045c7cee5a69c640ea64bd9"
 metafile = true
 
 [[files]]
-file = "resources/datapack/required/classic-village.pw.toml"
+file = "resources/datapack/required/classic-villages.pw.toml"
 hash = "e9d44d04cac68614cb96da282d3ae6672b7ff0b1a4b506f8c15b8a585fd649f4"
 metafile = true
