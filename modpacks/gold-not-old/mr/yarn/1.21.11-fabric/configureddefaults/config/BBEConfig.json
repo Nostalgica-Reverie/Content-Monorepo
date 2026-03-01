@@ -1,0 +1,85 @@
+{
+  "bbe.config.storage.main": [
+    {
+      "option": "optimize.master",
+      "value": true
+    },
+    {
+      "option": "optimize.chest",
+      "value": false
+    },
+    {
+      "option": "optimize.shulker",
+      "value": true
+    },
+    {
+      "option": "optimize.sign",
+      "value": true
+    },
+    {
+      "option": "optimize.decoratedpot",
+      "value": true
+    },
+    {
+      "option": "optimize.banner",
+      "value": true
+    },
+    {
+      "option": "optimize.bell",
+      "value": true
+    },
+    {
+      "option": "optimize.bed",
+      "value": true
+    },
+    {
+      "option": "optimize.copper_golem_statue",
+      "value": true
+    },
+    {
+      "option": "animation.chest",
+      "value": true
+    },
+    {
+      "option": "animation.shulker",
+      "value": true
+    },
+    {
+      "option": "animation.bell",
+      "value": true
+    },
+    {
+      "option": "animation.decoratedpot",
+      "value": true
+    },
+    {
+      "option": "misc.banner_graphics",
+      "value": 1
+    },
+    {
+      "option": "misc.christmas_chest",
+      "value": false
+    },
+    {
+      "option": "misc.render_passes",
+      "value": 25
+    },
+    {
+      "option": "misc.sign_text_distance",
+      "value": 16
+    },
+    {
+      "option": "misc.sign_text",
+      "value": true
+    },
+    {
+      "option": "misc.sign_text_culling",
+      "value": true
+    },
+    {
+      "option": "misc.update_scheduler",
+      "value": 1
+    }
+  ],
+  "bbe.config.storage.experimental": []
+}
