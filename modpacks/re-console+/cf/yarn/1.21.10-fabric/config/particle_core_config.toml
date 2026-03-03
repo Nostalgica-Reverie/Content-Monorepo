@@ -7,8 +7,5 @@ particleRenderDistanceMultiplier = 1.0
 asynchronousTicking = true
 cullingBlacklist = [  ]
 cullingBehavior = "AGGRESSIVE"
-reduceAllChance = 0.30
-reduceDecreasedChance = 0.10
-turnOffPotionParticlesV2 = [
-    "MOBS"
-]
+reduceAllChance = 0.50
+reduceDecreasedChance = 0.20
