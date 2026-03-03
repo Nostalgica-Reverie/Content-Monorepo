@@ -30,7 +30,7 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "config/crash_assistant/modlist.json"
-hash = "862cdf56757e69545a4365b13aeab338e58d2fcd2fef3ce9e7b8d1e0493ecc4a"
+hash = "ca8cad4fc2ec14cfdf76860b851ce83d185370b2b8fb7142d66ad38586a64d97"
 
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
@@ -106,7 +106,7 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "configureddefaults/config/crash_assistant/modlist.json"
-hash = "862cdf56757e69545a4365b13aeab338e58d2fcd2fef3ce9e7b8d1e0493ecc4a"
+hash = "ca8cad4fc2ec14cfdf76860b851ce83d185370b2b8fb7142d66ad38586a64d97"
 
 [[files]]
 file = "configureddefaults/config/crash_assistant/problematic_mods_config.json"
@@ -863,6 +863,16 @@ metafile = true
 [[files]]
 file = "mods/lazyai.pw.toml"
 hash = "05c9681cc413851881625f1a1f401e9edb9ebfc68a7f521f5e72c06bc8556251"
+metafile = true
+
+[[files]]
+file = "mods/legacy-mechanics.pw.toml"
+hash = "e3a89919aceb536befd0b2d0d530b51b7fb0b3c278621489afedf189aa3e043a"
+metafile = true
+
+[[files]]
+file = "mods/legacy-nether-extended.pw.toml"
+hash = "ee6013e8beb4f88698f0086afd586edb85a85aec3bfa73dc7db767ba18a73b8c"
 metafile = true
 
 [[files]]
@@ -8223,16 +8233,6 @@ metafile = true
 [[files]]
 file = "resourcepacks/super-mario-mash-up.pw.toml"
 hash = "a5afed631dc1117e9039fcd4b2208c8cac92c2b8a3f3ac59a849b6bf628b9a66"
-metafile = true
-
-[[files]]
-file = "resources/datapack/required/legacy-mechanics.pw.toml"
-hash = "9ed796be9f5bc5ac73c14f43d2bc334f2226120490426b65b0d72c19c4585d64"
-metafile = true
-
-[[files]]
-file = "resources/datapack/required/legacy-nether-extended.pw.toml"
-hash = "568043317b964df8bbab1a6b87f759c16ab48a7105dc282bc791727d4637f6c1"
 metafile = true
 
 [[files]]
