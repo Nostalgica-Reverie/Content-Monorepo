@@ -25,7 +25,7 @@ jobs:
 
       - name: Update
         run: |
-          sudo chmod +x update-all.sh
+          chmod +x update-all.sh
           ./update-all.sh
 
       - name: Commit Updates
