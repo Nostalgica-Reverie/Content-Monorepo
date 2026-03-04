@@ -7,7 +7,7 @@ on:
 
 jobs:
   auto-update:
-    runs-on: codeberg-small-lazy
+    runs-on: technocality
 
     steps:
       - uses: actions/checkout@v4
