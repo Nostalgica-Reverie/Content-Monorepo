@@ -33,4 +33,4 @@ jobs:
         with:
           author_name: forgejo-actions[bot]
           author_email: omo50@noreply.codeberg.org
-          message: 'Commit from Forgejo Actions (${{forgejo.workflow}})'
+          message: 'Forgejo Actions (${{forgejo.workflow}})'
