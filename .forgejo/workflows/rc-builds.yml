@@ -81,7 +81,7 @@ jobs:
     runs-on: technocality
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           path: downloaded-artifacts
           
@@ -91,7 +91,7 @@ jobs:
           find downloaded-artifacts -type f \( -name "*.mrpack" -o -name "*.zip" \) -exec cp {} combined/ \;
           
       - name: Final Upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: "RC-Plus-${{ needs.build.outputs.commit_sha }}"
           path: combined
