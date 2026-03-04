@@ -28,12 +28,12 @@ jobs:
       PACK_NAME: "Re-Console+"
       OUTPUT: artifacts
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
       - name: Cache Packwiz Binary
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         id: cache-packwiz
         with:
           path: ~/go/bin/packwiz
@@ -41,7 +41,7 @@ jobs:
 
       - name: Set up Go
         if: steps.cache-packwiz.outputs.cache-hit != 'true'
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v3
         with:
           go-version: 'stable'
 
@@ -71,7 +71,7 @@ jobs:
           packwiz ${{ matrix.packwiz_platform }} export --output "../${OUTPUT}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}.${{ matrix.file_ext }}"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: "RC-Plus-${{ matrix.version }}-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}"
           path: artifacts
