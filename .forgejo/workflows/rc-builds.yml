@@ -37,7 +37,7 @@ jobs:
         id: cache-packwiz
         with:
           path: ~/go/bin/packwiz
-          key: packwiz-binary-${{ runner.os }}-v1
+          key: packwiz-binary-${{ runner.os }}-v2
 
       - name: Set up Go
         if: steps.cache-packwiz.outputs.cache-hit != 'true'
