@@ -11,3 +11,19 @@ modpacks/*/Logs
 /modpacks/re-console/mr/yarn/1.21.10-fabric/Logs
 /modpacks/simply-legacy/cf/yarn/1.21.10-fabric/Logs
 /modpacks/gold-not-old/mr/yarn/1.21.11-fabric/Logs
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+# Visual Studio Code
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+# Logs and errors
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
