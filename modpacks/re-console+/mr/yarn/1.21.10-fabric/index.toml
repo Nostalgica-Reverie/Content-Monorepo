@@ -1,18 +1,6 @@
 hash-format = "sha256"
 
 [[files]]
-file = "config/animatium.json"
-hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
-
-[[files]]
-file = "config/badoptimizations.txt"
-hash = "f67df14f16e90a8e83ccfac0abf935673048e9b43bb7f3ddb664e0c0a26adc1b"
-
-[[files]]
-file = "config/c2me.toml"
-hash = "01511f429e0b1e4da3a8c89f7c0189f482a640bb12c5ed9f45cc1aa9c7fa2cfa"
-
-[[files]]
 file = "config/crash_assistant/config.toml"
 hash = "26b3d97ca256865f08b6b76542b0a78fb5d4bfcd0d965b8bd67533a6227d1b1f"
 
@@ -41,248 +29,560 @@ file = "config/crash_assistant/problematic_mods_config.json"
 hash = "9e40cdfe72fb74113c0cbd80dbfb2a504c5499b4e146a68589d9b0a3ab60c52d"
 
 [[files]]
-file = "config/entityculling.json"
+file = "config/modpack_defaults/animatium_utility.json"
+hash = "013bb87a1d68fdba744417b9591ed98e5e4c21c131868525967bca5e3a152c37"
+
+[[files]]
+file = "config/modpack_defaults/config/animatium.json"
+hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
+
+[[files]]
+file = "config/modpack_defaults/config/badoptimizations.txt"
+hash = "f67df14f16e90a8e83ccfac0abf935673048e9b43bb7f3ddb664e0c0a26adc1b"
+
+[[files]]
+file = "config/modpack_defaults/config/betterblockentities.json"
+hash = "bbeba9d6a83b6f5f6d62f839ab367defcae8833d1607050fdbff265a7541a281"
+
+[[files]]
+file = "config/modpack_defaults/config/betterf3.json"
+hash = "c80065e14f9913eaafff622fcf32cd8fdc234a1af64a64d8ae30d33e257f084e"
+
+[[files]]
+file = "config/modpack_defaults/config/bobby.conf"
+hash = "401590df116057aeb66c2cf5788931f0bface1d52ca263bffd09c0de17cb338f"
+
+[[files]]
+file = "config/modpack_defaults/config/c2me.toml"
+hash = "01511f429e0b1e4da3a8c89f7c0189f482a640bb12c5ed9f45cc1aa9c7fa2cfa"
+
+[[files]]
+file = "config/modpack_defaults/config/capes.json5"
+hash = "3c5f5e2ce32a31415ea9667f667eecc074cf9de46421afc348e1d17e8fd6957c"
+
+[[files]]
+file = "config/modpack_defaults/config/chunksfadein.properties"
+hash = "df0de8707e7a493b36db307de3bc961e62e3459fcd1f2bec5e004b0382f1f794"
+
+[[files]]
+file = "config/modpack_defaults/config/citresewn.json"
+hash = "2a4e3e29038837de5cd1004738a73243d7870b4f9dddadef6653ae5158920f01"
+
+[[files]]
+file = "config/modpack_defaults/config/cpm.json"
+hash = "20537ee105d0cfdd6b4c7bdff851dd1a1a8adbf0d73d08219f97af5734854f75"
+
+[[files]]
+file = "config/modpack_defaults/config/craftpresence.json"
+hash = "1d855833cc00eb0aa2e7ee1aa6e84b3ae84264cd3a276d862cf0a4e499e27955"
+
+[[files]]
+file = "config/modpack_defaults/config/dynamic_fps.json"
+hash = "77393a2a6a2da4d9a2704fe32c2ab42b420b3032bedfe930d60441278cf020ae"
+
+[[files]]
+file = "config/modpack_defaults/config/enhanced_bes.properties"
+hash = "219204a2efc6d53ad8b3116db7392e039ba8e0ed5f45bc18562c9697bdf8f5c9"
+
+[[files]]
+file = "config/modpack_defaults/config/entityculling.json"
 hash = "2d4267428332dc690ad8081bb7aea0b2e3f8c879d2d4c17dec13ae578efdf4f4"
 
 [[files]]
-file = "config/fabric/indigo-renderer.properties"
+file = "config/modpack_defaults/config/fabric/indigo-renderer.properties"
 hash = "aa272c538cfdf8b1b6bc75a35f6fa056869c131056604308f06d06beeac80e04"
 
 [[files]]
-file = "config/fabric_loader_dependencies.json"
+file = "config/modpack_defaults/config/fabric_loader_dependencies.json"
 hash = "51631d4fc7768aa448546665821ff26e41583f4b50243d18027f0812fcbd4096"
 
 [[files]]
-file = "config/ferritecore.mixin.properties"
+file = "config/modpack_defaults/config/fastquit.toml"
+hash = "f3856e2e9780a2d1aab940b4abb2c5a3bdcc4023a0eb955b573432fecf6c721f"
+
+[[files]]
+file = "config/modpack_defaults/config/ferritecore.mixin.properties"
 hash = "fee5dbdc8bdd6a22ae321282a6c7134624c3a318a3953718b65ca67b66683a13"
 
 [[files]]
-file = "config/immediatelyfast.json"
+file = "config/modpack_defaults/config/gnetum.json"
+hash = "42b3e43aea856749a716f806f31ea472e041b90b66188bed8f4b3b44452292ad"
+
+[[files]]
+file = "config/modpack_defaults/config/idletweaks.config"
+hash = "9d67f4b4966ea5e0ab2eda074ed8d803bf12ca2c1364a8adaf41ceef483dff74"
+
+[[files]]
+file = "config/modpack_defaults/config/immediatelyfast.json"
 hash = "c149427e9e399acf1c73b8dcf5016defb20fcb674b6d14280999dbfc4706f087"
 
 [[files]]
-file = "config/lithium.properties"
+file = "config/modpack_defaults/config/iris.properties"
+hash = "bc5fc249179fa926c9395c63626120f52f55e5c25638712a3e4008a3737e9013"
+
+[[files]]
+file = "config/modpack_defaults/config/ixeris.toml"
+hash = "4204f78b598577bcdea31b854b95a58d854e3a2d9e4c7527dc1fee8bf8f5a9f6"
+
+[[files]]
+file = "config/modpack_defaults/config/jimmy-smiths.json"
+hash = "42cffa127aa99ac9aa08c8cc5456a1c21d064b248198086967a8da0999f1a818"
+
+[[files]]
+file = "config/modpack_defaults/config/krypton_fnp.yaml"
+hash = "7430c68d9da526a2c725b1b4cafba24b4360e190188ddede552b5f266e41bf12"
+
+[[files]]
+file = "config/modpack_defaults/config/lambdynlights.toml"
+hash = "0fbd6c5f78625f0240300838e7ff89836df8612cca07091a644819341624138f"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/client_mixin.json"
+hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/client_options.json"
+hash = "9b5e05537869c4092ab249159c0846d1f7611cc78c596e8b0ab780f1de4b522b"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/common.json"
+hash = "3b9b9361ed4ad964361358b210952bb01f4f30ff2d56c249d0ce517792244266"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/common_mixin.json"
+hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/global_packs.json"
+hash = "305413427f71e132023d905c8fabd3a50ef95e503089b4f0d26d578923bc1d72"
+
+[[files]]
+file = "config/modpack_defaults/config/lithium.properties"
 hash = "caf4dfdb8635b29017625a08f57d0f4d5d3d4f6cb75bfeefd0993bca0f522405"
 
 [[files]]
-file = "config/modernfix-mixins.properties"
+file = "config/modpack_defaults/config/misctweaks/client_config.toml"
+hash = "237e5b2614812461ec503af4cc1b98fa9267cdc8b2c4d0b3bfaaf8b89ffa2f65"
+
+[[files]]
+file = "config/modpack_defaults/config/misctweaks/config.toml"
+hash = "2fd2b70be7f15953afd2d1fb94d11ac0959b65644613396099869aa9823cbcd9"
+
+[[files]]
+file = "config/modpack_defaults/config/modernfix-mixins.properties"
 hash = "ade717675365370adaa0b024c924ee635755a2581bde64a06110de29a419e8a9"
 
 [[files]]
-file = "config/moreculling.toml"
+file = "config/modpack_defaults/config/moonrise.yml"
+hash = "4a69168659e824c56cd8cf7cc48fd0393e620183d5400395a9f22ae02eff72f1"
+
+[[files]]
+file = "config/modpack_defaults/config/moreculling.toml"
 hash = "66e97b425b9ed294299b2613dcde72c3aba7b6af777a7b0660d6f9471a99c777"
 
 [[files]]
-file = "config/npe.json"
+file = "config/modpack_defaults/config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
+hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
+
+[[files]]
+file = "config/modpack_defaults/config/nostalgic_tweaks/nostalgic_tweaks.json"
+hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
+
+[[files]]
+file = "config/modpack_defaults/config/npe.json"
 hash = "b923571aa9f53f13cb31f652995462890c5116fd78b79fb88365106ba81ae565"
 
 [[files]]
-file = "config/particle_core_config.toml"
+file = "config/modpack_defaults/config/particle_core_config.toml"
 hash = "05f6f6a6f11ed1ad64a387b4a5564982b927b7be99c8c02db42f85da18f0960d"
 
 [[files]]
-file = "config/particle_core_disabled_optimizations_v2.json"
+file = "config/modpack_defaults/config/particle_core_disabled_optimizations_v2.json"
 hash = "e05799551de2a915cef7e6223357f253dc69163ae1d2d6e2d1670089585d0c23"
 
 [[files]]
-file = "config/servercore/config.yml"
+file = "config/modpack_defaults/config/proplacer-client.toml"
+hash = "d09e678763c98c68be47d5c74000d3cc4e2770ca610e3ff2db24149c6890fc3d"
+
+[[files]]
+file = "config/modpack_defaults/config/rsls.properties"
+hash = "f5d82051fd7157e0879121adec518664c6e4bd01309abaade268cc362e13d58a"
+
+[[files]]
+file = "config/modpack_defaults/config/servercore/config.yml"
 hash = "c4c9710c24a3b1f32bd360f36a7b3a4b116d4c0bf782aed98c8d0aed5eb2d0aa"
 
 [[files]]
-file = "config/servercore/optimizations.yml"
+file = "config/modpack_defaults/config/servercore/optimizations.yml"
 hash = "d46be0ff848f3c12326fb5306ba6be295769af256326bd931f8424582e617779"
 
 [[files]]
-file = "config/sodium-mixins.properties"
+file = "config/modpack_defaults/config/sodium-mixins.properties"
 hash = "35d3939d1bc306839c6ad538803288b3d2bc8a2dfed4948eae569d540d6b8058"
 
 [[files]]
-file = "config/sodium-options.json"
+file = "config/modpack_defaults/config/sodium-options.json"
 hash = "48036fe91ca4e16400437b8470775c5c801ce543fe0c6254421882f479d96052"
 
 [[files]]
-file = "config/stfu.json5"
+file = "config/modpack_defaults/config/stfu-disable.txt"
+hash = "f1db3febe2abb607ee0c0cd16627aa3e8d69b829d1ba3c12c46fbba2d12b96db"
+
+[[files]]
+file = "config/modpack_defaults/config/stfu.json5"
 hash = "9dfd510cc87aa55435c48bb549e58a06b9dd21f4bebc7860120e8d6479b68c55"
 
 [[files]]
-file = "config/vmp.properties"
+file = "config/modpack_defaults/config/vmp.properties"
 hash = "da154394968a0e7996e7815e91bafec989f77fa7fae118b69b8c1055c3e316a7"
 
 [[files]]
-file = "configureddefaults/animatium_utility.json"
-hash = "013bb87a1d68fdba744417b9591ed98e5e4c21c131868525967bca5e3a152c37"
+file = "config/modpack_defaults/options.txt"
+hash = "286f308704a6abacaa5dd75b08a793415d9841c7df4fe84b0dfba424695aba2a"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums.json"
+hash = "f8c32fda7982063d1701ee7ff8d949e5fba9a4bd673e16979870704ef034a619"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/alpha.json"
+hash = "6e17daf02f3e72e223a51ada6e160b179e83ea87c3a925207edd9532f86a4ef7"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/animated.json"
+hash = "c9e8eef0262e0041d5f33f8db34239d8e787af3c23a2393b0a55348543315d30"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/beta.json"
+hash = "3be15881562c90a9cbf8719c9373ac941a3a5839f599f8c33e4fe6d16e0be62e"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/candy.json"
+hash = "162561d952e15851c99c1f1250f773e2252d39fd4b4adfcdc660ac8bad0746cf"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/caribbean.json"
+hash = "ec40178ba43b8f6f5e97e4efc23cc4bb649a44247b7cb068bbe52b686775cf5e"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/cartoon.json"
+hash = "d896ba1e2aa8e49c924351c46820430780190ba831b0313aac84687561494c4f"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/chinese.json"
+hash = "cd29f79cff798f81ac33703396b7a8924988c499e5c3ab834c4dbc3eca4cf187"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/city.json"
+hash = "9e34ddb5fdb07923dfaccc81ac995b34e89c40421e1a142ce40da8ecf37f9245"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/darkmode.json"
+hash = "04c2c6c008ad0781ac128593ba3a2215d2d70f9164c2b33595723d573526d2dd"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/egyptian.json"
+hash = "1c069596bf0a44f874e8acc1602a269d96c4306e61a83be7089c65667965bbbd"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/faithful.json"
+hash = "df5dbd584db0f2903e5d81f3d379d8f24110ecedb1818b66e6d6301af3cde4b6"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/fallout.json"
+hash = "4dc306d737f0c503cb80b2cd74be044c5274317836341231ac61253fe443bfd2"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/fantasy.json"
+hash = "57df987d61acc476dbff19ad41da258c05894fc332375faccd15e74cbd6d77f1"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/festive.json"
+hash = "b5b2afa63a4e9844e7788f6c68f64f8d25f5fda81b1812de06df0ffece12017d"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/greek.json"
+hash = "9417d3027439bef45146123f4290ea29327e75278cc71d455635fe6e05e4dd9b"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/halloween.json"
+hash = "7a46012dbf1e647cb3c04b31b4d0607e8938cc2b4b3ee2a0f63ad5fa602a1dbe"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/live.json"
+hash = "b931ff92dd7c697ca21c6b0b281631b1bbeca1a1233ee205320e600bda2ba1e6"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/minecraft.json"
+hash = "e15135796e50e5f017f6c98f29c05364449c21ba306ea7f9efbb6248d5241715"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/minecraft_classic.json"
+hash = "8ff64d9a48327510a5df8c11d6d970c87bb2666e248c9657c5620578ba793449"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/n7.json"
+hash = "4ce8e5e993e67d2cfe36e1baeb622ab0f0a2ac2c0afe5673c6e14af0154858ec"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/natural.json"
+hash = "c7d9f3cb7b80b0df15c44f7cea37974c1173c51a674092ccf19211952521263a"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/norse.json"
+hash = "282953182ac03acc710c6124c363080ddbe7edd612fd357133425a7c26541be6"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/pattern.json"
+hash = "2ed332cc892d6efaee718c5c1253104b75ef4adb9081840c898c9b9f34baffb1"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/plastic.json"
+hash = "3e6a064f87949c8c0b3a8db392cb8d0a5e056dbbd4c1d929078f449c71232971"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/ps4parity.json"
+hash = "dcc8070c1d4b80f96d600a243cbbb493ac9c6a28ea3820bce1502423ea31a451"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/steampunk.json"
+hash = "158e46f66f2971df7a6affdc953f8e8fc1e372f52acc21faeaf2146d05490b4d"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/super_cute.json"
+hash = "54b20ca5f2d913dab514beb22ffc323af1d330de256c6f8967345daf517e08dd"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/super_mario.json"
+hash = "bf74d0bfdd233ee11a8cb9be5028bbfe8abeb4bfe38c90c7070d452b3e56373e"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/trailer.json"
+hash = "cc06cedb5f9429396134a5c36f5f88b24819e1a4c9f07ebb0cc9c353db545cba"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/vanillaplus.json"
+hash = "fb1553a382cc257ddc085eec6cd8ce084364e291e9c1ac35c0cb7b6dc9dc2f5c"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/intro.json"
+hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/af_za.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ar_sa.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ca_es.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/cs_cz.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/da_dk.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/de_de.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/el_gr.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_au.json"
+hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_ca.json"
+hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_gb.json"
+hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_nz.json"
+hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_pt.json"
+hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_ud.json"
+hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_us.json"
+hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/enp.json"
+hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/es_es.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/es_mx.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/fi_fi.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/fr_fr.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/he_il.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/hu_hu.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/it_it.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ja_jp.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ko_kr.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/nl_nl.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/no_no.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pl_pl.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pt_br.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pt_pt.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ro_ro.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ru_ru.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/sr_sp.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/sv_se.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/tr_tr.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/uk_ua.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/vi_vn.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/zh_cn.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/zh_tw.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "7005196a8c4446f44d2c9044be5f8cf6cace1afde83f3702bc7d0bce4fb7e38f"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "c797ed0959bee5a22f4289f2fb8c25b994b9a6e6caffa808d2fe6d363c349998"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "ef45bbbe597e4b69d121327570f11f1408ed88dbdd624a491d51252df8cc2409"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "3f6a7e313057c18ca80c09a310d45a10c64887ab355a388ba21560de23d692f5"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy_world_sizes/lang/en_us.json"
+hash = "7b5a42e025754f8b3df1c3095c01978505260727780c49633f654f327bc6181c"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/minecraft/lang/en_us.json"
+hash = "34407e21e7465a56cf6d9143a6f9b5c31dff5f60e00f0979fc8f21dca0d1f840"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/pack.mcmeta"
+hash = "87eddc80fa8fb4ae73680203826dacbd733d4b610bd4df57c96531d65da368c2"
+
+[[files]]
+file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/pack.png"
+hash = "ceb8eb65289969cc6357c186c6ca529560aae559decb13ae02b343c974d91fa6"
+
+[[files]]
+file = "config/modpack_defaults/servers.dat"
+hash = "d082d6307f908d09fad1c0e429a978795e66ef42b923645150284eb8891e7f4c"
 
 [[files]]
 file = "configureddefaults/config/animatium.json"
 hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
-file = "configureddefaults/config/betterblockentities.json"
-hash = "bbeba9d6a83b6f5f6d62f839ab367defcae8833d1607050fdbff265a7541a281"
-
-[[files]]
-file = "configureddefaults/config/betterf3.json"
-hash = "c80065e14f9913eaafff622fcf32cd8fdc234a1af64a64d8ae30d33e257f084e"
-
-[[files]]
-file = "configureddefaults/config/bobby.conf"
-hash = "401590df116057aeb66c2cf5788931f0bface1d52ca263bffd09c0de17cb338f"
-
-[[files]]
 file = "configureddefaults/config/c2me.toml"
 hash = "f980c048534f1dc42e1701e92572c8f931fc8a1363b4a4cddcce99588ff39b1c"
-
-[[files]]
-file = "configureddefaults/config/capes.json5"
-hash = "3c5f5e2ce32a31415ea9667f667eecc074cf9de46421afc348e1d17e8fd6957c"
-
-[[files]]
-file = "configureddefaults/config/chunksfadein.properties"
-hash = "df0de8707e7a493b36db307de3bc961e62e3459fcd1f2bec5e004b0382f1f794"
-
-[[files]]
-file = "configureddefaults/config/citresewn.json"
-hash = "2a4e3e29038837de5cd1004738a73243d7870b4f9dddadef6653ae5158920f01"
-
-[[files]]
-file = "configureddefaults/config/cpm.json"
-hash = "20537ee105d0cfdd6b4c7bdff851dd1a1a8adbf0d73d08219f97af5734854f75"
-
-[[files]]
-file = "configureddefaults/config/craftpresence.json"
-hash = "1d855833cc00eb0aa2e7ee1aa6e84b3ae84264cd3a276d862cf0a4e499e27955"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/config.toml"
-hash = "26b3d97ca256865f08b6b76542b0a78fb5d4bfcd0d965b8bd67533a6227d1b1f"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/crash_assistant_localization_overrides/README.md"
-hash = "52f394cd3754a29a6f236b1fe622bb430fa7e4632bce262eeb0333d71842bb52"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/README.md"
-hash = "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/en_us.json"
-hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/ru_ru.json"
-hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/lang/zh_cn.json"
-hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/modlist.json"
-hash = "143d2ad969342b0babd55aa677028f51f47ff1beab9c7635ac424ff73f9efc9a"
-
-[[files]]
-file = "configureddefaults/config/crash_assistant/problematic_mods_config.json"
-hash = "9e40cdfe72fb74113c0cbd80dbfb2a504c5499b4e146a68589d9b0a3ab60c52d"
-
-[[files]]
-file = "configureddefaults/config/dynamic_fps.json"
-hash = "77393a2a6a2da4d9a2704fe32c2ab42b420b3032bedfe930d60441278cf020ae"
-
-[[files]]
-file = "configureddefaults/config/enhanced_bes.properties"
-hash = "219204a2efc6d53ad8b3116db7392e039ba8e0ed5f45bc18562c9697bdf8f5c9"
-
-[[files]]
-file = "configureddefaults/config/fastquit.toml"
-hash = "f3856e2e9780a2d1aab940b4abb2c5a3bdcc4023a0eb955b573432fecf6c721f"
 
 [[files]]
 file = "configureddefaults/config/ferritecore.mixin.properties"
 hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
 
 [[files]]
-file = "configureddefaults/config/gnetum.json"
-hash = "42b3e43aea856749a716f806f31ea472e041b90b66188bed8f4b3b44452292ad"
-
-[[files]]
-file = "configureddefaults/config/idletweaks.config"
-hash = "9d67f4b4966ea5e0ab2eda074ed8d803bf12ca2c1364a8adaf41ceef483dff74"
-
-[[files]]
 file = "configureddefaults/config/immediatelyfast.json"
 hash = "7a003c2f1cb98de4f6fcd074723ad3993b1eb742c86949be33195ad88036f4e6"
-
-[[files]]
-file = "configureddefaults/config/iris.properties"
-hash = "bc5fc249179fa926c9395c63626120f52f55e5c25638712a3e4008a3737e9013"
-
-[[files]]
-file = "configureddefaults/config/ixeris.toml"
-hash = "4204f78b598577bcdea31b854b95a58d854e3a2d9e4c7527dc1fee8bf8f5a9f6"
-
-[[files]]
-file = "configureddefaults/config/jimmy-smiths.json"
-hash = "42cffa127aa99ac9aa08c8cc5456a1c21d064b248198086967a8da0999f1a818"
-
-[[files]]
-file = "configureddefaults/config/krypton_fnp.yaml"
-hash = "7430c68d9da526a2c725b1b4cafba24b4360e190188ddede552b5f266e41bf12"
-
-[[files]]
-file = "configureddefaults/config/lambdynlights.toml"
-hash = "0fbd6c5f78625f0240300838e7ff89836df8612cca07091a644819341624138f"
-
-[[files]]
-file = "configureddefaults/config/legacy/client_mixin.json"
-hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
-
-[[files]]
-file = "configureddefaults/config/legacy/client_options.json"
-hash = "9b5e05537869c4092ab249159c0846d1f7611cc78c596e8b0ab780f1de4b522b"
-
-[[files]]
-file = "configureddefaults/config/legacy/common.json"
-hash = "3b9b9361ed4ad964361358b210952bb01f4f30ff2d56c249d0ce517792244266"
-
-[[files]]
-file = "configureddefaults/config/legacy/common_mixin.json"
-hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
-
-[[files]]
-file = "configureddefaults/config/legacy/global_packs.json"
-hash = "305413427f71e132023d905c8fabd3a50ef95e503089b4f0d26d578923bc1d72"
 
 [[files]]
 file = "configureddefaults/config/lithium.properties"
 hash = "e5b0cbdba61b5bb019e9bf19333ace14c2da739baa936d3506b5edab3186ecf4"
 
 [[files]]
-file = "configureddefaults/config/misctweaks/client_config.toml"
-hash = "237e5b2614812461ec503af4cc1b98fa9267cdc8b2c4d0b3bfaaf8b89ffa2f65"
-
-[[files]]
-file = "configureddefaults/config/misctweaks/config.toml"
-hash = "2fd2b70be7f15953afd2d1fb94d11ac0959b65644613396099869aa9823cbcd9"
-
-[[files]]
 file = "configureddefaults/config/modernfix-mixins.properties"
 hash = "bd45c1ecc81e52b4adad97742955070852326d11e73ee1ed0214647848a9f8d0"
 
 [[files]]
-file = "configureddefaults/config/moonrise.yml"
-hash = "4a69168659e824c56cd8cf7cc48fd0393e620183d5400395a9f22ae02eff72f1"
-
-[[files]]
 file = "configureddefaults/config/moreculling.toml"
 hash = "a8ef29e5d01530454b385d39d8cf9f90d240cfd2462c044b7d33fa8555101657"
-
-[[files]]
-file = "configureddefaults/config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
-hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
-
-[[files]]
-file = "configureddefaults/config/nostalgic_tweaks/nostalgic_tweaks.json"
-hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
 
 [[files]]
 file = "configureddefaults/config/npe.json"
@@ -297,14 +597,6 @@ file = "configureddefaults/config/particle_core_disabled_optimizations_v2.json"
 hash = "e05799551de2a915cef7e6223357f253dc69163ae1d2d6e2d1670089585d0c23"
 
 [[files]]
-file = "configureddefaults/config/proplacer-client.toml"
-hash = "d09e678763c98c68be47d5c74000d3cc4e2770ca610e3ff2db24149c6890fc3d"
-
-[[files]]
-file = "configureddefaults/config/rsls.properties"
-hash = "f5d82051fd7157e0879121adec518664c6e4bd01309abaade268cc362e13d58a"
-
-[[files]]
 file = "configureddefaults/config/servercore/config.yml"
 hash = "57b07a5eae8e01115c98a8d9d52255484ed64e8f58a24ae4ade02588bf3ecbdd"
 
@@ -313,332 +605,8 @@ file = "configureddefaults/config/servercore/optimizations.yml"
 hash = "4ce27a04e866cc4d7d39f690884c8bbb2bcdbe3fcb26a993b64233e2e828716e"
 
 [[files]]
-file = "configureddefaults/config/stfu-disable.txt"
-hash = "f1db3febe2abb607ee0c0cd16627aa3e8d69b829d1ba3c12c46fbba2d12b96db"
-
-[[files]]
 file = "configureddefaults/config/stfu.json5"
 hash = "9dfd510cc87aa55435c48bb549e58a06b9dd21f4bebc7860120e8d6479b68c55"
-
-[[files]]
-file = "configureddefaults/options.txt"
-hash = "286f308704a6abacaa5dd75b08a793415d9841c7df4fe84b0dfba424695aba2a"
-
-[[files]]
-file = "configureddefaults/resource_albums.json"
-hash = "f8c32fda7982063d1701ee7ff8d949e5fba9a4bd673e16979870704ef034a619"
-
-[[files]]
-file = "configureddefaults/resource_albums/alpha.json"
-hash = "6e17daf02f3e72e223a51ada6e160b179e83ea87c3a925207edd9532f86a4ef7"
-
-[[files]]
-file = "configureddefaults/resource_albums/animated.json"
-hash = "c9e8eef0262e0041d5f33f8db34239d8e787af3c23a2393b0a55348543315d30"
-
-[[files]]
-file = "configureddefaults/resource_albums/beta.json"
-hash = "3be15881562c90a9cbf8719c9373ac941a3a5839f599f8c33e4fe6d16e0be62e"
-
-[[files]]
-file = "configureddefaults/resource_albums/candy.json"
-hash = "162561d952e15851c99c1f1250f773e2252d39fd4b4adfcdc660ac8bad0746cf"
-
-[[files]]
-file = "configureddefaults/resource_albums/caribbean.json"
-hash = "ec40178ba43b8f6f5e97e4efc23cc4bb649a44247b7cb068bbe52b686775cf5e"
-
-[[files]]
-file = "configureddefaults/resource_albums/cartoon.json"
-hash = "d896ba1e2aa8e49c924351c46820430780190ba831b0313aac84687561494c4f"
-
-[[files]]
-file = "configureddefaults/resource_albums/chinese.json"
-hash = "cd29f79cff798f81ac33703396b7a8924988c499e5c3ab834c4dbc3eca4cf187"
-
-[[files]]
-file = "configureddefaults/resource_albums/city.json"
-hash = "9e34ddb5fdb07923dfaccc81ac995b34e89c40421e1a142ce40da8ecf37f9245"
-
-[[files]]
-file = "configureddefaults/resource_albums/darkmode.json"
-hash = "04c2c6c008ad0781ac128593ba3a2215d2d70f9164c2b33595723d573526d2dd"
-
-[[files]]
-file = "configureddefaults/resource_albums/egyptian.json"
-hash = "1c069596bf0a44f874e8acc1602a269d96c4306e61a83be7089c65667965bbbd"
-
-[[files]]
-file = "configureddefaults/resource_albums/faithful.json"
-hash = "df5dbd584db0f2903e5d81f3d379d8f24110ecedb1818b66e6d6301af3cde4b6"
-
-[[files]]
-file = "configureddefaults/resource_albums/fallout.json"
-hash = "4dc306d737f0c503cb80b2cd74be044c5274317836341231ac61253fe443bfd2"
-
-[[files]]
-file = "configureddefaults/resource_albums/fantasy.json"
-hash = "57df987d61acc476dbff19ad41da258c05894fc332375faccd15e74cbd6d77f1"
-
-[[files]]
-file = "configureddefaults/resource_albums/festive.json"
-hash = "b5b2afa63a4e9844e7788f6c68f64f8d25f5fda81b1812de06df0ffece12017d"
-
-[[files]]
-file = "configureddefaults/resource_albums/greek.json"
-hash = "9417d3027439bef45146123f4290ea29327e75278cc71d455635fe6e05e4dd9b"
-
-[[files]]
-file = "configureddefaults/resource_albums/halloween.json"
-hash = "7a46012dbf1e647cb3c04b31b4d0607e8938cc2b4b3ee2a0f63ad5fa602a1dbe"
-
-[[files]]
-file = "configureddefaults/resource_albums/live.json"
-hash = "b931ff92dd7c697ca21c6b0b281631b1bbeca1a1233ee205320e600bda2ba1e6"
-
-[[files]]
-file = "configureddefaults/resource_albums/minecraft.json"
-hash = "e15135796e50e5f017f6c98f29c05364449c21ba306ea7f9efbb6248d5241715"
-
-[[files]]
-file = "configureddefaults/resource_albums/minecraft_classic.json"
-hash = "8ff64d9a48327510a5df8c11d6d970c87bb2666e248c9657c5620578ba793449"
-
-[[files]]
-file = "configureddefaults/resource_albums/n7.json"
-hash = "4ce8e5e993e67d2cfe36e1baeb622ab0f0a2ac2c0afe5673c6e14af0154858ec"
-
-[[files]]
-file = "configureddefaults/resource_albums/natural.json"
-hash = "c7d9f3cb7b80b0df15c44f7cea37974c1173c51a674092ccf19211952521263a"
-
-[[files]]
-file = "configureddefaults/resource_albums/norse.json"
-hash = "282953182ac03acc710c6124c363080ddbe7edd612fd357133425a7c26541be6"
-
-[[files]]
-file = "configureddefaults/resource_albums/pattern.json"
-hash = "2ed332cc892d6efaee718c5c1253104b75ef4adb9081840c898c9b9f34baffb1"
-
-[[files]]
-file = "configureddefaults/resource_albums/plastic.json"
-hash = "3e6a064f87949c8c0b3a8db392cb8d0a5e056dbbd4c1d929078f449c71232971"
-
-[[files]]
-file = "configureddefaults/resource_albums/ps4parity.json"
-hash = "dcc8070c1d4b80f96d600a243cbbb493ac9c6a28ea3820bce1502423ea31a451"
-
-[[files]]
-file = "configureddefaults/resource_albums/steampunk.json"
-hash = "158e46f66f2971df7a6affdc953f8e8fc1e372f52acc21faeaf2146d05490b4d"
-
-[[files]]
-file = "configureddefaults/resource_albums/super_cute.json"
-hash = "54b20ca5f2d913dab514beb22ffc323af1d330de256c6f8967345daf517e08dd"
-
-[[files]]
-file = "configureddefaults/resource_albums/super_mario.json"
-hash = "bf74d0bfdd233ee11a8cb9be5028bbfe8abeb4bfe38c90c7070d452b3e56373e"
-
-[[files]]
-file = "configureddefaults/resource_albums/trailer.json"
-hash = "cc06cedb5f9429396134a5c36f5f88b24819e1a4c9f07ebb0cc9c353db545cba"
-
-[[files]]
-file = "configureddefaults/resource_albums/vanillaplus.json"
-hash = "fb1553a382cc257ddc085eec6cd8ce084364e291e9c1ac35c0cb7b6dc9dc2f5c"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/intro.json"
-hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/af_za.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ar_sa.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ca_es.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/cs_cz.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/da_dk.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/de_de.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/el_gr.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_au.json"
-hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_ca.json"
-hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_gb.json"
-hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_nz.json"
-hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_pt.json"
-hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_ud.json"
-hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_us.json"
-hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/enp.json"
-hash = "c197afc040d9472a457d93d2b5ad4d2fba5535631303d394ab42be7d4d7690ee"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/es_es.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/es_mx.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/fi_fi.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/fr_fr.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/he_il.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/hu_hu.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/it_it.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ja_jp.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ko_kr.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/nl_nl.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/no_no.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pl_pl.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pt_br.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pt_pt.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ro_ro.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ru_ru.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/sr_sp.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/sv_se.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/tr_tr.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/uk_ua.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/vi_vn.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/zh_cn.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/zh_tw.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading.png"
-hash = "7005196a8c4446f44d2c9044be5f8cf6cace1afde83f3702bc7d0bce4fb7e38f"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading1.png"
-hash = "c797ed0959bee5a22f4289f2fb8c25b994b9a6e6caffa808d2fe6d363c349998"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading2.png"
-hash = "ef45bbbe597e4b69d121327570f11f1408ed88dbdd624a491d51252df8cc2409"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading3.png"
-hash = "3f6a7e313057c18ca80c09a310d45a10c64887ab355a388ba21560de23d692f5"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy_world_sizes/lang/en_us.json"
-hash = "7b5a42e025754f8b3df1c3095c01978505260727780c49633f654f327bc6181c"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/assets/minecraft/lang/en_us.json"
-hash = "34407e21e7465a56cf6d9143a6f9b5c31dff5f60e00f0979fc8f21dca0d1f840"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/pack.mcmeta"
-hash = "87eddc80fa8fb4ae73680203826dacbd733d4b610bd4df57c96531d65da368c2"
-
-[[files]]
-file = "configureddefaults/resources/resourcepack/required/Re-Console+ Resources/pack.png"
-hash = "ceb8eb65289969cc6357c186c6ca529560aae559decb13ae02b343c974d91fa6"
-
-[[files]]
-file = "configureddefaults/servers.dat"
-hash = "d082d6307f908d09fad1c0e429a978795e66ef42b923645150284eb8891e7f4c"
 
 [[files]]
 file = "modlist.md"
@@ -700,8 +668,13 @@ hash = "717d8ac591dba59be4767a179e1359747561e54ccfcac42161fd6bf54339a78b"
 metafile = true
 
 [[files]]
-file = "mods/configured-defaults.pw.toml"
-hash = "0fc46535baa2b4d05786d64803e0161e2ec2e408d0337e047ff81543ac8f0eaa"
+file = "mods/config-manager.pw.toml"
+hash = "d1e48fede01da26a7821dcad96ecb18a15eef8ccc99583d3a9148bfaa04ef8dd"
+metafile = true
+
+[[files]]
+file = "mods/configmanager.pw.toml"
+hash = "a9d2c92ab54655cb245ce95dcaec0a622a798b0935c8bc70fb7aa3cfc66ca2e4"
 metafile = true
 
 [[files]]
@@ -927,11 +900,6 @@ metafile = true
 [[files]]
 file = "mods/polytone.pw.toml"
 hash = "392b976b81bcf1149b6b51526b829e4f04b274f1ac9ca6d039605c5f3bbbb34f"
-metafile = true
-
-[[files]]
-file = "mods/pro-placer.pw.toml"
-hash = "8ff359ad681d52ccd206bd64c0be1dc0cef950d39532ac10d81cd8238751fb27"
 metafile = true
 
 [[files]]
