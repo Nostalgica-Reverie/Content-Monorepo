@@ -9,8 +9,8 @@ on:
   pull_request:
     branches: [ "main" ]
     paths: 
-      - 'modpacks/re-console+/cf/**'
-      - 'modpacks/re-console+/mr/**'
+      - 'modpacks/re-console-plus/cf/**'
+      - 'modpacks/re-console-plus/mr/**'
   workflow_dispatch:
 
 jobs:
