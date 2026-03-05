@@ -28,12 +28,12 @@ jobs:
       PACK_NAME: "Re-Console+"
       OUTPUT: artifacts
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: 'stable'
           cache: false  
@@ -63,7 +63,7 @@ jobs:
           packwiz ${{ matrix.packwiz_platform }} export --output "../${OUTPUT}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}.${{ matrix.file_ext }}"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: "RC-Plus-${{ matrix.version }}-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}"
           path: artifacts
@@ -73,7 +73,7 @@ jobs:
     runs-on: technocality
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           path: downloaded-artifacts
           
@@ -83,7 +83,7 @@ jobs:
           find downloaded-artifacts -type f \( -name "*.mrpack" -o -name "*.zip" \) -exec cp {} combined/ \;
           
       - name: Final Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: "RC-Plus-${{ needs.build.outputs.commit_sha }}"
           path: combined
