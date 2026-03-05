@@ -4,8 +4,8 @@ on:
   push:
     branches: [ "main" ]
     paths: 
-      - 'modpacks/re-console+/cf/**'
-      - 'modpacks/re-console+/mr/**'
+      - 'modpacks/re-console-plus/cf/**'
+      - 'modpacks/re-console-plus/mr/**'
   pull_request:
     branches: [ "main" ]
     paths: 
@@ -33,12 +33,14 @@ jobs:
           fetch-depth: 1
 
       - name: Set up Go
+        if: ${{ !fileExists('~/go/bin/packwiz') }}
         uses: actions/setup-go@v3
         with:
           go-version: 'stable'
           cache: false  
 
       - name: Install Packwiz
+        if: ${{ !fileExists('~/go/bin/packwiz') }}
         run: go install github.com/packwiz/packwiz@latest
 
       - name: Add Packwiz to PATH
@@ -53,7 +55,7 @@ jobs:
 
       - name: Build RC+
         run: |
-          SOURCE_DIR="./modpacks/re-console+/${{ matrix.platform }}/yarn/${{ matrix.version }}"
+          SOURCE_DIR="./modpacks/re-console-plus/${{ matrix.platform }}/yarn/${{ matrix.version }}"
           TEMP_DIR="build-temp-${{ matrix.platform }}-${{ matrix.version }}"
           mkdir -p "$TEMP_DIR"
           cp -a "$SOURCE_DIR/." "./$TEMP_DIR/"
