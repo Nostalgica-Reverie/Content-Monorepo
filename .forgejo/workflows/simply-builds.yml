@@ -1,0 +1,89 @@
+name: Simply Legacy Builds
+
+on:
+  push:
+    branches: [ "main" ]
+    paths: 
+      - 'modpacks/simply-legacy/cf/**'
+      - 'modpacks/simply-legacy/mr/**'
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+      - 'modpacks/simply-legacy/cf/**'
+      - 'modpacks/simply-legacy/mr/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: technocality
+    strategy:
+      matrix:
+        include:
+          - { version: "1.21.10-fabric", platform: "mr", packwiz_platform: "modrinth", file_ext: "mrpack" }
+          - { version: "1.21.10-fabric", platform: "cf", packwiz_platform: "curseforge", file_ext: "zip" }
+    outputs:
+      commit_sha: ${{ steps.vars.outputs.commit_sha }}
+    env:  
+      GITHUB_TOKEN: ${{ secrets.FORGEJO_TOKEN }} 
+      PACK_NAME: "Simply Legacy"
+      OUTPUT: artifacts
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 'stable'
+          cache: false  
+
+      - name: Install Packwiz
+        run: go install github.com/packwiz/packwiz@latest
+
+      - name: Add Packwiz to PATH
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
+      - name: Create short commit SHA
+        id: vars
+        run: |
+          shortSha=$(git rev-parse --short ${{ github.sha }})
+          echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
+          echo "commit_sha=$shortSha" >> $GITHUB_OUTPUT
+
+      - name: Build RC+
+        run: |
+          SOURCE_DIR="./modpacks/simply-legacy/${{ matrix.platform }}/yarn/${{ matrix.version }}"
+          TEMP_DIR="build-temp-${{ matrix.platform }}-${{ matrix.version }}"
+          mkdir -p "$TEMP_DIR"
+          cp -a "$SOURCE_DIR/." "./$TEMP_DIR/"
+          cd "./$TEMP_DIR"
+          packwiz refresh
+          mkdir -p "../$OUTPUT"
+          packwiz ${{ matrix.packwiz_platform }} export --output "../${OUTPUT}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}.${{ matrix.file_ext }}"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Simply-Legacy-${{ matrix.version }}-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}"
+          path: artifacts
+
+  combine:
+    needs: build
+    runs-on: technocality
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts
+          
+      - name: Combine and Upload
+        run: |
+          mkdir combined
+          find downloaded-artifacts -type f \( -name "*.mrpack" -o -name "*.zip" \) -exec cp {} combined/ \;
+          
+      - name: Final Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: "simply-legacy-${{ needs.build.outputs.commit_sha }}"
+          path: combined
