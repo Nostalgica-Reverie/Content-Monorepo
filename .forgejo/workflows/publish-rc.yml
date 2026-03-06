@@ -141,8 +141,13 @@ jobs:
 
       - name: Save artifacts to runner temp
         run: |
+          echo "test"
+          ls -la ${{ env.OUTPUT }}/ || echo "test failed"
+          echo "test 2 ${{ env.ARTIFACT_DIR }"
           mkdir -p ${{ env.ARTIFACT_DIR }}
           cp ${{ env.OUTPUT }}/* ${{ env.ARTIFACT_DIR }}/
+          echo "test 3"
+          ls -la ${{ env.ARTIFACT_DIR }}/
 
   publish-modrinth:
     needs: [check-tag, build]
