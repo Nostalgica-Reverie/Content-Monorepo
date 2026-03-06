@@ -337,10 +337,6 @@ file = "config/modpack_defaults/resource_albums/halloween.json"
 hash = "b2fbe9e194047c254192253125e333930699c6aa8963f6549346d350f8a458e6"
 
 [[files]]
-file = "config/modpack_defaults/resource_albums/live.json"
-hash = "200d4cf8c5ff736c878feac8f314d09ea61c7a07d9386e7dbd0f41d73844118c"
-
-[[files]]
 file = "config/modpack_defaults/resource_albums/minecraft.json"
 hash = "fb5b381456096ea7baa67402a2a5f82c1b0ccbb6ed3cd90ce9ee7bb5aa7321aa"
 
@@ -390,7 +386,11 @@ hash = "770dc57d21fd50a4a3a546315e75ddd1df6a6567002101e876d9a927fbd83ca4"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/vanillaplus.json"
-hash = "17298c79e048a690ce7637b5d0fe70a8c874dfc6f82a97b834f703000c91262e"
+hash = "55c09e9065e8873150444d70e9973569090cc32fe7e56ee994a3845c5e128ba6"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/vintage.json"
+hash = "8344c374eae3a92669bbda015399f1e9c063da539c7e853eb63a13f375b1b66e"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Re-Console+ Resources/assets/legacy/intro.json"
@@ -2431,6 +2431,11 @@ file = "resourcepacks/TU0 GUI/pack.png"
 hash = "ceb8eb65289969cc6357c186c6ca529560aae559decb13ae02b343c974d91fa6"
 
 [[files]]
+file = "resourcepacks/bb.pw.toml"
+hash = "bdd8827e7231d6fcd69a4613685c16e3e380298da398f819cb4d256095d386c0"
+metafile = true
+
+[[files]]
 file = "resourcepacks/candy-textures.pw.toml"
 hash = "0e76556ae0400671f1dbe9e7c1f6ad6e7f355fcca39bc80440392492c37c08f4"
 metafile = true
@@ -2451,8 +2456,18 @@ hash = "346c5cb1aac81738a1d15f08da92370d98473b6ffd7da18a9297ac6464089aeb"
 metafile = true
 
 [[files]]
+file = "resourcepacks/default-dark-mode-legacy4j.pw.toml"
+hash = "6c67d99d51dfe4d066c33759e46f2a5cea499d6e2029154ce76a6382138e1fdd"
+metafile = true
+
+[[files]]
 file = "resourcepacks/egyptian-mythology-mash-up.pw.toml"
 hash = "a4ff4d05d82bdb98c22f0ba6c65086bc0ed62908322d87afb8ea7cde50d311c2"
+metafile = true
+
+[[files]]
+file = "resourcepacks/faithful-32x.pw.toml"
+hash = "54af5b06ea488e58c6406e3fda7b9cb9c18ed346ecf5e619460400b70e6d992e"
 metafile = true
 
 [[files]]
@@ -2494,6 +2509,31 @@ file = "resourcepacks/fixed-chest-models/pack.png"
 hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
 
 [[files]]
+file = "resourcepacks/fresh-animations-extensions.pw.toml"
+hash = "31b83961fa840a616da6be81c814fca8e6a3807a8203d17b027ddb044e3714cc"
+metafile = true
+
+[[files]]
+file = "resourcepacks/fresh-animations.pw.toml"
+hash = "da66421a2a0dcab59fc4b17705b0aae4cd88b20634ebea20b0224fee2bef8251"
+metafile = true
+
+[[files]]
+file = "resourcepacks/fresh-moves.pw.toml"
+hash = "451bfa800a338ab8e7844d967300bdfbacebb382d5b5c5891548e3ac024babde"
+metafile = true
+
+[[files]]
+file = "resourcepacks/golden-days-alpha.pw.toml"
+hash = "28e570b24a20e2374df284896d3f934afb8e08ed38d4490d7a02f8e38e4da0a5"
+metafile = true
+
+[[files]]
+file = "resourcepacks/golden-days.pw.toml"
+hash = "23db52ab22be3c20b4e9e19d759b42205e0e16413642f4ed2cb45105406989c4"
+metafile = true
+
+[[files]]
 file = "resourcepacks/greek-mythology-mash-up.pw.toml"
 hash = "e762d92686c9f657badd0a310b5b83e2f5be6b95b2b960a4150ca581154c644e"
 metafile = true
@@ -2506,6 +2546,11 @@ metafile = true
 [[files]]
 file = "resourcepacks/legacy-titles.pw.toml"
 hash = "4fc873361376e11e6feb0e3f6288311b859c202b5cd191590c11c0bae10eb06f"
+metafile = true
+
+[[files]]
+file = "resourcepacks/motschens-better-leaves.pw.toml"
+hash = "64f039cd9df9f8612bebe1547596ba8f7e035524dac93564eead9ef0e504bc0b"
 metafile = true
 
 [[files]]
@@ -2529,8 +2574,23 @@ hash = "c81382040cac06e71e0b10201efba60c1abbec308ea5c5b90bc09263c53f4a0d"
 metafile = true
 
 [[files]]
+file = "resourcepacks/rays-3d-ladders.pw.toml"
+hash = "6f2cdf4952770672c733f06074d7a0987a82e52c7d8cb6a52a847d0c21a006dd"
+metafile = true
+
+[[files]]
+file = "resourcepacks/rays-3d-rails.pw.toml"
+hash = "c8c6ce7fbbd21eb53729ff6299301b4983fe67208a7900c96cbecec1ccc0cbb3"
+metafile = true
+
+[[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
 hash = "31a1e3fd0d00bbd115fabc136050847b6ca311a63260e9ce467bbee7f8696ba3"
+metafile = true
+
+[[files]]
+file = "resourcepacks/round-trees-mc-vanilla-1-8-1-13.pw.toml"
+hash = "bda57d94c0f1e85745919e54d11c33bd0721c570d3ce8b161e592b96460580ea"
 metafile = true
 
 [[files]]
