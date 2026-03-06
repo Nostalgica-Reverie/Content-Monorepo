@@ -146,7 +146,7 @@ jobs:
           modrinth-token: ${{ secrets.MR }}
           files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-modrinth.mrpack
           name: "RC Plus ${{ steps.version.outputs.version }} (Fabric)"
-          version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
+          version: "${{ steps.version.outputs.version }}-${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: fabric
           game-versions: "1.21.10"
