@@ -149,129 +149,63 @@ jobs:
           echo "test 3"
           ls -la ${{ env.ARTIFACT_DIR }}/
 
-  publish-modrinth:
-    needs: [check-tag, build]
-    if: needs.check-tag.outputs.should_run == 'true' && needs.check-tag.outputs.is_alpha == 'false'
-    runs-on: technocality
-    strategy:
-      matrix:
-        include:
-          - { version: "1.21.10-fabric", loader: "fabric" }
-      max-parallel: 1
-    env:
-      PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
-      VERSION: ${{ needs.build.outputs.version }}
-      COMMIT_SHORT_SHA: ${{ needs.build.outputs.commit-sha }}
-      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
-
-    steps:
-      - name: Copy artifacts for this matrix entry
+      - name: Build modpack
         run: |
-          mkdir -p artifacts
-          cp ${{ env.ARTIFACT_DIR }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-modrinth.mrpack artifacts/
+          temp_dir="RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp"
+          mkdir $temp_dir
+          cp -r ./modpacks/re-console-plus/${{ matrix.folder }}/yarn/${{ matrix.version }}/* ./$temp_dir/
+          cp ./LICENSE ./$temp_dir/
+          cp ./README.md ./$temp_dir/
+          cd ./$temp_dir/
+          packwiz refresh
+          mkdir -p ../${{ env.OUTPUT }}
+          packwiz ${{ matrix.platform }} export --output ../${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-${{ matrix.platform }}.${{ matrix.file_ext }}
 
       - name: Publish to Modrinth
+        if: matrix.platform == 'modrinth' && needs.check-tag.outputs.is_alpha == 'false'
         uses: https://github.com/Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ${{ needs.check-tag.outputs.modrinth_id }}
           modrinth-token: ${{ secrets.MR }}
-
-          files: |
-            artifacts/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-modrinth.mrpack
-
-          name: "RC Plus ${{ env.VERSION }} (${{ matrix.loader == 'fabric' && 'Fabric' }})"
-          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-modrinth.mrpack
+          name: "RC Plus ${{ steps.version.outputs.version }} (Fabric)"
+          version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
-
-          loaders: ${{ matrix.loader }}
-          game-versions: ${{ matrix.version }}
-
-          changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
-
+          loaders: fabric
+          game-versions: "1.21.10"
+          changelog: ${{ github.event.release.body || format('Development build - {0}', steps.version.outputs.commit-sha) }}
           retry-attempts: 3
           retry-delay: 10000
           fail-mode: warn
 
-  publish-curseforge:
-    needs: [check-tag, build]
-    if: needs.check-tag.outputs.should_run == 'true' && needs.check-tag.outputs.is_alpha == 'false'
-    runs-on: technocality
-    strategy:
-      matrix:
-        include:
-          - { version: "1.21.10-fabric", loader: "fabric" }
-      max-parallel: 1
-    env:
-      PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
-      VERSION: ${{ needs.build.outputs.version }}
-      COMMIT_SHORT_SHA: ${{ needs.build.outputs.commit-sha }}
-      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
-
-    steps:
-      - name: Copy artifacts for this matrix entry
-        run: |
-          mkdir -p artifacts
-          cp ${{ env.ARTIFACT_DIR }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-curseforge.zip artifacts/
-
       - name: Publish to CurseForge
+        if: matrix.platform == 'curseforge' && needs.check-tag.outputs.is_alpha == 'false'
         uses: https://github.com/Kir-Antipov/mc-publish@v3.3
         with:
           curseforge-id: ${{ needs.check-tag.outputs.curseforge_id }}
           curseforge-token: ${{ secrets.CF }}
-
-          files: |
-            artifacts/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ env.VERSION }}-curseforge.zip
-
-          name: "RC Plus ${{ env.VERSION }} (${{ matrix.loader == 'fabric' && 'Fabric' }})"
-          version: "${{ env.VERSION }}-${{ matrix.loader }}-${{ matrix.version }}"
+          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-curseforge.zip
+          name: "RC Plus ${{ steps.version.outputs.version }} (Fabric)"
+          version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
-
-          loaders: ${{ matrix.loader }}
-          game-versions: ${{ matrix.version }}
-
-          changelog: ${{ github.event.release.body || format('Development build - {0}', env.COMMIT_SHORT_SHA) }}
-
+          loaders: fabric
+          game-versions: "1.21.10"
+          changelog: ${{ github.event.release.body || format('Development build - {0}', steps.version.outputs.commit-sha) }}
           retry-attempts: 3
           retry-delay: 10000
           fail-mode: warn
 
-  publish-forgejo:
-    needs: [check-tag, build]
-    if: needs.check-tag.outputs.should_run == 'true' && github.event_name == 'release'
-    runs-on: technocality
-    env:
-      PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
-      VERSION: ${{ needs.build.outputs.version }}
-      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
-
-    steps:
-      - name: Create combined release zip and upload to Forgejo release
+      - name: Upload to Forgejo release
+        if: github.event_name == 'release'
         run: |
-          mkdir combined-release
-          find ${{ env.ARTIFACT_DIR }} -name "*.zip" -exec cp {} combined-release/ \;
-          find ${{ env.ARTIFACT_DIR }} -name "*.mrpack" -exec cp {} combined-release/ \;
-
-          zip_name="RC-plus-${{ env.VERSION }}-All.zip"
-          cd combined-release
-          zip -r "../$zip_name" .
-          cd ..
-
+          file=$(ls ${{ env.OUTPUT }}/*)
           release_id=$(curl -s \
             -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
             "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }}" \
             | jq -r '.id')
-
-          echo "Uploading $zip_name to release $release_id"
+          echo "Uploading $(basename $file) to release $release_id"
           curl -s -X POST \
             -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
             -H "Content-Type: application/octet-stream" \
-            --data-binary @"$zip_name" \
-            "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/${release_id}/assets?name=$zip_name"
-
-  cleanup:
-    needs: [publish-modrinth, publish-curseforge, publish-forgejo]
-    if: always()
-    runs-on: technocality
-    steps:
-      - name: Remove runner temp artifacts
-        run: rm -rf ${{ github.workspace }}/../rc-build-${{ github.sha }}
+            --data-binary @"$file" \
+            "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/${release_id}/assets?name=$(basename $file)"
