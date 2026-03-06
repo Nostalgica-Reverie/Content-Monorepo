@@ -66,8 +66,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - { version: "1.21.10", loader: "fabric", platform: "modrinth", file_ext: "mrpack" }
-          - { version: "1.21.10", loader: "fabric", platform: "curseforge", file_ext: "zip" }
+          - { version: "1.21.10", loader: "fabric", platform: "modrinth", file_ext: "mrpack", folder: "mr" }
+          - { version: "1.21.10", loader: "fabric", platform: "curseforge", file_ext: "zip",  folder: "cf" }
 
     runs-on: technocality
     env:
@@ -131,7 +131,7 @@ jobs:
           temp_dir="RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp"
 
           mkdir $temp_dir
-          cp -r ./versions/vanilla/src/${{ env.SOURCE_PATH }}/${{ matrix.platform }}/${{ matrix.loader }}/${{ matrix.version }}/* ./$temp_dir/
+          cp -r ./modpacks/re-console-plus/${{ matrix.folder }}/${{ matrix.loader }}/${{ matrix.version }}/* ./$temp_dir/
           cp ./LICENSE ./$temp_dir/
           cp ./README.md ./$temp_dir/
           cd ./$temp_dir/
