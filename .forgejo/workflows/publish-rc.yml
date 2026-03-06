@@ -75,7 +75,7 @@ jobs:
       PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
       SOURCE_PATH: ${{ needs.check-tag.outputs.source_path }}
       OUTPUT: artifacts
-      ARTIFACT_DIR: /tmp/rc-build-${{ github.sha }}
+      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
 
     outputs:
       version: ${{ steps.version.outputs.version }}
@@ -156,13 +156,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - { version: "1.21.10", loader: "fabric" }
+          - { version: "1.21.10-fabric", loader: "fabric" }
       max-parallel: 1
     env:
       PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
       VERSION: ${{ needs.build.outputs.version }}
       COMMIT_SHORT_SHA: ${{ needs.build.outputs.commit-sha }}
-      ARTIFACT_DIR: /tmp/rc-build-${{ github.sha }}
+      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
 
     steps:
       - name: Copy artifacts for this matrix entry
@@ -199,13 +199,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - { version: "1.21.10", loader: "fabric" }
+          - { version: "1.21.10-fabric", loader: "fabric" }
       max-parallel: 1
     env:
       PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
       VERSION: ${{ needs.build.outputs.version }}
       COMMIT_SHORT_SHA: ${{ needs.build.outputs.commit-sha }}
-      ARTIFACT_DIR: /tmp/rc-build-${{ github.sha }}
+      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
 
     steps:
       - name: Copy artifacts for this matrix entry
@@ -242,7 +242,7 @@ jobs:
     env:
       PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
       VERSION: ${{ needs.build.outputs.version }}
-      ARTIFACT_DIR: /tmp/rc-build-${{ github.sha }}
+      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
 
     steps:
       - name: Create combined release zip and upload to Forgejo release
@@ -256,7 +256,6 @@ jobs:
           zip -r "../$zip_name" .
           cd ..
 
-          # Get the release ID from Forgejo API by tag name
           release_id=$(curl -s \
             -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
             "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }}" \
@@ -275,4 +274,4 @@ jobs:
     runs-on: technocality
     steps:
       - name: Remove runner temp artifacts
-        run: rm -rf /tmp/rc-build-${{ github.sha }}
+        run: rm -rf ${{ github.workspace }}/../rc-build-${{ github.sha }}
