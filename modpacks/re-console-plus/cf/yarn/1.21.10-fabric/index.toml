@@ -2,7 +2,7 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
-hash = "a9cc46a7affd36e59e44688e343233d2432dea8ec9e5461e705abe231735268e"
+hash = "b33dd214f16d138355c55ad6025d00d377db8849485428e90e12088bd15adfeb"
 
 [[files]]
 file = "config/crash_assistant/lang/README.md"
@@ -22,11 +22,11 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "config/crash_assistant/modlist.json"
-hash = "5fb3805abfb2bd83ab7a4e6bc6597f25fb9f86937bae6d5292bd685a291235c6"
+hash = "efd95ec6717005fd1bb7b18ef43492164ef9c4e8fe4c50fe4c9d7d69482abe65"
 
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
-hash = "d332709be21b7bc8038f0cb6924120e3ac790b4f2415d160a416a7e1553ea07e"
+hash = "6b8959407eda32d11bbd25df75fc994c129e1730e8036f4acea6c842c903b30e"
 
 [[files]]
 file = "config/modpack_defaults/animatium_utility.json"
@@ -75,6 +75,34 @@ hash = "3870f1965e60dc67b321c224c41868293c75a595c4f510b2edcff879b7372775"
 [[files]]
 file = "config/modpack_defaults/config/craftpresence.json"
 hash = "616adff7c23266696effd21b205000087433333b99f689ca25e65520012324b2"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/config.toml"
+hash = "b33dd214f16d138355c55ad6025d00d377db8849485428e90e12088bd15adfeb"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/lang/README.md"
+hash = "bd2631461374ee995478917064980edee09d5c300dfde1548264c1d9b6763349"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/modlist.json"
+hash = "efd95ec6717005fd1bb7b18ef43492164ef9c4e8fe4c50fe4c9d7d69482abe65"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/problematic_mods_config.json"
+hash = "6b8959407eda32d11bbd25df75fc994c129e1730e8036f4acea6c842c903b30e"
 
 [[files]]
 file = "config/modpack_defaults/config/dynamic_fps.json"
