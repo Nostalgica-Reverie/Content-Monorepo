@@ -2,7 +2,7 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
-hash = "a9cc46a7affd36e59e44688e343233d2432dea8ec9e5461e705abe231735268e"
+hash = "b33dd214f16d138355c55ad6025d00d377db8849485428e90e12088bd15adfeb"
 
 [[files]]
 file = "config/crash_assistant/lang/README.md"
@@ -22,7 +22,7 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "config/crash_assistant/modlist.json"
-hash = "5fb3805abfb2bd83ab7a4e6bc6597f25fb9f86937bae6d5292bd685a291235c6"
+hash = "3aca02d4021f14282c20499a5ba7cef5d723c82cb570b4930206142f63fdfb80"
 
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
@@ -75,6 +75,34 @@ hash = "3870f1965e60dc67b321c224c41868293c75a595c4f510b2edcff879b7372775"
 [[files]]
 file = "config/modpack_defaults/config/craftpresence.json"
 hash = "616adff7c23266696effd21b205000087433333b99f689ca25e65520012324b2"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/config.toml"
+hash = "b33dd214f16d138355c55ad6025d00d377db8849485428e90e12088bd15adfeb"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/lang/README.md"
+hash = "bd2631461374ee995478917064980edee09d5c300dfde1548264c1d9b6763349"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/lang/en_us.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/lang/ru_ru.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/lang/zh_cn.json"
+hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/modlist.json"
+hash = "3aca02d4021f14282c20499a5ba7cef5d723c82cb570b4930206142f63fdfb80"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/problematic_mods_config.json"
+hash = "6b8959407eda32d11bbd25df75fc994c129e1730e8036f4acea6c842c903b30e"
 
 [[files]]
 file = "config/modpack_defaults/config/dynamic_fps.json"
@@ -246,7 +274,7 @@ hash = "87e5da3322d439dc2ebd373ba9945ec17eafc1addd3a1bea3ee07f8cf5a9d87c"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/alpha.json"
-hash = "3cd17ff7b273438d2bdafdd9c18144a2dcb31a65b8e71ac282a4d333441238a3"
+hash = "cf1de8a32e8b4af44668d62428c59fff11e0c2804dda33faedb224cf3d71d306"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/animated.json"
@@ -254,7 +282,7 @@ hash = "a52c4c835bd23b6eb2d853b1e1ab9e4f571119576b2cae49e5a4915f1e521f43"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/beta.json"
-hash = "a65c8bcdce3bb61b58cc0785365bb4c9c7e58b4feb1769ea202499cec84feb86"
+hash = "42e895dbd2f9fc2601ee1175c69fb0cf96636ea484ceeca9c3aaa183c198bc3b"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/candy.json"
@@ -942,7 +970,7 @@ metafile = true
 
 [[files]]
 file = "resource_albums/alpha.json"
-hash = "3cd17ff7b273438d2bdafdd9c18144a2dcb31a65b8e71ac282a4d333441238a3"
+hash = "cf1de8a32e8b4af44668d62428c59fff11e0c2804dda33faedb224cf3d71d306"
 
 [[files]]
 file = "resource_albums/animated.json"
@@ -950,7 +978,7 @@ hash = "a52c4c835bd23b6eb2d853b1e1ab9e4f571119576b2cae49e5a4915f1e521f43"
 
 [[files]]
 file = "resource_albums/beta.json"
-hash = "a65c8bcdce3bb61b58cc0785365bb4c9c7e58b4feb1769ea202499cec84feb86"
+hash = "42e895dbd2f9fc2601ee1175c69fb0cf96636ea484ceeca9c3aaa183c198bc3b"
 
 [[files]]
 file = "resource_albums/candy.json"
