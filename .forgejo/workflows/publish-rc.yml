@@ -179,7 +179,7 @@ jobs:
           release_id=$(curl -s \
             -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
             "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }}" \
-            | jq -r '.id')
+            | grep -o '"id":[0-9]*' | head -1 | sed 's/"id"://')
           echo "Uploading $(basename $file) to release $release_id"
           curl -s -X POST \
             -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
