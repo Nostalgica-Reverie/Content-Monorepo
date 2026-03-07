@@ -9,6 +9,26 @@ file = "config/cpm.json"
 hash = "6e89c1b296d2dabedf2d3732b5827e0babd4aa5e7261a82f1107f0bc06547573"
 
 [[files]]
+file = "config/crash_assistant/config.toml"
+hash = "bbda7be394ab1bd5a24625a6d4118c72df7b634e2361e9b9f91ac7df0f552ce8"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant_localization_overrides/README.md"
+hash = "52f394cd3754a29a6f236b1fe622bb430fa7e4632bce262eeb0333d71842bb52"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "e8a22f7df5bd33887dcf05748ee6f9c0fb1d8898f82a5ad61286e0ad124166a9"
+
+[[files]]
+file = "config/crash_assistant/scripts/log_analysis/example.jexl"
+hash = "798a496ac9989f59c3041147173d7f22719918d3a52f8dbddca318a33b730816"
+
+[[files]]
+file = "config/crash_assistant/scripts/startup/example.jexl"
+hash = "84d47f19124b71d47b9962388616c8dff4d0d0aa9207505b6fe68bfec6023d4d"
+
+[[files]]
 file = "config/customwindowtitle-client.toml"
 hash = "73dfe9a1e2d5358a66bf41e0e5fdbc344a5ed18c1a6c1cbb14a9c89f54c967ce"
 
@@ -264,18 +284,13 @@ hash = "01f5ef2303e0109a5fdd40d9bc5a956e8d17e426a14461f719823b044700dc9f"
 metafile = true
 
 [[files]]
-file = "mods/cloth-config.pw.toml"
-hash = "a112512699928e5504f2e826194c60881f949902fee6c6bef5f3539fcb90db75"
-metafile = true
-
-[[files]]
-file = "mods/cloth-gamerules.pw.toml"
-hash = "a91502ba5ef1a030cc4dacc7a1142f4751cf8c508068e6385f69bbfbdd1677fa"
+file = "mods/crash-assistant.pw.toml"
+hash = "f8f941964c822c5c56322eacbb2cd8b361b74df1a48608cc043420b86c2d8fec"
 metafile = true
 
 [[files]]
 file = "mods/cubes-without-borders.pw.toml"
-hash = "7797b4dcd9c68b4555caf2629b0bff76f234ae04e8b42956e95ce2c65807049e"
+hash = "a66f89f725ee5747668f77f4c1a1d98b98e7a96ffd892f3c9f778484bbf0c413"
 metafile = true
 
 [[files]]
@@ -330,7 +345,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "1586b3924f3165c02d7833d76739bb8eba63640d258cf39324b92da84238b9c3"
+hash = "6ec22733a32cf6e59584fbf2a855e24ea2c05f46026e0799f34f34c0915c8367"
 metafile = true
 
 [[files]]
@@ -474,6 +489,11 @@ hash = "5fd28a9e1cad5ba3a7580e71db9f561388e0783efd8b03271becab3dd48ae172"
 metafile = true
 
 [[files]]
+file = "mods/preferred-gamerules.pw.toml"
+hash = "15aaac41522577009d83c1d38cd677e45042dab030b3142e7e27f4071c193a78"
+metafile = true
+
+[[files]]
 file = "mods/scalablelux.pw.toml"
 hash = "e0bec3ba0a82933ef1143af3782021f14b544d91cee9edd0344cb26a697bd982"
 metafile = true
@@ -530,7 +550,7 @@ metafile = true
 
 [[files]]
 file = "options.txt"
-hash = "1122e757f9044854f07d449936fdf082ea9c668e8fb1fc367503ac6922b2528f"
+hash = "498f15ff7debe649de281dedb24d7a238b9ac82b9b27dd022401447af7c66966"
 
 [[files]]
 file = "resource_albums.json"
@@ -562,7 +582,7 @@ hash = "ca32395da2b115b393180c502b040c8ffa03485462c2ddac3477d4f66301d8fd"
 
 [[files]]
 file = "resourcepacks/Dreamcast Edition/assets/legacy/intro.json"
-hash = "91732c615f81d68e89ca34fce32bb937e5d871a378e2fc544877c4fa7f0c30f2"
+hash = "415bde2790239566b094bff941e074ac2e83209089a9a8ae267c87327164b691"
 
 [[files]]
 file = "resourcepacks/Dreamcast Edition/assets/legacy/lang/en_us.json"
@@ -611,10 +631,6 @@ hash = "8f61fbd1b26513027d939992a17a376797c6e554c7cb00ccb309b070770a0934"
 [[files]]
 file = "resourcepacks/Dreamcast Edition/pack.png"
 hash = "ab88c14d7a73753b2ac807fe5bf69b21f6738eb8bbc8f7ddd5154c1e7a062b37"
-
-[[files]]
-file = "resourcepacks/GameCube Edition/assets/legacy/intro.json"
-hash = "2eb119c6688707e6ca29d3dfae74c42605ed6c790a92c5be6fff223ea5c20f2c"
 
 [[files]]
 file = "resourcepacks/GameCube Edition/assets/legacy/lang/en_us.json"
@@ -718,7 +734,7 @@ hash = "07643b3a3eadc8114440c227493e6f01766e109d09d0301d328bf438f1ebef52"
 
 [[files]]
 file = "resourcepacks/Xbox Edition/assets/legacy/intro.json"
-hash = "6922c907b34903ef924d75cfb83ab580b02c27402ac29e1f5ae89f4e4abe3cff"
+hash = "e4f300bbe55f2f222d2f0bb3a00828275e9f3f2d1416d69568ec97dca397bb35"
 
 [[files]]
 file = "resourcepacks/Xbox Edition/assets/legacy/lang/en_us.json"
@@ -969,7 +985,7 @@ hash = "43522524974b5ea4048db49c6f9cb4286c97a1ca4523a847072cb76e445cbc90"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/legacy/intro.json"
-hash = "2eb119c6688707e6ca29d3dfae74c42605ed6c790a92c5be6fff223ea5c20f2c"
+hash = "c1ebdd5242dbadfd110b643f52920a4386cbbcc401f24d7c0495d54e30b05d0c"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/legacy/lang/en_us.json"
@@ -2304,6 +2320,26 @@ file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures
 hash = "02b33029483c3c9a014fbc3d6e4b3f111b0e6ec40c7a2e7aeedbf96dafee5f7e"
 
 [[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/lasting.png"
+hash = "a67ee30595a7e94112b02b9d45dcfe4788dd1882f2f18e2184614ca95e59e012"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "1192816137d67a9918d75bc72331545f7f1b11fdeb844e2324c9d3ec2f248540"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "76424bb481ebcec3e606439d019cfe7551790a29ad27d887ac4655d2caa328cf"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "8f5126e963034130e5952a7eeb4765a18dbd43a446f0a8524282261cd0f52a4e"
+
+[[files]]
+file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "87494d842283a919ee673fb11fc18e7e51e09a0130dd35353b74c88df0a94eab"
+
+[[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/legacy/textures/gui/intro/mojang.png"
 hash = "0eb7a23202996f1c27221b78ead2ef394e72223e763ad62befd4b094641d9e48"
 
@@ -2417,7 +2453,7 @@ hash = "84548d8a286b4694a6eb743e79ce8afc073e3b32083605eafb0660b606a9d84a"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/changelog/en_us.txt"
-hash = "96183de8929abb5f0547e2a1b3287c62a9e584617a80001dcd0adc47e1a815f5"
+hash = "8b0a8adde2d31fff786f6ec2484d05378a3b2142352d3d35b8681899e505f150"
 
 [[files]]
 file = "resources/resourcepack/required/Modpack Resources/assets/minecraft/lang/en_us.json"
