@@ -1,11 +1,10 @@
 {
    "brands": [
-     "legacy:textures/gui/intro/black.png",
-	 "legacy:textures/gui/intro/black.png",
-	 "legacy:textures/gui/intro/black.png",
-	 "legacy:textures/gui/intro/black.png",
-	 "legacy:textures/gui/intro/black.png",
-	 "legacy:textures/gui/intro/black.png",
+	 "legacy:textures/gui/intro/loading3.png",
+     "legacy:textures/gui/intro/loading.png",
+	 "legacy:textures/gui/intro/loading1.png",
+	 "legacy:textures/gui/intro/loading2.png",
+	 "legacy:textures/gui/intro/loading3.png",
 	 "legacy:textures/gui/intro/eula.png",
 	 "legacy:textures/gui/intro/nr.png",
 	 "legacy:textures/gui/intro/xblive.png",
@@ -17,5 +16,5 @@
     "brandDuration": 2000,
     "fadeIn": 0.06,
     "fadeOut": 0.06,
-    "crossFade": false
+    "crossFade": true
 }
