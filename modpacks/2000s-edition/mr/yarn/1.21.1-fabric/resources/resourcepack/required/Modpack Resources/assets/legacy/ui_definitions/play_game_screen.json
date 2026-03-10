@@ -4,14 +4,17 @@
   "elements": {
     "panel.width": 520,
     "panel.height": 213,
+    "panel.y": "(${height}/3)-17",
     "panelRecess.width": 250,
     "panelRecess.height": 190,
     "panelRecess.x": "${panel.x}+9",
     "panelRecess.y": "${panel.y}+11",
     "renderableVList.width": 230,
+    "renderableVList.height": 164,
     "renderableVList.x": "${panel.x}+19",
     "renderableVList.y": "${panel.y}+32",
     "serverRenderableVList.width": 230,
+    "serverRenderableVList.height": 164,
     "serverRenderableVList.x": "${panel.x}+${panel.width}/2+13",
     "serverRenderableVList.y": "${renderableVList.y}",
     "hasTitle": {
@@ -40,7 +43,7 @@
       "type": "draw_string",
       "component": "Start Game",
       "x": "${panelRecess.x}+(${panelRecess.width}-${startGame.component.width})/2",
-      "y": "${panel.y}+18",
+      "y": "${panel.y}+19",
       "color": "${commonColor.inventory_gray_text}",
       "shadow": false
     },
@@ -48,7 +51,7 @@
       "type": "draw_string",
       "component": "Join Game",
       "x": "${serverPanelRecess.x}+(${panelRecess.width}-${joinGame.component.width})/2",
-      "y": "${panel.y}+18",
+      "y": "${panel.y}+19",
       "color": "${commonColor.inventory_gray_text}",
       "shadow": false
     }
