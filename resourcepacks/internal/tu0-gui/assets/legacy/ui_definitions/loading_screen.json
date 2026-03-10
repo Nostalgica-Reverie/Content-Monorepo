@@ -1,6 +1,7 @@
 {
   "targetType": "class",
   "targetUI": "wily.legacy.client.screen.LegacyLoading",
+  "applyCondition": { "reference": "uiMode.hd" },
   "elements": {
     "fontOverride": {
       "type": "put_resource_location",
