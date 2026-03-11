@@ -1,6 +1,7 @@
 {
   "targetType": "class",
   "targetUI": "wily.legacy.client.screen.PlayGameScreen",
+  "applyCondition": "!(${uiMode.sd})",
   "elements": {
     "panel.width": 520,
     "panel.height": 213,
@@ -46,6 +47,11 @@
       "y": "${panel.y}+19",
       "color": "${commonColor.inventory_gray_text}",
       "shadow": false
+    },
+    "storageBar.isVisible": {
+      "applyCondition": { "reference": "uiMode.fhd" },
+      "type": "put_boolean",
+      "value": false
     },
     "joinGame": {
       "type": "draw_string",
