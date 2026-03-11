@@ -629,7 +629,7 @@ metafile = true
 
 [[files]]
 file = "mods/calcmod.pw.toml"
-hash = "6ebb236b2a46dbf564aa2760a68027703e44105ab18e77ea76c0fe2323a9bafb"
+hash = "262616993036070ec268b708a65f29420d54a8fb2fa55dffe6ebaa4169d84776"
 metafile = true
 
 [[files]]
@@ -669,7 +669,7 @@ metafile = true
 
 [[files]]
 file = "mods/crash-assistant.pw.toml"
-hash = "a22ba7c148744fe8c1ed7580e95e9a285bd71b2b1c2f66ab9d89c5d43e1498f1"
+hash = "8fc579768f43217f0d9a300c29daacc71313254b26a29e22db90912b8d6e7a11"
 metafile = true
 
 [[files]]
@@ -834,7 +834,7 @@ metafile = true
 
 [[files]]
 file = "mods/minimega.pw.toml"
-hash = "722795ba01ec6d781515f3733d6af1a0ecf7e83f95b97dfc473a2995aeb7105a"
+hash = "4029859198d25c5ecff4191a60d5fafdb691bfdb62469d4ca10dc1a907864e26"
 metafile = true
 
 [[files]]
@@ -964,7 +964,7 @@ metafile = true
 
 [[files]]
 file = "mods/zfastnoise.pw.toml"
-hash = "954588345b259905b257e8b3b467ee31b2a44151d6d504fc7304de51cf730f01"
+hash = "bdd6800c5780220bfd39a2e21ce41e89cdb6b694a58b8bc677371fe06e970cd0"
 metafile = true
 
 [[files]]
@@ -2575,7 +2575,7 @@ hash = "2f70c8b9e5f082bb6fbcde6b256a686fcdbe8b587598257581fbff6ec74be94a"
 
 [[files]]
 file = "resourcepacks/TU0 GUI/assets/legacy/ui_definitions/loading_screen.json"
-hash = "f52db1ec4ef9e07438ddf0973a9bba6f8490f8570fa016c47c20c28c6cd680c2"
+hash = "fdce07a3b2666ef7e9cbe993f9dbaf4230ad4fdeb83d8d88dbc85aa16b61ce10"
 
 [[files]]
 file = "resourcepacks/TU0 GUI/assets/legacy/ui_definitions/pause_screen.json"
@@ -2583,7 +2583,55 @@ hash = "d4ce9997a8336d3fa9a4cb4de9add15cd66d90e092568775f85b763054335ac9"
 
 [[files]]
 file = "resourcepacks/TU0 GUI/assets/legacy/ui_definitions/play_game_screen.json"
-hash = "fd909a3938108210cb9510257fb848a0a6d560b85ec468fec225b9f7fb0b0ebb"
+hash = "4bb7e2d0f48f4a06ccad32f993ee4bdebb4d16c2b96c2bf5da6d10102d9716f5"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/slider.png"
+hash = "4895acd147454771fd6a61ad294dfc12e13ff15d6018da26c9fa0e884fd9c14e"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/slider.png.mcmeta"
+hash = "d7dd31a632fe41be64e07ef0676b726e50f0af053e638742ec1f6f9550a1b7e5"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/slider_handle.png"
+hash = "9e9f72ccb8eb7886db92ac8e8dab1bf21ef09451bfcbafaf822fe0dafa54719d"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/slider_handle.png.mcmeta"
+hash = "e455ece745d4f9d34e477a20dc60f0899e769e7c4fbdf0c2b7a9ccfab615201c"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/slider_handle_highlighted.png"
+hash = "e6cb13b56d6f47c6b8fe700a8b69f4e9698ebc457a97d9eb9f9a1e8ba7751cc8"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/slider_handle_highlighted.png.mcmeta"
+hash = "e455ece745d4f9d34e477a20dc60f0899e769e7c4fbdf0c2b7a9ccfab615201c"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/slider_highlighted.png"
+hash = "53511ff2e2e8a24cc3a5f4520a30a33dea76bcffbe20d7f3675bab1cee173870"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/slider_highlighted.png.mcmeta"
+hash = "ca75a9f830a64b899558f6512297369828e6cfe442942d4900e9cb3fa8ab4d80"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/text_field.png"
+hash = "32097d0d7ba6163f55b1b50836b15ddd81d5c2b5ab868a9efbb226a4d2308dd2"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/text_field.png.mcmeta"
+hash = "d7dd31a632fe41be64e07ef0676b726e50f0af053e638742ec1f6f9550a1b7e5"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/text_field_highlighted.png"
+hash = "11fdeed0e8337916a9dfc570805df1c5576cbd77a859d5fb3c24d017c78ba2dd"
+
+[[files]]
+file = "resourcepacks/TU0 GUI/assets/minecraft/textures/gui/sprites/widget/text_field_highlighted.png.mcmeta"
+hash = "ca75a9f830a64b899558f6512297369828e6cfe442942d4900e9cb3fa8ab4d80"
 
 [[files]]
 file = "resourcepacks/TU0 GUI/pack.mcmeta"
@@ -8930,12 +8978,12 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/rays-3d-ladders.pw.toml"
-hash = "b2f202f7437e122b0f62038fd99ac93898d7d36623ca3e7a1ec513c72623b071"
+hash = "e53f841d27f5921bd2246f1398d73460cffb92e14f24e6088783156cbd458620"
 metafile = true
 
 [[files]]
 file = "resourcepacks/rays-3d-rails.pw.toml"
-hash = "0e80f97855da0ee8b2cba02d4cc1f3c82f50bd1ec0772645cfd5dd5d6f4e9a86"
+hash = "0c6ec7a772645ff7af7ead10d9074c7b3dc7bf2e6ef8bb9ea4f0babe633aafdc"
 metafile = true
 
 [[files]]
@@ -8985,7 +9033,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/tutorial-world-addon.pw.toml"
-hash = "0bc0f8d1982d6e95e8fc571354d00960c6a679f426f28e1e1b6a58c080507f55"
+hash = "7907f01376f3d60bcb74884967df6fb21c7d8db4dd8743c9393cf94b91afefaa"
 metafile = true
 
 [[files]]
@@ -9502,7 +9550,7 @@ metafile = true
 
 [[files]]
 file = "shaderpacks/miniature-shader.pw.toml"
-hash = "06d8b80e204e34536e4f9b3598934208bc08e5d76c656f0e2112821c0e040776"
+hash = "44b28aa2f85ae4784083feb329c6abe44947887b40dbeab77e97e1c1ede01cdf"
 metafile = true
 
 [[files]]
