@@ -1,15 +1,17 @@
 {
   "targetType": "class",
   "targetUI": "wily.legacy.client.screen.LegacyLoading",
+  "applyCondition": { "reference": "uiMode.hd" },
   "elements": {
     "fontOverride": {
       "type": "put_resource_location",
       "value": "legacy:default_11"
     },
     "loadingStage.x": "(${width}/2)-156",
-    "loadingStage.y": "${height}/2+7.5",
+    "loadingStage.y": "(${height}/2)+7",
     "loadingHeader.scaleX": 3,
     "loadingHeader.scaleY": 3,
+    "loadingHeader.y": "(${height}/2)-38",
     "loadingHeader.outline": "1/3.0"
   }
 }
