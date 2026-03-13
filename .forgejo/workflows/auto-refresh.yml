@@ -1,9 +1,9 @@
-name: Auto Update
+name: Auto Refresh
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */2 * * *"
 
 jobs:
   auto-update:
@@ -23,10 +23,10 @@ jobs:
       - name: Install Packwiz
         run: go install github.com/packwiz/packwiz@latest
 
-      - name: Update
+      - name: Refresh
         run: |
-          chmod +x update-all.sh
-          ./update-all.sh
+          chmod +x refresh-all.sh
+          ./refresh-all.sh
 
       - name: Commit Updates
         uses: https://github.com/EndBug/add-and-commit@v9.1.4
