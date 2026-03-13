@@ -1,0 +1,166 @@
+name: Publish Legacy Titles
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version_override:
+        description: 'Override version number'
+        required: false
+        type: string
+
+jobs:
+  check-tag:
+    runs-on: technocality
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      version: ${{ steps.extract.outputs.version }}
+      is_alpha: ${{ steps.extract.outputs.is_alpha }}
+      modrinth_id: ${{ steps.extract.outputs.modrinth_id }}
+      curseforge_id: ${{ steps.extract.outputs.curseforge_id }}
+    steps:
+      - name: Check if tag matches LT
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            tag="${{ github.event.release.tag_name }}"
+            if [[ "$tag" =~ ^LT-[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
+              echo "should_run=true" >> $GITHUB_OUTPUT
+            else
+              echo "should_run=false" >> $GITHUB_OUTPUT
+              echo "Tag '$tag' does not match pattern 'LT-X.Y.Z'. Skipping workflow."
+            fi
+          else
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Extract
+        id: extract
+        if: steps.check.outputs.should_run == 'true'
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            tag="${{ github.event.release.tag_name }}"
+            version=$(echo "$tag" | sed 's/^LT-//')
+            echo "version=$version" >> $GITHUB_OUTPUT
+            if [[ "$version" == *"-alpha"* ]]; then
+              echo "is_alpha=true" >> $GITHUB_OUTPUT
+              echo "Alpha release detected - will only publish to Forgejo"
+            else
+              echo "is_alpha=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "is_alpha=false" >> $GITHUB_OUTPUT
+            echo "version=dev" >> $GITHUB_OUTPUT
+          fi
+          echo "modrinth_id=legacy-titles" >> $GITHUB_OUTPUT
+          echo "curseforge_id=legacy-titles" >> $GITHUB_OUTPUT
+
+  build-and-publish:
+    needs: check-tag
+    if: needs.check-tag.outputs.should_run == 'true'
+    runs-on: technocality
+    env:
+      PACK_FOLDER: legacy-titles
+      OUTPUT: built-resourcepacks
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set version
+        id: version
+        run: |
+          shortSha=$(git rev-parse --short ${{ github.sha }})
+          echo "commit-sha=$shortSha" >> $GITHUB_OUTPUT
+
+          if [ -n "${{ github.event.inputs.version_override }}" ]; then
+            version="${{ github.event.inputs.version_override }}"
+          elif [ "${{ github.event_name }}" = "release" ]; then
+            version="${{ needs.check-tag.outputs.version }}"
+          else
+            version="dev-$(date +%Y%m%d-%H%M%S)"
+          fi
+
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Build
+        run: |
+          mkdir -p ${{ env.OUTPUT }}
+          dir="./resourcepacks/external/${{ env.PACK_FOLDER }}"
+          cd "$dir" && python3 -c "
+          import zipfile, os
+          with zipfile.ZipFile('$OLDPWD/${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
+              for root, dirs, files in os.walk('.'):
+                  for file in files:
+                      filepath = os.path.join(root, file)
+                      zf.write(filepath, os.path.relpath(filepath, '.'))
+          "
+
+      - name: Publish to Modrinth
+        if: needs.check-tag.outputs.is_alpha == 'false'
+        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ needs.check-tag.outputs.modrinth_id }}
+          modrinth-token: ${{ secrets.MR }}
+          files: ${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip
+          name: "Legacy Titles ${{ steps.version.outputs.version }}"
+          version: "${{ steps.version.outputs.version }}"
+          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+          loaders: |
+            minecraft
+          game-versions: |
+            1.20.1
+            1.20.4
+            1.21.1
+            1.21.3
+            1.21.4
+            1.21.5
+            1.21.8
+            1.21.10
+          changelog: ${{ github.event.release.body || format('Development build - {0}', steps.version.outputs.commit-sha) }}
+          retry-attempts: 3
+          retry-delay: 10000
+          fail-mode: warn
+
+      - name: Publish to CurseForge
+        if: needs.check-tag.outputs.is_alpha == 'false'
+        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: ${{ needs.check-tag.outputs.curseforge_id }}
+          curseforge-token: ${{ secrets.CF }}
+          files: ${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip
+          name: "Legacy Titles ${{ steps.version.outputs.version }}"
+          version: "${{ steps.version.outputs.version }}"
+          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+          loaders: |
+            minecraft
+          game-versions: |
+            1.20.1
+            1.20.4
+            1.21.1
+            1.21.3
+            1.21.4
+            1.21.5
+            1.21.8
+            1.21.10
+          changelog: ${{ github.event.release.body || format('Development build - {0}', steps.version.outputs.commit-sha) }}
+          retry-attempts: 3
+          retry-delay: 10000
+          fail-mode: warn
+
+      - name: Upload to Forgejo
+        if: github.event_name == 'release'
+        run: |
+          file=$(ls ${{ env.OUTPUT }}/*)
+          release_id=$(curl -s \
+            -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
+            "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }}" \
+            | grep -o '"id":[0-9]*' | head -1 | sed 's/"id"://')
+          echo "Uploading $(basename $file) to release $release_id"
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @"$file" \
+            "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/${release_id}/assets?name=$(basename $file)"
