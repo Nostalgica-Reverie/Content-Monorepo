@@ -23,6 +23,9 @@ jobs:
       - name: Install Packwiz
         run: go install github.com/packwiz/packwiz@latest
 
+      - name: Install Packwiz Wrapper
+        run: go install github.com/Merith-TK/packwiz-wrapper/cmd/pw@main
+
       - name: Refresh
         run: |
           chmod +x refresh-all.sh
