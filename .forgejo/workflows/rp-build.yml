@@ -11,6 +11,8 @@ jobs:
     runs-on: technocality
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
 
       - name: Build
         id: build
