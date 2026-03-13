@@ -1,0 +1,32 @@
+name: Validate Resource Packs
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'resourcepacks/**'
+  schedule:
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: technocality
+    container:
+      image: ghcr.io/mrkinau/resourcepackvalidator:master
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - name: Validate all
+        run: |
+          failed=0
+          for dir in ./resourcepacks/external/*/; do
+            pack=$(basename "$dir")
+            echo "Validating $pack"
+            resourcepackvalidator -rp "$dir" -report "./report-$pack.xml" || failed=1
+          done
+          for dir in ./resourcepacks/internal/*/; do
+            pack=$(basename "$dir")
+            echo "Validating $pack"
+            resourcepackvalidator -rp "$dir" -report "./report-$pack.xml" || failed=1
+          done
+          exit $failed

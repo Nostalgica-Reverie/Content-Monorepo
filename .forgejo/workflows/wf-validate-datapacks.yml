@@ -1,0 +1,32 @@
+name: Validate Datapacks
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'datapacks/**'
+  schedule:
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: technocality
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: legacy-nether
+        uses: https://github.com/ChenCMD/datapack-linter@v2
+        with:
+          lintDirectory: datapacks/external/legacy-nether
+
+      - name: legacy-nether-extended
+        uses: https://github.com/ChenCMD/datapack-linter@v2
+        with:
+          lintDirectory: datapacks/external/legacy-nether-extended
+
+      - name: legacy-mechanics
+        uses: https://github.com/ChenCMD/datapack-linter@v2
+        with:
+          lintDirectory: datapacks/external/legacy-mechanics
