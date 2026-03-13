@@ -1,4 +1,4 @@
-name: Publish Ore4J
+name: Publish Faithful Legacy
 
 on:
   release:
@@ -20,16 +20,16 @@ jobs:
       modrinth_id: ${{ steps.extract.outputs.modrinth_id }}
       curseforge_id: ${{ steps.extract.outputs.curseforge_id }}
     steps:
-      - name: Check if tag matches O4J
+      - name: Check if tag matches FL
         id: check
         run: |
           if [ "${{ github.event_name }}" = "release" ]; then
             tag="${{ github.event.release.tag_name }}"
-            if [[ "$tag" =~ ^O4J-[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
+            if [[ "$tag" =~ ^FL-[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
               echo "should_run=true" >> $GITHUB_OUTPUT
             else
               echo "should_run=false" >> $GITHUB_OUTPUT
-              echo "Tag '$tag' does not match pattern 'O4J-X.Y.Z'. Skipping workflow."
+              echo "Tag '$tag' does not match pattern 'FL-X.Y.Z'. Skipping workflow."
             fi
           else
             echo "should_run=true" >> $GITHUB_OUTPUT
@@ -53,8 +53,8 @@ jobs:
             echo "is_alpha=false" >> $GITHUB_OUTPUT
             echo "version=dev" >> $GITHUB_OUTPUT
           fi
-          echo "modrinth_id=ore4j" >> $GITHUB_OUTPUT
-          echo "curseforge_id=ore4j" >> $GITHUB_OUTPUT
+          echo "modrinth_id=faithful-legacy" >> $GITHUB_OUTPUT
+          echo "curseforge_id=faithful-legacy" >> $GITHUB_OUTPUT
 
   build-and-publish:
     needs: check-tag
@@ -105,7 +105,7 @@ jobs:
           modrinth-id: ${{ needs.check-tag.outputs.modrinth_id }}
           modrinth-token: ${{ secrets.MR }}
           files: ${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip
-          name: "Ore4J ${{ steps.version.outputs.version }}"
+          name: "Faithful Legacy ${{ steps.version.outputs.version }}"
           version: "${{ steps.version.outputs.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: |
@@ -131,7 +131,7 @@ jobs:
           curseforge-id: ${{ needs.check-tag.outputs.curseforge_id }}
           curseforge-token: ${{ secrets.CF }}
           files: ${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip
-          name: "Ore4J ${{ steps.version.outputs.version }}"
+          name: "Faithful Legacy ${{ steps.version.outputs.version }}"
           version: "${{ steps.version.outputs.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: |
