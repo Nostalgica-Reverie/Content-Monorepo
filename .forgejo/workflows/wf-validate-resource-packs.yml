@@ -13,9 +13,10 @@ jobs:
     container:
       image: ghcr.io/mrkinau/resourcepackvalidator:master
     steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 1
+      - name: Checkout
+        run: |
+          git clone --depth 1 ${{ github.server_url }}/${{ github.repository }} .
+          git checkout ${{ github.sha }}
       - name: Validate all
         run: |
           failed=0
