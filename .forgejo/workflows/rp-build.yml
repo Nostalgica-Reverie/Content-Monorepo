@@ -20,7 +20,7 @@ jobs:
           pack=$(git diff --name-only HEAD~1 HEAD | grep '^resourcepacks/' | sed 's|resourcepacks/[^/]*/\([^/]*\)/.*|\1|' | sort -u | head -1)
           dir=$(find ./resourcepacks -type d -name "$pack" | head -1)
           echo "pack=$pack" >> $GITHUB_OUTPUT
-          cd "$dir" && python3 -m zipfile -c "$OLDPWD/$pack.zip" .
+          cd "$dir" && python3 -m zipfile -c "$OLDPWD/$pack.zip" *
 
       - name: Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3
