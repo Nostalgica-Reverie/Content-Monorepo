@@ -41,7 +41,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "release" ]; then
             tag="${{ github.event.release.tag_name }}"
-            version=$(echo "$tag" | sed 's/^FL-//')
+            version=$(echo "$tag" | sed 's/^O4J-//')
             echo "version=$version" >> $GITHUB_OUTPUT
             if [[ "$version" == *"-alpha"* ]]; then
               echo "is_alpha=true" >> $GITHUB_OUTPUT
