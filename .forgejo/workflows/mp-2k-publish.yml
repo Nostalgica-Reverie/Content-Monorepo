@@ -75,7 +75,7 @@ jobs:
       PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
       SOURCE_PATH: ${{ needs.check-tag.outputs.source_path }}
       OUTPUT: artifacts
-      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
+      ARTIFACT_DIR: ${{ github.workspace }}/../2k-build-${{ github.sha }}
 
     outputs:
       version: ${{ steps.version.outputs.version }}
@@ -139,7 +139,7 @@ jobs:
 
       - name: Build modpack
         run: |
-          temp_dir="RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp"
+          temp_dir="RC-${{ matrix.platform }}-${{ matrix.version }}-temp"
           mkdir $temp_dir
           cp -r ./modpacks/2000s-edition/${{ matrix.folder }}/yarn/${{ matrix.version }}/* ./$temp_dir/
           cp ./LICENSE ./$temp_dir/
@@ -147,7 +147,7 @@ jobs:
           cd ./$temp_dir/
           packwiz refresh
           mkdir -p ../${{ env.OUTPUT }}
-          packwiz ${{ matrix.platform }} export --output ../${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-${{ matrix.platform }}.${{ matrix.file_ext }}
+          packwiz ${{ matrix.platform }} export --output ../${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-${{ matrix.platform }}.${{ matrix.file_ext }}
 
       - name: Publish to Modrinth
         if: matrix.platform == 'modrinth' && needs.check-tag.outputs.is_alpha == 'false'
@@ -155,9 +155,9 @@ jobs:
         with:
           modrinth-id: ${{ needs.check-tag.outputs.modrinth_id }}
           modrinth-token: ${{ secrets.MR }}
-          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-modrinth.mrpack
+          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-modrinth.mrpack
           name: "2K ${{ steps.version.outputs.version }} (Fabric)"
-          version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
+          version: "${{ steps.version.outputs.version }}-${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: fabric
           game-versions: "1.21.1"
