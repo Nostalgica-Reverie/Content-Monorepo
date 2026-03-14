@@ -24,6 +24,7 @@ jobs:
       - name: Install PackSquash
         if: steps.cache-packsquash.outputs.cache-hit != 'true'
         run: |
+          apt-get update
           apt-get install -y cmake
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source $HOME/.cargo/env
