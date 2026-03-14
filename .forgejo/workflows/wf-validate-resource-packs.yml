@@ -14,7 +14,7 @@ jobs:
       image: maven:3.9-eclipse-temurin-17
     steps:
       - name: Checkout
-        run: git clone --depth 1 https://oauth2:${{ secrets.FORGEJO_TOKEN }}@${{ github.server_url }}/${{ github.repository }} /workspace && cd /workspace && git checkout ${{ github.sha }}
+        run: git clone --depth 1 https://oauth2:${{ secrets.FORGEJO_TOKEN }}@${{ github.server_url }}/${{ github.repository }} /tmp/workspace && cd /tmp/workspace && git checkout ${{ github.sha }}
 
       - name: Build ResourcePackValidator
         run: git clone https://github.com/MrKinau/ResourcePackValidator.git /tmp/rpv-src && cd /tmp/rpv-src && mvn package -q -DskipTests && cp target/ResourcePackValidator*.jar /tmp/rpv.jar
@@ -22,7 +22,9 @@ jobs:
       - name: Validate all
         run: |
           failed=0
-          for dir in /workspace/resourcepacks/external/*/ /workspace/resourcepacks/internal/*/; do
+          for dir in /tmp/workspace/resourcepacks/external/*/ /tmp/workspace/resourcepacks/internal/*/; do
             [ -d "$dir" ] || continue
             echo "Validating $(basename $dir)"
-            java -jar /tmp/rpv.j
+            java -jar /tmp/rpv.jar -rp "$dir" || failed=1
+          done
+          exit $failed
