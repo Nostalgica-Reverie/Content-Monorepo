@@ -9,6 +9,11 @@
       "logLevel": "ERROR",
       "ignore": []
     },
+     "TextureLimitMipLevelValidator": {
+       "enabled": false,
+       "logLevel": "WARN",
+       "ignore": []
+    },
     "ModelParentValidator": {
       "enabled": true,
       "logLevel": "ERROR",
