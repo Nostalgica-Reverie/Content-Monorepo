@@ -42,7 +42,6 @@ This repository currently holds the source for these resource packs:
 Each of these packs can be found in their respective folders in the ``resourcepacks`` directory. Each pack may be under a different license, so if you are looking to fork or PR, please read the LICENSE file in the respective folder. Internal packs are generally internally used among modpacks, and External are published to sites.
 
 We also host every LCE port here.
-### LCE Ports
 | Icon | Name | Developers | Downloads | Links |
 |:-:|-|-|-|-|
 | <img src="https://cdn.modrinth.com/data/meEXwbr9/770e36a855375d291ea82a6cb093a9340b5e38cc.png" width="64" title="Plastic Texture Pack Logo" alt="Plastic Texture Pack Logo"> | [Plastic Texture Pack](https://modrinth.com/resourcepack/plastic-texture-pack) | [BrandonItaly](https://github.com/brandonitaly) | [![Modrinth Downloads](https://img.shields.io/modrinth/dt/plastic-texture-pack?logo=Modrinth&label=Downloads)](https://modrinth.com/resourcepack/plastic-texture-pack) [![CurseForge Downloads](https://img.shields.io/curseforge/dt/1172344?logo=CurseForge&label=Downloads)](https://www.curseforge.com/minecraft/texture-packs/plastic-texture-pack-lce) |<a href="https://modrinth.com/resourcepack/plastic-texture-pack"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy-minimal/available/modrinth_vector.svg" title="modrinth" alt="modrinth" width="32" height="32"></a> <a href="https://www.curseforge.com/minecraft/texture-packs/plastic-texture-pack-lce"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy-minimal/available/curseforge_vector.svg" title="curseforge" alt="curseforge" width="32" height="32"></a> |
@@ -98,12 +97,6 @@ If you are running into problems, you should make sure that your graphics driver
 
 For our Vulkan modpacks, they will support any GPU that supports Vulkan 1.2 or above.
 
-### Minimum Requirements (Vulkan)
-
-- Vulkan 1.2 capable discrete GPU (GTX 900+ / RX 400+ / Intel Arc A-series)
-We recommend that you have at least a AMD RDNA or NVIDIA RTX 2000 series (and above) architecture with the most up-to-date drivers to get the best performance.
-
-If you are running into problems, you should make sure that your graphics drivers are up-to-date. I also recommend taking a look at [the VulkanMod wiki](https://github.com/xCollateral/VulkanMod/wiki).
 
 # Nostalgica Reverie
 Consider joining the [Nostalgica Reverie Discord](https://discord.gg/6pRkrYxbGW) for sneak peeks and updates on development! By joining, you can:
@@ -142,3 +135,5 @@ Special thanks to:
 
 ## License
 As all of these modpacks are different, the license may vary. Most packs are under GPL-3.0, or MIT. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
+
+All actions are licensed under AGPL-3.0.
