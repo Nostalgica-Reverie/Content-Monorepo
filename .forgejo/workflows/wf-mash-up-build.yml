@@ -31,6 +31,9 @@ jobs:
           source $HOME/.cargo/env
           cargo +nightly install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
 
+      - name: Add Cargo to PATH
+        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
       - name: Build
         id: build
         run: |
