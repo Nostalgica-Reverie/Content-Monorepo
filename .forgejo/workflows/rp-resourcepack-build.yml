@@ -14,24 +14,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install PackSquash
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
+          cargo install packsquash_cli
+
       - name: Build
         id: build
         run: |
+          source $HOME/.cargo/env
           pack=$(git diff --name-only HEAD~1 HEAD | grep '^resourcepacks/' | sed 's|resourcepacks/[^/]*/\([^/]*\)/.*|\1|' | sort -u | head -1)
           dir=$(find ./resourcepacks -type d -name "$pack" | head -1)
           echo "pack=$pack" >> $GITHUB_OUTPUT
-          curl -L \
-            $(curl -s https://api.github.com/repos/ComunidadAylas/PackSquash/releases/latest \
-            | grep "browser_download_url" \
-            | grep "x86_64" \
-            | cut -d '"' -f 4) \
-            -o /tmp/packsquash.AppImage
-          chmod +x /tmp/packsquash.AppImage
           cat > /tmp/options.toml << EOF
           pack_directory = '$dir'
           output_file_path = '$pack.zip'
           EOF
-          /tmp/packsquash.AppImage --appimage-extract-and-run /tmp/options.toml
+          packsquash /tmp/options.toml
 
       - name: Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3
