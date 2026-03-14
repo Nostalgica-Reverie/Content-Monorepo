@@ -1,0 +1,188 @@
+name: Publish 2000s Edition
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version_override:
+        description: 'Override version number'
+        required: false
+        type: string
+
+jobs:
+  check-tag:
+    runs-on: technocality
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      version: ${{ steps.extract.outputs.version }}
+      is_alpha: ${{ steps.extract.outputs.is_alpha }}
+      pack_name: ${{ steps.extract.outputs.pack_name }}
+      source_path: ${{ steps.extract.outputs.source_path }}
+      modrinth_id: ${{ steps.extract.outputs.modrinth_id }}
+      curseforge_id: ${{ steps.extract.outputs.curseforge_id }}
+    steps:
+      - name: Check if tag starts with 2K
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            tag="${{ github.event.release.tag_name }}"
+            if [[ "$tag" =~ ^2K-[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
+              echo "should_run=true" >> $GITHUB_OUTPUT
+            else
+              echo "should_run=false" >> $GITHUB_OUTPUT
+              echo "Tag '$tag' does not match pattern '2K-X.Y.Z'. Skipping workflow."
+            fi
+          else
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Extract version and type from tag
+        id: extract
+        if: steps.check.outputs.should_run == 'true'
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            tag="${{ github.event.release.tag_name }}"
+            version=$(echo "$tag" | sed 's/^2K-//')
+            echo "version=$version" >> $GITHUB_OUTPUT
+
+            if [[ "$version" == *"-alpha"* ]]; then
+              echo "is_alpha=true" >> $GITHUB_OUTPUT
+              echo "Alpha release detected - will only publish to Forgejo"
+            else
+              echo "is_alpha=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "is_alpha=false" >> $GITHUB_OUTPUT
+          fi
+          echo "pack_name=2000s Edition" >> $GITHUB_OUTPUT
+          echo "source_path=2000s-edition" >> $GITHUB_OUTPUT
+          echo "modrinth_id=2000s-edition" >> $GITHUB_OUTPUT
+          echo "curseforge_id=2000s-edition" >> $GITHUB_OUTPUT
+
+  build:
+    needs: check-tag
+    if: needs.check-tag.outputs.should_run == 'true'
+    strategy:
+      matrix:
+        include:
+          - { version: "1.21.1-fabric", loader: "fabric", platform: "modrinth", file_ext: "mrpack", folder: "mr" }
+          - { version: "1.21.1-fabric", loader: "fabric", platform: "curseforge", file_ext: "zip",  folder: "cf" }
+
+    runs-on: technocality
+    env:
+      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+      PACK_NAME: ${{ needs.check-tag.outputs.pack_name }}
+      SOURCE_PATH: ${{ needs.check-tag.outputs.source_path }}
+      OUTPUT: artifacts
+      ARTIFACT_DIR: ${{ github.workspace }}/../rc-build-${{ github.sha }}
+
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      commit-sha: ${{ steps.version.outputs.commit-sha }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Check Packwiz
+        id: check-packwiz
+        run: |
+          if [ -f "$HOME/go/bin/packwiz" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Go
+        if: steps.check-packwiz.outputs.exists != 'true'
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: false
+
+      - name: Install Packwiz
+        if: steps.check-packwiz.outputs.exists != 'true'
+        run: go install github.com/packwiz/packwiz@latest
+
+      - name: Add Packwiz to PATH
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
+      - name: Set version and commit SHA
+        id: version
+        run: |
+          shortSha=$(git rev-parse --short ${{ github.sha }})
+          echo "commit-sha=$shortSha" >> $GITHUB_OUTPUT
+
+          if [ -n "${{ github.event.inputs.version_override }}" ]; then
+            version="${{ github.event.inputs.version_override }}"
+          elif [ "${{ github.event_name }}" = "release" ]; then
+            version="${{ needs.check-tag.outputs.version }}"
+          else
+            version="dev-$(date +%Y%m%d-%H%M%S)"
+          fi
+
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Build modpack
+        run: |
+          temp_dir="RC-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp"
+          mkdir $temp_dir
+          cp -r ./modpacks/2000s-edition/${{ matrix.folder }}/yarn/${{ matrix.version }}/* ./$temp_dir/
+          cp ./LICENSE ./$temp_dir/
+          cp ./README.md ./$temp_dir/
+          cd ./$temp_dir/
+          packwiz refresh
+          mkdir -p ../${{ env.OUTPUT }}
+          packwiz ${{ matrix.platform }} export --output ../${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-${{ matrix.platform }}.${{ matrix.file_ext }}
+
+      - name: Publish to Modrinth
+        if: matrix.platform == 'modrinth' && needs.check-tag.outputs.is_alpha == 'false'
+        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ needs.check-tag.outputs.modrinth_id }}
+          modrinth-token: ${{ secrets.MR }}
+          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-modrinth.mrpack
+          name: "2K ${{ steps.version.outputs.version }} (Fabric)"
+          version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
+          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+          loaders: fabric
+          game-versions: "1.21.1"
+          changelog: ${{ github.event.release.body || format('Development build - {0}', steps.version.outputs.commit-sha) }}
+          retry-attempts: 3
+          retry-delay: 10000
+          fail-mode: warn
+
+      - name: Publish to CurseForge
+        if: matrix.platform == 'curseforge' && needs.check-tag.outputs.is_alpha == 'false'
+        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: ${{ needs.check-tag.outputs.curseforge_id }}
+          curseforge-token: ${{ secrets.CF }}
+          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-curseforge.zip
+          name: "2K ${{ steps.version.outputs.version }} (Fabric)"
+          version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
+          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
+          loaders: fabric
+          game-versions: "1.21.1"
+          changelog: ${{ github.event.release.body || format('Development build - {0}', steps.version.outputs.commit-sha) }}
+          retry-attempts: 3
+          retry-delay: 10000
+          fail-mode: warn
+
+      - name: Upload to Forgejo release
+        if: github.event_name == 'release'
+        run: |
+          file=$(ls ${{ env.OUTPUT }}/*)
+          release_id=$(curl -s \
+            -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
+            "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }}" \
+            | grep -o '"id":[0-9]*' | head -1 | sed 's/"id"://')
+          echo "Uploading $(basename $file) to release $release_id"
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @"$file" \
+            "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/${release_id}/assets?name=$(basename $file)"
