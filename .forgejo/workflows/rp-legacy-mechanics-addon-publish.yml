@@ -1,8 +1,9 @@
 name: Publish Legacy Mechanics Addon
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'LMA-*'
   workflow_dispatch:
     inputs:
       version_override:

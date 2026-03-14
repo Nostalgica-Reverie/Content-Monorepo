@@ -1,8 +1,9 @@
 name: Publish Legacy Skin Packs
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'LSP-*'
   workflow_dispatch:
     inputs:
       version_override:

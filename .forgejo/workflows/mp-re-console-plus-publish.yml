@@ -1,8 +1,9 @@
 name: Publish Re-Console+
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'RC-*'
   workflow_dispatch:
     inputs:
       version_override:

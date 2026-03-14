@@ -1,8 +1,9 @@
 name: Publish Tutorial World Addon
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'TUT-*'
   workflow_dispatch:
     inputs:
       version_override:

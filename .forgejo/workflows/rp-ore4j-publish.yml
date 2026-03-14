@@ -1,8 +1,9 @@
 name: Publish Ore4J
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'O4J-*'
   workflow_dispatch:
     inputs:
       version_override:
