@@ -101,7 +101,18 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 'stable'
-          cache: false
+          cache: true
+
+      - name: Cache Packwiz
+        id: cache-packwiz
+        uses: https://code.forgejo.org/actions/cache@v3
+        with:
+          path: |
+            ~/go/bin
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-packwiz-${{ hashFiles('**/go.mod') }}
+          restore-keys: |
+            ${{ runner.os }}-packwiz-
 
       - name: Install Packwiz
         if: steps.check-packwiz.outputs.exists != 'true'
@@ -128,7 +139,7 @@ jobs:
 
       - name: Build modpack
         run: |
-          temp_dir="SL-${{ matrix.platform }}-${{ matrix.loader }}-${{ matrix.version }}-temp"
+          temp_dir="SL-${{ matrix.platform }}-${{ matrix.version }}-temp"
           mkdir $temp_dir
           cp -r ./modpacks/simply-legacy/${{ matrix.folder }}/yarn/${{ matrix.version }}/* ./$temp_dir/
           cp ./LICENSE ./$temp_dir/
@@ -136,7 +147,7 @@ jobs:
           cd ./$temp_dir/
           packwiz refresh
           mkdir -p ../${{ env.OUTPUT }}
-          packwiz ${{ matrix.platform }} export --output "../${{ env.OUTPUT }}/Simply-Legacy-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-${{ matrix.platform }}.${{ matrix.file_ext }}"
+          packwiz ${{ matrix.platform }} export --output ../${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-${{ matrix.platform }}.${{ matrix.file_ext }}
 
       - name: Publish to Modrinth
         if: matrix.platform == 'modrinth' && needs.check-tag.outputs.is_alpha == 'false'
@@ -144,9 +155,9 @@ jobs:
         with:
           modrinth-id: ${{ needs.check-tag.outputs.modrinth_id }}
           modrinth-token: ${{ secrets.MR }}
-          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-modrinth.mrpack
-          name: "SL ${{ steps.version.outputs.version }} (Fabric)"
-          version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
+          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-modrinth.mrpack
+          name: "Simply Legacy ${{ steps.version.outputs.version }} (Fabric)"
+          version: "${{ steps.version.outputs.version }}-${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: fabric
           game-versions: "1.21.10"
@@ -161,8 +172,8 @@ jobs:
         with:
           curseforge-id: ${{ needs.check-tag.outputs.curseforge_id }}
           curseforge-token: ${{ secrets.CF }}
-          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ matrix.loader }}-${{ steps.version.outputs.version }}-curseforge.zip
-          name: "SL ${{ steps.version.outputs.version }} (Fabric)"
+          files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-curseforge.zip
+          name: "Simply Legacy ${{ steps.version.outputs.version }} (Fabric)"
           version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: fabric
