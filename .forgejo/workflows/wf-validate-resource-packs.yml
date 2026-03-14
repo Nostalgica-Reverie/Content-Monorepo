@@ -14,7 +14,10 @@ jobs:
       image: maven:3.9-eclipse-temurin-17
     steps:
       - name: Checkout
-        run: git clone --depth 1 https://oauth2:${{ secrets.FORGEJO_TOKEN }}@${{ github.server_url }}/${{ github.repository }} /tmp/workspace && cd /tmp/workspace && git checkout ${{ github.sha }}
+        run: |
+          server=$(echo "${{ github.server_url }}" | sed 's|https://||')
+          git clone --depth 1 https://oauth2:${{ secrets.FORGEJO_TOKEN }}@${server}/${{ github.repository }} /tmp/workspace
+          cd /tmp/workspace && git checkout ${{ github.sha }}
 
       - name: Build ResourcePackValidator
         run: git clone https://github.com/MrKinau/ResourcePackValidator.git /tmp/rpv-src && cd /tmp/rpv-src && mvn package -q -DskipTests && cp target/ResourcePackValidator*.jar /tmp/rpv.jar
