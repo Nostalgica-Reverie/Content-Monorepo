@@ -20,11 +20,10 @@ jobs:
 
       - name: Validate all
         run: |
-          curl -sL https://github.com/MrKinau/ResourcePackValidator/releases/latest/download/ResourcePackValidator.jar -o /tmp/rpv.jar
           failed=0
           for dir in ./resourcepacks/external/*/ ./resourcepacks/internal/*/; do
             pack=$(basename "$dir")
             echo "Validating $pack"
-            java -jar /tmp/rpv.jar -rp "$dir" || failed=1
+            docker run --rm -v "$(pwd)/$dir:/resourcepack" ghcr.io/mrkinau/resourcepackvalidator:master resourcepackvalidator -rp /resourcepack || failed=1
           done
           exit $failed
