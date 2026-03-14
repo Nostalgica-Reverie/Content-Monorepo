@@ -3,7 +3,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'resourcepacks/**'
+      - 'resourcepacks/external*'
   schedule:
     - cron: "0 */4 * * *"
   workflow_dispatch:
