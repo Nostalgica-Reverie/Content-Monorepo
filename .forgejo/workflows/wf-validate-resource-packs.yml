@@ -10,24 +10,17 @@ on:
 jobs:
   validate:
     runs-on: technocality
-    container:
-      image: ghcr.io/mrkinau/resourcepackvalidator:master
     steps:
-      - name: Checkout
-        run: |
-          git clone --depth 1 ${{ github.server_url }}/${{ github.repository }} .
-          git checkout ${{ github.sha }}
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
       - name: Validate all
         run: |
+          curl -sL https://github.com/MrKinau/ResourcePackValidator/releases/latest/download/ResourcePackValidator.jar -o /tmp/rpv.jar
           failed=0
-          for dir in ./resourcepacks/external/*/; do
+          for dir in ./resourcepacks/external/*/ ./resourcepacks/internal/*/; do
             pack=$(basename "$dir")
             echo "Validating $pack"
-            resourcepackvalidator -rp "$dir" -report "./report-$pack.xml" || failed=1
-          done
-          for dir in ./resourcepacks/internal/*/; do
-            pack=$(basename "$dir")
-            echo "Validating $pack"
-            resourcepackvalidator -rp "$dir" -report "./report-$pack.xml" || failed=1
+            java -jar /tmp/rpv.jar -rp "$dir" || failed=1
           done
           exit $failed
