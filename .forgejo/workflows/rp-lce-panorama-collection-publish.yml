@@ -53,10 +53,10 @@ jobs:
             echo "is_alpha=false" >> $GITHUB_OUTPUT
             echo "version=dev" >> $GITHUB_OUTPUT
           fi
-          echo "modrinth_id=lce-panorama-collection >> $GITHUB_OUTPUT
+          echo "modrinth_id=lce-panorama-collection" >> $GITHUB_OUTPUT
           echo "curseforge_id=lce-panorama-collection" >> $GITHUB_OUTPUT
 
-build-and-publish:
+  build-and-publish:
     needs: check-tag
     if: needs.check-tag.outputs.should_run == 'true'
     runs-on: technocality
