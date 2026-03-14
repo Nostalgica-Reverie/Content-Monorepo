@@ -14,8 +14,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Cache PackSquash
+        id: cache-packsquash
+        uses: https://github.com/actions/cache@v3
+        with:
+          path: ~/.cargo/bin/packsquash
+          key: packsquash-${{ runner.os }}
+
       - name: Install PackSquash
+        if: steps.cache-packsquash.outputs.cache-hit != 'true'
         run: |
+          apt-get install -y cmake
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source $HOME/.cargo/env
           cargo install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
