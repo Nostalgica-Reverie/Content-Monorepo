@@ -1,8 +1,9 @@
 name: Publish Faithful Legacy
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'FL-*'
   workflow_dispatch:
     inputs:
       version_override:

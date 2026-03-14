@@ -1,8 +1,9 @@
 name: Publish Modern Skin Packs
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'MSP-*'
   workflow_dispatch:
     inputs:
       version_override:

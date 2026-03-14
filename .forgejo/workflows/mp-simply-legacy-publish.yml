@@ -1,8 +1,9 @@
 name: Publish Simply Legacy
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'SL-*'
   workflow_dispatch:
     inputs:
       version_override:

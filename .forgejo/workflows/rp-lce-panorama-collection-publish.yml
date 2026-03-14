@@ -1,8 +1,9 @@
 name: Publish LCE Panorama Collection
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'LPC-*'
   workflow_dispatch:
     inputs:
       version_override:

@@ -1,8 +1,9 @@
 name: Publish Old UI for Legacy4J
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'TU0-*'
   workflow_dispatch:
     inputs:
       version_override:

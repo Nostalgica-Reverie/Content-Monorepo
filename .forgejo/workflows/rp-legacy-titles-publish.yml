@@ -1,8 +1,9 @@
 name: Publish Legacy Titles
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'LT-*'
   workflow_dispatch:
     inputs:
       version_override:

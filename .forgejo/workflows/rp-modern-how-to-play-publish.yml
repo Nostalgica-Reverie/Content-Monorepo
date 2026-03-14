@@ -1,7 +1,9 @@
 name: Publish Modern How To Play
+
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'HTP-*'
   workflow_dispatch:
     inputs:
       version_override:

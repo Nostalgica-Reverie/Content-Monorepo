@@ -1,8 +1,9 @@
 name: Publish Vanilla Live
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'VL-*'
   workflow_dispatch:
     inputs:
       version_override:
