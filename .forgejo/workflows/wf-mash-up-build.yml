@@ -37,7 +37,6 @@ jobs:
       - name: Build
         id: build
         run: |
-          source $HOME/.cargo/env
           pack=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} \
             | grep '^resourcepacks/external/lce-resources/' \
             | sed 's|resourcepacks/external/lce-resources/\([^/]*\)/.*|\1|' \
