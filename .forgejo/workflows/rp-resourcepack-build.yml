@@ -23,15 +23,15 @@ jobs:
           curl -L \
             $(curl -s https://api.github.com/repos/ComunidadAylas/PackSquash/releases/latest \
             | grep "browser_download_url" \
-            | grep "x86_64-unknown-linux-musl" \
+            | grep "x86_64" \
             | cut -d '"' -f 4) \
-            -o /tmp/packsquash
-          chmod +x /tmp/packsquash
+            -o /tmp/packsquash.AppImage
+          chmod +x /tmp/packsquash.AppImage
           cat > /tmp/options.toml << EOF
           pack_directory = '$dir'
           output_file_path = '$pack.zip'
           EOF
-          /tmp/packsquash /tmp/options.toml
+          /tmp/packsquash.AppImage --appimage-extract-and-run /tmp/options.toml
 
       - name: Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3
