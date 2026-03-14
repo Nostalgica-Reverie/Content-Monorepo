@@ -28,7 +28,7 @@ jobs:
           apt-get install -y cmake
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source $HOME/.cargo/env
-          cargo install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
+          cargo +nightly install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
 
       - name: Build
         id: build
