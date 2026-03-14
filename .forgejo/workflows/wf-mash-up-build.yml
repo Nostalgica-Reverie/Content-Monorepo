@@ -1,4 +1,4 @@
-name: Build Mash-up
+name: Build Mash-up Pack
 on:
   push:
     branches: [ "main" ]
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Cache PackSquash
         id: cache-packsquash
@@ -33,26 +33,17 @@ jobs:
         id: build
         run: |
           source $HOME/.cargo/env
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            packs=$(ls -d ./resourcepacks/external/lce-resources/*/ | xargs -I{} basename {})
-          else
-            packs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} \
-              | grep '^resourcepacks/external/lce-resources/' \
-              | sed 's|resourcepacks/external/lce-resources/\([^/]*\)/.*|\1|' \
-              | sort -u)
-          fi
-          while IFS= read -r pack; do
-            [ -z "$pack" ] && continue
-            dir="./resourcepacks/external/lce-resources/$pack"
-            cat > /tmp/options.toml << EOF
-            pack_directory = '$dir'
-            output_file_path = '$(pwd)/$pack.zip'
+          pack=$(git diff --name-only HEAD~1 HEAD | grep '^resourcepacks/' | sed 's|resourcepacks/[^/]*/\([^/]*\)/.*|\1|' | sort -u | head -1)
+          dir=$(find ./resourcepacks -type d -name "$pack" | head -1)
+          echo "pack=$pack" >> $GITHUB_OUTPUT
+          cat > /tmp/options.toml << EOF
+          pack_directory = '$dir'
+          output_file_path = '$pack.zip'
           EOF
-            packsquash /tmp/options.toml
-          done <<< "$packs"
+          packsquash /tmp/options.toml
 
       - name: Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3
         with:
-          name: lce-builds
-          path: "*.zip"
+          name: ${{ steps.build.outputs.pack }}
+          path: ${{ steps.build.outputs.pack }}.zip
