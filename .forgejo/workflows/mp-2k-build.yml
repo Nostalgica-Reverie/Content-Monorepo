@@ -1,16 +1,16 @@
-name: Re-Console+ Builds
+name: 2000s Edition Builds
 
 on:
   push:
     branches: [ "main" ]
     paths: 
-      - 'modpacks/re-console-plus/cf/**'
-      - 'modpacks/re-console-plus/mr/**'
+      - 'modpacks/2000s-edition/cf/**'
+      - 'modpacks/2000s-edition/mr/**'
   pull_request:
     branches: [ "main" ]
     paths: 
-      - 'modpacks/re-console-plus/cf/**'
-      - 'modpacks/re-console-plus/mr/**'
+      - 'modpacks/2000s-edition/cf/**'
+      - 'modpacks/2000s-edition/mr/**'
   workflow_dispatch:
 
 jobs:
@@ -19,13 +19,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - { version: "1.21.10-fabric", platform: "mr", packwiz_platform: "modrinth", file_ext: "mrpack" }
-          - { version: "1.21.10-fabric", platform: "cf", packwiz_platform: "curseforge", file_ext: "zip" }
+          - { version: "1.21.1-fabric", platform: "mr", packwiz_platform: "modrinth", file_ext: "mrpack" }
+          - { version: "1.21.1-fabric", platform: "cf", packwiz_platform: "curseforge", file_ext: "zip" }
     outputs:
       commit_sha: ${{ steps.vars.outputs.commit_sha }}
     env:  
       GITHUB_TOKEN: ${{ secrets.FORGEJO_TOKEN }} 
-      PACK_NAME: "Re-Console+"
+      PACK_NAME: "2000s Edition"
       OUTPUT: artifacts
     steps:
       - uses: actions/checkout@v5
@@ -51,9 +51,9 @@ jobs:
           echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
           echo "commit_sha=$shortSha" >> $GITHUB_OUTPUT
 
-      - name: Build RC+
+      - name: Build 2K
         run: |
-          SOURCE_DIR="./modpacks/re-console-plus/${{ matrix.platform }}/yarn/${{ matrix.version }}"
+          SOURCE_DIR="./modpacks/2000s-edition/${{ matrix.platform }}/yarn/${{ matrix.version }}"
           TEMP_DIR="build-temp-${{ matrix.platform }}-${{ matrix.version }}"
           mkdir -p "$TEMP_DIR"
           cp -a "$SOURCE_DIR/." "./$TEMP_DIR/"
@@ -65,7 +65,7 @@ jobs:
       - name: Upload artifacts
         uses: https://code.forgejo.org/actions/upload-artifact@v3
         with:
-          name: "RC-Plus-${{ matrix.version }}-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}"
+          name: "2K-${{ matrix.version }}-${{ matrix.platform }}-${{ env.COMMIT_SHORT_SHA }}"
           path: artifacts
 
   combine:
@@ -85,5 +85,5 @@ jobs:
       - name: Final Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3
         with:
-          name: "RC-Plus-${{ needs.build.outputs.commit_sha }}"
+          name: "2K-${{ needs.build.outputs.commit_sha }}"
           path: combined
