@@ -6,22 +6,27 @@ on:
       - 'resourcepacks/**'
       - '!resourcepacks/external/lce-resources/**'
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: technocality
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Build
         id: build
         run: |
           pack=$(git diff --name-only HEAD~1 HEAD | grep '^resourcepacks/' | sed 's|resourcepacks/[^/]*/\([^/]*\)/.*|\1|' | sort -u | head -1)
           dir=$(find ./resourcepacks -type d -name "$pack" | head -1)
-          echo "pack=$pack" >> $GITHUB_OUTPUT
-          cd "$dir" && python3 -m zipfile -c "$OLDPWD/$pack.zip" *
+          echo "pack=$pack" >> $GITEA_OUTPUT
+          curl -L https://github.com/ComunidadAylas/PackSquash/releases/latest/download/packsquash-linux-x64 -o /tmp/packsquash
+          chmod +x /tmp/packsquash
+          cat > /tmp/options.toml << EOF
+          pack_directory = '$dir'
+          output_file_path = '$pack.zip'
+          EOF
+          /tmp/packsquash /tmp/options.toml
 
       - name: Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3
