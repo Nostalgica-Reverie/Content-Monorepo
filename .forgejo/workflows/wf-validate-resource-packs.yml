@@ -28,6 +28,6 @@ jobs:
           for dir in /tmp/workspace/resourcepacks/external/*/ /tmp/workspace/resourcepacks/internal/*/; do
             [ -d "$dir" ] || continue
             echo "Validating $(basename $dir)"
-            java -jar /tmp/rpv.jar -rp "$dir" || failed=1
+            java -jar /tmp/rpv.jar -rp "$dir" -config /tmp/workspace/rpv-config.json || failed=1 
           done
           exit $failed
