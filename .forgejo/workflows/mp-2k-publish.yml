@@ -103,8 +103,19 @@ jobs:
           go-version: 'stable'
           cache: false
 
+      - name: Cache Packwiz
+        id: cache-packwiz
+        uses: https://code.forgejo.org/actions/cache@v3
+        with:
+          path: |
+            ~/go/bin
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-packwiz-${{ hashFiles('**/go.mod') }}
+          restore-keys: |
+            ${{ runner.os }}-packwiz-
+
       - name: Install Packwiz
-        if: steps.check-packwiz.outputs.exists != 'true'
+        if: steps.cache-packwiz.outputs.cache-hit != 'true'
         run: go install github.com/packwiz/packwiz@latest
 
       - name: Add Packwiz to PATH
