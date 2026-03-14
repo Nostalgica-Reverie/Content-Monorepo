@@ -85,18 +85,33 @@ jobs:
 
           echo "version=$version" >> $GITHUB_OUTPUT
 
+      - name: Cache PackSquash
+        id: cache-packsquash
+        uses: https://github.com/actions/cache@v3
+        with:
+          path: ~/.cargo/bin/packsquash
+          key: packsquash-${{ runner.os }}
+
+      - name: Install PackSquash
+        if: steps.cache-packsquash.outputs.cache-hit != 'true'
+        run: |
+          apt-get update && apt-get install -y cmake
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly
+          $HOME/.cargo/bin/cargo +nightly install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
+
+      - name: Add Cargo to Path
+        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
       - name: Build
         run: |
           mkdir -p ${{ env.OUTPUT }}
           dir="./resourcepacks/external/${{ env.PACK_FOLDER }}"
-          cd "$dir" && python3 -c "
-          import zipfile, os
-          with zipfile.ZipFile('$OLDPWD/${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
-              for root, dirs, files in os.walk('.'):
-                  for file in files:
-                      filepath = os.path.join(root, file)
-                      zf.write(filepath, os.path.relpath(filepath, '.'))
-          "
+          output="$(pwd)/${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip"
+          cat > /tmp/options.toml << EOF
+          pack_directory = '$dir'
+          output_file_path = '$output'
+          EOF
+          packsquash /tmp/options.toml
 
       - name: Publish to Modrinth
         if: needs.check-tag.outputs.is_alpha == 'false'
