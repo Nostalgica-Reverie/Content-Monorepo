@@ -1,0 +1,289 @@
+{
+    "localization_name": "NorseMythology",
+    "serialize_name": "NorseMythology",
+    "pack_type": "mashup_pack",
+    "skins": [
+        {
+            "geometry": "geometry.NorseMythology.Odin",
+            "localization_name": "Odin",
+            "texture": "Odin.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Frigg",
+            "localization_name": "Frigg",
+            "texture": "Frigg.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Thor",
+            "localization_name": "Thor",
+            "texture": "Thor.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Loki",
+            "localization_name": "Loki",
+            "texture": "Loki.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Baldur",
+            "localization_name": "Baldur",
+            "texture": "Baldur.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Heimdall",
+            "localization_name": "Heimdall",
+            "texture": "Heimdall.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Tyr",
+            "localization_name": "Tyr",
+            "texture": "Tyr.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Eir",
+            "localization_name": "Eir",
+            "texture": "Eir.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Hildr",
+            "localization_name": "Hildr",
+            "texture": "Hildr.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Brynhildr",
+            "localization_name": "Brynhildr",
+            "texture": "Brynhildr.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Ratatoskr",
+            "localization_name": "Ratatoskr",
+            "texture": "Ratatoskr.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Austri",
+            "localization_name": "Austri",
+            "texture": "Austri.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Nordri",
+            "localization_name": "Nordri",
+            "texture": "Nordri.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Sudri",
+            "localization_name": "Sudri",
+            "texture": "Sudri.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Vestri",
+            "localization_name": "Vestri",
+            "texture": "Vestri.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Njord",
+            "localization_name": "Njord",
+            "texture": "Njord.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Ran",
+            "localization_name": "Ran",
+            "texture": "Ran.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Skadi",
+            "localization_name": "Skadi",
+            "texture": "Skadi.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.FrostJotunn",
+            "localization_name": "FrostJotunn",
+            "texture": "FrostJotunn.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Surtr",
+            "localization_name": "Surtr",
+            "texture": "Surtr.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Sinmara",
+            "localization_name": "Sinmara",
+            "texture": "Sinmara.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Draugr",
+            "localization_name": "Draugr",
+            "texture": "Draugr.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Einherjar",
+            "localization_name": "Einherjar",
+            "texture": "Einherjar.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Hel",
+            "localization_name": "Hel",
+            "texture": "Hel.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Sol",
+            "localization_name": "Sol",
+            "texture": "Sol.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Mani",
+            "localization_name": "Mani",
+            "texture": "Mani.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Landaettir",
+            "localization_name": "Landaettir",
+            "texture": "Landaettir.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Freyja",
+            "localization_name": "Freyja",
+            "texture": "Freyja.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Freyr",
+            "localization_name": "Freyr",
+            "texture": "Freyr.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.RagnarLothbrok",
+            "localization_name": "RagnarLothbrok",
+            "texture": "RagnarLothbrok.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.ThoraTown-Hart",
+            "localization_name": "ThoraTown-Hart",
+            "texture": "ThoraTown-Hart.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Aslaug",
+            "localization_name": "Aslaug",
+            "texture": "Aslaug.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Sigurd",
+            "localization_name": "Sigurd",
+            "texture": "Sigurd.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.FlokiVilgeroarson",
+            "localization_name": "FlokiVilgeroarson",
+            "texture": "FlokiVilgeroarson.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.BjornIronside",
+            "localization_name": "BjornIronside",
+            "texture": "BjornIronside.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Lagertha",
+            "localization_name": "Lagertha",
+            "texture": "Lagertha.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Gongu-Hrolfr",
+            "localization_name": "Gongu-Hrolfr",
+            "texture": "Gongu-Hrolfr.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.BearBerserker",
+            "localization_name": "BearBerserker",
+            "texture": "BearBerserker.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.WolfBerserker",
+            "localization_name": "WolfBerserker",
+            "texture": "WolfBerserker.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.BoarBerserker",
+            "localization_name": "BoarBerserker",
+            "texture": "BoarBerserker.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Grendel",
+            "localization_name": "Grendel",
+            "texture": "Grendel.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Fafnir",
+            "localization_name": "Fafnir",
+            "texture": "Fafnir.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Fenrir",
+            "localization_name": "Fenrir",
+            "texture": "Fenrir.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Jormungand",
+            "localization_name": "Jormungand",
+            "texture": "Jormungand.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Gullinbursti",
+            "localization_name": "Gullinbursti",
+            "texture": "Gullinbursti.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Troll",
+            "localization_name": "Troll",
+            "texture": "Troll.png",
+            "type": "free"
+        },
+        {
+            "geometry": "geometry.NorseMythology.Ymir",
+            "localization_name": "Ymir",
+            "texture": "Ymir.png",
+            "type": "free"
+        }
+    ]
+}

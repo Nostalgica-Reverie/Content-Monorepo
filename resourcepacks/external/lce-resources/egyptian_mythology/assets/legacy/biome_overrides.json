@@ -1,0 +1,232 @@
+{
+  "overrides": {
+    "default": {
+      "water_color": "#57a09d",
+      "water_transparency": 0.6,
+      "water_fog_color": "#4a8f8c",
+      "water_fog_distance": 15
+    },
+    "plains": {
+      "water_color": "#569e9b",
+      "water_fog_color": "#488a87"
+    },
+    "sunflower_plains": {
+      "water_color": "#57a09d",
+      "water_fog_color": "#4a908d"
+    },
+    "desert": {
+      "water_color": "#5da6a3",
+      "water_fog_color": "#529491"
+    },
+    "windswept_hills": {
+      "water_color": "#5da6a3",
+      "water_fog_color": "#4d9491"
+    },
+    "forest": {
+      "water_color": "#59a19e",
+      "water_fog_color": "#4a8e8b"
+    },
+    "flower_forest": {
+      "water_color": "#569e9b",
+      "water_fog_color": "#458885"
+    },
+    "taiga": {
+      "water_color": "#4a918d",
+      "water_fog_color": "#3d7d79"
+    },
+    "swamp": {
+      "water_color": "#4a8975",
+      "water_transparency": 1,
+      "water_fog_color": "#3d7765",
+      "water_fog_distance": 8
+    },
+    "river": {
+      "water_color": "#5ea7a5",
+      "water_fog_color": "#509492",
+      "water_fog_distance": 30
+    },
+    "nether_wastes": {
+      "water_color": "#5ca5a2",
+      "water_fog_color": "#5ba09e",
+      "fog_color": "#2E2822"
+    },
+    "the_end": {
+      "water_color": "#6ab4b2",
+      "water_fog_color": "#5ca2a0"
+    },
+    "frozen_river": {
+      "water_color": "#4c9390",
+      "water_fog_color": "#3e7d7a",
+      "water_fog_distance": 20
+    },
+    "snowy_plains": {
+      "water_color": "#539b98",
+      "water_fog_color": "#488986"
+    },
+    "ice_spikes": {
+      "water_color": "#539b98",
+      "water_fog_color": "#488986"
+    },
+    "ice_mountains": {
+      "water_color": "#579f9c",
+      "water_fog_color": "#4a8a87"
+    },
+    "mushroom_fields": {
+      "water_color": "#75c1bf",
+      "water_fog_color": "#64aba9"
+    },
+    "mushroom_fields_shore": {
+      "water_color": "#70bbb9",
+      "water_fog_color": "#62a6a4"
+    },
+    "beach": {
+      "water_color": "#59a19e",
+      "water_fog_color": "#4c908d",
+      "water_fog_distance": 60
+    },
+    "windswept_forest": {
+      "water_color": "#59a29f",
+      "water_fog_color": "#488b88"
+    },
+    "taiga_mountains": {
+      "water_color": "#488f8b",
+      "water_fog_color": "#3a7975"
+    },
+    "jungle": {
+      "water_color": "#5ba4a1",
+      "water_fog_color": "#4e918e"
+    },
+    "bamboo_jungle": {
+      "water_color": "#59a19e",
+      "water_fog_color": "#427e7c"
+    },
+    "sparse_jungle": {
+      "water_color": "#5ba4a1",
+      "water_fog_color": "#4d908d"
+    },
+    "stone_beach": {
+      "water_color": "#5ca5a2",
+      "water_fog_color": "#4e9390"
+    },
+    "snowy_beach": {
+      "water_color": "#5da6a3",
+      "water_fog_color": "#4b8e8b",
+      "water_fog_distance": 50
+    },
+    "birch_forest": {
+      "water_color": "#569e9b",
+      "water_fog_color": "#468784"
+    },
+    "dark_forest": {
+      "water_color": "#539b98",
+      "water_fog_color": "#478784"
+    },
+    "snowy_taiga": {
+      "water_color": "#468d8a",
+      "water_fog_color": "#397976"
+    },
+    "old_growth_pine_taiga": {
+      "water_color": "#478e8a",
+      "water_fog_color": "#3b7b77"
+    },
+    "windswept_gravelly_hills": {
+      "water_color": "#59a29f",
+      "water_fog_color": "#488b88"
+    },
+    "savanna": {
+      "water_color": "#57a09d",
+      "water_fog_color": "#498f8c"
+    },
+    "savanna_plateau": {
+      "water_color": "#579f9c",
+      "water_fog_color": "#4b8d8a"
+    },
+    "windswept_savanna": {
+      "water_color": "#579f9c",
+      "water_fog_color": "#4b8d8a"
+    },
+    "badlands": {
+      "water_color": "#5aa3a0",
+      "water_fog_color": "#4c918e"
+    },
+    "eroded_badlands": {
+      "water_color": "#59a29f",
+      "water_fog_color": "#488b88"
+    },
+    "wooded_badlands": {
+      "water_color": "#519996",
+      "water_fog_color": "#448784"
+    },
+    "ocean": {
+      "water_color": "#519996",
+      "water_fog_color": "#428582",
+      "water_fog_distance": 60
+    },
+    "deep_ocean": {
+      "water_color": "#4f9794",
+      "water_fog_color": "#428683",
+      "water_fog_distance": 60
+    },
+    "warm_ocean": {
+      "water_color": "#59a29f",
+      "water_transparency": 0.55,
+      "water_fog_color": "#4b908d",
+      "water_fog_distance": 60
+    },
+    "deep_warm_ocean": {
+      "water_color": "#57a09d",
+      "water_fog_color": "#498c89",
+      "water_fog_distance": 60
+    },
+    "lukewarm_ocean": {
+      "water_color": "#559e9b",
+      "water_fog_color": "#488a87",
+      "water_fog_distance": 60
+    },
+    "deep_lukewarm_ocean": {
+      "water_color": "#539b98",
+      "water_fog_color": "#468986",
+      "water_fog_distance": 60
+    },
+    "cold_ocean": {
+      "water_color": "#5aa3a0",
+      "water_fog_color": "#4c8f8c",
+      "water_fog_distance": 60
+    },
+    "deep_cold_ocean": {
+      "water_color": "#57a09d",
+      "water_fog_color": "#4c908d",
+      "water_fog_distance": 60
+    },
+    "frozen_ocean": {
+      "water_color": "#569e9b",
+      "water_fog_color": "#4d8d8a",
+      "water_fog_distance": 60
+    },
+    "deep_frozen_ocean": {
+      "water_color": "#539b98",
+      "water_fog_color": "#478b88",
+      "water_fog_distance": 60
+    },
+    "warped_forest": {
+      "water_color": "#905957",
+      "water_fog_color": "#905957",
+      "fog_color": "#2b3e36"
+    },
+    "crimson_forest": {
+      "water_color": "#905957",
+      "water_fog_color": "#905957",
+      "fog_color": "#4e2d22"
+    },
+    "soul_sand_valley": {
+      "water_color": "#905957",
+      "water_fog_color": "#905957",
+      "fog_color": "#1a4f4e"
+    },
+    "basalt_deltas": {
+      "water_color": "#3F76E4",
+      "water_fog_color": "#423E42",
+      "fog_color": "#5b5252"
+    }
+  }
+}

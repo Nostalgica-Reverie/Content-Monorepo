@@ -1,0 +1,68 @@
+{
+  "pack": {
+    "name": "Fantasy Texture Pack",
+    "description": "Transport yourselves to a time where knights were heroes.",
+    "min_format": 18,
+    "max_format": 75,
+    "pack_format": 75,
+    "supported_formats": {
+      "min_inclusive": 18,
+      "max_inclusive": 75
+    }
+  },
+  "overlays": {
+    "entries": [
+      {
+        "directory": "1_20_2",
+        "min_format": 18,
+        "max_format": 75,
+        "formats": [
+          18,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_2",
+        "min_format": 42,
+        "max_format": 75,
+        "formats": [
+          42,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_5",
+        "min_format": 55,
+        "max_format": 75,
+        "formats": [
+          55,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_6",
+        "min_format": 63,
+        "max_format": 75,
+        "formats": [
+          63,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_9",
+        "min_format": 69,
+        "max_format": 75,
+        "formats": [
+          69,
+          75
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "converted_from": "bedrock",
+    "conversion_date": "2026-01-19T10:32:24.314Z",
+    "original_uuid": "c568f8e5-e1c9-4401-b932-cdd0bf53a9bd",
+    "original_version": "1.0.66"
+  }
+}

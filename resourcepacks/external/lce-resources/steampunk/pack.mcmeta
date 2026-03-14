@@ -1,0 +1,68 @@
+{
+  "pack": {
+    "name": "Steampunk Texture Pack",
+    "description": "Create your own Industrial Revolution with this Victorian inspired Steampunk texture pack!",
+    "min_format": 18,
+    "max_format": 75,
+    "pack_format": 75,
+    "supported_formats": {
+      "min_inclusive": 18,
+      "max_inclusive": 75
+    }
+  },
+  "overlays": {
+    "entries": [
+      {
+        "directory": "1_20_2",
+        "min_format": 18,
+        "max_format": 75,
+        "formats": [
+          18,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_2",
+        "min_format": 42,
+        "max_format": 75,
+        "formats": [
+          42,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_5",
+        "min_format": 55,
+        "max_format": 75,
+        "formats": [
+          55,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_6",
+        "min_format": 63,
+        "max_format": 75,
+        "formats": [
+          63,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_9",
+        "min_format": 69,
+        "max_format": 75,
+        "formats": [
+          69,
+          75
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "converted_from": "bedrock",
+    "conversion_date": "2026-02-24T00:37:14.854Z",
+    "original_uuid": "d725e15d-105d-4f12-997f-16f844717b59",
+    "original_version": "1.0.52"
+  }
+}

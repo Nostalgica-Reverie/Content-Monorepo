@@ -1,0 +1,360 @@
+{
+  "music.creative": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music/15_kunlun_mountains_overworld",
+        "stream": true
+      },
+      {
+        "name": "music/16_mount_huaguo_overworld",
+        "stream": true
+      },
+      {
+        "name": "music/17_danxia_rainbow_mountains_overworld",
+        "stream": true
+      }
+    ]
+  },
+  "music.credits": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music/01_xuanzang",
+        "stream": true
+      }
+    ]
+  },
+  "music.dragon": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music/13_terracotta_army_the_end",
+        "stream": true
+      }
+    ]
+  },
+  "music.end": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music/05_sun_wukong_battle",
+        "stream": true
+      },
+      {
+        "name": "music/06_white_dragon_horse_battle",
+        "stream": true
+      },
+      {
+        "name": "music/11_zhu_baije_battle",
+        "stream": true
+      },
+      {
+        "name": "music/12_sha_wujing_battle",
+        "stream": true
+      }
+    ]
+  },
+  "music.game": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music/01_xuanzang",
+        "stream": true
+      },
+      {
+        "name": "music/02_chang_an_-_perpetual_peace_overworld",
+        "stream": true
+      },
+      {
+        "name": "music/03_jinshan_temple_overworld",
+        "stream": true
+      },
+      {
+        "name": "music/04_tianxi_mountains_overworld",
+        "stream": true
+      },
+      {
+        "name": "music/09_mountains_of_infinite_longevity_overworld",
+        "stream": true
+      },
+      {
+        "name": "music/10_hanging_monastery_overworld",
+        "stream": true
+      }
+    ]
+  },
+  "music.nether": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music/07_hotan_ruins_nether",
+        "stream": true
+      },
+      {
+        "name": "music/08_maijishan_grotto_nether",
+        "stream": true
+      },
+      {
+        "name": "music/14_tsaparang_nether",
+        "stream": true
+      }
+    ]
+  },
+  "music.overworld.badlands": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.bamboo_jungle": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.cherry_grove": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.deep_dark": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.desert": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.dripstone_caves": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.flower_forest": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.forest": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.frozen_peaks": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.grove": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.jagged_peaks": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.jungle": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.lush_caves": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.meadow": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.old_growth_taiga": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.snowy_slopes": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.sparse_jungle": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.stony_peaks": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.overworld.swamp": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.nether.basalt_deltas": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.nether",
+        "type": "event"
+      }
+    ]
+  },
+  "music.nether.crimson_forest": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.nether",
+        "type": "event"
+      }
+    ]
+  },
+  "music.nether.nether_wastes": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.nether",
+        "type": "event"
+      }
+    ]
+  },
+  "music.nether.soul_sand_valley": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.nether",
+        "type": "event"
+      }
+    ]
+  },
+  "music.nether.warped_forest": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.nether",
+        "type": "event"
+      }
+    ]
+  },
+  "music.under_water": {
+    "category": "music",
+    "replace": true,
+    "sounds": [
+      {
+        "name": "music.game",
+        "type": "event"
+      }
+    ]
+  }
+}

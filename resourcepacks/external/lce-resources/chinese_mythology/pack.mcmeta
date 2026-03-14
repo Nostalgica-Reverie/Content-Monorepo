@@ -1,0 +1,68 @@
+{
+  "pack": {
+    "name": "Chinese Mythology Mash-up",
+    "description": "Journey through epic terrain and find enlightenment in this mythical Mash-up!",
+    "min_format": 18,
+    "max_format": 75,
+    "pack_format": 75,
+    "supported_formats": {
+      "min_inclusive": 18,
+      "max_inclusive": 75
+    }
+  },
+  "overlays": {
+    "entries": [
+      {
+        "directory": "1_20_2",
+        "min_format": 18,
+        "max_format": 75,
+        "formats": [
+          18,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_2",
+        "min_format": 42,
+        "max_format": 75,
+        "formats": [
+          42,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_5",
+        "min_format": 55,
+        "max_format": 75,
+        "formats": [
+          55,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_6",
+        "min_format": 63,
+        "max_format": 75,
+        "formats": [
+          63,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_9",
+        "min_format": 69,
+        "max_format": 75,
+        "formats": [
+          69,
+          75
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "converted_from": "bedrock",
+    "conversion_date": "2026-01-13T02:24:53.375Z",
+    "original_uuid": "ef9723df-01a4-4c1d-a362-a6bb74f94001",
+    "original_version": "1.0.64"
+  }
+}

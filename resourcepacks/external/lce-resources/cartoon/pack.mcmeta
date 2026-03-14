@@ -1,0 +1,68 @@
+{
+  "pack": {
+    "name": "Cartoon Texture Pack",
+    "description": "Googly eyes! Goofy grins! Turn your world into a toon with this pack.",
+    "min_format": 18,
+    "max_format": 75,
+    "pack_format": 75,
+    "supported_formats": {
+      "min_inclusive": 18,
+      "max_inclusive": 75
+    }
+  },
+  "overlays": {
+    "entries": [
+      {
+        "directory": "1_20_2",
+        "min_format": 18,
+        "max_format": 75,
+        "formats": [
+          18,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_2",
+        "min_format": 42,
+        "max_format": 75,
+        "formats": [
+          42,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_5",
+        "min_format": 55,
+        "max_format": 75,
+        "formats": [
+          55,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_6",
+        "min_format": 63,
+        "max_format": 75,
+        "formats": [
+          63,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_9",
+        "min_format": 69,
+        "max_format": 75,
+        "formats": [
+          69,
+          75
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "converted_from": "bedrock",
+    "conversion_date": "2026-02-24T00:36:13.800Z",
+    "original_uuid": "78501ecb-b433-4f2b-a609-1ce062bf71c5",
+    "original_version": "1.0.49"
+  }
+}

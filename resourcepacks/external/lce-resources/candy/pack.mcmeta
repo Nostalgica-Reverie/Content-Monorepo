@@ -1,0 +1,68 @@
+{
+  "pack": {
+    "name": "Candy Texture Pack",
+    "description": "Get your just desserts! Tantalizing texture treats await.",
+    "min_format": 18,
+    "max_format": 75,
+    "pack_format": 75,
+    "supported_formats": {
+      "min_inclusive": 18,
+      "max_inclusive": 75
+    }
+  },
+  "overlays": {
+    "entries": [
+      {
+        "directory": "1_20_2",
+        "min_format": 18,
+        "max_format": 75,
+        "formats": [
+          18,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_2",
+        "min_format": 42,
+        "max_format": 75,
+        "formats": [
+          42,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_5",
+        "min_format": 55,
+        "max_format": 75,
+        "formats": [
+          55,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_6",
+        "min_format": 63,
+        "max_format": 75,
+        "formats": [
+          63,
+          75
+        ]
+      },
+      {
+        "directory": "1_21_9",
+        "min_format": 69,
+        "max_format": 75,
+        "formats": [
+          69,
+          75
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "converted_from": "bedrock",
+    "conversion_date": "2026-02-24T00:36:13.800Z",
+    "original_uuid": "48269a21-d9ab-48ec-9736-4d90c6046ae4",
+    "original_version": "1.1.58"
+  }
+}
