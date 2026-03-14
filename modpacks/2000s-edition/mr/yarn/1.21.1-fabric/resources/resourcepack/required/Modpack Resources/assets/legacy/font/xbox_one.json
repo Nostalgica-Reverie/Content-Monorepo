@@ -1,73 +1,129 @@
 {
     "providers":[
-    {
+        {
             "type": "bitmap",
             "file": "legacy:component/xone/down_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 15,
+            "height": 22,
             "chars": ["\uE735"]
+        },
+            {
+            "type": "bitmap",
+            "file": "legacy:component/xone/down_button_icon.png",
+            "ascent": 12,
+            "height": 17,
+            "chars": ["\uF735"]
         },
         {
             "type": "bitmap",
             "file": "legacy:component/xone/down_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 15,
+            "height": 22,
             "chars": ["\uE001"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/xone/down_overlay.png",
+            "ascent": 9,
+            "height": 10,
+            "chars": ["\uF002"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/xone/right_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 15,
+            "height": 22,
             "chars": ["\uE736"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/xone/right_button_icon.png",
+            "ascent": 12,
+            "height": 17,
+            "chars": ["\uF736"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/xone/right_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 15,
+            "height": 22,
             "chars": ["\uE002"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/xone/right_overlay.png",
+            "ascent": 9,
+            "height": 10,
+            "chars": ["\uF003"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/xone/left_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 15,
+            "height": 22,
             "chars": ["\uE737"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/xone/left_button_icon.png",
+            "ascent": 12,
+            "height": 17,
+            "chars": ["\uF737"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/xone/left_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 15,
+            "height": 22,
             "chars": ["\uE003"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/xone/left_overlay.png",
+            "ascent": 9,
+            "height": 10,
+            "chars": ["\uF004"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/xone/up_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 15,
+            "height": 22,
             "chars": ["\uE738"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/xone/up_button_icon.png",
+            "ascent": 12,
+            "height": 17,
+            "chars": ["\uF738"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/xone/up_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 15,
+            "height": 22,
             "chars": ["\uE004"]
         },
         {
             "type": "bitmap",
+            "file": "legacy:component/xone/up_overlay.png",
+            "ascent": 9,
+            "height": 11,
+            "chars": ["\uF005"]
+        },
+        {
+            "type": "bitmap",
             "file": "legacy:component/xone/back_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 13,
+            "height": 18,
             "chars": ["\uE73E"]
         },
         {
             "type": "bitmap",
             "file": "legacy:component/xone/back_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 13,
+            "height": 18,
             "chars": ["\uE005"]
         },
         {
@@ -80,22 +136,22 @@
         {
             "type": "bitmap",
             "file": "legacy:component/xone/start_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 13,
+            "height": 18,
             "chars": ["\uE73D"]
         },
         {
             "type": "bitmap",
             "file": "legacy:component/xone/start_button_pressed.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 13,
+            "height": 18,
             "chars": ["\uE006"]
         },
         {
             "type": "bitmap",
             "file": "legacy:component/xone/left_stick.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 14,
+            "height": 21,
             "chars": ["\uE746"]
         },
         {
@@ -115,8 +171,8 @@
         {
             "type": "bitmap",
             "file": "legacy:component/xone/right_stick.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 14,
+            "height": 21,
             "chars": ["\uE749"]
         },
         {
@@ -136,13 +192,13 @@
         {
             "type": "bitmap",
             "file": "legacy:component/xone/left_stick_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 16,
+            "height": 21,
             "chars": ["\uE743"]
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/xone/left_stick_button_pressed.png",
+            "file": "legacy:component/xone/right_stick_button_pressed.png",
             "ascent": 11,
             "height": 15,
             "chars": ["\uE00F"]
@@ -150,8 +206,8 @@
         {
             "type": "bitmap",
             "file": "legacy:component/xone/right_stick_button.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 16,
+            "height": 21,
             "chars": ["\uE744"]
         },
         {
@@ -164,64 +220,36 @@
         {
             "type": "bitmap",
             "file": "legacy:component/xone/left_bumper.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 14,
+            "height": 21,
             "chars": ["\uE739"]
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/xone/left_bumper_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE74A"]
-        },
-        {
-            "type": "bitmap",
             "file": "legacy:component/xone/right_bumper.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 14,
+            "height": 21,
             "chars": ["\uE73A"]
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/xone/right_bumper_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE74B"]
-        },
-        {
-            "type": "bitmap",
             "file": "legacy:component/xone/left_trigger.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 14,
+            "height": 22,
             "chars": ["\uE73B"]
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/xone/left_trigger_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE74C"]
-        },
-        {
-            "type": "bitmap",
             "file": "legacy:component/xone/right_trigger.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 14,
+            "height": 22,
             "chars": ["\uE73C"]
         },
         {
             "type": "bitmap",
-            "file": "legacy:component/xone/right_trigger_pressed.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE74D"]
-        },
-        {
-            "type": "bitmap",
             "file": "legacy:component/xone/dpad_down.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 18,
             "chars": ["\uE73F"]
         },
         {
@@ -234,8 +262,8 @@
         {
             "type": "bitmap",
             "file": "legacy:component/xone/dpad_right.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 18,
             "chars": ["\uE740"]
         },
         {
@@ -248,8 +276,8 @@
         {
             "type": "bitmap",
             "file": "legacy:component/xone/dpad_left.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 18,
             "chars": ["\uE741"]
         },
         {
@@ -262,8 +290,8 @@
         {
             "type": "bitmap",
             "file": "legacy:component/xone/dpad_up.png",
-            "ascent": 11,
-            "height": 15,
+            "ascent": 12,
+            "height": 18,
             "chars": ["\uE742"]
         },
         {
@@ -272,83 +300,6 @@
             "ascent": 11,
             "height": 15,
             "chars": ["\uE00F"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE750"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE752"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE753"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE754"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE755"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE756"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE757"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE758"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE759"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE75A"]
-        },
-        {
-            "type": "bitmap",
-            "file": "legacy:component/xone/unknown.png",
-            "ascent": 11,
-            "height": 15,
-            "chars": ["\uE75B"]
         }
     ]    
 }
