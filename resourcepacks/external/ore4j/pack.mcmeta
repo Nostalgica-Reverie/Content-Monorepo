@@ -1,10 +1,9 @@
 {
-  "pack": {
+    "pack": {
     "pack_format": 69,
-    "pack_format": 16,
-    "min_format": 16,
-    "max_format": 999,
-    "supported_formats": [ 16, 999 ],
-    "description": "For use with vanilla or vanilla-style resource packs."
+    "min_format": 34,
+    "max_format": 90,
+		"supported_formats": {"min_inclusive": 34, "max_inclusive": 90},
+    "description": "Changes the Legacy4J Ui look like the Bedrock Preview UI"
   }
 }
