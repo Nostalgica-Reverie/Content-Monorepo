@@ -19,7 +19,7 @@ jobs:
         run: |
           pack=$(git diff --name-only HEAD~1 HEAD | grep '^resourcepacks/' | sed 's|resourcepacks/[^/]*/\([^/]*\)/.*|\1|' | sort -u | head -1)
           dir=$(find ./resourcepacks -type d -name "$pack" | head -1)
-          echo "pack=$pack" >> $GITEA_OUTPUT
+          echo "pack=$pack" >> $GITHUB_OUTPUT
           curl -L https://github.com/ComunidadAylas/PackSquash/releases/latest/download/packsquash-linux-x64 -o /tmp/packsquash
           chmod +x /tmp/packsquash
           cat > /tmp/options.toml << EOF
