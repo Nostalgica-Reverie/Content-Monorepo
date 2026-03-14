@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 1
 
       - name: Install Java
-        run: apt-get install -y openjdk-25-jre-headless
+        run: apt-get install -y openjdk-21-jre-headless
 
       - name: Validate all
         run: |
