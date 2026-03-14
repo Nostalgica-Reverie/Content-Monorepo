@@ -55,7 +55,7 @@ jobs:
           else
             echo "is_alpha=false" >> $GITHUB_OUTPUT
           fi
-          echo "pack_name=2000s Edition" >> $GITHUB_OUTPUT
+          echo "pack_name=2000s-Edition" >> $GITHUB_OUTPUT
           echo "source_path=2000s-edition" >> $GITHUB_OUTPUT
           echo "modrinth_id=2000s-edition" >> $GITHUB_OUTPUT
           echo "curseforge_id=2000s-edition" >> $GITHUB_OUTPUT
