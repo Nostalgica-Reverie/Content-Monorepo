@@ -59,19 +59,29 @@ jobs:
   build-and-publish:
     needs: check-tag
     if: needs.check-tag.outputs.should_run == 'true'
+    runs-on: technocality
     strategy:
       matrix:
         include:
-          - { subfolder: "build0016", display_suffix: "(Build 0016)" }
-          - { subfolder: "build0054", display_suffix: "(Build 0054)" }
-          - { subfolder: "tu5", display_suffix: "(TU5)" }
-          - { subfolder: "tu7", display_suffix: "(TU7)" }
-          - { subfolder: "tu12", display_suffix: "(TU12)" }
-          - { subfolder: "tu20", display_suffix: "(TU20)" }
-          - { subfolder: "tu31", display_suffix: "(TU31)" }
-          - { subfolder: "tu46", display_suffix: "(TU46)" }
-          - { subfolder: "tu69", display_suffix: "(TU69)" }
-    runs-on: technocality
+          - subfolder: "build0016"
+            display_suffix: "(Build 0016)"
+          - subfolder: "build0054"
+            display_suffix: "(Build 0054)"
+          - subfolder: "tu5"
+            display_suffix: "(TU5)"
+          - subfolder: "tu7"
+            display_suffix: "(TU7)"
+          - subfolder: "tu12"
+            display_suffix: "(TU12)"
+          - subfolder: "tu20"
+            display_suffix: "(TU20)"
+          - subfolder: "tu31"
+            display_suffix: "(TU31)"
+          - subfolder: "tu46"
+            display_suffix: "(TU46)"
+          - subfolder: "tu69"
+            display_suffix: "(TU69)"
+            
     env:
       PACK_FOLDER: lce-panorama-collection
       OUTPUT: built-resourcepacks
