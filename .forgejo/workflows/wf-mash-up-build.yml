@@ -1,0 +1,58 @@
+name: Build Mash-up
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'resourcepacks/external/lce-resources/**'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: technocality
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Cache PackSquash
+        id: cache-packsquash
+        uses: https://github.com/actions/cache@v3
+        with:
+          path: ~/.cargo/bin/packsquash
+          key: packsquash-${{ runner.os }}
+
+      - name: Install PackSquash
+        if: steps.cache-packsquash.outputs.cache-hit != 'true'
+        run: |
+          apt-get update
+          apt-get install -y cmake
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
+          cargo +nightly install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
+
+      - name: Build
+        id: build
+        run: |
+          source $HOME/.cargo/env
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            packs=$(ls -d ./resourcepacks/external/lce-resources/*/ | xargs -I{} basename {})
+          else
+            packs=$(git diff --name-only HEAD~1 HEAD \
+              | grep '^resourcepacks/external/lce-resources/' \
+              | sed 's|resourcepacks/external/lce-resources/\([^/]*\)/.*|\1|' \
+              | sort -u)
+          fi
+          while IFS= read -r pack; do
+            [ -z "$pack" ] && continue
+            dir="./resourcepacks/external/lce-resources/$pack"
+            cat > /tmp/options.toml << EOF
+            pack_directory = '$dir'
+            output_file_path = '$(pwd)/$pack.zip'
+          EOF
+            packsquash /tmp/options.toml
+          done <<< "$packs"
+
+      - name: Upload
+        uses: https://code.forgejo.org/actions/upload-artifact@v3
+        with:
+          name: lce-builds
+          path: "*.zip"
