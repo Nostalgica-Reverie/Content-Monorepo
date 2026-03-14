@@ -1,18 +1,17 @@
 name: Publish Legacy Nether Extended
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'LNE-*'
   workflow_dispatch:
     inputs:
       version_override:
         description: 'Override version number'
         required: false
         type: string
-
 jobs:
   check-tag:
-    if: (github.event_name == 'release' && startsWith(github.event.release.tag_name, 'LNE')) || (github.event_name == 'workflow_dispatch')
     runs-on: technocality
     outputs:
       should_run: ${{ steps.check.outputs.should_run }}
