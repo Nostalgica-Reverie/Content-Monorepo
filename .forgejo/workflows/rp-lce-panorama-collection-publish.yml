@@ -81,7 +81,6 @@ jobs:
             display_suffix: "(TU46)"
           - subfolder: "tu69"
             display_suffix: "(TU69)"
-            
     env:
       PACK_FOLDER: lce-panorama-collection
       OUTPUT: built-resourcepacks
@@ -104,12 +103,11 @@ jobs:
           else
             version="dev-$(date +%Y%m%d-%H%M%S)"
           fi
-
           echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Cache PackSquash
         id: cache-packsquash
-        uses: https://github.com/actions/cache@v3
+        uses: actions/cache@v3
         with:
           path: ~/.cargo/bin/packsquash
           key: packsquash-${{ runner.os }}
@@ -127,15 +125,15 @@ jobs:
       - name: Build
         run: |
           mkdir -p ${{ env.OUTPUT }}
-          dir="./resourcepacks/external/${{ env.PACK_FOLDER }}"
-          output="$(pwd)/${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip"
+          dir="./resourcepacks/external/${{ env.PACK_FOLDER }}/${{ matrix.subfolder }}"
+          output="$(pwd)/${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ matrix.subfolder }}-${{ steps.version.outputs.version }}.zip"
           cat > /tmp/options.toml << EOF
           pack_directory = '$dir'
           output_file_path = '$output'
           EOF
           packsquash /tmp/options.toml 
 
-     - name: Publish to Modrinth
+      - name: Publish to Modrinth
         if: needs.check-tag.outputs.is_alpha == 'false'
         uses: https://github.com/Kir-Antipov/mc-publish@v3.3
         with:
