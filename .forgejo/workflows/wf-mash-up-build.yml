@@ -12,6 +12,8 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 1
+          sparse-checkout: |
+            resourcepacks
 
       - name: Cache PackSquash
         id: cache-packsquash
@@ -33,12 +35,15 @@ jobs:
         id: build
         run: |
           source $HOME/.cargo/env
-          pack=$(git diff --name-only HEAD~1 HEAD | grep '^resourcepacks/' | sed 's|resourcepacks/[^/]*/\([^/]*\)/.*|\1|' | sort -u | head -1)
-          dir=$(find ./resourcepacks -type d -name "$pack" | head -1)
+          pack=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} \
+            | grep '^resourcepacks/external/lce-resources/' \
+            | sed 's|resourcepacks/external/lce-resources/\([^/]*\)/.*|\1|' \
+            | sort -u | head -1)
+          dir="./resourcepacks/external/lce-resources/$pack"
           echo "pack=$pack" >> $GITHUB_OUTPUT
           cat > /tmp/options.toml << EOF
           pack_directory = '$dir'
-          output_file_path = '$pack.zip'
+          output_file_path = '$(pwd)/$pack.zip'
           EOF
           packsquash /tmp/options.toml
 
