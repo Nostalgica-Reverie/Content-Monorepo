@@ -95,15 +95,15 @@ jobs:
       - name: Install PackSquash
         if: steps.cache-packsquash.outputs.cache-hit != 'true'
         run: |
-          apt-get update
-          apt-get install -y cmake
+          apt-get update && apt-get install -y cmake
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly
-          source $HOME/.cargo/env
-          cargo +nightly install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
+          $HOME/.cargo/bin/cargo +nightly install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
+
+      - name: Add Cargo to Path
+        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Build
         run: |
-          source $HOME/.cargo/env
           mkdir -p ${{ env.OUTPUT }}
           dir="./resourcepacks/external/${{ env.PACK_FOLDER }}"
           output="$(pwd)/${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip"
