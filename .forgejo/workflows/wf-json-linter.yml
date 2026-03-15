@@ -1,0 +1,19 @@
+name: JSON linter
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - '**/*.json'
+  pull_request:
+    paths:
+      - '**/*.json'
+
+jobs:
+  lint:
+    runs-on: technocality
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - name: Lint JSON
+        run: find . -name "*.json" | xargs -I{} jq empty {}
