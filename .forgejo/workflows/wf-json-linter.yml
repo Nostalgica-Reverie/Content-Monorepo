@@ -3,11 +3,10 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - '**/*.json'
+      - 'modpacks/**/*.json'
   pull_request:
     paths:
-      - '**/*.json'
-
+      - 'modpacks/**/*.json'
 jobs:
   lint:
     runs-on: technocality
@@ -19,6 +18,14 @@ jobs:
             modpacks
       - name: Lint JSON
         run: |
-          find . -name "*.json" | while read f; do
-            python3 -m json.tool "$f" > /dev/null || echo "FAILED: $f"
-          done
+          changed=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} \
+            | grep '^modpacks/' \
+            | sed 's|modpacks/\([^/]*\)/.*|\1|' \
+            | sort -u)
+          while IFS= read -r pack; do
+            [ -z "$pack" ] && continue
+            echo "Linting $pack..."
+            find "./modpacks/$pack" -name "*.json" | while read f; do
+              python3 -m json.tool "$f" > /dev/null || echo "FIX YO JSON: $f"
+            done
+          done <<< "$changed"
