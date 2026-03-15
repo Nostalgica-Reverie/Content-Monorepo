@@ -18,4 +18,4 @@ jobs:
           sparse-checkout: |
             modpacks
       - name: Lint JSON
-        run: find . -name "*.json" | xargs -I{} jq empty {}
+        run: find . -name "*.json" | xargs -I{} python3 -m json.tool {} > /dev/null
