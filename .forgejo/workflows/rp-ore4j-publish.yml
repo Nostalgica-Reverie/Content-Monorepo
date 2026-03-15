@@ -2,183 +2,79 @@ name: Publish Ore4J
 
 on:
   push:
-    tags:
-      - 'O4J-*'
+    tags: ['O4J-*']
   workflow_dispatch:
     inputs:
       version_override:
-        description: 'Override version number'
-        required: false
+        description: 'Override version'
         type: string
 
 jobs:
-  check-tag:
-    runs-on: technocality
-    outputs:
-      should_run: ${{ steps.check.outputs.should_run }}
-      version: ${{ steps.extract.outputs.version }}
-      is_alpha: ${{ steps.extract.outputs.is_alpha }}
-      modrinth_id: ${{ steps.extract.outputs.modrinth_id }}
-      curseforge_id: ${{ steps.extract.outputs.curseforge_id }}
-    steps:
-      - name: Check if tag matches O4J
-        id: check
-        run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            tag="${{ github.event.release.tag_name }}"
-            if [[ "$tag" =~ ^O4J-[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
-              echo "should_run=true" >> $GITHUB_OUTPUT
-            else
-              echo "should_run=false" >> $GITHUB_OUTPUT
-              echo "Tag '$tag' does not match pattern 'O4J-X.Y.Z'. Skipping workflow."
-            fi
-          else
-            echo "should_run=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Extract
-        id: extract
-        if: steps.check.outputs.should_run == 'true'
-        run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            tag="${{ github.event.release.tag_name }}"
-            version=$(echo "$tag" | sed 's/^O4J-//')
-            echo "version=$version" >> $GITHUB_OUTPUT
-            if [[ "$version" == *"-alpha"* ]]; then
-              echo "is_alpha=true" >> $GITHUB_OUTPUT
-              echo "Alpha release detected - will only publish to Forgejo"
-            else
-              echo "is_alpha=false" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "is_alpha=false" >> $GITHUB_OUTPUT
-            echo "version=dev" >> $GITHUB_OUTPUT
-          fi
-          echo "modrinth_id=ore4j" >> $GITHUB_OUTPUT
-          echo "curseforge_id=ore4j" >> $GITHUB_OUTPUT
-
-  build-and-publish:
-    needs: check-tag
-    if: needs.check-tag.outputs.should_run == 'true'
+  publish:
     runs-on: technocality
     env:
-      PACK_FOLDER: ore4j
-      OUTPUT: built-resourcepacks
-
+      PACK: ore4j
+      OUT: built-resourcepacks
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 1
-          sparse-checkout: |
-            resourcepacks
+          sparse-checkout: resourcepacks
 
-      - name: Set version
-        id: version
+      - name: Prep Variables
+        id: vars
         run: |
-          shortSha=$(git rev-parse --short ${{ github.sha }})
-          echo "commit-sha=$shortSha" >> $GITHUB_OUTPUT
-
-          if [ -n "${{ github.event.inputs.version_override }}" ]; then
-            version="${{ github.event.inputs.version_override }}"
-          elif [ "${{ github.event_name }}" = "release" ]; then
-            version="${{ needs.check-tag.outputs.version }}"
-          else
-            version="dev-$(date +%Y%m%d-%H%M%S)"
+          TAG="${{ github.ref_name }}"
+          VERSION="${{ github.event.inputs.version_override }}"
+          IS_ALPHA="false"
+          
+          if [ -z "$VERSION" ]; then
+            if [[ "$TAG" =~ ^O4J- ]]; then
+              VERSION="${TAG#O4J-}"
+              [[ "$VERSION" == *"-alpha"* ]] && IS_ALPHA="true"
+            else
+              VERSION="dev-$(date +%s)"
+            fi
           fi
+          
+          echo "ver=$VERSION" >> $GITHUB_OUTPUT
+          echo "alpha=$IS_ALPHA" >> $GITHUB_OUTPUT
+          echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-          echo "version=$version" >> $GITHUB_OUTPUT
-
-      - name: Cache PackSquash
-        id: cache-packsquash
-        uses: https://github.com/actions/cache@v3
-        with:
-          path: ~/.cargo/bin/packsquash
-          key: packsquash-${{ runner.os }}
-
-      - name: Install PackSquash
-        if: steps.cache-packsquash.outputs.cache-hit != 'true'
+      - name: Setup PackSquash
         run: |
-          apt-get update && apt-get install -y cmake
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly
-          $HOME/.cargo/bin/cargo +nightly install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
-
-      - name: Add Cargo to Path
-        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          if ! command -v packsquash &> /dev/null; then
+            curl -L https://github.com/ComunidadAylas/PackSquash/releases/latest/download/packsquash-linux-x86_64 -o /usr/local/bin/packsquash
+            chmod +x /usr/local/bin/packsquash
+          fi
 
       - name: Build
         run: |
-          mkdir -p ${{ env.OUTPUT }}
-          dir="./resourcepacks/external/${{ env.PACK_FOLDER }}"
-          output="$(pwd)/${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip"
-          cat > /tmp/options.toml << EOF
-          pack_directory = '$dir'
-          output_file_path = '$output'
-          EOF
-          packsquash /tmp/options.toml
+          mkdir -p $OUT
+          FILE="$OUT/$PACK-${{ steps.vars.outputs.ver }}.zip"
+          echo -e "pack_directory = './resourcepacks/external/$PACK'\noutput_file_path = '$FILE'" > opt.toml
+          packsquash opt.toml
+          echo "zip=$FILE" >> $GITHUB_ENV
 
-      - name: Publish to Modrinth
-        if: needs.check-tag.outputs.is_alpha == 'false'
+      - name: Publish to Stores
+        if: steps.vars.outputs.alpha == 'false'
         uses: https://github.com/Kir-Antipov/mc-publish@v3.3
         with:
-          modrinth-id: ${{ needs.check-tag.outputs.modrinth_id }}
+          modrinth-id: ore4j
           modrinth-token: ${{ secrets.MR }}
-          files: ${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip
-          name: "Ore4J ${{ steps.version.outputs.version }}"
-          version: "${{ steps.version.outputs.version }}"
-          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
-          loaders: |
-            minecraft
-          game-versions: |
-            1.20.1
-            1.20.4
-            1.21.1
-            1.21.3
-            1.21.4
-            1.21.5
-            1.21.8
-            1.21.10
-          changelog: ${{ github.event.release.body || format('Development build - {0}', steps.version.outputs.commit-sha) }}
-          retry-attempts: 3
-          retry-delay: 10000
-          fail-mode: warn
-
-      - name: Publish to CurseForge
-        if: needs.check-tag.outputs.is_alpha == 'false'
-        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
-        with:
-          curseforge-id: ${{ needs.check-tag.outputs.curseforge_id }}
+          curseforge-id: ore4j
           curseforge-token: ${{ secrets.CF }}
-          files: ${{ env.OUTPUT }}/${{ env.PACK_FOLDER }}-${{ steps.version.outputs.version }}.zip
-          name: "Ore4J ${{ steps.version.outputs.version }}"
-          version: "${{ steps.version.outputs.version }}"
-          version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
-          loaders: |
-            minecraft
-          game-versions: |
-            1.20.1
-            1.20.4
-            1.21.1
-            1.21.3
-            1.21.4
-            1.21.5
-            1.21.8
-            1.21.10
-          changelog: ${{ github.event.release.body || format('Development build - {0}', steps.version.outputs.commit-sha) }}
-          retry-attempts: 3
-          retry-delay: 10000
+          files: ${{ env.zip }}
+          name: "Ore4J ${{ steps.vars.outputs.ver }}"
+          version: "${{ steps.vars.outputs.ver }}"
+          version-type: ${{ contains(steps.vars.outputs.ver, 'beta') && 'beta' || 'release' }}
+          loaders: minecraft
+          game-versions: "1.20.1\n1.20.4\n1.21.1\n1.21.3\n1.21.4\n1.21.5\n1.21.8\n1.21.10"
+          changelog: ${{ github.event.release.body || format('Dev build - {0}', steps.vars.outputs.sha) }}
           fail-mode: warn
 
       - name: Upload to Forgejo
-        if: github.event_name == 'release'
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
-          file=$(ls ${{ env.OUTPUT }}/*)
-          release_id=$(curl -s \
-            -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
-            "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }}" \
-            | grep -o '"id":[0-9]*' | head -1 | sed 's/"id"://')
-          echo "Uploading $(basename $file) to release $release_id"
-          curl -s -X POST \
-            -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" \
-            -H "Content-Type: application/octet-stream" \
-            --data-binary @"$file" \
-            "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/${release_id}/assets?name=$(basename $file)"
+          RELEASE_ID=$(curl -s -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.ref_name }}" | grep -oP '"id":\s*\K\d+')
+          curl -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" -H "Content-Type: application/zip" --data-binary @"${{ env.zip }}" "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=$(basename ${{ env.zip }})"
