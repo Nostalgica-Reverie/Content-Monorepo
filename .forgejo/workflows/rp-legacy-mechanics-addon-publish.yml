@@ -1,4 +1,4 @@
-name: Publish Legacy Mechanics: Add-on
+name: "Publish Legacy Mechanics: Add-on"
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
   publish:
     runs-on: technocality
     env:
-      PACK: modern-skin-packs
+      PACK: legacy-mechanics-addon
       OUT: built-resourcepacks
     steps:
       - name: Checkout RP only
