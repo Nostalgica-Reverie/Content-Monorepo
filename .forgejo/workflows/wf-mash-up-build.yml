@@ -42,7 +42,7 @@ jobs:
           dir="./resourcepacks/external/lce-resources/$pack"
           echo "pack=$pack" >> $GITHUB_OUTPUT
           
-          packsquash -c packsquash.toml \
+          packsquash packsquash.toml \
             --pack-directory "$dir" \
             --output-file-path "$(pwd)/$pack.zip"
 
