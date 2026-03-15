@@ -16,7 +16,8 @@ jobs:
       PACK: ore4j
       OUT: built-resourcepacks
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout RP only
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
           sparse-checkout: resourcepacks
@@ -24,36 +25,31 @@ jobs:
       - name: Prep Variables
         id: vars
         run: |
-          TAG="${{ github.ref_name }}"
-          VERSION="${{ github.event.inputs.version_override }}"
-          IS_ALPHA="false"
+          VER="${{ github.event.inputs.version_override }}"
+          [ -z "$VER" ] && [[ "${{ github.ref_name }}" =~ ^O4J- ]] && VER="${{ github.ref_name#O4J- }}"
+          [ -z "$VER" ] && VER="dev-$(date +%s)"
           
-          if [ -z "$VERSION" ]; then
-            if [[ "$TAG" =~ ^O4J- ]]; then
-              VERSION="${TAG#O4J-}"
-              [[ "$VERSION" == *"-alpha"* ]] && IS_ALPHA="true"
-            else
-              VERSION="dev-$(date +%s)"
-            fi
-          fi
+          ALPHA="false"
+          [[ "$VER" == *"-alpha"* ]] && ALPHA="true"
           
-          echo "ver=$VERSION" >> $GITHUB_OUTPUT
-          echo "alpha=$IS_ALPHA" >> $GITHUB_OUTPUT
+          echo "ver=$VER" >> $GITHUB_OUTPUT
+          echo "alpha=$ALPHA" >> $GITHUB_OUTPUT
           echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Setup PackSquash
         run: |
-          if ! command -v packsquash &> /dev/null; then
-            curl -L https://github.com/ComunidadAylas/PackSquash/releases/latest/download/packsquash-linux-x86_64 -o /usr/local/bin/packsquash
-            chmod +x /usr/local/bin/packsquash
-          fi
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/ComunidadAylas/PackSquash/releases/download/v0.4.1/packsquash-x86_64-unknown-linux-gnu.zip" -o ps.zip
+          unzip -oj ps.zip -d $HOME/.local/bin/
+          chmod +x $HOME/.local/bin/packsquash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Build
         run: |
           mkdir -p $OUT
           FILE="$OUT/$PACK-${{ steps.vars.outputs.ver }}.zip"
-          echo -e "pack_directory = './resourcepacks/external/$PACK'\noutput_file_path = '$FILE'" > opt.toml
-          packsquash opt.toml
+          printf "pack_directory='./resourcepacks/external/$PACK'\noutput_file_path='$FILE'" > opt.toml
+          $HOME/.local/bin/packsquash opt.toml
           echo "zip=$FILE" >> $GITHUB_ENV
 
       - name: Publish to Stores
@@ -71,10 +67,9 @@ jobs:
           loaders: minecraft
           game-versions: "1.20.1\n1.20.4\n1.21.1\n1.21.3\n1.21.4\n1.21.5\n1.21.8\n1.21.10"
           changelog: ${{ github.event.release.body || format('Dev build - {0}', steps.vars.outputs.sha) }}
-          fail-mode: warn
 
       - name: Upload to Forgejo
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          RELEASE_ID=$(curl -s -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.ref_name }}" | grep -oP '"id":\s*\K\d+')
-          curl -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" -H "Content-Type: application/zip" --data-binary @"${{ env.zip }}" "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=$(basename ${{ env.zip }})"
+          REL_ID=$(curl -s -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.ref_name }}" | grep -oP '"id":\s*\K\d+')
+          curl -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" -H "Content-Type: application/zip" --data-binary @"${{ env.zip }}" "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/$REL_ID/assets?name=$(basename ${{ env.zip }})"
