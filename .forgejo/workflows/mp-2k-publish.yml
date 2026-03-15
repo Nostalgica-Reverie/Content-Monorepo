@@ -87,6 +87,8 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 1
+          sparse-checkout: |
+            modpacks
 
       - name: Check Packwiz
         id: check-packwiz

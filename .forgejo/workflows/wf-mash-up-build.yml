@@ -4,6 +4,7 @@ on:
     branches: [ "main" ]
     paths:
       - 'resourcepacks/external/lce-resources/**'
+
   workflow_dispatch:
 jobs:
   build:

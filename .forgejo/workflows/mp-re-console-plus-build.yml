@@ -31,12 +31,25 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 1
+          sparse-checkout: |
+            modpacks
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: 'stable'
-          cache: false  
+          cache: true
+
+      - name: Cache Packwiz
+        id: cache-packwiz
+        uses: https://code.forgejo.org/actions/cache@v3
+        with:
+          path: |
+            ~/go/bin
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-packwiz-${{ hashFiles('**/go.mod') }}
+          restore-keys: |
+            ${{ runner.os }}-packwiz- 
 
       - name: Install Packwiz
         run: go install github.com/packwiz/packwiz@latest
