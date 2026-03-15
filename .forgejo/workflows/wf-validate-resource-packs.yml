@@ -13,12 +13,14 @@ jobs:
     container:
       image: maven:3.9-eclipse-temurin-17
     steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 1
-          sparse-checkout: |
-            resourcepacks/external
-            rpv-config.json
+      - name: Checkout
+        run: |
+          git config --global http.postBuffer 524288000
+          git clone --depth 1 --no-checkout https://oauth2:${{ secrets.FORGEJO_TOKEN }}@$(echo "${{ github.server_url }}" | sed 's|https://||')/${{ github.repository }} /tmp/workspace
+          cd /tmp/workspace
+          git sparse-checkout init --cone
+          git sparse-checkout set resourcepacks/external rpv-config.json
+          git checkout ${{ github.sha }}
 
       - name: Build ResourcePackValidator
         run: git clone https://github.com/MrKinau/ResourcePackValidator.git /tmp/rpv-src && cd /tmp/rpv-src && mvn package -q -DskipTests && cp target/ResourcePackValidator*.jar /tmp/rpv.jar
@@ -26,9 +28,9 @@ jobs:
       - name: Validate all
         run: |
           failed=0
-          for dir in ./resourcepacks/external/*/; do
+          for dir in /tmp/workspace/resourcepacks/external/*/; do
             [ -d "$dir" ] || continue
             echo "Validating $(basename $dir)"
-            java -jar /tmp/rpv.jar -rp "$dir" -config ./rpv-config.json || failed=1
+            java -jar /tmp/rpv.jar -rp "$dir" -config /tmp/workspace/rpv-config.json || failed=1
           done
           exit $failed
