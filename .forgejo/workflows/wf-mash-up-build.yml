@@ -4,51 +4,47 @@ on:
     branches: [ "main" ]
     paths:
       - 'resourcepacks/external/lce-resources/**'
+      - 'packsquash.toml'
 
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: technocality
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 1
+          fetch-depth: 2
           sparse-checkout: |
             resourcepacks
+            packsquash.toml
 
-      - name: Cache PackSquash
-        id: cache-packsquash
-        uses: https://github.com/actions/cache@v3
-        with:
-          path: ~/.cargo/bin/packsquash
-          key: packsquash-${{ runner.os }}
-
-      - name: Install PackSquash
-        if: steps.cache-packsquash.outputs.cache-hit != 'true'
+      - name: Setup PackSquash
         run: |
-          apt-get update
-          apt-get install -y cmake
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          source $HOME/.cargo/env
-          cargo +nightly install --git https://github.com/ComunidadAylas/PackSquash --bin packsquash
-
-      - name: Add Cargo to PATH
-        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          mkdir -p $HOME/.local/bin
+          if [ ! -f $HOME/.local/bin/packsquash ]; then
+            curl -L "https://github.com/ComunidadAylas/PackSquash/releases/download/v0.4.1/packsquash-x86_64-unknown-linux-gnu.zip" -o ps.zip
+            unzip -oj ps.zip -d $HOME/.local/bin/
+            chmod +x $HOME/.local/bin/packsquash
+          fi
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Build
         id: build
         run: |
-          pack=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} \
+          pack=$(git diff --name-only HEAD^ HEAD \
             | grep '^resourcepacks/external/lce-resources/' \
             | sed 's|resourcepacks/external/lce-resources/\([^/]*\)/.*|\1|' \
             | sort -u | head -1)
+          
+          if [ -z "$pack" ]; then pack="halloween"; fi
+          
           dir="./resourcepacks/external/lce-resources/$pack"
           echo "pack=$pack" >> $GITHUB_OUTPUT
-          cat > /tmp/options.toml << EOF
-          pack_directory = '$dir'
-          output_file_path = '$(pwd)/$pack.zip'
-          EOF
-          packsquash /tmp/options.toml
+          
+          packsquash -c packsquash.toml \
+            --pack-directory "$dir" \
+            --output-file-path "$(pwd)/$pack.zip"
 
       - name: Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3

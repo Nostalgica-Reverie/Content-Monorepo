@@ -1,0 +1,83 @@
+name: Publish Halloween Mash-up
+
+on:
+  push:
+    tags: ['HAL-*']
+  workflow_dispatch:
+    inputs:
+      version_override:
+        description: 'Override version'
+        type: string
+
+jobs:
+  publish:
+    runs-on: technocality
+    env:
+      PACK_DIR: "resourcepacks/external/lce-resources/halloween"
+      PACK_NAME: "halloween"
+      OUT: built-resourcepacks
+    steps:
+      - name: Checkout RP only
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: resourcepacks
+
+      - name: Prep Variables
+        id: vars
+        run: |
+          RAW_REF="${{ github.ref_name }}"
+          OVERRIDE="${{ github.event.inputs.version_override }}"
+          
+          if [ -n "$OVERRIDE" ]; then
+            VER="$OVERRIDE"
+          elif [[ "$RAW_REF" == HAL-* ]]; then
+            VER="${RAW_REF#HAL-}"
+          else
+            VER="dev-$(date +%s)"
+          fi
+          
+          ALPHA="false"
+          [[ "$VER" == *"-alpha"* ]] && ALPHA="true"
+          
+          echo "ver=$VER" >> $GITHUB_OUTPUT
+          echo "alpha=$ALPHA" >> $GITHUB_OUTPUT
+          echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Setup PackSquash
+        run: |
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/ComunidadAylas/PackSquash/releases/download/v0.4.1/packsquash-x86_64-unknown-linux-gnu.zip" -o ps.zip
+          unzip -oj ps.zip -d $HOME/.local/bin/
+          chmod +x $HOME/.local/bin/packsquash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Build
+        run: |
+          mkdir -p "$OUT"
+          FILE="$OUT/${{ env.PACK_NAME }}-${{ steps.vars.outputs.ver }}.zip"
+          printf "pack_directory='./${{ env.PACK_DIR }}'\noutput_file_path='$FILE'" > opt.toml
+          packsquash opt.toml
+          echo "zip=$FILE" >> $GITHUB_ENV
+
+      - name: Publish to Platforms
+        if: steps.vars.outputs.alpha == 'false'
+        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: halloween-mash-up
+          modrinth-token: ${{ secrets.MR }}
+          curseforge-id: halloween-mash-up
+          curseforge-token: ${{ secrets.CF }}
+          files: ${{ env.zip }}
+          name: "Halloween Mash-up Pack ${{ steps.vars.outputs.ver }}"
+          version: "${{ steps.vars.outputs.ver }}"
+          version-type: ${{ contains(steps.vars.outputs.ver, 'beta') && 'beta' || 'release' }}
+          loaders: minecraft
+          game-versions: "1.20.1\n1.20.4\n1.21.1\n1.21.3\n1.21.4\n1.21.5\n1.21.8\n1.21.10"
+          changelog: ${{ github.event.release.body || format('Dev build - {0}', steps.vars.outputs.sha) }}
+
+      - name: Upload to Forgejo
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          REL_ID=$(curl -s -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/tags/${{ github.ref_name }}" | grep -oP '"id":\s*\K\d+')
+          curl -H "Authorization: token ${{ secrets.FORGEJO_TOKEN }}" -H "Content-Type: application/zip" --data-binary @"${{ env.zip }}" "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/releases/$REL_ID/assets?name=$(basename ${{ env.zip }})"
