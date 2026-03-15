@@ -25,9 +25,16 @@ jobs:
       - name: Prep Variables
         id: vars
         run: |
-          VER="${{ github.event.inputs.version_override }}"
-          [ -z "$VER" ] && [[ "${{ github.ref_name }}" =~ ^O4J- ]] && VER="${{ github.ref_name#O4J- }}"
-          [ -z "$VER" ] && VER="dev-$(date +%s)"
+          RAW_REF="${{ github.ref_name }}"
+          OVERRIDE="${{ github.event.inputs.version_override }}"
+          
+          if [ -n "$OVERRIDE" ]; then
+            VER="$OVERRIDE"
+          elif [[ "$RAW_REF" == O4J-* ]]; then
+            VER="${RAW_REF#O4J-}"
+          else
+            VER="dev-$(date +%s)"
+          fi
           
           ALPHA="false"
           [[ "$VER" == *"-alpha"* ]] && ALPHA="true"
@@ -46,7 +53,7 @@ jobs:
 
       - name: Build
         run: |
-          mkdir -p $OUT
+          mkdir -p "$OUT"
           FILE="$OUT/$PACK-${{ steps.vars.outputs.ver }}.zip"
           printf "pack_directory='./resourcepacks/external/$PACK'\noutput_file_path='$FILE'" > opt.toml
           $HOME/.local/bin/packsquash opt.toml
