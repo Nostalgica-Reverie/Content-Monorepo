@@ -1,4 +1,5 @@
 name: Validate Resource Packs
+
 on:
   push:
     branches: [ "main" ]
@@ -7,30 +8,52 @@ on:
   schedule:
     - cron: "0 */4 * * *"
   workflow_dispatch:
+
 jobs:
   validate:
     runs-on: technocality
-    container:
-      image: maven:3.9-eclipse-temurin-17
     steps:
       - name: Checkout
-        run: |
-          git config --global http.postBuffer 524288000
-          git clone --depth 1 --no-checkout https://oauth2:${{ secrets.FORGEJO_TOKEN }}@$(echo "${{ github.server_url }}" | sed 's|https://||')/${{ github.repository }} /tmp/workspace
-          cd /tmp/workspace
-          git sparse-checkout init --cone
-          git sparse-checkout set resourcepacks/external rpv-config.json
-          git checkout ${{ github.sha }}
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            resourcepacks/external
+            rpv-config.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache ResourcePackValidator
+        id: cache-rpv
+        uses: actions/cache@v3
+        with:
+          path: ~/rpv.jar
+          key: rpv-jar-v1
 
       - name: Build ResourcePackValidator
-        run: git clone https://github.com/MrKinau/ResourcePackValidator.git /tmp/rpv-src && cd /tmp/rpv-src && mvn package -q -DskipTests && cp target/ResourcePackValidator*.jar /tmp/rpv.jar
+        if: steps.cache-rpv.outputs.cache-hit != 'true'
+        run: |
+          git clone --depth 1 https://github.com/MrKinau/ResourcePackValidator.git /tmp/rpv-src
+          cd /tmp/rpv-src
+          mvn package -q -DskipTests
+          cp target/ResourcePackValidator*.jar ~/rpv.jar
 
       - name: Validate all
         run: |
           failed=0
-          for dir in /tmp/workspace/resourcepacks/external/*/; do
+          for dir in resourcepacks/external/*/; do
             [ -d "$dir" ] || continue
-            echo "Validating $(basename $dir)"
-            java -jar /tmp/rpv.jar -rp "$dir" -config /tmp/workspace/rpv-config.json || failed=1
+            
+            echo "::group::Validating $(basename "$dir")"
+            java -jar ~/rpv.jar -rp "$dir" -config rpv-config.json || failed=1
+            echo "::endgroup::"
           done
-          exit $failed
+          
+          if [ $failed -ne 0 ]; then
+            echo "Validation failed"
+            exit 1
+          fi
