@@ -3,7 +3,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'resourcepacks/external*'
+      - 'resourcepacks/external/**'
   schedule:
     - cron: "0 */4 * * *"
   workflow_dispatch:
@@ -13,11 +13,12 @@ jobs:
     container:
       image: maven:3.9-eclipse-temurin-17
     steps:
-      - name: Checkout
-        run: |
-          server=$(echo "${{ github.server_url }}" | sed 's|https://||')
-          git clone --depth 1 https://oauth2:${{ secrets.FORGEJO_TOKEN }}@${server}/${{ github.repository }} /tmp/workspace
-          cd /tmp/workspace && git checkout ${{ github.sha }}
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            resourcepacks/external
+            rpv-config.json
 
       - name: Build ResourcePackValidator
         run: git clone https://github.com/MrKinau/ResourcePackValidator.git /tmp/rpv-src && cd /tmp/rpv-src && mvn package -q -DskipTests && cp target/ResourcePackValidator*.jar /tmp/rpv.jar
@@ -25,9 +26,9 @@ jobs:
       - name: Validate all
         run: |
           failed=0
-          for dir in /tmp/workspace/resourcepacks/external/*/; do
+          for dir in ./resourcepacks/external/*/; do
             [ -d "$dir" ] || continue
             echo "Validating $(basename $dir)"
-            java -jar /tmp/rpv.jar -rp "$dir" -config /tmp/workspace/rpv-config.json || failed=1 
+            java -jar /tmp/rpv.jar -rp "$dir" -config ./rpv-config.json || failed=1
           done
           exit $failed
