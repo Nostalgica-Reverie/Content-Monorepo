@@ -159,7 +159,7 @@ jobs:
           modrinth-token: ${{ secrets.MR }}
           files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-modrinth.mrpack
           name: "${{ steps.version.outputs.version }} (${{ matrix.version }})"
-          version: "${{ steps.version.outputs.version }}-${{ matrix.version }}"
+          version: "${{ steps.version.outputs.version }}-mc${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: fabric
           game-versions: "1.21.10"
@@ -176,7 +176,7 @@ jobs:
           curseforge-token: ${{ secrets.CF }}
           files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-curseforge.zip
           name: "${{ steps.version.outputs.version }} (${{ matrix.version }})"
-          version: "${{ steps.version.outputs.version }}-${{ matrix.version }}"
+          version: "${{ steps.version.outputs.version }}-mc${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: fabric
           game-versions: "1.21.10"
