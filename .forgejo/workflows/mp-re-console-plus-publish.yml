@@ -90,7 +90,7 @@ jobs:
           modrinth-token: ${{ secrets.MR }}
           files: "${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.vars.outputs.version }}-modrinth.mrpack"
           name: "${{ steps.vars.outputs.version }} (${{ matrix.version }})"
-          version: "${{ steps.vars.outputs.version }}-mc${{ matrix.version }}"
+          version: "${{ steps.vars.outputs.version }}+mc${{ matrix.version }}"
           loaders: fabric
           game-versions: "1.21.10"
           fail-mode: warn
@@ -103,7 +103,7 @@ jobs:
           curseforge-token: ${{ secrets.CF }}
           files: "${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.vars.outputs.version }}-curseforge.zip"
           name: "${{ steps.vars.outputs.version }} (${{ matrix.version }})"
-          version: "${{ steps.vars.outputs.version }}-mc${{ matrix.version }}"
+          version: "${{ steps.vars.outputs.version }}+mc${{ matrix.version }}"
           loaders: fabric
           game-versions: "1.21.10"
           fail-mode: warn
