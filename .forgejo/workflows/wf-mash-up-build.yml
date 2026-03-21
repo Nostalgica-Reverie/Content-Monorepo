@@ -34,30 +34,33 @@ jobs:
       - name: Build
         id: build
         run: |
-          pack=$(git diff --name-only HEAD^ HEAD \
+          pack=$(git diff --name-only HEAD^ HEAD 2>/dev/null \
             | grep '^resourcepacks/external/lce-resources/' \
             | sed 's|resourcepacks/external/lce-resources/\([^/]*\)/.*|\1|' \
-            | sort -u | head -1)
+            | sort -u | head -1) || pack=""
 
-          if [ -z "$pack" ]; then pack="halloween"; fi
+          if [ -z "$pack" ]; then 
+            echo "No specific pack changes detected. Defaulting to halloween."
+            pack="halloween"
+          fi
           
           dir="$(pwd)/resourcepacks/external/lce-resources/$pack"
+          output="$(pwd)/$pack.zip"
+          
           echo "pack=$pack" >> $GITHUB_OUTPUT
+          echo "Building: $pack from $dir"
+
+          if [ ! -d "$dir" ]; then
+            echo "Error: Directory $dir not found!"
+            exit 1
+          fi
 
           sed -i 's/\r$//' packsquash.toml
           sed -i '1s/^\xEF\xBB\xBF//' packsquash.toml
 
           packsquash packsquash.toml \
             --pack-directory "$dir" \
-            --output-file-path "$(pwd)/$pack.zip"
-
-          if [ -z "$pack" ]; then pack="halloween"; fi
-          dir="./resourcepacks/external/lce-resources/$pack"
-          echo "pack=$pack" >> $GITHUB_OUTPUT
-
-          packsquash packsquash.toml \
-            --pack-directory "$dir" \
-            --output-file-path "$(pwd)/$pack.zip"
+            --output-file-path "$output"
 
       - name: Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3
