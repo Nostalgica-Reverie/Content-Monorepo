@@ -1,42 +1,42 @@
-pack_directory = 'resourcepacks/external/lce-resources'
-output_file_path = 'output.zip'
+pack_directory = "resourcepacks/external/lce-resources"
+output_file_path = "output.zip"
 recompress_compressed_files = true
 zip_compression_iterations = 5
 automatic_minecraft_quirks_detection = true
 
-['**/*.{json,mcmeta}']
+["**/*.{json,mcmeta}"]
 minify_json = true
 delete_bloat_keys = false
 sort_json_object_keys = false
 
-['**/*.{flac,wav}']
+["**/*.{flac,wav}"]
 ogg_obfuscation = true
 channels = 2
 sampling_frequency = 44100
 target_pitch = 1.5
-bitrate_control_mode = 'VBR'
+bitrate_control_mode = "VBR"
 target_bitrate_control_metric = 128
 
-['**/*.png']
+["**/*.png"]
 image_data_compression_iterations = 15
-color_quantization_target = 'none'
+color_quantization_target = "none"
 maximum_width_and_height = 2048
 skip_alpha_optimizations = true
 downsize_if_single_color = false
 png_obfuscation = true
 
 [[filters]]
-path = '**/1_20_2/**'
-action = 'copy'
+path = "**/1_20_2/**"
+action = "copy"
 [[filters]]
-path = '**/1_21_2/**'
-action = 'copy'
+path = "**/1_21_2/**"
+action = "copy"
 [[filters]]
-path = '**/1_21_6/**'
-action = 'copy'
+path = "**/1_21_6/**"
+action = "copy"
 [[filters]]
-path = '**/1_21_9/**'
-action = 'copy'
+path = "**/1_21_9/**"
+action = "copy"
 [[filters]]
-path = '**/background.png'
-action = 'copy'
+path = "**/background.png"
+action = "copy"
