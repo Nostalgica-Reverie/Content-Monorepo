@@ -1,4 +1,4 @@
-name: Publish Re-Console
+name: Publish Re-Console Plus
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
         with:
           fetch-depth: 1
           sparse-checkout: |
-            modpacks/simply-legacy
+            modpacks/re-console-plus
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -75,7 +75,7 @@ jobs:
         run: |
           temp_dir="build-${{ matrix.platform }}-${{ matrix.version }}"
           mkdir -p "$temp_dir"
-          cp -r ./modpacks/simply-legacy/${{ matrix.folder }}/yarn/${{ matrix.version }}/* "./$temp_dir/"
+          cp -r ./modpacks/re-console-plus/${{ matrix.folder }}/yarn/${{ matrix.version }}/* "./$temp_dir/"
           cd "./$temp_dir/"
           
           packwiz refresh
