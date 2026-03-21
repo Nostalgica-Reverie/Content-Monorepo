@@ -1,4 +1,6 @@
+[options]
 pack_directory = 'resourcepacks/external/lce-resources'
+output_file_path = 'output.zip'
 minify_json = true
 delete_bloat_keys = false
 sort_json_object_keys = false
@@ -6,7 +8,7 @@ recompress_compressed_files = true
 zip_compression_iterations = 5
 automatic_minecraft_quirks_detection = true
 
-['**/*?.{flac,wav}']
+['**/*.{flac,wav}']
 ogg_obfuscation = true
 channels = 2
 sampling_frequency = 44100
@@ -14,7 +16,7 @@ target_pitch = 1.5
 bitrate_control_mode = 'VBR'
 target_bitrate_control_metric = 128
 
-['**/*?.png']
+['**/*.png']
 image_data_compression_iterations = 15
 color_quantization_target = 'none'
 maximum_width_and_height = 2048
