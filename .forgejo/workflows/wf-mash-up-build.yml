@@ -22,12 +22,14 @@ jobs:
       - name: Setup PackSquash
         run: |
           mkdir -p $HOME/.local/bin
-          if [ ! -f $HOME/.local/bin/packsquash ]; then
-            curl -L "https://github.com/ComunidadAylas/PackSquash/releases/download/v0.4.1/packsquash-x86_64-unknown-linux-gnu.zip" -o ps.zip
-            unzip -oj ps.zip -d $HOME/.local/bin/
-            chmod +x $HOME/.local/bin/packsquash
-          fi
+          rm -f $HOME/.local/bin/packsquash
+          
+          curl -L "https://github.com/ComunidadAylas/PackSquash/releases/download/v0.4.1/packsquash-x86_64-unknown-linux-gnu.zip" -o ps.zip
+          unzip -oj ps.zip -d $HOME/.local/bin/
+          chmod +x $HOME/.local/bin/packsquash
+
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+          $HOME/.local/bin/packsquash --version
 
       - name: Build
         id: build
