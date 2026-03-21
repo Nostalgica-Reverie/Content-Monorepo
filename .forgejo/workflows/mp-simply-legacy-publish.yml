@@ -13,7 +13,7 @@ on:
 
 jobs:
   check-tag:
-    if: (github.event_name == 'release' && startsWith(github.event.release.tag_name, 'SL')) || (github.event_name == 'workflow_dispatch')
+    if: (github.event_name == 'release' || 'push' && startsWith(github.event.release.tag_name, 'SL')) || (github.event_name == 'workflow_dispatch')
     runs-on: technocality
     outputs:
       should_run: ${{ steps.check.outputs.should_run }}
@@ -158,8 +158,8 @@ jobs:
           modrinth-id: ${{ needs.check-tag.outputs.modrinth_id }}
           modrinth-token: ${{ secrets.MR }}
           files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-modrinth.mrpack
-          name: "Simply Legacy ${{ steps.version.outputs.version }} (Fabric)"
-          version: "${{ steps.version.outputs.version }}-${{ matrix.version }}"
+          name: "${{ steps.version.outputs.version }} (${{ matrix.version }})"
+          version: "${{ steps.version.outputs.version }}-mc${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: fabric
           game-versions: "1.21.10"
@@ -175,8 +175,8 @@ jobs:
           curseforge-id: ${{ needs.check-tag.outputs.curseforge_id }}
           curseforge-token: ${{ secrets.CF }}
           files: ${{ env.OUTPUT }}/${{ env.PACK_NAME }}-${{ matrix.version }}-${{ steps.version.outputs.version }}-curseforge.zip
-          name: "Simply Legacy ${{ steps.version.outputs.version }} (Fabric)"
-          version: "${{ steps.version.outputs.version }}-${{ matrix.loader }}-${{ matrix.version }}"
+          name: "${{ steps.version.outputs.version }} (${{ matrix.version }})"
+          version: "${{ steps.version.outputs.version }}-mc${{ matrix.version }}"
           version-type: ${{ github.event_name == 'release' && (contains(github.event.release.tag_name, 'alpha') && 'alpha' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'release') || 'alpha' }}
           loaders: fabric
           game-versions: "1.21.10"
