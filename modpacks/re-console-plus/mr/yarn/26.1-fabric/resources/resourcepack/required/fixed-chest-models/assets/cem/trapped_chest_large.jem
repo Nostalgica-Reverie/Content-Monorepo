@@ -1,0 +1,84 @@
+{
+	"credit": "Made with Blockbench",
+	"textureSize": [64, 64],
+	"models": [
+		{
+			"part": "base_left",
+			"id": "base_left",
+			"invertAxis": "xy",
+			"translate": [-16, 0, -7],
+			"rotate": [-180, 0, 0],
+			"boxes": [
+				{"coordinates": [0, -10, 8, 15, 10, 14], "textureOffset": [0, 19]}
+			],
+			"submodels": [
+				{
+					"id": "left_lid",
+					"invertAxis": "xy",
+					"translate": [0, -9, 8],
+					"boxes": [
+						{"coordinates": [0, -2, 14, 1, 4, 1], "textureOffset": [0, 0]},
+						{"coordinates": [0, -5, 0, 15, 5, 14], "textureOffset": [0, 0], "sizeAdd": 0.01}
+					]
+				}
+			],
+			"animations": [
+				{
+					"this.rx": 0,
+					"left_lid.rx": "lid_left.rx"
+				}
+			]
+		},
+		{
+			"part": "base_right",
+			"id": "base_right",
+			"invertAxis": "xy",
+			"translate": [0, 0, -7],
+			"rotate": [-180, 0, 0],
+			"boxes": [
+				{"coordinates": [-15, -10, 8, 15, 10, 14], "textureOffset": [0, 19]}
+			],
+			"submodels": [
+				{
+					"id": "right_lid",
+					"invertAxis": "xy",
+					"translate": [0, -9, 8],
+					"boxes": [
+						{"coordinates": [-15, -5, 0, 15, 5, 14], "textureOffset": [0, 0], "sizeAdd": 0.01},
+						{"coordinates": [-1, -2, 14, 1, 4, 1], "textureOffset": [0, 0]}
+					]
+				}
+			],
+			"animations": [
+				{
+					"this.rx": 0,
+					"right_lid.rx": "lid_right.rx"
+				}
+			]
+		},
+		{
+			"part": "lid_left",
+			"id": "lid_left",
+			"invertAxis": "xy",
+			"translate": [0, 0, 0]
+		},
+		{
+			"part": "lid_right",
+			"id": "lid_right",
+			"invertAxis": "xy",
+			"translate": [0, 0, 0]
+		},
+		{
+			"part": "knob_left",
+			"id": "knob_left",
+			"invertAxis": "xy",
+			"translate": [0, 0, 0]
+		},
+		{
+			"part": "knob_right",
+			"id": "knob_right",
+			"invertAxis": "xy",
+			"translate": [0, 0, 0]
+		}
+	]
+}

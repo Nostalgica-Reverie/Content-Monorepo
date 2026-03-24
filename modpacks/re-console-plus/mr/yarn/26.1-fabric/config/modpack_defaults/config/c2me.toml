@@ -1,0 +1,21 @@
+version = 3
+defaultGlobalExecutorParallelismExpression = "max(1,min(if(is_client,(cpus/2.66+1),(cpus/1.5)),if(is_j9vm,((mem_gb-(if(is_client,0.5,0.2)))/0.2),((mem_gb-(if(is_client,0.8,0.5)))/0.2))))"
+threadPoolPriority = 3
+
+[clientSideConfig]
+
+	[clientSideConfig.modifyMaxVDConfig]
+		enableExtRenderDistanceProtocol = false
+		enabled = false
+
+[noTickViewDistance]
+	compatibilityMode = false
+	maxConcurrentChunkLoads = 18
+	enableExtRenderDistanceProtocol = false
+	maxViewDistance = 32
+	
+[ioSystem]
+	gcFreeChunkSerializer = true
+		
+[chunkSystem]
+	syncPlayerTickets = false
