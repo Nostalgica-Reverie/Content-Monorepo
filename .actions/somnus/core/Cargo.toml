@@ -1,0 +1,26 @@
+[package]
+name = "somnus_core"
+version = "26.4.0"
+edition = "2024"
+
+[lib]
+path = "src/lib.rs" 
+
+[[bin]]
+name = "json-linter"
+path = "src/bin/json-linter.rs"
+
+[[bin]]
+name = "toml-linter"
+path = "src/bin/toml-linter.rs"
+
+[dependencies]
+serde_json = "1.0"
+toml = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+walkdir = "2.5"
+git2 = "0.19"
+chrono = "0.4"

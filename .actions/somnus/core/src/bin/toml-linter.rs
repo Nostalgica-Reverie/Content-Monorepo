@@ -1,0 +1,42 @@
+use std::fs;
+use std::path::Path;
+use somnus_core::get_changed_files;
+
+fn main() {
+    if run() {
+        std::process::exit(1);
+    }
+}
+
+pub fn run() -> bool {
+    let mut failed = false;
+
+    let changed_files = match get_changed_files() {
+        Ok(files) => files,
+        Err(e) => {
+            eprintln!("::error::Failed to retrieve changed files: {}", e);
+            return true;
+        }
+    };
+
+    for file_path in changed_files {
+        let path = Path::new(&file_path);
+        if !path.exists() { continue; }
+
+        if file_path.ends_with(".toml") {
+            println!("::group::Linting TOML: {}", file_path);
+            let content = fs::read_to_string(path).expect("Read Error");
+            
+            if let Err(e) = content.parse::<toml::Value>() {
+                eprintln!("::error file={}::INVALID TOML: {}", file_path, e);
+                failed = true;
+            }
+            println!("::endgroup::");
+        }
+    }
+
+    if failed { 
+        eprintln!("Fix yo toml chud..."); 
+    }
+    failed
+}

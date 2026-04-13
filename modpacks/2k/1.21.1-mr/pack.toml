@@ -1,0 +1,13 @@
+name = "2000s-edition"
+author = "NicSonic"
+version = "v1.2"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "603f5f8ccc2b3e88effda1df064bce262da6b0081913a988109c0f901070fd25"
+
+[versions]
+fabric = "0.18.4"
+minecraft = "1.21.1"

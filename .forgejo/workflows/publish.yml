@@ -1,0 +1,68 @@
+name: "Publish"
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'modpacks/**/manifest.json'
+      - 'datapacks/**/manifest.json'
+      - 'resourcepacks/**/manifest.json'
+
+jobs:
+  publish:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install packwiz
+        run: |
+          if ! command -v packwiz &> /dev/null; then
+            echo "packwiz not found, installing..."
+            go install github.com/packwiz/packwiz@latest
+          else
+            echo "packwiz already installed."
+          fi
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Install Rust
+        run: |
+          if ! command -v cargo &> /dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          fi
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Build Publisher
+        run: |
+          . "$HOME/.cargo/env"
+          cargo build --release --manifest-path .actions/publish/Cargo.toml
+
+      - name: Run Rust Publisher
+        id: meta
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.cargo/bin
+          ./.actions/publish/target/release/publish
+
+      - name: Upload
+        if: "steps.meta.outputs.mr_id != ''"
+        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ steps.meta.outputs.mr_id }}
+          modrinth-token: ${{ secrets.MR }}
+          modrinth-files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*.mrpack"
+          curseforge-id: ${{ steps.meta.outputs.cf_id }}
+          curseforge-token: ${{ secrets.CF }}
+          curseforge-files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*.zip"
+          name: "${{ steps.meta.outputs.name }}"
+          version: "${{ steps.meta.outputs.ver }}"
+          changelog: "${{ steps.meta.outputs.notes }}"
+          loaders: ${{ steps.meta.outputs.type == 'modpack' && 'fabric' || 'minecraft' }}
+          game-versions: "${{ steps.meta.outputs.mc }}"

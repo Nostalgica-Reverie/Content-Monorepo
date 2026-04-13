@@ -1,0 +1,90 @@
+name: "Build"
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'modpacks/**'
+      - 'resourcepacks/**'
+      - 'datapacks/**'
+      - 'packsquash.toml'
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+          filter: blob:none
+          sparse-checkout: |
+            modpacks
+            resourcepacks
+            datapacks
+            .actions
+
+      - name: Meta
+        id: meta
+        run: |
+          CHANGED_FILE=$(git diff-tree --no-commit-id --name-only -r HEAD | grep -E '^(modpacks|resourcepacks|datapacks)/' | head -n 1)
+          if [ -z "$CHANGED_FILE" ]; then CHANGED_FILE="modpacks/simply-legacy/"; fi
+
+          PACK_ID=$(echo "$CHANGED_FILE" | cut -d'/' -f2)
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          CLEAN_NAME=$(echo "$PACK_ID" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1')
+
+          echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
+          echo "pack_name=$CLEAN_NAME" >> $GITHUB_OUTPUT
+
+      - name: Cache Go Binaries
+        id: cache-go
+        uses: actions/cache@v4
+        with:
+          path: ~/go/bin
+          key: go-bin-v1-${{ runner.os }}
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Install Packwiz
+        run: |
+          if [ ! -f "$HOME/go/bin/packwiz" ]; then
+            go install github.com/packwiz/packwiz@latest
+          fi
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+
+      - name: Cache Builder
+        id: cache-builder
+        uses: actions/cache@v4
+        with:
+          path: ./builder
+          key: builder-v26.4.0-${{ runner.os }}-${{ hashFiles('.actions/builder/src/**') }}
+
+      - name: Setup Builder
+        if: steps.cache-builder.outputs.cache-hit != 'true'
+        run: |
+          if ! command -v cargo &> /dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            source $HOME/.cargo/env
+          fi
+          cd .actions/builder
+          cargo build --release
+          cp target/release/builder ../../builder
+
+      - name: Run Build
+        run: |
+          chmod +x ./builder
+          ./builder ${{ steps.meta.outputs.short_sha }}
+
+      - name: Upload
+        uses: https://code.forgejo.org/actions/upload-artifact@v3
+        with:
+          name: "${{ steps.meta.outputs.pack_name }}-${{ steps.meta.outputs.short_sha }}"
+          path: artifacts/

@@ -1,0 +1,46 @@
+name: Linter
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'modpacks/**/*.json'
+      - 'modpacks/**/*.toml'
+      - 'resourcepacks/**/*.json'
+      - 'datapacks/**/*.json'
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Ensure rust
+        run: |
+          if ! command -v cargo &> /dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          fi
+
+      - name: Cache Cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            .actions/somnus/core/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('.actions/somnus/core/Cargo.toml') }}
+
+      - name: Run Somnus Linters
+        run: |
+          source "$HOME/.cargo/env" || true
+          
+          echo "rnning JSON Linter..."
+          cargo run --manifest-path ./.actions/somnus/core/Cargo.toml --bin json-linter
+          
+          echo "running TOML Linter..."
+          cargo run --manifest-path ./.actions/somnus/core/Cargo.toml --bin toml-linter

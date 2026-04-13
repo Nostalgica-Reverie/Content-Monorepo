@@ -1,0 +1,36 @@
+name: "Core Sync"
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'modpacks/lce-core/**/mods/**'
+      - 'modpacks/lce-core/**/resourcepacks/**'
+
+jobs:
+  sync:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+
+      - name: Setup Environment
+        run: |
+          [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Run CoreSync
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.cargo/bin
+          cargo run --release --manifest-path .actions/coresync/Cargo.toml
+
+      - name: Commit and Push
+        uses: https://github.com/EndBug/add-and-commit@v9
+        with:
+          author_name: forgejo-actions[bot]
+          author_email: omo50@noreply.nostalgica.net
+          message: 'actions: auto-update (${{ github.workflow }})'

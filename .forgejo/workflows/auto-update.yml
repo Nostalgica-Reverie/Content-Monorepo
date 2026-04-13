@@ -1,0 +1,81 @@
+name: "Auto Update & Refresh"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  auto-update:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with: 
+          token: ${{ secrets.FORGEJO_TOKEN }}
+          fetch-depth: 1
+          sparse-checkout: |
+            modpacks
+            .actions
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Install Tooling
+        run: |
+          mkdir -p $HOME/go/bin
+          if ! command -v packwiz &> /dev/null; then
+            go install github.com/packwiz/packwiz@latest
+          fi
+          if ! command -v pw &> /dev/null; then
+            go install github.com/Merith-TK/packwiz-wrapper/cmd/pw@main
+          fi
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+
+      - name: Cache Updater Binary
+        id: cache-updater
+        uses: actions/cache@v4
+        with:
+          path: ./updater-bin
+          key: updater-v2-${{ runner.os }}-${{ hashFiles('.actions/updater/**') }}
+
+      - name: Ensure Rust
+        if: steps.cache-updater.outputs.cache-hit != 'true'
+        run: |
+          if ! command -v rustup &> /dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            source $HOME/.cargo/env
+          fi
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Build Updater
+        if: steps.cache-updater.outputs.cache-hit != 'true'
+        run: |
+          cargo build --release --manifest-path .actions/updater/Cargo.toml
+          mkdir -p ./updater-bin
+          cp .actions/updater/target/release/updater ./updater-bin/updater
+
+      - name: Run Updater
+        id: rust-update
+        continue-on-error: true
+        run: |
+          chmod +x ./updater-bin/updater
+          ./updater-bin/updater
+
+      - name: Run Shell Update (Fallback)
+        if: steps.rust-update.outcome == 'failure'
+        run: |
+          echo "Rust Updater failed. Falling back to Shell..."
+          chmod +x ./modpacks/update-refresh.sh
+          ./modpacks/update-refresh.sh
+
+      - name: Commit
+        uses: https://github.com/EndBug/add-and-commit@v9
+        with:
+          author_name: forgejo-actions[bot]
+          author_email: omo50@noreply.nostalgica.net
+          message: 'actions: auto-update (${{ github.workflow }})'
+          add: 'modpacks'
