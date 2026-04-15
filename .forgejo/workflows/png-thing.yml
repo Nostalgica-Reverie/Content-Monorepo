@@ -1,4 +1,4 @@
-name: "png tyhingh"
+name: "PNG Optimization"
 
 on:
   workflow_dispatch:
@@ -7,38 +7,39 @@ jobs:
   bulk-nuke:
     runs-on: technocality
     steps:
-      - name: grab
+      - name: Checkout
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           filter: blob:none
 
-      - name: install
-        run: |
-          if ! command -v cargo &> /dev/null; then
-            echo "Rust not found. Bootstrapping..."
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          fi
-          
-          . "$HOME/.cargo/env"
-          
-          if ! command -v oxipng &> /dev/null; then
-            echo "Installing oxipng..."
-            cargo install oxipng
-          fi
-          
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: "maintenance-tools"
 
-      - name: comp
-        run: |
-          . "$HOME/.cargo/env"
-          
-          oxipng -r -o 4 -v --strip all "resourcepacks/"
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
 
-      - name: commit
+      - name: Cache oxipng
+        id: cache-oxipng
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/oxipng
+          key: ${{ runner.os }}-oxipng-v1
+
+      - name: Install oxipng
+        if: steps.cache-oxipng.outputs.cache-hit != 'true'
+        run: cargo install oxipng
+
+      - name: Run Optimization
+        run: |
+          oxipng -r -o 4 -v --strip all "resourcepacks/" "modpacks/" "datapacks/"
+
+      - name: Commit Optimized Images
         uses: https://github.com/EndBug/add-and-commit@v9
         with:
           author_name: forgejo-actions[bot]
           author_email: omo50@noreply.nostalgica.net
-          message: 'chore: bulk'
-          add: 'resourcepacks/**/*.png'
+          message: 'chore: bulk png optimization'
+          add: '**/*.png'
