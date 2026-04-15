@@ -15,43 +15,57 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0
+          fetch-depth: 0 
           filter: blob:none
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate Changelog
+        id: changelog
+        run: |
+          # The blobless fetch allows this git command to work perfectly
+          MANIFEST=$(git diff-tree --no-commit-id --name-only -r HEAD | grep 'manifest.json' | head -n 1)
+          echo "manifest=$MANIFEST" >> $GITHUB_OUTPUT
+          
+          npx tsx src/scripts/changelog.ts "$MANIFEST"
 
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
           go-version: 'stable'
+          cache: true
+
+      - name: Cache Packwiz Binaries
+        id: cache-go
+        uses: actions/cache@v4
+        with:
+          path: ~/go/bin
+          key: go-bin-v1-${{ runner.os }}
 
       - name: Install packwiz
-        run: |
-          if ! command -v packwiz &> /dev/null; then
-            echo "packwiz not found, installing..."
-            go install github.com/packwiz/packwiz@latest
-          else
-            echo "packwiz already installed."
-          fi
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+        if: steps.cache-go.outputs.cache-hit != 'true'
+        run: go install github.com/packwiz/packwiz@latest
+
+      - name: Add Path
+        run: echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Install Rust
-        run: |
-          if ! command -v cargo &> /dev/null; then
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          fi
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        uses: dtolnay/rust-toolchain@stable
 
-      - name: Build Publisher
-        run: |
-          . "$HOME/.cargo/env"
-          cargo build --release --manifest-path .actions/publish/Cargo.toml
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "src/actions -> target"
 
-      - name: Run Rust Publisher
+      - name: Run Publisher
         id: meta
         run: |
-          export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.cargo/bin
-          ./.actions/publish/target/release/publish
+          cargo run --release --manifest-path src/actions/Cargo.toml --bin publish -- "${{ steps.changelog.outputs.manifest }}"
 
-      - name: Upload
+      - name: Upload to Platforms
         if: "steps.meta.outputs.mr_id != ''"
         uses: https://github.com/Kir-Antipov/mc-publish@v3.3
         with:
@@ -63,6 +77,6 @@ jobs:
           curseforge-files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*.zip"
           name: "${{ steps.meta.outputs.name }}"
           version: "${{ steps.meta.outputs.ver }}"
-          changelog: "${{ steps.meta.outputs.notes }}"
+          changelog: "${{ steps.changelog.outputs.notes }}"
           loaders: ${{ steps.meta.outputs.type == 'modpack' && 'fabric' || 'minecraft' }}
           game-versions: "${{ steps.meta.outputs.mc }}"
