@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             modpacks
-            .actions
+            src/actions
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -24,39 +24,42 @@ jobs:
           go-version: 'stable'
           cache: true
 
+      - name: Cache Packwiz Binaries
+        id: cache-tooling
+        uses: actions/cache@v4
+        with:
+          path: $HOME/go/bin
+          key: tooling-${{ runner.os }}-packwiz
+
       - name: Install Tooling
+        if: steps.cache-tooling.outputs.cache-hit != 'true'
         run: |
           mkdir -p $HOME/go/bin
-          if ! command -v packwiz &> /dev/null; then
-            go install github.com/packwiz/packwiz@latest
-          fi
-          if ! command -v pw &> /dev/null; then
-            go install github.com/Merith-TK/packwiz-wrapper/cmd/pw@main
-          fi
-          echo "$HOME/go/bin" >> $GITHUB_PATH
+          go install github.com/packwiz/packwiz@latest
+          go install github.com/Merith-TK/packwiz-wrapper/cmd/pw@main
+      
+      - name: Add Path
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
-      - name: Cache Updater Binary
+      - name: Cache Updater
         id: cache-updater
         uses: actions/cache@v4
         with:
           path: ./updater-bin
-          key: updater-v2-${{ runner.os }}-${{ hashFiles('.actions/updater/**') }}
+          key: updater-v3-${{ runner.os }}-${{ hashFiles('src/actions/updater/**') }}
 
-      - name: Ensure Rust
+      - name: Rust Cache
         if: steps.cache-updater.outputs.cache-hit != 'true'
-        run: |
-          if ! command -v rustup &> /dev/null; then
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-            source $HOME/.cargo/env
-          fi
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "src/actions/updater -> target"
 
       - name: Build Updater
         if: steps.cache-updater.outputs.cache-hit != 'true'
         run: |
-          cargo build --release --manifest-path .actions/updater/Cargo.toml
+          cargo build --release --manifest-path src/actions/updater/Cargo.toml
           mkdir -p ./updater-bin
-          cp .actions/updater/target/release/updater ./updater-bin/updater
+          cp src/actions/updater/target/release/updater ./updater-bin/updater
 
       - name: Run Updater
         id: rust-update
@@ -65,7 +68,7 @@ jobs:
           chmod +x ./updater-bin/updater
           ./updater-bin/updater
 
-      - name: Run Shell Update (Fallback)
+      - name: Run Shell Updater
         if: steps.rust-update.outcome == 'failure'
         run: |
           echo "Rust Updater failed. Falling back to Shell..."
