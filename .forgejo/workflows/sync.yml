@@ -1,4 +1,4 @@
-name: "Core Sync"
+name: "CoreSync"
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
     paths:
       - 'modpacks/lce-core/**/mods/**'
       - 'modpacks/lce-core/**/resourcepacks/**'
+      - 'modpacks/lce-core/**/resources/**'
 
 jobs:
   sync:
@@ -17,20 +18,23 @@ jobs:
           fetch-depth: 0
           filter: blob:none
 
-      - name: Setup Environment
-        run: |
-          [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          # Point to the new src/actions location
+          workspaces: "src/actions/coresync -> target"
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Run CoreSync
         run: |
-          export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.cargo/bin
-          cargo run --release --manifest-path .actions/coresync/Cargo.toml
+          cargo run --release --manifest-path src/actions/coresync/Cargo.toml
 
       - name: Commit and Push
         uses: https://github.com/EndBug/add-and-commit@v9
         with:
           author_name: forgejo-actions[bot]
           author_email: omo50@noreply.nostalgica.net
-          message: 'actions: auto-update (${{ github.workflow }})'
+          message: 'actions: sync'
+          add: 'modpacks'
