@@ -1,4 +1,4 @@
-name: Linter
+name: "Linter"
 
 on:
   push:
@@ -18,29 +18,39 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          sparse-checkout: |
+            modpacks
+            resourcepacks
+            datapacks
+            src/actions/somnus
 
-      - name: Ensure rust
-        run: |
-          if ! command -v cargo &> /dev/null; then
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-            echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          fi
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
 
-      - name: Cache Cargo
+      - name: Cache Rust
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "src/actions/somnus/core -> target"
+
+      - name: Cache Linter Binaries
+        id: cache-linter
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            .actions/somnus/core/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('.actions/somnus/core/Cargo.toml') }}
+          path: ./linter-bin
+          key: linter-${{ runner.os }}-${{ hashFiles('src/actions/somnus/core/**/*.rs') }}
 
-      - name: Run Somnus Linters
+      - name: Build Linters
+        if: steps.cache-linter.outputs.cache-hit != 'true'
         run: |
-          source "$HOME/.cargo/env" || true
+          mkdir -p ./linter-bin
+          cargo build --release --manifest-path src/actions/somnus/core/Cargo.toml
+          cp src/actions/somnus/core/target/release/json-linter ./linter-bin/
+          cp src/actions/somnus/core/target/release/toml-linter ./linter-bin/
+
+      - name: Run Linters
+        run: |
+          echo "Running JSON Linter..."
+          ./linter-bin/json-linter
           
-          echo "rnning JSON Linter..."
-          cargo run --manifest-path ./.actions/somnus/core/Cargo.toml --bin json-linter
-          
-          echo "running TOML Linter..."
-          cargo run --manifest-path ./.actions/somnus/core/Cargo.toml --bin toml-linter
+          echo "Running TOML Linter..."
+          ./linter-bin/toml-linter
