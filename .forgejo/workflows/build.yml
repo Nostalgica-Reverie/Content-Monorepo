@@ -35,7 +35,6 @@ jobs:
           SHORT_SHA=$(git rev-parse --short HEAD)
           echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
 
-
       - name: Cache Builder Binary
         id: cache-builder
         uses: actions/cache@v4
@@ -49,7 +48,7 @@ jobs:
 
       - name: Rust Cache
         if: steps.cache-builder.outputs.cache-hit != 'true'
-        https://github.com/Swatinem/rust-cache@v2
+        uses: https://github.com/Swatinem/rust-cache@v2
         with:
           workspaces: "src/actions/builder -> target"
 

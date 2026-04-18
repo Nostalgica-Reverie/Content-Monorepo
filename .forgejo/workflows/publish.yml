@@ -78,7 +78,7 @@ jobs:
 
       - name: Rust Cache
         if: steps.cache-publisher.outputs.cache-hit != 'true'
-        https://github.com/Swatinem/rust-cache@v2
+        uses: https://github.com/Swatinem/rust-cache@v2
         with:
           workspaces: "src/actions/publish -> target"
 
