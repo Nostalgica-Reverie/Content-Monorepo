@@ -24,6 +24,12 @@ jobs:
             modpacks
             datapacks
 
+      - name: Install jq
+        run: |
+          if ! command -v jq &> /dev/null; then
+            apt-get update && apt-get install -y jq
+          fi
+
       - name: Find changed manifests
         id: find
         run: |
@@ -42,7 +48,7 @@ jobs:
 
   publish:
     needs: detect
-    if: needs.detect.outputs.has_manifests == 'true'
+    if: always()
     runs-on: technocality
     strategy:
       fail-fast: false
