@@ -7,6 +7,8 @@ pub mod state;
 pub mod logger;
 pub mod linter;
 
+pub use linter::{lint_changed_files, LintReport};
+
 use git2::Repository;
 use crate::errors::SomnusError;
 
