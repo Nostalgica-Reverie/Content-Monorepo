@@ -1,0 +1,164 @@
+[
+  {
+    "id": "legacy:lmr_6th",
+    "name": {"translate": "legacy.options.optionsPreset.lmr_6th"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.lmr_6th.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 4,
+      "options.graphics": 0,
+      "options.ao": false,
+      "options.renderClouds": false
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true
+    }
+  },
+  {
+    "id": "legacy:handheld",
+    "name": {"translate": "legacy.options.optionsPreset.handheld"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.handheld.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 6,
+      "options.graphics": 1,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 0.5,
+      "fakeAutosaveScreen": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true
+    }
+  },
+  {
+    "id": "legacy:low",
+    "name": {"translate": "legacy.options.optionsPreset.low"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.low.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 10,
+      "options.graphics": 1,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true
+    }
+  },
+  {
+    "id": "legacy:lmr_default",
+    "name": {"translate": "legacy.options.optionsPreset.lmr_default"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.lmr_default.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 12,
+      "options.graphics": 1,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true
+    }
+  },
+  {
+    "id": "legacy:lmr_defaultplus",
+    "name": {"translate": "legacy.options.optionsPreset.lmr_defaultplus"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.lmr_defaultplus.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 15,
+      "options.graphics": 1,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true
+    }
+  },
+  {
+    "id": "legacy:medium",
+    "name": {"translate": "legacy.options.optionsPreset.medium"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.medium.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 18,
+      "options.graphics": 1,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true
+    }
+  },
+  {
+    "id": "legacy:high",
+    "name": {"translate": "legacy.options.optionsPreset.high"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.high.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 24,
+      "options.graphics": 1,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "overrideTerrainFogStart": false,
+      "overrideTerrainFogEnd": false
+    }
+  },
+  {
+    "id": "legacy:ultra",
+    "name": {"translate": "legacy.options.optionsPreset.ultra"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.ultra.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 32,
+      "options.graphics": 1,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "overrideTerrainFogStart": false,
+      "overrideTerrainFogEnd": false
+    }
+  },
+  {
+    "id": "legacy:lmr_extreme",
+    "name": {"translate": "legacy.options.optionsPreset.lmr_extrene"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.lmr_extreme.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 64,
+      "options.graphics": 1,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "overrideTerrainFogStart": false,
+      "overrideTerrainFogEnd": false
+    }
+  }
+]
