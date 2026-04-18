@@ -2,55 +2,71 @@ name: "Linter"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths:
       - 'modpacks/**/*.json'
+      - 'modpacks/**/*.mcmeta'
       - 'modpacks/**/*.toml'
-      - 'resourcepacks/**/*.json'
       - 'datapacks/**/*.json'
+      - 'datapacks/**/*.mcmeta'
+      - 'src/actions/somnus/**'
   pull_request:
+    branches: ["main"]
+    paths:
+      - 'modpacks/**/*.json'
+      - 'modpacks/**/*.mcmeta'
+      - 'modpacks/**/*.toml'
+      - 'datapacks/**/*.json'
+      - 'datapacks/**/*.mcmeta'
+      - 'src/actions/somnus/**'
+  workflow_dispatch:
 
 jobs:
   lint:
     runs-on: technocality
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 2
+          filter: blob:none
           sparse-checkout: |
             modpacks
-            resourcepacks
             datapacks
             src/actions/somnus
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache Rust
-        uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: "src/actions/somnus/core -> target"
 
       - name: Cache Linter Binaries
         id: cache-linter
         uses: actions/cache@v4
         with:
           path: ./linter-bin
-          key: linter-${{ runner.os }}-${{ hashFiles('src/actions/somnus/core/**/*.rs') }}
+          key: linter-v1-${{ runner.os }}-${{ hashFiles('src/actions/somnus/core/**/*.rs', 'src/actions/somnus/core/Cargo.toml', 'src/actions/somnus/core/Cargo.lock') }}
+
+      - name: Install Rust
+        if: steps.cache-linter.outputs.cache-hit != 'true'
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust Cache (Compiler Internals)
+        if: steps.cache-linter.outputs.cache-hit != 'true'
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "src/actions/somnus/core -> target"
 
       - name: Build Linters
         if: steps.cache-linter.outputs.cache-hit != 'true'
         run: |
+          cargo build --release \
+            --manifest-path src/actions/somnus/core/Cargo.toml \
+            --bin json-linter --bin toml-linter
           mkdir -p ./linter-bin
-          cargo build --release --manifest-path src/actions/somnus/core/Cargo.toml
           cp src/actions/somnus/core/target/release/json-linter ./linter-bin/
           cp src/actions/somnus/core/target/release/toml-linter ./linter-bin/
 
       - name: Run Linters
         run: |
+          chmod +x ./linter-bin/json-linter ./linter-bin/toml-linter
           echo "Running JSON Linter..."
           ./linter-bin/json-linter
-          
           echo "Running TOML Linter..."
           ./linter-bin/toml-linter
+
