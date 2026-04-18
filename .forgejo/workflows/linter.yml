@@ -42,15 +42,15 @@ jobs:
           path: ./linter-bin
           key: linter-v1-${{ runner.os }}-${{ hashFiles('src/actions/somnus/core/**/*.rs', 'src/actions/somnus/core/Cargo.toml', 'src/actions/somnus/core/Cargo.lock') }}
 
-      - name: Install Rust
-        if: steps.cache-linter.outputs.cache-hit != 'true'
-        uses: https://github.com/dtolnay/rust-toolchain@stable
-
       - name: Rust Cache
         if: steps.cache-linter.outputs.cache-hit != 'true'
         uses: https://github.com/Swatinem/rust-cache@v2
         with:
           workspaces: "src/actions/somnus/core -> target"
+
+      - name: Install Rust
+        if: steps.cache-linter.outputs.cache-hit != 'true'
+        uses: https://github.com/dtolnay/rust-toolchain@stable
 
       - name: Build Linters
         if: steps.cache-linter.outputs.cache-hit != 'true'
@@ -59,8 +59,8 @@ jobs:
             --manifest-path src/actions/somnus/core/Cargo.toml \
             --bin json-linter --bin toml-linter
           mkdir -p ./linter-bin
-          cp src/actions/somnus/core/target/release/json-linter ./linter-bin/
-          cp src/actions/somnus/core/target/release/toml-linter ./linter-bin/
+          cp src/actions/somnus/core/src/bin/json-linter ./linter-bin/
+          cp src/actions/somnus/core/src/bin/toml-linter ./linter-bin/
 
       - name: Run Linters
         run: |
