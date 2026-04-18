@@ -48,7 +48,7 @@ jobs:
 
   publish:
     needs: detect
-    if: needs.detect.outputs.has_manifests == 'true'
+    if: always()
     runs-on: technocality
     strategy:
       fail-fast: false
