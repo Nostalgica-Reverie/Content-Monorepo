@@ -1,12 +1,13 @@
-name: "CoreSync"
+name: "Sync"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths:
       - 'modpacks/lce-core/**/mods/**'
       - 'modpacks/lce-core/**/resourcepacks/**'
       - 'modpacks/lce-core/**/resources/**'
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -15,21 +16,62 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           filter: blob:none
+          sparse-checkout: |
+            modpacks
+            src/actions/coresync
 
-      - name: Rust Cache
-        uses: Swatinem/rust-cache@v2
+
+      - name: Cache CoreSync Binary
+        id: cache-coresync
+        uses: actions/cache@v4
         with:
-          # Point to the new src/actions location
-          workspaces: "src/actions/coresync -> target"
+          path: ./coresync-bin
+          key: coresync-v1-${{ runner.os }}-${{ hashFiles('src/actions/coresync/**/*.rs', 'src/actions/coresync/Cargo.toml', 'src/actions/coresync/Cargo.lock') }}
 
       - name: Install Rust
+        if: steps.cache-coresync.outputs.cache-hit != 'true'
         uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust Cache (Compiler Internals)
+        if: steps.cache-coresync.outputs.cache-hit != 'true'
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "src/actions/coresync -> target"
+
+      - name: Build CoreSync
+        if: steps.cache-coresync.outputs.cache-hit != 'true'
+        run: |
+          cargo build --release --manifest-path src/actions/coresync/Cargo.toml --bin coresync
+          mkdir -p ./coresync-bin
+          cp src/actions/coresync/target/release/coresync ./coresync-bin/coresync
+
+      - name: Cache Packwiz Binaries
+        id: cache-go
+        uses: actions/cache@v4
+        with:
+          path: ~/go/bin
+          key: go-bin-packwiz-v1-${{ runner.os }}
+
+      - name: Setup Go
+        if: steps.cache-go.outputs.cache-hit != 'true'
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Install Packwiz
+        if: steps.cache-go.outputs.cache-hit != 'true'
+        run: go install github.com/packwiz/packwiz@latest
+
+      - name: Add Go bin to PATH
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
       - name: Run CoreSync
         run: |
-          cargo run --release --manifest-path src/actions/coresync/Cargo.toml
+          chmod +x ./coresync-bin/coresync
+          ./coresync-bin/coresync
 
       - name: Commit and Push
         uses: https://github.com/EndBug/add-and-commit@v9

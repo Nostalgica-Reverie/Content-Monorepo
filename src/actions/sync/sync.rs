@@ -1,68 +1,104 @@
+use anyhow::{bail, Context, Result};
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::Command;
 use walkdir::WalkDir;
 
-fn main() {
-    let sync_map = vec![
-        ("modpacks/lce-core/1.21.10-mr", vec![
+const SUBFOLDERS: &[&str] = &["mods", "resourcepacks", "resources"];
+
+const SYNC_MAP: &[(&str, &[&str])] = &[
+    (
+        "modpacks/lce-core/1.21.10-mr",
+        &[
             "modpacks/simply/1.21.10-mr",
             "modpacks/rc-plus/1.21.10-mr",
-        ]),
-        ("modpacks/lce-core/1.21.10-cf", vec![
+        ],
+    ),
+    (
+        "modpacks/lce-core/1.21.10-cf",
+        &[
             "modpacks/simply/1.21.10-cf",
             "modpacks/rc-plus/1.21.10-cf",
-        ]),
-    ];
+        ],
+    ),
+];
 
-    for (src_str, targets) in sync_map {
+fn main() -> Result<()> {
+    for (src_str, targets) in SYNC_MAP {
         let src_path = Path::new(src_str);
         if !src_path.exists() {
-            println!("Skipping source {}: Not found", src_str);
+            println!("skipping source {src_str}: not found");
             continue;
         }
 
-        for target_str in targets {
+        for target_str in *targets {
             let target_path = Path::new(target_str);
-            if !target_path.exists() { continue; }
+            if !target_path.exists() {
+                println!("skipping target {target_str}: not found");
+                continue;
+            }
 
-            println!("Syncing {} -> {}", src_str, target_str);
-            
-            sync_subfolder(src_path, target_path, "mods");
-            sync_subfolder(src_path, target_path, "resourcepacks");
-            sync_subfolder(src_path, target_path, "resources");
+            println!("syncing {src_str} -> {target_str}");
 
-            refresh_packwiz(target_path);
+            for folder in SUBFOLDERS {
+                sync_subfolder(src_path, target_path, folder)
+                    .with_context(|| format!("failed syncing '{folder}' to {target_str}"))?;
+            }
+
+            refresh_packwiz(target_path)
+                .with_context(|| format!("packwiz refresh failed in {target_str}"))?;
         }
     }
+
+    println!("all syncs completed.");
+    Ok(())
 }
 
-fn sync_subfolder(src_root: &Path, dst_root: &Path, folder: &str) {
+fn sync_subfolder(src_root: &Path, dst_root: &Path, folder: &str) -> Result<()> {
     let src = src_root.join(folder);
-    let dst = dst_root.join(folder);
+    if !src.exists() {
+        return Ok(());
+    }
 
-    if !src.exists() { return; }
+    let mut copied = 0usize;
 
-    for entry in WalkDir::new(&src)
-        .into_iter()
-        .filter_map(|e| e.ok())
-        .filter(|e| !e.path().is_dir()) 
-    {
-        let src_file = entry.path();
-        let relative = src_file.strip_prefix(src_root).unwrap();
+    for entry in WalkDir::new(&src) {
+        let entry = entry.context("walkdir error")?;
+        let path = entry.path();
+        if path.is_dir() {
+            continue;
+        }
+
+        let relative = path.strip_prefix(src_root).context("strip_prefix failed")?;
         let target_file = dst_root.join(relative);
 
         if let Some(parent) = target_file.parent() {
-            fs::create_dir_all(parent).expect("Failed to create dirs");
+            fs::create_dir_all(parent)
+                .with_context(|| format!("failed to create {}", parent.display()))?;
         }
 
-        fs::copy(src_file, &target_file).expect("Failed to copy file");
+        fs::copy(path, &target_file).with_context(|| {
+            format!(
+                "failed to copy {} -> {}",
+                path.display(),
+                target_file.display()
+            )
+        })?;
+        copied += 1;
     }
+
+    println!("  {folder}: {copied} file(s) copied");
+    Ok(())
 }
 
-fn refresh_packwiz(dir: &Path) {
-    let _ = Command::new("packwiz")
-        .arg("refresh")
+fn refresh_packwiz(dir: &Path) -> Result<()> {
+    let status = Command::new("packwiz")
+        .args(["refresh", "-y"])
         .current_dir(dir)
-        .status();
+        .status()
+        .context("failed to invoke packwiz")?;
+    if !status.success() {
+        bail!("packwiz refresh exited with {status}");
+    }
+    Ok(())
 }
