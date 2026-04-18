@@ -1,47 +1,32 @@
-use std::fs;
-use std::path::Path;
-use somnus_core::get_changed_files;
+use somnus_core::lint_changed_files;
+
+const WATCHED_PREFIXES: &[&str] = &["modpacks/", "datapacks/"];
+const WATCHED_EXTS: &[&str] = &[".json", ".mcmeta"];
 
 fn main() {
-    if run() {
-        std::process::exit(1);
-    }
-}
-
-pub fn run() -> bool {
-    let mut failed = false;
-
-    let changed_files = match get_changed_files() {
-        Ok(files) => files,
+    let report = match lint_changed_files(
+        "json",
+        |path| {
+            WATCHED_PREFIXES.iter().any(|p| path.starts_with(p))
+                && WATCHED_EXTS.iter().any(|e| path.ends_with(e))
+        },
+        |content| {
+            serde_json::from_str::<serde_json::Value>(content)
+                .map(|_| ())
+                .map_err(|e| e.to_string())
+        },
+    ) {
+        Ok(r) => r,
         Err(e) => {
-            eprintln!("::error::Failed to retrieve changed files: {}", e);
-            return true;
+            eprintln!("::error::lint harness failed: {e}");
+            std::process::exit(1);
         }
     };
 
-    for file_path in changed_files {
-        let path = Path::new(&file_path);
-        if !path.exists() { continue; }
+    println!("linted {} json file(s), {} failed.", report.checked, report.failed);
 
-        if file_path.ends_with(".json") || file_path.ends_with(".mcmeta") {
-            if ["modpacks/", "resourcepacks/", "datapacks/"]
-                .iter()
-                .any(|dir| file_path.starts_with(dir)) 
-            {
-                println!("::group::Linting {}", file_path);
-                let content = fs::read_to_string(path).expect("Read Error");
-                
-                if let Err(e) = serde_json::from_str::<serde_json::Value>(&content) {
-                    eprintln!("::error file={}::INVALID JSON: {}", file_path, e);
-                    failed = true;
-                }
-                println!("::endgroup::");
-            }
-        }
+    if !report.is_ok() {
+        eprintln!("fix yo json chud...");
+        std::process::exit(1);
     }
-
-    if failed { 
-        eprintln!("Fix yo json chud..."); 
-    }
-    failed
 }

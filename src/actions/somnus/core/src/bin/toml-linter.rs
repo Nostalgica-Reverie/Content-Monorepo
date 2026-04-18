@@ -1,42 +1,32 @@
-use std::fs;
-use std::path::Path;
-use somnus_core::get_changed_files;
+use somnus_core::lint_changed_files;
+
+const WATCHED_PREFIXES: &[&str] = &["modpacks/", "datapacks/"];
 
 fn main() {
-    if run() {
-        std::process::exit(1);
-    }
-}
-
-pub fn run() -> bool {
-    let mut failed = false;
-
-    let changed_files = match get_changed_files() {
-        Ok(files) => files,
+    let report = match lint_changed_files(
+        "toml",
+        |path| {
+            path.ends_with(".toml")
+                && WATCHED_PREFIXES.iter().any(|p| path.starts_with(p))
+        },
+        |content| {
+            content
+                .parse::<toml::Value>()
+                .map(|_| ())
+                .map_err(|e| e.to_string())
+        },
+    ) {
+        Ok(r) => r,
         Err(e) => {
-            eprintln!("::error::Failed to retrieve changed files: {}", e);
-            return true;
+            eprintln!("::error::lint harness failed: {e}");
+            std::process::exit(1);
         }
     };
 
-    for file_path in changed_files {
-        let path = Path::new(&file_path);
-        if !path.exists() { continue; }
+    println!("linted {} toml file(s), {} failed.", report.checked, report.failed);
 
-        if file_path.ends_with(".toml") {
-            println!("::group::Linting TOML: {}", file_path);
-            let content = fs::read_to_string(path).expect("Read Error");
-            
-            if let Err(e) = content.parse::<toml::Value>() {
-                eprintln!("::error file={}::INVALID TOML: {}", file_path, e);
-                failed = true;
-            }
-            println!("::endgroup::");
-        }
+    if !report.is_ok() {
+        eprintln!("fix yo toml chud...");
+        std::process::exit(1);
     }
-
-    if failed { 
-        eprintln!("Fix yo toml chud..."); 
-    }
-    failed
 }
