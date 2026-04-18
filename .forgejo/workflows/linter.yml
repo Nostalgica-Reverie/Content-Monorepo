@@ -59,8 +59,8 @@ jobs:
             --manifest-path src/actions/somnus/core/Cargo.toml \
             --bin json-linter --bin toml-linter
           mkdir -p ./linter-bin
-          cp src/actions/somnus/core/src/bin/json-linter ./linter-bin/
-          cp src/actions/somnus/core/src/bin/toml-linter ./linter-bin/
+          cp src/actions/somnus/core/src/bin/json-linter.rs ./linter-bin/
+          cp src/actions/somnus/core/src/bin/toml-linter.rs ./linter-bin/
 
       - name: Run Linters
         run: |
