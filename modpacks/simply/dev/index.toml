@@ -374,7 +374,7 @@ hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/intro.json"
-hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
+hash = "8c5566590c58d9cdffd4eed365e2354badca04e07912db2b923b84160c1c51c0"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/af_za.json"
@@ -430,7 +430,7 @@ hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_us.json"
-hash = "f237df2d65d2ddaeb0fb4aaf890603af8156ee1a746203d39e36e3428aff6bef"
+hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/enp.json"
@@ -774,7 +774,7 @@ hash = "e7ced9acb213b517915bcffbff6df231a1cc6f5ef1719812e75f61cc7972bc0c"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/pack.mcmeta"
-hash = "3887759fb6ec0356d33dce2368c58abf68fbb63dcf5fb85b7fd3e09ee6e85abf"
+hash = "6916f9deaf6b2b3f79699ecd3d8728ca4d9afad8a1717495325f27a2fc15bd46"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/pack.png"
@@ -844,7 +844,7 @@ metafile = true
 
 [[files]]
 file = "mods/entity-model-features.pw.toml"
-hash = "e8a456b474cc572ceb2bdd29f6611166224b3c34e6fb100e89dd35764ab1e04f"
+hash = "6e772213a6e3504f250852a75d9b170850daa6265b4f11491bdc654f91832308"
 metafile = true
 
 [[files]]
@@ -854,7 +854,7 @@ metafile = true
 
 [[files]]
 file = "mods/entitytexturefeatures.pw.toml"
-hash = "060ee8258633fac0fa2f905d15a6f93388a9f02b5876a723d08298a450154fd5"
+hash = "27afacf195a3757d569fa1f6f4363e5ad608e8033092db2324e6b9091a1c2e19"
 metafile = true
 
 [[files]]
@@ -866,6 +866,10 @@ metafile = true
 file = "mods/fabric-language-kotlin.pw.toml"
 hash = "e49f549eecbe502a3da6d731d6e28783631b14b0bba7bba9780a1075e7926776"
 metafile = true
+
+[[files]]
+file = "mods/facapi-next.toml"
+hash = "f9f3164187728e73e983a5a298c4d351f3b8a045e74930756dbe4b0608e4b643"
 
 [[files]]
 file = "mods/factory-api.pw.toml"
@@ -889,7 +893,7 @@ metafile = true
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "b10c93f14fb96e5c1bdaebf0fb6eb06d9c67227ea6b4154b0119c8934fe692fc"
+hash = "9e6a3fb54ebb13ea95ced681d270cfa83134e95bb7111de140208db7160fffa7"
 metafile = true
 
 [[files]]
@@ -924,12 +928,7 @@ metafile = true
 
 [[files]]
 file = "mods/lws-next.pw.toml"
-hash = "2e80de56b7327089b8c757598cc6ed98fa87192243008ce1f40d6a850dd13904"
-metafile = true
-
-[[files]]
-file = "mods/mod.pw.toml"
-hash = "15b83ad4613f017e879854a4bda23711ba091fb0fab68362705c0253ccb681ea"
+hash = "0ae68610449fedabeaf0a67020376ee1ab3b079be0088e9a0c7fb114f2fc503f"
 metafile = true
 
 [[files]]
@@ -963,6 +962,11 @@ hash = "ab6def9d98d3f5bf12f78845bdb770a19d5ca590c571e60184e537ffa14dcbee"
 metafile = true
 
 [[files]]
+file = "mods/preferred-gamerules.pw.toml"
+hash = "7337f07b427d7defbb70bd010cca7f90ee2e4f5fa8e63f13b938226e754af947"
+metafile = true
+
+[[files]]
 file = "mods/regsyncfix.pw.toml"
 hash = "8c5e091f9ba1228c91ce49d5da218751ba48522fd0d587aff8774fc2ba7c1bfc"
 metafile = true
@@ -975,11 +979,6 @@ metafile = true
 [[files]]
 file = "mods/servercore.pw.toml"
 hash = "f257b7d8512dc119c05021b2eacab79f3cdfb2b1ca6760a0123da5719247dbf8"
-metafile = true
-
-[[files]]
-file = "mods/shuttfup.pw.toml"
-hash = "0328bce44bf75ef2c30203f7cdc98406cd50bda55ad4ac1066abf174e465f880"
 metafile = true
 
 [[files]]
@@ -1145,7 +1144,7 @@ hash = "06b76e55f87011613602a3fbbcb361f490619c0a9238c676381210440461b017"
 
 [[files]]
 file = "resourcepacks/Clean World Loading/assets/legacy/lang/en_us.json"
-hash = "60ae64c66c4267b6554462fbe29e89a731ef2eeb592d34cffb43ec45c3e1f522"
+hash = "06b76e55f87011613602a3fbbcb361f490619c0a9238c676381210440461b017"
 
 [[files]]
 file = "resourcepacks/Clean World Loading/assets/legacy/lang/enp.json"
@@ -2312,7 +2311,7 @@ hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/intro.json"
-hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
+hash = "8c5566590c58d9cdffd4eed365e2354badca04e07912db2b923b84160c1c51c0"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/af_za.json"
@@ -2368,7 +2367,7 @@ hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_us.json"
-hash = "f237df2d65d2ddaeb0fb4aaf890603af8156ee1a746203d39e36e3428aff6bef"
+hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/enp.json"
@@ -2712,7 +2711,7 @@ hash = "e7ced9acb213b517915bcffbff6df231a1cc6f5ef1719812e75f61cc7972bc0c"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/pack.mcmeta"
-hash = "3887759fb6ec0356d33dce2368c58abf68fbb63dcf5fb85b7fd3e09ee6e85abf"
+hash = "6916f9deaf6b2b3f79699ecd3d8728ca4d9afad8a1717495325f27a2fc15bd46"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/pack.png"
