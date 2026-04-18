@@ -45,11 +45,11 @@ jobs:
 
       - name: Install Rust
         if: steps.cache-builder.outputs.cache-hit != 'true'
-        uses: dtolnay/rust-toolchain@stable
+        uses: https://github.com/dtolnay/rust-toolchain@stable
 
-      - name: Rust Cache (Compiler Internals)
+      - name: Rust Cache
         if: steps.cache-builder.outputs.cache-hit != 'true'
-        uses: Swatinem/rust-cache@v2
+        https://github.com/Swatinem/rust-cache@v2
         with:
           workspaces: "src/actions/builder -> target"
 
