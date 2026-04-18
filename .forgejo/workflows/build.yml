@@ -6,13 +6,13 @@ on:
     paths:
       - 'modpacks/**'
       - 'datapacks/**'
-      - 'src/actions/**'
+      - 'src/actions/builder/**'
   pull_request:
     branches: ["main"]
     paths:
       - 'modpacks/**'
       - 'datapacks/**'
-      - 'src/actions/**'
+      - 'src/actions/builder/**'
   workflow_dispatch:
 
 jobs:
@@ -27,13 +27,38 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            src/actions
+            src/actions/builder
 
       - name: Meta
         id: meta
         run: |
           SHORT_SHA=$(git rev-parse --short HEAD)
           echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
+
+
+      - name: Cache Builder Binary
+        id: cache-builder
+        uses: actions/cache@v4
+        with:
+          path: ./builder-bin
+          key: builder-v1-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.rs', 'src/actions/builder/Cargo.toml', 'src/actions/builder/Cargo.lock') }}
+
+      - name: Install Rust
+        if: steps.cache-builder.outputs.cache-hit != 'true'
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust Cache (Compiler Internals)
+        if: steps.cache-builder.outputs.cache-hit != 'true'
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "src/actions/builder -> target"
+
+      - name: Build Builder
+        if: steps.cache-builder.outputs.cache-hit != 'true'
+        run: |
+          cargo build --release --manifest-path src/actions/builder/Cargo.toml --bin builder
+          mkdir -p ./builder-bin
+          cp src/actions/builder/target/release/builder ./builder-bin/builder
 
       - name: Cache Go Binaries
         id: cache-go
@@ -55,29 +80,6 @@ jobs:
 
       - name: Add Go bin to PATH
         run: echo "$HOME/go/bin" >> $GITHUB_PATH
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache Builder Binary
-        id: cache-builder
-        uses: actions/cache@v4
-        with:
-          path: ./builder-bin
-          key: builder-v1-${{ runner.os }}-${{ hashFiles('src/actions/**/*.rs', 'src/actions/Cargo.toml', 'src/actions/Cargo.lock') }}
-
-      - name: Rust Cache
-        if: steps.cache-builder.outputs.cache-hit != 'true'
-        uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: "src/actions -> target"
-
-      - name: Build Builder
-        if: steps.cache-builder.outputs.cache-hit != 'true'
-        run: |
-          cargo build --release --manifest-path src/actions/Cargo.toml --bin builder
-          mkdir -p ./builder-bin
-          cp src/actions/target/release/builder ./builder-bin/builder
 
       - name: Run Build
         run: |
