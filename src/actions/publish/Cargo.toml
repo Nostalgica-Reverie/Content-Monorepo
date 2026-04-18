@@ -8,4 +8,5 @@ name = "publish"
 path = "publish.rs"
 
 [dependencies]
+anyhow = "1.0"
 serde_json = "1.0"
