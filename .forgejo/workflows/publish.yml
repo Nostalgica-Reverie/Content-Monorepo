@@ -24,6 +24,12 @@ jobs:
             modpacks
             datapacks
 
+      - name: Install jq
+        run: |
+          if ! command -v jq &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y jq
+          fi
+
       - name: Find changed manifests
         id: find
         run: |
