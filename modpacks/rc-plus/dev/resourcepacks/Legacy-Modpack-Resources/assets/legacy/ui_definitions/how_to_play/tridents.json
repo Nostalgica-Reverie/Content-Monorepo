@@ -1,0 +1,38 @@
+{
+  "elements": {
+    "scrollable_renderer": {
+      "type": "put_scrollable_renderer",
+      "x": "(${width}-${scrollable_renderer.width})/2",
+      "y": "(${height}-${scrollable_renderer.height})/2 + 31",
+      "width": 456,
+      "height": 222,
+      "elements": {
+        "text": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.tridents_message"},
+          "width": 433
+        },
+        "impaling": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.tridents_impaling"},
+          "width": 433
+        },
+        "riptide": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.tridents_riptide"},
+          "width": 433
+        },
+        "loyalty": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.tridents_loyalty"},
+          "width": 433
+        },
+        "channeling": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.tridents_channeling"},
+          "width": 433
+        }
+      }
+    }
+  }
+}
