@@ -249,6 +249,10 @@ file = "config/modpack_defaults/config/threadtweak.json"
 hash = "b4c1cc5fc213225d64e685a3b632092e909386ab41bd9925f9cf7efd53d1ad46"
 
 [[files]]
+file = "config/modpack_defaults/config/voicechat/voicechat-client.properties"
+hash = "756bf0b8391d5c8f8a3e92ec0f04d35b249f3968a4c0f2a966476de27b3bb822"
+
+[[files]]
 file = "config/modpack_defaults/config/yacl.json5"
 hash = "121b93764159be6fb7dab523b29a844e2bb78400ce8c48f52135a097e9b0006e"
 
@@ -979,11 +983,6 @@ metafile = true
 [[files]]
 file = "mods/zfastnoise.pw.toml"
 hash = "ddab752f582932650084ba48a56e6bd37dcdc06e3a8430ce82b277ab7c26b390"
-metafile = true
-
-[[files]]
-file = "plugins/simple-voice-chat.pw.toml"
-hash = "561a29524b1fa12577e757ce2c898cef598032f47e7ac91ba2922bcec7159da0"
 metafile = true
 
 [[files]]
