@@ -1,87 +1,121 @@
-use std::process::Command;
-use std::sync::{Arc, Mutex};
-use std::thread;
+use anyhow::{bail, Context, Result};
+use std::{
+    fs,
+    path::PathBuf,
+    process::Command,
+    sync::{Arc, Mutex},
+    thread,
+};
 
-fn main() {
-    let modpacks = vec!["simply", "rc-plus", "2k", "rekindled"];
-    let max_concurrent = 4; 
-    
-    let modpacks_queue = Arc::new(Mutex::new(modpacks.into_iter()));
-    let errors = Arc::new(Mutex::new(Vec::new()));
-    let mut workers = vec![];
+const PACKS: &[&str] = &["simply", "rc-plus", "2k", "rekindled"];
+const MAX_CONCURRENT: usize = 8;
 
-    println!("starting throttled parallel updates ({} at a time)...", max_concurrent);
+fn main() -> Result<()> {
+    let mut jobs: Vec<PathBuf> = Vec::new();
+    for pack in PACKS {
+        let pack_dir = PathBuf::from("modpacks").join(pack);
+        if !pack_dir.exists() {
+            eprintln!("warning: pack directory missing: {}", pack_dir.display());
+            continue;
+        }
 
-    for i in 0..max_concurrent {
-        let queue_clone = Arc::clone(&modpacks_queue);
-        let err_clone = Arc::clone(&errors);
+        let entries = fs::read_dir(&pack_dir)
+            .with_context(|| format!("failed to read {}", pack_dir.display()))?;
 
-        let handle = thread::spawn(move || {
+        for entry in entries {
+            let entry = entry.context("failed to read directory entry")?;
+            let path = entry.path();
+            if !path.is_dir() {
+                continue;
+            }
+            let Some(name) = path.file_name().and_then(|s| s.to_str()) else {
+                continue;
+            };
+            if name.ends_with("-mr") || name.ends_with("-cf") {
+                jobs.push(path);
+            }
+        }
+    }
+
+    if jobs.is_empty() {
+        println!("no packs to update.");
+        return Ok(());
+    }
+
+    println!(
+        "queued {} subdir(s) across {} pack(s), running up to {} in parallel",
+        jobs.len(),
+        PACKS.len(),
+        MAX_CONCURRENT,
+    );
+
+    let jobs = Arc::new(Mutex::new(jobs.into_iter()));
+    let failures: Arc<Mutex<Vec<(PathBuf, String)>>> = Arc::new(Mutex::new(Vec::new()));
+
+    let mut handles = Vec::new();
+    for worker_id in 0..MAX_CONCURRENT {
+        let jobs = Arc::clone(&jobs);
+        let failures = Arc::clone(&failures);
+
+        handles.push(thread::spawn(move || {
             loop {
-                let pack = {
-                    let mut queue = queue_clone.lock().unwrap();
-                    queue.next()
-                };
+                let job = { jobs.lock().unwrap().next() };
+                let Some(path) = job else { break };
 
-                let pack = match pack {
-                    Some(p) => p,
-                    None => break,
-                };
+                let label = path.display().to_string();
+                println!("[W{worker_id}] updating {label}");
 
-                let path = format!("modpacks/{}", pack);
-                println!("[Worker {}] starting: {}", i, pack);
-
-                if !std::path::Path::new(&path).exists() {
-                    let mut e = err_clone.lock().unwrap();
-                    e.push(format!("directory missing: {}", path));
-                    continue;
-                }
-
-                let refresh = Command::new("pw")
-                    .args(["batch", "refresh", "-y"])
+                let output = Command::new("packwiz")
+                    .args(["update", "-a", "-y"])
                     .current_dir(&path)
-                    .status();
+                    .output();
 
-                let update = Command::new("pw")
-                    .args(["batch", "update", "-a", "-y"])
-                    .current_dir(&path)
-                    .status();
-
-                let failed = match (refresh, update) {
-                    (Ok(s1), Ok(s2)) => !s1.success() || !s2.success(),
-                    (Err(e), _) => {
-                        println!("[Worker {}] refresh failed for {}: {}", i, pack, e);
-                        true
-                    },
-                    (_, Err(e)) => {
-                        println!("[Worker {}] update failed for {}: {}", i, pack, e);
-                        true
+                match output {
+                    Ok(o) if o.status.success() => {
+                        println!("[W{worker_id}] ok: {label}");
                     }
-                };
-
-                if failed {
-                    let mut e = err_clone.lock().unwrap();
-                    e.push(format!("failed: {}", pack));
-                } else {
-                    println!("[Worker {}] done: {}", i, pack);
+                    Ok(o) => {
+                        let stderr = String::from_utf8_lossy(&o.stderr).into_owned();
+                        let stdout = String::from_utf8_lossy(&o.stdout).into_owned();
+                        eprintln!("[W{worker_id}] FAIL {label} (exit {})", o.status);
+                        if !stdout.is_empty() {
+                            eprintln!("  stdout:\n{}", indent(&stdout, "    "));
+                        }
+                        if !stderr.is_empty() {
+                            eprintln!("  stderr:\n{}", indent(&stderr, "    "));
+                        }
+                        let reason = if !stderr.is_empty() { stderr } else { stdout };
+                        failures.lock().unwrap().push((path, reason));
+                    }
+                    Err(e) => {
+                        eprintln!("[W{worker_id}] FAIL {label}: could not launch packwiz: {e}");
+                        failures.lock().unwrap().push((path, e.to_string()));
+                    }
                 }
             }
-        });
-        workers.push(handle);
+        }));
     }
 
-    for handle in workers {
-        handle.join().unwrap();
+    for h in handles {
+        h.join().expect("worker thread panicked");
     }
 
-    let final_errors = errors.lock().unwrap();
-    if !final_errors.is_empty() {
-        eprintln!("\nsummary of failures");
-        for err in final_errors.iter() { 
-            eprintln!("{}", err); 
-        }
-        std::process::exit(1); 
-    } else {
+    let failures = failures.lock().unwrap();
+    if failures.is_empty() {
         println!("\nall updates finished successfully.");
+        Ok(())
+    } else {
+        eprintln!("\n{} subdir(s) failed:", failures.len());
+        for (path, _reason) in failures.iter() {
+            eprintln!("  - {}", path.display());
+        }
+        bail!("{} update(s) failed", failures.len())
     }
+}
+
+fn indent(s: &str, prefix: &str) -> String {
+    s.lines()
+        .map(|l| format!("{prefix}{l}"))
+        .collect::<Vec<_>>()
+        .join("\n")
 }
