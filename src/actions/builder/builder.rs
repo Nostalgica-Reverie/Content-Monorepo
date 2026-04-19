@@ -6,6 +6,7 @@ use std::{
     io,
     path::{Path, PathBuf},
     process::Command,
+    thread,
 };
 use walkdir::WalkDir;
 use zip::write::SimpleFileOptions;
@@ -123,10 +124,10 @@ fn build_modpack(pack_id: &str, sha: &str, artifacts_dir: &Path) -> Result<()> {
     };
     let p_ver = manifest["version"]
         .as_str()
-        .ok_or_else(|| anyhow!("missing 'version' in {}", manifest_path.display()))?;
+        .ok_or_else(|| anyhow!("missing 'version' in {}", manifest_path.display()))?
+        .to_string();
 
-    let mut built_something = false;
-
+    let mut jobs: Vec<(Platform, PathBuf, String)> = Vec::new();
     let entries = fs::read_dir(&pack_dir)
         .with_context(|| format!("failed to read {}", pack_dir.display()))?;
 
@@ -136,61 +137,78 @@ fn build_modpack(pack_id: &str, sha: &str, artifacts_dir: &Path) -> Result<()> {
         if !path.is_dir() {
             continue;
         }
-
         let Some(dir_name) = path.file_name().and_then(|s| s.to_str()) else {
             continue;
         };
-
         let Some((mc_ver, suffix)) = dir_name.rsplit_once('-') else {
             continue;
         };
         let Some(platform) = Platform::from_suffix(suffix) else {
             continue;
         };
-
-        built_something = true;
-        let output_name = format!(
-            "{}-{}-{}-{}-{}.{}",
-            pack_id,
-            mc_ver,
-            platform.short(),
-            p_ver,
-            sha,
-            platform.ext()
-        );
-        let output_path = artifacts_dir.join(&output_name);
-
-        let refresh = Command::new("packwiz")
-            .args(["refresh", "-y"])
-            .current_dir(&path)
-            .status()
-            .context("failed to invoke packwiz refresh")?;
-        if !refresh.success() {
-            bail!("packwiz refresh failed in {}", path.display());
-        }
-
-        let export = Command::new("packwiz")
-            .args([
-                platform.cli(),
-                "export",
-                "--output",
-                output_path
-                    .to_str()
-                    .ok_or_else(|| anyhow!("non-UTF8 output path"))?,
-            ])
-            .current_dir(&path)
-            .status()
-            .context("failed to invoke packwiz export")?;
-        if !export.success() {
-            bail!("packwiz export failed for {dir_name}");
-        }
-
-        println!("exported {output_name}");
+        jobs.push((platform, path, mc_ver.to_string()));
     }
 
-    if !built_something {
+    if jobs.is_empty() {
         bail!("no valid version dirs (expected '{{mc_ver}}-mr' or '{{mc_ver}}-cf') for {pack_id}");
     }
+
+    let pack_id_owned = pack_id.to_string();
+    let sha_owned = sha.to_string();
+    let artifacts_dir_owned = artifacts_dir.to_path_buf();
+
+    let mut handles = Vec::new();
+    for (platform, target_path, mc_ver) in jobs {
+        let pack_id = pack_id_owned.clone();
+        let sha = sha_owned.clone();
+        let p_ver = p_ver.clone();
+        let artifacts_dir = artifacts_dir_owned.clone();
+
+        handles.push(thread::spawn(move || -> Result<()> {
+            let output_name = format!(
+                "{}-{}-{}-{}-{}.{}",
+                pack_id,
+                mc_ver,
+                platform.short(),
+                p_ver,
+                sha,
+                platform.ext()
+            );
+            let output_path = artifacts_dir.join(&output_name);
+            let out_str = output_path
+                .to_str()
+                .ok_or_else(|| anyhow!("non-UTF8 output path"))?;
+
+            let export = Command::new("packwiz")
+                .args([platform.cli(), "export", "--output", out_str])
+                .current_dir(&target_path)
+                .status()
+                .context("failed to invoke packwiz export")?;
+            if !export.success() {
+                bail!("packwiz export failed for {}", target_path.display());
+            }
+
+            println!("exported {output_name}");
+            Ok(())
+        }));
+    }
+
+    let mut errors = Vec::new();
+    for h in handles {
+        match h.join() {
+            Ok(Ok(())) => {}
+            Ok(Err(e)) => errors.push(e),
+            Err(_) => errors.push(anyhow!("export thread panicked")),
+        }
+    }
+
+    if !errors.is_empty() {
+        for e in &errors {
+            eprintln!("error: {e:#}");
+        }
+        bail!("{} export(s) failed for {pack_id}", errors.len());
+    }
+
     Ok(())
 }
 
