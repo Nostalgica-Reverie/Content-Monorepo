@@ -4,8 +4,9 @@ use std::{
     env,
     fs::{self, OpenOptions},
     io::Write,
-    path::Path,
+    path::{Path, PathBuf},
     process::Command,
+    thread,
 };
 
 #[derive(Clone, Copy)]
@@ -111,52 +112,71 @@ fn build_modpack(
     loader: &str,
 ) -> Result<()> {
     let filename_base = format!("{p_name}-{mc_ver}-{loader}-{p_ver}");
-    let mut built = 0;
 
+    let mut jobs: Vec<(Platform, PathBuf)> = Vec::new();
     for platform in Platform::ALL {
         let target_folder = format!("{mc_ver}-{}", platform.short());
         let target_path = p_dir.join(&target_folder);
-        if !target_path.exists() {
+        if target_path.exists() {
+            jobs.push((platform, target_path));
+        } else {
             println!(
                 "skipping {}: folder {} not found",
                 platform.short(),
                 target_path.display()
             );
-            continue;
         }
-
-        let refresh = Command::new("packwiz")
-            .args(["refresh", "-y"])
-            .current_dir(&target_path)
-            .status()
-            .context("failed to invoke packwiz refresh")?;
-        if !refresh.success() {
-            bail!("packwiz refresh failed in {}", target_path.display());
-        }
-
-        let out_file = artifacts_dir.join(format!(
-            "{filename_base}-{}.{}",
-            platform.short(),
-            platform.ext()
-        ));
-        let out_str = out_file
-            .to_str()
-            .ok_or_else(|| anyhow!("non-UTF8 output path"))?;
-
-        let export = Command::new("packwiz")
-            .args([platform.cli(), "export", "--output", out_str])
-            .current_dir(&target_path)
-            .status()
-            .context("failed to invoke packwiz export")?;
-        if !export.success() {
-            bail!("packwiz export failed for {target_folder}");
-        }
-        built += 1;
     }
 
-    if built == 0 {
+    if jobs.is_empty() {
         bail!("no platform folders (mc_ver-mr / mc_ver-cf) found");
     }
+
+    let mut handles = Vec::new();
+    for (platform, target_path) in jobs {
+        let filename_base = filename_base.clone();
+        let artifacts_dir = artifacts_dir.to_path_buf();
+
+        handles.push(thread::spawn(move || -> Result<()> {
+            let out_file = artifacts_dir.join(format!(
+                "{filename_base}-{}.{}",
+                platform.short(),
+                platform.ext()
+            ));
+            let out_str = out_file
+                .to_str()
+                .ok_or_else(|| anyhow!("non-UTF8 output path"))?;
+
+            let export = Command::new("packwiz")
+                .args([platform.cli(), "export", "--output", out_str])
+                .current_dir(&target_path)
+                .status()
+                .context("failed to invoke packwiz export")?;
+            if !export.success() {
+                bail!("packwiz export failed for {}", target_path.display());
+            }
+
+            println!("exported {}", out_file.display());
+            Ok(())
+        }));
+    }
+
+    let mut errors = Vec::new();
+    for h in handles {
+        match h.join() {
+            Ok(Ok(())) => {}
+            Ok(Err(e)) => errors.push(e),
+            Err(_) => errors.push(anyhow!("export thread panicked")),
+        }
+    }
+
+    if !errors.is_empty() {
+        for e in &errors {
+            eprintln!("error: {e:#}");
+        }
+        bail!("{} export(s) failed", errors.len());
+    }
+
     Ok(())
 }
 

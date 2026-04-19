@@ -11,55 +11,67 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-        with: 
+        with:
           token: ${{ secrets.FORGEJO_TOKEN }}
           fetch-depth: 1
+          filter: blob:none
           sparse-checkout: |
             modpacks
-            src/actions
+            src/actions/updater
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
-
-      - name: Cache Packwiz Binaries
-        id: cache-tooling
-        uses: actions/cache@v4
-        with:
-          path: $HOME/go/bin
-          key: tooling-${{ runner.os }}-packwiz
-
-      - name: Install Tooling
-        if: steps.cache-tooling.outputs.cache-hit != 'true'
-        run: |
-          mkdir -p $HOME/go/bin
-          go install github.com/packwiz/packwiz@latest
-          go install github.com/Merith-TK/packwiz-wrapper/cmd/pw@main
-      
-      - name: Add Path
-        run: echo "$HOME/go/bin" >> $GITHUB_PATH
-
-      - name: Cache Updater
+      - name: Cache Updater Binary
         id: cache-updater
         uses: actions/cache@v4
         with:
           path: ./updater-bin
-          key: updater-v3-${{ runner.os }}-${{ hashFiles('src/actions/updater/**') }}
+          key: updater-v4-${{ runner.os }}-${{ hashFiles('src/actions/updater/**/*.rs', 'src/actions/updater/Cargo.toml', 'src/actions/updater/Cargo.lock') }}
 
-      - name: Rust Cache
+      - name: Install Rust
         if: steps.cache-updater.outputs.cache-hit != 'true'
-        uses: Swatinem/rust-cache@v2
+        uses: https://github.com/dtolnay/rust-toolchain@stable
+
+      - name: Rust Cache (Compiler Internals)
+        if: steps.cache-updater.outputs.cache-hit != 'true'
+        uses: https://github.com/Swatinem/rust-cache@v2
         with:
           workspaces: "src/actions/updater -> target"
 
       - name: Build Updater
         if: steps.cache-updater.outputs.cache-hit != 'true'
         run: |
-          cargo build --release --manifest-path src/actions/updater/Cargo.toml
+          cargo build --release --manifest-path src/actions/updater/Cargo.toml --bin updater
           mkdir -p ./updater-bin
           cp src/actions/updater/target/release/updater ./updater-bin/updater
+
+      - name: Cache Packwiz Binary
+        id: cache-go
+        uses: actions/cache@v4
+        with:
+          path: ~/go/bin
+          key: go-bin-packwiz-v1-${{ runner.os }}
+
+      - name: Setup Go
+        if: steps.cache-go.outputs.cache-hit != 'true'
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Install Packwiz
+        if: steps.cache-go.outputs.cache-hit != 'true'
+        run: go install github.com/packwiz/packwiz@latest
+
+      - name: Add Go bin to PATH
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
+
+      - name: Cache Packwiz Downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/packwiz
+          key: packwiz-cache-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            packwiz-cache-${{ runner.os }}-
 
       - name: Run Updater
         id: rust-update
@@ -68,10 +80,10 @@ jobs:
           chmod +x ./updater-bin/updater
           ./updater-bin/updater
 
-      - name: Run Shell Updater
+      - name: Run Shell Fallback
         if: steps.rust-update.outcome == 'failure'
         run: |
-          echo "Rust Updater failed. Falling back to Shell..."
+          echo "Rust updater failed, falling back to shell..."
           chmod +x ./modpacks/update-refresh.sh
           ./modpacks/update-refresh.sh
 
