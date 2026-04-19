@@ -146,7 +146,8 @@ fn build_modpack(pack_id: &str, sha: &str, artifacts_dir: &Path) -> Result<()> {
         let Some(platform) = Platform::from_suffix(suffix) else {
             continue;
         };
-        jobs.push((platform, path, mc_ver.to_string()));
+        let mc_ver = mc_ver.to_string();
+        jobs.push((platform, path, mc_ver));
     }
 
     if jobs.is_empty() {
@@ -244,3 +245,4 @@ fn zip_dir(src: &Path, dest: &Path) -> Result<()> {
     zip.finish()?;
     Ok(())
 }
+
