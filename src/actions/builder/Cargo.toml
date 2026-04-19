@@ -13,3 +13,7 @@ zip = "2.2"
 [[bin]]
 name = "builder"
 path = "builder.rs"
+
+[[bin]]
+name = "minify-json"
+path = "minify-json.rs"
