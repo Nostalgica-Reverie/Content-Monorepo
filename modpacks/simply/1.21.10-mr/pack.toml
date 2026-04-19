@@ -1,15 +1,15 @@
 name = "Simply Legacy"
 author = "Cjnator38"
-version = "26.04.1"
+version = "26.04.1.2617.0"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "6911c41ebc90667f74de7d7745d0634301628f868a66f437f24a69f04b8aae0e"
+hash = "d6e0de06b1d12cee92d8f25b06a4127e2e904d084c460751d7c91c894b0f39cf"
 
 [versions]
-fabric = "0.18.5"
+fabric = "0.19.2"
 minecraft = "1.21.10"
 
 [options]

@@ -1,13 +1,16 @@
-name = "Re-Console+"
-author = "omo50, Technocality, Cjnator38"
-version = "26.04.1"
+name = "Re-Console Plus"
+author = "omo50, Cjnator38"
+version = "26.04.2"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "7f680a809484314a0dd155615e10a8394bcd05eaff5a8bcc07800d6c6c33c045"
+hash = "4ae86fa02e72ce6b0da9f6c99b33a0ec2f630af7377d7d5fac0768df542d7deb"
 
 [versions]
-fabric = "0.18.5"
+fabric = "0.19.2"
 minecraft = "1.21.10"
+
+[options]
+datapack-folder = "./resources/datapack/required/"

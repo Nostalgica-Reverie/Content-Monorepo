@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          fetch-depth: 2
+          fetch-depth: 0
           filter: blob:none
           sparse-checkout: |
             modpacks
@@ -73,7 +73,12 @@ jobs:
 
       - name: Generate Changelog
         id: changelog
-        run: npx tsx tools/changelog/generate-changelog.ts "${{ matrix.manifest }}"
+        run: |
+          git config user.name "Forgejo Action"
+          git config user.email "actions@noreply.forgejo"
+          git add .
+          git commit -m "internal: prepare changelog" --allow-empty
+          npx tsx tools/changelog/generate-changelog.ts "${{ matrix.manifest }}"
 
       - name: Cache Publisher Binary
         id: cache-publisher

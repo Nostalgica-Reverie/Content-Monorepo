@@ -1,0 +1,15 @@
+name = "mod"
+filename = "factory_api-fabric-1.21.10-2.2.7.2615.2.jar"
+side = "both"
+
+[download]
+url = "https://github.com/omo50/mod/releases/download/facapi_next-1.0/factory_api-fabric-1.21.10-2.2.7.2615.2.jar"
+hash-format = "sha256"
+hash = "05946a0986e74d25bac2b45453726db8ce91760393f3338be4f4c24903843c54"
+
+[update]
+[update.github]
+branch = "main"
+regex = "^.+(?<!-api|-dev|-dev-preshadow|-sources)\\.jar$"
+slug = "omo50/mod"
+tag = "next-1.0"

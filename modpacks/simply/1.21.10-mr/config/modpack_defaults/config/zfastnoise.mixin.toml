@@ -14,7 +14,7 @@ version = 1
 	[perf.surface]
 		#Predict biomes in advance in surface builder. Major speedup for surface builder but may cause mod incompatibility
 		#default: false
-		biome = false
+		biome = true
 		#Skip trivial surface builder. Major speedup for end dimension. Depends on surface builder
 		#default: true
 		trivial = true
