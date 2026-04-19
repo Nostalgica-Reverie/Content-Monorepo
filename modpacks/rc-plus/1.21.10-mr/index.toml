@@ -2,11 +2,15 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/animatium.json"
-hash = "f83e8176ccda0689fb95e7c8724e3a9f86daa305772880bb419dde5e28d299c1"
+hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
 file = "config/c2me.toml"
-hash = "d072cb16eb9244f4e6bc09d57a613f96bf734dc013874b3dab58828801f99350"
+hash = "711e0664920627670c5638e9e29acba8f410d90b2f6091479e2cb8a08f764c35"
+
+[[files]]
+file = "config/complexleafculling.json"
+hash = "61677f9fa6d31e972eef67f963883d644f95ec060395f6628916b64f1a73a4a2"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
@@ -38,15 +42,15 @@ hash = "96bf60c2653e893599129f251281215774ec7d420db24fe094ae364ecbfc5939"
 
 [[files]]
 file = "config/fabric/indigo-renderer.properties"
-hash = "0a776bd94413087200e0cd1a0bd72cbfe5c1a69002c1c625236233c2183c301c"
+hash = "aa272c538cfdf8b1b6bc75a35f6fa056869c131056604308f06d06beeac80e04"
 
 [[files]]
 file = "config/immediatelyfast.json"
-hash = "8f85626cee8effcf430d24772946b3bea79a778917ba0681d2cc6fcb857efd2b"
+hash = "aeb8a2371724d24d68292ad2aa9f4d6b7111e046409a2a94925878dfeac7ccc8"
 
 [[files]]
 file = "config/modernfix-mixins.properties"
-hash = "0a81d2a243a17a906abdb39ebed7c1d8d09a976f6e5d58f5fa2a33e11e441892"
+hash = "3e808ff5702adc376a9990d84c543feb3fad5a28d564cfb465a9b6ce58b87c29"
 
 [[files]]
 file = "config/modpack_defaults/animatium_utility.json"
@@ -87,6 +91,10 @@ hash = "e2363d6108e75030db1257a59cdd5272bb81a96ff10572a8e03512cd4d301f50"
 [[files]]
 file = "config/modpack_defaults/config/citresewn.json"
 hash = "080ec08b7754723a3fa7c45cc0c37f251cc69ff5a07c06bb0f9cb40596373bbe"
+
+[[files]]
+file = "config/modpack_defaults/config/complexleafculling.json"
+hash = "61677f9fa6d31e972eef67f963883d644f95ec060395f6628916b64f1a73a4a2"
 
 [[files]]
 file = "config/modpack_defaults/config/cpm.json"
@@ -134,11 +142,11 @@ hash = "6ef9e4a1132e7aeab97f6829893124078b95be3c9a5b247754c2ccc9deb423ce"
 
 [[files]]
 file = "config/modpack_defaults/config/entity_model_features.json"
-hash = "a409f75f21a3189f06c4edf5bf6b613c3c6275147c8b51ae1e1c46e8e8cdb8ef"
+hash = "37144d898a913de605a370bf18a870c61c0633844512934630bfaa55914d8492"
 
 [[files]]
 file = "config/modpack_defaults/config/entity_texture_features.json"
-hash = "0554c0e7816266477c65c18d2ada9fdddf1c6750787efd329056223ca4a073b2"
+hash = "4284266e11add2e03fe5b9a27ce1287e725443dfe12bdf2dcde5473203f62107"
 
 [[files]]
 file = "config/modpack_defaults/config/entityculling.json"
@@ -146,7 +154,7 @@ hash = "6bb3b6b65f728d5c3d06dd986b85d21370e3b78a30629b7a1ab7a0a46e033768"
 
 [[files]]
 file = "config/modpack_defaults/config/etf_warnings.json"
-hash = "a5ba22e63061c1fb67f0f895f17681351eaeccc225faef966c29ee630593275e"
+hash = "368c428c9edaddb490c2e7339642e79ceddcb0a6fd8fd434c4bd8e1af34c26f8"
 
 [[files]]
 file = "config/modpack_defaults/config/fabric/indigo-renderer.properties"
@@ -158,11 +166,11 @@ hash = "51631d4fc7768aa448546665821ff26e41583f4b50243d18027f0812fcbd4096"
 
 [[files]]
 file = "config/modpack_defaults/config/factory_api/client_options.json"
-hash = "5a4c1f7d253af2c4c47e10a8702d1e10d6a3fd42cc32223ff89810f94909a387"
+hash = "5bad688f356193319f0bb7c19f9b0fce8ff08d6d529d5d6bbcbf2fe614643911"
 
 [[files]]
 file = "config/modpack_defaults/config/factory_api/common_options.json"
-hash = "a9e6f5696304dbeeb2899e5edc0d6783235c3bac06d76b7524299ae11c71755e"
+hash = "7b103325f88b27b5d68e6ac6a02d53761e9287ccbffd18ffdd5da0063a9d9828"
 
 [[files]]
 file = "config/modpack_defaults/config/fastquit.toml"
@@ -210,7 +218,7 @@ hash = "ace4602e3fd17695499bd3c4c098009bd0e78d7c8e094428688d262a85236d8f"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/client_options.json"
-hash = "6e19966e2e74f75e6ea644e53e695c0c4948405e312e14a197c5b730fdca5f4f"
+hash = "a09e7c228c65113d49f16e4a9ca22900ac6c163a1b0d39670454b88e479e4099"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/common.json"
@@ -222,11 +230,11 @@ hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/global_packs.json"
-hash = "191680fcefdab73f264c706e51f9f69bf0eebe98bede96356db5cdfd9131a5f6"
+hash = "24a6632343b96399a7b90a6cb130dfb95d32688ec3fd41ca8cac1b63e7abae39"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy_world_sizes/common.json"
-hash = "c34dfd4b2c13e3ef9479173039891092969d4a61809609f779ef8685916a4294"
+hash = "03fe9d4796b38fc8ffbe9692986d7e69ff08043690b3e1024df74f2241c42006"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy_world_sizes/common_mixin.json"
@@ -246,7 +254,7 @@ hash = "a844236f3392894ad21314f5f372ef98521498399852b290398cb14f18b3606e"
 
 [[files]]
 file = "config/modpack_defaults/config/modelfix-client.json"
-hash = "7e02c1d587a4c011b0b18080b7ba7451bd44535159a52c4c0c9a94b863334678"
+hash = "1f7d946ec7a12efbbe58cdeedc2ae767446e06e7ffed095c18482d5cc27a86a7"
 
 [[files]]
 file = "config/modpack_defaults/config/modernfix-mixins.properties"
@@ -254,7 +262,7 @@ hash = "0a81d2a243a17a906abdb39ebed7c1d8d09a976f6e5d58f5fa2a33e11e441892"
 
 [[files]]
 file = "config/modpack_defaults/config/modmenu.json"
-hash = "ee8d1a6f11ea009f37abba6325d97766910e1786b0de848aa307771d8a87ed72"
+hash = "4dc7d729a2b83401f4a39dff457680f6f5872df1a5b2a93d9eb27b0b5df42d0e"
 
 [[files]]
 file = "config/modpack_defaults/config/moonrise.yml"
@@ -283,6 +291,10 @@ hash = "5ab97abde7373e152b69e82a7412b95adaf620f34ef4e778bfb4f6be4cbadcb4"
 [[files]]
 file = "config/modpack_defaults/config/particle_core_disabled_optimizations_v2.json"
 hash = "3d731115173b34dd0fe9de6f52fa14dc271c848495a52f66c0016e24150f59d6"
+
+[[files]]
+file = "config/modpack_defaults/config/plasmovoice/client.toml"
+hash = "3117d54d6b49d7ee577a13713c0031e0198049e9d0fe98a0ccb2257f79529b2d"
 
 [[files]]
 file = "config/modpack_defaults/config/preferred-gamerules.properties"
@@ -318,7 +330,7 @@ hash = "068fc165435c8734b43d5f735cfbe42d015356d157222d577012e45b3bf0a989"
 
 [[files]]
 file = "config/modpack_defaults/config/sodium-shadowy-path-blocks-options.json"
-hash = "25baba4e198fbefd6656a38dcf0cdc3e7ccef211221b4f5218d22a778d1853fa"
+hash = "2f16d7c9cfbcb73f5af74f213cbd1d6d799369d8a63208b3430b20aa630b69d7"
 
 [[files]]
 file = "config/modpack_defaults/config/stfu-disable.txt"
@@ -330,7 +342,7 @@ hash = "f94ebbc6b37b7f65bdf5dd9aeeb5d6879f0b7195f02260b7d865026ee8175f84"
 
 [[files]]
 file = "config/modpack_defaults/config/threadtweak.json"
-hash = "b4c1cc5fc213225d64e685a3b632092e909386ab41bd9925f9cf7efd53d1ad46"
+hash = "33191bf9b7c96165db5eea96dfa57e7ca7763fc3b842ebfd943184dc895969c6"
 
 [[files]]
 file = "config/modpack_defaults/config/vmp.properties"
@@ -338,11 +350,11 @@ hash = "d631bc153e5b284b19b2e51f59bc49417fc40e62c42a3a3de0ea1f4586a09110"
 
 [[files]]
 file = "config/modpack_defaults/config/yacl.json5"
-hash = "121b93764159be6fb7dab523b29a844e2bb78400ce8c48f52135a097e9b0006e"
+hash = "8a201ac6b572e9b56ea1de77e13a8d6c8fab64c89727649346e22e6e27413577"
 
 [[files]]
 file = "config/modpack_defaults/config/zfastnoise.mixin.toml"
-hash = "70213250ce898b715b63937f7475483be04750ed57cda362f12d270ccb7802e7"
+hash = "03841a30368b6bd9450d17a13adff6583b9e6a6be8146d7d9b402227e16abea2"
 
 [[files]]
 file = "config/modpack_defaults/options.txt"
@@ -478,27 +490,27 @@ hash = "8344c374eae3a92669bbda015399f1e9c063da539c7e853eb63a13f375b1b66e"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/chest_large.jem"
-hash = "08c1145125ca3fdf126ade6b8c0a3943755bddf5778c55123e20fdf063cddb8d"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/ender_chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest_large.jem"
-hash = "08c1145125ca3fdf126ade6b8c0a3943755bddf5778c55123e20fdf063cddb8d"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/pack.mcmeta"
-hash = "1a5f9f1c26572ef887647294c0fa5876b7e5f72abf3ec68a445d68dd3f925737"
+hash = "da77d6004687edd35428a7a5c5568fe9a01f799c037d171b5be0e94dc9dfac96"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/pack.png"
@@ -698,11 +710,11 @@ hash = "d082d6307f908d09fad1c0e429a978795e66ef42b923645150284eb8891e7f4c"
 
 [[files]]
 file = "config/servercore/config.yml"
-hash = "7aa4761cc751f6df10d32f053a009953fabfb6649670b253199dd6bbd7aa3f9d"
+hash = "8f2a0beab110717038219622c49fb764f71122040cb52d8a4d06c0c60fd286f1"
 
 [[files]]
 file = "config/servercore/optimizations.yml"
-hash = "0e7fde302ae1f9cbe3c507b8f4bc23ebc51acae005de2c4f69933893d037894a"
+hash = "d46be0ff848f3c12326fb5306ba6be295769af256326bd931f8424582e617779"
 
 [[files]]
 file = "mods/animatica.pw.toml"
@@ -761,7 +773,7 @@ metafile = true
 
 [[files]]
 file = "mods/complex-leaf-culling.pw.toml"
-hash = "ed95c3be02fb007fd3450540555c068d7284d0f6401faddcb94df0b147903c2f"
+hash = "825022e303b96c6ba4880c65ad62b470ea106d8478431eb89112d20fce3ead6f"
 metafile = true
 
 [[files]]
@@ -831,12 +843,7 @@ metafile = true
 
 [[files]]
 file = "mods/facapi-next.pw.toml"
-hash = "f2a93e3b8787fd9fab886831b1ec7f1fae29a3d032deb824e7f5c4fb71e7463f"
-metafile = true
-
-[[files]]
-file = "mods/factory-api.pw.toml"
-hash = "589cba3d3b77a3f90de9a156486120b517a44a8e22ef39e3130c42e706fb2f88"
+hash = "a78335cfcdbf4d1cf174dc1a1e916fb15b40505179ab8fed8f5467ba5a7ec19a"
 metafile = true
 
 [[files]]
@@ -896,7 +903,7 @@ metafile = true
 
 [[files]]
 file = "mods/l4j-next.pw.toml"
-hash = "15b83ad4613f017e879854a4bda23711ba091fb0fab68362705c0253ccb681ea"
+hash = "ba6e634fe199519ee67e347c96a20f157491cfbe6b19713e524675fa635ea2c0"
 metafile = true
 
 [[files]]
@@ -936,7 +943,7 @@ metafile = true
 
 [[files]]
 file = "mods/lws-next.pw.toml"
-hash = "0ae68610449fedabeaf0a67020376ee1ab3b079be0088e9a0c7fb114f2fc503f"
+hash = "8921bcf5e97d9cf64e889ec927f4712566aee1dbd420a6ad4142a02243882036"
 metafile = true
 
 [[files]]
@@ -986,12 +993,12 @@ metafile = true
 
 [[files]]
 file = "mods/placeholder-api.pw.toml"
-hash = "ab6def9d98d3f5bf12f78845bdb770a19d5ca590c571e60184e537ffa14dcbee"
+hash = "b05f77afeaa3662fae34dcb39d07abb0f324ff53f69dce644d89c419cfcbf3f3"
 metafile = true
 
 [[files]]
 file = "mods/plasmo-voice.pw.toml"
-hash = "11c6415a0f76bd1b02ac6b44782219b21760a81672d283f80a30b87866b2c6e9"
+hash = "a44ee0233f309dd037f14a115c7b0e80f0b15ab48c975ddd9ee43f21d8c529e9"
 metafile = true
 
 [[files]]
@@ -1041,7 +1048,7 @@ metafile = true
 
 [[files]]
 file = "mods/simple-music-control.pw.toml"
-hash = "bcd4938c174cb691ce4b356857b79a3d94dfbd9cbb4a33c764fee273a0048ccf"
+hash = "ad92e9f77c6cff0e9e039f39c16ecac7ff1de2a1cd1ee35ef818715a041c9ada"
 metafile = true
 
 [[files]]
@@ -2306,790 +2313,6 @@ file = "resourcepacks/Legacy Panorama/pack.png"
 hash = "3d8b67e813ed44b9032a97d52da84d306468401d87179712fec81590b908acca"
 
 [[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/LICENSE"
-hash = "cc2df44bb7f35f0a280fe0d9c57306503f13a2c7c2926c6f0ead7b64f74f1b5e"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/lang/en_us.json"
-hash = "f359ea9b46517e051cad6dde369ebb1ce4bdcb97d771301e7ed3c2ba41dbbe51"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skin_packs.json"
-hash = "5d4bc70d51600b46f816327b9dcc6a2a595d34ac48fe62b695c8354b1de7c072"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimalex.cpmmodel"
-hash = "8764bcf4c7a6ed3d3f8985faf881888d9a4216f33efe1cfa50f03d4b10c3f0c8"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimari.cpmmodel"
-hash = "902f47ab577a0cddf9eb1c843d0eaf40a7a6e9e00529409dfeefca53d610297a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimefe.cpmmodel"
-hash = "69225b1c3bbea6e8f2099d75d427a758e652dc5eb4e7612a1f4469bcf992d464"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimkai.cpmmodel"
-hash = "9fa36ed2e9c3cfd94982462e4b466008ff469cd5fe5f9ff97cfdde7b948d0e31"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimmakena.cpmmodel"
-hash = "57c3e134c54e1dc1df7e79de2477da7559dd2b4ad3d8264be048125e2ae1a7f1"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimnoor.cpmmodel"
-hash = "e8dd5705e5f277e1214e06b0bcb7e80f3ea41e9980ec1022b54a53e722536bde"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimsteve.cpmmodel"
-hash = "ec59176ee3d073b1cfb010cd8546372bc2a8def7da9395dd5799c772f86f0733"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimsunny.cpmmodel"
-hash = "2bac167c634a69f36d04690d7a3d901baf8372816ca4fbd3507841fcd722e0bb"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultslim/skinpacks/1/slimzuri.cpmmodel"
-hash = "845c5faa3196d8ea4e9a12086852682e23b348b6d8df6314f8d62ca5aac8135b"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/lang/en_us.json"
-hash = "851a1c6bcd1e94152bf170d6016938bf9bc2b0a10f8c1fdc6c99a5162747e5f8"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skin_packs.json"
-hash = "6894c1a4c09d0058cea44bf261f0307a1c535c4cec6ac61525b1230fb2580b98"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/widealex.cpmmodel"
-hash = "0c80b228de7fac27e5d4873e39e6682e8ae3fe2e684453d5b8360b24236850a9"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/wideari.cpmmodel"
-hash = "cac70bbd2c83e3f72327895f68600fc2e0ee094e911fd9390f567842bc1e3340"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/widebnoor.cpmmodel"
-hash = "89e41dd4b049adf4494a9add12e668df2bcad87a088a3919e4deabc0a1d9a6a6"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/wideefe.cpmmodel"
-hash = "63de24626dc59a4e66013cb37e49d545c0d96478e9d38f12d0192c69cc4077e5"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/widekai.cpmmodel"
-hash = "ee3c251b2315688073a78a88f1b432d54cf826f43adb1f65a85af0ba98ff3d68"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/widemakena.cpmmodel"
-hash = "8a56d21b7fda30a19f9c9eefcdf5cf065dd740d22fe9deb1efbe93af0108b3ae"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/widenoor.cpmmodel"
-hash = "4b7ad25b6a677a88255f7ef45876260b726d3cc68f36b28f9764446875112ce6"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/widesteve.cpmmodel"
-hash = "9d6d02b60a917b6f6fbf897ccbb0acc1af9e5f5f5ac046b88d458ac3fc43ec3b"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/widesunny.cpmmodel"
-hash = "86d759d6d433036da7e21b832e862a1dd20363eb94c8fc8a4370a9bc1c168b34"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/defaultwide/skinpacks/1/widezuri.cpmmodel"
-hash = "013592c97d9f7ae3df4edb624a6d4a17447dc76d66bcee23fab85c2cc66f0268"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/discs/lang/en_us.json"
-hash = "5e719e7349ef8d22d2b417418872e02ee36a8a156828deec6432a58a64f36cbf"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/biome_overrides.json"
-hash = "9ea829ff0ba925e07e48e635b58028e8eae7a0680556f8d1802078ba5f22fec4"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/how_to_play_sections.json"
-hash = "0ec685909eac8c8e1b8d9689fd080285232f635e4ac0a5971a9851a85c1afadd"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/intro.json"
-hash = "78291d6f1ae32a5483cc08323a48b5ed3f5dd9cb809f96490edc17dd25837f5a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/lang/en_us.json"
-hash = "e6adac691cc3266775fb90e5e7009940056f8a0f7326af2f6bde567981841218"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/option_presets.json"
-hash = "4f8aee8647ac8b322c1779bc90ed2be3f47f58526d0dbfa87709e85a5fe870c4"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/4j.png"
-hash = "04405a2700a27b6fbe2b3d22b76c02a5d350e0c9c4e0d9efd4904c9c0c19b1b2"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/curseforge.png"
-hash = "aaddc4d497b28588a360873c5e8632987686d91bbde17d06b8a242447598bbad"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/eula.png"
-hash = "1f4b31713058b414c829c1ecbb7977ffb65e5d59692572624d73fa9ee8011641"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/fabric.png"
-hash = "0dbdff234d28c176c3ff3e6e02c699f42d2d53547ad1d85908f2f205205d0d4a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/lasting.png"
-hash = "97ea9d77f1785eab1f5755437774fc1bba44bcfc95bec7ef31aa652184bfe160"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/ll-fab-mr.png"
-hash = "b1f4475fe6296d231d4bc5ad5fc841d7a572400877f9978b293204d339c9630e"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/loading.png"
-hash = "97617ce75aeae0ea3b287ab74a6c510b52c67e31751ee0f651eb633380616454"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/loading1.png"
-hash = "892e978fd9e056cff701d64c00303e4ce5a7e957e2914cfdd3ea9b90fe36a8c4"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/loading2.png"
-hash = "b6a6f3145d35ec4e1faa2af3f1ae90afa8fc2925f2604735d6b91102fedfc38c"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/loading3.png"
-hash = "a57bc24754dd4f555118096ad9187cb51ad868b56bb5ef7ebe1dbf3a156772c6"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/modrinth.png"
-hash = "b563a9bbf8a0d32eff5a181e70758353798eba5ac1595901eee376c1fb5ccd0a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/mojang.png"
-hash = "1d451c5e21215114e1df1294895b706fbedef76bf2b62d52fcb50858bcd65d4e"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/nr-fab-mr.png"
-hash = "626a565e55e84245534d42370569fcb34507ba82672aaea6a907f5b5f0cd0760"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/nr.png"
-hash = "17d2ce33f752cccbefe2943c9b04b26567f2f096b34b1cb690facf6303407969"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/william-howard-taft.png"
-hash = "a11b4a1971365420adadf7bf46e4de994a55811e75a48b2995f25442863fc165"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/intro/xbox.png"
-hash = "2f65e24b260ea15a6acbceffda1d31c4e31f50ed05307ebf3f3e813dcf4e3b25"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/comparison.png"
-hash = "9f09550f31502876775f7697b8c46a4b6e982a67d614716fdbaf417a7d678b13"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/icon.png"
-hash = "78e5e24a93f435ea23dc9bd2ab65d5652429ca10c9138dbae2dd133883dd8446"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/alpha/icon.png"
-hash = "2fb7d9347a99a4f344991f3457db255f3326e97e5539cf9d5d466e0a23dafc3d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/animated/icon.png"
-hash = "12a40ffcf3a2be95e6328cc53faa5a290fbf9050b7a6c02bd5f3890aec3670c5"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/beta/icon.png"
-hash = "5bed2c948ece5ab636c3e15b8a249b291948d4834e6c7d5a63a68aa66be5cdc3"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/candy/comparison.png"
-hash = "0fa1f8ae8816a3d93a2314a8231acde407fef7faef14cd021dcebcbed28882ce"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/candy/icon.png"
-hash = "af8a09ebc14a9a7bcc713aa416fe041f037ec3ce08ddac172870daaeac31b893"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/comparison.png"
-hash = "de132c52c5dae9182cc2d105ef4770b38cfb40a72b41d1e79e59462796a4f01a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/icon.png"
-hash = "a2d240b84af4c6b4166af0fdf5ab7057a9fcd135e8b1ab657ceff7cbf8ed22b3"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/comparison.png"
-hash = "cd832720f13221f06c6fdedeb1862997426c987a67ef524ec3c75cfeebac7c68"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/icon.png"
-hash = "ca53a65646d75749d85ae23c0bef421e75cb346ff02af3634a3f478820fcfb07"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/comparison.png"
-hash = "d2d30f535a9bc3f80e9d8d7198362b1def343da2719a5e888bcdca66fb30c08b"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/icon.png"
-hash = "8eb1306a4d4883f944aa98e4bb50805679df2bf4171d66b668e962cb334f4c57"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/city/comparison.png"
-hash = "ca20258bef78543985edee809c549040219697522db38e7c4cf87c53c6a039a8"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/city/icon.png"
-hash = "02c18880cb1400dccfbcb1f7973da2f2267c34a1e4d757cb6e216797653cad14"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/darkmode/icon.png"
-hash = "742ba2889af70b6b6d718c5013132a7f18c9daa30cdb7d3c9fe35f1a6b395f90"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/comparison.png"
-hash = "d901672f6dffcafa969cefacf42196e37d5c7c5ac3218ad92cbc99cffe500a88"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/icon.png"
-hash = "233ce8bb49b38db6a6e6ae4ec0cef974fef4bf10198832b2d890677cc674e365"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/comparison.png"
-hash = "8515293aefd6e59e74e9090c201cb895a3717bde05956cdf39dc126967fe800c"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/icon.png"
-hash = "87fd873edfbf46d0c6117219bc89cc94b540a9265c68b16ba12a65c818978c66"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/faithful/icon.png"
-hash = "11e2e5d094205d890c828cae12ddef646e4fb651a76c8123344802a9d61ee41f"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/comparison.png"
-hash = "2370e4270c80304af631fccac023526733a0450b48ddb8ec26b845056821af8e"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/icon.png"
-hash = "8c132461b88eab16ecc536e737ab8418938fb48e54a88ddfefbb50f1c633587d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/comparison.png"
-hash = "246aa1be3247874ae9d661db3ff0db07d1370b27a1a94628bc68f12160fd2ca2"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/icon.png"
-hash = "8e11caa8e98168ccf734f1fc3483b9e465fab85a69d3688796d0bf30aea9bfea"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/festive/comparison.png"
-hash = "18d192c1b78fc1b5426b5a64711298c11a1d228fcb01355bd3559632fa6d22f1"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/festive/icon.png"
-hash = "bd2f44503899f3bd5c774583c87ffb96fd40d4724bf819098fcbb1ded94adef5"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/greek/comparison.png"
-hash = "611423a869fb77f203fc5c2881fc290a220302e6b6ecbcb779decc3883f29eb4"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/greek/icon.png"
-hash = "5032051b32a449ed57a5f5a9763d9fabc8a8d23c2445d96f8a566ca5333253c7"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/comparison.png"
-hash = "8f91036d987c4e9abd7bc775637214f9f2ddfbe3efb435a1ff171ae521119101"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/icon.png"
-hash = "cf58037c6b1aaccefeff6f21c97e54e41153fcafa1c06ae3987303f2e8f59534"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/comparison.png"
-hash = "666ff4fc184a9fcda16cd8421bd9607027ecd978c1368bea6d0c30efe157b16d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/icon.png"
-hash = "96afa8b199e0f77fcf34be27b5d29351a931f185eff9bf9a8feb34f31c522b1d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/live/icon.png"
-hash = "d41477e6fb46ab8c461e1237a8606ac6b0883db8cd9b77636ab908627f8d79c4"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/comparison.png"
-hash = "c779f7dd72c8f89e15964f5b44dea1f377340f7549f14f69d3e79d14c2ad91be"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/icon.png"
-hash = "6e8bc4f4942d4cad9daeb8dd14b558420655c725f602e46a4fb92088610ace08"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/n7/comparison.png"
-hash = "40d8d3434f8a1c9ee0c52555cbd5e4f3a5bc0670059b50b8f9148949833ee387"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/n7/icon.png"
-hash = "ea7cb984c8a9d0bb375b762dd6b5f56efc5ad31c72460347249ad0551f61d4b3"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/natural/comparison.png"
-hash = "b6896828510b919b377a3c7312503f26a7f09f0781f09b9564548b7c5e35e1c3"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/natural/icon.png"
-hash = "b3fbcf9eb5fbbc96b69d33891f53b10a591ec71f1089954ae4843c9901858fe0"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/comparison.png"
-hash = "28f3e178c4efac94bca0a4ba7faf16b04b4a34bc23cc3ddc0075a04d90b21deb"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/icon.png"
-hash = "ca53e4977720092f771b2cdac8b23361727c493d88d687a6fe941c167d0eda3b"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/norse/comparison.png"
-hash = "4877ea41a7a87b5cd0b5f07f8c373c211abf81bcfb77d981a2f109c29b0e8564"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/norse/icon.png"
-hash = "9fa0f24ec5f66d6c6a0e755c87030e047957bc1f5d3c7ae86b0026a72bbee0a3"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/comparison.png"
-hash = "f6cef49258dd8fb2c5fee36798d0436bc33ec5390cfe0274160f87c5988b809a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/icon.png"
-hash = "468dbe6a819901dee12e596543b086b5a27146c2f75ce861af8a7728d7747458"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/comparison.png"
-hash = "c934f22f455918803abdd5fc7c5834d06095f1f216c7416c5d82a18e339fbd21"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/icon.png"
-hash = "a871da292a2498827d295f622fffe9d4fd7a1bdc9738a76b7b53c35d9541c758"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/ps4parity/icon.png"
-hash = "7c385495ccd563479d5fe27f566a2c4f1fca87d5d38247e1396225c01e2ba9a3"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/comparison.png"
-hash = "d81cbdb3314cf792132ba617a1b2a90d9dd19ea818240fea5a74014f453a8187"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/icon.png"
-hash = "2c9e1514dce28a472c4fad84d061f8e27db4da7d327a686b59413141dbdc9623"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/comparison.png"
-hash = "4a7f8822e6045778cf137910f00812324f64f3442e5d3609de47e1fcad7c0863"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/icon.png"
-hash = "e63f7cc66a5f6c738911b99cba2a850d80ead4016b6f182247508ce8a7ee878f"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/comparison.png"
-hash = "2e57d9ef2de07eb115451bd645086fb5bc3801486fd4a1844fd8aaf13d95058e"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/icon.png"
-hash = "b4b9baa0ef8c7a397d06a21161fb5db559effe6649e0ab2c78b29ba7b4f28f14"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/comparison.png"
-hash = "250cd618ef6683876f30065c498a4589d92ce1d874e6798f8af82b91c9a26d58"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/icon.png"
-hash = "2afb11229f88f981409c6d8c83bd1d6a275cbd69e4087ba14972379193d1941c"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/comparison.png"
-hash = "a17033a9cfedcaf767e61bc8279b930e6508206bba4b02455181961fa2404a7c"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/icon.png"
-hash = "890da859db27a472600a6ec7689203a7a75fa2f9f99b686667f013bef9071e7d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/toy/comparison.png"
-hash = "f49ff01c59e6d941ec902cb997d33570b7879d2dbd1d4f3264c19e980680c935"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/toy/icon.png"
-hash = "732a99a8b74dfb7d433021e53e16e1e6f80466d7e512f01cd72e79e58c1f2678"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/trailer/icon.png"
-hash = "e962c525b65e940ad4248264d679381f580a796943120ae67460762771645e05"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/comparisons/vanillaplus/icon.png"
-hash = "958781a27530be518f387d49244abbbe6e1cb5691d726b27bbbb5b13286ac54d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/barrel.png"
-hash = "a992ca6da434f4ca175a18090fd028edad0c299b8e25dbbf64d952a2cbe57797"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/basalt-deltas.png"
-hash = "99f9f9444b0c0ffcf0eff1b8f3aa595481ffc72ed5f673f88f366d1411e3ccbb"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/bees.png"
-hash = "b8a5fa3b661b8cf0143530625c068f5ffb46e02537fdf1ec745a73e54289641d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/crimson-forest.png"
-hash = "608b27194bd345ab150de5d5765a0b23ac8a903e02028ee20a263142d590024f"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/nether.png"
-hash = "e7b54d1f05b3501bc68cf030c4cd76f7c62ba09cf85feb3b1db1441aef2e52e4"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/pale-garden.png"
-hash = "0bedc74f25cfab5c19a920d3233dfab3914036fdf991dbb1ad0b0bd0c3e851ac"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/piglins.png"
-hash = "0a967f29f3122b5ef97344d686da34e8c89588495e267181515e216401e74686"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/spyglass.png"
-hash = "541716332bab052ae2f7b07d3ee1fe1861ae67f620dfc58df941fb2fc4ac9798"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/trial-chamber.png"
-hash = "a8b543a08dbb7dded7272cb25f241c4a9f2642dee39990e2b6c3359ff327a718"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/container/how_to_play/warped-forest.png"
-hash = "7288381baaf5abb619256aae7d57ffd58156bc2db3e28bccc331e1013451e99d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/sprites/widget/leaderboard_button_highlighted.png"
-hash = "78b19b837e5904f2bfd07756f332c2677158cbc98a275ca943980c33c0988210"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/sprites/widget/leaderboard_button_highlighted.png.mcmeta"
-hash = "af63ae0b12cb2ebe54416d0e6ff32f5b57d6a610d2493efb00d239a5fa43c92e"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/sprites/widget/pack_highlighted.png"
-hash = "a38d6f71d03c8c8af90300563f9eb16aa85d3746ba0e0ff2eeafc4f85b919451"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/sprites/widget/panel_highlight.png"
-hash = "a0dd2a6d378288087d878a7a98757b905202ad5c1db19ddba3074eb42c884afb"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/sprites/sprites/widget/tickbox_hovered.png"
-hash = "33f5ff69a103ddbab29c574d76c03f4e129d22a347a75f153e9eb61d655b7ac7"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/title/panorama_day.png"
-hash = "c05a44dfb2dcc9aed4b931713c55582689fcc061e9c2d535d819c913b12476c8"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/textures/gui/title/panorama_night.png"
-hash = "f9820a5f20e05d5fc5d7b6ff582ab4e912217a3cfefc35a6c4a553a6f3b0a1cd"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/barrel.json"
-hash = "c1e631de61215a968eac6134c1642a7e22efcbbf06487e456ae9e8f1702320b8"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/basalt-deltas.json"
-hash = "88c3a860b58d81db5df9ff9a118ec480929406f04ced7333e251b36e00d2192a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/bees.json"
-hash = "2feec7b9db2716908e59e2b7b23dd94181a4b415637a909cc7a869cd22d0c828"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/blast-furnace.json"
-hash = "215d26aa2cb1cf1b09c48ce7539f350bb5fd2131201206af1129cd3320c7b300"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/bundle.json"
-hash = "1cf22b735b2086c007706040fdd041891892af3a20cfa1084553324a92861961"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/conduit.json"
-hash = "b455747495af2260507437e979febb8faef186b9072c53d98f54a9bab8531290"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/copper-tools.json"
-hash = "3df6ae408be2567fcc286aca698b77ddcc3815f7bc074d786209c5540b656893"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/crimson-forest.json"
-hash = "4726d81a93fcb23106fb1949b22386711bae295aeb2873da79f6da1156192c5b"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/furnace.json"
-hash = "38c60ca26285455c01e7fe5627467bc79c7e1f111b2975aa5e50aeeaffb1dab3"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/illagers.json"
-hash = "16e3ecf0604ce1b9fef837e3b1802a11df9c21ec03626d01aca89879580cb18b"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/mace.json"
-hash = "2a8571ed78a89077e55f5b3f9507f2f7c62cfd94a7f62f13276a66de492713f7"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/nether-biomes.json"
-hash = "0c8cc47a5690f8aa79933332503188efbfa6aa28d6b26b3d9e9c6c8720d09721"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/pale-garden.json"
-hash = "2cc7c635966a9bf73a203791b2472c5d31b76fae2bf220e61c11637203df3a23"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/piglins.json"
-hash = "1e5a5a8cabf9565dde7640d68811a384980548b04dde1ee1e5e19c604c293351"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/raids.json"
-hash = "678ea28ba64b7285d504093d328608859ba4c5842ffea4def4ab8dd9e5d09d78"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/scaffolding.json"
-hash = "351405fd2649a0bc370a5eae8d747d05c871c8e423c06eaf197d7d2e4e4395db"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/smithing.json"
-hash = "219de879f590c9853d0a8ef391867a1975beed73370cd1fb0a2dca94c0765799"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/smoker.json"
-hash = "665b6e99d384ce0c8323fcdd3fc1c80c1c2c06593c9cdc4dafb4413b74cb37bf"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/spyglass.json"
-hash = "3e4d4f497b9c732e9c2fd9916a7b22655613d4d5eaeafbc80e743ba70656a836"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/the-nether.json"
-hash = "b6792426ff325f517c00a3442438c6317d39d7babc9c28d509a9f97b85e6829d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/trial-chamber.json"
-hash = "1ee2d67b609dfabd98d9b445e37e81be789b6c75f79a466224c69ec52eb71f61"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/tridents.json"
-hash = "7d054eae3280b3c30ced81e142a0a693d4524c2f8478dd96daafed3b19288244"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/villagers.json"
-hash = "24abc47234ed8163cd62e3c8f68010ed4ae62a2f6657f6c419f05291a3c3a7c8"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/warped-forest.json"
-hash = "215777278da35721540285952ad209705770ab3a80043dd4e52dec8d50e9d63c"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/legacy/ui_definitions/how_to_play/whats_new.json"
-hash = "2e7ffba8bd0373958f2ed9d4108ca9b70274ad4c80204d456d8c580964185705"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/lspo/LICENSE"
-hash = "35fad9deb1142e58c4e938927efc9e0960b0adcc7dacd1de6d619247f1011657"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/lspo/skin_pack_priorities.json"
-hash = "e971653f8673a61ed4a784df8a3f1826fc021d2bcbd8214e4583fe0de440b260"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/lspodh/LICENSE"
-hash = "35fad9deb1142e58c4e938927efc9e0960b0adcc7dacd1de6d619247f1011657"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/lspodh/skin_pack_priorities.json"
-hash = "c88dea2f1fa61bb964e8ed1225d6ae7fb80d23161455a65f4e45af528099eabd"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/minecraft/changelog/en_us.txt"
-hash = "417acb7dabd2e606013b0dfd99f3ca6effb68a0e19db478576d7cc4ab5a80568"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/minecraft/misc/enchanted_glint_entity.png"
-hash = "23831803126a3b75e74deeb5a5e39df9a26c94872d20533f444eb5072b417fb5"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/minecraft/misc/unknown_pack.png"
-hash = "65a0b97613cd93d8de87e330b2e1d25d8e4b436a19ed2c38e16a9cb030c2341a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/minecraft/misc/unknown_server.png"
-hash = "65a0b97613cd93d8de87e330b2e1d25d8e4b436a19ed2c38e16a9cb030c2341a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/minecraft/models/block/grass_block.json"
-hash = "f0cb3b434513fdedd842dc0823137f833577bf2474444ded71492ae398e8f137"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/minecraft/painting/back.png"
-hash = "f02b280084de54c821608465aa76f7a7831e609b4e5409a899d7a6498d0fe52e"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/LICENSE"
-hash = "35fad9deb1142e58c4e938927efc9e0960b0adcc7dacd1de6d619247f1011657"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/christmas2024.png"
-hash = "f95eb9a6eca0cdc72e95b1074a5f7988eda56a40bf83254cc00dfc8038228750"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/christmas20242.png"
-hash = "4837a77c04e8d5b2cbc4967e7258e82f69c3d9facddf06417b89467942c639ab"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/lang/en_us.json"
-hash = "5165c72f59f4cd099f3c16959786d502422bd31287a07f0a5ec16b1a49f79985"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/skin_pack_priorities.json"
-hash = "d25e16d27e4ba0680f43645e899ce3eb7676f4a0004220bb3cc768def7e32fba"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/skin_packs.json"
-hash = "209a5954a37b9b8132b3595ea019ae7f706a4192b3cb300c6e94f2498090fb26"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/skinpacks/chicken-detective.cpmmodel"
-hash = "8657b91c833b18140cb6ffbb04cc2adc342785e75f6e162a51e1964ad1a43138"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/skinpacks/christmas-alex.cpmmodel"
-hash = "b8b12f8bac5346cb2b27f8c3ab7d32c3b39b00ee4b6838910257e83f8b89106a"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/skinpacks/christmas-steve.cpmmodel"
-hash = "92e51cfc0de97c0d70ba7da9e1487a45f6ff247c112cbc2cc523d96a0d772d63"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/skinpacks/christmas-zuri.cpmmodel"
-hash = "42fdb19d49b66dfba03bbdd436e935cddbe758daef86f3dddcc7d455f328354b"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/skinpacks/festive-grain.cpmmodel"
-hash = "ddc01afaa51eab04db241de112aa131223ffbeec0663d4ff96372d3dc0a05484"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/namemc-packs/skinpacks/festive-steve.cpmmodel"
-hash = "e96c6c366b05146b6f4076c650690d87c7c411c5ef7dafe04f451b60e45ab6ef"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/adjust_volumes.png"
-hash = "eafa45ce59b4d90198df6c817e900073b72b05d91168880eb4dd836504b846c6"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/device_selected.png"
-hash = "7fcc48d619a2e3d739ed16ad328c004caa77309d366a646265f808d7881759fe"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/disconnected.png"
-hash = "e514752174141012aa71ccb6dfdea3b6e17bd859b06d49526944df4a07ca5708"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/group.png"
-hash = "e044c9610cde17f4a65c11499bb84a734b680432471bd8f683216c9714e15de2"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/group_hud_button.png"
-hash = "d8114e4451a6820c86828b45d536b5a8749d36cbcd6a04f2378113b7caf588cc"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/hide_button.png"
-hash = "e6fee0c3d77a6f0ceed088a51536e296e4038018750bc5ffe293efbd1e3ae87e"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/invite_button.png"
-hash = "d0c058565f0a03e2559f7b4d2ded1e693ec78eb47745344a65ff1092b1186fbc"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/leave.png"
-hash = "3791be04c1a4f117bb8c49e0dc70d585ea65b80db97f5caf52768abfa0d06037"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/lock.png"
-hash = "0490adf5cb39f781ce630df86b04a78534581077d9b0a5bfabfcb10ea93c7f63"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/microphone.png"
-hash = "a5e078a4b3f1339c2e3384ae87349605d964c5fffd4e7fc3815740f4490544d1"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/microphone_button.png"
-hash = "d824d271d0f7d0915d6b9eacc4ac4942d684ce388b5c87f88b0798696d5185b9"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/microphone_button.png~"
-hash = "e322873651c3865305cb58acd41c48f982bed81e3db90ea8048b327d467e8238"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/microphone_off.png"
-hash = "dd421c77d63d4221950797ceb45755672f5b780060e262d36cf1e0bf1fd8a370"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/microphone_whisper.png"
-hash = "a9ba7a758c3e147fb644246408925df7fd9c68fa9dc309d93f26e4fdf0214de3"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/other_volume.png"
-hash = "345e92069f290d0516df0b974450043921a59302e9e775b73d5350adec8e46ef"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/speaker.png"
-hash = "3363370f2339ef357ebe6b135ef826811fc6a760391dde463cde9ca58b0571e8"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/speaker_button.png"
-hash = "db35bbb505469747d35bbb93cba3f3e8bdc96c70b248e3f9ab459808bea08ba0"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/speaker_button.png~"
-hash = "96f87c8c438981d2f13bbb45238f4b8ec9abc94678a76b07741a1acb232ec534"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/speaker_off.png"
-hash = "fbdc85661bd20ad0aa06bc54a3328b4d603c7fba9fabab6a2b35f07133645ea1"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/speaker_small_off.png"
-hash = "2daa4579faff07078ce455b3464e5bdcab7ae002b71bede363439483dfd134dd"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/assets/voicechat/textures/icons/speaker_whisper.png"
-hash = "3482b48f80ff12b54572250e107de87c1f9d4658505e1a3a5867281368d3c61d"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/pack.mcmeta"
-hash = "f0fef204680734981192c3c4a3a53b1ba7d85521ee92d9f21d427338a5c01acf"
-
-[[files]]
-file = "resourcepacks/Legacy-Modpack-Resources/pack.png"
-hash = "ac949c4aec5664a57246fbe2ad49d81f2399780b1e16f83ed8d156e3d97eb033"
-
-[[files]]
 file = "resourcepacks/Panorama/assets/legacy/textures/gui/title/panorama_day.png"
 hash = "c05a44dfb2dcc9aed4b931713c55582689fcc061e9c2d535d819c913b12476c8"
 
@@ -3312,7 +2535,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "9d1e61232d46e8b80ccce3caeba5f9c35e982f1f150035981629f8d9a88a3300"
+hash = "acb1553f772dd27b4863406b1cec21aaeaa06dc429d54615d25a0670a82c30c3"
 metafile = true
 
 [[files]]
@@ -3372,27 +2595,27 @@ metafile = true
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/chest_large.jem"
-hash = "08c1145125ca3fdf126ade6b8c0a3943755bddf5778c55123e20fdf063cddb8d"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/ender_chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest_large.jem"
-hash = "08c1145125ca3fdf126ade6b8c0a3943755bddf5778c55123e20fdf063cddb8d"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/pack.mcmeta"
-hash = "1a5f9f1c26572ef887647294c0fa5876b7e5f72abf3ec68a445d68dd3f925737"
+hash = "da77d6004687edd35428a7a5c5568fe9a01f799c037d171b5be0e94dc9dfac96"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/pack.png"
