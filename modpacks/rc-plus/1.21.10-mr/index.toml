@@ -2,11 +2,15 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/animatium.json"
-hash = "f83e8176ccda0689fb95e7c8724e3a9f86daa305772880bb419dde5e28d299c1"
+hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
 file = "config/c2me.toml"
-hash = "d072cb16eb9244f4e6bc09d57a613f96bf734dc013874b3dab58828801f99350"
+hash = "711e0664920627670c5638e9e29acba8f410d90b2f6091479e2cb8a08f764c35"
+
+[[files]]
+file = "config/complexleafculling.json"
+hash = "61677f9fa6d31e972eef67f963883d644f95ec060395f6628916b64f1a73a4a2"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
@@ -38,15 +42,15 @@ hash = "96bf60c2653e893599129f251281215774ec7d420db24fe094ae364ecbfc5939"
 
 [[files]]
 file = "config/fabric/indigo-renderer.properties"
-hash = "0a776bd94413087200e0cd1a0bd72cbfe5c1a69002c1c625236233c2183c301c"
+hash = "aa272c538cfdf8b1b6bc75a35f6fa056869c131056604308f06d06beeac80e04"
 
 [[files]]
 file = "config/immediatelyfast.json"
-hash = "8f85626cee8effcf430d24772946b3bea79a778917ba0681d2cc6fcb857efd2b"
+hash = "aeb8a2371724d24d68292ad2aa9f4d6b7111e046409a2a94925878dfeac7ccc8"
 
 [[files]]
 file = "config/modernfix-mixins.properties"
-hash = "0a81d2a243a17a906abdb39ebed7c1d8d09a976f6e5d58f5fa2a33e11e441892"
+hash = "3e808ff5702adc376a9990d84c543feb3fad5a28d564cfb465a9b6ce58b87c29"
 
 [[files]]
 file = "config/modpack_defaults/animatium_utility.json"
@@ -87,6 +91,10 @@ hash = "e2363d6108e75030db1257a59cdd5272bb81a96ff10572a8e03512cd4d301f50"
 [[files]]
 file = "config/modpack_defaults/config/citresewn.json"
 hash = "080ec08b7754723a3fa7c45cc0c37f251cc69ff5a07c06bb0f9cb40596373bbe"
+
+[[files]]
+file = "config/modpack_defaults/config/complexleafculling.json"
+hash = "61677f9fa6d31e972eef67f963883d644f95ec060395f6628916b64f1a73a4a2"
 
 [[files]]
 file = "config/modpack_defaults/config/cpm.json"
@@ -134,11 +142,11 @@ hash = "6ef9e4a1132e7aeab97f6829893124078b95be3c9a5b247754c2ccc9deb423ce"
 
 [[files]]
 file = "config/modpack_defaults/config/entity_model_features.json"
-hash = "a409f75f21a3189f06c4edf5bf6b613c3c6275147c8b51ae1e1c46e8e8cdb8ef"
+hash = "37144d898a913de605a370bf18a870c61c0633844512934630bfaa55914d8492"
 
 [[files]]
 file = "config/modpack_defaults/config/entity_texture_features.json"
-hash = "0554c0e7816266477c65c18d2ada9fdddf1c6750787efd329056223ca4a073b2"
+hash = "4284266e11add2e03fe5b9a27ce1287e725443dfe12bdf2dcde5473203f62107"
 
 [[files]]
 file = "config/modpack_defaults/config/entityculling.json"
@@ -146,7 +154,7 @@ hash = "6bb3b6b65f728d5c3d06dd986b85d21370e3b78a30629b7a1ab7a0a46e033768"
 
 [[files]]
 file = "config/modpack_defaults/config/etf_warnings.json"
-hash = "a5ba22e63061c1fb67f0f895f17681351eaeccc225faef966c29ee630593275e"
+hash = "368c428c9edaddb490c2e7339642e79ceddcb0a6fd8fd434c4bd8e1af34c26f8"
 
 [[files]]
 file = "config/modpack_defaults/config/fabric/indigo-renderer.properties"
@@ -158,11 +166,11 @@ hash = "51631d4fc7768aa448546665821ff26e41583f4b50243d18027f0812fcbd4096"
 
 [[files]]
 file = "config/modpack_defaults/config/factory_api/client_options.json"
-hash = "5a4c1f7d253af2c4c47e10a8702d1e10d6a3fd42cc32223ff89810f94909a387"
+hash = "5bad688f356193319f0bb7c19f9b0fce8ff08d6d529d5d6bbcbf2fe614643911"
 
 [[files]]
 file = "config/modpack_defaults/config/factory_api/common_options.json"
-hash = "a9e6f5696304dbeeb2899e5edc0d6783235c3bac06d76b7524299ae11c71755e"
+hash = "7b103325f88b27b5d68e6ac6a02d53761e9287ccbffd18ffdd5da0063a9d9828"
 
 [[files]]
 file = "config/modpack_defaults/config/fastquit.toml"
@@ -226,7 +234,7 @@ hash = "191680fcefdab73f264c706e51f9f69bf0eebe98bede96356db5cdfd9131a5f6"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy_world_sizes/common.json"
-hash = "c34dfd4b2c13e3ef9479173039891092969d4a61809609f779ef8685916a4294"
+hash = "03fe9d4796b38fc8ffbe9692986d7e69ff08043690b3e1024df74f2241c42006"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy_world_sizes/common_mixin.json"
@@ -246,7 +254,7 @@ hash = "a844236f3392894ad21314f5f372ef98521498399852b290398cb14f18b3606e"
 
 [[files]]
 file = "config/modpack_defaults/config/modelfix-client.json"
-hash = "7e02c1d587a4c011b0b18080b7ba7451bd44535159a52c4c0c9a94b863334678"
+hash = "1f7d946ec7a12efbbe58cdeedc2ae767446e06e7ffed095c18482d5cc27a86a7"
 
 [[files]]
 file = "config/modpack_defaults/config/modernfix-mixins.properties"
@@ -254,7 +262,7 @@ hash = "0a81d2a243a17a906abdb39ebed7c1d8d09a976f6e5d58f5fa2a33e11e441892"
 
 [[files]]
 file = "config/modpack_defaults/config/modmenu.json"
-hash = "ee8d1a6f11ea009f37abba6325d97766910e1786b0de848aa307771d8a87ed72"
+hash = "4dc7d729a2b83401f4a39dff457680f6f5872df1a5b2a93d9eb27b0b5df42d0e"
 
 [[files]]
 file = "config/modpack_defaults/config/moonrise.yml"
@@ -318,7 +326,7 @@ hash = "068fc165435c8734b43d5f735cfbe42d015356d157222d577012e45b3bf0a989"
 
 [[files]]
 file = "config/modpack_defaults/config/sodium-shadowy-path-blocks-options.json"
-hash = "25baba4e198fbefd6656a38dcf0cdc3e7ccef211221b4f5218d22a778d1853fa"
+hash = "2f16d7c9cfbcb73f5af74f213cbd1d6d799369d8a63208b3430b20aa630b69d7"
 
 [[files]]
 file = "config/modpack_defaults/config/stfu-disable.txt"
@@ -330,7 +338,7 @@ hash = "f94ebbc6b37b7f65bdf5dd9aeeb5d6879f0b7195f02260b7d865026ee8175f84"
 
 [[files]]
 file = "config/modpack_defaults/config/threadtweak.json"
-hash = "b4c1cc5fc213225d64e685a3b632092e909386ab41bd9925f9cf7efd53d1ad46"
+hash = "33191bf9b7c96165db5eea96dfa57e7ca7763fc3b842ebfd943184dc895969c6"
 
 [[files]]
 file = "config/modpack_defaults/config/vmp.properties"
@@ -338,11 +346,11 @@ hash = "d631bc153e5b284b19b2e51f59bc49417fc40e62c42a3a3de0ea1f4586a09110"
 
 [[files]]
 file = "config/modpack_defaults/config/yacl.json5"
-hash = "121b93764159be6fb7dab523b29a844e2bb78400ce8c48f52135a097e9b0006e"
+hash = "8a201ac6b572e9b56ea1de77e13a8d6c8fab64c89727649346e22e6e27413577"
 
 [[files]]
 file = "config/modpack_defaults/config/zfastnoise.mixin.toml"
-hash = "70213250ce898b715b63937f7475483be04750ed57cda362f12d270ccb7802e7"
+hash = "03841a30368b6bd9450d17a13adff6583b9e6a6be8146d7d9b402227e16abea2"
 
 [[files]]
 file = "config/modpack_defaults/options.txt"
@@ -478,27 +486,27 @@ hash = "8344c374eae3a92669bbda015399f1e9c063da539c7e853eb63a13f375b1b66e"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/chest_large.jem"
-hash = "08c1145125ca3fdf126ade6b8c0a3943755bddf5778c55123e20fdf063cddb8d"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/ender_chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest_large.jem"
-hash = "08c1145125ca3fdf126ade6b8c0a3943755bddf5778c55123e20fdf063cddb8d"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/pack.mcmeta"
-hash = "1a5f9f1c26572ef887647294c0fa5876b7e5f72abf3ec68a445d68dd3f925737"
+hash = "da77d6004687edd35428a7a5c5568fe9a01f799c037d171b5be0e94dc9dfac96"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/pack.png"
@@ -698,11 +706,11 @@ hash = "d082d6307f908d09fad1c0e429a978795e66ef42b923645150284eb8891e7f4c"
 
 [[files]]
 file = "config/servercore/config.yml"
-hash = "7aa4761cc751f6df10d32f053a009953fabfb6649670b253199dd6bbd7aa3f9d"
+hash = "8f2a0beab110717038219622c49fb764f71122040cb52d8a4d06c0c60fd286f1"
 
 [[files]]
 file = "config/servercore/optimizations.yml"
-hash = "0e7fde302ae1f9cbe3c507b8f4bc23ebc51acae005de2c4f69933893d037894a"
+hash = "d46be0ff848f3c12326fb5306ba6be295769af256326bd931f8424582e617779"
 
 [[files]]
 file = "mods/animatica.pw.toml"
@@ -761,7 +769,7 @@ metafile = true
 
 [[files]]
 file = "mods/complex-leaf-culling.pw.toml"
-hash = "ed95c3be02fb007fd3450540555c068d7284d0f6401faddcb94df0b147903c2f"
+hash = "825022e303b96c6ba4880c65ad62b470ea106d8478431eb89112d20fce3ead6f"
 metafile = true
 
 [[files]]
@@ -835,11 +843,6 @@ hash = "f2a93e3b8787fd9fab886831b1ec7f1fae29a3d032deb824e7f5c4fb71e7463f"
 metafile = true
 
 [[files]]
-file = "mods/factory-api.pw.toml"
-hash = "589cba3d3b77a3f90de9a156486120b517a44a8e22ef39e3130c42e706fb2f88"
-metafile = true
-
-[[files]]
 file = "mods/fast-ip-ping.pw.toml"
 hash = "068008bddde74e8b167c96d70032afd93e9b3a06f78d3053d3f91cf0f598f88c"
 metafile = true
@@ -896,7 +899,7 @@ metafile = true
 
 [[files]]
 file = "mods/l4j-next.pw.toml"
-hash = "15b83ad4613f017e879854a4bda23711ba091fb0fab68362705c0253ccb681ea"
+hash = "ba6e634fe199519ee67e347c96a20f157491cfbe6b19713e524675fa635ea2c0"
 metafile = true
 
 [[files]]
@@ -936,7 +939,7 @@ metafile = true
 
 [[files]]
 file = "mods/lws-next.pw.toml"
-hash = "0ae68610449fedabeaf0a67020376ee1ab3b079be0088e9a0c7fb114f2fc503f"
+hash = "8921bcf5e97d9cf64e889ec927f4712566aee1dbd420a6ad4142a02243882036"
 metafile = true
 
 [[files]]
@@ -986,12 +989,12 @@ metafile = true
 
 [[files]]
 file = "mods/placeholder-api.pw.toml"
-hash = "ab6def9d98d3f5bf12f78845bdb770a19d5ca590c571e60184e537ffa14dcbee"
+hash = "b05f77afeaa3662fae34dcb39d07abb0f324ff53f69dce644d89c419cfcbf3f3"
 metafile = true
 
 [[files]]
 file = "mods/plasmo-voice.pw.toml"
-hash = "11c6415a0f76bd1b02ac6b44782219b21760a81672d283f80a30b87866b2c6e9"
+hash = "a44ee0233f309dd037f14a115c7b0e80f0b15ab48c975ddd9ee43f21d8c529e9"
 metafile = true
 
 [[files]]
@@ -1041,7 +1044,7 @@ metafile = true
 
 [[files]]
 file = "mods/simple-music-control.pw.toml"
-hash = "bcd4938c174cb691ce4b356857b79a3d94dfbd9cbb4a33c764fee273a0048ccf"
+hash = "ad92e9f77c6cff0e9e039f39c16ecac7ff1de2a1cd1ee35ef818715a041c9ada"
 metafile = true
 
 [[files]]
@@ -3372,27 +3375,27 @@ metafile = true
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/chest_large.jem"
-hash = "08c1145125ca3fdf126ade6b8c0a3943755bddf5778c55123e20fdf063cddb8d"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/ender_chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest.jem"
-hash = "e13abe89090d216f1866e9408e9c37e5e1a83b8e365e695226659ef07310de8f"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest_large.jem"
-hash = "08c1145125ca3fdf126ade6b8c0a3943755bddf5778c55123e20fdf063cddb8d"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/pack.mcmeta"
-hash = "1a5f9f1c26572ef887647294c0fa5876b7e5f72abf3ec68a445d68dd3f925737"
+hash = "da77d6004687edd35428a7a5c5568fe9a01f799c037d171b5be0e94dc9dfac96"
 
 [[files]]
 file = "resources/resourcepack/required/Fixed Chest Models/pack.png"
