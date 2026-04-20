@@ -1,15 +1,15 @@
 name = "mod"
-filename = "LWS-1.21.10-0.0.1-fabric.jar"
+filename = "Legacy4J-1.21.10-1.8.7.2615.0-fabric.jar"
 side = "both"
 
 [download]
-url = "https://github.com/omo50/mod/releases/download/lws_next-1.0/LWS-1.21.10-0.0.1-fabric.jar"
+url = "https://github.com/omo50/mod/releases/download/next-1.1/Legacy4J-1.21.10-1.8.7.2615.0-fabric.jar"
 hash-format = "sha256"
-hash = "0f70a9fe99b3414866ca74dc723c3e965ebaa32e89634dce8854d387a6f92108"
+hash = "87c9cc81207e7b7e9c05a01da1017f6ec1013d1b0a5ed5439ebb692a985478e2"
 
 [update]
 [update.github]
 branch = "main"
 regex = "^.+(?<!-api|-dev|-dev-preshadow|-sources)\\.jar$"
 slug = "omo50/mod"
-tag = "next-1.0"
+tag = "next-1.1"
