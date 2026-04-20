@@ -1,4 +1,4 @@
-use somnus_core::lint_changed_files;
+use somnus_core::linter::lint_changed_files;
 
 const WATCHED_PREFIXES: &[&str] = &["modpacks/", "datapacks/"];
 const WATCHED_EXTS: &[&str] = &[".json", ".mcmeta"];

@@ -35,12 +35,12 @@ jobs:
           SHORT_SHA=$(git rev-parse --short HEAD)
           echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
 
-      - name: Cache Builder Binary
+      - name: Cache Builder Binaries
         id: cache-builder
         uses: actions/cache@v4
         with:
           path: ./builder-bin
-          key: builder-v1-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.rs', 'src/actions/builder/Cargo.toml', 'src/actions/builder/Cargo.lock') }}
+          key: builder-v2-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.rs', 'src/actions/builder/Cargo.toml', 'src/actions/builder/Cargo.lock') }}
 
       - name: Install Rust
         if: steps.cache-builder.outputs.cache-hit != 'true'
@@ -52,12 +52,15 @@ jobs:
         with:
           workspaces: "src/actions/builder -> target"
 
-      - name: Build Builder
+      - name: Build Binaries
         if: steps.cache-builder.outputs.cache-hit != 'true'
         run: |
-          cargo build --release --manifest-path src/actions/builder/Cargo.toml --bin builder
+          cargo build --release \
+            --manifest-path src/actions/builder/Cargo.toml \
+            --bin builder --bin minify-json
           mkdir -p ./builder-bin
           cp src/actions/builder/target/release/builder ./builder-bin/builder
+          cp src/actions/builder/target/release/minify-json ./builder-bin/minify-json
 
       - name: Cache Go Binaries
         id: cache-go
@@ -88,10 +91,70 @@ jobs:
           restore-keys: |
             packwiz-cache-${{ runner.os }}-
 
+      - name: Minify JSON configs
+        run: |
+          set -eu
+          chmod +x ./builder-bin/minify-json
+
+          if [ -d datapacks ]; then
+            for pack_dir in datapacks/*/; do
+              [ -d "$pack_dir" ] || continue
+              TARGET="${pack_dir}content"
+              if [ -d "$TARGET" ]; then
+                cp -r "$TARGET" "${TARGET}.original"
+                ./builder-bin/minify-json "$TARGET"
+              fi
+            done
+          fi
+
+          if [ -d modpacks ]; then
+            for pack_dir in modpacks/*/; do
+              [ -d "$pack_dir" ] || continue
+              for subdir in "$pack_dir"*-mr "$pack_dir"*-cf; do
+                [ -d "$subdir" ] || continue
+                CONFIG_DIR="$subdir/config"
+                if [ -d "$CONFIG_DIR" ]; then
+                  cp -r "$CONFIG_DIR" "${CONFIG_DIR}.original"
+                  ./builder-bin/minify-json "$CONFIG_DIR"
+                fi
+              done
+            done
+          fi
+
       - name: Run Build
         run: |
           chmod +x ./builder-bin/builder
           ./builder-bin/builder "${{ steps.meta.outputs.short_sha }}"
+
+      - name: Restore JSON sources
+        if: always()
+        run: |
+          set -eu
+
+          if [ -d datapacks ]; then
+            for pack_dir in datapacks/*/; do
+              [ -d "$pack_dir" ] || continue
+              TARGET="${pack_dir}content"
+              if [ -d "${TARGET}.original" ]; then
+                rm -rf "$TARGET"
+                mv "${TARGET}.original" "$TARGET"
+              fi
+            done
+          fi
+
+          if [ -d modpacks ]; then
+            for pack_dir in modpacks/*/; do
+              [ -d "$pack_dir" ] || continue
+              for subdir in "$pack_dir"*-mr "$pack_dir"*-cf; do
+                [ -d "$subdir" ] || continue
+                CONFIG_DIR="$subdir/config"
+                if [ -d "${CONFIG_DIR}.original" ]; then
+                  rm -rf "$CONFIG_DIR"
+                  mv "${CONFIG_DIR}.original" "$CONFIG_DIR"
+                fi
+              done
+            done
+          fi
 
       - name: Upload
         uses: https://code.forgejo.org/actions/upload-artifact@v3

@@ -16,8 +16,6 @@ enum Platform {
 }
 
 impl Platform {
-    const ALL: [Platform; 2] = [Platform::Modrinth, Platform::Curseforge];
-
     fn short(self) -> &'static str {
         match self {
             Platform::Modrinth => "mr",
@@ -60,9 +58,14 @@ fn main() -> Result<()> {
     let p_ver = required_str(&manifest, "version")?;
     let mc_ver = required_str(&manifest, "mc_version")?;
     let p_type = required_str(&manifest, "type")?;
-    let loader = manifest["loader"].as_str().unwrap_or("fabric");
+    let loader = required_str(&manifest, "loader")?;
+    let release_type = required_str(&manifest, "release_type")?;
     let mr_id = manifest["modrinth_id"].as_str().unwrap_or("");
     let cf_id = manifest["curseforge_id"].as_str().unwrap_or("");
+
+    if mr_id.is_empty() && cf_id.is_empty() {
+        bail!("manifest must set at least one of modrinth_id or curseforge_id");
+    }
 
     let workspace = env::var("GITHUB_WORKSPACE").unwrap_or_else(|_| ".".into());
     let artifacts_dir = Path::new(&workspace).join(p_dir).join("artifacts");
@@ -76,7 +79,7 @@ fn main() -> Result<()> {
     println!("::group::Building artifacts for {raw_name}");
 
     match p_type {
-        "modpack" => build_modpack(p_dir, &artifacts_dir, &p_name, mc_ver, p_ver, loader)?,
+        "modpack" => build_modpack(p_dir, &artifacts_dir, &p_name, mc_ver, p_ver, loader, mr_id, cf_id)?,
         "datapack" => build_datapack(p_dir, &artifacts_dir, &manifest, p_ver)?,
         other => bail!("unsupported pack type: {other}"),
     }
@@ -91,6 +94,7 @@ fn main() -> Result<()> {
         mc_ver,
         p_type,
         loader,
+        release_type,
         p_dir,
     })?;
 
@@ -110,11 +114,16 @@ fn build_modpack(
     mc_ver: &str,
     p_ver: &str,
     loader: &str,
+    mr_id: &str,
+    cf_id: &str,
 ) -> Result<()> {
     let filename_base = format!("{p_name}-{mc_ver}-{loader}-{p_ver}");
 
     let mut jobs: Vec<(Platform, PathBuf)> = Vec::new();
-    for platform in Platform::ALL {
+    for (platform, id) in [(Platform::Modrinth, mr_id), (Platform::Curseforge, cf_id)] {
+        if id.is_empty() {
+            continue;
+        }
         let target_folder = format!("{mc_ver}-{}", platform.short());
         let target_path = p_dir.join(&target_folder);
         if target_path.exists() {
@@ -129,7 +138,7 @@ fn build_modpack(
     }
 
     if jobs.is_empty() {
-        bail!("no platform folders (mc_ver-mr / mc_ver-cf) found");
+        bail!("no platform folders (mc_ver-mr / mc_ver-cf) found matching manifest");
     }
 
     let mut handles = Vec::new();
@@ -211,6 +220,7 @@ struct OutputData<'a> {
     mc_ver: &'a str,
     p_type: &'a str,
     loader: &'a str,
+    release_type: &'a str,
     p_dir: &'a Path,
 }
 
@@ -230,6 +240,7 @@ fn write_outputs(d: OutputData) -> Result<()> {
     writeln!(f, "mc={}", d.mc_ver)?;
     writeln!(f, "type={}", d.p_type)?;
     writeln!(f, "loader={}", d.loader)?;
+    writeln!(f, "release_type={}", d.release_type)?;
     writeln!(f, "path={}", d.p_dir.display())?;
     Ok(())
 }
