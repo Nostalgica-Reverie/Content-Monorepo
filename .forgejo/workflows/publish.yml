@@ -75,11 +75,15 @@ jobs:
             src/actions/publish
             src/actions/builder
             tools/changelog
+            tools/manifest
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Validate Manifest
+        run: npx tsx tools/manifest/validate.ts "${{ matrix.manifest }}"
 
       - name: Generate Changelog
         id: changelog
@@ -90,7 +94,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./publisher-bin
-          key: publisher-v1-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
+          key: publisher-v2-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
 
       - name: Cache Minify-JSON Binary
         id: cache-minify
@@ -167,14 +171,12 @@ jobs:
           PACK_DIR="$(dirname "$MANIFEST")"
 
           if [[ "$MANIFEST" == datapacks/* ]]; then
-            # Datapack: minify content/
             TARGET="${PACK_DIR}/content"
             if [ -d "$TARGET" ]; then
               cp -r "$TARGET" "${TARGET}.original"
               ./builder-bin/minify-json "$TARGET"
             fi
           elif [[ "$MANIFEST" == modpacks/* ]]; then
-            # Modpack: minify each platform subdir's config/ folder
             for subdir in "$PACK_DIR"/*-mr "$PACK_DIR"/*-cf; do
               [ -d "$subdir" ] || continue
               CONFIG_DIR="$subdir/config"
@@ -227,6 +229,7 @@ jobs:
           curseforge-files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*.zip"
           name: "${{ steps.meta.outputs.name }}"
           version: "${{ steps.meta.outputs.ver }}"
+          version-type: ${{ steps.meta.outputs.release_type }}
           changelog: "${{ steps.changelog.outputs.notes }}"
           loaders: ${{ steps.meta.outputs.type == 'modpack' && steps.meta.outputs.loader || 'minecraft' }}
           game-versions: "${{ steps.meta.outputs.mc }}"
