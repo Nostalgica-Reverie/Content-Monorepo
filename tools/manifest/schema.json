@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pack Manifest",
+  "description": "Defines a publishable pack in the monorepo",
+  "type": "object",
+  "required": ["id", "name", "type", "loader", "mc_version", "version", "release_type"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Path to this schema file."
+    },
+    "id": {
+      "type": "string",
+      "description": "Matches the directory name",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable pack name shown on Modrinth/CurseForge. Ie. Re-Console Plus",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "description": "Pack type. 'modpack' exports via packwiz, 'datapack' zips the content directory",
+      "enum": ["modpack", "datapack"]
+    },
+    "loader": {
+      "type": "string",
+      "description": "Mod loader this pack targets (e.g., 'fabric', 'neoforge', 'forge', 'quilt')",
+      "minLength": 1
+    },
+    "mc_version": {
+      "type": "string",
+      "description": "Target Minecraft version (e.g., '1.21.10')",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "description": "Pack version.",
+      "minLength": 1
+    },
+    "release_type": {
+      "type": "string",
+      "description": "Release channel",
+      "enum": ["release", "beta", "alpha"]
+    },
+    "modrinth_id": {
+      "type": "string",
+      "description": "Modrinth project ID or slug (e.g., 'legacy-minecraft'). Leave empty if not publishing to Modrinth"
+    },
+    "curseforge_id": {
+      "type": "string",
+      "description": "CurseForge project slug or numeric ID (e.g., 're-console'). Leave empty if not publishing to CurseForge"
+    }
+  }
+}
