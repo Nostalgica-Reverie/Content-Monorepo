@@ -1,9 +1,12 @@
 {
+  "$schema": "../../tools/manifest/schema.json",
   "id": "simply",
   "name": "Simply Legacy",
   "type": "modpack",
-  "version": "26.04.5",
+  "loader": "fabric",
   "mc_version": "1.21.10",
+  "version": "26.04.5",
+  "release_type": "release",
   "modrinth_id": "simply-legacy",
   "curseforge_id": "simply-legacy"
 }
