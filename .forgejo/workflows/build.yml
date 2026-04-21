@@ -32,8 +32,23 @@ jobs:
       - name: Meta
         id: meta
         run: |
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          echo "short_sha=$SHORT_SHA" >> $GITHUB_OUTPUT
+          set -eu
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
+
+          CHANGED_MODPACKS=$(echo "$CHANGED" | grep -E '^modpacks/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
+          CHANGED_DATAPACKS=$(echo "$CHANGED" | grep -E '^datapacks/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
+
+          {
+            echo "has_modpacks=$( [ -n "$CHANGED_MODPACKS" ] && echo true || echo false )"
+            echo "has_datapacks=$( [ -n "$CHANGED_DATAPACKS" ] && echo true || echo false )"
+            echo "changed_modpacks<<EOF"
+            echo "$CHANGED_MODPACKS"
+            echo "EOF"
+            echo "changed_datapacks<<EOF"
+            echo "$CHANGED_DATAPACKS"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Cache Builder Binaries
         id: cache-builder
@@ -55,14 +70,13 @@ jobs:
       - name: Build Binaries
         if: steps.cache-builder.outputs.cache-hit != 'true'
         run: |
-          cargo build --release \
-            --manifest-path src/actions/builder/Cargo.toml \
-            --bin builder --bin minify-json
+          cargo build --release --manifest-path src/actions/builder/Cargo.toml --bin builder --bin minify-json
           mkdir -p ./builder-bin
-          cp src/actions/builder/target/release/builder ./builder-bin/builder
-          cp src/actions/builder/target/release/minify-json ./builder-bin/minify-json
+          cp src/actions/builder/target/release/{builder,minify-json} ./builder-bin/
+          chmod +x ./builder-bin/builder ./builder-bin/minify-json
 
-      - name: Cache Go Binaries
+      - name: Cache Packwiz
+        if: steps.meta.outputs.has_modpacks == 'true'
         id: cache-go
         uses: actions/cache@v4
         with:
@@ -70,94 +84,66 @@ jobs:
           key: go-bin-packwiz-v1-${{ runner.os }}
 
       - name: Setup Go
-        if: steps.cache-go.outputs.cache-hit != 'true'
-        uses: actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
+        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true'
+        uses: https://github.com/actions/setup-go@v5
+        with: { go-version: 'stable', cache: true }
 
       - name: Install Packwiz
-        if: steps.cache-go.outputs.cache-hit != 'true'
+        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true'
         run: go install github.com/packwiz/packwiz@latest
 
       - name: Add Go bin to PATH
+        if: steps.meta.outputs.has_modpacks == 'true'
         run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
-      - name: Cache Packwiz Downloads
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/packwiz
-          key: packwiz-cache-${{ runner.os }}-${{ github.run_id }}
-          restore-keys: |
-            packwiz-cache-${{ runner.os }}-
-
-      - name: Minify JSON configs
+      - name: Minify datapacks
+        if: steps.meta.outputs.has_datapacks == 'true'
         run: |
           set -eu
-          chmod +x ./builder-bin/minify-json
+          while IFS= read -r pack; do
+            [ -n "$pack" ] || continue
+            target="$pack/content"
+            [ -d "$target" ] || continue
+            (
+              cp -r "$target" "$target.original"
+              ./builder-bin/minify-json "$target"
+            ) &
+          done <<< "${{ steps.meta.outputs.changed_datapacks }}"
+          wait
 
-          if [ -d datapacks ]; then
-            for pack_dir in datapacks/*/; do
-              [ -d "$pack_dir" ] || continue
-              TARGET="${pack_dir}content"
-              if [ -d "$TARGET" ]; then
-                cp -r "$TARGET" "${TARGET}.original"
-                ./builder-bin/minify-json "$TARGET"
-              fi
+      - name: Minify modpacks
+        if: steps.meta.outputs.has_modpacks == 'true'
+        run: |
+          set -eu
+          while IFS= read -r pack; do
+            [ -n "$pack" ] || continue
+            for sub in "$pack"/*-{mr,cf}/config; do
+              [ -d "$sub" ] || continue
+              (
+                cp -r "$sub" "$sub.original"
+                ./builder-bin/minify-json "$sub"
+              ) &
             done
-          fi
-
-          if [ -d modpacks ]; then
-            for pack_dir in modpacks/*/; do
-              [ -d "$pack_dir" ] || continue
-              for subdir in "$pack_dir"*-mr "$pack_dir"*-cf; do
-                [ -d "$subdir" ] || continue
-                CONFIG_DIR="$subdir/config"
-                if [ -d "$CONFIG_DIR" ]; then
-                  cp -r "$CONFIG_DIR" "${CONFIG_DIR}.original"
-                  ./builder-bin/minify-json "$CONFIG_DIR"
-                fi
-              done
-            done
-          fi
+          done <<< "${{ steps.meta.outputs.changed_modpacks }}"
+          wait
 
       - name: Run Build
-        run: |
-          chmod +x ./builder-bin/builder
-          ./builder-bin/builder "${{ steps.meta.outputs.short_sha }}"
+        run: ./builder-bin/builder "${{ steps.meta.outputs.short_sha }}"
 
       - name: Restore JSON sources
         if: always()
         run: |
           set -eu
-
-          if [ -d datapacks ]; then
-            for pack_dir in datapacks/*/; do
-              [ -d "$pack_dir" ] || continue
-              TARGET="${pack_dir}content"
-              if [ -d "${TARGET}.original" ]; then
-                rm -rf "$TARGET"
-                mv "${TARGET}.original" "$TARGET"
-              fi
-            done
-          fi
-
-          if [ -d modpacks ]; then
-            for pack_dir in modpacks/*/; do
-              [ -d "$pack_dir" ] || continue
-              for subdir in "$pack_dir"*-mr "$pack_dir"*-cf; do
-                [ -d "$subdir" ] || continue
-                CONFIG_DIR="$subdir/config"
-                if [ -d "${CONFIG_DIR}.original" ]; then
-                  rm -rf "$CONFIG_DIR"
-                  mv "${CONFIG_DIR}.original" "$CONFIG_DIR"
-                fi
-              done
-            done
-          fi
+          for orig in datapacks/*/content.original modpacks/*/*-{mr,cf}/config.original; do
+            [ -d "$orig" ] || continue
+            target="${orig%.original}"
+            rm -rf "$target"
+            mv "$orig" "$target"
+          done
 
       - name: Upload
-        uses: https://code.forgejo.org/actions/upload-artifact@v3
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
         with:
           name: "build-${{ steps.meta.outputs.short_sha }}"
           path: "artifacts/"
+          compression-level: 0
