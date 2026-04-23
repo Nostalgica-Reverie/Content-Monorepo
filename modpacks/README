@@ -1,1 +1,3 @@
 This is the general directory for all files for our modpacks.
+
+To run batch updates on every version of a pack, install Packwiz Wrapper and run ``pw batch update --all -y`` to update every mod, and ``pw batch refresh`` to fix any issues in the ``index.toml``

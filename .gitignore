@@ -1,3 +1,4 @@
+# General
 build
 .DS_Store
 *.exe
@@ -10,16 +11,19 @@ modpacks/**/Logs
 modpacks/refresh-all.sh
 modpacks/update-all.sh
 modpacks/export-all.sh
+
 # IntelliJ
 .idea/
 *.iml
 *.ipr
 *.iws
+
 # Visual Studio Code
 .settings/
 .vscode/
 .classpath
 .project
+
 # Logs and errors
 hs_err_*.log
 replay_*.log
