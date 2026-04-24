@@ -161,10 +161,6 @@ file = "config/modpack_defaults/config/fabric/indigo-renderer.properties"
 hash = "0a776bd94413087200e0cd1a0bd72cbfe5c1a69002c1c625236233c2183c301c"
 
 [[files]]
-file = "config/modpack_defaults/config/fabric_loader_dependencies.json"
-hash = "51631d4fc7768aa448546665821ff26e41583f4b50243d18027f0812fcbd4096"
-
-[[files]]
 file = "config/modpack_defaults/config/factory_api/client_options.json"
 hash = "5a4c1f7d253af2c4c47e10a8702d1e10d6a3fd42cc32223ff89810f94909a387"
 
@@ -1214,6 +1210,11 @@ metafile = true
 [[files]]
 file = "mods/macos-input-fixes.pw.toml"
 hash = "660261eedaaf2fe6a8b301ead93d1ea84cacc32236baa806f510c3998dd0bf86"
+metafile = true
+
+[[files]]
+file = "mods/mm-next.pw.toml"
+hash = "f449eb628b850f87afd52550871619078ed3d6ce43ac0606c40fdb8ee2c3cd81"
 metafile = true
 
 [[files]]
