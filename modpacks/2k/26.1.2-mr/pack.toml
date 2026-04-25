@@ -1,0 +1,17 @@
+name = "2000s-edition"
+author = "NicSonic"
+version = "26.05"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "b708f30b77ae43f9a37b4850a52f7e8e60094afcd2510557cf2f5c68b48d9267"
+
+[versions]
+fabric = "0.19.2"
+minecraft = "26.1.2"
+
+[options]
+acceptable-game-versions = ["1.21.1"]
+datapack-folder = "./resources/datapack/required/"
