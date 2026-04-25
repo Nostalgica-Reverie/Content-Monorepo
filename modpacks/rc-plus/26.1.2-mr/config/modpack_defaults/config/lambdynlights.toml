@@ -1,20 +1,12 @@
-# LambDynamicLights configuration.
-# The dynamic lights mode
 mode = "fancy"
 
-# Light sources settings.
 [light_sources]
-	# Enables water-sensitive light sources check. This means that water-sensitive items will not light up when submerged in water.
 	water_sensitive_check = true
 	beam = true
 	firefly = true
-	# Enable entities light source.
 	entities = true
-	# Enable first-person player light source.
 	self = true
-	# TNT lighting mode. May be off, simple or fancy.
-	tnt = "fancy"
-	# Creeper lighting mode. May be off, simple or fancy.
+	tnt = "fancy".
 	creeper = "fancy"
 	guardian_laser = true
 
