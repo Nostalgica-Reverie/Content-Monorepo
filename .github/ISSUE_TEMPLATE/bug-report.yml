@@ -65,34 +65,9 @@ body:
         - N/A
         - Re-Console+ Modrinth
         - Re-Console+ Curseforge
-        - Re-Console Modrinth
-        - Re-Console Curseforge
-        - Rekindled Legacy (List TU in your bug report)
         - Simply Legacy Modrinth
         - Simply Legacy Curseforge
-      default: 0
-    validations:
-      required: true
-  - type: dropdown
-    id: rp
-    attributes:
-      label: Resource Pack
-      description: What Resource Pack are you using?
-      options:
-        - N/A
-        - 1080p KBM tooltips
-        - Extra Controller Tooltips
-        - Faithful Legacy
-        - Hybrid Aspects
-        - Legacy Modpack Resources
-        - Legacy Panorama
-        - Legacy Titles
-        - Legacy Skin Packs
-        - Modern Skin Packs
-        - Modern How to Play
-        - Ore4J
-        - Tutorial World Add-on
-        - Vanilla Live
+        - Rekindled Legacy (List TU in your bug report)
       default: 0
     validations:
       required: true
