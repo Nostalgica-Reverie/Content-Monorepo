@@ -38,11 +38,15 @@ hash = "8cb838ec67ab9938d16b4af5bcdcb9daf9d2731ef8e0da5ec07dcdceed8ba77f"
 
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
-hash = "6d6113ca1a0da1982835e71901893f0fc1fd8842bd56bcdd0dc82799c58f0fa2"
+hash = "31e618a33cd6ac7c0921c5b721f369dfe931517296d36b4439f0b7b943c76c43"
 
 [[files]]
 file = "config/fabric/indigo-renderer.properties"
 hash = "aa272c538cfdf8b1b6bc75a35f6fa056869c131056604308f06d06beeac80e04"
+
+[[files]]
+file = "config/fabric_loader_dependencies.json"
+hash = "ec9d888cfad8889468d41926931476c9aa675a7c5f9040e3e83e16bbbcbe8aa2"
 
 [[files]]
 file = "config/immediatelyfast.json"
@@ -197,10 +201,6 @@ file = "config/modpack_defaults/config/jimmy-smiths.json"
 hash = "42cffa127aa99ac9aa08c8cc5456a1c21d064b248198086967a8da0999f1a818"
 
 [[files]]
-file = "config/modpack_defaults/config/lambdynlights.toml"
-hash = "db1940d3a9fd4677430748029e1910689cb8ae18d77739a0287c40cd37b76018"
-
-[[files]]
 file = "config/modpack_defaults/config/legacy/client_mixin.json"
 hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
 
@@ -278,7 +278,7 @@ hash = "85665ff3c6bdda824317de7a8e2b53edbbc8b17032d7dedff045475ee1da926c"
 
 [[files]]
 file = "config/modpack_defaults/config/proplacer-client.toml"
-hash = "d09e678763c98c68be47d5c74000d3cc4e2770ca610e3ff2db24149c6890fc3d"
+hash = "4b9861276dccca463c61914bc68a2ac93906a1be720a34003ccb9a46fcfe0b69"
 
 [[files]]
 file = "config/modpack_defaults/config/rsls.properties"
@@ -306,7 +306,7 @@ hash = "48036fe91ca4e16400437b8470775c5c801ce543fe0c6254421882f479d96052"
 
 [[files]]
 file = "config/modpack_defaults/config/sodium-shadowy-path-blocks-options.json"
-hash = "2f16d7c9cfbcb73f5af74f213cbd1d6d799369d8a63208b3430b20aa630b69d7"
+hash = "4b019a9381a786d24249553c769f1a1363b0c347b6a70f81b4e9a1c0ee4254f1"
 
 [[files]]
 file = "config/modpack_defaults/config/stfu-disable.txt"
@@ -1073,7 +1073,7 @@ metafile = true
 
 [[files]]
 file = "mods/forge-config-api-port.pw.toml"
-hash = "ccf85a22cdd9f965cc6aa8dd97c5f5aac4d5b42427888a852af5874f8a345d87"
+hash = "451f8726db7533de82a17cc902fe6053dcd82f968442c17d507d0373de02ddd0"
 metafile = true
 
 [[files]]
@@ -1213,12 +1213,12 @@ metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "722007a08065b27337e39edbbdb6a34067bbbe523f36a968d9861b9714144368"
+hash = "030f69f3a7e275201c10eef33ae360341a3c280b06955134b6885aeaa8883d6a"
 metafile = true
 
 [[files]]
 file = "mods/yacl.pw.toml"
-hash = "47909ee03f4addc160fcaf5dde8a1eb90cadbef00c94758695aea6fbad0162d7"
+hash = "51a17d028bf0d35c66d269185a63ea4adc968f60727454d0f8ed3ef2138f8612"
 metafile = true
 
 [[files]]
