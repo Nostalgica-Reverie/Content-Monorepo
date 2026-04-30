@@ -945,10 +945,6 @@ file = "config/modpack_defaults/servers.dat"
 hash = "d082d6307f908d09fad1c0e429a978795e66ef42b923645150284eb8891e7f4c"
 
 [[files]]
-file = "config/moreculling.toml"
-hash = "a379fab4e05772a52e83884251c81d63857b6edc75e5185bb08930bd460a9170"
-
-[[files]]
 file = "config/servercore/config.yml"
 hash = "8f2a0beab110717038219622c49fb764f71122040cb52d8a4d06c0c60fd286f1"
 
@@ -1092,6 +1088,11 @@ hash = "de954e56216772900768426c541731ec91d0c7bd1c5037ad2f6cc5552f87c635"
 metafile = true
 
 [[files]]
+file = "mods/globalpacks.pw.toml"
+hash = "4054621ba956c149298aeddeb452272f9b9cab2fff6a525ca76e73a5321e10fc"
+metafile = true
+
+[[files]]
 file = "mods/gnetum.pw.toml"
 hash = "b12d92bfd034d24e08011970a6de4883e11c9b8e4c6004064393ff2f2739cb94"
 metafile = true
@@ -1214,11 +1215,6 @@ metafile = true
 [[files]]
 file = "mods/simple-music-control.pw.toml"
 hash = "e521f1b3cdd28fbc83bddf37287ff0d7f14087658795cd2d1b4dfb06ebc43a86"
-metafile = true
-
-[[files]]
-file = "mods/simple-resource-loader.pw.toml"
-hash = "f8f5a13a845c5c8bbaf4abbdee49dccccb37d988c0d36445fe4585af285bf1b7"
 metafile = true
 
 [[files]]
