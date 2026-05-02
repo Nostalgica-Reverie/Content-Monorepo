@@ -45,12 +45,11 @@ A minor mod that fixes numerous small bugs in the game.
 - Group icons will populate from the bottom-right corner.
 
 ### Refactored Options Presets
-- `"Retro" LCE` - Replaces `Very Low (XB/PS2*)`, now with more Legacy-style enhancements.
-- `Handheld LCE` - Replaces `Handheld (Switch/Vita)`, now with more Legacy-style enhancements.
-- `Old-Gen LCE` - Replaces `Low (XB360/PS3)`, now with more Legacy-style enhancements
-  - This will be the new default preset.
-- `New-Gen LCE - Derived from `Medium (XB1/PS4)`, now with more Legacy-style enhancements.
-- `"Next-Gen" LCE` - Derived from `High (XB Series/PS5)`, now with more Legacy-style enhancements.
+- `"Retro" LCE` - Replaces `Very Low (XB/PS2*)`, now with more Legacy-style gui enhancements.
+- `Handheld LCE` - Replaces `Handheld (Switch/Vita)`, now with more Legacy-style gui enhancements.
+- `Old-Gen LCE` - Replaces `Low (XB360/PS3)`, now with more Legacy-style gui enhancements
+- `New-Gen LCE - Derived from `Medium (XB1/PS4)`, now with more Legacy-style gui enhancements.
+- `"Next-Gen" LCE` - Derived from `High (XB Series/PS5)`, now with more Legacy-style gui enhancements.
 - `Potato` - Derived from `Very Low (XB/PS2*)`, without the Legacy-style enhancements
 - `Very Low` - Derived from `Handheld (Switch/Vita)`, without the Legacy-style enhancements
 - `Low` - Derived from `Low (XB360/PS3)`, without the Legacy-style enhancements
@@ -62,6 +61,9 @@ No longer maintained.
 
 ### Removed Tooltips Enhanced
 Now that we're on a build of Legacy4J that includes these control icons by default, Tooltips Enhanced has been removed.
+
+### Removed BadOptimizations
+Mod is more placebo than it is actual benefits.
 
 ## Temporarily Unavailable
 - Particle Core
