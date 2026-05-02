@@ -945,10 +945,6 @@ file = "config/modpack_defaults/servers.dat"
 hash = "d082d6307f908d09fad1c0e429a978795e66ef42b923645150284eb8891e7f4c"
 
 [[files]]
-file = "config/moreculling.toml"
-hash = "a379fab4e05772a52e83884251c81d63857b6edc75e5185bb08930bd460a9170"
-
-[[files]]
 file = "config/servercore/config.yml"
 hash = "8f2a0beab110717038219622c49fb764f71122040cb52d8a4d06c0c60fd286f1"
 
@@ -957,18 +953,485 @@ file = "config/servercore/optimizations.yml"
 hash = "d46be0ff848f3c12326fb5306ba6be295769af256326bd931f8424582e617779"
 
 [[files]]
-file = "mods/badoptimizations.pw.toml"
-hash = "8e6033c2642308835d119a073fdf24306394cdb6985c482a08e67b8087f6e90d"
-metafile = true
+file = "global_packs/required_resources/Fixed Chest Models/assets/cem/chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "global_packs/required_resources/Fixed Chest Models/assets/cem/chest_large.jem"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
+
+[[files]]
+file = "global_packs/required_resources/Fixed Chest Models/assets/cem/ender_chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "global_packs/required_resources/Fixed Chest Models/assets/cem/trapped_chest.jem"
+hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
+
+[[files]]
+file = "global_packs/required_resources/Fixed Chest Models/assets/cem/trapped_chest_large.jem"
+hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
+
+[[files]]
+file = "global_packs/required_resources/Fixed Chest Models/pack.mcmeta"
+hash = "0b0c453b8c341d683b02ef356dbba5052bb3bdc7e8ecab3e0668067a6a47bc9d"
+
+[[files]]
+file = "global_packs/required_resources/Fixed Chest Models/pack.png"
+hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/intro.json"
+hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/af_za.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/ar_sa.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/ca_es.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/cs_cz.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/da_dk.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/de_de.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/el_gr.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/en_au.json"
+hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/en_ca.json"
+hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/en_gb.json"
+hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/en_nz.json"
+hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/en_pt.json"
+hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/en_ud.json"
+hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/en_us.json"
+hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/enp.json"
+hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/es_es.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/es_mx.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/fi_fi.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/fr_fr.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/he_il.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/hu_hu.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/it_it.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/ja_jp.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/ko_kr.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/nl_nl.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/no_no.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/pl_pl.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/pt_br.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/pt_pt.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/ro_ro.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/ru_ru.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/sr_sp.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/sv_se.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/tr_tr.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/uk_ua.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/vi_vn.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/zh_cn.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/lang/zh_tw.json"
+hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "7005196a8c4446f44d2c9044be5f8cf6cace1afde83f3702bc7d0bce4fb7e38f"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "c797ed0959bee5a22f4289f2fb8c25b994b9a6e6caffa808d2fe6d363c349998"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "ef45bbbe597e4b69d121327570f11f1408ed88dbdd624a491d51252df8cc2409"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "3f6a7e313057c18ca80c09a310d45a10c64887ab355a388ba21560de23d692f5"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/comparison.png"
+hash = "ce5892b1d13ac22d021b27093e56cf28f27e8726930cd3ab908c3370b00db889"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/icon.png"
+hash = "fafb4ec3e279a23e0df864f7986fd490794d5aa05818a9fa3ff9516574c56775"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/alpha/icon.png"
+hash = "a535ae2500061c82e1de47fe8d7444f02a467ef557acc0bf0521e3e9e9472541"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/animated/icon.png"
+hash = "c1dcd628abed3a45828aa9ae8aac2f5ecda9b034193d3be443f5ca0a9bbedc96"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/beta/icon.png"
+hash = "46e569d107c2db8efd1d6f951b84761d507f5c74e0c8b297005da7c46d06c4d1"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/candy/comparison.png"
+hash = "1f80165c02ba6403d12b6dd684e74d4e25e110c9764aa65229ab8df193d9908c"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/candy/icon.png"
+hash = "6c691407d0e38aae8e451d6a7f5a169e592d695b4326e2802b078874b63c7a09"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/comparison.png"
+hash = "bed3288b1d7e7f210ffd26ca5f4a1efb93e33bc33f07de084f23245f6e2b0e56"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/icon.png"
+hash = "a9df65ee8758fd219ce4ce6a8d72deb81cbd57286fb3d5388c3a9cef100f706d"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/comparison.png"
+hash = "979466ed7447b7bb2d4ba2f01f37ff91d1d274f0b76b594d9ed04c2bc9093b17"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/icon.png"
+hash = "6d225c94b384af7e141c9e387a53a3cf1055dfc2d7caf0aad3979b8288acebf2"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/comparison.png"
+hash = "3b15dad26abe7c5e99a3615af9ec6be612aae5c16d7e4fa43ae9becff5191849"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/icon.png"
+hash = "d11c1f20eb3cdb4207f1037c5fbb1910218d8f30f58b175b7b0270fc39b3c499"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/city/comparison.png"
+hash = "8408546140623852493fa9ef336b8a7c7ed35f121e572c3010bb00fa895c554b"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/city/icon.png"
+hash = "3ae45512e4a43b6e8e3d78bc51eeb4042014a044d0f8dcd58b9c5ba7c2c9c707"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/darkmode/icon.png"
+hash = "aec2d2516ef1c1efdda8e442c977eef52bcb13329cf706fdf07e2191241f961b"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/comparison.png"
+hash = "e23f6a6c01bdffe7b2321e0d65d6749430b8fee5686a854810e9001c3b6faab2"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/icon.png"
+hash = "f0679e9d4a35236fbccee19e2848ddcfc20f7972b2346ba4bd119ef0a2ea5c4d"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/comparison.png"
+hash = "2a03675fd78bdc5e60a97415b8b7ee4abd123d6780e39b2ed626f19c22d91a58"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/icon.png"
+hash = "5dd8a7b1463905380ce3bec812bde41b898678da9dca8baaaf23e0411f412c68"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/faithful/icon.png"
+hash = "db206a5ae7de02d36407d83838766df28328a84eccb6fb7b77d1e9aabce0ceee"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/comparison.png"
+hash = "ababda13b5eda2637c034374f13605ea405a00b7d15b0249049f18466bb354a5"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/icon.png"
+hash = "c7c96d4b911ae183f8cf8be00eda98248d757d4b4ca4ceb671d68be180e72a9e"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/comparison.png"
+hash = "170f8a7663a5b83ddf43d2c88196f35c908e400a1a81dd4d1a5fbded22e4bd97"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/icon.png"
+hash = "b39836e4216018d3a27a788641900ed801843d72b06163584492ffe1b2110393"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/festive/comparison.png"
+hash = "1bd63065aaa0f3709c51ce844c9fffef91651831f31a8a3ddc5a3af298028446"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/festive/icon.png"
+hash = "af643f37c4cff536dd9e63e436884f7c9e59d16ca2f4a6c541233bcb3983751d"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/greek/comparison.png"
+hash = "500e3722aee77e56a6bebc2bbfacac4fc13fdbfe1115ab14cca253144aa79734"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/greek/icon.png"
+hash = "4656ca807726f6ee2e0f573408d7ff6da140f6ad0d57214d823953c2f9907d54"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/comparison.png"
+hash = "fc869a028af3005f31a1b13587018539841c45d74862a9a6de207674d286e4ae"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/icon.png"
+hash = "dd049f2743b7f96629dc2546c91552baa91ec926086355db673c18adeacb1eb2"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/comparison.png"
+hash = "0a08f41af41d29d1ca97766be24314b2fafeab857e564e396eec6fc6d11d2d49"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/icon.png"
+hash = "13ebc0ea843091607988b725596abd4070fb5bab382239dbf94b367823ad80c1"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/live/icon.png"
+hash = "809d9ce7126b6199c0aa815364af38a3ad70dc79429dc744a68b3ac51db00ad4"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/comparison.png"
+hash = "a8277fc9c122c933cd0029c2a0a7b4479aaefa886f64226e03f5522987ff9da9"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/icon.png"
+hash = "87f8d53a6789f040ae7e4ef53709c98cd546e7ad75015efe9df1d58da01d6dfa"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/n7/comparison.png"
+hash = "a59571d1490a757974349c1e120775d8c81777c47d04c4c382f949efa4ba1fdd"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/n7/icon.png"
+hash = "c4dca6fd44768af91a4cea21413e62e7bd828f50672cc6189c40c0ad8da9a01f"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/natural/comparison.png"
+hash = "24bb54b428f1f1667bba5af0a43039afae8ce6273ea5fad68841cb047a990fbb"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/natural/icon.png"
+hash = "abb7c3877a8be5239bce78960c29ac5f1c6a15d28957a58a98622e24a9683069"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/comparison.png"
+hash = "f8bc8027e602aaed12e012018df8caa8efa0c60cab3984b0212ba3d1f84001f5"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/icon.png"
+hash = "1098e02d10ac644686cb160f742b9feab7bde713c1ad3c9f894c794f4e6859e3"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/norse/comparison.png"
+hash = "f4100a76da546e82e6847a5d29368074076b23d0850ee9b1daaecf473739d7ff"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/norse/icon.png"
+hash = "459c7d02dc672c552051ca1d687945683a28feb62578e3ab709646dc5fd9c553"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/comparison.png"
+hash = "d0f8405bdd26d0dd25b7087aa484f35e3c1c1e90ab18c2f659e94bbe4eb8963c"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/icon.png"
+hash = "799aebc057d5a70ba64a6774b30aff4104167939e5c385c01651970ca33b1ed8"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/comparison.png"
+hash = "5054d4769c62fe1ea30c4184044416adef63b9c9a02c0686987665d79b4a299b"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/icon.png"
+hash = "5e53affb565e2ef75585a908937d51f95be5324facc5f81aec089c87387ac3ae"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/ps4parity/icon.png"
+hash = "fa0af965d0cf1c068cff78f1da460e9a3392f5de5bd607344326a533ec686357"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/comparison.png"
+hash = "33371b91c2557c4f61db51679440321f68b4f9538e1401ffd0c9b27ca7b5a70c"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/icon.png"
+hash = "8c1a9fc99638ac0ef3e90ce569f21bdc247e43ec43cc19dd31de80a9e26bde95"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/comparison.png"
+hash = "6f2e7232d7efdedeb179b70fc9ccd2388b211202a212b2a369a62ab27d233dba"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/icon.png"
+hash = "c40ff126bb227fb76956521ade48f97d1df2b39301ccec04828cfcba3567fb05"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/comparison.png"
+hash = "4d34219d3c4e97f502013d194d52735067dad681d1ca73b8f920e6eea22cc308"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/icon.png"
+hash = "7554131bad578295866cf093e3c28478923f86f75c81ee721890fc6350ef2127"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/comparison.png"
+hash = "a8adea4d78feb81cc605448be65c1c3eebe900d9e41ac9da449da4e5d6c206a6"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/icon.png"
+hash = "fb8753d918d25bff5c1a3bb824fa2765565572889e94d9f92fd55a62fd4ea70b"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/comparison.png"
+hash = "de1b84ce8d7ffb4646a5eae6091c168d1073fd5e79824cafa96d9c75268a8711"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/icon.png"
+hash = "0f195001d9aa37a65dea613ebd44b145afd0191fb92e932fc13b8fe2ef00b420"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/toy/comparison.png"
+hash = "92069c0592c5dd0d3211afb438ceae860e6ce11bb98180889883963e1690b92d"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/toy/icon.png"
+hash = "ada1b7cc1eb8ee561d3df78f82aab0603fe14c74b9f8c28de514b2a06f7f1415"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/trailer/icon.png"
+hash = "853515dc6f8f1b1fccbba8cf14f1fc8677d1e1cb42def3ceddda12d4dbae651f"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/vanillaplus/icon.png"
+hash = "69c6092e1fdacc5739bf2f170ece29efdcbf49b0fcd64936b01189dffd96dd32"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/vintage/icon.png"
+hash = "f7039ebe3f3f7271443da585100cf706b8f25d54c626a72c703424df02b578a8"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/legacy_world_sizes/lang/en_us.json"
+hash = "25859e4219345c8dc85b26e06cc0d30ec657512a966866bdb479a9ad566d61e9"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/assets/minecraft/lang/en_us.json"
+hash = "8e1dbbdefc420ba29f2e531974cffdad5cde0016f5a3a08c6513ef342378720c"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/pack.mcmeta"
+hash = "87eddc80fa8fb4ae73680203826dacbd733d4b610bd4df57c96531d65da368c2"
+
+[[files]]
+file = "global_packs/required_resources/Re-Console+ Resources/pack.png"
+hash = "ceb8eb65289969cc6357c186c6ca529560aae559decb13ae02b343c974d91fa6"
 
 [[files]]
 file = "mods/better-block-entities.pw.toml"
-hash = "56ab33230daa33839c1aca1c6c71ffdda1e4794ebcbcb2bc15fcd51a6a44df99"
+hash = "70840a6fafda10a17218ed11bfb2574af2d7ac06c3ce8f611e7d41517783be26"
 metafile = true
 
 [[files]]
 file = "mods/betterf3.pw.toml"
-hash = "36578230c2b232b40d5964a8dbb159606758fc9a93a3f9e3e5c8d014f6c3e9b4"
+hash = "270675632e20b3f27d79a4633356fac3b2bf7335aa250a7894f53a4490e61b29"
 metafile = true
 
 [[files]]
@@ -977,8 +1440,13 @@ hash = "29be6fd74f960ca0d9e7015ebae1f83f629703bafa6bee8ab30e7504193ff24f"
 metafile = true
 
 [[files]]
+file = "mods/bugfixerupper.pw.toml"
+hash = "5791cb0e3f23d8be295669b9e639caebc60d7a65c98793f04a917a339ea2b57d"
+metafile = true
+
+[[files]]
 file = "mods/c2me-fabric.pw.toml"
-hash = "6b306404c910f6910bb704132f724f62bb78594e281755b8d3125fe14bce349b"
+hash = "05608f9174ebde171474deee51bc28ccf0a29d7594a6c0bdc40f06d2c7e32b50"
 metafile = true
 
 [[files]]
@@ -1032,8 +1500,13 @@ hash = "0b4721522ae8497677ff44178646d768863825d92e925ac93ab97c02f165c08c"
 metafile = true
 
 [[files]]
+file = "mods/e4mc.pw.toml"
+hash = "865ee3da70da1671c3797b1cc87cff689e1c01e74f8dbf0c646d63722209c5df"
+metafile = true
+
+[[files]]
 file = "mods/entity-model-features.pw.toml"
-hash = "dbbdc2eb0bd4c6082a4a47e5b37d894c4b4a294fd16ecd5329624e19c1e5388d"
+hash = "22a4393b10d352d054bc13e1992d36c652f96d4e0dea28460b060afd0a372bd7"
 metafile = true
 
 [[files]]
@@ -1048,12 +1521,17 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "1b7dddabe21e51ddc2a0f1a304523089c4aa80dfe03d1921fdb6847a9a7f1065"
+hash = "f88b106c6c7500d912c11c973d9c124d52b1577c52630c282720367312452d24"
 metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
 hash = "337d97b990f76c91584b12600651ae7bd47a0824e45070b3d9330b0922149fc0"
+metafile = true
+
+[[files]]
+file = "mods/factory-api.pw.toml"
+hash = "50a21c341a3f81366a4de7e237641ee6f9d498a832e90c120c08cb9f1f184adc"
 metafile = true
 
 [[files]]
@@ -1082,8 +1560,13 @@ hash = "de954e56216772900768426c541731ec91d0c7bd1c5037ad2f6cc5552f87c635"
 metafile = true
 
 [[files]]
+file = "mods/globalpacks.pw.toml"
+hash = "4054621ba956c149298aeddeb452272f9b9cab2fff6a525ca76e73a5321e10fc"
+metafile = true
+
+[[files]]
 file = "mods/gnetum.pw.toml"
-hash = "b12d92bfd034d24e08011970a6de4883e11c9b8e4c6004064393ff2f2739cb94"
+hash = "3c167684e793c842cb1128475e4cac35f96ab45729e4946ae989e551ac264f5c"
 metafile = true
 
 [[files]]
@@ -1098,7 +1581,7 @@ metafile = true
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "c9a661d4865d0ba5d2b6356141c6e7ad6246586aa5224d482c23bf309b6bdc3a"
+hash = "45db1736aeee554d2db425ad7da44c2d19ab30920d406816b93c34ab7dfe568a"
 metafile = true
 
 [[files]]
@@ -1117,6 +1600,11 @@ hash = "83ce6d277b02b2d55a9ad0d5a5900ef43562f4926e88a81b1ad904aeb63d5074"
 metafile = true
 
 [[files]]
+file = "mods/legacy4j.pw.toml"
+hash = "352614aff968bff29ac30e194a438c89b71e3a8ae859262c81bf525c5909bdef"
+metafile = true
+
+[[files]]
 file = "mods/lithium.pw.toml"
 hash = "ceed226223967ea3e7017aad327a069250c289c834766e1a3cd27c8d0ad52de1"
 metafile = true
@@ -1132,8 +1620,18 @@ hash = "ae057f4cbe01acc8387f5d9dcab2b5ea49dd4a3d0b00b2a138ca6cd07ed5c518"
 metafile = true
 
 [[files]]
+file = "mods/minimega.pw.toml"
+hash = "93ab738e0025ed9d0b184f9517aed45550be49d4a6bce0e04b4adcc322dc170f"
+metafile = true
+
+[[files]]
+file = "mods/mod.pw.toml"
+hash = "5b790b7adcf76651f0f920f7feb7f004b8699ced3d4e843cf5bba92155ee5e9e"
+metafile = true
+
+[[files]]
 file = "mods/moderner-beta.pw.toml"
-hash = "34a2a4fa550f2bbd2c478ebae50667e84c52bb6cae2575922de606173df5001c"
+hash = "6ec7169d17308e21df34afc3b1a8a9fabcb3eb8e2068d9ea427b8bb3dbcb1350"
 metafile = true
 
 [[files]]
@@ -1152,8 +1650,13 @@ hash = "5ba6db6a41f7c289b2b3ef6cea1826b875efe13dd409b84e4ea4c169305cff3d"
 metafile = true
 
 [[files]]
+file = "mods/ok-zoomer.pw.toml"
+hash = "1dac9936d503501a9d0a8f9a2a7f67337b11ff8a8b9cafd1cdca70cffbec3460"
+metafile = true
+
+[[files]]
 file = "mods/optiboxes.pw.toml"
-hash = "65f6adf17aa12d6b890f4930b3fd5ebcb754a82ab3f6d5bda81f95bcbd57c429"
+hash = "63fdd2b23b59250f9d2272f6eb116a40f60fe9463044eb8a539d492df3a30782"
 metafile = true
 
 [[files]]
@@ -1177,6 +1680,16 @@ hash = "c4f5f4ad0b30e4e976061d97b6b292900cd019867fe69a7a6e01a71c2942832b"
 metafile = true
 
 [[files]]
+file = "mods/pro-placer.pw.toml"
+hash = "775af0d8d897220f308c1da527a4a4ab2c7496d4a127461cd3bea360aef3d28a"
+metafile = true
+
+[[files]]
+file = "mods/puzzles-lib.pw.toml"
+hash = "c38b5478ba89be287c283fc6c7bf8a5b576a0cb22594e4b773e044f20aaf22bb"
+metafile = true
+
+[[files]]
 file = "mods/scalablelux.pw.toml"
 hash = "645be5d20d755e83c986014b768abbf473d3bf31da5dcd197af63c8b200cc141"
 metafile = true
@@ -1194,11 +1707,6 @@ metafile = true
 [[files]]
 file = "mods/simple-music-control.pw.toml"
 hash = "e521f1b3cdd28fbc83bddf37287ff0d7f14087658795cd2d1b4dfb06ebc43a86"
-metafile = true
-
-[[files]]
-file = "mods/simple-resource-loader.pw.toml"
-hash = "f8f5a13a845c5c8bbaf4abbdee49dccccb37d988c0d36445fe4585af285bf1b7"
 metafile = true
 
 [[files]]
@@ -2555,7 +3063,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/fresh-animations-extensions.pw.toml"
-hash = "e219ab7d169279cfbc2f217016404c9c462b37ddc231984526a7100d51940a09"
+hash = "03228d3643d9c6ee91c30df398b46cf910ba6aca3d673de1cc6e7fea5ce6d340"
 metafile = true
 
 [[files]]
@@ -2595,7 +3103,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/legacy-skin-packs.pw.toml"
-hash = "cc0339a37b0c0a071bf2a4397dea123ecb3a010ebfebdd55eb88393225b2a83e"
+hash = "11b0c66e2b294eab4ae270ed7d34e67986224a70974914ce18bf1374285580a1"
 metafile = true
 
 [[files]]
@@ -2675,7 +3183,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "477fef9faa95612b02430fca4ac387afe7adfde77c2a4d31e1dd1b358212d89b"
+hash = "851aebdacef608b4951350b4f2f16c22e70b06a52f3cf3cae29f259c249ceddd"
 metafile = true
 
 [[files]]
@@ -2732,475 +3240,3 @@ metafile = true
 file = "resourcepacks/vintage.pw.toml"
 hash = "85e13b5798f65e261b420c1fabce203f5b403a66e98a1c302db6683ee0254264"
 metafile = true
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/chest.jem"
-hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/chest_large.jem"
-hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/ender_chest.jem"
-hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest.jem"
-hash = "9bc1ff50e3539f54bc7c3f42338d8c88f0178235790de1b1e2020be1eb0f2289"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest_large.jem"
-hash = "2290e6dc78592bd196f580ebb26137def58eead583dc7d920e91042d584a1e8d"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/pack.mcmeta"
-hash = "0b0c453b8c341d683b02ef356dbba5052bb3bdc7e8ecab3e0668067a6a47bc9d"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/pack.png"
-hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/intro.json"
-hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/af_za.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ar_sa.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ca_es.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/cs_cz.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/da_dk.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/de_de.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/el_gr.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_au.json"
-hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_ca.json"
-hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_gb.json"
-hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_nz.json"
-hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_pt.json"
-hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_ud.json"
-hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/en_us.json"
-hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/enp.json"
-hash = "0fec9c76829980e59328ba6ab4455f51b0fdcf49d7449238145e8f57b95523fe"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/es_es.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/es_mx.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/fi_fi.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/fr_fr.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/he_il.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/hu_hu.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/it_it.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ja_jp.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ko_kr.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/nl_nl.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/no_no.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pl_pl.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pt_br.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/pt_pt.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ro_ro.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/ru_ru.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/sr_sp.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/sv_se.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/tr_tr.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/uk_ua.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/vi_vn.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/zh_cn.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/lang/zh_tw.json"
-hash = "71b38fac0277d72897afa5c7ebf42f2a9a68225fe7eefa8bf4a17084736bfa59"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading.png"
-hash = "7005196a8c4446f44d2c9044be5f8cf6cace1afde83f3702bc7d0bce4fb7e38f"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading1.png"
-hash = "c797ed0959bee5a22f4289f2fb8c25b994b9a6e6caffa808d2fe6d363c349998"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading2.png"
-hash = "ef45bbbe597e4b69d121327570f11f1408ed88dbdd624a491d51252df8cc2409"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/intro/loading3.png"
-hash = "3f6a7e313057c18ca80c09a310d45a10c64887ab355a388ba21560de23d692f5"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/comparison.png"
-hash = "ce5892b1d13ac22d021b27093e56cf28f27e8726930cd3ab908c3370b00db889"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/icon.png"
-hash = "fafb4ec3e279a23e0df864f7986fd490794d5aa05818a9fa3ff9516574c56775"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/alpha/icon.png"
-hash = "a535ae2500061c82e1de47fe8d7444f02a467ef557acc0bf0521e3e9e9472541"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/animated/icon.png"
-hash = "c1dcd628abed3a45828aa9ae8aac2f5ecda9b034193d3be443f5ca0a9bbedc96"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/beta/icon.png"
-hash = "46e569d107c2db8efd1d6f951b84761d507f5c74e0c8b297005da7c46d06c4d1"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/candy/comparison.png"
-hash = "1f80165c02ba6403d12b6dd684e74d4e25e110c9764aa65229ab8df193d9908c"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/candy/icon.png"
-hash = "6c691407d0e38aae8e451d6a7f5a169e592d695b4326e2802b078874b63c7a09"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/comparison.png"
-hash = "bed3288b1d7e7f210ffd26ca5f4a1efb93e33bc33f07de084f23245f6e2b0e56"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/icon.png"
-hash = "a9df65ee8758fd219ce4ce6a8d72deb81cbd57286fb3d5388c3a9cef100f706d"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/comparison.png"
-hash = "979466ed7447b7bb2d4ba2f01f37ff91d1d274f0b76b594d9ed04c2bc9093b17"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/icon.png"
-hash = "6d225c94b384af7e141c9e387a53a3cf1055dfc2d7caf0aad3979b8288acebf2"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/comparison.png"
-hash = "3b15dad26abe7c5e99a3615af9ec6be612aae5c16d7e4fa43ae9becff5191849"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/icon.png"
-hash = "d11c1f20eb3cdb4207f1037c5fbb1910218d8f30f58b175b7b0270fc39b3c499"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/city/comparison.png"
-hash = "8408546140623852493fa9ef336b8a7c7ed35f121e572c3010bb00fa895c554b"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/city/icon.png"
-hash = "3ae45512e4a43b6e8e3d78bc51eeb4042014a044d0f8dcd58b9c5ba7c2c9c707"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/darkmode/icon.png"
-hash = "aec2d2516ef1c1efdda8e442c977eef52bcb13329cf706fdf07e2191241f961b"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/comparison.png"
-hash = "e23f6a6c01bdffe7b2321e0d65d6749430b8fee5686a854810e9001c3b6faab2"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/icon.png"
-hash = "f0679e9d4a35236fbccee19e2848ddcfc20f7972b2346ba4bd119ef0a2ea5c4d"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/comparison.png"
-hash = "2a03675fd78bdc5e60a97415b8b7ee4abd123d6780e39b2ed626f19c22d91a58"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/icon.png"
-hash = "5dd8a7b1463905380ce3bec812bde41b898678da9dca8baaaf23e0411f412c68"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/faithful/icon.png"
-hash = "db206a5ae7de02d36407d83838766df28328a84eccb6fb7b77d1e9aabce0ceee"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/comparison.png"
-hash = "ababda13b5eda2637c034374f13605ea405a00b7d15b0249049f18466bb354a5"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/icon.png"
-hash = "c7c96d4b911ae183f8cf8be00eda98248d757d4b4ca4ceb671d68be180e72a9e"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/comparison.png"
-hash = "170f8a7663a5b83ddf43d2c88196f35c908e400a1a81dd4d1a5fbded22e4bd97"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/icon.png"
-hash = "b39836e4216018d3a27a788641900ed801843d72b06163584492ffe1b2110393"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/festive/comparison.png"
-hash = "1bd63065aaa0f3709c51ce844c9fffef91651831f31a8a3ddc5a3af298028446"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/festive/icon.png"
-hash = "af643f37c4cff536dd9e63e436884f7c9e59d16ca2f4a6c541233bcb3983751d"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/greek/comparison.png"
-hash = "500e3722aee77e56a6bebc2bbfacac4fc13fdbfe1115ab14cca253144aa79734"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/greek/icon.png"
-hash = "4656ca807726f6ee2e0f573408d7ff6da140f6ad0d57214d823953c2f9907d54"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/comparison.png"
-hash = "fc869a028af3005f31a1b13587018539841c45d74862a9a6de207674d286e4ae"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/icon.png"
-hash = "dd049f2743b7f96629dc2546c91552baa91ec926086355db673c18adeacb1eb2"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/comparison.png"
-hash = "0a08f41af41d29d1ca97766be24314b2fafeab857e564e396eec6fc6d11d2d49"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/icon.png"
-hash = "13ebc0ea843091607988b725596abd4070fb5bab382239dbf94b367823ad80c1"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/live/icon.png"
-hash = "809d9ce7126b6199c0aa815364af38a3ad70dc79429dc744a68b3ac51db00ad4"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/comparison.png"
-hash = "a8277fc9c122c933cd0029c2a0a7b4479aaefa886f64226e03f5522987ff9da9"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/icon.png"
-hash = "87f8d53a6789f040ae7e4ef53709c98cd546e7ad75015efe9df1d58da01d6dfa"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/n7/comparison.png"
-hash = "a59571d1490a757974349c1e120775d8c81777c47d04c4c382f949efa4ba1fdd"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/n7/icon.png"
-hash = "c4dca6fd44768af91a4cea21413e62e7bd828f50672cc6189c40c0ad8da9a01f"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/natural/comparison.png"
-hash = "24bb54b428f1f1667bba5af0a43039afae8ce6273ea5fad68841cb047a990fbb"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/natural/icon.png"
-hash = "abb7c3877a8be5239bce78960c29ac5f1c6a15d28957a58a98622e24a9683069"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/comparison.png"
-hash = "f8bc8027e602aaed12e012018df8caa8efa0c60cab3984b0212ba3d1f84001f5"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/icon.png"
-hash = "1098e02d10ac644686cb160f742b9feab7bde713c1ad3c9f894c794f4e6859e3"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/norse/comparison.png"
-hash = "f4100a76da546e82e6847a5d29368074076b23d0850ee9b1daaecf473739d7ff"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/norse/icon.png"
-hash = "459c7d02dc672c552051ca1d687945683a28feb62578e3ab709646dc5fd9c553"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/comparison.png"
-hash = "d0f8405bdd26d0dd25b7087aa484f35e3c1c1e90ab18c2f659e94bbe4eb8963c"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/icon.png"
-hash = "799aebc057d5a70ba64a6774b30aff4104167939e5c385c01651970ca33b1ed8"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/comparison.png"
-hash = "5054d4769c62fe1ea30c4184044416adef63b9c9a02c0686987665d79b4a299b"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/icon.png"
-hash = "5e53affb565e2ef75585a908937d51f95be5324facc5f81aec089c87387ac3ae"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/ps4parity/icon.png"
-hash = "fa0af965d0cf1c068cff78f1da460e9a3392f5de5bd607344326a533ec686357"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/comparison.png"
-hash = "33371b91c2557c4f61db51679440321f68b4f9538e1401ffd0c9b27ca7b5a70c"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/icon.png"
-hash = "8c1a9fc99638ac0ef3e90ce569f21bdc247e43ec43cc19dd31de80a9e26bde95"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/comparison.png"
-hash = "6f2e7232d7efdedeb179b70fc9ccd2388b211202a212b2a369a62ab27d233dba"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/icon.png"
-hash = "c40ff126bb227fb76956521ade48f97d1df2b39301ccec04828cfcba3567fb05"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/comparison.png"
-hash = "4d34219d3c4e97f502013d194d52735067dad681d1ca73b8f920e6eea22cc308"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/icon.png"
-hash = "7554131bad578295866cf093e3c28478923f86f75c81ee721890fc6350ef2127"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/comparison.png"
-hash = "a8adea4d78feb81cc605448be65c1c3eebe900d9e41ac9da449da4e5d6c206a6"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/icon.png"
-hash = "fb8753d918d25bff5c1a3bb824fa2765565572889e94d9f92fd55a62fd4ea70b"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/comparison.png"
-hash = "de1b84ce8d7ffb4646a5eae6091c168d1073fd5e79824cafa96d9c75268a8711"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/icon.png"
-hash = "0f195001d9aa37a65dea613ebd44b145afd0191fb92e932fc13b8fe2ef00b420"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/toy/comparison.png"
-hash = "92069c0592c5dd0d3211afb438ceae860e6ce11bb98180889883963e1690b92d"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/toy/icon.png"
-hash = "ada1b7cc1eb8ee561d3df78f82aab0603fe14c74b9f8c28de514b2a06f7f1415"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/trailer/icon.png"
-hash = "853515dc6f8f1b1fccbba8cf14f1fc8677d1e1cb42def3ceddda12d4dbae651f"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/vanillaplus/icon.png"
-hash = "69c6092e1fdacc5739bf2f170ece29efdcbf49b0fcd64936b01189dffd96dd32"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy/textures/gui/sprites/comparisons/vintage/icon.png"
-hash = "f7039ebe3f3f7271443da585100cf706b8f25d54c626a72c703424df02b578a8"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/legacy_world_sizes/lang/en_us.json"
-hash = "25859e4219345c8dc85b26e06cc0d30ec657512a966866bdb479a9ad566d61e9"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/assets/minecraft/lang/en_us.json"
-hash = "8e1dbbdefc420ba29f2e531974cffdad5cde0016f5a3a08c6513ef342378720c"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/pack.mcmeta"
-hash = "87eddc80fa8fb4ae73680203826dacbd733d4b610bd4df57c96531d65da368c2"
-
-[[files]]
-file = "resources/resourcepack/required/Re-Console+ Resources/pack.png"
-hash = "ceb8eb65289969cc6357c186c6ca529560aae559decb13ae02b343c974d91fa6"

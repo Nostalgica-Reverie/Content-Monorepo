@@ -1,6 +1,10 @@
 {
 	"pack": {
-		"pack_format": 34,
-		"description": "Default Resources, DO NOT REMOVE!"
+	"pack_format": 69,
+    "pack_format": 16,
+    "min_format": 16,
+    "max_format": 999,
+    "supported_formats": [ 16, 999 ]
+		"description": "Default Resources for 2000s Edition, DO NOT REMOVE!"
 	}
 }

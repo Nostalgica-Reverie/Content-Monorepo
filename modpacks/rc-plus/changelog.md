@@ -1,4 +1,4 @@
-# Re-Console Plus 26.04.10
+# Re-Console Plus 26.05
 A major update for Re-Console Plus, Simply Legacy and Legacy4J. This updates us to Minecraft 26.1.2, and gives us numerous new features.
 
 This changelog encompasses all changelogs from 26.04.2 to 26.04.9, as well.
@@ -32,15 +32,24 @@ This changelog encompasses all changelogs from 26.04.2 to 26.04.9, as well.
 Replaces MoreCulling.
 
 ### Added Gnetum
-Buffers framerate on GUI elements to improve performance
+Buffers framerate on GUI elements to improve performance.
+
+### Added Ok Zoomer
+Mod no-longer incompatible with Minimega.
+
+### Added BugFixerUpper
+A minor mod that fixes numerous small bugs in the game.
+
+### Adjusted the default SVC HUD
+- Voice chat status icons are shown in the top-right corner, just right of the potion/status effect HUD.
+- Group icons will populate from the bottom-right corner.
 
 ### Refactored Options Presets
-- `"Retro" LCE` - Replaces `Very Low (XB/PS2*)`, now with more Legacy-style enhancements.
-- `Handheld LCE` - Replaces `Handheld (Switch/Vita)`, now with more Legacy-style enhancements.
-- `Old-Gen LCE` - Replaces `Low (XB360/PS3)`, now with more Legacy-style enhancements
-  - This will be the new default preset.
-- `New-Gen LCE - Derived from `Medium (XB1/PS4)`, now with more Legacy-style enhancements.
-- `"Next-Gen" LCE` - Derived from `High (XB Series/PS5)`, now with more Legacy-style enhancements.
+- `"Retro" LCE` - Replaces `Very Low (XB/PS2*)`, now with more Legacy-style gui enhancements.
+- `Handheld LCE` - Replaces `Handheld (Switch/Vita)`, now with more Legacy-style gui enhancements.
+- `Old-Gen LCE` - Replaces `Low (XB360/PS3)`, now with more Legacy-style gui enhancements
+- `New-Gen LCE - Derived from `Medium (XB1/PS4)`, now with more Legacy-style gui enhancements.
+- `"Next-Gen" LCE` - Derived from `High (XB Series/PS5)`, now with more Legacy-style gui enhancements.
 - `Potato` - Derived from `Very Low (XB/PS2*)`, without the Legacy-style enhancements
 - `Very Low` - Derived from `Handheld (Switch/Vita)`, without the Legacy-style enhancements
 - `Low` - Derived from `Low (XB360/PS3)`, without the Legacy-style enhancements
@@ -53,19 +62,17 @@ No longer maintained.
 ### Removed Tooltips Enhanced
 Now that we're on a build of Legacy4J that includes these control icons by default, Tooltips Enhanced has been removed.
 
-### Updated Fabric Loader to 0.19.2
-The modpack has been updated to the latest Fabric Loader.
-
-### Adjusted the default SVC HUD
-- Voice chat status icons are shown in the top-right corner, just right of the potion/status effect HUD.
-- Group icons will populate from the bottom-right corner.
+### Removed BadOptimizations
+Mod is more placebo than it is actual benefits.
 
 ## Temporarily Unavailable
-- Pro Placer
 - Particle Core
 - Polytone
 - Legacy Skins
 - Console Advancement Sounds
+
+### Updated Fabric Loader to 0.19.2
+The modpack has been updated to the latest Fabric Loader.
 
 - 8723ff6d chore(simply/rc): bump ver - Cjnator38
 - d57e8221 chore(simply/rc): update ca modlist - Cjnator38
