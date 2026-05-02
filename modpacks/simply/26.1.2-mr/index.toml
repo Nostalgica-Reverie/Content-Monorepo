@@ -30,7 +30,7 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "config/crash_assistant/modlist.json"
-hash = "b40239504576df48558e32a20add2f50f10ce64e873cdde4d2c25e5765b1fb6a"
+hash = "9d938680cef8f76c2532d9a0986b49efc4057ba35eae4794497922f6b15d573a"
 
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
@@ -94,7 +94,7 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "config/modpack_defaults/config/crash_assistant/modlist.json"
-hash = "b40239504576df48558e32a20add2f50f10ce64e873cdde4d2c25e5765b1fb6a"
+hash = "9d938680cef8f76c2532d9a0986b49efc4057ba35eae4794497922f6b15d573a"
 
 [[files]]
 file = "config/modpack_defaults/config/crash_assistant/problematic_mods_config.json"
@@ -250,7 +250,7 @@ hash = "edf610a49a103f0710a5b3b20d00b0677274c674c8f7dd9ae83caf339fef843f"
 
 [[files]]
 file = "config/modpack_defaults/options.txt"
-hash = "11e0228f9144b2a7372a4c67207925f84fdd1505dbfc0ccaf80b23f1ef9965e9"
+hash = "c80f2f1acaa4c77e99c2639ea1a484bbe40b23046b40cbca6c9980886123189a"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums.json"
@@ -799,7 +799,7 @@ metafile = true
 
 [[files]]
 file = "mods/better-block-entities.pw.toml"
-hash = "56ab33230daa33839c1aca1c6c71ffdda1e4794ebcbcb2bc15fcd51a6a44df99"
+hash = "70840a6fafda10a17218ed11bfb2574af2d7ac06c3ce8f611e7d41517783be26"
 metafile = true
 
 [[files]]
@@ -839,7 +839,7 @@ metafile = true
 
 [[files]]
 file = "mods/entity-model-features.pw.toml"
-hash = "dbbdc2eb0bd4c6082a4a47e5b37d894c4b4a294fd16ecd5329624e19c1e5388d"
+hash = "22a4393b10d352d054bc13e1992d36c652f96d4e0dea28460b060afd0a372bd7"
 metafile = true
 
 [[files]]
@@ -854,12 +854,17 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "1b7dddabe21e51ddc2a0f1a304523089c4aa80dfe03d1921fdb6847a9a7f1065"
+hash = "f88b106c6c7500d912c11c973d9c124d52b1577c52630c282720367312452d24"
 metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
 hash = "337d97b990f76c91584b12600651ae7bd47a0824e45070b3d9330b0922149fc0"
+metafile = true
+
+[[files]]
+file = "mods/factory-api.pw.toml"
+hash = "50a21c341a3f81366a4de7e237641ee6f9d498a832e90c120c08cb9f1f184adc"
 metafile = true
 
 [[files]]
@@ -879,7 +884,7 @@ metafile = true
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "c9a661d4865d0ba5d2b6356141c6e7ad6246586aa5224d482c23bf309b6bdc3a"
+hash = "45db1736aeee554d2db425ad7da44c2d19ab30920d406816b93c34ab7dfe568a"
 metafile = true
 
 [[files]]
@@ -888,18 +893,23 @@ hash = "035b616a64a41a7ec9eadb77d2ab30b39a97526e521f5a96a7490958fbbf9481"
 metafile = true
 
 [[files]]
-file = "mods/legacy-mechanics.pw.toml"
-hash = "e3a89919aceb536befd0b2d0d530b51b7fb0b3c278621489afedf189aa3e043a"
-metafile = true
-
-[[files]]
-file = "mods/legacy-nether-extended.pw.toml"
-hash = "ee6013e8beb4f88698f0086afd586edb85a85aec3bfa73dc7db767ba18a73b8c"
+file = "mods/legacy4j.pw.toml"
+hash = "352614aff968bff29ac30e194a438c89b71e3a8ae859262c81bf525c5909bdef"
 metafile = true
 
 [[files]]
 file = "mods/lithium.pw.toml"
 hash = "ceed226223967ea3e7017aad327a069250c289c834766e1a3cd27c8d0ad52de1"
+metafile = true
+
+[[files]]
+file = "mods/lws-next.pw.toml"
+hash = "7e60b1761d497fd812f232fc29f95407a02a8cdbfa67bd6462925a498ecd0c39"
+metafile = true
+
+[[files]]
+file = "mods/minimega.pw.toml"
+hash = "e29f2e644f2316f7c9e0887cd94bc050adbc62d44def0db7e092fc16b749c165"
 metafile = true
 
 [[files]]
@@ -914,12 +924,7 @@ metafile = true
 
 [[files]]
 file = "mods/moreculling.pw.toml"
-hash = "567b3b5c08e5860de765b30e6a73e2bb1a4c63f725165c4113219269ce1b4c1d"
-metafile = true
-
-[[files]]
-file = "mods/particle-core.pw.toml"
-hash = "51c5dc79381f5e788aa78211c82a8294ec8b1313a5f8cc584fba1e62664dea81"
+hash = "94768827963a3c80fffa06fbbf9d1c2cbae436c1ef83074d01221f1259f7cf55"
 metafile = true
 
 [[files]]
@@ -929,12 +934,7 @@ metafile = true
 
 [[files]]
 file = "mods/preferred-gamerules.pw.toml"
-hash = "5532488d882998487b6ad9edd1acaa4cb7b20a2dbc01e32f43e8606b51759a85"
-metafile = true
-
-[[files]]
-file = "mods/regsyncfix.pw.toml"
-hash = "8c5e091f9ba1228c91ce49d5da218751ba48522fd0d587aff8774fc2ba7c1bfc"
+hash = "59eeea904f5912fca5aa6fcac32ecf2912c34455d9a8052cb4926c1dcf357bf6"
 metafile = true
 
 [[files]]
@@ -964,12 +964,12 @@ metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "722007a08065b27337e39edbbdb6a34067bbbe523f36a968d9861b9714144368"
+hash = "030f69f3a7e275201c10eef33ae360341a3c280b06955134b6885aeaa8883d6a"
 metafile = true
 
 [[files]]
 file = "mods/yacl.pw.toml"
-hash = "47909ee03f4addc160fcaf5dde8a1eb90cadbef00c94758695aea6fbad0162d7"
+hash = "51a17d028bf0d35c66d269185a63ea4adc968f60727454d0f8ed3ef2138f8612"
 metafile = true
 
 [[files]]
@@ -2239,7 +2239,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/re-console-resources.pw.toml"
-hash = "acb1553f772dd27b4863406b1cec21aaeaa06dc429d54615d25a0670a82c30c3"
+hash = "851aebdacef608b4951350b4f2f16c22e70b06a52f3cf3cae29f259c249ceddd"
 metafile = true
 
 [[files]]
@@ -2440,6 +2440,10 @@ hash = "332dcd6666b84bfd70d6b49a3793d93e9c3082fd235e1d845403454c7f059619"
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/zh_tw.json"
 hash = "332dcd6666b84bfd70d6b49a3793d93e9c3082fd235e1d845403454c7f059619"
+
+[[files]]
+file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/store_categories.json"
+hash = "aee150a7b5130c7e5a45b905ec8910c8c9928c6155896f30ef09b72b2ab641c3"
 
 [[files]]
 file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/texts/tips.json"
