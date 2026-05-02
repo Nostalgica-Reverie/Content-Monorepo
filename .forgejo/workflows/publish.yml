@@ -214,15 +214,27 @@ jobs:
             done
           fi
 
-      - name: Upload to Platforms
-        if: "steps.meta.outputs.mr_id != '' || steps.meta.outputs.cf_id != ''"
+      - name: Upload to Modrinth
+        if: steps.meta.outputs.mr_id != ''
         uses: https://github.com/Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ${{ steps.meta.outputs.mr_id }}
           modrinth-token: ${{ secrets.MR }}
+          files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*.mrpack"
+          name: "${{ steps.meta.outputs.name }}"
+          version: "${{ steps.meta.outputs.ver }}"
+          version-type: ${{ steps.meta.outputs.release_type }}
+          changelog: "${{ steps.changelog.outputs.notes }}"
+          loaders: ${{ steps.meta.outputs.type == 'modpack' && steps.meta.outputs.loader || 'minecraft' }}
+          game-versions: "${{ steps.meta.outputs.mc }}"
+
+      - name: Upload to CurseForge
+        if: steps.meta.outputs.cf_id != ''
+        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
+        with:
           curseforge-id: ${{ steps.meta.outputs.cf_id }}
           curseforge-token: ${{ secrets.CF }}
-          files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*"
+          files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*.zip"
           name: "${{ steps.meta.outputs.name }}"
           version: "${{ steps.meta.outputs.ver }}"
           version-type: ${{ steps.meta.outputs.release_type }}
