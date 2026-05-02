@@ -220,10 +220,9 @@ jobs:
         with:
           modrinth-id: ${{ steps.meta.outputs.mr_id }}
           modrinth-token: ${{ secrets.MR }}
-          modrinth-files: ${{ steps.meta.outputs.mr_id != '' && format('{0}/{1}/artifacts/*.mrpack', github.workspace, steps.meta.outputs.path) || '' }}
           curseforge-id: ${{ steps.meta.outputs.cf_id }}
           curseforge-token: ${{ secrets.CF }}
-          curseforge-files: ${{ steps.meta.outputs.cf_id != '' && format('{0}/{1}/artifacts/*.zip', github.workspace, steps.meta.outputs.path) || '' }}
+          files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*"
           name: "${{ steps.meta.outputs.name }}"
           version: "${{ steps.meta.outputs.ver }}"
           version-type: ${{ steps.meta.outputs.release_type }}
