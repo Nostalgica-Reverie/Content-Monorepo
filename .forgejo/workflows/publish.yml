@@ -74,7 +74,6 @@ jobs:
             datapacks
             src/actions/publish
             src/actions/builder
-            src/actions/somnus/core
             tools/changelog
             tools/manifest
 
@@ -100,15 +99,8 @@ jobs:
           path: ./builder-bin
           key: builder-v2-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.rs', 'src/actions/builder/Cargo.toml', 'src/actions/builder/Cargo.lock') }}
 
-      - name: Cache somnus_core Binaries
-        id: cache-somnus
-        uses: actions/cache@v4
-        with:
-          path: ./linter-bin
-          key: somnus-core-v3-${{ runner.os }}-${{ hashFiles('src/actions/somnus/core/**/*.rs', 'src/actions/somnus/core/Cargo.toml', 'src/actions/somnus/core/Cargo.lock') }}
-
       - name: Install Rust
-        if: steps.cache-publisher.outputs.cache-hit != 'true' || steps.cache-minify.outputs.cache-hit != 'true' || steps.cache-somnus.outputs.cache-hit != 'true'
+        if: steps.cache-publisher.outputs.cache-hit != 'true' || steps.cache-minify.outputs.cache-hit != 'true'
         uses: https://github.com/dtolnay/rust-toolchain@stable
 
       - name: Rust Cache (publish)
@@ -122,12 +114,6 @@ jobs:
         uses: https://github.com/Swatinem/rust-cache@v2
         with:
           workspaces: "src/actions/builder -> target"
-
-      - name: Rust Cache (somnus_core)
-        if: steps.cache-somnus.outputs.cache-hit != 'true'
-        uses: https://github.com/Swatinem/rust-cache@v2
-        with:
-          workspaces: "src/actions/somnus/core -> target"
 
       - name: Build Publisher
         if: steps.cache-publisher.outputs.cache-hit != 'true'
@@ -143,20 +129,9 @@ jobs:
           mkdir -p ./builder-bin
           cp src/actions/builder/target/release/minify-json ./builder-bin/minify-json
 
-      - name: Build mod-diff
-        if: steps.cache-somnus.outputs.cache-hit != 'true'
-        run: |
-          cargo build --release --manifest-path src/actions/somnus/core/Cargo.toml --bin mod-diff
-          mkdir -p ./linter-bin
-          cp src/actions/somnus/core/target/release/mod-diff ./linter-bin/mod-diff
-
       - name: Generate Changelog
         id: changelog
-        env:
-          MOD_DIFF_BIN: ./linter-bin/mod-diff
-        run: |
-          chmod +x ./linter-bin/mod-diff
-          npx tsx tools/changelog/generate-changelog.ts "${{ matrix.manifest }}"
+        run: npx tsx tools/changelog/generate-changelog.ts "${{ matrix.manifest }}"
 
       - name: Cache Packwiz Binaries
         id: cache-go
