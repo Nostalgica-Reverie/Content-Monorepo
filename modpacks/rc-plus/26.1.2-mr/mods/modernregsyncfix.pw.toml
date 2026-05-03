@@ -1,0 +1,15 @@
+name = "ModernRegSyncFix"
+filename = "modernregsyncfix-2.0.0.jar"
+side = "both"
+
+[download]
+url = "https://github.com/DexrnZacAttack/ModernRegSyncFix/releases/download/2.0.0/modernregsyncfix-2.0.0.jar"
+hash-format = "sha256"
+hash = "3238d7ba9a8e7cb5a5fbb280667c37307dbd7531b7cf8792dd17000b69d66752"
+
+[update]
+[update.github]
+branch = "master"
+regex = "^.+(?<!-api|-dev|-dev-preshadow|-sources)\\.jar$"
+slug = "DexrnZacAttack/ModernRegSyncFix"
+tag = "2.0.0"
