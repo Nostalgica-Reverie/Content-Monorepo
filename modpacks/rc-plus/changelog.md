@@ -10,9 +10,10 @@
 A fork of RegSyncFix that works on 26.1+
 
 ### Default config changes/fixes
+- Bobby is now disabled by default since it can fill up the log to serveral megabytes
 - Cubes Without Borders now has a working default config that should fix Fullscreen being disabled by default
 - The `Medium` Option Preset should now be enabled properly
-- The default window resolution is now 854x480 to match Simply Legacy.
+- The default window resolution is now 854x480 to match Simply Legacy
 - The Inventory/Crafting keys have been changed from `I`/`E` to `E`/`R`
 - The Reload Shaders key for Iris has been changed to `U`, which is also in close proximity to the other Iris hotkeys
 
