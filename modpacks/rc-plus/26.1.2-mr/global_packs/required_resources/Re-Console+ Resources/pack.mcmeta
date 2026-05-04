@@ -1,6 +1,12 @@
 {
   "pack": {
+    "description": "Required Language Files",
     "pack_format": 69,
-    "description": "Required Language Files"
+    "supported_formats": {
+      "max_inclusive": 96,
+      "min_inclusive": 34
+    },
+    "min_format": 16,
+    "max_format": 420
   }
 }
