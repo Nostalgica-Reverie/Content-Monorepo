@@ -11,7 +11,57 @@ Large patch for Re-Console+ 26.1.2
 A fork of RegSyncFix that works on 26.1.2 and above. Special thanks to DexrnZacAttack for the fork!
 
 ### Added Community Splashes Pack
-A pack of community splashes, from the Discord and Re-Console SMP!
+A pack of community splashes, from the Discord and Re-Console SMP! The current list of splashes:
+- Insects with Instruments!
+- Your friend wont murdurr!
+- Little lad go!
+- Big lad go!
+- Nocholas_____ hit the ground too hard!
+- Eggs!
+- Buy MusCola™️!
+- Beware of the Evil Re-Console!
+- Also check out Simply Legacy!
+- Also check out Rekindled Legacy!
+- Also check out 2000s Edition!
+- Also check out Consoleidated!
+- Don’t check out Evil Consoleidated!
+- Spears can Jab 1-to-5!
+- The steak The Potato
+- Bomboclat Wallahi
+- Anything but modpack development
+- Punkinville!
+- Mälmö!
+- Petoria!
+- The Safe Zone!
+- Post Town!
+- The Emporium
+- Should i mace him?
+- The carrot caravan!
+- Dexron Zekeatlas!
+- Also check out Legacy Edition Minigames!
+- Also check out Silver Lining!
+- Also check out Reminiscence!
+- Check out the Re-Console SMP!
+- What is the meaning of "Affogato"?
+- Affogato Reverie?
+- Nostalgica Reverie!
+- Lasting Legacy!
+- Violaflower!
+- Reverie Projects!
+- Where is Gerald?
+- If you mash strawberries…”
+- Pixel Peeping since 2023!
+- Born on April 28th 2024!
+- Born on April 24th 2024!
+- ..When was this pack born?
+- Legacy4J!
+- Legacy Skins!
+- Minimega!
+- What is a Re-Console+?
+- Not Bug Free!
+- smp.nostalgica.net!
+- Also check out AydenFYP!
+- Also check out TheMinecraftArchitect!
 
 ### Added Gnetum
 GUI issues have been fixed, and now the mod should offer a considerable performance uplift, regarding GUI's and HUDS. They are now FPS limited and batched, allowing for higher performance in game.
@@ -40,9 +90,12 @@ Minor fix that will improve speed of accessing servers, like the Re-Console SMP.
 ### Added Debugify
 Expands upon BugFixerUpper by fixing dozens of vanilla bugs.
 
+### Added AMECs
+Allows for binding of keys to multiple, allowing for keybinds like shift+, ctrl+, and more.
+
 ### Default config changes/fixes
 - Cubes Without Borders now has a working default config that should fix Fullscreen being disabled by default
-- The `Medium` Option Preset should now be enabled properly
+- The `Medium` Option Preset should now be enabled properly by default
 - The default window resolution is now 854x480 to match Simply Legacy
 - The Inventory/Crafting keys have been changed from `I`/`E` to `E`/`R`
 - The Reload Shaders key for Iris has been changed to `U`, which is also in close proximity to the other Iris hotkeys
@@ -50,16 +103,22 @@ Expands upon BugFixerUpper by fixing dozens of vanilla bugs.
 - The Isometric Screenshot key has been set to `CTRL+3`
 - The Change Music button has been set to `SHIFT+F`
 - The Dynamic Resources option in ModernFix is once again enabled, which should provide a large decrease to RAM usage
+- The Dynamic Languages option in ModernFix is now enabled.
 - The F3 config has been improved to add in more system information on the right, alongside providing improved readability when it comes to the left.
 - The Gnetum mod now has a default config applied, to fix the GUI issues seen in 26.05.1.
+- The window title will now say Re-Console+ for Minecraft 26.1.2 instead of just Minecraft 26.1.2
+- There have been fixes applied to the Crash Assistant pop-up, removing leftovers from when the 26.1.2 development process was based upon Simply Legacy.
 
-### Fixed numerous resource packs
+### Fixed resource packs
 Various built-in resource packs have been fixed via changes to their pack.mcmetas. This applies to:
 - Fixed Chest Models
 - Re-Console+ Resources
 
 ### Removed duplicated mods
 Duplicated mods, like Zoomify
+
+### Removed Better Block Entities
+The mod has been causing consistent trouble in regards to performance. The mod has now been removed.
 
 ### Updated Minimega to 6.1.10
 Various Battle changes and bug fixes. See the [changelog](https://modrinth.com/mod/minimega/version/6.1.10).
