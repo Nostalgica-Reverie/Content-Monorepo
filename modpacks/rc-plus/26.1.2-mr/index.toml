@@ -45,6 +45,10 @@ file = "config/fabric/indigo-renderer.properties"
 hash = "aa272c538cfdf8b1b6bc75a35f6fa056869c131056604308f06d06beeac80e04"
 
 [[files]]
+file = "config/gnetum.json"
+hash = "b855d66dd4f38b216b50b66a43679470664c7ca0e60aa22f2ea88aabbf1ff3cb"
+
+[[files]]
 file = "config/immediatelyfast.json"
 hash = "aeb8a2371724d24d68292ad2aa9f4d6b7111e046409a2a94925878dfeac7ccc8"
 
@@ -1447,11 +1451,6 @@ hash = "7edff6256d436cb9b11937f4cd39972add7799612fd7ef54ce5ee8642227354e"
 metafile = true
 
 [[files]]
-file = "mods/better-block-entities.pw.toml"
-hash = "70840a6fafda10a17218ed11bfb2574af2d7ac06c3ce8f611e7d41517783be26"
-metafile = true
-
-[[files]]
 file = "mods/betterf3.pw.toml"
 hash = "270675632e20b3f27d79a4633356fac3b2bf7335aa250a7894f53a4490e61b29"
 metafile = true
@@ -1589,6 +1588,11 @@ metafile = true
 [[files]]
 file = "mods/globalpacks.pw.toml"
 hash = "4054621ba956c149298aeddeb452272f9b9cab2fff6a525ca76e73a5321e10fc"
+metafile = true
+
+[[files]]
+file = "mods/gnetum.pw.toml"
+hash = "3c167684e793c842cb1128475e4cac35f96ab45729e4946ae989e551ac264f5c"
 metafile = true
 
 [[files]]
