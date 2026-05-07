@@ -99,9 +99,10 @@ Allows for binding of keys to multiple, allowing for keybinds like shift+, ctrl+
 - The default window resolution is now 854x480 to match Simply Legacy
 - The Inventory/Crafting keys have been changed from `I`/`E` to `E`/`R`
 - The Reload Shaders key for Iris has been changed to `U`, which is also in close proximity to the other Iris hotkeys
-- The Simple Voice Chat key has been moved to `CTRL+B`
+- The Simple Voice Chat key has been moved to `CTRL+C`
 - The Isometric Screenshot key has been set to `CTRL+3`
 - The Change Music button has been set to `SHIFT+F`
+- The Pause Music button has been set to `SHIFT+G`
 - The Dynamic Resources option in ModernFix is once again enabled, which should provide a large decrease to RAM usage
 - The Dynamic Languages option in ModernFix is now enabled.
 - The F3 config has been improved to add in more system information on the right, alongside providing improved readability when it comes to the left.
