@@ -1,5 +1,5 @@
 # Re-Console Plus 26.05.3-alpha | Megapatch I
-Large patch for Re-Console+ 26.1.2
+Large patch for Re-Console+ for Minecraft 26.1.2, adding in a suite of new features on top of the modpack.
 
 ## Notes
 - **If you are updating from a 1.21.10 version, it is recommended to Update or Reset your configs through Config Manager for the best experience.**
@@ -49,7 +49,7 @@ A pack of community splashes, from the Discord and Re-Console SMP! The current l
 - Violaflower!
 - Reverie Projects!
 - Where is Gerald?
-- If you mash strawberries…”
+- If you mash strawberries…
 - Pixel Peeping since 2023!
 - Born on April 28th 2024!
 - Born on April 24th 2024!
@@ -64,7 +64,10 @@ A pack of community splashes, from the Discord and Re-Console SMP! The current l
 - Also check out TheMinecraftArchitect!
 
 ### Added Gnetum
-GUI issues have been fixed, and now the mod should offer a considerable performance uplift, regarding GUI's and HUDS. They are now FPS limited and batched, allowing for higher performance in game.
+GUI issues have been fixed, and now the mod should offer a considerable performance uplift, regarding GUIs and HUDS. They are now FPS limited and batched, allowing for higher performance in game.
+
+### Added Experimentalist
+Fixes any experimental warnings on the creation screen.
 
 ### Added Async Logger
 Improving logging performance, by allowing it to run asynchronously. For long sessions on the SMP, this could improve logging speeds substantially and potentially fix minor lag issues.
@@ -83,6 +86,9 @@ Animatium provides many neat utilities and old features back into Minecraft!
 
 ### Added WorldThreader
 Each dimension is now ran on its own thread, improving performance. This means that for higher threaded CPUS (6+), the game should run significantly smoother.
+
+### Added Krypton & Krypton Reno
+Both mods can improve connectivity, especially if you run Re-Console+ via server.
 
 ### Added Fast Server Pings
 Minor fix that will improve speed of accessing servers, like the Re-Console SMP.
@@ -103,7 +109,7 @@ Allows for binding of keys to multiple, allowing for keybinds like shift+, ctrl+
 - The Isometric Screenshot key has been set to `CTRL+3`
 - The Change Music button has been set to `SHIFT+F`
 - The Pause Music button has been set to `SHIFT+G`
-- The Dynamic Resources option in ModernFix is once again enabled, which should provide a large decrease to RAM usage
+- The Dynamic Resources option in ModernFix is once again enabled, which should provide a large decrease to RAM usage (sometimes over 50%!)
 - The Dynamic Languages option in ModernFix is now enabled.
 - The F3 config has been improved to add in more system information on the right, alongside providing improved readability when it comes to the left.
 - The Gnetum mod now has a default config applied, to fix the GUI issues seen in 26.05.1.
