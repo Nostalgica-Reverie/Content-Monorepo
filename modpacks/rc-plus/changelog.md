@@ -64,16 +64,16 @@ A pack of community splashes, from the Discord and Re-Console SMP! The current l
 - Also check out TheMinecraftArchitect!
 
 ### Added Gnetum
-GUI issues have been fixed, and now the mod should offer a considerable performance uplift, regarding GUIs and HUDS. They are now FPS limited and batched, allowing for higher performance in game.
+GUI issues have been fixed, and now the mod should offer a considerable performance uplift, regarding GUIs and HUDS. They are now FPS limited and batched, allowing for higher performance in game, where it actually matters.
 
 ### Added Experimentalist
 Fixes any experimental warnings on the creation screen.
 
 ### Added Async Logger
-Improving logging performance, by allowing it to run asynchronously. For long sessions on the SMP, this could improve logging speeds substantially and potentially fix minor lag issues.
+Improving logging performance, by allowing it to run asynchronously. For long sessions on the SMP, this could improve logging speeds substantially (up to 43x).
 
 ### Added Picture Mode
-A mod by Icanttellyou, allowing for alpha/beta style isometric screenshots. Compatibility with controller is currently not known.
+A mod by Icanttellyou, allowing for alpha/beta style isometric screenshots. Compatibility with controller is currently not known and untested. Bound to `CTRL+3`
 
 ### Added Longview
 Longview is a mod that fixes zfighting issues with mobs far away in render distance.
@@ -96,11 +96,15 @@ Minor fix that will improve speed of accessing servers, like the Re-Console SMP.
 ### Added Debugify
 Expands upon BugFixerUpper by fixing dozens of vanilla bugs.
 
+### Added RenderScale
+Allows for scalable resolutions and screenshots. Bound to `SHIFT+R`
+
 ### Added AMECs
 Allows for binding of keys to multiple, allowing for keybinds like shift+, ctrl+, and more.
 
+This impacts some default keybinds, please read below!
+
 ### Default config changes/fixes
-- Cubes Without Borders now has a working default config that should fix Fullscreen being disabled by default
 - The `Medium` Option Preset should now be enabled properly by default
 - The default window resolution is now 854x480 to match Simply Legacy
 - The Inventory/Crafting keys have been changed from `I`/`E` to `E`/`R`
