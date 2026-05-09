@@ -1,14 +1,70 @@
-# Re-Console Plus 26.05.3-alpha | Megapatch I
+# Re-Console Plus 26.05.3 | Megapatch I
 Large patch for Re-Console+ for Minecraft 26.1.2, adding in a suite of new features on top of the modpack.
+
+This release coincides with the 14 year anniversary of Minecraft Xbox 360 Edition, which released on May 9th of 2012. To commemerate, this release was adjusted from a hotfix into a very large release, which touches new content, fixes, updates, among other things.
+
+The largest improvement should be in regards to performance; RAM usage should be down by approximately 50%, among other smaller things. 
 
 ## Notes
 - **If you are updating from a 1.21.10 version, it is recommended to Update or Reset your configs through Config Manager for the best experience.**
   - This can be found in `Modifications > Config Manager`.
 - This update is marked as beta due to major internal changes between 1.21.10 and 26.1.2, the relatively early state of the Legacy4J 26.1.2 port as of 1.9 Pre-Release 2, and missing features that may impact worlds created prior to 26.05-alpha
-- Releases on CurseForge will come at a later date.
+- Releases on CurseForge will come at a later date, as we approach stability on the build.
 
-### Added ModernRegSyncFix
-A fork of RegSyncFix that works on 26.1.2 and above. Special thanks to DexrnZacAttack for the fork!
+## Content Additions
+
+### Added Picture Mode
+A mod by Icanttellyou, allowing for alpha/beta style isometric screenshots. Compatibility with controller is currently not known and untested. Bound to `CTRL+3`
+
+### Added Animatium
+Animatium provides many neat utilities and old features back into Minecraft!
+
+### Added Skyboxify
+Restores Optifine compatibility in regards to sky-modifying texture packs.
+
+### Added Animatica Refabricated
+Restores Optifine compatibility in regards to animated textures.
+
+### Added Advancement Screenshot
+Take a screenshot anytime you advance!
+
+### Added Outrageous Preset
+Go beyond Extreme with 128 render distance! Requires an extremely beefy computer to run.
+
+### Added RenderScale
+Allows for scalable resolutions and screenshots. Bound to `SHIFT+R`
+
+### Added Borderless Mining Updated
+A proper borderless fullscreen mod that does its job well, and improves performance vs alternative.
+
+### Added new Texture Packs
+- Added Ultra High-Res Texture Pack
+- Added Classic High-Res Texture Pack
+- Added Player vs. Player Texture Pack
+- Added Ashen Texture Pack
+- Added Realistic Texture Pack
+- Added Whimsical Texture Pack
+
+### Added new Shader Packs
+Following the update to 26.1.2, shader packs had been missing for a while. They have been re-added with new additions.
+
+Re-added packs:
+- Complementary Reimagined
+- Complementary Unbound
+- BSL Shaders
+- Rethinking Voxels
+- Solas Shaders
+- MakeUp
+- Bliss Shaders
+- Kappa
+- Super Duper Vanilla
+
+New Packs:
+- Nostalgia Shader
+- Shrimple Shader
+- Noble Shader
+- RenderPearl
+- RedHat Shaders
 
 ### Added Community Splashes Pack
 A pack of community splashes, from the Discord and Re-Console SMP! The current list of splashes:
@@ -63,17 +119,33 @@ A pack of community splashes, from the Discord and Re-Console SMP! The current l
 - Also check out AydenFYP!
 - Also check out TheMinecraftArchitect!
 
+### Added Bisect Hosting Integration
+You can now order a server for Re-Console+ or other modpacks in-game, with all proceeds supporting us. This was designed to be unintrusive; only appearing on the multiplayer screen.
+
+### Updated Vanilla Plus Texture Pack
+The pack has been updated with new flowers in grass, 3d item drops, and a few smaller things.
+
+## Performance Improvements
+
 ### Added Gnetum
 GUI issues have been fixed, and now the mod should offer a considerable performance uplift, regarding GUIs and HUDS. They are now FPS limited and batched, allowing for higher performance in game, where it actually matters.
-
-### Added Experimentalist
-Fixes any experimental warnings on the creation screen.
 
 ### Added Async Logger
 Improving logging performance, by allowing it to run asynchronously. For long sessions on the SMP, this could improve logging speeds substantially (up to 43x).
 
-### Added Picture Mode
-A mod by Icanttellyou, allowing for alpha/beta style isometric screenshots. Compatibility with controller is currently not known and untested. Bound to `CTRL+3`
+### Added WorldThreader
+Each dimension is now ran on its own thread, improving performance. This means that for higher threaded CPUS (6+), the game should run significantly smoother.
+
+### Added Krypton Reno
+This can improve connectivity, especially if you run Re-Console+ via server.
+
+## Quality of Life Improvements
+
+### Added ModernRegSyncFix
+A fork of RegSyncFix that works on 26.1.2 and above. Special thanks to DexrnZacAttack for the fork!
+
+### Added Experimentalist
+Fixes any experimental warnings on the creation screen.
 
 ### Added Longview
 Longview is a mod that fixes zfighting issues with mobs far away in render distance.
@@ -81,30 +153,18 @@ Longview is a mod that fixes zfighting issues with mobs far away in render dista
 ### Added Cave Fog Stabilizer
 This is a mod that fixes a visual quirk where fog in caves is impacted by the sunrise/sunset above ground.
 
-### Added Animatium
-Animatium provides many neat utilities and old features back into Minecraft!
-
-### Added WorldThreader
-Each dimension is now ran on its own thread, improving performance. This means that for higher threaded CPUS (6+), the game should run significantly smoother.
-
-### Added Krypton & Krypton Reno
-Both mods can improve connectivity, especially if you run Re-Console+ via server.
-
 ### Added Fast Server Pings
 Minor fix that will improve speed of accessing servers, like the Re-Console SMP.
 
 ### Added Debugify
-Expands upon BugFixerUpper by fixing dozens of vanilla bugs.
-
-### Added RenderScale
-Allows for scalable resolutions and screenshots. Bound to `SHIFT+R`
+Expands upon BugFixerUpper by fixing dozens of vanilla bugs
 
 ### Added AMECs
 Allows for binding of keys to multiple, allowing for keybinds like shift+, ctrl+, and more.
 
 This impacts some default keybinds, please read below!
 
-### Default config changes/fixes
+## Default config changes/fixes
 - The `Medium` Option Preset should now be enabled properly by default
 - The default window resolution is now 854x480 to match Simply Legacy
 - The Inventory/Crafting keys have been changed from `I`/`E` to `E`/`R`
@@ -126,19 +186,30 @@ Various built-in resource packs have been fixed via changes to their pack.mcmeta
 - Re-Console+ Resources
 
 ### Removed duplicated mods
-Duplicated mods, like Zoomify
+Duplicated mods, like Zoomify, which were left-overs from an unfinished development build.
 
 ### Removed Better Block Entities
 The mod has been causing consistent trouble in regards to performance. The mod has now been removed.
 
-### Updated Minimega to 6.1.10
-Various Battle changes and bug fixes. See the [changelog](https://modrinth.com/mod/minimega/version/6.1.10).
+This mod had caused issues in regards to Bobby (rendering more chunks than servers allow), issues with mash-up models, and the performance increase is simply not worth the hassle of all of these issues.
+
+### Updated Legacy4J
+- Now on Pre-Release 2
+- Fixed a bug when using the Load Save Directly option would delete worlds
+- Fixed compatibility issues with Sodium
+- Fixed tutorial world not being properly converted to 26.1.2
+- Cjnator38 added better translations for some of the added tips
+- Cjnator38 reordered the options and unified the size of advanced options panels
+Thanks to WilyIcaro, CreeperEater201 and Cjnator38 for this release.
+
+### Updated Minimega to 6.1.20
+Various Battle changes and bug fixes. See the [changelog](https://modrinth.com/mod/minimega/version/6.1.20).
 
 ### Updated Legacy Ports
-Additions and bug fixes for 26.1
+Additions and bug fixes for Minecraft 26.1
 
 ### Updated Legacy Modpack Resources
-Fixes various issues with Option Presets
+Fixes various issues with Option Presets and adds in the new Outrageous preset.
 
 ## Temporarily Unavailable
 - Console Advancement Sounds
