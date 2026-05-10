@@ -36,7 +36,7 @@ License
 All linters automatically run on commit, and will fail if the modified JSON/TOML is broken. This is helpful in the case of making a minor mistake in syntax/
 
 ## Credits
-justfile forked from skywardmc, stale.yml from JEI. Both licensed under MIT.
+justfile forked from skywardmc, stale.yml forked from JEI. Both licensed under MIT.
 
 # License
 As all of these projects are different, the license may vary. Most packs are under GPL-3.0, or MIT. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
