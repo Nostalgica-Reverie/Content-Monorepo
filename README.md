@@ -2,7 +2,7 @@
 This is the repository hosting all of the different Lasting Legacy modpacks, resource packs, and datapacks.
 
 ## Notice
-Development is held on [git.nostalgica.net](https://git.nostalgica.net/Lasting-Legacy/Content-Monorepo), GitHub and Codeberg are mirrors. Please go to our [GitHub Issues](https://github.com/Nostalgica-Reverie/Content-Monorepo/issues) page to report any issues.
+Development is (currently) held on [git.nostalgica.net](https://git.nostalgica.net/Lasting-Legacy/Content-Monorepo), Tangled, GitHub and Codeberg are mirrors. Please go to our [GitHub Issues](https://github.com/Nostalgica-Reverie/Content-Monorepo/issues) page to report any issues.
 
 # General
 This repository hosts all the source and files for all of our resource packs, data packs, modpacks and more. This readme is primarily intended for internal developer usage.
