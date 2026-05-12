@@ -2,7 +2,7 @@
 This is the repository hosting all of the different Lasting Legacy modpacks, resource packs, and datapacks.
 
 ## Notice
-Development is held on [git.nostalgica.net](https://git.nostalgica.net/Lasting-Legacy/Content-Monorepo), GitHub and Codeberg are mirrors. Please go to our [GitHub Issues](https://github.com/Nostalgica-Reverie/Content-Monorepo/issues) page to report any issues.
+Development is (currently) held on [git.nostalgica.net](https://git.nostalgica.net/Lasting-Legacy/Content-Monorepo), Tangled, GitHub and Codeberg are mirrors. Please go to our [GitHub Issues](https://github.com/Nostalgica-Reverie/Content-Monorepo/issues) page to report any issues.
 
 # General
 This repository hosts all the source and files for all of our resource packs, data packs, modpacks and more. This readme is primarily intended for internal developer usage.
@@ -36,7 +36,7 @@ License
 All linters automatically run on commit, and will fail if the modified JSON/TOML is broken. This is helpful in the case of making a minor mistake in syntax/
 
 ## Credits
-justfile forked from skywardmc, stale.yml from JEI. Both licensed under MIT.
+justfile forked from skywardmc, stale.yml forked from JEI. Both licensed under MIT.
 
 # License
 As all of these projects are different, the license may vary. Most packs are under GPL-3.0, or MIT. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
