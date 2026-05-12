@@ -1,4 +1,4 @@
-# Simply Legacy 26.05.4
+# Simply Legacy 26.05.5
 
 ## Notes
 - **If you are updating from a 1.21.10 version, it is recommended to Update or Reset your configs through Config Manager for the best experience.**
@@ -6,25 +6,17 @@
 - This update is marked as beta due to missing features that may impact worlds created prior to 26.05-alpha. Legacy4J has become relatively stable as of Pre-Release 2.
 - Releases on CurseForge will come at a later date.
 
-### Updated Legacy4J to 1.9 Pre-Release 2
-- Reordered Mouse Options and unified the size of Advanced Options panels
-- Ported the Kanji font from the Legacy Console Edition
-- Fixed Sodium support
-- Fixed several issues with the tutorial world
-- Fixed a bug where the Save Cache option being off would delete worlds
-See the full changelog [here](https://modrinth.com/mod/legacy4j/version/26.1.2-1.9-pre-2-fabric)
+### Configuration Changes
+- Enabled the `Rosenfeld Patch` resource pack in the `Minecraft Classic Texture Pack` album
+- Disabled the `Legacy Baby Villager Head` by default, since Tiny Takeover increased the baby villager's head size anyways
 
-### Updated Minimega to 6.1.20
-- Lowers the collision of lava adjacent to Soul Sand
-- Added a popup for when authentication fails, rather than blocking the game from running
-- Fixed rendering issues with Sodium, so boosts will now correctly render animated and with the correct color channels
-See the full changelog [here](https://modrinth.com/mod/minimega/version/6.1.20)
-
-### Re-enabled Bobby by default
-Since Better Block Entities was removed, Bobby has now been re-enabled by default.
-
-### Updated Legacy Modpack Resources
-Adds an `Outrageous` preset with a 128 chunk render distance
+### Notable Updates
+- Fabric API has been updated to 0.148.2
+  - Fixes a critical out-of-memory crash exploit
+- Legacy Worlds has been updated to 1.0.5
+  - Adds proper compatibility for 26.1
+- Super Mario Mash-up has been updated to 1.5 (Tiny Takeover)
+  - Adds content from the Tiny Takeover game drop
 
 ## Temporarily Unavailable
 - Console Advancement Sounds
