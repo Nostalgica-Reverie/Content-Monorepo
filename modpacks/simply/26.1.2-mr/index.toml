@@ -10,7 +10,7 @@ hash = "93a49bfdb5a265002d191ef9134f088f16596271ff0e2c604bc8c5d37350716d"
 
 [[files]]
 file = "config/c2me.toml"
-hash = "d072cb16eb9244f4e6bc09d57a613f96bf734dc013874b3dab58828801f99350"
+hash = "a2e4eb562da19cfa42be1126f39c8a93da9bd1d131991dd473475b023c724c1e"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
@@ -45,6 +45,10 @@ file = "config/fabric/indigo-renderer.properties"
 hash = "0a776bd94413087200e0cd1a0bd72cbfe5c1a69002c1c625236233c2183c301c"
 
 [[files]]
+file = "config/gnetum.json"
+hash = "b855d66dd4f38b216b50b66a43679470664c7ca0e60aa22f2ea88aabbf1ff3cb"
+
+[[files]]
 file = "config/immediatelyfast.json"
 hash = "8f85626cee8effcf430d24772946b3bea79a778917ba0681d2cc6fcb857efd2b"
 
@@ -70,7 +74,7 @@ hash = "93a49bfdb5a265002d191ef9134f088f16596271ff0e2c604bc8c5d37350716d"
 
 [[files]]
 file = "config/modpack_defaults/config/c2me.toml"
-hash = "1c5b034200e1a54106bad6eed735dcd46aa56190e411d928cb1a50d7b7c690cf"
+hash = "a2e4eb562da19cfa42be1126f39c8a93da9bd1d131991dd473475b023c724c1e"
 
 [[files]]
 file = "config/modpack_defaults/config/cpm.json"
@@ -139,6 +143,10 @@ hash = "a9e6f5696304dbeeb2899e5edc0d6783235c3bac06d76b7524299ae11c71755e"
 [[files]]
 file = "config/modpack_defaults/config/ferritecore.mixin.properties"
 hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
+
+[[files]]
+file = "config/modpack_defaults/config/gnetum.json"
+hash = "b855d66dd4f38b216b50b66a43679470664c7ca0e60aa22f2ea88aabbf1ff3cb"
 
 [[files]]
 file = "config/modpack_defaults/config/immediatelyfast.json"
@@ -801,6 +809,11 @@ file = "config/servercore/optimizations.yml"
 hash = "0e7fde302ae1f9cbe3c507b8f4bc23ebc51acae005de2c4f69933893d037894a"
 
 [[files]]
+file = "mods/asynclogger.pw.toml"
+hash = "7edff6256d436cb9b11937f4cd39972add7799612fd7ef54ce5ee8642227354e"
+metafile = true
+
+[[files]]
 file = "mods/badoptimizations.pw.toml"
 hash = "8e6033c2642308835d119a073fdf24306394cdb6985c482a08e67b8087f6e90d"
 metafile = true
@@ -881,6 +894,11 @@ hash = "de954e56216772900768426c541731ec91d0c7bd1c5037ad2f6cc5552f87c635"
 metafile = true
 
 [[files]]
+file = "mods/gnetum.pw.toml"
+hash = "3c167684e793c842cb1128475e4cac35f96ab45729e4946ae989e551ac264f5c"
+metafile = true
+
+[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "d9f54bcf75d036c25ebe636abb7ffa7c2d21c3601fec13b0fa2cc8916120affa"
 metafile = true
@@ -888,6 +906,11 @@ metafile = true
 [[files]]
 file = "mods/ixeris.pw.toml"
 hash = "45db1736aeee554d2db425ad7da44c2d19ab30920d406816b93c34ab7dfe568a"
+metafile = true
+
+[[files]]
+file = "mods/kreno-fpatcher.pw.toml"
+hash = "366c1440db0a711f2e9c9c595f9a9f28cc52f01f4cf8dbb3379311ca45144d68"
 metafile = true
 
 [[files]]
@@ -973,6 +996,11 @@ metafile = true
 [[files]]
 file = "mods/sodium.pw.toml"
 hash = "05c19cf37d76c1c53853f0b367b0ad5308d799c72354c2f2a320609eb0c7aaa6"
+metafile = true
+
+[[files]]
+file = "mods/worldthreader.pw.toml"
+hash = "b2c338bce2f1d5bcd7e1964fb9044500e4f2e2a315823c8df678c2a7c5ea6669"
 metafile = true
 
 [[files]]
