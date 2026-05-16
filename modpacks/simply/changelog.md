@@ -14,10 +14,15 @@
 - Re-added Legacy Nether: Enhanced
   - Blaze loot and Wither Skeleton spawning should now work again
   - Nether Wart generating on Soul Sand currently does not work
-- Updated Minimega
-  - 
+  - **Legacy Mechanics will not be re-added since most of its features have been merged for the next Legacy4J update**
+- Updated Minimega from 6.1.20 to 6.2.2
+  - Data-driven map loading and map creation tools
+  - See the full changelogs [here](https://modrinth.com/mod/minimega/changelog)
 - Added Gnetum
   - Improves user interface performance
+  - Compared to Re-Console, now only the Experience Level and Info Bar elements have had their caching disabled
+    - The Experience Level was the element causing issues with flashing previously
+    - The Info Bar has visual issues when caching is enabled
 - Added KryptonReno's Fabric Patcher
   - Improves networking performance
 - Added WorldThreader
@@ -27,6 +32,4 @@
 
 ## Temporarily Unavailable
 - Console Advancement Sounds
-- Legacy Mechanics
-- Legacy Nether: Enhanced
 - Legacy Skins
