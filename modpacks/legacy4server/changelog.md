@@ -1,2 +1,2 @@
-# Legacy4Server 26.05
-Initial release
+# Legacy4Server 26.05.1
+Fix critical crash issue
