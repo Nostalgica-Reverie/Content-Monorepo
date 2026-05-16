@@ -1,9 +1,5 @@
-# Re-Console Plus 26.05.3 | Megapatch I
-Large patch for Re-Console+ for Minecraft 26.1.2, adding in a suite of new features on top of the modpack.
-
-This release coincides with the 14 year anniversary of Minecraft Xbox 360 Edition, which released on May 9th of 2012. To commemerate, this release was adjusted from a hotfix into a very large release, which touches new content, fixes, updates, among other things.
-
-The largest improvement should be in regards to performance; RAM usage should be down by approximately 50%, among other smaller things. 
+# Re-Console Plus 26.05.4 | Megapatch II
+Large patch for Re-Console+ for Minecraft 26.1.2, adding in new features, fixes, and QoL changes on top of Megapatch I. 
 
 ## Notes
 - **If you are updating from a 1.21.10 version, it is recommended to Update or Reset your configs through Config Manager for the best experience.**

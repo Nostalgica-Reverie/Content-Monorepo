@@ -1,0 +1,13 @@
+name = "Legacy4Server"
+author = "omo50"
+version = "26.05"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "a26decdb4284d5222fd9dab956e511cc71121b2921fb2e1fdc3495d243b63cdf"
+
+[versions]
+fabric = "0.19.2"
+minecraft = "26.1.2"
