@@ -5,6 +5,14 @@
     "name": "fabric",
     "version": "fabric-loader-0.19.2.jar"
   },
+  "asynclogger-1.1.2+26.1.1-fabric.jar": {
+    "jarName": "asynclogger-1.1.2+26.1.1-fabric.jar",
+    "modId": "asynclogger",
+    "name": "Async Logger",
+    "version": "1.1.2+26.1.1-fabric",
+    "curseForgeHash": 162263242,
+    "modrinthHash": "912432e5a4bad7ebaeee8cdbf6462fdc7597e53c"
+  },
   "BadOptimizations-2.4.1-26.1-fabric.jar": {
     "jarName": "BadOptimizations-2.4.1-26.1-fabric.jar",
     "modId": "badoptimizations",
@@ -13,13 +21,13 @@
     "curseForgeHash": 320144994,
     "modrinthHash": "9636073ca8f378ea796b5d13bffac146a7f2f0f3"
   },
-  "bobby-5.2.12+mc26.1.jar": {
-    "jarName": "bobby-5.2.12+mc26.1.jar",
+  "bobby-5.2.13+mc26.1.jar": {
+    "jarName": "bobby-5.2.13+mc26.1.jar",
     "modId": "bobby",
     "name": "Bobby",
-    "version": "5.2.12+mc26.1",
-    "curseForgeHash": 1986027145,
-    "modrinthHash": "2af0b6ab7eeed738d39f66ead142756702a4cbf2"
+    "version": "5.2.13+mc26.1",
+    "curseForgeHash": 1822167192,
+    "modrinthHash": "24bb68c889e56d6a532725668ca663e4197935c5"
   },
   "cloth-config-26.1.154.jar": {
     "jarName": "cloth-config-26.1.154.jar",
@@ -53,13 +61,13 @@
     "curseForgeHash": 2060955661,
     "modrinthHash": "02791dd2ec18139f881844e21920cd4b092f54bb"
   },
-  "cwb-4.0.2+26.1.jar": {
-    "jarName": "cwb-4.0.2+26.1.jar",
+  "cwb-4.0.3+26.1.jar": {
+    "jarName": "cwb-4.0.3+26.1.jar",
     "modId": "cwb",
     "name": "Cubes Without Borders",
-    "version": "4.0.2+26.1",
-    "curseForgeHash": 466674365,
-    "modrinthHash": "92a66e36bd84aae1cdece80b028b9079ec9fecc9"
+    "version": "4.0.3+26.1",
+    "curseForgeHash": 2418507873,
+    "modrinthHash": "b41434422c640dda534de3af586c0e42968f3d6f"
   },
   "e4mc-fabric-6.1.0-modern.jar": {
     "jarName": "e4mc-fabric-6.1.0-modern.jar",
@@ -93,13 +101,13 @@
     "curseForgeHash": 3226993359,
     "modrinthHash": "389764754270070655fa5874b9df79f9f0a30ce4"
   },
-  "fabric-api-0.148.2+26.1.2.jar": {
-    "jarName": "fabric-api-0.148.2+26.1.2.jar",
+  "fabric-api-0.149.0+26.1.2.jar": {
+    "jarName": "fabric-api-0.149.0+26.1.2.jar",
     "modId": "fabric-api",
     "name": "Fabric API",
-    "version": "0.148.2+26.1.2",
-    "curseForgeHash": 496359125,
-    "modrinthHash": "2ae5145d7e6e8d6221f3df7855f6f3b020fa89df"
+    "version": "0.149.0+26.1.2",
+    "curseForgeHash": 3158407866,
+    "modrinthHash": "1d3aa9049af831d4d7ed7fbf1b5f0fbb37d7fab4"
   },
   "fabric-language-kotlin-1.13.11+kotlin.2.3.21.jar": {
     "jarName": "fabric-language-kotlin-1.13.11+kotlin.2.3.21.jar",
@@ -133,6 +141,14 @@
     "curseForgeHash": 1408081779,
     "modrinthHash": "dabdfb956438fc9526ec0794fcf4ff0261a75870"
   },
+  "Gnetum-4.3.2+26.1.2-fabric.jar": {
+    "jarName": "Gnetum-4.3.2+26.1.2-fabric.jar",
+    "modId": "gnetum",
+    "name": "Gnetum",
+    "version": "4.3.2+26.1.2-fabric",
+    "curseForgeHash": 1107259366,
+    "modrinthHash": "5e0114bbde68291e902d20401c4e23852275cd8f"
+  },
   "ImmediatelyFast-Fabric-1.15.2+26.1.2.jar": {
     "jarName": "ImmediatelyFast-Fabric-1.15.2+26.1.2.jar",
     "modId": "immediatelyfast",
@@ -141,13 +157,21 @@
     "curseForgeHash": 3918244527,
     "modrinthHash": "195bc6059dda0aac574906d035fae0b62a575a87"
   },
-  "Ixeris-4.2.0+26.1.2-fabric.jar": {
-    "jarName": "Ixeris-4.2.0+26.1.2-fabric.jar",
+  "Ixeris-4.3.0+26.1.2-fabric.jar": {
+    "jarName": "Ixeris-4.3.0+26.1.2-fabric.jar",
     "modId": "ixeris",
     "name": "Ixeris",
-    "version": "4.2.0+26.1.2-fabric",
-    "curseForgeHash": 893579063,
-    "modrinthHash": "ce756582b7ae06a5388cd5897840ce046c963603"
+    "version": "4.3.0+26.1.2-fabric",
+    "curseForgeHash": 1707868179,
+    "modrinthHash": "8b6477d7c9c8b3414f6fed09b5e26d8df50336b5"
+  },
+  "kreno_fpatcher-26.2.0+26.1.jar": {
+    "jarName": "kreno_fpatcher-26.2.0+26.1.jar",
+    "modId": "kreno-fpatcher",
+    "name": "KryptonReno\u0027s Fabric Patcher",
+    "version": "26.2.0+26.1",
+    "curseForgeHash": 247442658,
+    "modrinthHash": "8505adf224c4a0c95345b056064f1dd587395a03"
   },
   "lazy-ai-1.6.1.jar": {
     "jarName": "lazy-ai-1.6.1.jar",
@@ -181,29 +205,29 @@
     "curseForgeHash": 759098983,
     "modrinthHash": "f7e8e1c7d89961b2cba32ace73143f6d31c5a832"
   },
-  "minimega-6.1.20.jar": {
-    "jarName": "minimega-6.1.20.jar",
+  "minimega-6.2.2.jar": {
+    "jarName": "minimega-6.2.2.jar",
     "modId": "minimega",
     "name": "Minimega",
-    "version": "6.1.20",
-    "curseForgeHash": 3503540377,
-    "modrinthHash": "4d765b55bf5a4b5575614ea501525387080b4418"
+    "version": "6.2.2",
+    "curseForgeHash": 3910267072,
+    "modrinthHash": "f23d3965d75cc2047c957bb6e1238c488b6c03a5"
   },
-  "modernfix-5.27.5-build.2.jar": {
-    "jarName": "modernfix-5.27.5-build.2.jar",
+  "modernfix-5.27.7-build.1.jar": {
+    "jarName": "modernfix-5.27.7-build.1.jar",
     "modId": "modernfix",
     "name": "ModernFix",
-    "version": "5.27.5-build.2",
-    "curseForgeHash": 2151241032,
-    "modrinthHash": "2a52e6878e4c0237d0a2a45af47fb65342904199"
+    "version": "5.27.7-build.1",
+    "curseForgeHash": 1845083236,
+    "modrinthHash": "8c067ba5f8da5ef9e53c5938dde93c935e2e0ba2"
   },
   "modernregsyncfix-2.0.0.jar": {
     "jarName": "modernregsyncfix-2.0.0.jar",
     "modId": "modernregsyncfix",
     "name": "ModernRegSyncFix",
     "version": "2.0.0",
-    "curseForgeHash": 2599736420,
-    "modrinthHash": "fa64d252431d900fd3c4cabaee34c191d872e7da"
+    "curseForgeHash": 2990279527,
+    "modrinthHash": "1a3ddb73c99cf269390f40d9f9fb2981fb9e03e1"
   },
   "modmenu-18.0.0-beta.1.jar": {
     "jarName": "modmenu-18.0.0-beta.1.jar",
@@ -261,13 +285,13 @@
     "curseForgeHash": 3048962393,
     "modrinthHash": "012af84e5764e663c45205e467312745dbfff95c"
   },
-  "sodium-fabric-0.8.12-beta.2+mc26.1.2.jar": {
-    "jarName": "sodium-fabric-0.8.12-beta.2+mc26.1.2.jar",
+  "sodium-fabric-0.8.12-beta.4+mc26.1.2.jar": {
+    "jarName": "sodium-fabric-0.8.12-beta.4+mc26.1.2.jar",
     "modId": "sodium",
     "name": "Sodium",
-    "version": "0.8.12-beta.2+mc26.1.2",
-    "curseForgeHash": 1674011343,
-    "modrinthHash": "57cc6f54307815c6d0dc8dfb53e5ab9e0a05ba50"
+    "version": "0.8.12-beta.4+mc26.1.2",
+    "curseForgeHash": 3888348473,
+    "modrinthHash": "6217db6d6893504283f6f709947afc97b57c4caf"
   },
   "sodium-shadowy-path-blocks-fabric-7.0.0.jar": {
     "jarName": "sodium-shadowy-path-blocks-fabric-7.0.0.jar",
@@ -293,12 +317,12 @@
     "curseForgeHash": 3039484477,
     "modrinthHash": "666bbfcce4508b53d51dca1e4253f528c517b315"
   },
-  "zfastnoise-1.0.29-ocl+26.1.2.jar": {
-    "jarName": "zfastnoise-1.0.29-ocl+26.1.2.jar",
+  "zfastnoise-1.0.32b+26.1.2.jar": {
+    "jarName": "zfastnoise-1.0.32b+26.1.2.jar",
     "modId": "zfastnoise",
     "name": "Fast Noise",
-    "version": "1.0.29-ocl+26.1.2",
-    "curseForgeHash": 1414415781,
-    "modrinthHash": "afbb670dbcd40221ffafa53f7116d9db14a6bd03"
+    "version": "1.0.32b+26.1.2",
+    "curseForgeHash": 1688161019,
+    "modrinthHash": "286d2c0193f31a14f843f37ae32dd8ae5dc8b4e4"
   }
 }
