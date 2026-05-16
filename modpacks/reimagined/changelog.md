@@ -1,2 +1,2 @@
-# Legacy4Server 26.05.1
-Fix critical crash issue
+# Reimagined Legacy 26.05-dev
+Quit snooping!
