@@ -1,0 +1,15 @@
+name = "mod"
+filename = "LWS-26.1.2-0.0.1-fabric.jar"
+side = "both"
+
+[download]
+url = "https://github.com/omo50/mod/releases/download/lws_next-1.2/LWS-26.1.2-0.0.1-fabric.jar"
+hash-format = "sha256"
+hash = "866277f4f55385f5db476560f3d6c2f91385f5c46c93655c4fb99a524cc693c5"
+
+[update]
+[update.github]
+branch = "main"
+regex = "^.+(?<!-api|-dev|-dev-preshadow|-sources)\\.jar$"
+slug = "omo50/mod"
+tag = "next-1.0"
