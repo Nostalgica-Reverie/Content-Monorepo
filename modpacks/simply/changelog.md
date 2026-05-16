@@ -14,6 +14,7 @@
 - Re-added Legacy Nether: Enhanced
   - Blaze loot and Wither Skeleton spawning should now work again
   - Nether Wart generating on Soul Sand currently does not work
+  - **Legacy Mechanics will not be re-added since most of its features have been merged for the next Legacy4J update**
 - Updated Minimega from 6.1.20 to 6.2.2
   - Data-driven map loading and map creation tools
   - See the full changelogs [here](https://modrinth.com/mod/minimega/changelog)
@@ -31,6 +32,4 @@
 
 ## Temporarily Unavailable
 - Console Advancement Sounds
-- Legacy Mechanics
-- Legacy Nether: Enhanced
 - Legacy Skins
