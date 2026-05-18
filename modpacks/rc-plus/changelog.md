@@ -9,117 +9,14 @@ Large patch for Re-Console+ for Minecraft 26.1.2, adding in new features, fixes,
 
 ## Content Additions
 
-### Added Picture Mode
-A mod by Icanttellyou, allowing for alpha/beta style isometric screenshots. Compatibility with controller is currently not known and untested. Bound to `CTRL+3`
+### Added Bannerpoint
+Adds banners into the locator bar.
 
-### Added Animatium
-Animatium provides many neat utilities and old features back into Minecraft!
+### Added Dualbar
+Merges the experience and locator bar.
 
-### Added Skyboxify
-Restores Optifine compatibility in regards to sky-modifying texture packs.
-
-### Added Animatica Refabricated
-Restores Optifine compatibility in regards to animated textures.
-
-### Added Advancement Screenshot
-Take a screenshot anytime you advance!
-
-### Added Outrageous Preset
-Go beyond Extreme with 128 render distance! Requires an extremely beefy computer to run.
-
-### Added RenderScale
-Allows for scalable resolutions and screenshots. Bound to `SHIFT+R`
-
-### Added Borderless Mining Updated
-A proper borderless fullscreen mod that does its job well, and improves performance vs alternative.
-
-### Added new Texture Packs
-- Added Ultra High-Res Texture Pack
-- Added Classic High-Res Texture Pack
-- Added Player vs. Player Texture Pack
-- Added Ashen Texture Pack
-- Added Realistic Texture Pack
-- Added Whimsical Texture Pack
-
-### Added new Shader Packs
-Following the update to 26.1.2, shader packs had been missing for a while. They have been re-added with new additions.
-
-Re-added packs:
-- Complementary Reimagined
-- Complementary Unbound
-- BSL Shaders
-- Rethinking Voxels
-- Solas Shaders
-- MakeUp
-- Bliss Shaders
-- Kappa
-- Super Duper Vanilla
-
-New Packs:
-- Nostalgia Shader
-- Shrimple Shader
-- Noble Shader
-- RenderPearl
-- RedHat Shaders
-
-### Added Community Splashes Pack
-A pack of community splashes, from the Discord and Re-Console SMP! The current list of splashes:
-- Insects with Instruments!
-- Your friend wont murdurr!
-- Little lad go!
-- Big lad go!
-- Nocholas_____ hit the ground too hard!
-- Eggs!
-- Buy MusCola™️!
-- Beware of the Evil Re-Console!
-- Also check out Simply Legacy!
-- Also check out Rekindled Legacy!
-- Also check out 2000s Edition!
-- Also check out Consoleidated!
-- Don’t check out Evil Consoleidated!
-- Spears can Jab 1-to-5!
-- The steak The Potato
-- Bomboclat Wallahi
-- Anything but modpack development
-- Punkinville!
-- Mälmö!
-- Petoria!
-- The Safe Zone!
-- Post Town!
-- The Emporium
-- Should i mace him?
-- The carrot caravan!
-- Dexron Zekeatlas!
-- Also check out Legacy Edition Minigames!
-- Also check out Silver Lining!
-- Also check out Reminiscence!
-- Check out the Re-Console SMP!
-- What is the meaning of "Affogato"?
-- Affogato Reverie?
-- Nostalgica Reverie!
-- Lasting Legacy!
-- Violaflower!
-- Reverie Projects!
-- Where is Gerald?
-- If you mash strawberries…
-- Pixel Peeping since 2023!
-- Born on April 28th 2024!
-- Born on April 24th 2024!
-- ..When was this pack born?
-- Legacy4J!
-- Legacy Skins!
-- Minimega!
-- What is a Re-Console+?
-- Not Bug Free!
-- smp.nostalgica.net!
-- Also check out AydenFYP!
-- Also check out TheMinecraftArchitect!
-
-### Added Bisect Hosting Integration
-You can now order a server for Re-Console+ or other modpacks in-game, with all proceeds supporting us. This was designed to be unintrusive; only appearing on the multiplayer screen.
-
-### Updated Vanilla Plus Texture Pack
-The pack has been updated with new flowers in grass, 3d item drops, and a few smaller things.
+### Added 2000s Edition Controller Tips
+Introduces custom Stadia 
 
 ## Performance Improvements
 

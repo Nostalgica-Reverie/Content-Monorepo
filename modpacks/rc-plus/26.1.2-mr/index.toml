@@ -29,6 +29,30 @@ file = "config/crash_assistant/config.toml"
 hash = "3a394e84e66c7c45c6d649b01388e082ef962c88300ed677a25ecc1dabd63978"
 
 [[files]]
+file = "config/crash_assistant/crash_assistant/config.toml"
+hash = "04cbcb57ef01efd7c2edeb7946d2aacb2f47cca7e3c00d97428a3834a06c4748"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/crash_assistant_localization_overrides/README.md"
+hash = "943e1c3672b8a03f27519b357091133205119c7b3db2fcc4c25b597cabf8926d"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/modlist.json"
+hash = "502fd26d2f1e71f73082c1d87fb5afa093b234213a0849c43f9b03235b6f77ad"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/scripts/log_analysis/example.jexl"
+hash = "adde7e5e42b9d716f14a9bc49797999a21a0ee05cc67e71410a232f830115b3b"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/scripts/startup/00_migrated_problematic_mods.jexl"
+hash = "bdce941c1e440f66983cc51a9c416b2635b3a87e0e3397488c14a5cd5b0138ba"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/scripts/startup/example.jexl"
+hash = "346378f04a9e7319cdcb405fad82d6e7f1b36b39e0e4129c00a226b49f41cf37"
+
+[[files]]
 file = "config/crash_assistant/lang/README.md"
 hash = "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc"
 
@@ -1466,7 +1490,7 @@ metafile = true
 
 [[files]]
 file = "mods/asynclogger.pw.toml"
-hash = "7edff6256d436cb9b11937f4cd39972add7799612fd7ef54ce5ee8642227354e"
+hash = "a0ccec3c16ef496cb073afa182129af68e3bf6915d400aad055ff1c8e9e1d8a3"
 metafile = true
 
 [[files]]
@@ -1481,7 +1505,7 @@ metafile = true
 
 [[files]]
 file = "mods/bobby.pw.toml"
-hash = "29be6fd74f960ca0d9e7015ebae1f83f629703bafa6bee8ab30e7504193ff24f"
+hash = "996ec8b8484c0709cc66e7eaa7a22535375fab7aed76e2ec4db34b5323aa382f"
 metafile = true
 
 [[files]]
@@ -1550,6 +1574,11 @@ hash = "00e5ea7fd418d5af044c02b11d1cdc5ba679a505304fb3e84aa45387e87d1db9"
 metafile = true
 
 [[files]]
+file = "mods/dualbar.pw.toml"
+hash = "7fd13909bb3517a00fcf0f2b6d956f2e2a30a81c00400de5f65409bab175fddd"
+metafile = true
+
+[[files]]
 file = "mods/dynamic-fps.pw.toml"
 hash = "0b4721522ae8497677ff44178646d768863825d92e925ac93ab97c02f165c08c"
 metafile = true
@@ -1581,7 +1610,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "ee508959c67a8f198a5de28e613c5900488d395fc14000cf2861b4551b901743"
+hash = "dae57c5a1bea0fb7b104fff48e4dd5b76c0eb46cb198f65b4a3ca13316c86d20"
 metafile = true
 
 [[files]]
@@ -1646,7 +1675,7 @@ metafile = true
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "45db1736aeee554d2db425ad7da44c2d19ab30920d406816b93c34ab7dfe568a"
+hash = "fcb71635139025f0fec6588be1ee0270be391a145edecdcbc2eb199aca076bb8"
 metafile = true
 
 [[files]]
@@ -1701,7 +1730,7 @@ metafile = true
 
 [[files]]
 file = "mods/minimega.pw.toml"
-hash = "d5096e7e86940e28189e1d16e0cc121a95454b73dd51d51c9f7d3f54230ba973"
+hash = "045be3b736cc0e805735514b0ea58dcb73cef21479b28b90ed01bdf19cc20829"
 metafile = true
 
 [[files]]
@@ -1711,7 +1740,7 @@ metafile = true
 
 [[files]]
 file = "mods/modernfix-mvus.pw.toml"
-hash = "dc12b3aba319df85cefde7e6fb0e89e59399fa304a2bbfacf812fb240c06380b"
+hash = "40ea7513ea7b648ad4fc392d549d52d3764ec87ee0b864c42f87e3a67a6356eb"
 metafile = true
 
 [[files]]
@@ -1721,7 +1750,7 @@ metafile = true
 
 [[files]]
 file = "mods/modmenu.pw.toml"
-hash = "a3b2043845ab8f258b02e6cefe35e20f836ccc1e30acd6758fc98a772be87828"
+hash = "42583eed7ccb599f10285e721c25bf3c8858ef7e0eb8e22aa8bf64a08d98a280"
 metafile = true
 
 [[files]]
@@ -1771,7 +1800,7 @@ metafile = true
 
 [[files]]
 file = "mods/puzzles-lib.pw.toml"
-hash = "3f155b99b1ace9037dd8b37968e73b7e50a8301c45fee9882c8a2647d84f057b"
+hash = "9e4db61249fdff741216b5af017384093e522e336059f31dc1c1f36fb81d346f"
 metafile = true
 
 [[files]]
@@ -1791,7 +1820,7 @@ metafile = true
 
 [[files]]
 file = "mods/shuttfup.pw.toml"
-hash = "f95ab7e06b357a98304108331fa9fdaefcf299bb99bd8256748444159f6f5128"
+hash = "97331430fa4c008a289277ca936df8a0633d9f23e754c59ceb1967a588f9a67b"
 metafile = true
 
 [[files]]
@@ -1816,7 +1845,7 @@ metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "2f67aab82589795053a900088d14edd10cfca4902a00a1d5b7101d5c2d80568b"
+hash = "61e81490e34e2fad9b8fda7419fd6ef72f3aad942ab210a70142af0bd806f409"
 metafile = true
 
 [[files]]
@@ -1831,7 +1860,7 @@ metafile = true
 
 [[files]]
 file = "mods/zfastnoise.pw.toml"
-hash = "6d06b6fd8b81a3996e012d95a59f5076eca0e9fbf59bbfe7914ba1860f951f57"
+hash = "dd275d2b9f7edd1046117a4d03fb567f63b65218fc4b1abf2bcd3f0eb531f3ba"
 metafile = true
 
 [[files]]
@@ -3157,7 +3186,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/default-dark-mode-legacy4j.pw.toml"
-hash = "36e079430de607258837c9a16483100bbc1e658459b74c305930634f763bdf16"
+hash = "8ef2a0dfe0b6d47058d58ae82c2c1639633ef16910f358928bb006ba5d5fe2cd"
 metafile = true
 
 [[files]]
@@ -3257,7 +3286,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/legacy-worlds.pw.toml"
-hash = "ec24e2a3d0b8d6ec7565757eb1f2895f881e660b08e45c40d3797fe6a310611b"
+hash = "9257eee8fda42823ed6f4caa830332fba72513d8641b2e4c30cb5ea30506df15"
 metafile = true
 
 [[files]]
@@ -3362,7 +3391,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/super-mario-mash-up.pw.toml"
-hash = "f67d61414731a22094eddc06284f6a730f6c7ad598a058dc34a7f4f17c7da208"
+hash = "3f51fb9e7e283d7f4baa1865d9c67972abd814edb7bd0dd7de0a2bb3073af5f9"
 metafile = true
 
 [[files]]
@@ -3392,7 +3421,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/vanilla-live-mc.pw.toml"
-hash = "ba7a08efa0017127fb6c28b5bb27f2ec12c35452da2cce292eee74136b223061"
+hash = "ec42b0e09c7298906f188604e62ea894913f5c9b9b1fbe16bccb3e06897f7f17"
 metafile = true
 
 [[files]]
@@ -3417,12 +3446,12 @@ metafile = true
 
 [[files]]
 file = "shaderpacks/complementary-reimagined.pw.toml"
-hash = "b769a2f7ef2fa754224c5068491e79d02c0c85e0bc326fc05247f18315cc866b"
+hash = "844af68c07eac70b45bb488a7d9af2298cd6f2867d1ad33fd7abe94110dfedb1"
 metafile = true
 
 [[files]]
 file = "shaderpacks/complementary-unbound.pw.toml"
-hash = "5caf93fa1624aeb26d11cdbadcb0c03b2a92815c798a930014774c7d525baf28"
+hash = "4186d52e3f4eadf4ba35098431dd9d209d3f2637b1c7abb5668894594cc88246"
 metafile = true
 
 [[files]]
@@ -3432,7 +3461,7 @@ metafile = true
 
 [[files]]
 file = "shaderpacks/makeup-ultra-fast-shaders.pw.toml"
-hash = "784936d0db9b68ae57e8d212f5991f7f8c73ab1387854b9618e1d9a2be6a0205"
+hash = "85edba5e221fc8c2cbf4fbdd4b6b1973fcfb3aa571cbe68f0d4df5d8aa5c9750"
 metafile = true
 
 [[files]]
