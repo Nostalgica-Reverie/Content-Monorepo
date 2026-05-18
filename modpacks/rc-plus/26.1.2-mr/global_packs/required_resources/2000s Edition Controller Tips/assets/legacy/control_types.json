@@ -48,7 +48,7 @@
         "iconHeight": 9
       }
     },
-    "minecraftLogo": "legacy:textures/gui/title/minecraft/xbox_one_old.png"
+    "minecraftLogo": "legacy:textures/gui/title/minecraft/xbox_one.png"
   },
   {
     "id": "legacy:xbox_one",
@@ -110,8 +110,14 @@
     },
     "minecraftLogo": "legacy:textures/gui/title/minecraft/playstation_5.png"
   },
-  "legacy:gamecube",
-  "legacy:wii_u",
+  {
+    "id": "legacy:gamecube",
+    "name": {"translate": "legacy.options.controlType.gamecube"},
+    "font": {
+      "default": "legacy:gamecube"
+    },
+    "minecraftLogo": "legacy:textures/gui/title/minecraft/gamecube.png"
+  },
   {
     "id": "legacy:switch",
     "name": {"translate": "legacy.options.controlType.switch"},
