@@ -1,0 +1,156 @@
+[
+  {
+    "id": "legacy:gcn",
+    "name": {"translate": "legacy.options.optionsPreset.gcn"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.gcn.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 4,
+      "options.cutoutLeaves": false,
+      "options.ao": false,
+      "options.renderClouds": false
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true
+    }
+  },
+  {
+    "id": "legacy:default",
+    "name": {"translate": "legacy.options.optionsPreset.default"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.default.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 4,
+      "options.cutoutLeaves": false,
+      "options.ao": false,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true
+    }
+  },
+  {
+    "id": "legacy:default_lce",
+    "name": {"translate": "legacy.options.optionsPreset.default_lce"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.default_lce.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 4,
+      "options.cutoutLeaves": false,
+      "options.ao": false,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true
+    }
+  },
+  {
+    "id": "legacy:ps2",
+    "name": {"translate": "legacy.options.optionsPreset.ps2"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.ps2.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 5,
+      "options.cutoutLeaves": false,
+      "options.ao": false,
+      "options.renderClouds": false
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true
+    }
+  },
+  {
+    "id": "legacy:xbox",
+    "name": {"translate": "legacy.options.optionsPreset.xbox"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.xbox.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 6,
+      "options.cutoutLeaves": false,
+      "options.ao": false,
+      "options.renderClouds": false
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true
+    }
+  },
+  {
+    "id": "legacy:dreamcast",
+    "name": {"translate": "legacy.options.optionsPreset.dreamcast"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.dreamcast.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 8,
+      "options.cutoutLeaves": true,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true
+    }
+  },
+  {
+    "id": "legacy:pc",
+    "name": {"translate": "legacy.options.optionsPreset.pc"},
+    "tooltip": {"translate": "legacy.options.optionsPreset.pc.tooltip"},
+    "vanilla": {
+      "options.renderDistance": 10,
+      "options.cutoutLeaves": true,
+      "options.ao": true,
+      "options.renderClouds": true
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true
+    }
+  }
+]
