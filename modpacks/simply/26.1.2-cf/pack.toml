@@ -1,0 +1,16 @@
+name = "Simply Legacy"
+author = "Cjnator38"
+version = "26.04.7+mc1.21.10"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "b8980495a8a9e0e1d85bd89d7e48b6e419a70acca5c38066efe3d6b1bf3f64b8"
+
+[versions]
+fabric = "0.19.2"
+minecraft = "26.1.2"
+
+[options]
+acceptable-game-versions = ["1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6", "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11"]
