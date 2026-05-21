@@ -101,13 +101,13 @@
     "curseForgeHash": 3226993359,
     "modrinthHash": "389764754270070655fa5874b9df79f9f0a30ce4"
   },
-  "fabric-api-0.149.0+26.1.2.jar": {
-    "jarName": "fabric-api-0.149.0+26.1.2.jar",
+  "fabric-api-0.149.1+26.1.2.jar": {
+    "jarName": "fabric-api-0.149.1+26.1.2.jar",
     "modId": "fabric-api",
     "name": "Fabric API",
-    "version": "0.149.0+26.1.2",
-    "curseForgeHash": 3158407866,
-    "modrinthHash": "1d3aa9049af831d4d7ed7fbf1b5f0fbb37d7fab4"
+    "version": "0.149.1+26.1.2",
+    "curseForgeHash": 587790065,
+    "modrinthHash": "f07ace934b02896a8b77727efd03ce2ad32dc5da"
   },
   "fabric-language-kotlin-1.13.11+kotlin.2.3.21.jar": {
     "jarName": "fabric-language-kotlin-1.13.11+kotlin.2.3.21.jar",
@@ -181,6 +181,14 @@
     "curseForgeHash": 4082808753,
     "modrinthHash": "ca618a5797fd829579958566c210e558468becba"
   },
+  "legacy-nether-extended-cf-3.0.0.jar": {
+    "jarName": "legacy-nether-extended-cf-3.0.0.jar",
+    "modId": "mr_legacy_netherextended",
+    "name": "Legacy Nether: Extended",
+    "version": "3.0.0",
+    "curseForgeHash": 2746427115,
+    "modrinthHash": "1e5256445dda51d3eeede3555d78941d65c5fbaf"
+  },
   "Legacy4J-26.1.2-1.9-pre-2-fabric.jar": {
     "jarName": "Legacy4J-26.1.2-1.9-pre-2-fabric.jar",
     "modId": "legacy",
@@ -202,16 +210,8 @@
     "modId": "legacy_world_sizes",
     "name": "Legacy World Sizes",
     "version": "0.0.1",
-    "curseForgeHash": 759098983,
-    "modrinthHash": "f7e8e1c7d89961b2cba32ace73143f6d31c5a832"
-  },
-  "minimega-6.2.2.jar": {
-    "jarName": "minimega-6.2.2.jar",
-    "modId": "minimega",
-    "name": "Minimega",
-    "version": "6.2.2",
-    "curseForgeHash": 3910267072,
-    "modrinthHash": "f23d3965d75cc2047c957bb6e1238c488b6c03a5"
+    "curseForgeHash": 2560637650,
+    "modrinthHash": "ac4aa5cb372c7c779e0d1d4be98f6d8e72aea898"
   },
   "modernfix-5.27.7-build.1.jar": {
     "jarName": "modernfix-5.27.7-build.1.jar",
@@ -220,14 +220,6 @@
     "version": "5.27.7-build.1",
     "curseForgeHash": 1845083236,
     "modrinthHash": "8c067ba5f8da5ef9e53c5938dde93c935e2e0ba2"
-  },
-  "modernregsyncfix-2.0.0.jar": {
-    "jarName": "modernregsyncfix-2.0.0.jar",
-    "modId": "modernregsyncfix",
-    "name": "ModernRegSyncFix",
-    "version": "2.0.0",
-    "curseForgeHash": 2990279527,
-    "modrinthHash": "1a3ddb73c99cf269390f40d9f9fb2981fb9e03e1"
   },
   "modmenu-18.0.0-beta.1.jar": {
     "jarName": "modmenu-18.0.0-beta.1.jar",
@@ -245,6 +237,22 @@
     "curseForgeHash": 1414199626,
     "modrinthHash": "ae8afeefa6e512f7c22053642fd5059a5ed4979b"
   },
+  "NoChatReports-FABRIC-26.1-v2.19.0.jar": {
+    "jarName": "NoChatReports-FABRIC-26.1-v2.19.0.jar",
+    "modId": "nochatreports",
+    "name": "No Chat Reports",
+    "version": "26.1-v2.19.0",
+    "curseForgeHash": 491244961,
+    "modrinthHash": "50ad29d6146667c732f7764a715cebf70e3cecdd"
+  },
+  "NoChatRestrictions-Fabric-MC26.1-v1.1.0.jar": {
+    "jarName": "NoChatRestrictions-Fabric-MC26.1-v1.1.0.jar",
+    "modId": "nochatrestrictions",
+    "name": "No Chat Restrictions",
+    "version": "Fabric-MC26.1-v1.1.0",
+    "curseForgeHash": 1658626111,
+    "modrinthHash": "f9b567768cc082eaedf78b48b39eea0505be43f6"
+  },
   "placeholder-api-3.0.0+26.1.jar": {
     "jarName": "placeholder-api-3.0.0+26.1.jar",
     "modId": "placeholder-api",
@@ -253,13 +261,13 @@
     "curseForgeHash": 2486016348,
     "modrinthHash": "c1ce548549ec4517b9393985cefc65389e6f36d8"
   },
-  "preferred-gamerules-2.0.0+26.1.jar": {
-    "jarName": "preferred-gamerules-2.0.0+26.1.jar",
-    "modId": "preferred-gamerules",
-    "name": "Preferred Gamerules",
-    "version": "2.0.0+26.1",
-    "curseForgeHash": 3998252836,
-    "modrinthHash": "c5297405196b6f9bd0e0e017af7eb5321dd09d43"
+  "rsls-1.2.0.jar": {
+    "jarName": "rsls-1.2.0.jar",
+    "modId": "rsls",
+    "name": "Raise Sound Limit Simplified",
+    "version": "1.2.0",
+    "curseForgeHash": 2994719667,
+    "modrinthHash": "16413dd9bc98172ed29f17594f8ec6946d989f07"
   },
   "ScalableLux-0.2.0+fabric.2b63825-all.jar": {
     "jarName": "ScalableLux-0.2.0+fabric.2b63825-all.jar",
@@ -269,13 +277,13 @@
     "curseForgeHash": 1439985698,
     "modrinthHash": "3875a697a9bb014c06aa3a62d72e8bec3de23160"
   },
-  "servercore-fabric-1.5.16+26.1.jar": {
-    "jarName": "servercore-fabric-1.5.16+26.1.jar",
+  "servercore-fabric-1.5.17+26.1.2.jar": {
+    "jarName": "servercore-fabric-1.5.17+26.1.2.jar",
     "modId": "servercore",
     "name": "ServerCore",
-    "version": "1.5.16+26.1",
-    "curseForgeHash": 2418592025,
-    "modrinthHash": "e276f34ae9ded682a084da79849356a14b3f84b6"
+    "version": "1.5.17+26.1.2",
+    "curseForgeHash": 3256779019,
+    "modrinthHash": "52b4b9d03ad49a05977f6a7042f7bf21e61f01c9"
   },
   "simpleresourceloader-1.1.0+26.1.jar": {
     "jarName": "simpleresourceloader-1.1.0+26.1.jar",
@@ -285,13 +293,13 @@
     "curseForgeHash": 3048962393,
     "modrinthHash": "012af84e5764e663c45205e467312745dbfff95c"
   },
-  "sodium-fabric-0.8.12-beta.4+mc26.1.2.jar": {
-    "jarName": "sodium-fabric-0.8.12-beta.4+mc26.1.2.jar",
+  "sodium-fabric-0.8.12+mc26.1.2.jar": {
+    "jarName": "sodium-fabric-0.8.12+mc26.1.2.jar",
     "modId": "sodium",
     "name": "Sodium",
-    "version": "0.8.12-beta.4+mc26.1.2",
-    "curseForgeHash": 3888348473,
-    "modrinthHash": "6217db6d6893504283f6f709947afc97b57c4caf"
+    "version": "0.8.12+mc26.1.2",
+    "curseForgeHash": 394429184,
+    "modrinthHash": "cd6c6236f0dcff03c7148414db220de32c934b5a"
   },
   "sodium-shadowy-path-blocks-fabric-7.0.0.jar": {
     "jarName": "sodium-shadowy-path-blocks-fabric-7.0.0.jar",
@@ -309,6 +317,14 @@
     "curseForgeHash": 3987747436,
     "modrinthHash": "ce2569566a0ae5daf620fa093b7a66c39837d6a5"
   },
+  "Worldthreader-3.0.0.jar": {
+    "jarName": "Worldthreader-3.0.0.jar",
+    "modId": "worldthreader",
+    "name": "Worldthreader",
+    "version": "3.0.0",
+    "curseForgeHash": 1358438245,
+    "modrinthHash": "0946e91acec72c6a09f609d8fab78b2821d4df2a"
+  },
   "yet_another_config_lib_v3-3.9.3+26.1-fabric.jar": {
     "jarName": "yet_another_config_lib_v3-3.9.3+26.1-fabric.jar",
     "modId": "yet_another_config_lib_v3",
@@ -317,12 +333,12 @@
     "curseForgeHash": 3039484477,
     "modrinthHash": "666bbfcce4508b53d51dca1e4253f528c517b315"
   },
-  "zfastnoise-1.0.32b+26.1.2.jar": {
-    "jarName": "zfastnoise-1.0.32b+26.1.2.jar",
+  "zfastnoise-1.0.32c+26.1.2.jar": {
+    "jarName": "zfastnoise-1.0.32c+26.1.2.jar",
     "modId": "zfastnoise",
     "name": "Fast Noise",
-    "version": "1.0.32b+26.1.2",
-    "curseForgeHash": 1688161019,
-    "modrinthHash": "286d2c0193f31a14f843f37ae32dd8ae5dc8b4e4"
+    "version": "1.0.32c+26.1.2",
+    "curseForgeHash": 68636579,
+    "modrinthHash": "5be1ec6770438ed98681e377e6b7b31daa1cae80"
   }
 }
