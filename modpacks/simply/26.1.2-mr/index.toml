@@ -37,8 +37,8 @@ file = "config/crash_assistant/modlist.json"
 hash = "1bf6eeadb54951dc8865dfbb96e389dc725a507e6839317abe8636114267505e"
 
 [[files]]
-file = "config/crash_assistant/problematic_mods_config.json"
-hash = "96bf60c2653e893599129f251281215774ec7d420db24fe094ae364ecbfc5939"
+file = "config/crash_assistant/scripts/startup/00_migrated_problematic_mods.jexl"
+hash = "be73fbb74882c103c62761bd40a63b446f5258935c48af68d69f5dd4b522173b"
 
 [[files]]
 file = "config/fabric/indigo-renderer.properties"
@@ -101,8 +101,8 @@ file = "config/modpack_defaults/config/crash_assistant/modlist.json"
 hash = "1bf6eeadb54951dc8865dfbb96e389dc725a507e6839317abe8636114267505e"
 
 [[files]]
-file = "config/modpack_defaults/config/crash_assistant/problematic_mods_config.json"
-hash = "96bf60c2653e893599129f251281215774ec7d420db24fe094ae364ecbfc5939"
+file = "config/modpack_defaults/config/crash_assistant/scripts/startup/00_migrated_problematic_mods.jexl"
+hash = "be73fbb74882c103c62761bd40a63b446f5258935c48af68d69f5dd4b522173b"
 
 [[files]]
 file = "config/modpack_defaults/config/cwb.json"
