@@ -5,16 +5,16 @@ file = "config/animatium.json"
 hash = "f83e8176ccda0689fb95e7c8724e3a9f86daa305772880bb419dde5e28d299c1"
 
 [[files]]
+file = "config/bobby.conf"
+hash = "93a49bfdb5a265002d191ef9134f088f16596271ff0e2c604bc8c5d37350716d"
+
+[[files]]
 file = "config/c2me.toml"
-hash = "d072cb16eb9244f4e6bc09d57a613f96bf734dc013874b3dab58828801f99350"
+hash = "a2e4eb562da19cfa42be1126f39c8a93da9bd1d131991dd473475b023c724c1e"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
 hash = "2d5777b5466f6b7bfda339792e92cb90e200d49ed2e01fa5b296039608cb67c0"
-
-[[files]]
-file = "config/crash_assistant/crash_assistant_localization_overrides/README.md"
-hash = "943e1c3672b8a03f27519b357091133205119c7b3db2fcc4c25b597cabf8926d"
 
 [[files]]
 file = "config/crash_assistant/lang/README.md"
@@ -34,11 +34,11 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "config/crash_assistant/modlist.json"
-hash = "8fa77c83397e1dfa269af8795e3977d67a3202319b6b7945ae866d838418ec2c"
+hash = "1bf6eeadb54951dc8865dfbb96e389dc725a507e6839317abe8636114267505e"
 
 [[files]]
 file = "config/crash_assistant/problematic_mods_config.json"
-hash = "d332709be21b7bc8038f0cb6924120e3ac790b4f2415d160a416a7e1553ea07e"
+hash = "96bf60c2653e893599129f251281215774ec7d420db24fe094ae364ecbfc5939"
 
 [[files]]
 file = "config/fabric/indigo-renderer.properties"
@@ -47,10 +47,6 @@ hash = "0a776bd94413087200e0cd1a0bd72cbfe5c1a69002c1c625236233c2183c301c"
 [[files]]
 file = "config/immediatelyfast.json"
 hash = "8f85626cee8effcf430d24772946b3bea79a778917ba0681d2cc6fcb857efd2b"
-
-[[files]]
-file = "config/legacy/global_packs.json"
-hash = "e5d1701bc553ad86c2bd2f1157eac6ded5f7781fbdcaf8fcb27023404758a1c3"
 
 [[files]]
 file = "config/modernfix-mixins.properties"
@@ -70,11 +66,11 @@ hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
 
 [[files]]
 file = "config/modpack_defaults/config/bobby.conf"
-hash = "31c8245ab721c4ddec0658274a0439a2546764e09fd7fa8bd37e09a4263f2032"
+hash = "93a49bfdb5a265002d191ef9134f088f16596271ff0e2c604bc8c5d37350716d"
 
 [[files]]
 file = "config/modpack_defaults/config/c2me.toml"
-hash = "1c5b034200e1a54106bad6eed735dcd46aa56190e411d928cb1a50d7b7c690cf"
+hash = "a2e4eb562da19cfa42be1126f39c8a93da9bd1d131991dd473475b023c724c1e"
 
 [[files]]
 file = "config/modpack_defaults/config/cpm.json"
@@ -102,11 +98,15 @@ hash = "3a429334ee23f897a7f9433e25af1246a735b289629d32cb0c730a9885a3c240"
 
 [[files]]
 file = "config/modpack_defaults/config/crash_assistant/modlist.json"
-hash = "8fa77c83397e1dfa269af8795e3977d67a3202319b6b7945ae866d838418ec2c"
+hash = "1bf6eeadb54951dc8865dfbb96e389dc725a507e6839317abe8636114267505e"
 
 [[files]]
 file = "config/modpack_defaults/config/crash_assistant/problematic_mods_config.json"
 hash = "96bf60c2653e893599129f251281215774ec7d420db24fe094ae364ecbfc5939"
+
+[[files]]
+file = "config/modpack_defaults/config/cwb.json"
+hash = "294e19a72c24c0b11a12424a97a80fc2ef74cbdbb9e3775ab57acfeda144f9d8"
 
 [[files]]
 file = "config/modpack_defaults/config/entity_model_features.json"
@@ -141,8 +141,12 @@ file = "config/modpack_defaults/config/ferritecore.mixin.properties"
 hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
 
 [[files]]
+file = "config/modpack_defaults/config/gnetum.json"
+hash = "f0a9c687b64bb4e9eab2d2927725cc03c1157e7d918a6feea5dc53a7ee7d5fd3"
+
+[[files]]
 file = "config/modpack_defaults/config/immediatelyfast.json"
-hash = "76aa2fb300513b5e5ce592c606da18a59ad07cc7d98b9a7cd3abc420fdddce13"
+hash = "8f85626cee8effcf430d24772946b3bea79a778917ba0681d2cc6fcb857efd2b"
 
 [[files]]
 file = "config/modpack_defaults/config/ixeris.toml"
@@ -158,7 +162,7 @@ hash = "b87f97b466cd28a298998cd36ef501d2c466131d7fc2e92727eea33a903eb3de"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/client_options.json"
-hash = "5d1fb6afaa82e171d82ae4ea341f5ad48494d2279c000bed683d422f181f7675"
+hash = "73cdc11a34731b19df3ea5ba800d086a224c8fd26e9e7008f5832e1a03a47220"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/common.json"
@@ -170,7 +174,7 @@ hash = "8c3090d5ad28a65c7f946726318c7b578e9708cec49fc2eee99f746780e002bf"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/global_packs.json"
-hash = "e5d1701bc553ad86c2bd2f1157eac6ded5f7781fbdcaf8fcb27023404758a1c3"
+hash = "ff632c7a905260b272593c394e4822a6fc3a557176573f96067f8089fe9af338"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy_world_sizes/common.json"
@@ -198,7 +202,7 @@ hash = "ee8d1a6f11ea009f37abba6325d97766910e1786b0de848aa307771d8a87ed72"
 
 [[files]]
 file = "config/modpack_defaults/config/moreculling.toml"
-hash = "20a7c9a9d1ec3c730f37af63357d6847afbb28fd37cd13657928c3d22feb055c"
+hash = "394b52aae7e522155222155313a1295e4ba75518d9f0ddd9beccbdf73bbf33e8"
 
 [[files]]
 file = "config/modpack_defaults/config/npe.json"
@@ -213,8 +217,12 @@ file = "config/modpack_defaults/config/particle_core_disabled_optimizations_v2.j
 hash = "3d731115173b34dd0fe9de6f52fa14dc271c848495a52f66c0016e24150f59d6"
 
 [[files]]
+file = "config/modpack_defaults/config/preferred-gamerules.properties"
+hash = "ade56789ed3450f59ecfad371febad8656c2a6cc443fe8cb53bef2db4e15184c"
+
+[[files]]
 file = "config/modpack_defaults/config/servercore/config.yml"
-hash = "7aa4761cc751f6df10d32f053a009953fabfb6649670b253199dd6bbd7aa3f9d"
+hash = "4b0bcb12540056a29b8b7b33eb072a4c0dcc5ad5e0bb17f10b36924b9f3e03fd"
 
 [[files]]
 file = "config/modpack_defaults/config/servercore/optimizations.yml"
@@ -237,28 +245,24 @@ file = "config/modpack_defaults/config/sodium-shadowy-path-blocks-options.json"
 hash = "25baba4e198fbefd6656a38dcf0cdc3e7ccef211221b4f5218d22a778d1853fa"
 
 [[files]]
-file = "config/modpack_defaults/config/stfu-disable.txt"
-hash = "757ee91f87a1d1064ebe583e3fcc460f87fc6087b1799409bcf679216821e856"
-
-[[files]]
-file = "config/modpack_defaults/config/stfu.json5"
-hash = "c3259429631217e29e91d60b663ee9c076b058268317a08d3a9fba866879b4f4"
-
-[[files]]
 file = "config/modpack_defaults/config/threadtweak.json"
 hash = "b4c1cc5fc213225d64e685a3b632092e909386ab41bd9925f9cf7efd53d1ad46"
 
 [[files]]
 file = "config/modpack_defaults/config/voicechat/voicechat-client.properties"
-hash = "756bf0b8391d5c8f8a3e92ec0f04d35b249f3968a4c0f2a966476de27b3bb822"
+hash = "00c0ea508f0994cd80fc6342eb23da6a741c4834227c441150f5a3b11ed24896"
 
 [[files]]
 file = "config/modpack_defaults/config/yacl.json5"
 hash = "121b93764159be6fb7dab523b29a844e2bb78400ce8c48f52135a097e9b0006e"
 
 [[files]]
+file = "config/modpack_defaults/config/zfastnoise.mixin.toml"
+hash = "edf610a49a103f0710a5b3b20d00b0677274c674c8f7dd9ae83caf339fef843f"
+
+[[files]]
 file = "config/modpack_defaults/options.txt"
-hash = "1074efe9a61c254863be298465582698a0a7afd9f3a90dcef6797e8a0fef5996"
+hash = "4d3a5518d657ac30eebe9eae01c8d783c10da9d20d3726bbcccd3549b35b82da"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums.json"
@@ -266,71 +270,87 @@ hash = "ea205bc2c311ff7a567b30a3d6111b2c665bb3d68f3c77ad9cce473b221de09d"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/candy.json"
-hash = "1225800a164ace1c98e9ede84bd7a9a0587add372025e3094d755999597384e8"
+hash = "63d2f498ba59f939fdbdc822e3f5091c6ff80db912556bd8dbec3caee01d52ec"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/caribbean.json"
+hash = "1bdb92d02a1f6b2e23050f46ab0eff9cc544f591fdd24b7b57fb0d2b0a687127"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/cartoon.json"
-hash = "2fbad4be5b13751287e0d9f016fbfa1b85758d34ebbbfb617e8fb3b2ee8442c6"
+hash = "7841328d8661eac2f41c2a2e02886fe74134943f40b638d4c5250ec3676cc2fc"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/chinese.json"
-hash = "a603717b2d9559717cf015b9b6b6789a9dbc8de9b81a3f5997438f60f3f091bf"
+hash = "529fd704f7ca22a1cedc6a42f1667c22ac77a7e1b1641b68112ceac73327556e"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/city.json"
-hash = "fbe668a0016c775b69b78ceac058677ab87173a40eb2317439849f55f365626e"
+hash = "a0995826620932c34b2ccb734b476f9f7365d2074fbb0a5fd9f623d2a22b55a6"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/egyptian.json"
-hash = "522ebb4d28dab5d4ec3278e3169db14f5745367d4f29af404e504452795272a0"
+hash = "a861c5f7dbc31bf7c50c2491dd6dbffdea2521a515852c95ec883fedd7757061"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/fallout.json"
+hash = "2bfeefe72393fab6e3df99d33e15b0738675427c094dade58d8ea2d62df7f31c"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/fantasy.json"
-hash = "5a30fa5e2f3a912bac544a4964f682ca03a51e895b90ca302e311a558e23c9fc"
+hash = "70148b75e27f8aaf71647f1c4b06385eff0b6a52bd65452174932d44b2b635d5"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/festive.json"
-hash = "ca0368773cca23d55c950aed764d882e45d30f646df4060e273eff850eb6a9c8"
+hash = "92a6302b98a0841d0a7130d1810c90e03be6762fefcafcce4c443e529f69f4ff"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/greek.json"
-hash = "558fa96ab27798ba9b513cb06ae7a1fc2e25d08a9896462e94b3ac626fa5be53"
+hash = "3fa101560b51078bffcd46b44ab4dd6985ed6588abc4d4318ef2b0f77c71d42c"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/halloween.json"
-hash = "04f17d84b7df4c3af8ad1bb38a92ac96152ef0e47af033aeddc7a6b88584b9ff"
+hash = "4c684bd8e518546009b7f825f0b95851044d3f3eafcb9069f3c7ba5dafbc060d"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/minecraft.json"
-hash = "62d576f85067c881fedf065c6d283d08cb7ee468401381ec824ab7c48d418ad8"
+hash = "472f2720fba3810fd0a05bdf0d8eb7c800eb55876d5cf9946786c0fed5a9d59d"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/minecraft_classic.json"
-hash = "f3e1f7f70a61087211eb0796c5923b79c01e2ee23af24148b257694b32ba509e"
+hash = "ddc8f2ec1ad66c64c660793af1158fd974cc764aa1748de688732cda26ec5e6e"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/n7.json"
+hash = "4506ba0a9847b97d873b4ff2aa5019142e4c96dc5bf83c67ca10f8b2f47de421"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/natural.json"
-hash = "1caa6e86e0093063c696a9ae9cfe43ea01a704915373cd234a8f270b752adce3"
+hash = "7f4eee3dbb054ee8af07aec67a83bd19831d09be428509750731717cdad21b24"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/norse.json"
-hash = "a92022f0fc4a87741e1a28bdeabaa13aaf2346405618ce88d06bc3ec6eb9a514"
+hash = "0f3d31f34ecf354ff6a79d2f7a5554d4597f5fb0f1b28507fab78d599fe81e77"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/pattern.json"
-hash = "a6bf356e0f77687aec69bdece3a17f805f8f738250b39e268773aa37811b200e"
+hash = "836f9fc4448c2f6b8dad6fd72f44b4537f4f620b884a984538c458c90443b7ab"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/plastic.json"
-hash = "0cae638b7451fece20129c856cbbb6a9b48f98dfa1d8ac9dcda919cf5c7fd05b"
+hash = "59d2a7c15bf8d425a8c31b0d13bd112a75c248f34c6157ceae69c8cfd4178dcc"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/steampunk.json"
-hash = "206f9a655a0ec96b9314dff4a62a514e940e4857b69ae4d410b98259a3a96b48"
+hash = "0c1f49dd116d56bac33f1293b5a947a4d3515b5d38141dac862629183a866c5a"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/super_cute.json"
-hash = "cf4bdc0f6fb60b7dc2d0acbad5f92902ceb33b6add6bcb92a56980469eee7b61"
+hash = "3f1d5032fe263bea29f1fe1cca954c4df79c62f074959c3fb763fd0b6186ef92"
+
+[[files]]
+file = "config/modpack_defaults/resource_albums/super_mario.json"
+hash = "6dd9d2483c3b6d08f41bba0e4b96c57ae135acee8b42f8fffc3bb7beb5e80e82"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Fixed Chest Models/assets/cem/chest.jem"
@@ -394,35 +414,35 @@ hash = "332dcd6666b84bfd70d6b49a3793d93e9c3082fd235e1d845403454c7f059619"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_au.json"
-hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
+hash = "092687e15e0f0f176ded3f2678cbdd49182fef06718d04b4c737018db4dbc919"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_ca.json"
-hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
+hash = "092687e15e0f0f176ded3f2678cbdd49182fef06718d04b4c737018db4dbc919"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_gb.json"
-hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
+hash = "092687e15e0f0f176ded3f2678cbdd49182fef06718d04b4c737018db4dbc919"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_nz.json"
-hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
+hash = "092687e15e0f0f176ded3f2678cbdd49182fef06718d04b4c737018db4dbc919"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_pt.json"
-hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
+hash = "092687e15e0f0f176ded3f2678cbdd49182fef06718d04b4c737018db4dbc919"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_ud.json"
-hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
+hash = "092687e15e0f0f176ded3f2678cbdd49182fef06718d04b4c737018db4dbc919"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_us.json"
-hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
+hash = "092687e15e0f0f176ded3f2678cbdd49182fef06718d04b4c737018db4dbc919"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/enp.json"
-hash = "e707f6fb19a595f2f7d78fe57203f36e4d12cb2e2b5986bdaff9d3bc1d665086"
+hash = "092687e15e0f0f176ded3f2678cbdd49182fef06718d04b4c737018db4dbc919"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/es_es.json"
@@ -754,7 +774,7 @@ hash = "ada1b7cc1eb8ee561d3df78f82aab0603fe14c74b9f8c28de514b2a06f7f1415"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/legacy_world_sizes/lang/en_us.json"
-hash = "01c69199f2a7d0d63f38b67ebd222eb599b95561f3dd9064eea15aedcc414bd3"
+hash = "3da0a32f2d7637dbc6c50cf6d34c59617b5b291b49382087f0af015a50c7a64f"
 
 [[files]]
 file = "config/modpack_defaults/resources/resourcepack/required/Simply Legacy Resources/assets/minecraft/lang/en_us.json"
@@ -773,8 +793,12 @@ file = "config/modpack_defaults/servers.dat"
 hash = "d082d6307f908d09fad1c0e429a978795e66ef42b923645150284eb8891e7f4c"
 
 [[files]]
+file = "config/moreculling.toml"
+hash = "394b52aae7e522155222155313a1295e4ba75518d9f0ddd9beccbdf73bbf33e8"
+
+[[files]]
 file = "config/servercore/config.yml"
-hash = "7aa4761cc751f6df10d32f053a009953fabfb6649670b253199dd6bbd7aa3f9d"
+hash = "4b0bcb12540056a29b8b7b33eb072a4c0dcc5ad5e0bb17f10b36924b9f3e03fd"
 
 [[files]]
 file = "config/servercore/optimizations.yml"
