@@ -7,7 +7,7 @@ interface Manifest {
   type: 'modpack' | 'datapack';
   loader: string;
   mc_version: string;
-  version: string;
+  version?: string;
   release_type: 'release' | 'beta' | 'alpha';
   modrinth_id?: string;
   curseforge_id?: string;
@@ -27,6 +27,12 @@ function validate(manifestPath: string): void {
     fail(`manifest not found: ${manifestPath}`);
   }
 
+  const filename = path.basename(manifestPath);
+  if (filename !== 'manifest.json' && filename !== 'manifest-experimental.json') {
+    fail(`unknown manifest filename: ${filename} (expected 'manifest.json' or 'manifest-experimental.json')`);
+  }
+  const isExperimental = filename === 'manifest-experimental.json';
+
   let manifest: Manifest;
   try {
     const raw = fs.readFileSync(manifestPath, 'utf-8');
@@ -35,9 +41,13 @@ function validate(manifestPath: string): void {
     fail(`failed to parse ${manifestPath}: ${e instanceof Error ? e.message : e}`);
   }
 
-  const required = [
-    'id', 'name', 'type', 'loader', 'mc_version', 'version', 'release_type',
-  ] as const;
+  const required: (keyof Manifest)[] = [
+    'id', 'name', 'type', 'loader', 'mc_version', 'release_type',
+  ];
+  if (!isExperimental) {
+    required.push('version');
+  }
+
   for (const field of required) {
     const v = manifest[field];
     if (v === undefined || v === null || v === '') {
@@ -52,6 +62,10 @@ function validate(manifestPath: string): void {
     fail(`invalid 'release_type': ${manifest.release_type} (must be 'release', 'beta', or 'alpha')`);
   }
 
+  if (isExperimental && manifest.release_type !== 'alpha') {
+    warn(`experimental manifest uses release_type='${manifest.release_type}'; convention is 'alpha'`);
+  }
+
   const hasMr = manifest.modrinth_id && manifest.modrinth_id.trim() !== '';
   const hasCf = manifest.curseforge_id && manifest.curseforge_id.trim() !== '';
   if (!hasMr && !hasCf) {
@@ -60,17 +74,19 @@ function validate(manifestPath: string): void {
 
   const packDir = path.dirname(manifestPath);
 
-  const changelogPath = path.join(packDir, 'changelog.md');
-  if (!fs.existsSync(changelogPath)) {
-    fail(`changelog.md is missing at ${changelogPath}`);
-  }
-  const changelog = fs.readFileSync(changelogPath, 'utf-8').trim();
-  if (changelog === '') {
-    fail(`changelog.md is empty at ${changelogPath}`);
-  }
-  const contentLines = changelog.split('\n').filter(l => l.trim() && !l.trim().startsWith('#'));
-  if (contentLines.length === 0) {
-    fail(`changelog.md has headers but no content at ${changelogPath}`);
+  if (!isExperimental) {
+    const changelogPath = path.join(packDir, 'changelog.md');
+    if (!fs.existsSync(changelogPath)) {
+      fail(`changelog.md is missing at ${changelogPath}`);
+    }
+    const changelog = fs.readFileSync(changelogPath, 'utf-8').trim();
+    if (changelog === '') {
+      fail(`changelog.md is empty at ${changelogPath}`);
+    }
+    const contentLines = changelog.split('\n').filter(l => l.trim() && !l.trim().startsWith('#'));
+    if (contentLines.length === 0) {
+      fail(`changelog.md has headers but no content at ${changelogPath}`);
+    }
   }
 
   if (manifest.type === 'modpack') {
@@ -98,7 +114,9 @@ function validate(manifestPath: string): void {
     }
   }
 
-  console.log(`${manifest.id} ${manifest.version} (${manifest.release_type}) — manifest OK`);
+  const label = isExperimental ? 'EXPERIMENTAL' : 'production';
+  const version = manifest.version ?? '(generated)';
+  console.log(`✓ ${manifest.id} ${version} (${manifest.release_type}, ${label}) — manifest OK`);
 }
 
 const args = process.argv.slice(2);
