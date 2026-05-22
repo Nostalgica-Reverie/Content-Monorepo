@@ -35,27 +35,14 @@ jobs:
           set -eu
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
+          echo "$CHANGED" | grep -q '^modpacks/'  && echo "has_modpacks=true"  >> $GITHUB_OUTPUT || echo "has_modpacks=false"  >> $GITHUB_OUTPUT
 
-          CHANGED_MODPACKS=$(echo "$CHANGED" | grep -E '^modpacks/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
-          CHANGED_DATAPACKS=$(echo "$CHANGED" | grep -E '^datapacks/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
-
-          {
-            echo "has_modpacks=$( [ -n "$CHANGED_MODPACKS" ] && echo true || echo false )"
-            echo "has_datapacks=$( [ -n "$CHANGED_DATAPACKS" ] && echo true || echo false )"
-            echo "changed_modpacks<<EOF"
-            echo "$CHANGED_MODPACKS"
-            echo "EOF"
-            echo "changed_datapacks<<EOF"
-            echo "$CHANGED_DATAPACKS"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Cache Builder Binaries
+      - name: Cache Builder Binary
         id: cache-builder
         uses: actions/cache@v4
         with:
           path: ./builder-bin
-          key: builder-v2-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.rs', 'src/actions/builder/Cargo.toml', 'src/actions/builder/Cargo.lock') }}
+          key: builder-v3-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.rs', 'src/actions/builder/Cargo.toml', 'src/actions/builder/Cargo.lock') }}
 
       - name: Install Rust
         if: steps.cache-builder.outputs.cache-hit != 'true'
@@ -67,13 +54,13 @@ jobs:
         with:
           workspaces: "src/actions/builder -> target"
 
-      - name: Build Binaries
+      - name: Build Binary
         if: steps.cache-builder.outputs.cache-hit != 'true'
         run: |
-          cargo build --release --manifest-path src/actions/builder/Cargo.toml --bin builder --bin minify-json
+          cargo build --release --manifest-path src/actions/builder/Cargo.toml --bin builder
           mkdir -p ./builder-bin
-          cp src/actions/builder/target/release/{builder,minify-json} ./builder-bin/
-          chmod +x ./builder-bin/builder ./builder-bin/minify-json
+          cp src/actions/builder/target/release/builder ./builder-bin/builder
+          chmod +x ./builder-bin/builder
 
       - name: Cache Packwiz
         if: steps.meta.outputs.has_modpacks == 'true'
@@ -96,50 +83,8 @@ jobs:
         if: steps.meta.outputs.has_modpacks == 'true'
         run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
-      - name: Minify datapacks
-        if: steps.meta.outputs.has_datapacks == 'true'
-        run: |
-          set -eu
-          while IFS= read -r pack; do
-            [ -n "$pack" ] || continue
-            target="$pack/content"
-            [ -d "$target" ] || continue
-            (
-              cp -r "$target" "$target.original"
-              ./builder-bin/minify-json "$target"
-            ) &
-          done <<< "${{ steps.meta.outputs.changed_datapacks }}"
-          wait
-
-      - name: Minify modpacks
-        if: steps.meta.outputs.has_modpacks == 'true'
-        run: |
-          set -eu
-          while IFS= read -r pack; do
-            [ -n "$pack" ] || continue
-            for sub in "$pack"/*-{mr,cf}/config; do
-              [ -d "$sub" ] || continue
-              (
-                cp -r "$sub" "$sub.original"
-                ./builder-bin/minify-json "$sub"
-              ) &
-            done
-          done <<< "${{ steps.meta.outputs.changed_modpacks }}"
-          wait
-
       - name: Run Build
         run: ./builder-bin/builder "${{ steps.meta.outputs.short_sha }}"
-
-      - name: Restore JSON sources
-        if: always()
-        run: |
-          set -eu
-          for orig in datapacks/*/content.original modpacks/*/*-{mr,cf}/config.original; do
-            [ -d "$orig" ] || continue
-            target="${orig%.original}"
-            rm -rf "$target"
-            mv "$orig" "$target"
-          done
 
       - name: Upload
         uses: https://code.forgejo.org/forgejo/upload-artifact@v4

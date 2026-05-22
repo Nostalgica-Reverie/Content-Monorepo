@@ -5,7 +5,11 @@ on:
     branches: ["main"]
     paths:
       - 'modpacks/**/manifest.json'
+      - 'modpacks/**/manifest-experimental.json'
+      - 'modpacks/**'
       - 'datapacks/**/manifest.json'
+      - 'datapacks/**/manifest-experimental.json'
+      - 'datapacks/**'
   workflow_dispatch:
 
 jobs:
@@ -24,17 +28,38 @@ jobs:
             modpacks
             datapacks
 
-      - name: Find changed manifests
+      - name: Find manifests to publish
         id: find
         run: |
           set -eu
-          MANIFESTS=$(git diff-tree --no-commit-id --name-only -r HEAD \
-            | grep -E '^(modpacks|datapacks)/.*/manifest\.json$' || true)
 
-          if [ -z "$MANIFESTS" ]; then
+          CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
+
+          PROD_MANIFESTS=$(echo "$CHANGED" \
+            | grep -E '^(modpacks|datapacks)/[^/]+/manifest\.json$' \
+            || true)
+
+          CHANGED_PACKS=$(echo "$CHANGED" \
+            | grep -E '^(modpacks|datapacks)/[^/]+/' \
+            | cut -d/ -f1-2 \
+            | sort -u \
+            || true)
+
+          EXP_MANIFESTS=""
+          while IFS= read -r pack; do
+            [ -n "$pack" ] || continue
+            EXP_PATH="$pack/manifest-experimental.json"
+            if [ -f "$EXP_PATH" ]; then
+              EXP_MANIFESTS="${EXP_MANIFESTS}${EXP_PATH}"$'\n'
+            fi
+          done <<< "$CHANGED_PACKS"
+
+          ALL=$(printf '%s\n%s' "$PROD_MANIFESTS" "$EXP_MANIFESTS" | grep -v '^$' | sort -u || true)
+
+          if [ -z "$ALL" ]; then
             echo "has_manifests=false" >> "$GITHUB_OUTPUT"
             echo "manifests=[]" >> "$GITHUB_OUTPUT"
-            echo "no changed manifests."
+            echo "no manifests to publish."
             exit 0
           fi
 
@@ -48,7 +73,7 @@ jobs:
               JSON="${JSON},"
             fi
             JSON="${JSON}\"${line}\""
-          done <<< "$MANIFESTS"
+          done <<< "$ALL"
           JSON="${JSON}]"
 
           echo "has_manifests=true" >> "$GITHUB_OUTPUT"
@@ -73,7 +98,6 @@ jobs:
             modpacks
             datapacks
             src/actions/publish
-            src/actions/builder
             tools/changelog
             tools/manifest
 
@@ -90,17 +114,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./publisher-bin
-          key: publisher-v2-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
-
-      - name: Cache Minify-JSON Binary
-        id: cache-minify
-        uses: actions/cache@v4
-        with:
-          path: ./builder-bin
-          key: builder-v2-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.rs', 'src/actions/builder/Cargo.toml', 'src/actions/builder/Cargo.lock') }}
+          key: publisher-v3-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
 
       - name: Install Rust
-        if: steps.cache-publisher.outputs.cache-hit != 'true' || steps.cache-minify.outputs.cache-hit != 'true'
+        if: steps.cache-publisher.outputs.cache-hit != 'true'
         uses: https://github.com/dtolnay/rust-toolchain@stable
 
       - name: Rust Cache (publish)
@@ -109,25 +126,12 @@ jobs:
         with:
           workspaces: "src/actions/publish -> target"
 
-      - name: Rust Cache (builder)
-        if: steps.cache-minify.outputs.cache-hit != 'true'
-        uses: https://github.com/Swatinem/rust-cache@v2
-        with:
-          workspaces: "src/actions/builder -> target"
-
       - name: Build Publisher
         if: steps.cache-publisher.outputs.cache-hit != 'true'
         run: |
           cargo build --release --manifest-path src/actions/publish/Cargo.toml --bin publish
           mkdir -p ./publisher-bin
           cp src/actions/publish/target/release/publish ./publisher-bin/publish
-
-      - name: Build minify-json
-        if: steps.cache-minify.outputs.cache-hit != 'true'
-        run: |
-          cargo build --release --manifest-path src/actions/builder/Cargo.toml --bin minify-json
-          mkdir -p ./builder-bin
-          cp src/actions/builder/target/release/minify-json ./builder-bin/minify-json
 
       - name: Generate Changelog
         id: changelog
@@ -162,57 +166,13 @@ jobs:
           restore-keys: |
             packwiz-cache-${{ runner.os }}-
 
-      - name: Minify JSON configs
-        run: |
-          set -eu
-          chmod +x ./builder-bin/minify-json
-          MANIFEST='${{ matrix.manifest }}'
-          PACK_DIR="$(dirname "$MANIFEST")"
-          if [[ "$MANIFEST" == datapacks/* ]]; then
-            TARGET="${PACK_DIR}/content"
-            if [ -d "$TARGET" ]; then
-              cp -r "$TARGET" "${TARGET}.original"
-              ./builder-bin/minify-json "$TARGET"
-            fi
-          elif [[ "$MANIFEST" == modpacks/* ]]; then
-            for subdir in "$PACK_DIR"/*-mr "$PACK_DIR"/*-cf; do
-              [ -d "$subdir" ] || continue
-              CONFIG_DIR="$subdir/config"
-              if [ -d "$CONFIG_DIR" ]; then
-                cp -r "$CONFIG_DIR" "${CONFIG_DIR}.original"
-                ./builder-bin/minify-json "$CONFIG_DIR"
-              fi
-            done
-          fi
-
       - name: Run Publisher
         id: meta
+        env:
+          GITHUB_SHA: ${{ github.sha }}
         run: |
           chmod +x ./publisher-bin/publish
           ./publisher-bin/publish "${{ matrix.manifest }}"
-
-      - name: Restore JSON sources
-        if: always()
-        run: |
-          set -eu
-          MANIFEST='${{ matrix.manifest }}'
-          PACK_DIR="$(dirname "$MANIFEST")"
-          if [[ "$MANIFEST" == datapacks/* ]]; then
-            TARGET="${PACK_DIR}/content"
-            if [ -d "${TARGET}.original" ]; then
-              rm -rf "$TARGET"
-              mv "${TARGET}.original" "$TARGET"
-            fi
-          elif [[ "$MANIFEST" == modpacks/* ]]; then
-            for subdir in "$PACK_DIR"/*-mr "$PACK_DIR"/*-cf; do
-              [ -d "$subdir" ] || continue
-              CONFIG_DIR="$subdir/config"
-              if [ -d "${CONFIG_DIR}.original" ]; then
-                rm -rf "$CONFIG_DIR"
-                mv "${CONFIG_DIR}.original" "$CONFIG_DIR"
-              fi
-            done
-          fi
 
       - name: Upload to Modrinth
         if: steps.meta.outputs.mr_id != ''

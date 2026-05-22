@@ -1,4 +1,5 @@
 use anyhow::{anyhow, bail, Context, Result};
+use chrono::Utc;
 use serde_json::Value;
 use std::{
     env,
@@ -48,6 +49,12 @@ fn main() -> Result<()> {
         .parent()
         .ok_or_else(|| anyhow!("manifest has no parent directory"))?;
 
+    let filename = manifest_path
+        .file_name()
+        .and_then(|n| n.to_str())
+        .ok_or_else(|| anyhow!("invalid manifest filename"))?;
+    let is_experimental = filename == "manifest-experimental.json";
+
     let manifest_content = fs::read_to_string(manifest_path)
         .with_context(|| format!("failed to read {}", manifest_path.display()))?;
     let manifest: Value = serde_json::from_str(&manifest_content)
@@ -55,17 +62,30 @@ fn main() -> Result<()> {
 
     let raw_name = required_str(&manifest, "name")?;
     let p_name = raw_name.replace(' ', "-");
-    let p_ver = required_str(&manifest, "version")?;
     let mc_ver = required_str(&manifest, "mc_version")?;
     let p_type = required_str(&manifest, "type")?;
     let loader = required_str(&manifest, "loader")?;
     let release_type = required_str(&manifest, "release_type")?;
+    let id = required_str(&manifest, "id")?;
     let mr_id = manifest["modrinth_id"].as_str().unwrap_or("");
     let cf_id = manifest["curseforge_id"].as_str().unwrap_or("");
 
     if mr_id.is_empty() && cf_id.is_empty() {
         bail!("manifest must set at least one of modrinth_id or curseforge_id");
     }
+
+    let p_ver: String = if is_experimental {
+        let sha = env::var("GITHUB_SHA")
+            .context("GITHUB_SHA env var not set; required for experimental publish")?;
+        let short: String = sha.chars().take(7).collect();
+        let cycle = Utc::now().format("%y.%m").to_string();
+        format!("{id}-{cycle}-{short}")
+    } else {
+        manifest["version"]
+            .as_str()
+            .ok_or_else(|| anyhow!("missing 'version' in {}", manifest_path.display()))?
+            .to_string()
+    };
 
     let workspace = env::var("GITHUB_WORKSPACE").unwrap_or_else(|_| ".".into());
     let artifacts_dir = Path::new(&workspace).join(p_dir).join("artifacts");
@@ -76,11 +96,15 @@ fn main() -> Result<()> {
     fs::create_dir_all(&artifacts_dir)
         .with_context(|| format!("failed to create {}", artifacts_dir.display()))?;
 
-    println!("::group::Building artifacts for {raw_name}");
+    if is_experimental {
+        println!("::group::Building EXPERIMENTAL artifacts for {raw_name} ({p_ver})");
+    } else {
+        println!("::group::Building artifacts for {raw_name}");
+    }
 
     match p_type {
-        "modpack" => build_modpack(p_dir, &artifacts_dir, &p_name, mc_ver, p_ver, loader, mr_id, cf_id)?,
-        "datapack" => build_datapack(p_dir, &artifacts_dir, &manifest, p_ver)?,
+        "modpack" => build_modpack(p_dir, &artifacts_dir, &p_name, mc_ver, &p_ver, loader, mr_id, cf_id)?,
+        "datapack" => build_datapack(p_dir, &artifacts_dir, &manifest, &p_ver)?,
         other => bail!("unsupported pack type: {other}"),
     }
 
@@ -90,12 +114,13 @@ fn main() -> Result<()> {
         mr_id,
         cf_id,
         raw_name,
-        p_ver,
+        p_ver: &p_ver,
         mc_ver,
         p_type,
         loader,
         release_type,
         p_dir,
+        is_experimental,
     })?;
 
     Ok(())
@@ -222,6 +247,7 @@ struct OutputData<'a> {
     loader: &'a str,
     release_type: &'a str,
     p_dir: &'a Path,
+    is_experimental: bool,
 }
 
 fn write_outputs(d: OutputData) -> Result<()> {
@@ -235,12 +261,19 @@ fn write_outputs(d: OutputData) -> Result<()> {
         .with_context(|| format!("failed to open {out_path}"))?;
     writeln!(f, "mr_id={}", d.mr_id)?;
     writeln!(f, "cf_id={}", d.cf_id)?;
-    writeln!(f, "name={} {}", d.raw_name, d.p_ver)?;
+
+    if d.is_experimental {
+        writeln!(f, "name=[EXPERIMENTAL] {} {}", d.raw_name, d.p_ver)?;
+    } else {
+        writeln!(f, "name={} {}", d.raw_name, d.p_ver)?;
+    }
+
     writeln!(f, "ver={}", d.p_ver)?;
     writeln!(f, "mc={}", d.mc_ver)?;
     writeln!(f, "type={}", d.p_type)?;
     writeln!(f, "loader={}", d.loader)?;
     writeln!(f, "release_type={}", d.release_type)?;
     writeln!(f, "path={}", d.p_dir.display())?;
+    writeln!(f, "is_experimental={}", d.is_experimental)?;
     Ok(())
 }
