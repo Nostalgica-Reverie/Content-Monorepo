@@ -91,7 +91,7 @@ function generateChangelog(manifestPathStr: string): string {
         return notes;
     }
 
-    let notes = `_Experimental nightly build. Unfinished work for technical users._\n`;
+    let notes = `_Experimental commit build. Unfinished work for technical users. Here be dragons._\n`;
 
     const commitLines = collectCommitLines(prevHash, pDir);
     if (commitLines.length > 0) {
