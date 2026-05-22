@@ -1,2 +1,2 @@
-# Legacy4Server 26.05.1
-Fix critical crash issue
+# Legacy4Server 26.05.2
+Add oxidizium to the modpack
