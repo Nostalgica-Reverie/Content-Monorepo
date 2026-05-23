@@ -1,0 +1,13 @@
+name = "Vital"
+author = "omo50, intergrav, blryface"
+version = "26.05"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "9cfcf83487c19995baf2557b81b880a178ee47593c131cfa0f98414f6862f9e8"
+
+[versions]
+fabric = "0.19.2"
+minecraft = "26.1.2"
