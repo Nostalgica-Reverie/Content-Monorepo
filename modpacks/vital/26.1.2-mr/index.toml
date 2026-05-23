@@ -1,8 +1,12 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/fabric_loader_dependencies.json"
+hash = "b78625e91edf83a04b40ff90e6fbc457e99dd963e4edea16a218a5efd11d939a"
+
+[[files]]
 file = "config/isxander-main-menu-credits.json"
-hash = "06fe2d29e8e8616a11461aef554170be782bf45155a2cc08bdf9bb4db0b9b490"
+hash = "d50ca2b3bb9a45a3068b310ab6eb82ae5272da3bc80f1b88eddb47b9d6bb8376"
 
 [[files]]
 file = "config/modpack_defaults/config/cape-provider/config.json"
@@ -18,7 +22,19 @@ hash = "4ecbd7b9f073f3f8d66d530af6cf1a23555650c433beb3815a5d2fe9c55218fb"
 
 [[files]]
 file = "config/modpack_defaults/config/crash_assistant/config.toml"
-hash = "8f422c3e4c8b45e7a5de9895043b30d61ecac117991c8f521fcf7d6d8062a5d0"
+hash = "986a51352b3e89a5f7a6189c8b6f7fa3a82e503f44b9e1ae936ce271f4f881d8"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/scripts/log_analysis/example.jexl"
+hash = "adde7e5e42b9d716f14a9bc49797999a21a0ee05cc67e71410a232f830115b3b"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/scripts/startup/00_migrated_problematic_mods.jexl"
+hash = "fc77e17103f99d3c5745fb29758e5a3973beafe9b3caaa072d824f31ab28aeab"
+
+[[files]]
+file = "config/modpack_defaults/config/crash_assistant/scripts/startup/example.jexl"
+hash = "346378f04a9e7319cdcb405fad82d6e7f1b36b39e0e4129c00a226b49f41cf37"
 
 [[files]]
 file = "config/modpack_defaults/config/dynamic_fps.json"
@@ -89,6 +105,11 @@ hash = "b4cfd65678e2d07489b41aefc2e126baad29deb4b7e093cbb2116b3c45caa60d"
 metafile = true
 
 [[files]]
+file = "mods/chat-emoji-mod.pw.toml"
+hash = "f228a86ad586ef7e8d392648cecba1cacc21d0d9fd6e81222843533a747972ae"
+metafile = true
+
+[[files]]
 file = "mods/chat-heads.pw.toml"
 hash = "bd0add8fee8c183ff050adea19aa66e42f8ac506e8710f745bf7ac6d15f71a33"
 metafile = true
@@ -111,16 +132,6 @@ metafile = true
 [[files]]
 file = "mods/controlify.pw.toml"
 hash = "d2b576fa3b996fba4c7fd01ee05539e1952648fe0c066e02c640cedfb138d3dd"
-metafile = true
-
-[[files]]
-file = "mods/cosmetica.pw.toml"
-hash = "257121134a9b96f95d94cf12970ecef4ea07dedd7e4838ec53faabf4938345df"
-metafile = true
-
-[[files]]
-file = "mods/craftpresence.pw.toml"
-hash = "7dfe328ddd9129a16440b63741dc4fbf6c5b5e709b4dd08845cb41156fe8339b"
 metafile = true
 
 [[files]]
@@ -154,11 +165,6 @@ hash = "c55425a9266cca6c41ca8712cd056cee966c456db412fee9c6a12f90c2534cef"
 metafile = true
 
 [[files]]
-file = "mods/emoji-type.pw.toml"
-hash = "b7e81d2abd7eba61fbeb6650f0cd1d9c6845b85b874adabf65bd738ee54d87e7"
-metafile = true
-
-[[files]]
 file = "mods/entity-model-features.pw.toml"
 hash = "22a4393b10d352d054bc13e1992d36c652f96d4e0dea28460b060afd0a372bd7"
 metafile = true
@@ -180,7 +186,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "5adf60faf11b97a7979f398fd6c494f55603a384880db1bf9755f2495d0dc5a2"
+hash = "2a77dc7aade5de6d21315582c4b70db40ff2bdf746b61c10d7ad3c5be8422f75"
 metafile = true
 
 [[files]]
@@ -201,11 +207,6 @@ metafile = true
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "d9f54bcf75d036c25ebe636abb7ffa7c2d21c3601fec13b0fa2cc8916120affa"
-metafile = true
-
-[[files]]
-file = "mods/in-game-account-switcher.pw.toml"
-hash = "14bf102d0b9fccdcca4c2a8465435fa686c0caac06999217b28556411a656cbd"
 metafile = true
 
 [[files]]
