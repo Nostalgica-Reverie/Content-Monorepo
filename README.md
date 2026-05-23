@@ -30,10 +30,10 @@ Every project in the repo must have a manifest.json. This manifest.json specifie
 All builds in the repo occur when a commit happens to their specific subdirectory. This produces a build that is slightly different than the source, as our build script auto-minifies JSON files. These builds are the same as what Auto Publish uses.
 
 Only the pack modified within a commit will be built. So if you modified something in, lets say Simply Legacy, your commit would only build Simply Legacy, and not Re-Console or 2000's Edition.
-License
+
 
 ### Using Linters
-All linters automatically run on commit, and will fail if the modified JSON/TOML is broken. This is helpful in the case of making a minor mistake in syntax/
+All linters automatically run on commit, and will fail if the modified JSON/TOML is broken. This is helpful in the case of making a minor mistake in syntax
 
 ## Credits
 justfile forked from skywardmc, stale.yml forked from JEI. Both licensed under MIT.
