@@ -17,31 +17,7 @@ jobs:
           filter: blob:none
           sparse-checkout: |
             modpacks
-            src/actions/updater
-
-      - name: Cache Updater Binary
-        id: cache-updater
-        uses: actions/cache@v4
-        with:
-          path: ./updater-bin
-          key: updater-v4-${{ runner.os }}-${{ hashFiles('src/actions/updater/**/*.rs', 'src/actions/updater/Cargo.toml', 'src/actions/updater/Cargo.lock') }}
-
-      - name: Install Rust
-        if: steps.cache-updater.outputs.cache-hit != 'true'
-        uses: https://github.com/dtolnay/rust-toolchain@stable
-
-      - name: Rust Cache (Compiler Internals)
-        if: steps.cache-updater.outputs.cache-hit != 'true'
-        uses: https://github.com/Swatinem/rust-cache@v2
-        with:
-          workspaces: "src/actions/updater -> target"
-
-      - name: Build Updater
-        if: steps.cache-updater.outputs.cache-hit != 'true'
-        run: |
-          cargo build --release --manifest-path src/actions/updater/Cargo.toml --bin updater
-          mkdir -p ./updater-bin
-          cp src/actions/updater/target/release/updater ./updater-bin/updater
+            tools/auto-update
 
       - name: Cache Packwiz Binary
         id: cache-go
@@ -64,7 +40,6 @@ jobs:
       - name: Add Go bin to PATH
         run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
-
       - name: Cache Packwiz Downloads
         uses: actions/cache@v4
         with:
@@ -74,18 +49,9 @@ jobs:
             packwiz-cache-${{ runner.os }}-
 
       - name: Run Updater
-        id: rust-update
-        continue-on-error: true
         run: |
-          chmod +x ./updater-bin/updater
-          ./updater-bin/updater
-
-      - name: Run Shell Fallback
-        if: steps.rust-update.outcome == 'failure'
-        run: |
-          echo "Rust updater failed, falling back to shell..."
-          chmod +x ./modpacks/update-refresh.sh
-          ./modpacks/update-refresh.sh
+          chmod +x tools/auto-update/update.sh
+          tools/auto-update/update.sh
 
       - name: Commit
         uses: https://github.com/EndBug/add-and-commit@v9
