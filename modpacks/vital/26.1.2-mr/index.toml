@@ -82,7 +82,7 @@ hash = "c602ad2f5d370579a6f530355b2c60852fbbbfa6c230ebb568cbf79ec290e76b"
 
 [[files]]
 file = "config/modpack_defaults/options.txt"
-hash = "5f7a76da45c11e03698f375bd3612d57a729a09f604f21d8bc647d069eaf0c7f"
+hash = "bbe00f0d240ffd72688d89a328331937111049e802310ec1785eda6a67f6b2d3"
 
 [[files]]
 file = "mods/better-block-entities.pw.toml"
@@ -97,11 +97,6 @@ metafile = true
 [[files]]
 file = "mods/calcmod.pw.toml"
 hash = "d9c6327d012eea113016270c89b54a70901f6df90925f207b5342bba68a882ef"
-metafile = true
-
-[[files]]
-file = "mods/cape-provider.pw.toml"
-hash = "b4cfd65678e2d07489b41aefc2e126baad29deb4b7e093cbb2116b3c45caa60d"
 metafile = true
 
 [[files]]
@@ -132,6 +127,11 @@ metafile = true
 [[files]]
 file = "mods/controlify.pw.toml"
 hash = "d2b576fa3b996fba4c7fd01ee05539e1952648fe0c066e02c640cedfb138d3dd"
+metafile = true
+
+[[files]]
+file = "mods/cosmetica.pw.toml"
+hash = "257121134a9b96f95d94cf12970ecef4ea07dedd7e4838ec53faabf4938345df"
 metafile = true
 
 [[files]]
@@ -205,8 +205,18 @@ hash = "069d81cab53c0141459ad4d70bcf3e10f17652f24cc62d3b4a0fc2cd2b700871"
 metafile = true
 
 [[files]]
+file = "mods/fzzy-config.pw.toml"
+hash = "de954e56216772900768426c541731ec91d0c7bd1c5037ad2f6cc5552f87c635"
+metafile = true
+
+[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "d9f54bcf75d036c25ebe636abb7ffa7c2d21c3601fec13b0fa2cc8916120affa"
+metafile = true
+
+[[files]]
+file = "mods/in-game-account-switcher.pw.toml"
+hash = "134c5e382ad745ce3d2a926339104ea48d7498ab04a7f64aa2ee13ce57052f3d"
 metafile = true
 
 [[files]]
@@ -310,6 +320,11 @@ hash = "97331430fa4c008a289277ca936df8a0633d9f23e754c59ceb1967a588f9a67b"
 metafile = true
 
 [[files]]
+file = "mods/simple-music-control.pw.toml"
+hash = "e521f1b3cdd28fbc83bddf37287ff0d7f14087658795cd2d1b4dfb06ebc43a86"
+metafile = true
+
+[[files]]
 file = "mods/skinshuffle.pw.toml"
 hash = "b112f576a895bd57db32a9a3b3bfccc8d8a435a96bb5e6276bbefcb8d1d84129"
 metafile = true
@@ -362,4 +377,14 @@ metafile = true
 [[files]]
 file = "resourcepacks/chat-reporting-helper.pw.toml"
 hash = "9eb00a94aff6fd846c107580fed2882d6a9bf3dde3e728481483b8d23cca0ef8"
+metafile = true
+
+[[files]]
+file = "resourcepacks/reimaginedguidark.pw.toml"
+hash = "8f2eecff7e5f33a9d8a0255e119146855e7a5f4849a589c69830f4f4a9ffa522"
+metafile = true
+
+[[files]]
+file = "resourcepacks/reimaginedguilight.pw.toml"
+hash = "f0238941138f95fb3dd5c607f01db567f25ddfb320ab48e9f81f095074d5f6e8"
 metafile = true
