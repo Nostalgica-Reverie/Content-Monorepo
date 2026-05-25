@@ -1,29 +1,29 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/c2me.toml"
+hash = "363c7635e7356e80de529bcca835851a706c4b065dc409cc93d733cfa3dcd708"
+
+[[files]]
+file = "config/ferritecore.mixin.properties"
+hash = "3817e94107bb1c7358beebb80b1810e822de38be430f855cf14828c38018e8e2"
+
+[[files]]
+file = "config/lithium.properties"
+hash = "928fdb1e604e394de7389a4b7a7f230fe6863a468e1839bee22d80652ea0d31f"
+
+[[files]]
+file = "config/preferred-gamerules.properties"
+hash = "0712a4e075b5005fd7e4a9cb92c12011b784d369c9355e2a948488cfd0919866"
+
+[[files]]
+file = "config/zfastnoise.mixin.toml"
+hash = "47e4810bca56258fe2ba501bd8872a59dd40433c202276f73c4e958563e0fe34"
+
+[[files]]
 file = "mods/c2me-fabric.pw.toml"
 hash = "82f8e930d470d72330d18b6609e233f5c61a37866cec7c93f17d9bc6006e7565"
 metafile = true
-
-[[files]]
-file = "mods/config/c2me.toml"
-hash = "711e0664920627670c5638e9e29acba8f410d90b2f6091479e2cb8a08f764c35"
-
-[[files]]
-file = "mods/config/ferritecore.mixin.properties"
-hash = "fee5dbdc8bdd6a22ae321282a6c7134624c3a318a3953718b65ca67b66683a13"
-
-[[files]]
-file = "mods/config/lithium.properties"
-hash = "caf4dfdb8635b29017625a08f57d0f4d5d3d4f6cb75bfeefd0993bca0f522405"
-
-[[files]]
-file = "mods/config/preferred-gamerules.properties"
-hash = "85665ff3c6bdda824317de7a8e2b53edbbc8b17032d7dedff045475ee1da926c"
-
-[[files]]
-file = "mods/config/zfastnoise.mixin.toml"
-hash = "c84c554d17cc2563cb41bd81beb0db77015e7c5f37cc94db90456d7dce8be8e3"
 
 [[files]]
 file = "mods/custom-player-models.pw.toml"
