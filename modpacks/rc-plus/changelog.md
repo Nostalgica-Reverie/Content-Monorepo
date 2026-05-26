@@ -1,5 +1,5 @@
-# Re-Console Plus 26.05.4 | Megapatch II
-Large patch for Re-Console+ for Minecraft 26.1.2, adding in new features, fixes, and QoL changes on top of Megapatch I. 
+# Re-Console Plus 26.05.4
+Patch for Re-Console+ for Minecraft 26.1.2, adding in new features, fixes, and QoL changes on top of Megapatch I. 
 
 ## Notes
 - **If you are updating from a 1.21.10 version, it is recommended to Update or Reset your configs through Config Manager for the best experience.**
@@ -18,10 +18,13 @@ Merges the experience and locator bar.
 ### Added 2000s Edition Controller Tips
 Introduces custom tooltips from 2000s edition.
 
-## Performance Improvements
-
 ## Quality of Life Improvements
 
+### Added Anti Smooth
+Anti-Smooth makes the server send entity updates more frequently to make player interactions with them (especially knockback from attacks) feel more responsive.
+
+### Updated all mods
+All mods in the pack have been updated to their latest versions.
 
 ## Default config changes/fixes
 
@@ -46,3 +49,12 @@ Introduces custom tooltips from 2000s edition.
 - Also check out Moderner Beta!
 - Also check out Taproot!
 - Also check out Reverie Projects on Youtube!
+
+### Fixed Compatibility with Xaero's Minimap and World Map
+These now have default provided configs, which fixes issues seen with Gnetum.
+
+### Lithium's `mixin.experimental` has been disabled
+Fixes an issue where new Warden spawns can crash the game
+
+### LazyAI's `Enable Vanilla Mob Ticking` has been enabled
+Should make distant AI smoother, especially impacting the Ender Dragon fight
