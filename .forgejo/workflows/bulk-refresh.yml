@@ -38,14 +38,6 @@ jobs:
       - name: Add Go bin to PATH
         run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
-      - name: Cache Packwiz Downloads
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/packwiz
-          key: packwiz-cache-${{ runner.os }}-${{ github.run_id }}
-          restore-keys: |
-            packwiz-cache-${{ runner.os }}-
-
       - name: Run Bulk Refresh
         run: |
           chmod +x tools/bulk/refresh.sh
