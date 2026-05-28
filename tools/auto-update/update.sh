@@ -51,7 +51,7 @@ printf '%s\n' "${TARGETS[@]}" | MODPACKS_DIR="$MODPACKS_DIR" xargs -P "$MAX_CONC
   dir="$1"
   label="${dir#"$MODPACKS_DIR"/}"
   echo "updating $label"
-  if (cd "$dir" && packwiz update -a -y) >"/tmp/upd-$$.log" 2>&1; then
+  if (cd "$dir" && packwiz update --all -y) >"/tmp/upd-$$.log" 2>&1; then
     echo "ok: $label"
     rm -f "/tmp/upd-$$.log"
   else
