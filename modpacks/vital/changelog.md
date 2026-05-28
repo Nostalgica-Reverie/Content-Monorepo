@@ -3,4 +3,4 @@
 ### Whats New
 - Added Screenshot Manager
 - Added Krypton Reno Patcher
--
+- Updated all mods
