@@ -1,15 +1,21 @@
-# Simply Legacy 26.05.8
-
-## Notes
-- **If you are updating from a 1.21.10 version, it is recommended to Update or Reset your configs through Config Manager for the best experience.**
-  - This can be found in `Modifications > Config Manager`.
+# Simply Legacy 26.05.9
 
 ### Configuration Changes
-- Lithium's `mixin.experimental` has been disabled
-  - Fixes an issue where new Warden spawns can crash the game
-- LazyAI's `Enable Vanilla Mob Ticking` has been enabled
-  - Should make distant AI smoother, especially impacting the Ender Dragon fight
+- Updated Option Presets
+  - The `Clouds` setting will no longer be changed by Option Presets
+    - Works around an issue where changing the "Render Clouds" option from Legacy Settings Menus would reset the preset
+  - Added `Legacy Held Item Lighting` to the `LCE` presets
+    - Enabled on `New-Gen LCE` and `"Next-Gen" LCE`
+    - Disabled on `"Retro" LCE`, `Handheld LCE` and `Old-Gen LCE`
 
-## Temporarily Unavailable
-- Console Advancement Sounds
-- Legacy Skins
+### Notable Updates
+- **Modrinth**: Updated Minimega from 6.2.3 to 6.3.11
+  - Adds the **Cove** Battle map!
+  - Support for more languages
+  - Improves the map transition screen
+  - Fixes various softlocks
+  - See the full changelogs [here](https://modrinth.com/mod/minimega/versions)
+- **Modrinth**: Updated the Programmer Art Continuation Project to 2.5.1
+  - Retextures Wolf Pups, Kittens and Baby Armadillos!
+  - See the full changelog [here](https://modrinth.com/resourcepack/pacp/version/2.5.1)
+- **Modrinth**: Switched to the [public version](https://modrinth.com/mod/legacy-world-sizes) of Legacy World Sizes
