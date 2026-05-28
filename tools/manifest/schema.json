@@ -2,46 +2,20 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://git.nostalgica.net/schema/manifest.json",
   "title": "Lasting Legacy Pack Manifest",
-  "description": "Manifest for a modpack or datapack. A manifest is either SINGLE-VERSION (has 'mc_version') or MULTI-VARIANT (has 'variants'), never both.",
+  "description": "Manifest for a modpack or datapack. A manifest is either single version (has 'mc_version') or multi variant (has 'variants'), never both.",
   "type": "object",
   "properties": {
-    "$schema": {
-      "type": "string",
-      "description": "Path to this schema, for editor autocomplete."
-    },
-    "id": {
-      "type": "string",
-      "description": "Stable pack identifier. Matches the pack's folder name."
-    },
-    "name": {
-      "type": "string",
-      "description": "Human-readable pack name."
-    },
-    "type": {
-      "type": "string",
-      "enum": ["modpack", "datapack"],
-      "description": "Project type."
-    },
-    "loader": {
-      "type": "string",
-      "description": "Mod loader (e.g. fabric, forge, neoforge, quilt)."
-    },
-    "release_type": {
-      "type": "string",
-      "enum": ["release", "beta", "alpha"],
-      "description": "Release channel for the published version."
-    },
-    "version": {
-      "type": "string",
-      "description": "Pack version (CalVer, e.g. 26.05). Required for production single-version manifests and generated for experimental manifests"
-    },
-    "mc_version": {
-      "type": "string",
-      "description": "Minecraft version. Used by single version modpack manifests. Mutually exclusive with 'variants'."
-    },
+    "$schema": { "type": "string", "description": "Path to this schema, for editor autocomplete." },
+    "id": { "type": "string", "description": "Stable pack identifier. Matches the pack's folder name." },
+    "name": { "type": "string", "description": "Human-readable pack name." },
+    "type": { "type": "string", "enum": ["modpack", "datapack"], "description": "Project type." },
+    "loader": { "type": "string", "description": "Mod loader (e.g. fabric, forge, neoforge, quilt)." },
+    "release_type": { "type": "string", "enum": ["release", "beta", "alpha"], "description": "Release channel." },
+    "version": { "type": "string", "description": "Pack version (ideally CalVer). Required for  single-version manifests and generated for experimental." },
+    "mc_version": { "type": "string", "description": "Minecraft version. single version manifests. this is mutually exclusive with 'variants'." },
     "variants": {
       "type": "array",
-      "description": "For MULTI-VARIANT packs: independently-built variants published as separate versions under the same project. Publish order follows array order (last entry lands on top of the platform version list).",
+      "description": "MULTI-VARIANT packs: independently-built variants published as separate versions under one project. Publish order = array order (last lands on top).",
       "minItems": 1,
       "items": {
         "type": "object",
@@ -61,36 +35,59 @@
 
     "base": {
       "type": "boolean",
-      "description": "If true, this pack is a base that other packs may consume (e.g. SoF as the performance base). Bases cannot themselves declare 'performance_base' \u2014 no chains."
+      "description": "If true, this pack is a base others may link to. Bases cannot declare 'performance_base' (no chains)."
     },
     "performance_base": {
-      "type": "string",
-      "description": "ID of the pack this one consumes its performance baseline from. The referenced pack must exist in modpacks/ and must have 'base': true. Omit if this pack does not consume from a performance base."
+      "type": "object",
+      "description": "Declares that this pack consumes its performance baseline (mods + config) from another pack. Sync copies the base's named source subdir into this pack's named target subdir for each mapping. CROSS-PLATFORM MAPPINGS ARE FORBIDDEN: source and target must share the same platform suffix (-mr or -cf), because copying Modrinth-sourced mods into a CurseForge pack (or vice versa) risks license violations. If the base lacks a named source subdir, that mapping fails validation. Each mapping is explicit \u2014 there is no inference.",
+      "properties": {
+        "pack": {
+          "type": "string",
+          "description": "ID of the base pack. Must exist and have 'base': true."
+        },
+        "mappings": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Explicit source target subdir pairings. One per target subdir that should receive the baseline.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Subdir in the base pack to copy from (e.g. '26.1.2-mr'). Must end in '-mr' or '-cf'.",
+                "pattern": "-(mr|cf)$"
+              },
+              "target": {
+                "type": "string",
+                "description": "Subdir in THIS pack to copy into (e.g. '26.1.2-mr', 'tu0-mr'). Must share the same platform suffix as 'source'.",
+                "pattern": "-(mr|cf)$"
+              }
+            },
+            "required": ["source", "target"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["pack", "mappings"],
+      "additionalProperties": false
     },
     "shared_assets": {
       "type": "string",
-      "description": "ID of a pack that provides shared assets (e.g. 'lce-common'). The referenced pack must exist in modpacks/. Independent of 'performance_base' \u2014 a pack may set both."
+      "description": "ID of a pack providing shared assets (e.g. 'lce-common'). Must exist. Independent of 'performance_base'."
     }
   },
   "required": ["id", "name", "type", "loader", "release_type"],
   "oneOf": [
-    {
-      "required": ["mc_version"],
-      "not": { "required": ["variants"] }
-    },
-    {
-      "required": ["variants"],
-      "not": { "required": ["mc_version"] }
-    }
+    { "required": ["mc_version"], "not": { "required": ["variants"] } },
+    { "required": ["variants"], "not": { "required": ["mc_version"] } }
   ],
   "anyOf": [
     { "required": ["modrinth_id"] },
     { "required": ["curseforge_id"] }
   ],
-
   "allOf": [
     {
-      "description": "No chains: a pack marked as a base cannot consume from another base.",
+      "description": "No chains: a base cannot consume from another base.",
       "if": { "properties": { "base": { "const": true } }, "required": ["base"] },
       "then": { "not": { "required": ["performance_base"] } }
     }
