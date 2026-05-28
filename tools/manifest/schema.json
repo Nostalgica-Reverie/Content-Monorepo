@@ -37,7 +37,7 @@
     },
     "mc_version": {
       "type": "string",
-      "description": "Minecraft version. Used by SINGLE-VERSION manifests. Mutually exclusive with 'variants'."
+      "description": "Minecraft version. Used by single version modpack manifests. Mutually exclusive with 'variants'."
     },
     "variants": {
       "type": "array",

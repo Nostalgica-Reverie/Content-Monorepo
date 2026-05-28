@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " I",
+        "F "
+    ],
+    "key": {
+        "I": {
+            "item": "minecraft:iron_ingot"
+        },
+        "F": {
+            "item": "minecraft:flint"
+        }
+    },
+	"result": {
+        "id": "minecraft:flint_and_steel",
+        "count": 1
+    }
+}
