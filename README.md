@@ -1,4 +1,4 @@
-# Lasting Legacy/LCE-Monorepo
+# Reverie Projects/monorepo
 This is the repository hosting all of the different Lasting Legacy modpacks, resource packs, and datapacks.
 
 ## Notice
