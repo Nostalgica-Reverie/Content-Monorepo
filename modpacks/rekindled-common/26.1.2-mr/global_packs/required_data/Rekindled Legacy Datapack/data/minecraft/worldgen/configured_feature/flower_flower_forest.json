@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:noise_provider",
+      "noise": {
+        "amplitudes": [
+          1.0
+        ],
+        "firstOctave": 0
+      },
+      "scale": 0.020833334,
+      "seed": 2345,
+      "states": [
+        {
+          "Name": "minecraft:dandelion"
+        },
+        {
+          "Name": "minecraft:poppy"
+        }
+      ]
+    }
+  }
+}

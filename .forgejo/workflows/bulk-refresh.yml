@@ -1,0 +1,52 @@
+name: "Bulk Refresh"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bulk-refresh:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.FORGEJO_TOKEN }}
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            modpacks
+            tools/bulk
+
+      - name: Cache Packwiz Binary
+        id: cache-go
+        uses: actions/cache@v4
+        with:
+          path: ~/go/bin
+          key: go-bin-packwiz-v1-${{ runner.os }}
+
+      - name: Setup Go
+        if: steps.cache-go.outputs.cache-hit != 'true'
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Install Packwiz
+        if: steps.cache-go.outputs.cache-hit != 'true'
+        run: go install github.com/packwiz/packwiz@latest
+
+      - name: Add Go bin to PATH
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
+      - name: Run Bulk Refresh
+        run: |
+          chmod +x tools/bulk/refresh.sh
+          tools/bulk/refresh.sh
+
+      - name: Commit
+        uses: https://github.com/EndBug/add-and-commit@v9
+        with:
+          author_name: forgejo-actions[bot]
+          author_email: omo50@noreply.nostalgica.net
+          message: 'actions: bulk refresh'
+          add: 'modpacks'

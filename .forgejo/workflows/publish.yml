@@ -4,11 +4,7 @@ on:
   push:
     branches: ["main"]
     paths:
-      - 'modpacks/**/manifest.json'
-      - 'modpacks/**/manifest-experimental.json'
       - 'modpacks/**'
-      - 'datapacks/**/manifest.json'
-      - 'datapacks/**/manifest-experimental.json'
       - 'datapacks/**'
   workflow_dispatch:
 
@@ -16,8 +12,8 @@ jobs:
   detect:
     runs-on: technocality
     outputs:
-      manifests: ${{ steps.find.outputs.manifests }}
-      has_manifests: ${{ steps.find.outputs.has_manifests }}
+      entries: ${{ steps.expand.outputs.entries }}
+      has_entries: ${{ steps.expand.outputs.has_entries }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -27,58 +23,75 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
+            src/actions/publish
 
-      - name: Find manifests to publish
-        id: find
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache Publisher Binary
+        id: cache-publisher
+        uses: actions/cache@v4
+        with:
+          path: ./publisher-bin
+          key: publisher-v4-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
+
+      - name: Install Rust
+        if: steps.cache-publisher.outputs.cache-hit != 'true'
+        uses: https://github.com/dtolnay/rust-toolchain@stable
+
+      - name: Rust Cache
+        if: steps.cache-publisher.outputs.cache-hit != 'true'
+        uses: https://github.com/Swatinem/rust-cache@v2
+        with:
+          workspaces: "src/actions/publish -> target"
+
+      - name: Build Publisher
+        if: steps.cache-publisher.outputs.cache-hit != 'true'
+        run: |
+          cargo build --release --manifest-path src/actions/publish/Cargo.toml --bin publish
+          mkdir -p ./publisher-bin
+          cp src/actions/publish/target/release/publish ./publisher-bin/publish
+
+      - name: Expand changed manifests into matrix entries
+        id: expand
         run: |
           set -eu
+          chmod +x ./publisher-bin/publish
 
           CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
 
-          PROD_MANIFESTS=$(echo "$CHANGED" \
-            | grep -E '^(modpacks|datapacks)/[^/]+/manifest\.json$' \
-            || true)
+          PROD=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks)/[^/]+/manifest\.json$' || true)
 
-          CHANGED_PACKS=$(echo "$CHANGED" \
-            | grep -E '^(modpacks|datapacks)/[^/]+/' \
-            | cut -d/ -f1-2 \
-            | sort -u \
-            || true)
-
-          EXP_MANIFESTS=""
+          CHANGED_PACKS=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks)/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
+          EXP=""
           while IFS= read -r pack; do
             [ -n "$pack" ] || continue
-            EXP_PATH="$pack/manifest-experimental.json"
-            if [ -f "$EXP_PATH" ]; then
-              EXP_MANIFESTS="${EXP_MANIFESTS}${EXP_PATH}"$'\n'
+            if [ -f "$pack/manifest-experimental.json" ]; then
+              EXP="${EXP}${pack}/manifest-experimental.json"$'\n'
             fi
           done <<< "$CHANGED_PACKS"
 
-          ALL=$(printf '%s\n%s' "$PROD_MANIFESTS" "$EXP_MANIFESTS" | grep -v '^$' | sort -u || true)
+          MANIFESTS=$(printf '%s\n%s' "$PROD" "$EXP" | grep -v '^$' | sort -u || true)
 
-          if [ -z "$ALL" ]; then
-            echo "has_manifests=false" >> "$GITHUB_OUTPUT"
-            echo "manifests=[]" >> "$GITHUB_OUTPUT"
+          if [ -z "$MANIFESTS" ]; then
+            echo "has_entries=false" >> "$GITHUB_OUTPUT"
+            echo "entries=[]" >> "$GITHUB_OUTPUT"
             echo "no manifests to publish."
             exit 0
           fi
 
-          JSON="["
-          first=1
-          while IFS= read -r line; do
-            [ -z "$line" ] && continue
-            if [ "$first" -eq 1 ]; then
-              first=0
-            else
-              JSON="${JSON},"
-            fi
-            JSON="${JSON}\"${line}\""
-          done <<< "$ALL"
-          JSON="${JSON}]"
+          ALL="[]"
+          while IFS= read -r m; do
+            [ -n "$m" ] || continue
+            PART=$(./publisher-bin/publish list "$m")
+            ALL=$(node -e "const a=$ALL,b=$PART;console.log(JSON.stringify(a.concat(b)))")
+          done <<< "$MANIFESTS"
 
-          echo "has_manifests=true" >> "$GITHUB_OUTPUT"
-          echo "manifests=${JSON}" >> "$GITHUB_OUTPUT"
-          echo "manifests to publish: ${JSON}"
+          echo "has_entries=true" >> "$GITHUB_OUTPUT"
+          echo "entries=$ALL" >> "$GITHUB_OUTPUT"
+          echo "matrix entries: $ALL"
 
   publish:
     needs: detect
@@ -86,8 +99,9 @@ jobs:
     runs-on: technocality
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
-        manifest: ${{ fromJson(needs.detect.outputs.manifests) }}
+        entry: ${{ fromJson(needs.detect.outputs.entries) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -107,20 +121,20 @@ jobs:
           node-version: '20'
 
       - name: Validate Manifest
-        run: npx tsx tools/manifest/validate.ts "${{ matrix.manifest }}"
+        run: npx tsx tools/manifest/validate.ts "${{ matrix.entry.manifest }}"
 
       - name: Cache Publisher Binary
         id: cache-publisher
         uses: actions/cache@v4
         with:
           path: ./publisher-bin
-          key: publisher-v3-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
+          key: publisher-v4-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
 
       - name: Install Rust
         if: steps.cache-publisher.outputs.cache-hit != 'true'
         uses: https://github.com/dtolnay/rust-toolchain@stable
 
-      - name: Rust Cache (publish)
+      - name: Rust Cache
         if: steps.cache-publisher.outputs.cache-hit != 'true'
         uses: https://github.com/Swatinem/rust-cache@v2
         with:
@@ -135,7 +149,7 @@ jobs:
 
       - name: Generate Changelog
         id: changelog
-        run: npx tsx tools/changelog/generate-changelog.ts "${{ matrix.manifest }}"
+        run: npx tsx tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
 
       - name: Cache Packwiz Binaries
         id: cache-go
@@ -147,9 +161,7 @@ jobs:
       - name: Setup Go
         if: steps.cache-go.outputs.cache-hit != 'true'
         uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
+        with: { go-version: 'stable', cache: true }
 
       - name: Install Packwiz
         if: steps.cache-go.outputs.cache-hit != 'true'
@@ -166,13 +178,18 @@ jobs:
           restore-keys: |
             packwiz-cache-${{ runner.os }}-
 
-      - name: Run Publisher
+      - name: Run Publisher (build this entry)
         id: meta
         env:
           GITHUB_SHA: ${{ github.sha }}
         run: |
           chmod +x ./publisher-bin/publish
-          ./publisher-bin/publish "${{ matrix.manifest }}"
+          VARIANT='${{ matrix.entry.variant }}'
+          if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
+            ./publisher-bin/publish build "${{ matrix.entry.manifest }}"
+          else
+            ./publisher-bin/publish build "${{ matrix.entry.manifest }}" "$VARIANT"
+          fi
 
       - name: Upload to Modrinth
         if: steps.meta.outputs.mr_id != ''
