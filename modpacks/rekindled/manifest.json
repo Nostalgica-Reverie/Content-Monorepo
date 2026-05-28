@@ -1,0 +1,57 @@
+{
+  "$schema": "../../tools/manifest/schema.json",
+  "id": "rekindled",
+  "name": "Rekindled",
+  "type": "modpack",
+  "loader": "fabric",
+  "release_type": "release",
+  "version": "26.05",
+  "modrinth_id": "rekindled-legacy",
+  "variants": [
+    {
+      "id": "tu0",
+      "mc_version": "26.1.2",
+      "name": "TU0"
+    },
+    {
+      "id": "tu1",
+      "mc_version": "26.1.2",
+      "name": "TU1"
+    },
+    {
+      "id": "tu2",
+      "mc_version": "26.1.2",
+      "name": "TU2"
+    },
+    {
+      "id": "tu3",
+      "mc_version": "26.1.2",
+      "name": "TU3"
+    },
+    {
+      "id": "tu5",
+      "mc_version": "26.1.2",
+      "name": "TU5"
+    },
+    {
+      "id": "b0033",
+      "mc_version": "26.1.2",
+      "name": "Beta 0033"
+    },
+    {
+      "id": "b0035",
+      "mc_version": "26.1.2",
+      "name": "Beta 0035"
+    },
+    {
+      "id": "b0054",
+      "mc_version": "26.1.2",
+      "name": "Beta 0054"
+    },
+    {
+      "id": "gdc2012",
+      "mc_version": "26.1.2",
+      "name": "GDC 2012"
+    }
+  ]
+}

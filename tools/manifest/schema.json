@@ -1,57 +1,98 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Pack Manifest",
-  "description": "Defines a publishable pack in the monorepo",
+  "$id": "https://git.nostalgica.net/schema/manifest.json",
+  "title": "Lasting Legacy Pack Manifest",
+  "description": "Manifest for a modpack or datapack. A manifest is either SINGLE-VERSION (has 'mc_version') or MULTI-VARIANT (has 'variants'), never both.",
   "type": "object",
-  "required": ["id", "name", "type", "loader", "mc_version", "version", "release_type"],
-  "additionalProperties": false,
   "properties": {
     "$schema": {
       "type": "string",
-      "description": "Path to this schema file."
+      "description": "Path to this schema, for editor autocomplete."
     },
     "id": {
       "type": "string",
-      "description": "Matches the directory name",
-      "minLength": 1
+      "description": "Stable pack identifier. Matches the pack's folder name."
     },
     "name": {
       "type": "string",
-      "description": "Human-readable pack name shown on Modrinth/CurseForge. Ie. Re-Console Plus",
-      "minLength": 1
+      "description": "Human-readable pack name."
     },
     "type": {
       "type": "string",
-      "description": "Pack type. 'modpack' exports via packwiz, 'datapack' zips the content directory",
-      "enum": ["modpack", "datapack"]
+      "enum": ["modpack", "datapack"],
+      "description": "Project type."
     },
     "loader": {
       "type": "string",
-      "description": "Mod loader this pack targets (e.g., 'fabric', 'neoforge', 'forge', 'quilt')",
-      "minLength": 1
-    },
-    "mc_version": {
-      "type": "string",
-      "description": "Target Minecraft version (e.g., '1.21.10')",
-      "minLength": 1
-    },
-    "version": {
-      "type": "string",
-      "description": "Pack version.",
-      "minLength": 1
+      "description": "Mod loader (e.g. fabric, forge, neoforge, quilt)."
     },
     "release_type": {
       "type": "string",
-      "description": "Release channel",
-      "enum": ["release", "beta", "alpha"]
+      "enum": ["release", "beta", "alpha"],
+      "description": "Release channel for the published version."
     },
-    "modrinth_id": {
+    "version": {
       "type": "string",
-      "description": "Modrinth project ID or slug (e.g., 'legacy-minecraft'). Leave empty if not publishing to Modrinth"
+      "description": "Pack version (CalVer, e.g. 26.05). Required for production single-version manifests and generated for experimental manifests"
     },
-    "curseforge_id": {
+    "mc_version": {
       "type": "string",
-      "description": "CurseForge project slug or numeric ID (e.g., 're-console'). Leave empty if not publishing to CurseForge"
+      "description": "Minecraft version. Used by SINGLE-VERSION manifests. Mutually exclusive with 'variants'."
+    },
+    "variants": {
+      "type": "array",
+      "description": "For MULTI-VARIANT packs: independently-built variants published as separate versions under the same project. Publish order follows array order (last entry lands on top of the platform version list).",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "mc_version": { "type": "string" },
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "version": { "type": "string" },
+          "release_type": { "type": "string", "enum": ["release", "beta", "alpha"] }
+        },
+        "required": ["mc_version"],
+        "additionalProperties": false
+      }
+    },
+    "modrinth_id": { "type": "string" },
+    "curseforge_id": { "type": "string" },
+
+    "base": {
+      "type": "boolean",
+      "description": "If true, this pack is a base that other packs may consume (e.g. SoF as the performance base). Bases cannot themselves declare 'performance_base' \u2014 no chains."
+    },
+    "performance_base": {
+      "type": "string",
+      "description": "ID of the pack this one consumes its performance baseline from. The referenced pack must exist in modpacks/ and must have 'base': true. Omit if this pack does not consume from a performance base."
+    },
+    "shared_assets": {
+      "type": "string",
+      "description": "ID of a pack that provides shared assets (e.g. 'lce-common'). The referenced pack must exist in modpacks/. Independent of 'performance_base' \u2014 a pack may set both."
     }
-  }
+  },
+  "required": ["id", "name", "type", "loader", "release_type"],
+  "oneOf": [
+    {
+      "required": ["mc_version"],
+      "not": { "required": ["variants"] }
+    },
+    {
+      "required": ["variants"],
+      "not": { "required": ["mc_version"] }
+    }
+  ],
+  "anyOf": [
+    { "required": ["modrinth_id"] },
+    { "required": ["curseforge_id"] }
+  ],
+
+  "allOf": [
+    {
+      "description": "No chains: a pack marked as a base cannot consume from another base.",
+      "if": { "properties": { "base": { "const": true } }, "required": ["base"] },
+      "then": { "not": { "required": ["performance_base"] } }
+    }
+  ]
 }
