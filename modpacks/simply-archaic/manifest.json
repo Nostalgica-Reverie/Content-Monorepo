@@ -4,8 +4,12 @@
   "name": "Simply Archaic",
   "type": "modpack",
   "loader": "forge",
-  "mc_version": "1.7.10",
-  "version": "26.05",
   "release_type": "beta",
-  "modrinth_id": "simply-archaic"
+  "version": "26.05.1",
+  "modrinth_id": "simply-archaic",
+  "variants": [
+    { "mc_version": "1.7.10" },
+    { "mc_version": "1.8.9"  },
+    { "mc_version": "1.12.2" }
+  ]
 }
