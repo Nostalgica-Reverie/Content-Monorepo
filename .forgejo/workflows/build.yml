@@ -6,12 +6,14 @@ on:
     paths:
       - 'modpacks/**'
       - 'datapacks/**'
+      - 'resourcepacks/**'
       - 'src/actions/builder/**'
   pull_request:
     branches: ["main"]
     paths:
       - 'modpacks/**'
       - 'datapacks/**'
+      - 'resourcepacks/**'
       - 'src/actions/builder/**'
   workflow_dispatch:
 
@@ -27,6 +29,7 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
+            resourcepacks
             src/actions/builder
 
       - name: Meta
@@ -42,24 +45,17 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./builder-bin
-          key: builder-v3-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.rs', 'src/actions/builder/Cargo.toml', 'src/actions/builder/Cargo.lock') }}
+          key: builder-go-v1-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.go', 'src/actions/builder/go.mod') }}
 
-      - name: Install Rust
+      - name: Setup Go
         if: steps.cache-builder.outputs.cache-hit != 'true'
-        uses: https://github.com/dtolnay/rust-toolchain@stable
-
-      - name: Rust Cache
-        if: steps.cache-builder.outputs.cache-hit != 'true'
-        uses: https://github.com/Swatinem/rust-cache@v2
-        with:
-          workspaces: "src/actions/builder -> target"
+        uses: https://github.com/actions/setup-go@v5
+        with: { go-version: 'stable', cache: true }
 
       - name: Build Binary
         if: steps.cache-builder.outputs.cache-hit != 'true'
         run: |
-          cargo build --release --manifest-path src/actions/builder/Cargo.toml --bin builder
-          mkdir -p ./builder-bin
-          cp src/actions/builder/target/release/builder ./builder-bin/builder
+          go build -C src/actions/builder -o "$GITHUB_WORKSPACE/builder-bin/builder" .
           chmod +x ./builder-bin/builder
 
       - name: Cache Packwiz
@@ -70,8 +66,8 @@ jobs:
           path: ~/go/bin
           key: go-bin-packwiz-v1-${{ runner.os }}
 
-      - name: Setup Go
-        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true'
+      - name: Setup Go Dos
+        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true' && steps.cache-builder.outputs.cache-hit == 'true'
         uses: https://github.com/actions/setup-go@v5
         with: { go-version: 'stable', cache: true }
 
