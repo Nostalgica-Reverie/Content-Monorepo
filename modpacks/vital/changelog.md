@@ -28,6 +28,7 @@ From Simply Optimized Forked. This should improve chunk performance.
 
 ## Configuration Changes
 - Set ScalableLux and ServerCore to both client and server
+- Simple Music Control now has the toast on the top right
 
 ## Removals
 - Removed both Reimagined GUI resource packs, as all of them can be downloaded via Resourcify.
