@@ -1,10 +1,18 @@
 {
   "$schema": "../../tools/manifest/schema.json",
-  "id": "simply-legacy",
-  "name": "Simply Legacy",
+  "id": "rc-plus",
+  "name": "Re-Console Plus",
   "type": "modpack",
   "loader": "fabric",
   "mc_version": "26.1.2",
   "release_type": "alpha",
-  "modrinth_id": "simply-legacy-canary"
+  "modrinth_id": "simply-legacy-canary",
+  "role": {
+    "performance_base": {
+      "pack": "simply-optimized-forked",
+      "mappings": [
+        { "source": "26.1.2-mr", "target": "26.1.2-mr" }
+      ]
+    }
+  }
 }

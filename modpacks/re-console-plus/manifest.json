@@ -1,6 +1,6 @@
 {
   "$schema": "../../tools/manifest/schema.json",
-  "id": "rc-plus",
+  "id": "re-console-plus",
   "name": "Re-Console Plus",
   "type": "modpack",
   "loader": "fabric",
@@ -8,12 +8,14 @@
   "version": "26.05.5",
   "release_type": "release",
   "modrinth_id": "legacy-minecraft",
-  "curseforge_id": "re-console-plus",
-  "performance_base": {
-    "pack": "simply-optimized-forked",
-    "mappings": [
-      { "source": "26.1.2-mr", "target": "26.1.2-mr" },
-      { "source": "26.1.2-cf", "target": "26.1.2-cf" }
-    ]
+  "curseforge_id": "re-console",
+  "role": {
+    "performance_base": {
+      "pack": "simply-optimized-forked",
+      "mappings": [
+        { "source": "26.1.2-mr", "target": "26.1.2-mr" },
+        { "source": "26.1.2-cf", "target": "26.1.2-cf" }
+      ]
+    }
   }
 }

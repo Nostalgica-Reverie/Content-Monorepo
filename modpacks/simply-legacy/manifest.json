@@ -5,8 +5,17 @@
   "type": "modpack",
   "loader": "fabric",
   "mc_version": "26.1.2",
-  "version": "26.05.9",
+  "version": "26.05.10",
   "release_type": "release",
   "modrinth_id": "simply-legacy",
-  "curseforge_id": "simply-legacy"
+  "curseforge_id": "simply-legacy",
+  "role": {
+    "performance_base": {
+      "pack": "simply-optimized-forked",
+      "mappings": [
+        { "source": "26.1.2-mr", "target": "26.1.2-mr" },
+        { "source": "26.1.2-cf", "target": "26.1.2-cf" }
+      ]
+    }
+  }
 }

@@ -1,10 +1,18 @@
 {
   "$schema": "../../tools/manifest/schema.json",
-  "id": "re-console-plus",
+  "id": "rc-plus",
   "name": "Re-Console Plus",
   "type": "modpack",
   "loader": "fabric",
   "mc_version": "26.1.2",
   "release_type": "alpha",
-  "modrinth_id": "legacy-minecraft-canary"
+  "modrinth_id": "legacy-minecraft-canary",
+  "role": {
+    "performance_base": {
+      "pack": "simply-optimized-forked",
+      "mappings": [
+        { "source": "26.1.2-mr", "target": "26.1.2-mr" }
+      ]
+    }
+  }
 }
