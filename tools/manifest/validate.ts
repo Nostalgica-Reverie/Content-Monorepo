@@ -19,19 +19,20 @@ interface PerformanceBase {
   mappings: Mapping[];
 }
 
+type Role = 'none' | 'base' | { performance_base: PerformanceBase };
+
 interface Manifest {
   id: string;
   name: string;
-  type: 'modpack' | 'datapack';
-  loader: string;
+  type: 'modpack' | 'datapack' | 'resourcepack';
+  loader?: string;
   mc_version?: string;
   variants?: VariantEntry[];
   version?: string;
   release_type: 'release' | 'beta' | 'alpha';
   modrinth_id?: string;
   curseforge_id?: string;
-  base?: boolean;
-  performance_base?: PerformanceBase;
+  role: Role;
   shared_assets?: string;
 }
 
@@ -70,6 +71,14 @@ function platformSuffix(subdir: string): 'mr' | 'cf' | null {
   return null;
 }
 
+function isBaseRole(role: Role): boolean {
+  return role === 'base';
+}
+function getPerformanceBase(role: Role): PerformanceBase | null {
+  if (typeof role === 'object' && role.performance_base) return role.performance_base;
+  return null;
+}
+
 function validate(manifestPath: string): void {
   const filename = path.basename(manifestPath);
   if (filename !== 'manifest.json' && filename !== 'manifest-experimental.json') {
@@ -79,9 +88,17 @@ function validate(manifestPath: string): void {
   const manifest = readManifest(manifestPath);
   const packDir = path.dirname(manifestPath);
 
-  for (const field of ['id', 'name', 'type', 'loader', 'release_type'] as (keyof Manifest)[]) {
+  for (const field of ['id', 'name', 'type', 'release_type', 'role'] as (keyof Manifest)[]) {
     const v = manifest[field];
     if (v === undefined || v === null || v === '') fail(`manifest missing required field: ${field}`);
+  }
+
+  if (!['modpack', 'datapack', 'resourcepack'].includes(manifest.type)) {
+    fail(`invalid 'type': ${manifest.type}`);
+  }
+
+  if (manifest.type === 'modpack' && (!manifest.loader || manifest.loader.trim() === '')) {
+    fail(`modpack manifests must declare a 'loader'`);
   }
 
   const hasMcVersion = manifest.mc_version !== undefined;
@@ -91,7 +108,6 @@ function validate(manifestPath: string): void {
 
   if (!isExperimental && !manifest.version) fail(`manifest missing required field: version`);
 
-  if (!['modpack', 'datapack'].includes(manifest.type)) fail(`invalid 'type': ${manifest.type}`);
   if (!['release', 'beta', 'alpha'].includes(manifest.release_type)) fail(`invalid 'release_type': ${manifest.release_type}`);
   if (isExperimental && manifest.release_type !== 'alpha') {
     warn(`experimental manifest uses release_type='${manifest.release_type}'; convention is 'alpha'`);
@@ -101,56 +117,49 @@ function validate(manifestPath: string): void {
   const hasCf = !!(manifest.curseforge_id && manifest.curseforge_id.trim());
   if (!hasMr && !hasCf) fail(`manifest must set at least one of modrinth_id or curseforge_id`);
 
-  if (isExperimental && manifest.base === true) {
-    fail(`experimental manifests cannot declare 'base: true' (bases must be stable)`);
-  }
-  if (manifest.base === true && manifest.performance_base) {
-    fail(`pack is 'base: true' and cannot also declare 'performance_base' (no chains)`);
+  // --- Role validation ---
+  const role = manifest.role;
+  const roleIsString = typeof role === 'string';
+  if (roleIsString && role !== 'none' && role !== 'base') {
+    fail(`invalid 'role' string '${role}' (expected 'none', 'base', or a performance_base object)`);
   }
 
-  if (manifest.performance_base) {
-    const pb = manifest.performance_base;
+  if (isExperimental && isBaseRole(role)) {
+    fail(`experimental manifests cannot have role 'base' (bases must be stable)`);
+  }
 
+  const pb = getPerformanceBase(role);
+  if (pb) {
     if (!pb.pack || !Array.isArray(pb.mappings) || pb.mappings.length === 0) {
-      fail(`'performance_base' must have a 'pack' and a non-empty 'mappings' array`);
+      fail(`role.performance_base must have a 'pack' and a non-empty 'mappings' array`);
     }
     if (pb.pack === manifest.id) {
-      fail(`'performance_base.pack' cannot reference the pack itself ('${manifest.id}')`);
+      fail(`performance_base.pack cannot reference the pack itself ('${manifest.id}')`);
     }
 
     const base = loadReferencedManifest(pb.pack);
     if (!base) {
-      fail(`'performance_base.pack' references unknown pack '${pb.pack}' (no manifest.json at ${MODPACKS_DIR}/${pb.pack}/)`);
+      fail(`performance_base.pack references unknown pack '${pb.pack}' (no manifest.json at ${MODPACKS_DIR}/${pb.pack}/)`);
     }
-    if (base.base !== true) {
-      fail(`'performance_base.pack' references '${pb.pack}', but that pack does not declare 'base: true'`);
+    if (!isBaseRole(base.role)) {
+      fail(`performance_base.pack references '${pb.pack}', but that pack's role is not 'base'`);
     }
 
     const basePackDir = path.join(MODPACKS_DIR, pb.pack);
-
     for (const m of pb.mappings) {
-      if (!m.source || !m.target) {
-        fail(`each performance_base mapping needs both 'source' and 'target'`);
-      }
-
+      if (!m.source || !m.target) fail(`each performance_base mapping needs both 'source' and 'target'`);
       const sSuffix = platformSuffix(m.source);
       const tSuffix = platformSuffix(m.target);
-
       if (!sSuffix) fail(`mapping source '${m.source}' must end in '-mr' or '-cf'`);
       if (!tSuffix) fail(`mapping target '${m.target}' must end in '-mr' or '-cf'`);
-
       if (sSuffix !== tSuffix) {
         fail(`FORBIDDEN cross-platform mapping: source '${m.source}' (${sSuffix}) \u2192 target '${m.target}' (${tSuffix}). Modrinth and CurseForge substrates must never cross (license risk).`);
       }
-
-      const sourcePath = path.join(basePackDir, m.source);
-      if (!fs.existsSync(sourcePath)) {
-        fail(`mapping source '${m.source}' does not exist in base pack '${pb.pack}' (looked at ${sourcePath})`);
+      if (!fs.existsSync(path.join(basePackDir, m.source))) {
+        fail(`mapping source '${m.source}' does not exist in base pack '${pb.pack}'`);
       }
-
-      const targetPath = path.join(packDir, m.target);
-      if (!fs.existsSync(targetPath)) {
-        fail(`mapping target '${m.target}' does not exist in this pack (looked at ${targetPath})`);
+      if (!fs.existsSync(path.join(packDir, m.target))) {
+        fail(`mapping target '${m.target}' does not exist in this pack`);
       }
     }
   }
@@ -160,7 +169,7 @@ function validate(manifestPath: string): void {
       fail(`'shared_assets' cannot reference the pack itself ('${manifest.id}')`);
     }
     if (!loadReferencedManifest(manifest.shared_assets)) {
-      fail(`'shared_assets' references unknown pack '${manifest.shared_assets}' (no manifest.json at ${MODPACKS_DIR}/${manifest.shared_assets}/)`);
+      fail(`'shared_assets' references unknown pack '${manifest.shared_assets}'`);
     }
   }
 
@@ -190,23 +199,31 @@ function validate(manifestPath: string): void {
         if (hasCf && !fs.existsSync(cf)) fail(`variant ${key}: curseforge_id is set but ${cf} does not exist`);
       }
     }
-  }
-
-  if (manifest.type === 'datapack') {
-    const content = path.join(packDir, 'content');
-    if (!fs.existsSync(content)) fail(`datapack content directory missing: ${content}`);
+  } else {
+    validateZipPackStructure(packDir, manifest.type);
   }
 
   const label = isExperimental ? 'EXPERIMENTAL' : 'production';
   const version = manifest.version ?? '(generated)';
   const shape = hasVariants ? `multi-variant (${manifest.variants!.length})` : 'single-version';
-  const roleInfo = [
-    manifest.base ? 'base' : null,
-    manifest.performance_base ? `consumes ${manifest.performance_base.pack} (${manifest.performance_base.mappings.length} mappings)` : null,
-    manifest.shared_assets ? `assets from ${manifest.shared_assets}` : null,
-  ].filter(Boolean).join(', ');
-  const roleSuffix = roleInfo ? ` [${roleInfo}]` : '';
-  console.log(`\u2713 ${manifest.id} ${version} (${manifest.release_type}, ${label}, ${shape})${roleSuffix} \u2014 manifest OK`);
+  const roleStr = roleIsString ? (role as string) : `consumes ${pb!.pack} (${pb!.mappings.length} mappings)`;
+  const sharedStr = manifest.shared_assets ? `, assets from ${manifest.shared_assets}` : '';
+  console.log(`\u2713 ${manifest.id} ${version} (${manifest.release_type}, ${label}, ${shape}) [${roleStr}${sharedStr}] \u2014 manifest OK`);
+}
+
+function validateZipPackStructure(packDir: string, type: string): void {
+  const entries = fs.readdirSync(packDir, { withFileTypes: true });
+  const versionDirs = entries.filter((e) => e.isDirectory()).map((e) => e.name);
+  if (versionDirs.length === 0) {
+    fail(`${type} '${path.basename(packDir)}' has no version directory (expected ${path.basename(packDir)}/{version}/)`);
+  }
+  if (versionDirs.length > 1) {
+    fail(`${type} '${path.basename(packDir)}' must have exactly one version directory, found ${versionDirs.length}: ${versionDirs.join(', ')}`);
+  }
+  const versionDir = path.join(packDir, versionDirs[0]);
+  if (!fs.existsSync(path.join(versionDir, 'pack.mcmeta'))) {
+    warn(`${type} version dir ${versionDir} has no pack.mcmeta at its root (Minecraft requires it)`);
+  }
 }
 
 const args = process.argv.slice(2);

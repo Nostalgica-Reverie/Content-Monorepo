@@ -1,21 +1,21 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://git.nostalgica.net/schema/manifest.json",
-  "title": "Lasting Legacy Pack Manifest",
-  "description": "Manifest for a modpack or datapack. A manifest is either single version (has 'mc_version') or multi variant (has 'variants'), never both.",
+  "title": "Manifest",
+  "description": "Manifest for a modpack, datapack, or resourcepack. A manifest is either single-version (has 'mc_version') or multi-variant (has 'variants'), never both. Every manifest must declare a 'role'.",
   "type": "object",
   "properties": {
     "$schema": { "type": "string", "description": "Path to this schema, for editor autocomplete." },
     "id": { "type": "string", "description": "Stable pack identifier. Matches the pack's folder name." },
     "name": { "type": "string", "description": "Human-readable pack name." },
-    "type": { "type": "string", "enum": ["modpack", "datapack"], "description": "Project type." },
-    "loader": { "type": "string", "description": "Mod loader (e.g. fabric, forge, neoforge, quilt)." },
+    "type": { "type": "string", "enum": ["modpack", "datapack", "resourcepack"], "description": "Project type." },
+    "loader": { "type": "string", "description": "Mod loader (e.g. fabric, forge, neoforge, quilt). Required for modpacks." },
     "release_type": { "type": "string", "enum": ["release", "beta", "alpha"], "description": "Release channel." },
-    "version": { "type": "string", "description": "Pack version (ideally CalVer). Required for  single-version manifests and generated for experimental." },
-    "mc_version": { "type": "string", "description": "Minecraft version. single version manifests. this is mutually exclusive with 'variants'." },
+    "version": { "type": "string", "description": "Pack version (ideally CalVer). Required for single-version production manifests; generated for experimental." },
+    "mc_version": { "type": "string", "description": "Minecraft version. Single-version manifests. Mutually exclusive with 'variants'." },
     "variants": {
       "type": "array",
-      "description": "MULTI-VARIANT packs: independently-built variants published as separate versions under one project. Publish order = array order (last lands on top).",
+      "description": "Multi-variant packs: independently-built variants published as separate versions under one project. Publish order = array order (last lands on top).",
       "minItems": 1,
       "items": {
         "type": "object",
@@ -33,50 +33,53 @@
     "modrinth_id": { "type": "string" },
     "curseforge_id": { "type": "string" },
 
-    "base": {
-      "type": "boolean",
-      "description": "If true, this pack is a base others may link to. Bases cannot declare 'performance_base' (no chains)."
-    },
-    "performance_base": {
-      "type": "object",
-      "description": "Declares that this pack consumes its performance baseline (mods + config) from another pack. Sync copies the base's named source subdir into this pack's named target subdir for each mapping. CROSS-PLATFORM MAPPINGS ARE FORBIDDEN: source and target must share the same platform suffix (-mr or -cf), because copying Modrinth-sourced mods into a CurseForge pack (or vice versa) risks license violations. If the base lacks a named source subdir, that mapping fails validation. Each mapping is explicit \u2014 there is no inference.",
-      "properties": {
-        "pack": {
+    "role": {
+      "description": "REQUIRED. Declares this pack's performance relationship. One of: 'none' (standalone), 'base' (a performance base others consume), or an object declaring the base this pack consumes from. Forces every pack to state its role explicitly rather than by omission.",
+      "oneOf": [
+        {
           "type": "string",
-          "description": "ID of the base pack. Must exist and have 'base': true."
+          "enum": ["none", "base"],
+          "description": "'none' = standalone; 'base' = this pack is a performance base."
         },
-        "mappings": {
-          "type": "array",
-          "minItems": 1,
-          "description": "Explicit source target subdir pairings. One per target subdir that should receive the baseline.",
-          "items": {
-            "type": "object",
-            "properties": {
-              "source": {
-                "type": "string",
-                "description": "Subdir in the base pack to copy from (e.g. '26.1.2-mr'). Must end in '-mr' or '-cf'.",
-                "pattern": "-(mr|cf)$"
+        {
+          "type": "object",
+          "description": "This pack consumes its performance baseline from another pack.",
+          "properties": {
+            "performance_base": {
+              "type": "object",
+              "description": "Sync copies the base's named source subdir into this pack's named target subdir per mapping. cross platform is forbidden cuz source and target must share the same platform suffix (-mr/-cf), since copying Modrinth mods into a CurseForge pack (or vice versa) risks license violations.",
+              "properties": {
+                "pack": { "type": "string", "description": "ID of the base pack. Must exist and have role 'base'." },
+                "mappings": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "source": { "type": "string", "pattern": "-(mr|cf)$", "description": "Subdir in the base to copy from. Must end -mr or -cf." },
+                      "target": { "type": "string", "pattern": "-(mr|cf)$", "description": "Subdir in THIS pack to copy into. Same platform suffix as source." }
+                    },
+                    "required": ["source", "target"],
+                    "additionalProperties": false
+                  }
+                }
               },
-              "target": {
-                "type": "string",
-                "description": "Subdir in THIS pack to copy into (e.g. '26.1.2-mr', 'tu0-mr'). Must share the same platform suffix as 'source'.",
-                "pattern": "-(mr|cf)$"
-              }
-            },
-            "required": ["source", "target"],
-            "additionalProperties": false
-          }
+              "required": ["pack", "mappings"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["performance_base"],
+          "additionalProperties": false
         }
-      },
-      "required": ["pack", "mappings"],
-      "additionalProperties": false
+      ]
     },
+
     "shared_assets": {
       "type": "string",
-      "description": "ID of a pack providing shared assets (e.g. 'lce-common'). Must exist. Independent of 'performance_base'."
+      "description": "ID of a pack providing shared assets (e.g. 'lce-common'). Must exist. Independent of 'role' \u2014 a pack of any role may also use shared assets."
     }
   },
-  "required": ["id", "name", "type", "loader", "release_type"],
+  "required": ["id", "name", "type", "release_type", "role"],
   "oneOf": [
     { "required": ["mc_version"], "not": { "required": ["variants"] } },
     { "required": ["variants"], "not": { "required": ["mc_version"] } }
@@ -84,12 +87,5 @@
   "anyOf": [
     { "required": ["modrinth_id"] },
     { "required": ["curseforge_id"] }
-  ],
-  "allOf": [
-    {
-      "description": "No chains: a base cannot consume from another base.",
-      "if": { "properties": { "base": { "const": true } }, "required": ["base"] },
-      "then": { "not": { "required": ["performance_base"] } }
-    }
   ]
 }
