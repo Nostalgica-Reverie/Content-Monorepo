@@ -15,33 +15,51 @@ jobs:
           filter: blob:none
           sparse-checkout: |
             modpacks
-            tools/bulk
+            src/actions/maintain
+
+      - name: Cache Maintain Binary
+        id: cache-maintain
+        uses: actions/cache@v4
+        with:
+          path: ./maintain-bin
+          key: maintain-go-v1-${{ runner.os }}-${{ hashFiles('src/actions/maintain/**/*.go', 'src/actions/maintain/go.mod') }}
+
+      - name: Setup Go
+        if: steps.cache-maintain.outputs.cache-hit != 'true'
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Build Maintain
+        if: steps.cache-maintain.outputs.cache-hit != 'true'
+        run: |
+          go build -C src/actions/maintain -o "$GITHUB_WORKSPACE/maintain-bin/maintain" .
+          chmod +x ./maintain-bin/maintain
 
       - name: Cache Packwiz Binary
-        id: cache-go
+        id: cache-packwiz
         uses: actions/cache@v4
         with:
           path: ~/go/bin
           key: go-bin-packwiz-v1-${{ runner.os }}
 
-      - name: Setup Go
-        if: steps.cache-go.outputs.cache-hit != 'true'
+      - name: Setup Go Dos
+        if: steps.cache-packwiz.outputs.cache-hit != 'true' && steps.cache-maintain.outputs.cache-hit == 'true'
         uses: https://github.com/actions/setup-go@v5
         with:
           go-version: 'stable'
           cache: true
 
       - name: Install Packwiz
-        if: steps.cache-go.outputs.cache-hit != 'true'
+        if: steps.cache-packwiz.outputs.cache-hit != 'true'
         run: go install github.com/packwiz/packwiz@latest
 
       - name: Add Go bin to PATH
         run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
       - name: Run Bulk Refresh
-        run: |
-          chmod +x tools/bulk/refresh.sh
-          tools/bulk/refresh.sh
+        run: ./maintain-bin/maintain refresh
 
       - name: Commit
         uses: https://github.com/EndBug/add-and-commit@v9
@@ -50,3 +68,4 @@ jobs:
           author_email: omo50@noreply.nostalgica.net
           message: 'actions: bulk refresh'
           add: 'modpacks'
+
