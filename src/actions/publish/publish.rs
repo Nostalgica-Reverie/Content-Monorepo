@@ -70,16 +70,16 @@ fn cmd_list(manifest_path: &Path) -> Result<()> {
     let mut entries: Vec<Value> = Vec::new();
 
     if let Some(variants) = manifest.get("variants").and_then(|v| v.as_array()) {
-        for v in variants {
+        for (idx, v) in variants.iter().enumerate() {
             let key = v
                 .get("id")
                 .and_then(|x| x.as_str())
                 .or_else(|| v.get("mc_version").and_then(|x| x.as_str()))
                 .ok_or_else(|| anyhow!("variant missing both 'id' and 'mc_version'"))?;
-            entries.push(json!({ "manifest": manifest_str, "variant": key }));
+            entries.push(json!({ "manifest": manifest_str, "variant": key, "order": idx }));
         }
     } else {
-        entries.push(json!({ "manifest": manifest_str, "variant": Value::Null }));
+        entries.push(json!({ "manifest": manifest_str, "variant": Value::Null, "order": 0 }));
     }
 
     println!("{}", serde_json::to_string(&entries)?);

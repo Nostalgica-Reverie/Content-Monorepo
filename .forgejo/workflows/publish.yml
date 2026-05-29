@@ -183,6 +183,18 @@ jobs:
             ./publisher-bin/publish build "${{ matrix.entry.manifest }}" "$VARIANT"
           fi
 
+      - name: Stagger publish timing (preserve display order)
+        run: |
+          ORDER='${{ matrix.entry.order }}'
+          STAGGER_SECONDS=15
+          SLEEP=$(( ORDER * STAGGER_SECONDS ))
+          if [ "$SLEEP" -gt 0 ]; then
+            echo "entry order $ORDER -> sleeping ${SLEEP}s so publish timestamp lands in sequence"
+            sleep "$SLEEP"
+          else
+            echo "entry order 0 -> no delay"
+          fi
+
       - name: Upload to Modrinth
         if: steps.meta.outputs.mr_id != ''
         uses: https://github.com/Kir-Antipov/mc-publish@v3.3
