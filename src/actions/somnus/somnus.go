@@ -67,6 +67,12 @@ func findRepoRoot() string {
 	}
 }
 
+const (
+	defaultMCVersion   = "1.21.1"
+	defaultPackVersion = "0.0.0"
+	placeholderAuthor  = "CHANGEME"
+)
+
 func cmdInit(args []string) {
 	if len(args) < 2 {
 		fail("usage: somnus init <category> <name>\n  category: modpacks | datapacks | resourcepacks")
@@ -92,12 +98,12 @@ func cmdInit(args []string) {
 		"name":         name,
 		"type":         categoryType(category),
 		"release_type": "release",
-		"version":      "0.0.0",
+		"version":      defaultPackVersion,
 		"role":         "none",
 	}
 	if category == "modpacks" {
 		manifest["loader"] = "fabric"
-		manifest["mc_version"] = "1.21.1"
+		manifest["mc_version"] = defaultMCVersion
 	}
 	manifest["modrinth_id"] = name
 
@@ -109,9 +115,41 @@ func cmdInit(args []string) {
 	}
 
 	fmt.Printf("scaffolded %s\n", packDir)
-	fmt.Printf("  manifest.json (role: none, fill in modrinth_id/curseforge_id and version)\n")
+	fmt.Printf("  manifest.json (role: none; fill in modrinth_id/curseforge_id, version, author)\n")
 	fmt.Printf("  changelog.md\n")
-	fmt.Printf("next: add platform subdirs (e.g. %s/1.21.1-mr) and run packwiz init there.\n", packDir)
+
+	if category == "modpacks" {
+		if _, err := exec.LookPath("packwiz"); err != nil {
+			fmt.Println("note: packwiz not on PATH; skipped subdir init. Create {mc}-mr/{mc}-cf and run packwiz init manually.")
+			return
+		}
+		for _, plat := range []string{"mr", "cf"} {
+			sub := filepath.Join(packDir, defaultMCVersion+"-"+plat)
+			if err := os.MkdirAll(sub, 0o755); err != nil {
+				fail(fmt.Sprintf("failed to create %s: %v", sub, err))
+			}
+			fmt.Printf("  packwiz init in %s ...\n", sub)
+			cmd := exec.Command("packwiz", "init",
+				"--name", name,
+				"--author", placeholderAuthor,
+				"--mc-version", defaultMCVersion,
+				"--modloader", "fabric",
+				"--fabric-latest",
+				"--version", defaultPackVersion,
+				"-y",
+			)
+			cmd.Dir = sub
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			if err := cmd.Run(); err != nil {
+				fail(fmt.Sprintf("packwiz init failed in %s: %v", sub, err))
+			}
+		}
+		fmt.Printf("ready: %s has %s-mr and %s-cf initialized. Add mods with packwiz, then fill manifest placeholders.\n",
+			packDir, defaultMCVersion, defaultMCVersion)
+	} else {
+		fmt.Printf("next: create %s/{version}/ and add the pack contents (pack.mcmeta at its root).\n", packDir)
+	}
 }
 
 func categoryType(category string) string {
@@ -179,6 +217,7 @@ type modlistEntry struct {
 	CurseForgeHash *int64 `json:"curseForgeHash,omitempty"`
 	ModrinthHash   string `json:"modrinthHash,omitempty"`
 }
+
 type pwMod struct {
 	name       string
 	filename   string

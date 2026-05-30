@@ -82,7 +82,7 @@ Afterward, you can run somnus in the CLI and see the current commands.
 Somnus is primarily a tool to accelerate some hurdles in pack development, regarding exporting with packwiz, initiating new packs under our monorepo structure, and to also allow CI to be ran locally in a better way.
 
 ### Somnus Init
-```somnus init``` will initiate a new modpack with a manifest.json and a changelog.md. You must do the subdirectory yourself, but there are plans to make it set up packwiz for you as well in the future.
+```somnus init``` will initiate a new modpack with a manifest.json and a changelog.md, along with 2 sub-directories for Modrinth and CurseForge that run latest Fabric Loader!
 
 ### Somnus Bump
 ```somnus bump``` will bump manifest via CLI.
