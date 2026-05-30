@@ -73,7 +73,7 @@ All linters automatically run on commit, and will fail if the modified JSON/TOML
 # Somnus
 Somnus is a WIP CLI tool written in go that is built directly into the Monorepository. To utilize it, you must install it locally. It can be very helpful to modpack development!
 
-# Installing Somnus
+## Installing Somnus
 To install Somnus, you must install Somnus, Builder and Maintain. All 3 of these are written in Go, so you can simply navigate to their directories and run ```go install .```.
 
 Afterward, you can run somnus in the CLI and see the current commands.
@@ -100,7 +100,7 @@ Somnus is primarily a tool to accelerate some hurdles in pack development, regar
 ```somnus test``` will (attempt) to set up an untracked auto-updating MultiMC instance, currently for testing purposes.
 
 ### Somnus Lint
-```somnus lint `` will check if your JSON or TOML is valid and yell at you if it isnt.
+```somnus lint``` will check if your JSON or TOML is valid and yell at you if it isnt.
 
 ## Credits
 stale.yml forked from JEI. Both licensed under MIT.
