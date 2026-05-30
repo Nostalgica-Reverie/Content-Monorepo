@@ -8,12 +8,9 @@
   "downscale": {
     "value": "OFF"
   },
-  "fastFboBlit": {
-    "value": "ON"
-  },
-  "numberOfPasses": 10,
+  "numberOfPasses": 4,
   "maxFps": 60,
-  "screenMaxFps": 30,
+  "screenMaxFps": 20,
   "map": {
     "hand": {
       "enabled": {
@@ -25,54 +22,9 @@
         "value": "AUTO"
       }
     },
-    "crosshair": {
+    "scoreboard": {
       "enabled": {
         "value": "AUTO"
-      }
-    },
-    "spectator_menu": {
-      "enabled": {
-        "value": "AUTO"
-      }
-    },
-    "hotbar": {
-      "enabled": {
-        "value": "OFF"
-      }
-    },
-    "armor_bar": {
-      "enabled": {
-        "value": "OFF"
-      }
-    },
-    "health_bar": {
-      "enabled": {
-        "value": "OFF"
-      }
-    },
-    "food_bar": {
-      "enabled": {
-        "value": "OFF"
-      }
-    },
-    "air_bar": {
-      "enabled": {
-        "value": "AUTO"
-      }
-    },
-    "mount_health": {
-      "enabled": {
-        "value": "OFF"
-      }
-    },
-    "info_bar": {
-      "enabled": {
-        "value": "AUTO"
-      }
-    },
-    "experience_level": {
-      "enabled": {
-        "value": "OFF"
       }
     },
     "held_item_tooltip": {
@@ -80,17 +32,7 @@
         "value": "AUTO"
       }
     },
-    "spectator_tooltip": {
-      "enabled": {
-        "value": "AUTO"
-      }
-    },
-    "mob_effects": {
-      "enabled": {
-        "value": "AUTO"
-      }
-    },
-    "boss_bar": {
+    "armor_bar": {
       "enabled": {
         "value": "AUTO"
       }
@@ -100,17 +42,37 @@
         "value": "AUTO"
       }
     },
+    "chat": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
     "demo_timer": {
       "enabled": {
         "value": "AUTO"
       }
     },
-    "scoreboard": {
+    "player_list": {
       "enabled": {
         "value": "AUTO"
       }
     },
-    "overlay_message": {
+    "boss_bar": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "experience_level": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "food_bar": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "health_bar": {
       "enabled": {
         "value": "AUTO"
       }
@@ -120,12 +82,47 @@
         "value": "AUTO"
       }
     },
-    "chat": {
+    "hotbar": {
       "enabled": {
         "value": "AUTO"
       }
     },
-    "player_list": {
+    "air_bar": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "info_bar": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "mount_health": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "status_effects": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "crosshair": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "overlay_message": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "spectator_tooltip": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "spectator_menu": {
       "enabled": {
         "value": "AUTO"
       }
@@ -140,12 +137,17 @@
         "value": "AUTO"
       }
     },
-    "minimega:armor": {
+    "minimega:timer": {
       "enabled": {
         "value": "AUTO"
       }
     },
-    "minimega:timer": {
+    "architectury": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "xmlpull_xmlpull": {
       "enabled": {
         "value": "AUTO"
       }
@@ -157,7 +159,7 @@
     },
     "debug_overlay": {
       "enabled": {
-        "value": "OFF"
+        "value": "ON"
       }
     }
   }
