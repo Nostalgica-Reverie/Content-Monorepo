@@ -99,6 +99,9 @@ Somnus is primarily a tool to accelerate some hurdles in pack development, regar
 ### Somnus Test
 ```somnus test``` will (attempt) to set up an untracked auto-updating MultiMC instance, currently for testing purposes.
 
+### Somnus Lint
+```somnus lint `` will check if your JSON or TOML is valid and yell at you if it isnt.
+
 ## Credits
 stale.yml forked from JEI. Both licensed under MIT.
 
