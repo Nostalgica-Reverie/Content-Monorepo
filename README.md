@@ -96,6 +96,9 @@ Somnus is primarily a tool to accelerate some hurdles in pack development, regar
 ### Somnus Modlist
 ```somnus modlist``` will generate a Crash Assistant mod list derived from the packs ```index.toml```.
 
+### Somnus Test
+```somnus test``` will (attempt) to set up an untracked auto-updating MultiMC instance, currently for testing purposes.
+
 ## Credits
 stale.yml forked from JEI. Both licensed under MIT.
 
