@@ -25,10 +25,10 @@ jobs:
             datapacks
             src/actions/publish
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - name: Set up Bun
+        uses: https://github.com/oven-sh/setup-bun@v2
         with:
-          node-version: '20'
+          bun-version: latest
 
       - name: Cache Publisher Binary
         id: cache-publisher
@@ -86,7 +86,7 @@ jobs:
           while IFS= read -r m; do
             [ -n "$m" ] || continue
             PART=$(./publisher-bin/publish list "$m")
-            ALL=$(node -e "const a=$ALL,b=$PART;console.log(JSON.stringify(a.concat(b)))")
+            ALL=$(bun -e "const a=$ALL,b=$PART;console.log(JSON.stringify(a.concat(b)))")
           done <<< "$MANIFESTS"
 
           echo "has_entries=true" >> "$GITHUB_OUTPUT"
@@ -115,13 +115,13 @@ jobs:
             tools/changelog
             tools/manifest
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - name: Set up Bun
+        uses: https://github.com/oven-sh/setup-bun@v2
         with:
-          node-version: '20'
+          bun-version: latest
 
       - name: Validate Manifest
-        run: npx tsx tools/manifest/validate.ts "${{ matrix.entry.manifest }}"
+        run: bun tools/manifest/validate.ts "${{ matrix.entry.manifest }}"
 
       - name: Cache Publisher Binary
         id: cache-publisher
@@ -149,7 +149,7 @@ jobs:
 
       - name: Generate Changelog
         id: changelog
-        run: npx tsx tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
+        run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
 
       - name: Cache Packwiz Binaries
         id: cache-go
