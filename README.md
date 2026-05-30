@@ -17,14 +17,40 @@ The repository makes usage of Forgejo actions, for CI/CD and general QoL improve
 - Auto Publish
 - Auto Update and Auto Refresh*
 - Auto Build
+- Bulk Refresh*
+- Bulk Update*
+- Bulk PNG Optimizer
 - JSON Linter
 - TOML Linter
-- PNG Compressor
+- Modpack Sync*
 *for modpacks only
 **on publish and build only
 
 ### Using Auto Publish
 Every project in the repo must have a manifest.json. This manifest.json specifies stuff that our publish.yml then uses to auto publish. Once it is set up, you may simply bump version in the manifest.json and it will update across platforms.
+
+Whenever Auto Publish is ran, it will be ran through a Validator. The Validator will fail if something is improperly configured; whether that be the lack of a changelog.md, a malformed manifest.json, or other reasons. If a publish run fails, please look to your manifest and set-up to make sure you are properly set up.
+
+### Using Sync
+To address issues regarding our packs being intertwined in content and development, there is now a Sync system implemented. 
+
+Sync will essentially make one pack act as a library for whatever pack needs it. A good example is Simply Optimized Forked; a handful of our modpacks utilize this modpack as its performance base, so that we do not have to reimplement the same optimizations over and over.
+
+In manifest.json, a pack must declare whether it is a ```base```. If it is, then other packs can hook into it to be synced up automatically, with a structure similar to this:
+
+```
+"role": {
+    "performance_base": {
+      "pack": "lce-common",
+      "mappings": [
+        { "source": "26.1.2-mr", "target": "26.1.2-mr" }
+      ]
+    }
+  }
+} 
+```
+
+This means that this pack is directly synced with ```lce-common```, benefitting from all of its changes
 
 ### Using Canary Channels
 Our Auto Publish action comes with an additional thing, a Canary channel for projects. To properly utilize this, add in a manifest-experimental.json, and properly configure it according to the schema, and every commit on the pack, it will automatically publish to a dedicated canary channel.
@@ -41,8 +67,31 @@ Only the pack modified within a commit will be built. So if you modified somethi
 
 This means builds can be very fast, sometimes taking only 30 seconds.
 
-### Using Linters (currently unavailable)
+### Using Linters
 All linters automatically run on commit, and will fail if the modified JSON/TOML is broken. This is helpful in the case of making a minor mistake in syntax
+
+# Somnus
+Somnus is a WIP CLI tool written in go that is built directly into the Monorepository. To utilize it, you must install it locally. It can be very helpful to modpack development!
+
+# Installing Somnus
+To install Somnus, you must install Somnus, Builder and Maintain. All 3 of these are written in Go, so you can simply navigate to their directories and run ```go install .```.
+
+Afterward, you can run somnus in the CLI and see the current commands.
+
+## Using Somnus
+Somnus is primarily a tool to accelerate some hurdles in pack development, regarding exporting with packwiz, initiating new packs under our monorepo structure, and to also allow CI to be ran locally in a better way.
+
+### Somnus Init
+```somnus init``` will initiate a new modpack with a manifest.json and a changelog.md. You must do the subdirectory yourself, but there are plans to make it set up packwiz for you as well in the future.
+
+### Somnus Bump
+```somnus bump``` will bump manifest via CLI.
+
+### Somnus Export
+```somnus export``` will batch export every version of the pack in a .mrpack/.zip format in a non tracked folder for you to use.
+
+### Somnus Sync
+```somnus sync``` runs the sync command locally.
 
 ## Credits
 stale.yml forked from JEI. Both licensed under MIT.
@@ -50,4 +99,4 @@ stale.yml forked from JEI. Both licensed under MIT.
 # License
 As all of these projects are different, the license may vary. Most packs are under GPL-3.0, or MIT. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
 
-All* actions are licensed under AGPL-3.0 and written in Rust/Typescript.
+All* actions are licensed under AGPL-3.0 and written in Rust/Typescript/Go.

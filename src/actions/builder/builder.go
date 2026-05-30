@@ -46,9 +46,19 @@ type manifest struct {
 
 func main() {
 	if len(os.Args) < 2 {
-		fail("usage: builder <short-sha>")
+		fail("usage: builder <short-sha>  |  builder --pack <name> <short-sha>")
 	}
-	shortSHA := os.Args[1]
+
+	var targetedPack, shortSHA string
+	if os.Args[1] == "--pack" {
+		if len(os.Args) < 4 {
+			fail("usage: builder --pack <name> <short-sha>")
+		}
+		targetedPack = os.Args[2]
+		shortSHA = os.Args[3]
+	} else {
+		shortSHA = os.Args[1]
+	}
 
 	repoRoot, err := os.Getwd()
 	if err != nil {
@@ -59,13 +69,22 @@ func main() {
 		fail(fmt.Sprintf("failed to create %s: %v", artifactsDir, err))
 	}
 
-	changed, err := detectChangedTargets()
-	if err != nil {
-		fail(fmt.Sprintf("failed to detect changed targets: %v", err))
-	}
-	if len(changed) == 0 {
-		fmt.Println("no packs detected in git diff.")
-		return
+	var changed []target
+	if targetedPack != "" {
+		t, err := resolvePack(targetedPack)
+		if err != nil {
+			fail(err.Error())
+		}
+		changed = []target{t}
+	} else {
+		changed, err = detectChangedTargets()
+		if err != nil {
+			fail(fmt.Sprintf("failed to detect changed targets: %v", err))
+		}
+		if len(changed) == 0 {
+			fmt.Println("no packs detected in git diff.")
+			return
+		}
 	}
 
 	for _, t := range changed {
@@ -84,6 +103,15 @@ func main() {
 	}
 
 	fmt.Println("all builds completed successfully.")
+}
+
+func resolvePack(name string) (target, error) {
+	for _, category := range []string{"modpacks", "datapacks", "resourcepacks"} {
+		if info, err := os.Stat(filepath.Join(category, name)); err == nil && info.IsDir() {
+			return target{category: category, pack: name}, nil
+		}
+	}
+	return target{}, fmt.Errorf("pack '%s' not found in modpacks/, datapacks/, or resourcepacks/", name)
 }
 
 type target struct {

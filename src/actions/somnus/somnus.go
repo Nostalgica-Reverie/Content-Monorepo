@@ -1,0 +1,205 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
+)
+
+func main() {
+	if len(os.Args) < 2 {
+		fail("usage: somnus <init|bump|export|sync> [args]")
+	}
+
+	switch os.Args[1] {
+	case "export", "sync":
+		if root := findRepoRoot(); root != "" {
+			if err := os.Chdir(root); err != nil {
+				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
+			}
+		} else {
+			fail("could not locate repo root (no .git or modpacks/ found walking up from here)")
+		}
+	}
+
+	switch os.Args[1] {
+	case "init":
+		cmdInit(os.Args[2:])
+	case "bump":
+		cmdBump(os.Args[2:])
+	case "export":
+		cmdExport(os.Args[2:])
+	case "sync":
+		cmdSync(os.Args[2:])
+	default:
+		fail(fmt.Sprintf("unknown verb %q (expected init, bump, export, or sync)", os.Args[1]))
+	}
+}
+
+func findRepoRoot() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		return ""
+	}
+	for {
+		if _, err := os.Stat(filepath.Join(dir, ".git")); err == nil {
+			return dir
+		}
+		if info, err := os.Stat(filepath.Join(dir, "modpacks")); err == nil && info.IsDir() {
+			return dir
+		}
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			return ""
+		}
+		dir = parent
+	}
+}
+
+func cmdInit(args []string) {
+	if len(args) < 2 {
+		fail("usage: somnus init <category> <name>\n  category: modpacks | datapacks | resourcepacks")
+	}
+	category, name := args[0], args[1]
+	switch category {
+	case "modpacks", "datapacks", "resourcepacks":
+	default:
+		fail(fmt.Sprintf("invalid category %q (expected modpacks, datapacks, or resourcepacks)", category))
+	}
+
+	packDir := filepath.Join(category, name)
+	if _, err := os.Stat(packDir); err == nil {
+		fail(fmt.Sprintf("pack already exists: %s", packDir))
+	}
+	if err := os.MkdirAll(packDir, 0o755); err != nil {
+		fail(fmt.Sprintf("failed to create %s: %v", packDir, err))
+	}
+
+	manifest := map[string]any{
+		"$schema":      "../../tools/manifest/schema.json",
+		"id":           name,
+		"name":         name,
+		"type":         categoryType(category),
+		"release_type": "release",
+		"version":      "0.0.0",
+		"role":         "none",
+	}
+	if category == "modpacks" {
+		manifest["loader"] = "fabric"
+		manifest["mc_version"] = "1.21.1"
+	}
+	manifest["modrinth_id"] = name
+
+	writeJSON(filepath.Join(packDir, "manifest.json"), manifest)
+
+	changelog := fmt.Sprintf("# %s\n\nInitial scaffold. Describe the first release here.\n", name)
+	if err := os.WriteFile(filepath.Join(packDir, "changelog.md"), []byte(changelog), 0o644); err != nil {
+		fail(fmt.Sprintf("failed to write changelog.md: %v", err))
+	}
+
+	fmt.Printf("scaffolded %s\n", packDir)
+	fmt.Printf("  manifest.json (role: none, fill in modrinth_id/curseforge_id and version)\n")
+	fmt.Printf("  changelog.md\n")
+	fmt.Printf("next: add platform subdirs (e.g. %s/1.21.1-mr) and run packwiz init there.\n", packDir)
+}
+
+func categoryType(category string) string {
+	switch category {
+	case "datapacks":
+		return "datapack"
+	case "resourcepacks":
+		return "resourcepack"
+	default:
+		return "modpack"
+	}
+}
+
+func cmdBump(args []string) {
+	if len(args) < 2 {
+		fail("usage: somnus bump <pack-dir> <new-version>\n  e.g. somnus bump modpacks/rc-plus 26.06.1")
+	}
+	packDir, newVer := args[0], args[1]
+	mfPath := filepath.Join(packDir, "manifest.json")
+
+	data, err := os.ReadFile(mfPath)
+	if err != nil {
+		fail(fmt.Sprintf("failed to read %s: %v", mfPath, err))
+	}
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		fail(fmt.Sprintf("invalid JSON in %s: %v", mfPath, err))
+	}
+	old, _ := obj["version"].(string)
+	obj["version"] = newVer
+	writeJSON(mfPath, obj)
+	fmt.Printf("bumped %s: %s -> %s\n", mfPath, old, newVer)
+}
+
+func cmdExport(args []string) {
+	bin := findBinary("BUILDER_BIN", "builder", "./builder-bin/builder")
+	if bin == "" {
+		fail("builder binary not found. Build it (go build -C src/actions/builder -o builder-bin/builder .) or set $BUILDER_BIN")
+	}
+
+	if len(args) > 0 {
+		pack := args[0]
+		fmt.Printf("somnus export -> running builder --pack %s (%s)\n", pack, bin)
+		runPassthrough(bin, "--pack", pack, "local")
+		return
+	}
+	fmt.Printf("somnus export -> running builder (%s)\n", bin)
+	runPassthrough(bin, "local")
+}
+
+func cmdSync(args []string) {
+	bin := findBinary("MAINTAIN_BIN", "maintain", "./maintain-bin/maintain")
+	if bin == "" {
+		fail("maintain binary not found. Build it (go build -C src/actions/maintain -o maintain-bin/maintain .) or set $MAINTAIN_BIN")
+	}
+	fmt.Printf("somnus sync -> running maintain sync (%s)\n", bin)
+	runPassthrough(bin, "sync")
+}
+
+func findBinary(envVar, name, fallback string) string {
+	if v := os.Getenv(envVar); v != "" {
+		return v
+	}
+	if p, err := exec.LookPath(name); err == nil {
+		return p
+	}
+	if _, err := os.Stat(fallback); err == nil {
+		return fallback
+	}
+	return ""
+}
+
+func runPassthrough(bin string, args ...string) {
+	cmd := exec.Command(bin, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
+	if err := cmd.Run(); err != nil {
+		if exitErr, ok := err.(*exec.ExitError); ok {
+			os.Exit(exitErr.ExitCode())
+		}
+		fail(fmt.Sprintf("failed to run %s: %v", bin, err))
+	}
+}
+
+func writeJSON(path string, v any) {
+	data, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		fail(fmt.Sprintf("failed to marshal JSON: %v", err))
+	}
+	data = append(data, '\n')
+	if err := os.WriteFile(path, data, 0o644); err != nil {
+		fail(fmt.Sprintf("failed to write %s: %v", path, err))
+	}
+}
+
+func fail(msg string) {
+	fmt.Fprintf(os.Stderr, "::error::%s\n", msg)
+	os.Exit(1)
+}
