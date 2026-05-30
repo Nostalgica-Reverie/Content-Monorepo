@@ -1,2 +1,2 @@
-# Simply Optimized Forked 26.05.5
-updates
+# Simply Optimized Forked 26.05.6
+add particle core
