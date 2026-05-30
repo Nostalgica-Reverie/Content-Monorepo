@@ -7,19 +7,21 @@
   "release_type": "release",
   "version": "26.05",
   "modrinth_id": "rekindled-legacy",
-  "performance_base": {
-    "pack": "rekindled-common",
-    "mappings": [
-      { "source": "26.1.2-mr", "target": "b0033-mr" },
-      { "source": "26.1.2-mr", "target": "b0035-mr" },
-      { "source": "26.1.2-mr", "target": "gdc2012-mr" },
-      { "source": "26.1.2-mr", "target": "b0054-mr" },
-      { "source": "26.1.2-mr", "target": "tu0-mr" },
-      { "source": "26.1.2-mr", "target": "tu1-mr" },
-      { "source": "26.1.2-mr", "target": "tu2-mr" },
-      { "source": "26.1.2-mr", "target": "tu3-mr" },
-      { "source": "26.1.2-mr", "target": "tu5-mr" }
-    ]
+  "role": {
+    "performance_base": {
+      "pack": "rekindled-common",
+      "mappings": [
+        { "source": "26.1.2-mr", "target": "b0033-mr" },
+        { "source": "26.1.2-mr", "target": "b0035-mr" },
+        { "source": "26.1.2-mr", "target": "gdc2012-mr" },
+        { "source": "26.1.2-mr", "target": "b0054-mr" },
+        { "source": "26.1.2-mr", "target": "tu0-mr" },
+        { "source": "26.1.2-mr", "target": "tu1-mr" },
+        { "source": "26.1.2-mr", "target": "tu2-mr" },
+        { "source": "26.1.2-mr", "target": "tu3-mr" },
+        { "source": "26.1.2-mr", "target": "tu5-mr" }
+      ]
+    }
   },
   "variants": [
     { "id": "b0033",   "mc_version": "26.1.2", "name": "Beta 0033" },
