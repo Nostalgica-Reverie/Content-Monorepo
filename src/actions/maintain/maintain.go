@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,7 +22,7 @@ func modpacksDir() string {
 
 func main() {
 	if len(os.Args) < 2 {
-		fail("usage: maintain <update|refresh>")
+		fail("usage: maintain <update|refresh|sync>")
 	}
 
 	switch os.Args[1] {
@@ -28,8 +30,10 @@ func main() {
 		run(opUpdate)
 	case "refresh":
 		run(opRefresh)
+	case "sync":
+		runSync()
 	default:
-		fail(fmt.Sprintf("unknown subcommand %q (expected 'update' or 'refresh')", os.Args[1]))
+		fail(fmt.Sprintf("unknown subcommand %q (expected update, refresh, or sync)", os.Args[1]))
 	}
 }
 
@@ -176,6 +180,202 @@ func workPool(targets []string, op operation) []string {
 		failures = append(failures, f)
 	}
 	return failures
+}
+
+type mapping struct {
+	Source string `json:"source"`
+	Target string `json:"target"`
+}
+type performanceBase struct {
+	Pack     string    `json:"pack"`
+	Mappings []mapping `json:"mappings"`
+}
+type manifest struct {
+	ID   string          `json:"id"`
+	Role json.RawMessage `json:"role"`
+}
+
+func parseRole(raw json.RawMessage) (kind string, pb *performanceBase) {
+	var s string
+	if err := json.Unmarshal(raw, &s); err == nil {
+		return s, nil // "none" or "base"
+	}
+	var obj struct {
+		PerformanceBase *performanceBase `json:"performance_base"`
+	}
+	if err := json.Unmarshal(raw, &obj); err == nil && obj.PerformanceBase != nil {
+		return "consumer", obj.PerformanceBase
+	}
+	return "", nil
+}
+
+func platformSuffix(s string) string {
+	if strings.HasSuffix(s, "-mr") {
+		return "mr"
+	}
+	if strings.HasSuffix(s, "-cf") {
+		return "cf"
+	}
+	return ""
+}
+
+type syncJob struct {
+	consumerID string
+	baseID     string
+	sourceDir  string
+	targetDir  string
+}
+
+func readManifest(path string) (*manifest, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var m manifest
+	if err := json.Unmarshal(data, &m); err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+func runSync() {
+	if _, err := exec.LookPath("packwiz"); err != nil {
+		fail("packwiz not found in PATH")
+	}
+	root := modpacksDir()
+	packs, err := os.ReadDir(root)
+	if err != nil {
+		fail(fmt.Sprintf("failed to read %s: %v", root, err))
+	}
+
+	roleOf := make(map[string]string)
+	for _, p := range packs {
+		if !p.IsDir() {
+			continue
+		}
+		m, err := readManifest(filepath.Join(root, p.Name(), "manifest.json"))
+		if err != nil {
+			continue
+		}
+		kind, _ := parseRole(m.Role)
+		roleOf[m.ID] = kind
+	}
+
+	var jobs []syncJob
+	for _, p := range packs {
+		if !p.IsDir() {
+			continue
+		}
+		packPath := filepath.Join(root, p.Name())
+		m, err := readManifest(filepath.Join(packPath, "manifest.json"))
+		if err != nil {
+			continue
+		}
+		kind, pb := parseRole(m.Role)
+		if kind != "consumer" || pb == nil {
+			continue
+		}
+
+		if roleOf[pb.Pack] != "base" {
+			fail(fmt.Sprintf("consumer '%s' references base '%s', which is not role 'base'", m.ID, pb.Pack))
+		}
+		basePackDir := filepath.Join(root, pb.Pack)
+
+		for _, mp := range pb.Mappings {
+			sp, tp := platformSuffix(mp.Source), platformSuffix(mp.Target)
+			if sp == "" || tp == "" {
+				fail(fmt.Sprintf("consumer '%s': mapping %s->%s has a non -mr/-cf suffix", m.ID, mp.Source, mp.Target))
+			}
+			if sp != tp {
+				fail(fmt.Sprintf("consumer '%s': FORBIDDEN cross-platform mapping %s (%s) -> %s (%s). MR/CF must never cross (license risk).",
+					m.ID, mp.Source, sp, mp.Target, tp))
+			}
+			src := filepath.Join(basePackDir, mp.Source)
+			dst := filepath.Join(packPath, mp.Target)
+			if _, err := os.Stat(src); err != nil {
+				fail(fmt.Sprintf("consumer '%s': mapping source %s missing in base '%s'", m.ID, mp.Source, pb.Pack))
+			}
+			if _, err := os.Stat(dst); err != nil {
+				fail(fmt.Sprintf("consumer '%s': mapping target %s missing in this pack", m.ID, mp.Target))
+			}
+			jobs = append(jobs, syncJob{consumerID: m.ID, baseID: pb.Pack, sourceDir: src, targetDir: dst})
+		}
+	}
+
+	if len(jobs) == 0 {
+		fmt.Println("no consumers to sync.")
+		return
+	}
+	fmt.Printf("resolved %d sync job(s) from manifests\n", len(jobs))
+
+	for _, j := range jobs {
+		fmt.Printf("syncing %s -> %s (base %s)\n", j.sourceDir, j.targetDir, j.baseID)
+
+		for _, folder := range []string{"mods", "config"} {
+			srcFolder := filepath.Join(j.sourceDir, folder)
+			if _, err := os.Stat(srcFolder); err != nil {
+				continue
+			}
+			n, err := copyTree(srcFolder, filepath.Join(j.targetDir, folder))
+			if err != nil {
+				fail(fmt.Sprintf("copy %s for %s failed: %v", folder, j.consumerID, err))
+			}
+			fmt.Printf("  %s: %d file(s) copied -> i did this!\n", folder, n)
+		}
+
+		cmd := exec.Command("packwiz", "refresh")
+		cmd.Dir = j.targetDir
+		if out, err := cmd.CombinedOutput(); err != nil {
+			fail(fmt.Sprintf("packwiz refresh failed in %s: %v\n%s", j.targetDir, err, indent(string(out), "    ")))
+		}
+		fmt.Printf("  refreshed %s\n", j.targetDir)
+	}
+
+	fmt.Println("all syncs completed.")
+}
+
+func copyTree(src, dst string) (int, error) {
+	count := 0
+	err := filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		rel, err := filepath.Rel(src, path)
+		if err != nil {
+			return err
+		}
+		if rel == "." {
+			return nil
+		}
+		target := filepath.Join(dst, rel)
+		if info.IsDir() {
+			return os.MkdirAll(target, 0o755)
+		}
+		if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
+			return err
+		}
+		if err := copyFile(path, target); err != nil {
+			return err
+		}
+		count++
+		return nil
+	})
+	return count, err
+}
+
+func copyFile(src, dst string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+	_, err = io.Copy(out, in)
+	return err
 }
 
 func indent(s, prefix string) string {
