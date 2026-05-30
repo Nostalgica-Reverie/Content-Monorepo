@@ -93,6 +93,9 @@ Somnus is primarily a tool to accelerate some hurdles in pack development, regar
 ### Somnus Sync
 ```somnus sync``` runs the sync command locally.
 
+### Somnus Modlist
+```somnus modlist``` will generate a Crash Assistant mod list derived from the packs ```index.toml```.
+
 ## Credits
 stale.yml forked from JEI. Both licensed under MIT.
 
