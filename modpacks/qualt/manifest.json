@@ -1,0 +1,26 @@
+{
+  "$schema": "../../tools/manifest/schema.json",
+  "id": "qualt",
+  "loader": "fabric",
+  "mc_version": "26.1.2",
+  "modrinth_id": "qualt",
+  "name": "qualt",
+  "release_type": "release",
+  "role": {
+    "performance_base": {
+      "mappings": [
+        {
+          "source": "26.1.2-mr",
+          "target": "26.1.2-mr"
+        },
+        {
+          "source": "26.1.2-cf",
+          "target": "26.1.2-cf"
+        }
+      ],
+      "pack": "simply-optimized-forked"
+    }
+  },
+  "type": "modpack",
+  "version": "26.06"
+}

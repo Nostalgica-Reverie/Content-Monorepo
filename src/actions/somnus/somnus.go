@@ -153,16 +153,28 @@ func cmdInit(args []string) {
 		"version":      defaultPackVersion,
 	}
 
+	keys := []string{mcVersion}
+	if len(variants) > 0 {
+		keys = variants
+	}
+
 	switch {
 	case asBase:
 		manifest["role"] = "base"
 	case consumesBase != "":
+		var mappings []map[string]string
+		for _, key := range keys {
+			for _, plat := range []string{"mr", "cf"} {
+				mappings = append(mappings, map[string]string{
+					"source": "CHANGEME-" + plat,
+					"target": key + "-" + plat,
+				})
+			}
+		}
 		manifest["role"] = map[string]any{
 			"performance_base": map[string]any{
-				"pack": consumesBase,
-				"mappings": []map[string]string{
-					{"source": "CHANGEME-mr", "target": "CHANGEME-mr"},
-				},
+				"pack":     consumesBase,
+				"mappings": mappings,
 			},
 		}
 	default:
@@ -208,10 +220,6 @@ func cmdInit(args []string) {
 		if _, err := exec.LookPath("packwiz"); err != nil {
 			fmt.Println("note: packwiz not on PATH; skipped subdir init. Create the subdirs and run packwiz init manually.")
 			return
-		}
-		keys := []string{mcVersion}
-		if len(variants) > 0 {
-			keys = variants
 		}
 		for _, key := range keys {
 			for _, plat := range []string{"mr", "cf"} {
