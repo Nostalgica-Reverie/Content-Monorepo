@@ -1,0 +1,55 @@
+# Modlist
+
+## Client Mods
+
+- [Animatium](https://modrinth.com/mod/zy0karK1)
+- [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
+- [Better Block Entities](https://modrinth.com/mod/ONZm0H7Y)
+- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
+- [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
+- [Cubes Without Borders](https://modrinth.com/mod/ETlrkaYF)
+- [Dynamic FPS](https://modrinth.com/mod/LQ3K71Q1)
+- [Enchanted's Sodium Options](https://modrinth.com/mod/bd7qKEEC)
+- [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
+- [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
+- [Gnetum](https://modrinth.com/mod/7MoE34WK)
+- [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
+- [Ixeris](https://modrinth.com/mod/p8RJPJIC)
+- [Legacy Display](https://modrinth.com/mod/TmbxdF9G)
+- [Mod Menu](https://modrinth.com/mod/mOgUt4GM)
+- [More Culling](https://modrinth.com/mod/51shyZVL)
+- [Particle Core](https://modrinth.com/mod/RSeLon5O)
+- [Picture Mode](https://modrinth.com/mod/kFU5UCQz)
+- [Resource Pack Overrides](https://modrinth.com/mod/YsFycamt)
+- [ServerCore](https://modrinth.com/mod/4WWQxlQP)
+- [Sodium Core Shader Support](https://modrinth.com/mod/G8yJPRdl)
+- [Sodium](https://modrinth.com/mod/AANobbMI)
+- [Stfu](https://modrinth.com/mod/Rg9WdvvR)
+- [Timeless](https://modrinth.com/mod/nJxEs2tZ)
+- [[EMF] Entity Model Features](https://modrinth.com/mod/4I1XuqiY)
+- [[ETF] Entity Texture Features](https://modrinth.com/mod/BVzZfTc1)
+
+## Shared Mods
+
+- [Anti-Smooth](https://modrinth.com/mod/zlZC5n7T)
+- [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
+- [Fabric API](https://modrinth.com/mod/P7dR8mSH)
+- [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
+- [FerriteCore](https://modrinth.com/mod/uXXizFIs)
+- [Forge Config API Port](https://modrinth.com/mod/ohNO6lps)
+- [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
+- [Golden Age Combat](https://modrinth.com/mod/U5I04KQ6)
+- [Lithium](https://modrinth.com/mod/gvQqBUqZ)
+- [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)
+- [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
+- [Puzzles Lib](https://modrinth.com/mod/QAGBst4M)
+- [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
+- [Simple Resource Loader](https://modrinth.com/mod/5e65FGXQ)
+- [Text Placeholder API](https://modrinth.com/mod/eXts2L7r)
+- [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
+- [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
+- [oωo (owo-lib)](https://modrinth.com/mod/ccKDOlHs)
+
+## Server Mods
+
+- [Custom Default World Preset](https://modrinth.com/mod/1BduonQp)

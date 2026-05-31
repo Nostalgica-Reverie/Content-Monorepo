@@ -1,0 +1,57 @@
+# Modlist
+
+## Client Mods
+
+- [Amecs](https://modrinth.com/mod/rcLriA4v)
+- [Animatium](https://modrinth.com/mod/zy0karK1)
+- [Async Logger](https://modrinth.com/mod/zvNzKfGF)
+- [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
+- [BisectHosting Server Integration Menu](https://modrinth.com/mod/yWSAtnfH)
+- [Bobby](https://modrinth.com/mod/M08ruV16)
+- [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
+- [Cull Fewer Leaves](https://modrinth.com/mod/alhWWxax)
+- [Dynamic FPS](https://modrinth.com/mod/LQ3K71Q1)
+- [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
+- [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
+- [Gnetum](https://modrinth.com/mod/7MoE34WK)
+- [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
+- [Ixeris](https://modrinth.com/mod/p8RJPJIC)
+- [Particle Core](https://modrinth.com/mod/RSeLon5O)
+- [Raise Sound Limit Simplified](https://modrinth.com/mod/SKW62Pht)
+- [ServerCore](https://modrinth.com/mod/4WWQxlQP)
+- [Sodium](https://modrinth.com/mod/AANobbMI)
+- [Stfu](https://modrinth.com/mod/Rg9WdvvR)
+
+## Shared Mods
+
+- [Async](https://modrinth.com/mod/vEC2jm6I)
+- [Bedrock Skins](https://modrinth.com/mod/76lEgqhs)
+- [BugFixerUpper](https://modrinth.com/mod/gRMQvlnJ)
+- [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
+- [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
+- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
+- [Customizable Player Models](https://modrinth.com/mod/h1E7sQNL)
+- [Fabric API](https://modrinth.com/mod/P7dR8mSH)
+- [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
+- [Factory API](https://modrinth.com/mod/nkTZHOLD)
+- [FerriteCore](https://modrinth.com/mod/uXXizFIs)
+- [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
+- [Global Packs](https://modrinth.com/mod/NRLPy2mk)
+- [Legacy Nether: Extended](https://modrinth.com/mod/l54rfVmm)
+- [Legacy World Sizes](https://modrinth.com/mod/ATANFEww)
+- [Legacy4J](https://modrinth.com/mod/gHvKJofA)
+- [Lithium](https://modrinth.com/mod/gvQqBUqZ)
+- [Minimega](https://modrinth.com/mod/d4zJxq8p)
+- [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
+- [ModernRegSyncFix](https://modrinth.com/mod/U2w9BZus)
+- [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
+- [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
+- [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
+- [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
+- [Simple Voice Chat](https://modrinth.com/mod/9eGKb6K1)
+- [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
+- [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
+
+## Server Mods
+
+- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)
