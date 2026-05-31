@@ -7,17 +7,18 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 )
 
 func main() {
 	if len(os.Args) < 2 {
-		fail("usage: somnus <init|bump|export|sync|update|refresh|modlist|test|lint|port> [args]")
+		fail("usage: somnus <init|bump|export|sync|update|refresh|modlist|pages|test|lint|port> [args]")
 	}
 
 	switch os.Args[1] {
-	case "export", "sync", "update", "refresh", "lint":
+	case "export", "sync", "update", "refresh", "lint", "pages":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -42,6 +43,8 @@ func main() {
 		cmdRefresh(os.Args[2:])
 	case "modlist":
 		cmdModlist(os.Args[2:])
+	case "pages":
+		cmdPages(os.Args[2:])
 	case "test":
 		cmdTest(os.Args[2:])
 	case "lint":
@@ -49,7 +52,7 @@ func main() {
 	case "port":
 		cmdPort(os.Args[2:])
 	default:
-		fail(fmt.Sprintf("unknown verb %q (expected init, bump, export, sync, update, refresh, modlist, test, lint, or port)", os.Args[1]))
+		fail(fmt.Sprintf("unknown verb %q (expected init, bump, export, sync, update, refresh, modlist, pages, test, lint, or port)", os.Args[1]))
 	}
 }
 
@@ -329,6 +332,8 @@ type modlistEntry struct {
 type pwMod struct {
 	name       string
 	filename   string
+	side       string
+	url        string
 	hashFormat string
 	hash       string
 	cfFileID   *int64
@@ -405,6 +410,137 @@ func cmdModlist(args []string) {
 	}
 }
 
+func cmdPages(args []string) {
+	var packArg string
+	if len(args) > 0 {
+		packArg = args[0]
+	}
+
+	var subdirs []string
+	if packArg != "" {
+		subdirs = packModSubdirs(packArg)
+		if len(subdirs) == 0 {
+			fail(fmt.Sprintf("no mod subdirs found under %s", packArg))
+		}
+	} else {
+		root := modpacksRoot()
+		packs, err := os.ReadDir(root)
+		if err != nil {
+			fail(fmt.Sprintf("failed to read %s: %v", root, err))
+		}
+		for _, p := range packs {
+			if p.IsDir() {
+				subdirs = append(subdirs, packModSubdirs(filepath.Join(root, p.Name()))...)
+			}
+		}
+		if len(subdirs) == 0 {
+			fail("no mod subdirs found in any pack")
+		}
+	}
+
+	written := 0
+	for _, sub := range subdirs {
+		n, err := writeModlistMD(sub)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "::warning::%s: %v\n", sub, err)
+			continue
+		}
+		fmt.Printf("wrote %s/modlist.md (%d mods)\n", sub, n)
+		written++
+	}
+	fmt.Printf("generated %d modlist.md file(s).\n", written)
+}
+
+func modpacksRoot() string {
+	if d := os.Getenv("MODPACKS_DIR"); d != "" {
+		return d
+	}
+	return "modpacks"
+}
+
+func packModSubdirs(packDir string) []string {
+	var out []string
+	entries, err := os.ReadDir(packDir)
+	if err != nil {
+		return nil
+	}
+	for _, e := range entries {
+		if !e.IsDir() {
+			continue
+		}
+		if _, err := os.Stat(filepath.Join(packDir, e.Name(), "mods")); err == nil {
+			out = append(out, filepath.Join(packDir, e.Name()))
+		}
+	}
+	return out
+}
+
+func writeModlistMD(subdir string) (int, error) {
+	modsDir := filepath.Join(subdir, "mods")
+	entries, err := os.ReadDir(modsDir)
+	if err != nil {
+		return 0, err
+	}
+
+	var client, shared, server []string
+	count := 0
+	for _, e := range entries {
+		if e.IsDir() || !strings.HasSuffix(e.Name(), ".pw.toml") {
+			continue
+		}
+		mod, err := parsePwToml(filepath.Join(modsDir, e.Name()))
+		if err != nil {
+			continue
+		}
+		count++
+		line := fmt.Sprintf("- [%s](%s)", mod.name, modPageURL(mod))
+		switch mod.side {
+		case "client":
+			client = append(client, line)
+		case "server":
+			server = append(server, line)
+		default:
+			shared = append(shared, line)
+		}
+	}
+
+	var b strings.Builder
+	b.WriteString("# Modlist\n")
+	writeSection(&b, "Client Mods", client)
+	writeSection(&b, "Shared Mods", shared)
+	writeSection(&b, "Server Mods", server)
+
+	out := filepath.Join(subdir, "modlist.md")
+	if err := os.WriteFile(out, []byte(b.String()), 0o644); err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
+func writeSection(b *strings.Builder, title string, lines []string) {
+	if len(lines) == 0 {
+		return
+	}
+	sort.Strings(lines)
+	b.WriteString("\n## " + title + "\n\n")
+	for _, l := range lines {
+		b.WriteString(l + "\n")
+	}
+}
+
+func modPageURL(m *pwMod) string {
+	if m.mrModID != "" {
+		return "https://modrinth.com/mod/" + m.mrModID
+	}
+	if m.cfFileID != nil && m.url != "" {
+		return m.url
+	}
+	if m.url != "" {
+		return m.url
+	}
+	return ""
+}
+
 func parsePwToml(path string) (*pwMod, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
@@ -433,6 +569,8 @@ func parsePwToml(path string) (*pwMod, error) {
 				m.name = val
 			case "filename":
 				m.filename = val
+			case "side":
+				m.side = val
 			}
 		case "download":
 			switch key {
@@ -440,6 +578,8 @@ func parsePwToml(path string) (*pwMod, error) {
 				m.hashFormat = val
 			case "hash":
 				m.hash = val
+			case "url":
+				m.url = val
 			}
 		case "update.curseforge":
 			if key == "file-id" {

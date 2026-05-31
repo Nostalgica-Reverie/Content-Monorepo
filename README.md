@@ -111,6 +111,18 @@ Somnus is primarily a tool to accelerate some hurdles in pack development, regar
 ### Somnus Lint
 ```somnus lint``` will check if your JSON or TOML is valid and yell at you if it isnt.
 
+### Somnus Update
+```somnus update``` runs update on every modpack.
+
+### Somnus Refresh
+```somnus refresh``` runs refresh on every modpack.
+
+### Somnus Port
+```somnus port``` (attempts) to port a Modrinth or Curseforge pack to the other distribution platform. This will likely be high in error, but may accelerate porting by providing a majority of the core mods.
+
+### Somnus Pages
+```somnus pages``` generates a modlist.md inside each subdirectory, which can be linked to users, or saved for reference at a specific point in time.
+
 ## Credits
 stale.yml forked from JEI, licensed under MIT.
 
