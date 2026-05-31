@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:overworlddipshit",
+  "generator": {
+    "type": "moderner_beta:moderner_beta",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "preset": "minecraft:overworld"
+    },
+    "settings": "moderner_beta:beta",
+    "provider_settings": {
+      "moderner_beta:preset": "moderner_beta:beta_xbox_legacy"
+    }
+  }
+}

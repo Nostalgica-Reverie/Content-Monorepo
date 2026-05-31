@@ -1,0 +1,81 @@
+{
+  "elements": {
+    "scrollable_renderer": {
+      "type": "put_scrollable_renderer",
+      "x": "${width}/2-220",
+      "y": "(${height}-${scrollable_renderer.height})/2 + 23",
+      "width": 211,
+      "height": 174,
+      "elements": {
+        "text": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.dispenser_message", "allowVariables": true, "args": ["controlIcon.menu_main_action"]},
+          "width": 186,
+          "shadow": false
+        },
+        "text1": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.dispenser_message_1", "allowVariables": true, "args": ["controlIcon.menu_main_action"]},
+          "width": 186,
+          "shadow": false
+        }
+      }
+    },
+    "panel": {
+      "type":"blit_sprite",
+      "sprite":"legacy:tiles/small_panel",
+      "width":215,
+      "height":204,
+      "x":"${width}/2+15",
+      "y":"${scrollable_renderer.y}-17"
+    },
+    "dispenser_label": {
+      "type":"draw_string",
+      "component": {"translate": "container.dispenser"},
+      "color": "${commonColor.inventory_gray_text}",
+      "shadow": false,
+      "x":"${panel.x}+${panel.width}/2-${dispenser_label.component.width}/2",
+      "y":"${panel.y}+10"
+    },
+    "dispenser_inventory": {
+      "type":"put_legacy_slot",
+      "range":"[0,8]",
+      "isFake":true,
+      "fakeContainer": [
+        "arrow","arrow","arrow",
+        "arrow","arrow","arrow",
+        "arrow","arrow","air"
+      ],
+      "x":"${panel.x}+${panel.width}/2+(${dispenser_inventory.index}%3)*21-31",
+      "y":"${panel.y}+24+(${dispenser_inventory.index}/3)*21"
+    },
+    "inventory_label": {
+      "type":"draw_string",
+      "component": {"translate": "container.inventory"},
+      "color": "${commonColor.inventory_gray_text}",
+      "shadow": false,
+      "x":"${panel.x}+14",
+      "y":"${panel.y}+93"
+    },
+    "inventory": {
+      "type":"put_legacy_slot",
+      "range":"[0,26]",
+      "isFake":true,
+   "fakeContainer": [
+        {"item": "dirt", "count": 30},{"item": "oak_planks", "count": 14},"bow","wheat_seeds","sand","arrow","air","air","air",
+        "air","air","air","air","air","air","air","air--","air",
+        {"item": "oak_sapling", "count": 5},"air","air","air","air","air","air","air","air"],
+      "x":"${panel.x}+14+(${inventory.index}%9)*21",
+      "y":"${panel.y}+106+(${inventory.index}/9)*21"
+    },
+    "quick_select": {
+      "type":"put_legacy_slot",
+      "range":"[0,8]",
+      "isFake":true,
+  "fakeContainer": [
+        "stone_pickaxe","iron_sword",{"item": "dirt", "count": 32},{"item": "cobblestone", "count": 22},{"item": "oak_log", "count": 11}, {"item": "torch", "count": 12}, "air", "air", "air"],
+      "x":"${panel.x}+14+(${quick_select.index}%9)*21",
+      "y":"${panel.y}+176"
+    }
+  }
+}

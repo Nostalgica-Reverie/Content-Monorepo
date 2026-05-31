@@ -1,108 +1,75 @@
 {
-  "type": "minecraft:random_patch",
+  "type": "minecraft:simple_random_selector",
   "config": {
-    "feature": {
-      "feature": {
-        "type": "minecraft:simple_random_selector",
-        "config": {
-          "features": [
-            {
-              "feature": {
-                "config": {
-                  "to_place": {
-                    "type": "minecraft:simple_state_provider",
-                    "state": {
-                      "Name": "minecraft:carved_pumpkin",
-                      "Properties": {
-                        "facing": "north"
-                      }
-                    }
-                  }
-                },
-                "type": "minecraft:simple_block"
-              },
-              "placement": []
-            },
-            {
-              "feature": {
-                "config": {
-                  "to_place": {
-                    "type": "minecraft:simple_state_provider",
-                    "state": {
-                      "Name": "minecraft:carved_pumpkin",
-                      "Properties": {
-                        "facing": "south"
-                      }
-                    }
-                  }
-                },
-                "type": "minecraft:simple_block"
-              },
-              "placement": []
-            },
-            {
-              "feature": {
-                "config": {
-                  "to_place": {
-                    "type": "minecraft:simple_state_provider",
-                    "state": {
-                      "Name": "minecraft:carved_pumpkin",
-                      "Properties": {
-                        "facing": "west"
-                      }
-                    }
-                  }
-                },
-                "type": "minecraft:simple_block"
-              },
-              "placement": []
-            },
-            {
-              "feature": {
-                "config": {
-                  "to_place": {
-                    "type": "minecraft:simple_state_provider",
-                    "state": {
-                      "Name": "minecraft:carved_pumpkin",
-                      "Properties": {
-                        "facing": "east"
-                      }
-                    }
-                  }
-                },
-                "type": "minecraft:simple_block"
-              },
-              "placement": []
-            }
-          ]
-        }
-      },
-      "placement": [
-        {
-          "type": "minecraft:block_predicate_filter",
-          "predicate": {
-            "type": "minecraft:all_of",
-            "predicates": [
-              {
-                "type": "minecraft:matching_blocks",
-                "blocks": "minecraft:air"
-              },
-              {
-                "type": "minecraft:matching_blocks",
-                "blocks": "minecraft:grass_block",
-                "offset": [
-                  0,
-                  -1,
-                  0
-                ]
+    "features": [
+      {
+        "feature": {
+          "type": "minecraft:simple_block",
+          "config": {
+            "to_place": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "minecraft:carved_pumpkin",
+                "Properties": {
+                  "facing": "north"
+                }
               }
-            ]
+            }
           }
-        }
-      ]
-    },
-    "tries": 96,
-    "xz_spread": 7,
-    "y_spread": 3
+        },
+        "placement": []
+      },
+      {
+        "feature": {
+          "type": "minecraft:simple_block",
+          "config": {
+            "to_place": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "minecraft:carved_pumpkin",
+                "Properties": {
+                  "facing": "south"
+                }
+              }
+            }
+          }
+        },
+        "placement": []
+      },
+      {
+        "feature": {
+          "type": "minecraft:simple_block",
+          "config": {
+            "to_place": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "minecraft:carved_pumpkin",
+                "Properties": {
+                  "facing": "west"
+                }
+              }
+            }
+          }
+        },
+        "placement": []
+      },
+      {
+        "feature": {
+          "type": "minecraft:simple_block",
+          "config": {
+            "to_place": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "minecraft:carved_pumpkin",
+                "Properties": {
+                  "facing": "east"
+                }
+              }
+            }
+          }
+        },
+        "placement": []
+      }
+    ]
   }
 }
