@@ -2,10 +2,16 @@ name: "Sync"
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'modpacks/simply-optimized-forked/**'
+      - 'modpacks/rekindled-common/**'
+      - 'modpacks/lce-common/**'
 
 jobs:
   sync:
     runs-on: technocality
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
