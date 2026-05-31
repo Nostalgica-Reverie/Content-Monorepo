@@ -8,7 +8,9 @@ Development is (currently) held on [git.nostalgica.net](https://git.nostalgica.n
 This repository hosts all the source and files for all of our resource packs, data packs, modpacks and more. This readme is primarily intended for internal developer usage.
 
 ## Contributing
-First, please refer to the CONTRIBUTING.md file in the repository. This will tell you some basics
+First, please refer to the CONTRIBUTING.md file in the repository. This will tell you some basics.
+
+To work on the repo, please install Packwiz. It is also helpful to install Packwiz Wrapper, as it can do some batch commands. Alternatively, you may also use the WIP tool Somnus, which is detailed below.
 
 # Actions
 The repository makes usage of Forgejo actions, for CI/CD and general QoL improvements to our dev process.
@@ -23,13 +25,17 @@ The repository makes usage of Forgejo actions, for CI/CD and general QoL improve
 - JSON Linter
 - TOML Linter
 - Modpack Sync*
+
 *for modpacks only
+
 **on publish and build only
 
 ### Using Auto Publish
 Every project in the repo must have a manifest.json. This manifest.json specifies stuff that our publish.yml then uses to auto publish. Once it is set up, you may simply bump version in the manifest.json and it will update across platforms.
 
 Whenever Auto Publish is ran, it will be ran through a Validator. The Validator will fail if something is improperly configured; whether that be the lack of a changelog.md, a malformed manifest.json, or other reasons. If a publish run fails, please look to your manifest and set-up to make sure you are properly set up.
+
+Auto Publish will also automatically list out every mod updated, added or removed in a modpack, and all commits to the pack. This allows for some time saving as you no longer now have to keep track of constant changes
 
 ### Using Sync
 To address issues regarding our packs being intertwined in content and development, there is now a Sync system implemented. 
@@ -69,6 +75,9 @@ This means builds can be very fast, sometimes taking only 30 seconds.
 
 ### Using Linters
 All linters automatically run on commit, and will fail if the modified JSON/TOML is broken. This is helpful in the case of making a minor mistake in syntax
+
+### Using Bulk Actions
+Bulk Actions allow you to a lot of one thing, in a single button push via our ForgeJo. This allows for bulk PNG compression, a bulk refresh (which will fix any broken modpacks), and a bulk update (does the same as auto update and auto refresh!)
 
 # Somnus
 Somnus is a WIP CLI tool written in go that is built directly into the Monorepository. To utilize it, you must install it locally. It can be very helpful to modpack development!
