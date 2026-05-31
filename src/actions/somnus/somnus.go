@@ -13,11 +13,11 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		fail("usage: somnus <init|bump|export|sync|modlist|test|lint|port> [args]")
+		fail("usage: somnus <init|bump|export|sync|update|refresh|modlist|test|lint|port> [args]")
 	}
 
 	switch os.Args[1] {
-	case "export", "sync", "lint":
+	case "export", "sync", "update", "refresh", "lint":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -36,6 +36,10 @@ func main() {
 		cmdExport(os.Args[2:])
 	case "sync":
 		cmdSync(os.Args[2:])
+	case "update":
+		cmdUpdate(os.Args[2:])
+	case "refresh":
+		cmdRefresh(os.Args[2:])
 	case "modlist":
 		cmdModlist(os.Args[2:])
 	case "test":
@@ -45,7 +49,7 @@ func main() {
 	case "port":
 		cmdPort(os.Args[2:])
 	default:
-		fail(fmt.Sprintf("unknown verb %q (expected init, bump, export, sync, modlist, test, lint, or port)", os.Args[1]))
+		fail(fmt.Sprintf("unknown verb %q (expected init, bump, export, sync, update, refresh, modlist, test, lint, or port)", os.Args[1]))
 	}
 }
 
@@ -77,13 +81,56 @@ const (
 
 func cmdInit(args []string) {
 	if len(args) < 2 {
-		fail("usage: somnus init <category> <name>\n  category: modpacks | datapacks | resourcepacks")
+		fail("usage: somnus init <category> <name> [--mc <version>] [--loader fabric|forge|neoforge|quilt] [--base | --consumes <id>] [--variants a,b,c]\n  category: modpacks | datapacks | resourcepacks")
 	}
 	category, name := args[0], args[1]
 	switch category {
 	case "modpacks", "datapacks", "resourcepacks":
 	default:
 		fail(fmt.Sprintf("invalid category %q (expected modpacks, datapacks, or resourcepacks)", category))
+	}
+
+	loader := "fabric"
+	mcVersion := defaultMCVersion
+	asBase := false
+	consumesBase := ""
+	var variants []string
+	for i := 2; i < len(args); i++ {
+		switch args[i] {
+		case "--mc":
+			if i+1 < len(args) {
+				mcVersion = args[i+1]
+				i++
+			}
+		case "--loader":
+			if i+1 < len(args) {
+				loader = args[i+1]
+				i++
+			}
+		case "--base":
+			asBase = true
+		case "--consumes":
+			if i+1 < len(args) {
+				consumesBase = args[i+1]
+				i++
+			}
+		case "--variants":
+			if i+1 < len(args) {
+				for _, v := range strings.Split(args[i+1], ",") {
+					if v = strings.TrimSpace(v); v != "" {
+						variants = append(variants, v)
+					}
+				}
+				i++
+			}
+		}
+	}
+	if asBase && consumesBase != "" {
+		fail("--base and --consumes are mutually exclusive (a pack is either a base or a consumer, not both)")
+	}
+	loaderFlag, ok := loaderLatestFlag(loader)
+	if !ok {
+		fail(fmt.Sprintf("invalid loader %q (expected fabric, forge, neoforge, or quilt)", loader))
 	}
 
 	packDir := filepath.Join(category, name)
@@ -101,13 +148,41 @@ func cmdInit(args []string) {
 		"type":         categoryType(category),
 		"release_type": "release",
 		"version":      defaultPackVersion,
-		"role":         "none",
 	}
+
+	switch {
+	case asBase:
+		manifest["role"] = "base"
+	case consumesBase != "":
+		manifest["role"] = map[string]any{
+			"performance_base": map[string]any{
+				"pack": consumesBase,
+				"mappings": []map[string]string{
+					{"source": "CHANGEME-mr", "target": "CHANGEME-mr"},
+				},
+			},
+		}
+	default:
+		manifest["role"] = "none"
+	}
+
 	if category == "modpacks" {
-		manifest["loader"] = "fabric"
-		manifest["mc_version"] = defaultMCVersion
+		manifest["loader"] = loader
+		manifest["mc_version"] = mcVersion
 	}
 	manifest["modrinth_id"] = name
+
+	if len(variants) > 0 {
+		var vs []map[string]string
+		for _, v := range variants {
+			vs = append(vs, map[string]string{
+				"id":         v,
+				"mc_version": mcVersion,
+				"name":       v,
+			})
+		}
+		manifest["variants"] = vs
+	}
 
 	writeJSON(filepath.Join(packDir, "manifest.json"), manifest)
 
@@ -116,39 +191,51 @@ func cmdInit(args []string) {
 		fail(fmt.Sprintf("failed to write changelog.md: %v", err))
 	}
 
+	roleDesc := "none"
+	if asBase {
+		roleDesc = "base"
+	} else if consumesBase != "" {
+		roleDesc = "consumer of " + consumesBase + " (mappings are CHANGEME stubs \u2014 fill them in)"
+	}
 	fmt.Printf("scaffolded %s\n", packDir)
-	fmt.Printf("  manifest.json (role: none; fill in modrinth_id/curseforge_id, version, author)\n")
+	fmt.Printf("  manifest.json (role: %s; fill in modrinth_id/curseforge_id, version, author)\n", roleDesc)
 	fmt.Printf("  changelog.md\n")
 
 	if category == "modpacks" {
 		if _, err := exec.LookPath("packwiz"); err != nil {
-			fmt.Println("note: packwiz not on PATH; skipped subdir init. Create {mc}-mr/{mc}-cf and run packwiz init manually.")
+			fmt.Println("note: packwiz not on PATH; skipped subdir init. Create the subdirs and run packwiz init manually.")
 			return
 		}
-		for _, plat := range []string{"mr", "cf"} {
-			sub := filepath.Join(packDir, defaultMCVersion+"-"+plat)
-			if err := os.MkdirAll(sub, 0o755); err != nil {
-				fail(fmt.Sprintf("failed to create %s: %v", sub, err))
-			}
-			fmt.Printf("  packwiz init in %s ...\n", sub)
-			cmd := exec.Command("packwiz", "init",
-				"--name", name,
-				"--author", placeholderAuthor,
-				"--mc-version", defaultMCVersion,
-				"--modloader", "fabric",
-				"--fabric-latest",
-				"--version", defaultPackVersion,
-				"-y",
-			)
-			cmd.Dir = sub
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-			if err := cmd.Run(); err != nil {
-				fail(fmt.Sprintf("packwiz init failed in %s: %v", sub, err))
+		keys := []string{mcVersion}
+		if len(variants) > 0 {
+			keys = variants
+		}
+		for _, key := range keys {
+			for _, plat := range []string{"mr", "cf"} {
+				sub := filepath.Join(packDir, key+"-"+plat)
+				if err := os.MkdirAll(sub, 0o755); err != nil {
+					fail(fmt.Sprintf("failed to create %s: %v", sub, err))
+				}
+				fmt.Printf("  packwiz init in %s ...\n", sub)
+				cmd := exec.Command("packwiz", "init",
+					"--name", name,
+					"--author", placeholderAuthor,
+					"--mc-version", mcVersion,
+					"--modloader", loader,
+					loaderFlag,
+					"--version", defaultPackVersion,
+					"-y",
+				)
+				cmd.Dir = sub
+				cmd.Stdout = os.Stdout
+				cmd.Stderr = os.Stderr
+				if err := cmd.Run(); err != nil {
+					fail(fmt.Sprintf("packwiz init failed in %s: %v", sub, err))
+				}
 			}
 		}
-		fmt.Printf("ready: %s has %s-mr and %s-cf initialized. Add mods with packwiz, then fill manifest placeholders.\n",
-			packDir, defaultMCVersion, defaultMCVersion)
+		fmt.Printf("ready: %s initialized %d subdir-pair(s) (%s, latest). Add mods with packwiz, then fill manifest placeholders.\n",
+			packDir, len(keys), loader)
 	} else {
 		fmt.Printf("next: create %s/{version}/ and add the pack contents (pack.mcmeta at its root).\n", packDir)
 	}
@@ -162,6 +249,21 @@ func categoryType(category string) string {
 		return "resourcepack"
 	default:
 		return "modpack"
+	}
+}
+
+func loaderLatestFlag(loader string) (string, bool) {
+	switch loader {
+	case "fabric":
+		return "--fabric-latest", true
+	case "forge":
+		return "--forge-latest", true
+	case "neoforge":
+		return "--neoforge-latest", true
+	case "quilt":
+		return "--quilt-latest", true
+	default:
+		return "", false
 	}
 }
 
@@ -202,13 +304,17 @@ func cmdExport(args []string) {
 	runPassthrough(bin, "local")
 }
 
-func cmdSync(args []string) {
+func cmdSync(args []string)    { maintainWrapper("sync") }
+func cmdUpdate(args []string)  { maintainWrapper("update") }
+func cmdRefresh(args []string) { maintainWrapper("refresh") }
+
+func maintainWrapper(subcommand string) {
 	bin := findBinary("MAINTAIN_BIN", "maintain", "./maintain-bin/maintain")
 	if bin == "" {
 		fail("maintain binary not found. Build it (go build -C src/actions/maintain -o maintain-bin/maintain .) or set $MAINTAIN_BIN")
 	}
-	fmt.Printf("somnus sync -> running maintain sync (%s)\n", bin)
-	runPassthrough(bin, "sync")
+	fmt.Printf("somnus %s -> running maintain %s (%s)\n", subcommand, subcommand, bin)
+	runPassthrough(bin, subcommand)
 }
 
 type modlistEntry struct {

@@ -37,6 +37,9 @@ Whenever Auto Publish is ran, it will be ran through a Validator. The Validator 
 
 Auto Publish will also automatically list out every mod updated, added or removed in a modpack, and all commits to the pack. This allows for some time saving as you no longer now have to keep track of constant changes
 
+### Using Canary Channels
+Our Auto Publish action comes with an additional thing, a Canary channel for projects. To properly utilize this, add in a manifest-experimental.json, and properly configure it according to the schema, and every commit on the pack, it will automatically publish to a dedicated canary channel.
+
 ### Using Sync
 To address issues regarding our packs being intertwined in content and development, there is now a Sync system implemented. 
 
@@ -56,10 +59,7 @@ In manifest.json, a pack must declare whether it is a ```base```. If it is, then
 } 
 ```
 
-This means that this pack is directly synced with ```lce-common```, benefitting from all of its changes
-
-### Using Canary Channels
-Our Auto Publish action comes with an additional thing, a Canary channel for projects. To properly utilize this, add in a manifest-experimental.json, and properly configure it according to the schema, and every commit on the pack, it will automatically publish to a dedicated canary channel.
+This means that this pack is directly synced with ```lce-common```, benefitting from all of its changes automatically. It allows for easier development as the packs relying on it are essentially patches on top of the base.
 
 ### Using Auto Update & Auto Refresh
 Auto Update and Auto Refresh can be very powerful things! It allows you to automatically update packs. Since May 23rd, 2026, the action has now been made opt-out as well.
@@ -91,7 +91,7 @@ Afterward, you can run somnus in the CLI and see the current commands.
 Somnus is primarily a tool to accelerate some hurdles in pack development, regarding exporting with packwiz, initiating new packs under our monorepo structure, and to also allow CI to be ran locally in a better way.
 
 ### Somnus Init
-```somnus init``` will initiate a new modpack with a manifest.json and a changelog.md, along with 2 sub-directories for Modrinth and CurseForge that run latest Fabric Loader!
+```somnus init``` will initiate a new modpack with a manifest.json and a changelog.md, along with 2 sub-directories for Modrinth and CurseForge. You may set this to any loader (will always use latest) and Minecraft version while running the command.
 
 ### Somnus Bump
 ```somnus bump``` will bump manifest via CLI.
@@ -100,10 +100,10 @@ Somnus is primarily a tool to accelerate some hurdles in pack development, regar
 ```somnus export``` will batch export every version of the pack in a .mrpack/.zip format in a non tracked folder for you to use.
 
 ### Somnus Sync
-```somnus sync``` runs the sync command locally.
+```somnus sync``` runs the sync command detailed in the prior CI section locally.
 
 ### Somnus Modlist
-```somnus modlist``` will generate a Crash Assistant mod list derived from the packs ```index.toml```.
+```somnus modlist``` will generate a Crash Assistant mod list derived from the packs ```index.toml```. This may be buggy as it will add both serverside and clientside mods to the mod-list, so be aware.
 
 ### Somnus Test
 ```somnus test``` will (attempt) to set up an untracked auto-updating MultiMC instance, currently for testing purposes.
@@ -112,7 +112,7 @@ Somnus is primarily a tool to accelerate some hurdles in pack development, regar
 ```somnus lint``` will check if your JSON or TOML is valid and yell at you if it isnt.
 
 ## Credits
-stale.yml forked from JEI. Both licensed under MIT.
+stale.yml forked from JEI, licensed under MIT.
 
 # License
 As all of these projects are different, the license may vary. Most packs are under GPL-3.0, or MIT. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
