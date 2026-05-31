@@ -77,6 +77,10 @@ file = "config/modpack_defaults/config/bobby.conf"
 hash = "93a49bfdb5a265002d191ef9134f088f16596271ff0e2c604bc8c5d37350716d"
 
 [[files]]
+file = "config/modpack_defaults/config/bug-fixer-upper-config.properties"
+hash = "3cb4f725773d777a7c01953e32e4b3829e2aab7a00b8da34358f6813e1c09908"
+
+[[files]]
 file = "config/modpack_defaults/config/c2me.toml"
 hash = "10744721de30447cc0291e82bf3ae41a2d6ba8c451ed7eded71c6c1e77ce484a"
 
@@ -1446,7 +1450,7 @@ hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
 
 [[files]]
 file = "modlist.md"
-hash = "f1f1bb5ab0eb1a68ff01667e824c234fac980242b164efff196fb48b88988c39"
+hash = "d56d7aad8095d810fc6a6bd3de939ad358a7b327c86cb6aee93a3330f8e81ca9"
 
 [[files]]
 file = "mods/amecs.pw.toml"
@@ -1494,11 +1498,6 @@ hash = "5791cb0e3f23d8be295669b9e639caebc60d7a65c98793f04a917a339ea2b57d"
 metafile = true
 
 [[files]]
-file = "mods/c2me-fabric.pw.toml"
-hash = "82f8e930d470d72330d18b6609e233f5c61a37866cec7c93f17d9bc6006e7565"
-metafile = true
-
-[[files]]
 file = "mods/cloth-config.pw.toml"
 hash = "1b8f4603e81c48badce4a9321dea87bdeb9d3b5a2f0be566139d087afad73a47"
 metafile = true
@@ -1519,18 +1518,8 @@ hash = "047f529b7339b37e9fa57559876f27023b77d4a5dc9c0c2c525e5681f147b423"
 metafile = true
 
 [[files]]
-file = "mods/cull-fewer-leaves.pw.toml"
-hash = "48b7006d6efb70e924d404d2c598b66f178ba04d04350172915bb7a41ecca9b1"
-metafile = true
-
-[[files]]
 file = "mods/custom-player-models.pw.toml"
 hash = "972d16ed9c58e5de576a8399819a3bf65b1fb2ff0e292cb5bfd5595b055a1fbd"
-metafile = true
-
-[[files]]
-file = "mods/dynamic-fps.pw.toml"
-hash = "42f5637a87150687969d64b172ce8ef91bc3a92ee2eb68a2a17153350ff92b4b"
 metafile = true
 
 [[files]]
@@ -1720,11 +1709,6 @@ metafile = true
 [[files]]
 file = "mods/sodium.pw.toml"
 hash = "e5278cc1dcda4fe789eaf05318fa5885f9f3412685f8ac231fe9a395409089e0"
-metafile = true
-
-[[files]]
-file = "mods/vmp-fabric.pw.toml"
-hash = "96c75aa9280fb3704a4c729b1b1a03d0660af2848455db627e3bdf84170f3f25"
 metafile = true
 
 [[files]]
@@ -3477,4 +3461,4 @@ hash = "3ad288f9136ae252b52521486e0f532745efaddf90da2b8673b77781e1d97eea"
 
 [[files]]
 file = "sync.json"
-hash = "c3c8376dc36ece95083e622c5d2fe43e8770092926bab8ed5fb0e1c6a506c6e3"
+hash = "dbca9267f6250b828344784ba91b2d721ef9e0d85102817a3e4e5c7af009773d"
