@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 )
@@ -31,7 +32,13 @@ func main() {
 	case "refresh":
 		run(opRefresh)
 	case "sync":
-		runSync()
+		dryRun := false
+		for _, a := range os.Args[2:] {
+			if a == "--dry-run" {
+				dryRun = true
+			}
+		}
+		runSync(dryRun)
 	default:
 		fail(fmt.Sprintf("unknown subcommand %q (expected update, refresh, or sync)", os.Args[1]))
 	}
@@ -135,7 +142,7 @@ func collectTargets(root string, honorIgnore bool) (targets []string, skipped []
 
 func workPool(targets []string, op operation) []string {
 	jobs := make(chan string)
-	results := make(chan string, len(targets)) // failed dirs
+	results := make(chan string, len(targets))
 	var wg sync.WaitGroup
 
 	workers := maxConcurrent
@@ -198,7 +205,7 @@ type manifest struct {
 func parseRole(raw json.RawMessage) (kind string, pb *performanceBase) {
 	var s string
 	if err := json.Unmarshal(raw, &s); err == nil {
-		return s, nil // "none" or "base"
+		return s, nil
 	}
 	var obj struct {
 		PerformanceBase *performanceBase `json:"performance_base"`
@@ -238,7 +245,7 @@ func readManifest(path string) (*manifest, error) {
 	return &m, nil
 }
 
-func runSync() {
+func runSync(dryRun bool) {
 	if _, err := exec.LookPath("packwiz"); err != nil {
 		fail("packwiz not found in PATH")
 	}
@@ -307,20 +314,84 @@ func runSync() {
 		return
 	}
 	fmt.Printf("resolved %d sync job(s) from manifests\n", len(jobs))
+	if dryRun {
+		fmt.Println("[DRY RUN] no files will be copied, deleted, or refreshed")
+	}
+
+	syncedFolders := []string{"mods", "config", "resourcepacks"}
 
 	for _, j := range jobs {
 		fmt.Printf("syncing %s -> %s (base %s)\n", j.sourceDir, j.targetDir, j.baseID)
 
-		for _, folder := range []string{"mods", "config"} {
+		provided := map[string]bool{}
+		for _, folder := range syncedFolders {
 			srcFolder := filepath.Join(j.sourceDir, folder)
 			if _, err := os.Stat(srcFolder); err != nil {
 				continue
 			}
-			n, err := copyTree(srcFolder, filepath.Join(j.targetDir, folder))
+			rels, err := relFilesUnder(srcFolder)
+			if err != nil {
+				fail(fmt.Sprintf("scanning %s for %s failed: %v", folder, j.consumerID, err))
+			}
+			for _, r := range rels {
+				provided[filepath.ToSlash(filepath.Join(folder, r))] = true
+			}
+		}
+
+		statePath := filepath.Join(j.targetDir, "sync.json")
+		prev := readSyncState(statePath)
+		var toDelete []string
+		for f := range prev {
+			if !provided[f] {
+				toDelete = append(toDelete, f)
+			}
+		}
+		sort.Strings(toDelete)
+
+		placed := map[string]bool{}
+		for _, folder := range syncedFolders {
+			srcFolder := filepath.Join(j.sourceDir, folder)
+			if _, err := os.Stat(srcFolder); err != nil {
+				continue
+			}
+			if dryRun {
+				rels, _ := relFilesUnder(srcFolder)
+				for _, r := range rels {
+					placed[filepath.ToSlash(filepath.Join(folder, r))] = true
+				}
+				fmt.Printf("  [DRY RUN] would copy %d file(s) into %s/\n", len(rels), folder)
+				continue
+			}
+			n, err := copyTreeRecording(srcFolder, filepath.Join(j.targetDir, folder), folder, placed)
 			if err != nil {
 				fail(fmt.Sprintf("copy %s for %s failed: %v", folder, j.consumerID, err))
 			}
 			fmt.Printf("  %s: %d file(s) copied -> i did this!\n", folder, n)
+		}
+
+		if len(toDelete) > 0 {
+			if dryRun {
+				fmt.Printf("  [DRY RUN] would delete %d base-removed file(s):\n", len(toDelete))
+				for _, f := range toDelete {
+					fmt.Printf("      - %s\n", f)
+				}
+			} else {
+				for _, f := range toDelete {
+					p := filepath.FromSlash(filepath.Join(j.targetDir, f))
+					if err := os.Remove(p); err != nil && !os.IsNotExist(err) {
+						fmt.Fprintf(os.Stderr, "::warning::could not delete %s: %v\n", p, err)
+					}
+				}
+				fmt.Printf("  pruned %d base-removed file(s)\n", len(toDelete))
+			}
+		}
+
+		if dryRun {
+			continue
+		}
+
+		if err := writeSyncState(statePath, placed); err != nil {
+			fail(fmt.Sprintf("failed to write %s: %v", statePath, err))
 		}
 
 		cmd := exec.Command("packwiz", "refresh")
@@ -331,10 +402,63 @@ func runSync() {
 		fmt.Printf("  refreshed %s\n", j.targetDir)
 	}
 
-	fmt.Println("all syncs completed.")
+	if dryRun {
+		fmt.Println("[DRY RUN] complete \u2014 nothing was changed.")
+	} else {
+		fmt.Println("all syncs completed.")
+	}
 }
 
-func copyTree(src, dst string) (int, error) {
+func relFilesUnder(root string) ([]string, error) {
+	var out []string
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
+			return nil
+		}
+		rel, err := filepath.Rel(root, path)
+		if err != nil {
+			return err
+		}
+		out = append(out, rel)
+		return nil
+	})
+	return out, err
+}
+
+func readSyncState(path string) map[string]bool {
+	set := map[string]bool{}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return set
+	}
+	var files []string
+	if err := json.Unmarshal(data, &files); err != nil {
+		return set
+	}
+	for _, f := range files {
+		set[f] = true
+	}
+	return set
+}
+
+func writeSyncState(path string, placed map[string]bool) error {
+	files := make([]string, 0, len(placed))
+	for f := range placed {
+		files = append(files, f)
+	}
+	sort.Strings(files)
+	data, err := json.MarshalIndent(files, "", "  ")
+	if err != nil {
+		return err
+	}
+	data = append(data, '\n')
+	return os.WriteFile(path, data, 0o644)
+}
+
+func copyTreeRecording(src, dst, folder string, placed map[string]bool) (int, error) {
 	count := 0
 	err := filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -357,6 +481,7 @@ func copyTree(src, dst string) (int, error) {
 		if err := copyFile(path, target); err != nil {
 			return err
 		}
+		placed[filepath.ToSlash(filepath.Join(folder, rel))] = true
 		count++
 		return nil
 	})
