@@ -117,6 +117,10 @@ file = "config/modpack_defaults/config/badoptimizations.txt"
 hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
 
 [[files]]
+file = "config/modpack_defaults/config/c2me.toml"
+hash = "10744721de30447cc0291e82bf3ae41a2d6ba8c451ed7eded71c6c1e77ce484a"
+
+[[files]]
 file = "config/modpack_defaults/config/crash_assistant/config.toml"
 hash = "41ee9756749a569e0f50e71cb9c92387eccdd8329c3979bd5fcbcbf159df9c6e"
 
@@ -162,7 +166,7 @@ hash = "647ad92f7bdc5e0ccef37d6e7386b08f2a19715b77742202f2f9048fb14e0dec"
 
 [[files]]
 file = "config/modpack_defaults/config/gnetum.json"
-hash = "409715006c696e68866f2bdafb9de3064ce7b373a88c036ec45c935a7f30b093"
+hash = "91cb5895241c87ee69ea9e8c06ab2258497766b515a0cde6f1f9001591b4b153"
 
 [[files]]
 file = "config/modpack_defaults/config/goldenagecombat-client.toml"
@@ -182,7 +186,7 @@ hash = "76aa2fb300513b5e5ce592c606da18a59ad07cc7d98b9a7cd3abc420fdddce13"
 
 [[files]]
 file = "config/modpack_defaults/config/ixeris.toml"
-hash = "808b76d281cedc9edc1736b42d2fc99d274fbf4650d53c617eb17fc71006689c"
+hash = "e7fbd9d0e87ee689ddf2dff427177bb50ac818a055e4454ddbfa2bcbea3a73e4"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy_display.json5"
@@ -198,7 +202,7 @@ hash = "3a2360be7854a19786e99ff65d32e6f9a205cea96062718b304b566157088f9a"
 
 [[files]]
 file = "config/modpack_defaults/config/modernfix-mixins.properties"
-hash = "2bf5a5bdbeefe6ff9885a0bbc9e2f3ba28b1ecc0e4b0e06e598a5d4d65bb267e"
+hash = "9c7f4bf8628b8ba676d12987edb0185082bcefef2a070f1adf551a740667db82"
 
 [[files]]
 file = "config/modpack_defaults/config/modmenu.json"
@@ -206,11 +210,15 @@ hash = "4efd7956cb181bc0e9f040986de1b70978af0dfaef5708a6988b7a3ab02ce79d"
 
 [[files]]
 file = "config/modpack_defaults/config/moreculling.toml"
-hash = "47c90ca85fa6733e7b4fb652760b91506957ae19a830c02caa72d20df405819a"
+hash = "ad9502638dfc64191c82e28efeede417bd4ab32b6276e60117bc978e41b936bd"
 
 [[files]]
 file = "config/modpack_defaults/config/npe.json"
 hash = "128a7016ca5bfd22277f4ad447ea0db0863fc2e039c5c3dfb6e39e8c25766bbb"
+
+[[files]]
+file = "config/modpack_defaults/config/oxidizium.properties"
+hash = "cea355a7ed51de972174198021130739e2d32cd2d50fd13f2f4c34956c97d776"
 
 [[files]]
 file = "config/modpack_defaults/config/particle_core_config.toml"
@@ -234,7 +242,7 @@ hash = "7821d6b26f9c900da75123044555e2d01c40885f04deb5571296fdef94e22115"
 
 [[files]]
 file = "config/modpack_defaults/config/servercore/config.yml"
-hash = "7aa4761cc751f6df10d32f053a009953fabfb6649670b253199dd6bbd7aa3f9d"
+hash = "f456cd56f8e061ad719f84517cf658d1ee4489a474ca35e7e8e076620dd048cd"
 
 [[files]]
 file = "config/modpack_defaults/config/servercore/optimizations.yml"
@@ -286,7 +294,7 @@ hash = "121b93764159be6fb7dab523b29a844e2bb78400ce8c48f52135a097e9b0006e"
 
 [[files]]
 file = "config/modpack_defaults/config/zfastnoise.mixin.toml"
-hash = "c92d12aa6f71c3b42206ec41ab20fcfe5f83a177d8a7fffcad31995b66c8f298"
+hash = "47e4810bca56258fe2ba501bd8872a59dd40433c202276f73c4e958563e0fe34"
 
 [[files]]
 file = "config/modpack_defaults/debug-profile.json"
@@ -294,7 +302,7 @@ hash = "c20cd4a591dfa9e5b16ff93ca525a338ef9cdfb35dd045b5abdce51e71a3fce3"
 
 [[files]]
 file = "config/modpack_defaults/options.txt"
-hash = "402d3297e89c426308e64a15cd2f8ea0b12acefd81083ab8e8b3608d2d86600b"
+hash = "bbe00f0d240ffd72688d89a328331937111049e802310ec1785eda6a67f6b2d3"
 
 [[files]]
 file = "config/moreculling.toml"
@@ -381,6 +389,10 @@ file = "config/zfastnoise.mixin.toml"
 hash = "c92d12aa6f71c3b42206ec41ab20fcfe5f83a177d8a7fffcad31995b66c8f298"
 
 [[files]]
+file = "modlist.md"
+hash = "ac7ab0e302315f2a61453775287fd06e19ba3c489b36ef7d490dbaf599cde41b"
+
+[[files]]
 file = "mods/animatium.pw.toml"
 hash = "2cc4bc2fc29c36574b102b5628bbc16b197cd825e22bdc4b7e74670a9f2b0c67"
 metafile = true
@@ -388,6 +400,16 @@ metafile = true
 [[files]]
 file = "mods/anti-smooth.pw.toml"
 hash = "d4121a7eabd848f3f1720f035ee2a3773a598f0c2e155362e6fbbb29246ced12"
+metafile = true
+
+[[files]]
+file = "mods/async.pw.toml"
+hash = "bac3e198aa9948d6b46b5a7483a74e25233919f93bae6fdcc592908e3705e4e5"
+metafile = true
+
+[[files]]
+file = "mods/asynclogger.pw.toml"
+hash = "a0ccec3c16ef496cb073afa182129af68e3bf6915d400aad055ff1c8e9e1d8a3"
 metafile = true
 
 [[files]]
@@ -401,13 +423,18 @@ hash = "3a7f685358fe4eda8dc265f2d350c05e2cbc8c7a661e1d9676e72a02bc044a2b"
 metafile = true
 
 [[files]]
+file = "mods/c2me-fabric.pw.toml"
+hash = "82f8e930d470d72330d18b6609e233f5c61a37866cec7c93f17d9bc6006e7565"
+metafile = true
+
+[[files]]
 file = "mods/cloth-config.pw.toml"
 hash = "1b8f4603e81c48badce4a9321dea87bdeb9d3b5a2f0be566139d087afad73a47"
 metafile = true
 
 [[files]]
 file = "mods/configmanager.pw.toml"
-hash = "b05837b7f732face70b56b6ec14ad493238b2f27c09adb373a747fb28386a0f7"
+hash = "448f56f00955f708d4d15ce3a9d94753516646bb2314fcad8c95e80b826eea2c"
 metafile = true
 
 [[files]]
@@ -418,6 +445,11 @@ metafile = true
 [[files]]
 file = "mods/cubes-without-borders.pw.toml"
 hash = "047f529b7339b37e9fa57559876f27023b77d4a5dc9c0c2c525e5681f147b423"
+metafile = true
+
+[[files]]
+file = "mods/cull-fewer-leaves.pw.toml"
+hash = "48b7006d6efb70e924d404d2c598b66f178ba04d04350172915bb7a41ecca9b1"
 metafile = true
 
 [[files]]
@@ -511,6 +543,11 @@ hash = "7c28c238c031a19433620992a1fd1496049bfb524ae86af41a3ac5abe40e3526"
 metafile = true
 
 [[files]]
+file = "mods/modernfix-mvus.pw.toml"
+hash = "40ea7513ea7b648ad4fc392d549d52d3764ec87ee0b864c42f87e3a67a6356eb"
+metafile = true
+
+[[files]]
 file = "mods/modmenu.pw.toml"
 hash = "42583eed7ccb599f10285e721c25bf3c8858ef7e0eb8e22aa8bf64a08d98a280"
 metafile = true
@@ -528,6 +565,11 @@ metafile = true
 [[files]]
 file = "mods/owo-lib.pw.toml"
 hash = "2df6e71ac01b886ff496669c5cd6d8c89ca358c655ca4983487d09e6b7d2728c"
+metafile = true
+
+[[files]]
+file = "mods/oxidizium.pw.toml"
+hash = "7a6bbd99bfd8a704c16d5f905ef9b9b859ed15cfcfc77d3f83f029597d6e5360"
 metafile = true
 
 [[files]]
@@ -593,6 +635,11 @@ metafile = true
 [[files]]
 file = "mods/vmp-fabric.pw.toml"
 hash = "96c75aa9280fb3704a4c729b1b1a03d0660af2848455db627e3bdf84170f3f25"
+metafile = true
+
+[[files]]
+file = "mods/worldthreader.pw.toml"
+hash = "3513a8acf9140e9cce75521c80462344efd95dc17c823820a357382c1175033d"
 metafile = true
 
 [[files]]

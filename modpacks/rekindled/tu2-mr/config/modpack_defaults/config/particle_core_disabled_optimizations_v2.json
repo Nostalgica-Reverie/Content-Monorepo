@@ -1,0 +1,18 @@
+{
+  "_Disable_Optimizations_Options": {
+    "ROTATION": "[Impact: Medium] Disables mixins related to vertex rotation caching (ParticleManagerRotationMixin, BillboardParticleMixin)",
+    "CULLING": "[Impact: HIGH] Disables mixins related to particle culling (FrustumAccessor, ParticleAccessor, ParticleRendererFrustumMixin, WorldRendererFrustumMixin, ParticleFrustumBlacklistMixin)",
+    "TYPE": "[Impact: Low to Medium] Disables mixins related to particle disabling and reduction (ParticleManagerTypeMixin, ParticleManagerCreatorMixin, FireworksSparkParticleMixin)",
+    "DECREASE": "[Impact: Low] Disables mixins related particle settings reduction (ALL, DECREASED, MINIMAL) (ClientWorldDecreaseMixin)",
+    "LIGHTMAP": "[Impact: Medium] Disables mixins related to light map caching (ParticleManagerCachedLightMixin, ParticleBrightnessCacheMixin, ParticleCachePosMixin, ParticleRendererCachedPosMixin, ParticleRendererBrightnessTickMixin)",
+    "POTION": "[Impact: Low] Disables mixins related to potion particle disabling (LivingEntityMixin)",
+    "MOVE": "[Impact: Medium] Disables mixins related to particle movement optimization (ParticleMoveAdjustMixin, ParticleCachePosMixin, ParticleRendererCachedPosMixin)",
+    "VERTEX": "[Impact: HIGH] Disables mixins related to particle vertex drawing optimizations (BillboardParticleVertexMixin, BufferBuilderVertexMixin)",
+    "COUNT": "[Impact: Variable] Disables mixins related to max particle count setting (ParticleRendererCountMixin)",
+    "ASYNC": "[Impact: Medium] Disables asynchronous ticking of particles (ParticleManagerAsyncMixin, ParticleRendererAccessor)",
+    "RENDER_DISTANCE": "[Impact: Variable] Disables mixins that control max particle render distance (ParticleManagerRenderDistanceMixin, ParticleAccessor, ParticleRendererRenderDistanceMixin)"
+  },
+  "disableOptimizations": [
+    "NONE"
+  ]
+}

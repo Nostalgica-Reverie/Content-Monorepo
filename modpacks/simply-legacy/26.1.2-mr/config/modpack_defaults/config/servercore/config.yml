@@ -1,7 +1,15 @@
+lobotomize-villagers:
+  enabled: true
+  tick-interval: 20
+
+features:
+  item-merge-radius: 0.8
+  xp-merge-radius: 0.8
+
 commands:
   status-enabled: false
   mobcaps-enabled: false
-  
+
 activation-range:
   enabled: true
   tick-new-entities: false
@@ -43,12 +51,10 @@ activation-range:
 
   custom-activation-types:
     - name: 'mob'
-      activation-range: 96
+      activation-range: 20
       tick-interval: 6
       wakeup-interval: -1
       extra-height-up: false
       extra-height-down: false
       entity-matcher:
         - 'typeof:mob'
-
-
