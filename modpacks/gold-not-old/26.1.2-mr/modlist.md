@@ -3,11 +3,12 @@
 ## Client Mods
 
 - [Animatium](https://modrinth.com/mod/zy0karK1)
+- [Async Logger](https://modrinth.com/mod/zvNzKfGF)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
 - [Better Block Entities](https://modrinth.com/mod/ONZm0H7Y)
-- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
 - [Cubes Without Borders](https://modrinth.com/mod/ETlrkaYF)
+- [Cull Fewer Leaves](https://modrinth.com/mod/alhWWxax)
 - [Dynamic FPS](https://modrinth.com/mod/LQ3K71Q1)
 - [Enchanted's Sodium Options](https://modrinth.com/mod/bd7qKEEC)
 - [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
@@ -33,6 +34,7 @@
 
 - [Anti-Smooth](https://modrinth.com/mod/zlZC5n7T)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
+- [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
@@ -40,8 +42,10 @@
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
 - [Golden Age Combat](https://modrinth.com/mod/U5I04KQ6)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
+- [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
 - [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
+- [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
 - [Puzzles Lib](https://modrinth.com/mod/QAGBst4M)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [Simple Resource Loader](https://modrinth.com/mod/5e65FGXQ)
@@ -52,4 +56,7 @@
 
 ## Server Mods
 
+- [Async](https://modrinth.com/mod/vEC2jm6I)
+- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Custom Default World Preset](https://modrinth.com/mod/1BduonQp)
+- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)

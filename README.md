@@ -33,9 +33,11 @@ The repository makes usage of Forgejo actions, for CI/CD and general QoL improve
 ### Using Auto Publish
 Every project in the repo must have a manifest.json. This manifest.json specifies stuff that our publish.yml then uses to auto publish. Once it is set up, you may simply bump version in the manifest.json and it will update across platforms.
 
+Please read tools/manifest/schema.json to understand the manifest.json.
+
 Whenever Auto Publish is ran, it will be ran through a Validator. The Validator will fail if something is improperly configured; whether that be the lack of a changelog.md, a malformed manifest.json, or other reasons. If a publish run fails, please look to your manifest and set-up to make sure you are properly set up.
 
-Auto Publish will also automatically list out every mod updated, added or removed in a modpack, and all commits to the pack. This allows for some time saving as you no longer now have to keep track of constant changes
+Auto Publish will also automatically list out every mod updated, added or removed in a modpack, and all commits to the pack. This allows for some time saving as you no longer now have to keep track of constant changes, and they are automatically added to the changelog
 
 ### Using Canary Channels
 Our Auto Publish action comes with an additional thing, a Canary channel for projects. To properly utilize this, add in a manifest-experimental.json, and properly configure it according to the schema, and every commit on the pack, it will automatically publish to a dedicated canary channel.
