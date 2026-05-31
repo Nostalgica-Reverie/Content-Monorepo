@@ -318,7 +318,7 @@ func runSync(dryRun bool) {
 		fmt.Println("[DRY RUN] no files will be copied, deleted, or refreshed")
 	}
 
-	syncedFolders := []string{"mods", "config", "resourcepacks"}
+	syncedFolders := []string{"mods", "config", "resourcepacks", "global_packs"}
 
 	for _, j := range jobs {
 		fmt.Printf("syncing %s -> %s (base %s)\n", j.sourceDir, j.targetDir, j.baseID)
