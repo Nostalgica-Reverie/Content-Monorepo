@@ -1,2 +1,2 @@
-# Simply Optimized Forked 26.05.6
-add particle core
+# Simply Optimized Forked 26.06
+Removed world threader!
