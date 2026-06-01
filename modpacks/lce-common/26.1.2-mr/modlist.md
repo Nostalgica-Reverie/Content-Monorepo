@@ -9,8 +9,6 @@
 - [BisectHosting Server Integration Menu](https://modrinth.com/mod/yWSAtnfH)
 - [Bobby](https://modrinth.com/mod/M08ruV16)
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
-- [Cull Fewer Leaves](https://modrinth.com/mod/alhWWxax)
-- [Dynamic FPS](https://modrinth.com/mod/LQ3K71Q1)
 - [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
 - [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [Gnetum](https://modrinth.com/mod/7MoE34WK)
@@ -28,7 +26,6 @@
 - [Bedrock Skins](https://modrinth.com/mod/76lEgqhs)
 - [BugFixerUpper](https://modrinth.com/mod/gRMQvlnJ)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
-- [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Customizable Player Models](https://modrinth.com/mod/h1E7sQNL)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
@@ -49,7 +46,6 @@
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [Simple Voice Chat](https://modrinth.com/mod/9eGKb6K1)
-- [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
 - [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
 
 ## Server Mods
