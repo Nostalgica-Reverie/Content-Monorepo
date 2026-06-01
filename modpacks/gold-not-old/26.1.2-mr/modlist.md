@@ -58,4 +58,3 @@
 - [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Custom Default World Preset](https://modrinth.com/mod/1BduonQp)
-- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)

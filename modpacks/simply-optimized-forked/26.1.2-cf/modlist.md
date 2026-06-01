@@ -28,7 +28,3 @@
 - [Sodium]()
 - [ThreadTweak](https://modrinth.com/mod/vSEH1ERy)
 - [Very Many Players (Fabric)]()
-
-## Server Mods
-
-- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)

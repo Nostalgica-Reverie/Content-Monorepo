@@ -35,4 +35,3 @@
 
 - [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)
-- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)
