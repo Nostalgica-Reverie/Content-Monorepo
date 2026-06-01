@@ -85,7 +85,7 @@ Bulk Actions allow you to a lot of one thing, in a single button push via our Fo
 Somnus is a WIP CLI tool written in go that is built directly into the Monorepository. To utilize it, you must install it locally. It can be very helpful to modpack development!
 
 ## Installing Somnus
-To install Somnus, you must install Somnus, Builder and Maintain. All 3 of these are written in Go, so you can simply navigate to their directories and run ```go install .```.
+To install Somnus, you can simply navigate to the src/actions/somnus directory and run ```go install .```.
 
 Afterward, you can run somnus in the CLI and see the current commands.
 
