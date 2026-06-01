@@ -1,6 +1,10 @@
 hash-format = "sha256"
 
 [[files]]
+file = "modlist.md"
+hash = "12f2b7f797cd0689901abc4cf4da23d0b5e737b171e5cd17eefd1c0ece52549b"
+
+[[files]]
 file = "mods/c2me-fabric.pw.toml"
 hash = "70b2a115b12368173e9ddc8d9eda97198dfa3fd39aef92fc4c94d104eaef0474"
 metafile = true
@@ -27,7 +31,7 @@ metafile = true
 
 [[files]]
 file = "mods/custom-player-models.pw.toml"
-hash = "da3f91da4408a423604eb6b6d8405d4434d044d8085fb7b1909e8827587d940d"
+hash = "e53d2a12447b7280fc2a6b5e1621b6cb4d7224cc463d60020a10cdaf58e66efb"
 metafile = true
 
 [[files]]

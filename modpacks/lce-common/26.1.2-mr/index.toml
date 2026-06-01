@@ -13,6 +13,10 @@ file = "config/modpack_defaults/config/badoptimizations.txt"
 hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
 
 [[files]]
+file = "config/modpack_defaults/config/bug-fixer-upper-config.properties"
+hash = "dd1df2f250035bbcb151ab104fd1e5b4cf5d5475caff872e15d9497859cc5e7d"
+
+[[files]]
 file = "config/modpack_defaults/config/c2me.toml"
 hash = "10744721de30447cc0291e82bf3ae41a2d6ba8c451ed7eded71c6c1e77ce484a"
 
@@ -38,7 +42,7 @@ hash = "3817e94107bb1c7358beebb80b1810e822de38be430f855cf14828c38018e8e2"
 
 [[files]]
 file = "config/modpack_defaults/config/gnetum.json"
-hash = "91cb5895241c87ee69ea9e8c06ab2258497766b515a0cde6f1f9001591b4b153"
+hash = "3ea81bb85c1741b083aa9a16edef2790124901c357a131b3a7eb8b64c68303bf"
 
 [[files]]
 file = "config/modpack_defaults/config/immediatelyfast.json"
@@ -725,6 +729,10 @@ file = "global_packs/required_resources/LCE Common Resources/pack.png"
 hash = "f3663988433fd24d83c8d016a58fa0d8046ede4a1b4d0d3e682a43d06376fd7f"
 
 [[files]]
+file = "modlist.md"
+hash = "78328ed6a5556e6f57a9008e460a145f75175452cff05eaaa31bdd5f2487f7d7"
+
+[[files]]
 file = "mods/amecs.pw.toml"
 hash = "f0526e4dcbb5e1463d8ab2a5cd52c51fb2fdcd582a9c3dbeec86cbcc035b76d5"
 metafile = true
@@ -770,11 +778,6 @@ hash = "5791cb0e3f23d8be295669b9e639caebc60d7a65c98793f04a917a339ea2b57d"
 metafile = true
 
 [[files]]
-file = "mods/c2me-fabric.pw.toml"
-hash = "82f8e930d470d72330d18b6609e233f5c61a37866cec7c93f17d9bc6006e7565"
-metafile = true
-
-[[files]]
 file = "mods/cloth-config.pw.toml"
 hash = "1b8f4603e81c48badce4a9321dea87bdeb9d3b5a2f0be566139d087afad73a47"
 metafile = true
@@ -790,18 +793,8 @@ hash = "b0ee602e15644fb8c5a3c49e3decbf5453c2e7ae9473f5b249f65cbcf9a1a944"
 metafile = true
 
 [[files]]
-file = "mods/cull-fewer-leaves.pw.toml"
-hash = "48b7006d6efb70e924d404d2c598b66f178ba04d04350172915bb7a41ecca9b1"
-metafile = true
-
-[[files]]
 file = "mods/custom-player-models.pw.toml"
 hash = "972d16ed9c58e5de576a8399819a3bf65b1fb2ff0e292cb5bfd5595b055a1fbd"
-metafile = true
-
-[[files]]
-file = "mods/dynamic-fps.pw.toml"
-hash = "42f5637a87150687969d64b172ce8ef91bc3a92ee2eb68a2a17153350ff92b4b"
 metafile = true
 
 [[files]]
@@ -868,10 +861,6 @@ metafile = true
 file = "mods/legacy4j.pw.toml"
 hash = "d7e34117f2a40e2d5a3c0c41dd236d85d228e39b09fe670effd33d343d3eeced"
 metafile = true
-
-[[files]]
-file = "mods/lithium.pw copy.toml"
-hash = "5a114e21e8d069509174fd2c526e0ac3e58f7a7c6b10484aa6ba9988c1f3606a"
 
 [[files]]
 file = "mods/lithium.pw.toml"
@@ -941,11 +930,6 @@ metafile = true
 [[files]]
 file = "mods/sodium.pw.toml"
 hash = "e5278cc1dcda4fe789eaf05318fa5885f9f3412685f8ac231fe9a395409089e0"
-metafile = true
-
-[[files]]
-file = "mods/vmp-fabric.pw.toml"
-hash = "96c75aa9280fb3704a4c729b1b1a03d0660af2848455db627e3bdf84170f3f25"
 metafile = true
 
 [[files]]
@@ -1668,7 +1652,7 @@ file = "resourcepacks/Hybrid Aspects/assets/minecraft/textures/entity/player/wid
 hash = "b38da9382324be9530c02685aae1dc6f8cb0638df2fb7766fb2c465ea9af728d"
 
 [[files]]
-file = "resourcepacks/Hybrid Aspects/assets/minecraft/textures/entity/witch.png"
+file = "resourcepacks/Hybrid Aspects/assets/minecraft/textures/entity/witch/witch.png"
 hash = "48a67e7f83254d26bda63e473d559400e48731804c98c44a6224f2a566bb94f6"
 
 [[files]]
@@ -2047,10 +2031,6 @@ metafile = true
 file = "resourcepacks/norse-mythology-mash-up.pw.toml"
 hash = "c4535b6faed9568414a9809ee3887ad1e44187a1a01eaa147274a403e7165b6f"
 metafile = true
-
-[[files]]
-file = "resourcepacks/pacp.pw copy.toml"
-hash = "033145fce1843d9279ce99e62acb71d7d67b4881cfbc1768b7a5daf2cb0c7a07"
 
 [[files]]
 file = "resourcepacks/pacp.pw.toml"
