@@ -323,6 +323,11 @@ func runSync(dryRun bool) {
 	for _, j := range jobs {
 		fmt.Printf("syncing %s -> %s (base %s)\n", j.sourceDir, j.targetDir, j.baseID)
 
+		excluded := readSyncExclude(filepath.Join(j.targetDir, "sync-exclude.json"))
+		if len(excluded) > 0 {
+			fmt.Printf("  %d path(s) excluded from sync (sync-exclude.json)\n", len(excluded))
+		}
+
 		provided := map[string]bool{}
 		for _, folder := range syncedFolders {
 			srcFolder := filepath.Join(j.sourceDir, folder)
@@ -334,7 +339,11 @@ func runSync(dryRun bool) {
 				fail(fmt.Sprintf("scanning %s for %s failed: %v", folder, j.consumerID, err))
 			}
 			for _, r := range rels {
-				provided[filepath.ToSlash(filepath.Join(folder, r))] = true
+				slash := filepath.ToSlash(filepath.Join(folder, r))
+				if excluded[slash] {
+					continue
+				}
+				provided[slash] = true
 			}
 		}
 
@@ -342,6 +351,9 @@ func runSync(dryRun bool) {
 		prev := readSyncState(statePath)
 		var toDelete []string
 		for f := range prev {
+			if excluded[f] {
+				continue
+			}
 			if !provided[f] {
 				toDelete = append(toDelete, f)
 			}
@@ -356,13 +368,19 @@ func runSync(dryRun bool) {
 			}
 			if dryRun {
 				rels, _ := relFilesUnder(srcFolder)
+				kept := 0
 				for _, r := range rels {
-					placed[filepath.ToSlash(filepath.Join(folder, r))] = true
+					slash := filepath.ToSlash(filepath.Join(folder, r))
+					if excluded[slash] {
+						continue
+					}
+					placed[slash] = true
+					kept++
 				}
-				fmt.Printf("  [DRY RUN] would copy %d file(s) into %s/\n", len(rels), folder)
+				fmt.Printf("  [DRY RUN] would copy %d file(s) into %s/\n", kept, folder)
 				continue
 			}
-			n, err := copyTreeRecording(srcFolder, filepath.Join(j.targetDir, folder), folder, placed)
+			n, err := copyTreeRecording(srcFolder, filepath.Join(j.targetDir, folder), folder, placed, excluded)
 			if err != nil {
 				fail(fmt.Sprintf("copy %s for %s failed: %v", folder, j.consumerID, err))
 			}
@@ -458,7 +476,7 @@ func writeSyncState(path string, placed map[string]bool) error {
 	return os.WriteFile(path, data, 0o644)
 }
 
-func copyTreeRecording(src, dst, folder string, placed map[string]bool) (int, error) {
+func copyTreeRecording(src, dst, folder string, placed, excluded map[string]bool) (int, error) {
 	count := 0
 	err := filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -471,6 +489,10 @@ func copyTreeRecording(src, dst, folder string, placed map[string]bool) (int, er
 		if rel == "." {
 			return nil
 		}
+		slash := filepath.ToSlash(filepath.Join(folder, rel))
+		if !info.IsDir() && excluded[slash] {
+			return nil
+		}
 		target := filepath.Join(dst, rel)
 		if info.IsDir() {
 			return os.MkdirAll(target, 0o755)
@@ -481,11 +503,27 @@ func copyTreeRecording(src, dst, folder string, placed map[string]bool) (int, er
 		if err := copyFile(path, target); err != nil {
 			return err
 		}
-		placed[filepath.ToSlash(filepath.Join(folder, rel))] = true
+		placed[slash] = true
 		count++
 		return nil
 	})
 	return count, err
+}
+
+func readSyncExclude(path string) map[string]bool {
+	set := map[string]bool{}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return set
+	}
+	var files []string
+	if err := json.Unmarshal(data, &files); err != nil {
+		return set
+	}
+	for _, f := range files {
+		set[f] = true
+	}
+	return set
 }
 
 func copyFile(src, dst string) error {
