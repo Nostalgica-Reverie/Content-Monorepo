@@ -7,14 +7,14 @@ on:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
-      - 'src/actions/builder/**'
+      - 'src/actions/somnus/**'
   pull_request:
     branches: ["main"]
     paths:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
-      - 'src/actions/builder/**'
+      - 'src/actions/somnus/**'
   workflow_dispatch:
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
             modpacks
             datapacks
             resourcepacks
-            src/actions/builder
+            src/actions/somnus
             tools/lint
             tools/manifest
 
@@ -71,23 +71,23 @@ jobs:
           done <<< "$CHANGED_PACKS"
           exit $STATUS
 
-      - name: Cache Builder Binary
-        id: cache-builder
+      - name: Cache Somnus Binary
+        id: cache-somnus
         uses: actions/cache@v4
         with:
-          path: ./builder-bin
-          key: builder-go-v1-${{ runner.os }}-${{ hashFiles('src/actions/builder/**/*.go', 'src/actions/builder/go.mod') }}
+          path: ./somnus-bin
+          key: somnus-go-v1-${{ runner.os }}-${{ hashFiles('src/actions/somnus/**/*.go', 'src/actions/somnus/go.mod') }}
 
       - name: Setup Go
-        if: steps.cache-builder.outputs.cache-hit != 'true'
+        if: steps.cache-somnus.outputs.cache-hit != 'true'
         uses: https://github.com/actions/setup-go@v5
         with: { go-version: 'stable', cache: true }
 
       - name: Build Binary
-        if: steps.cache-builder.outputs.cache-hit != 'true'
+        if: steps.cache-somnus.outputs.cache-hit != 'true'
         run: |
-          go build -C src/actions/builder -o "$GITHUB_WORKSPACE/builder-bin/builder" .
-          chmod +x ./builder-bin/builder
+          go build -C src/actions/somnus -o "$GITHUB_WORKSPACE/somnus-bin/somnus" .
+          chmod +x ./somnus-bin/somnus
 
       - name: Cache Packwiz
         if: steps.meta.outputs.has_modpacks == 'true'
@@ -98,7 +98,7 @@ jobs:
           key: go-bin-packwiz-v1-${{ runner.os }}
 
       - name: Setup Go Dos
-        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true' && steps.cache-builder.outputs.cache-hit == 'true'
+        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true' && steps.cache-somnus.outputs.cache-hit == 'true'
         uses: https://github.com/actions/setup-go@v5
         with: { go-version: 'stable', cache: true }
 
@@ -111,7 +111,7 @@ jobs:
         run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
       - name: Run Build
-        run: ./builder-bin/builder "${{ steps.meta.outputs.short_sha }}"
+        run: ./somnus-bin/somnus build "${{ steps.meta.outputs.short_sha }}"
 
       - name: Upload
         uses: https://code.forgejo.org/forgejo/upload-artifact@v4
@@ -119,4 +119,3 @@ jobs:
           name: "build-${{ steps.meta.outputs.short_sha }}"
           path: "artifacts/"
           compression-level: 0
-
