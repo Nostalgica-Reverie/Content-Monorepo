@@ -21,7 +21,6 @@
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
 - [Picture Mode](https://modrinth.com/mod/kFU5UCQz)
 - [Resource Pack Overrides](https://modrinth.com/mod/YsFycamt)
-- [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Sodium Core Shader Support](https://modrinth.com/mod/G8yJPRdl)
 - [Sodium](https://modrinth.com/mod/AANobbMI)
 - [Stfu](https://modrinth.com/mod/Rg9WdvvR)
@@ -32,8 +31,10 @@
 ## Shared Mods
 
 - [Anti-Smooth](https://modrinth.com/mod/zlZC5n7T)
+- [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
+- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
@@ -47,6 +48,7 @@
 - [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
 - [Puzzles Lib](https://modrinth.com/mod/QAGBst4M)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
+- [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Simple Resource Loader](https://modrinth.com/mod/5e65FGXQ)
 - [Text Placeholder API](https://modrinth.com/mod/eXts2L7r)
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
@@ -55,6 +57,4 @@
 
 ## Server Mods
 
-- [Async](https://modrinth.com/mod/vEC2jm6I)
-- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Custom Default World Preset](https://modrinth.com/mod/1BduonQp)

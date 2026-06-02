@@ -13,13 +13,14 @@
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
 - [Ixeris](https://modrinth.com/mod/p8RJPJIC)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
-- [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Sodium](https://modrinth.com/mod/AANobbMI)
 
 ## Shared Mods
 
+- [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
+- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
@@ -29,9 +30,5 @@
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
 - [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
+- [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
-
-## Server Mods
-
-- [Async](https://modrinth.com/mod/vEC2jm6I)
-- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
