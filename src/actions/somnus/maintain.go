@@ -17,6 +17,19 @@ const maxConcurrent = 8
 func cmdUpdate(args []string)  { run(opUpdate) }
 func cmdRefresh(args []string) { run(opRefresh) }
 
+func cmdLoaderUpdate(args []string) {
+	target := "latest"
+	if len(args) > 0 && (args[0] == "latest" || args[0] == "recommended") {
+		target = args[0]
+	}
+	run(operation{
+		name:        "loader-update",
+		gerund:      "migrating loader (" + target + ") in",
+		packwizArgs: []string{"migrate", "loader", target},
+		honorIgnore: true,
+	})
+}
+
 func cmdSync(args []string) {
 	dryRun := false
 	for _, a := range args {
@@ -356,6 +369,10 @@ func runSync(dryRun bool) {
 		}
 
 		if len(toDelete) > 0 {
+			if len(toDelete) > len(provided) {
+				fail(fmt.Sprintf("ABORT: %s delete-set (%d) exceeds files the base provides (%d). Prior sync.json is likely stale/mismatched. Delete sync.json in this target and re-run to reset state. NO files were deleted.",
+					j.targetDir, len(toDelete), len(provided)))
+			}
 			if dryRun {
 				fmt.Printf("  [DRY RUN] would delete %d base-removed file(s):\n", len(toDelete))
 				for _, f := range toDelete {
@@ -414,17 +431,29 @@ func relFilesUnder(root string) ([]string, error) {
 	return out, err
 }
 
+const syncStateVersion = 2
+
+type syncState struct {
+	Version int      `json:"version"`
+	Files   []string `json:"files"`
+}
+
 func readSyncState(path string) map[string]bool {
 	set := map[string]bool{}
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return set
 	}
-	var files []string
-	if err := json.Unmarshal(data, &files); err != nil {
+	var st syncState
+	if err := json.Unmarshal(data, &st); err != nil {
 		return set
 	}
-	for _, f := range files {
+	if st.Version != syncStateVersion {
+		fmt.Fprintf(os.Stderr, "::warning::ignoring %s (state version %d != %d); treating as fresh, no prune this run\n",
+			path, st.Version, syncStateVersion)
+		return set
+	}
+	for _, f := range st.Files {
 		set[f] = true
 	}
 	return set
@@ -436,7 +465,8 @@ func writeSyncState(path string, placed map[string]bool) error {
 		files = append(files, f)
 	}
 	sort.Strings(files)
-	data, err := json.MarshalIndent(files, "", "  ")
+	st := syncState{Version: syncStateVersion, Files: files}
+	data, err := json.MarshalIndent(st, "", "  ")
 	if err != nil {
 		return err
 	}

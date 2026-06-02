@@ -9,11 +9,11 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		fail("usage: somnus <init|bump|export|build|sync|update|refresh|modlist|pages|test|lint|port> [args]")
+		fail("usage: somnus <init|bump|export|build|sync|update|refresh|loader-update|modlist|pages|test|lint|port> [args]")
 	}
 
 	switch os.Args[1] {
-	case "export", "build", "sync", "update", "refresh", "lint", "pages":
+	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -38,6 +38,8 @@ func main() {
 		cmdUpdate(os.Args[2:])
 	case "refresh":
 		cmdRefresh(os.Args[2:])
+	case "loader-update":
+		cmdLoaderUpdate(os.Args[2:])
 	case "modlist":
 		cmdModlist(os.Args[2:])
 	case "pages":
@@ -49,7 +51,7 @@ func main() {
 	case "port":
 		cmdPort(os.Args[2:])
 	default:
-		fail(fmt.Sprintf("unknown verb %q (expected init, bump, export, build, sync, update, refresh, modlist, pages, test, lint, or port)", os.Args[1]))
+		fail(fmt.Sprintf("unknown verb %q (expected init, bump, export, build, sync, update, refresh, loader-update, modlist, pages, test, lint, or port)", os.Args[1]))
 	}
 }
 
