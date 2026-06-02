@@ -8,6 +8,10 @@ on:
       - 'modpacks/rekindled-common/**'
       - 'modpacks/lce-common/**'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   sync:
     runs-on: technocality

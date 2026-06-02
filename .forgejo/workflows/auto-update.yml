@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: "0 */6 * * *"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   auto-update:
     runs-on: technocality
@@ -70,3 +74,4 @@ jobs:
           author_email: omo50@noreply.nostalgica.net
           message: 'actions: auto-update (${{ github.workflow }})'
           add: 'modpacks'
+

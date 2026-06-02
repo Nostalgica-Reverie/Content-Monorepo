@@ -8,6 +8,10 @@ on:
       - 'datapacks/**'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   detect:
     runs-on: technocality
@@ -222,3 +226,4 @@ jobs:
           changelog: "${{ steps.changelog.outputs.notes }}"
           loaders: ${{ steps.meta.outputs.type == 'modpack' && steps.meta.outputs.loader || 'minecraft' }}
           game-versions: "${{ steps.meta.outputs.mc }}"
+

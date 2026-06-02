@@ -9,7 +9,7 @@ import (
 
 func cmdBump(args []string) {
 	if len(args) < 2 {
-		fail("usage: somnus bump <pack-dir> <new-version>\n  e.g. somnus bump modpacks/rc-plus 26.06.1")
+		fail("usage: somnus bump <pack-dir> <new-version>\n  e.g. somnus bump modpacks/re-console-plus 26.06.1")
 	}
 	packDir, newVer := args[0], args[1]
 	mfPath := filepath.Join(packDir, "manifest.json")

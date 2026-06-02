@@ -7,15 +7,17 @@ on:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
-      - 'src/actions/somnus/**'
   pull_request:
     branches: ["main"]
     paths:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
-      - 'src/actions/somnus/**'
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:

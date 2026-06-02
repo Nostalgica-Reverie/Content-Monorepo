@@ -3,6 +3,10 @@ name: "Bulk Update"
 on:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   bulk-update:
     runs-on: technocality
@@ -68,3 +72,4 @@ jobs:
           author_email: omo50@noreply.nostalgica.net
           message: 'actions: bulk update all'
           add: 'modpacks'
+
