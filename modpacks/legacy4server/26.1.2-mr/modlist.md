@@ -6,6 +6,7 @@
 - [Customizable Player Models](https://modrinth.com/mod/h1E7sQNL)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
+- [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [KryptonReno's Fabric Patcher](https://modrinth.com/mod/yzkasIPx)
 - [Krypton](https://modrinth.com/mod/fQEb0iXm)
@@ -15,12 +16,8 @@
 - [ModernRegSyncFix](https://modrinth.com/mod/U2w9BZus)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
 - [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
-- [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
-- [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
-
-## Server Mods
-
-- [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
+- [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [TT20 (TPS Fixer)](https://modrinth.com/mod/YS3ZignI)
+- [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
