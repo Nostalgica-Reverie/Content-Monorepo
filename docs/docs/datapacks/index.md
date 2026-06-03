@@ -4,7 +4,7 @@ layout: home
 title: Data Packs
 
 hero:
-  name: "Lasting Legacy"
+  name: "Reverie Projects"
   text: "Data Packs"
   tagline: Data Packs adding functionality from Legacy Console Edition
   image:
