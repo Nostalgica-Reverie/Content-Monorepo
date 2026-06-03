@@ -23,6 +23,8 @@ npm add -D vitepress@next
 npm run docs:dev
 ```
 
+Any changes made in the docs segment of the repo will now automatically update locally
+
 # Modpacks
 To work on modpacks, you must install Packwiz and Somnus, which are detailed below
 
