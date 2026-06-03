@@ -5,12 +5,26 @@ This is the repository hosting all of the different Reverie Projects modpacks, r
 Development is (currently) held on [git.nostalgica.net](https://git.nostalgica.net/Lasting-Legacy/Content-Monorepo), Tangled, GitHub and Codeberg are mirrors. Please go to our [GitHub Issues](https://github.com/Nostalgica-Reverie/Content-Monorepo/issues) page to report any issues.
 
 # General
-This repository hosts all the source and files for all of our resource packs, data packs, modpacks and more. This readme is primarily intended for internal developer usage.
+This repository hosts all the source and files for all of our resource packs, data packs, modpacks and documentation. This readme is primarily intended for internal developer usage.
 
 ## Contributing
 First, please refer to the CONTRIBUTING.md file in the repository. This will tell you some basics.
 
 To work on the repo, please install Packwiz. It is also helpful to install Packwiz Wrapper, as it can do some batch commands. Alternatively, you may also use the WIP tool Somnus, which is detailed below.
+
+# Documentation
+- Install [Node.js](https://nodejs.org/en/download) version 18 or higher
+- Install VitePress through NPM in a terminal
+```
+npm add -D vitepress@next
+```
+- Start the local development server
+```
+npm run docs:dev
+```
+
+# Modpacks
+To work on modpacks, you must install Packwiz and Somnus, which are detailed below
 
 # Actions
 The repository makes usage of Forgejo actions, for CI/CD and general QoL improvements to our dev process.

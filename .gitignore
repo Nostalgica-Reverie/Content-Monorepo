@@ -8,10 +8,18 @@ update_log_*.txt
 modpacks/**/packitup.schema.json
 modpacks/**/Logs
 artifacts/
+
+# Somnus
 .somnus-test-instance
 somnus-bin/
 somnus/somnus
 src/actions/somnus/somnus
+
+# Docs
+node_modules
+docs/docs/.vitepress/cache
+docs/docs/.vitepress/dist
+.idea
 
 # IntelliJ
 .idea/

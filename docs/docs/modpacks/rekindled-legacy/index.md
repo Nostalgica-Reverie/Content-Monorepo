@@ -1,0 +1,3 @@
+---
+title: Rekindled Legacy
+---
