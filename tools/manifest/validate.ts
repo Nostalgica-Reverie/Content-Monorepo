@@ -7,6 +7,7 @@ interface VariantEntry {
   name?: string;
   version?: string;
   release_type?: 'release' | 'beta' | 'alpha';
+  loader?: string;
 }
 
 interface Mapping {
@@ -97,8 +98,46 @@ function validate(manifestPath: string): void {
     fail(`invalid 'type': ${manifest.type}`);
   }
 
-  if (manifest.type === 'modpack' && (!manifest.loader || manifest.loader.trim() === '')) {
+  if (manifest.type === 'modpack' && !manifest.variants && (!manifest.loader || manifest.loader.trim() === '')) {
     fail(`modpack manifests must declare a 'loader'`);
+  }
+
+  if (manifest.type === 'modpack' && manifest.variants) {
+    const byVersion = new Map<string, VariantEntry[]>();
+    for (const v of manifest.variants) {
+      const list = byVersion.get(v.mc_version) ?? [];
+      list.push(v);
+      byVersion.set(v.mc_version, list);
+    }
+    for (const [mc, list] of byVersion) {
+      if (list.length > 1) {
+        for (const v of list) {
+          if (!v.id || v.id.trim() === '') {
+            fail(`variant for mc_version '${mc}' shares that version with another variant and must declare a distinct 'id' (e.g. '${mc}-fabric')`);
+          }
+          if (!v.loader || v.loader.trim() === '') {
+            fail(`variant '${v.id}' shares mc_version '${mc}' with another variant and must declare its own 'loader'`);
+          }
+        }
+        const ids = list.map((v) => v.id!);
+        const dupeIds = ids.filter((id, i) => ids.indexOf(id) !== i);
+        if (dupeIds.length > 0) {
+          fail(`duplicate variant id(s) for mc_version '${mc}': ${[...new Set(dupeIds)].join(', ')}`);
+        }
+        const loaders = list.map((v) => v.loader!);
+        const dupeLoaders = loaders.filter((l, i) => loaders.indexOf(l) !== i);
+        if (dupeLoaders.length > 0) {
+          fail(`two variants share both mc_version '${mc}' and loader '${[...new Set(dupeLoaders)].join(', ')}' \u2014 they are indistinguishable`);
+        }
+      }
+    }
+    for (const v of manifest.variants) {
+      const resolvedLoader = v.loader ?? manifest.loader;
+      if (!resolvedLoader || resolvedLoader.trim() === '') {
+        const key = v.id ?? v.mc_version;
+        fail(`variant '${key}' has no loader: set a variant 'loader' or a pack-level 'loader'`);
+      }
+    }
   }
 
   const hasMcVersion = manifest.mc_version !== undefined;
@@ -117,7 +156,6 @@ function validate(manifestPath: string): void {
   const hasCf = !!(manifest.curseforge_id && manifest.curseforge_id.trim());
   if (!hasMr && !hasCf) fail(`manifest must set at least one of modrinth_id or curseforge_id`);
 
-  // --- Role validation ---
   const role = manifest.role;
   const roleIsString = typeof role === 'string';
   if (roleIsString && role !== 'none' && role !== 'base') {
