@@ -8,7 +8,157 @@
   "downscale": {
     "value": "OFF"
   },
-  "numberOfPasses": 6,
+  "fastFboBlit": {
+    "value": "ON"
+  },
+  "numberOfPasses": 10,
   "maxFps": 60,
-  "screenMaxFps": 15
+  "screenMaxFps": 30,
+  "map": {
+    "hand": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "misc_overlays": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "crosshair": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "spectator_menu": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "hotbar": {
+      "enabled": {
+        "value": "OFF"
+      }
+    },
+    "armor_bar": {
+      "enabled": {
+        "value": "OFF"
+      }
+    },
+    "health_bar": {
+      "enabled": {
+        "value": "OFF"
+      }
+    },
+    "food_bar": {
+      "enabled": {
+        "value": "OFF"
+      }
+    },
+    "air_bar": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "mount_health": {
+      "enabled": {
+        "value": "OFF"
+      }
+    },
+    "info_bar": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "experience_level": {
+      "enabled": {
+        "value": "OFF"
+      }
+    },
+    "held_item_tooltip": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "spectator_tooltip": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "mob_effects": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "boss_bar": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "sleep": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "demo_timer": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "scoreboard": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "overlay_message": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "title_and_subtitle": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "chat": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "player_list": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "subtitles": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "minimega:shield": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "minimega:armor": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "minimega:timer": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "_unknown_": {
+      "enabled": {
+        "value": "AUTO"
+      }
+    },
+    "debug_overlay": {
+      "enabled": {
+        "value": "OFF"
+      }
+    }
+  }
 }

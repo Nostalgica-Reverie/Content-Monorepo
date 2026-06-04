@@ -1,8 +1,16 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/modpack_defaults/config/animatium.json"
+hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
+
+[[files]]
 file = "config/modpack_defaults/config/badoptimizations.txt"
 hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
+
+[[files]]
+file = "config/modpack_defaults/config/bug-fixer-upper-config.properties"
+hash = "dd1df2f250035bbcb151ab104fd1e5b4cf5d5475caff872e15d9497859cc5e7d"
 
 [[files]]
 file = "config/modpack_defaults/config/c2me.toml"
@@ -17,12 +25,20 @@ file = "config/modpack_defaults/config/fabric/indigo-renderer.properties"
 hash = "0a776bd94413087200e0cd1a0bd72cbfe5c1a69002c1c625236233c2183c301c"
 
 [[files]]
+file = "config/modpack_defaults/config/factory_api/client_options.json"
+hash = "5bad688f356193319f0bb7c19f9b0fce8ff08d6d529d5d6bbcbf2fe614643911"
+
+[[files]]
+file = "config/modpack_defaults/config/factory_api/common_options.json"
+hash = "7b103325f88b27b5d68e6ac6a02d53761e9287ccbffd18ffdd5da0063a9d9828"
+
+[[files]]
 file = "config/modpack_defaults/config/ferritecore.mixin.properties"
 hash = "3817e94107bb1c7358beebb80b1810e822de38be430f855cf14828c38018e8e2"
 
 [[files]]
 file = "config/modpack_defaults/config/gnetum.json"
-hash = "91cb5895241c87ee69ea9e8c06ab2258497766b515a0cde6f1f9001591b4b153"
+hash = "3ea81bb85c1741b083aa9a16edef2790124901c357a131b3a7eb8b64c68303bf"
 
 [[files]]
 file = "config/modpack_defaults/config/immediatelyfast.json"
@@ -31,6 +47,14 @@ hash = "76aa2fb300513b5e5ce592c606da18a59ad07cc7d98b9a7cd3abc420fdddce13"
 [[files]]
 file = "config/modpack_defaults/config/ixeris.toml"
 hash = "8f1a267276cec9d77d19b7bd6175e1cf34c06a94f43296b5de90ae6cda25e396"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy_world_sizes/common.json"
+hash = "03fe9d4796b38fc8ffbe9692986d7e69ff08043690b3e1024df74f2241c42006"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy_world_sizes/common_mixin.json"
+hash = "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
 
 [[files]]
 file = "config/modpack_defaults/config/lithium.properties"
@@ -43,6 +67,14 @@ hash = "9c7f4bf8628b8ba676d12987edb0185082bcefef2a070f1adf551a740667db82"
 [[files]]
 file = "config/modpack_defaults/config/moreculling.toml"
 hash = "ad9502638dfc64191c82e28efeede417bd4ab32b6276e60117bc978e41b936bd"
+
+[[files]]
+file = "config/modpack_defaults/config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
+hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
+
+[[files]]
+file = "config/modpack_defaults/config/nostalgic_tweaks/nostalgic_tweaks.json"
+hash = "da9e16081492698179576b7dbfe7bf1e3fe5a44aa6ec8d14b17f9f0e6dd70341"
 
 [[files]]
 file = "config/modpack_defaults/config/npe.json"
@@ -77,12 +109,16 @@ file = "config/modpack_defaults/config/sodium-options.json"
 hash = "068fc165435c8734b43d5f735cfbe42d015356d157222d577012e45b3bf0a989"
 
 [[files]]
-file = "config/modpack_defaults/config/zfastnoise.mixin.toml"
-hash = "c84c554d17cc2563cb41bd81beb0db77015e7c5f37cc94db90456d7dce8be8e3"
+file = "config/modpack_defaults/config/stfu-disable.txt"
+hash = "f1db3febe2abb607ee0c0cd16627aa3e8d69b829d1ba3c12c46fbba2d12b96db"
 
 [[files]]
-file = "config/modpack_defaults/options.txt"
-hash = "71723701bd22b284dfa294e6f245a09e52e04a15de34db611dc1bcd125b45c33"
+file = "config/modpack_defaults/config/voicechat/voicechat-client.properties"
+hash = "66bf7683c672213cbb134da315b4f8cd1487e1cab5a448e71fb1e41bd6f15ef6"
+
+[[files]]
+file = "config/modpack_defaults/config/zfastnoise.mixin.toml"
+hash = "c84c554d17cc2563cb41bd81beb0db77015e7c5f37cc94db90456d7dce8be8e3"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums.json"
@@ -903,7 +939,7 @@ metafile = true
 
 [[files]]
 file = "mods/legacy-minecraft.pw.toml"
-hash = "f506ce5accc8f7bcff9415d3de5a1daa5869efca249d0580e4b5d536694ce911"
+hash = "c1a35ae670ddc0d5879ba4605ad6a1bed9a07ec3222fa362bbb5c75c8365471b"
 metafile = true
 
 [[files]]
@@ -1018,7 +1054,7 @@ metafile = true
 
 [[files]]
 file = "mods/simple-voice-chat.pw.toml"
-hash = "85cfd441c63b312d1e11c7d4846b18c6ebb06388c93d2274e66a77bee480ed06"
+hash = "8e5f60727778244f74941770a19d55365dea7fd324f553f49c837e255b03c5bf"
 metafile = true
 
 [[files]]
@@ -2292,4 +2328,4 @@ metafile = true
 
 [[files]]
 file = "sync.json"
-hash = "1288f407e23dedd37a52225d628931ca2cb176c6e59be715521a6507d328efab"
+hash = "36d24e19bca8cb8e9dc30e32b5f066c8451f5209a36ab807a09933fb4fe192d0"
