@@ -2,11 +2,11 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/fabric_loader_dependencies.json"
-hash = "dce89c85b61f061fb15eccd8f5a8a5970071f8bc29a964ed8db4e0672d898f2c"
+hash = "b78625e91edf83a04b40ff90e6fbc457e99dd963e4edea16a218a5efd11d939a"
 
 [[files]]
 file = "config/isxander-main-menu-credits.json"
-hash = "17acdab215455239654c590a9c090c81a02d64429cd37f75087a0567052eb340"
+hash = "ce1df447326ca8b3018c0b2f4886092f63aaed9711443289b5370c6dd5af97ae"
 
 [[files]]
 file = "config/modpack_defaults/config/c2me.toml"
@@ -26,7 +26,7 @@ hash = "4ecbd7b9f073f3f8d66d530af6cf1a23555650c433beb3815a5d2fe9c55218fb"
 
 [[files]]
 file = "config/modpack_defaults/config/cosmetica/cosmetica.properties"
-hash = "d08ff9e592e21cdc142abc7afcc825b2b536a06036ff9c607f3916f180afc11c"
+hash = "b7114383639ae2ecb42ca456185d30272ad503aee4b7d714a92eb9da3560b727"
 
 [[files]]
 file = "config/modpack_defaults/config/cosmetica/pack_settings.json"
@@ -116,7 +116,7 @@ metafile = true
 
 [[files]]
 file = "mods/bannerpoint.pw.toml"
-hash = "899c476fd54179a0bf7d59823ce95f8a00c8a1cfc50f0edf598d041d63b9416e"
+hash = "1d42eb1d4f16b4ef0b89dc94f0280f1c44586f2d39920efd4c4ae7933c1414cd"
 metafile = true
 
 [[files]]
@@ -141,7 +141,7 @@ metafile = true
 
 [[files]]
 file = "mods/c2me-fabric.pw.toml"
-hash = "82f8e930d470d72330d18b6609e233f5c61a37866cec7c93f17d9bc6006e7565"
+hash = "cf069f9208e3e5ac8c6b7ae6e7564494b29dbe241e656fd1d59f75f988ac0672"
 metafile = true
 
 [[files]]
@@ -196,7 +196,7 @@ metafile = true
 
 [[files]]
 file = "mods/cubes-without-borders.pw.toml"
-hash = "047f529b7339b37e9fa57559876f27023b77d4a5dc9c0c2c525e5681f147b423"
+hash = "13f28d12f8c58184e6a7edf3f609eecb56a6ffc872148c94996ae666543b68e0"
 metafile = true
 
 [[files]]
@@ -206,7 +206,7 @@ metafile = true
 
 [[files]]
 file = "mods/depillage.pw.toml"
-hash = "eb589fa554e0cbd64372823c7eaa3314189291addec5b5774c414010bdae04b3"
+hash = "24385a6aec0e58d9b3066250e899bf9577b87a0610ebf5681774359e05e5c528"
 metafile = true
 
 [[files]]
@@ -281,7 +281,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "337d97b990f76c91584b12600651ae7bd47a0824e45070b3d9330b0922149fc0"
+hash = "4040491034ad54617e4428b4d9fda5a407cd61930bcd58312a75d3fc40c8285f"
 metafile = true
 
 [[files]]
@@ -336,7 +336,7 @@ metafile = true
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "8fa5669929af129935a06b50ee323cd4fb25a2328356cc3190ce189119a25ab4"
+hash = "5138ff3e3ad846f68290aa51270d13e099f31c46146047b63a2f77686cf3ef01"
 metafile = true
 
 [[files]]
@@ -360,18 +360,23 @@ hash = "83ce6d277b02b2d55a9ad0d5a5900ef43562f4926e88a81b1ad904aeb63d5074"
 metafile = true
 
 [[files]]
+file = "mods/leaves-be-gone.pw.toml"
+hash = "32673d364ca9329a746fe7acf395938f8ed7b326e051486d94a1edd7eaf0282a"
+metafile = true
+
+[[files]]
 file = "mods/litematica.pw.toml"
 hash = "c8b294d6eaab29151eb2884525b962ef5506e8fc83d31ea839dbc3d30bd99651"
 metafile = true
 
 [[files]]
 file = "mods/lithium.pw.toml"
-hash = "c4f5f4038e66b1ce6a57898de54878490d1240712c6a0db4371db3914760e6de"
+hash = "5a114e21e8d069509174fd2c526e0ac3e58f7a7c6b10484aa6ba9988c1f3606a"
 metafile = true
 
 [[files]]
 file = "mods/lithostitched.pw.toml"
-hash = "316b9d20a315707d0a7ca9bbb11a1151e444ca39a7f353f4a04282203613c09a"
+hash = "edd4fb11fe7332744d2546728cde7474b292c502346d297a22edcaedd32a0b20"
 metafile = true
 
 [[files]]
@@ -580,6 +585,16 @@ hash = "6557d217f2ec39850a73945d0d3cdd037b631f87342ecf48c0e921d7e44e44af"
 metafile = true
 
 [[files]]
+file = "mods/vanilla-backpacks.pw.toml"
+hash = "cfa121ffa0d433047815b7de4ea3c4278bd3939107e1d936367ecb2ad57bfc20"
+metafile = true
+
+[[files]]
+file = "mods/veinminer.pw.toml"
+hash = "f09d38d7c89144c74165bd738654f0de49cd8050e49007e634d14c3dc7a782d2"
+metafile = true
+
+[[files]]
 file = "mods/visual-workbench.pw.toml"
 hash = "03932449f4c44e79ebc9edf046dcfc245b5d3094f79257e2497321364e6bc0da"
 metafile = true
@@ -615,22 +630,6 @@ hash = "055e6a5ca54023619cbc1d0c91d4a102d4eb37981940dc3f8de62e6a3ecb3e86"
 metafile = true
 
 [[files]]
-file = "resourcepacks/Mod Menu Helper/License.txt"
-hash = "ad97bca36a5ff62ea068e8825e43a48d2005c4f47a157ed90f5a3aef76b479ae"
-
-[[files]]
-file = "resourcepacks/Mod Menu Helper/assets/fo/lang/en_us.json"
-hash = "27c1e498b5693256024f125f4b8438fcbfbaf890985e667c9709d1c72ea75ec7"
-
-[[files]]
-file = "resourcepacks/Mod Menu Helper/pack.mcmeta"
-hash = "216f38d211651da4ab5e3dfef597dc703f583c031394439d4e46cd28acbe8310"
-
-[[files]]
 file = "resourcepacks/chat-reporting-helper.pw.toml"
 hash = "3819eca29d5a6fb7f5bf25ae15b4fb454ac3c2476f5271ad9507c9cec533773d"
 metafile = true
-
-[[files]]
-file = "sync.json"
-hash = "835993ae35bc6629c5b87398f79130a36739e0f0d0b70f1db7f07ee798ceb32c"
