@@ -89,6 +89,11 @@ file = "modlist.md"
 hash = "074a81e8fbc79624e463b4e5ce6e906a6504d90f1105bde107e136571639c979"
 
 [[files]]
+file = "mods/amecs.pw.toml"
+hash = "fbd625d791e2a4cf239d188ce847c8039989be6b5d28732b7cbb7180444c0107"
+metafile = true
+
+[[files]]
 file = "mods/asynclogger.pw.toml"
 hash = "b43e0b4299c6272dbf9e01eed5b848b8e6509e0158016e239e6ee2a75396d6da"
 metafile = true
@@ -99,8 +104,23 @@ hash = "68c328a6f95dc78e1212d7c4e58bcb104c9472d00f9f48d32bb1c5530deeef1c"
 metafile = true
 
 [[files]]
+file = "mods/bedrock-skins.pw.toml"
+hash = "367276f42a1291a3b68ba503fcae327e025ff7be3c22d5399fd0e8db1c748a90"
+metafile = true
+
+[[files]]
 file = "mods/better-block-entities.pw.toml"
 hash = "ae591c95c3189ac3b08d7a07c1dd98e659f4d557654d5a4abc54f258b1aabebf"
+metafile = true
+
+[[files]]
+file = "mods/bobby.pw.toml"
+hash = "463da331c6e307609bac355c92ebeeb230c154f35145fc39fc30ebf6e0856321"
+metafile = true
+
+[[files]]
+file = "mods/bugfixerupper.pw.toml"
+hash = "48322f871a4ea31eec7eca963481ac24837d09024f4689dcba6c2ad31865e8d0"
 metafile = true
 
 [[files]]
@@ -116,6 +136,11 @@ metafile = true
 [[files]]
 file = "mods/configmanager.pw.toml"
 hash = "1347ee8be0f38884db0791d81f9c846270ef052a8036d00643dd875ceac35d9c"
+metafile = true
+
+[[files]]
+file = "mods/crash-assistant.pw.toml"
+hash = "d9dd1a686b2c5695ba16f67513287335ce4cf49644974c6008212a482c87682a"
 metafile = true
 
 [[files]]
@@ -135,7 +160,12 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "69c0b14fe1ceb54fc531c65d527de02d3a1bc51505b71a7346bdd548e00379bf"
+hash = "c740d8036d3f695c9e90ab61611ea870abe50990d7448b48daedbe50d3492816"
+metafile = true
+
+[[files]]
+file = "mods/factory-api.pw.toml"
+hash = "b4c9e72fad74c0db855ca76092070a7bc35dbea32fb28990bf6340f81f904644"
 metafile = true
 
 [[files]]
@@ -146,6 +176,11 @@ metafile = true
 [[files]]
 file = "mods/fzzy-config.pw.toml"
 hash = "1fffe5b72ab3b513ebbd19f3d3f0d574b8bb20dd6e34efbb02aeb1b15735e4ee"
+metafile = true
+
+[[files]]
+file = "mods/globalpacks.pw.toml"
+hash = "0406e19c5d31b64a0bf1c081063f3af9d676b909513580e607cecbb17da109e9"
 metafile = true
 
 [[files]]
@@ -164,7 +199,17 @@ hash = "ce0289066c1544c5bd51cc0fc64b9540a2f5d5d3465227ddc650f1cf199244aa"
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "a564d03162fc3d67fb67aa37f12c1c5a92b5d014c7e0e5323c85517ce39eee19"
+hash = "52dfb359285d96d62a09c822dd59f8c373fd57fb0a74d30e6eba36f4624b4ea1"
+metafile = true
+
+[[files]]
+file = "mods/legacy-minecraft.pw.toml"
+hash = "c1a35ae670ddc0d5879ba4605ad6a1bed9a07ec3222fa362bbb5c75c8365471b"
+metafile = true
+
+[[files]]
+file = "mods/legacy-nether-extended.pw.toml"
+hash = "4b7f7da8ad4c078036441fa40f7741b71900f398a6bf0af16f4d35cba9e5be04"
 metafile = true
 
 [[files]]
@@ -184,12 +229,17 @@ metafile = true
 
 [[files]]
 file = "mods/no-chat-restrictions.pw.toml"
-hash = "3ff0238578a8a895680c33fbde60cff4750b189bbd476fad6a854cdcb6318f78"
+hash = "111d55b6e3069f2f1768df973649681a919ff79ce44e0441f23640c93bc5470c"
 metafile = true
 
 [[files]]
 file = "mods/particle-core.pw.toml"
 hash = "4f43aceef4cd35b40fcc34dc4b0e2cfa7efa352584e259fa566618d15c5a80d9"
+metafile = true
+
+[[files]]
+file = "mods/rsls.pw.toml"
+hash = "9af6a0ec74b10cd376016e8c81f0a99ab593edc57524dcc4cdfef10ce96e769a"
 metafile = true
 
 [[files]]
@@ -200,6 +250,16 @@ metafile = true
 [[files]]
 file = "mods/servercore.pw.toml"
 hash = "2c72b218732e6bd71a91807f537acbdc2a464bc95a80bb9edc69e1dd4ff6dd4b"
+metafile = true
+
+[[files]]
+file = "mods/shuttfup.pw.toml"
+hash = "b1d1580ed55b1869a5afa6408fd8ce4fb1e61f0942986a6649b35dc5b04f5bd2"
+metafile = true
+
+[[files]]
+file = "mods/simple-voice-chat.pw.toml"
+hash = "8e5f60727778244f74941770a19d55365dea7fd324f553f49c837e255b03c5bf"
 metafile = true
 
 [[files]]
@@ -220,6 +280,11 @@ metafile = true
 [[files]]
 file = "mods/worldthreader.pw.toml"
 hash = "3513a8acf9140e9cce75521c80462344efd95dc17c823820a357382c1175033d"
+metafile = true
+
+[[files]]
+file = "mods/yacl.pw.toml"
+hash = "8b74939820e5304e916071cf86e04a0fe2cbe55336c8b05bdc33a0310298ff80"
 metafile = true
 
 [[files]]
