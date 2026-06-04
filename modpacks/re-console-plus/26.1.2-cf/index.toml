@@ -1,6 +1,58 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/crash_assistant/config.toml"
+hash = "f72ab9f17eb198a42f181954a399aafdab5b697dbb0232d93c42403f3e9627f2"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/config.toml"
+hash = "04cbcb57ef01efd7c2edeb7946d2aacb2f47cca7e3c00d97428a3834a06c4748"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/crash_assistant_localization_overrides/README.md"
+hash = "943e1c3672b8a03f27519b357091133205119c7b3db2fcc4c25b597cabf8926d"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/modlist.json"
+hash = "502fd26d2f1e71f73082c1d87fb5afa093b234213a0849c43f9b03235b6f77ad"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/scripts/log_analysis/example.jexl"
+hash = "adde7e5e42b9d716f14a9bc49797999a21a0ee05cc67e71410a232f830115b3b"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/scripts/startup/00_migrated_problematic_mods.jexl"
+hash = "f217976c0fd9783b984b1e5d7a27cac43f3eee661d9f962084f0d43e6ba80c43"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/scripts/startup/example.jexl"
+hash = "346378f04a9e7319cdcb405fad82d6e7f1b36b39e0e4129c00a226b49f41cf37"
+
+[[files]]
+file = "config/crash_assistant/lang/README.md"
+hash = "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc"
+
+[[files]]
+file = "config/crash_assistant/lang/en_us.json"
+hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "afa8f234434eacf1e7ef2aa25c9cc5af2d1366fa3f2b23073fd7815dcfb4d0a8"
+
+[[files]]
+file = "config/crash_assistant/problematic_mods_config.json"
+hash = "3ddefc6991fbcae65806ee14dad0efd93bd3258cb9bf9696f8eef5d564a6289b"
+
+[[files]]
 file = "config/modpack_defaults/config/animatium.json"
 hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
@@ -47,6 +99,26 @@ hash = "76aa2fb300513b5e5ce592c606da18a59ad07cc7d98b9a7cd3abc420fdddce13"
 [[files]]
 file = "config/modpack_defaults/config/ixeris.toml"
 hash = "8f1a267276cec9d77d19b7bd6175e1cf34c06a94f43296b5de90ae6cda25e396"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/client_mixin.json"
+hash = "de0e25757fb3fb538d710ba01b3ebe416e97f0b40b78af2749cb85ba138532f3"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/client_options.json"
+hash = "9d19030eac15f86e71d98e9614c77b09c04c53eadbff73976e7e5096049968cf"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/common.json"
+hash = "3b9b9361ed4ad964361358b210952bb01f4f30ff2d56c249d0ce517792244266"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/common_mixin.json"
+hash = "8ffadf5901d31192638d4089d7b3eb16a6ed160252c9b4f7c6566448195f4019"
+
+[[files]]
+file = "config/modpack_defaults/config/legacy/global_packs.json"
+hash = "3a126891fed186e3fd4bc2bc45ad6b97566840f316b42b4ba96bf71aa17e50ea"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy_world_sizes/common.json"
