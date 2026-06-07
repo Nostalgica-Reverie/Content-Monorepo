@@ -27,7 +27,7 @@ These charts mostly pertain to the Modrinth versions of the modpacks. The CurseF
 | Nether Mechanics | ✅ | ✅ |
 | Texture Packs | ✅ | ✅ |
 | Mash-up Worlds | ✅ | ✅ |
-| Mini Games* | ✅ | ✅ |
+| Mini Games | ✅ | ✅ |
 | Skin Packs | ✅ | ✅ |
 | Manual Saving | ❌ | ✅ |
 | All Tutorial World Revisions <br> Included | ✅ | ❌ |
@@ -46,10 +46,10 @@ These charts mostly pertain to the Modrinth versions of the modpacks. The CurseF
 | Borderless Fullscreen | ✅ | ✅ |
 | Custom Options Presets | ✅ | ✅ |
 | Online Multiplayer with e4mc | ✅ | ✅ |
+| Simple Voice Chat <br> + Voice Chat Interaction | ✅ | ✅ |
 | Built-in Shaders | ✅ | ❌ |
-| Extra "Java-native" Texture Packs <br> (like Bare Bones and Faithful) | ✅ | ❌ |
-| Alpha and Beta Texture Packs | ✅ | ❌ |
+| Extra "Java-native" Texture Packs <br> (like Bare Bones, Patrix and Faithful) | ✅ | ❌ |
+| Beta & Alpga Texture Packs | ✅ | ❌ |
 | OptiFine Gameplay features <br> (Dynamic lighting, zoom, BetterGrass, etc.) | ✅ | ❌ |
 | Extra Utilities <br> (Ping View, CalcMod, Chat Heads, etc.) | ✅ | ❌ |
 | Bedrock-style Bridging | ✅ | ❌ |
-| Simple Voice Chat <br> + Voice Chat Interaction | ✅ | ❌ |

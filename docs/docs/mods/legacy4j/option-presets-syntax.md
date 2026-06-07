@@ -1,1 +1,307 @@
 # Option Presets Syntax
+
+The options preset system allows you to change the default Options presets bundled with the mod.
+
+An example is the one found in Legacy Modpack Resources
+
+```[
+  {
+    "id": "legacy:legacy_retro",
+    "name": { "translate": "legacy.options.optionsPreset.legacy_retro" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.legacy_retro.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 4,
+      "options.cutoutLeaves": false,
+      "options.ao": false
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true,
+      "slowChunkLoading": true,
+      "itemLightingInHand": false
+    }
+  },
+  {
+    "id": "legacy:legacy_handheld",
+    "name": { "translate": "legacy.options.optionsPreset.legacy_handheld" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.legacy_handheld.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 6,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 0.5,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true,
+      "slowChunkLoading": true,
+      "itemLightingInHand": false
+    }
+  },
+  {
+    "id": "legacy:legacy_low",
+    "name": { "translate": "legacy.options.optionsPreset.legacy_low" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.legacy_low.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 10,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": true,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": true,
+      "fakeManualSaveScreen": true,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true,
+      "slowChunkLoading": true,
+      "itemLightingInHand": false
+    }
+  },
+  {
+    "id": "legacy:legacy_medium",
+    "name": { "translate": "legacy.options.optionsPreset.legacy_medium" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.legacy_medium.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 18,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": true,
+      "legacyCloudHeightAndTexture": true,
+      "slowChunkLoading": true,
+      "itemLightingInHand": true
+    }
+  },
+  {
+    "id": "legacy:legacy_high",
+    "name": { "translate": "legacy.options.optionsPreset.legacy_high" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.legacy_high.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 24,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": true,
+      "overrideTerrainFogStart": false,
+      "overrideTerrainFogEnd": false,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": true,
+      "itemLightingInHand": true
+    }
+  },
+```
+This JSON is for LMR's "Legacy" mode, utilizing Legacy4J's Purist mode, which is configurable and provides settings like ```lceClouds```, ```slowChunkLoading``` and others. These are options available in Legacy4J's config and are enabled here.
+
+For the non "Legacy" mode versions, you can look below. 
+These provide more Java-esque visuals than the "Legacy" mode options
+
+```
+  {
+    "id": "legacy:potato",
+    "name": { "translate": "legacy.options.optionsPreset.potato" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.potato.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 4,
+      "options.cutoutLeaves": false,
+      "options.ao": false
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": false
+    }
+  },
+  {
+    "id": "legacy:very_low",
+    "name": { "translate": "legacy.options.optionsPreset.very_low" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.very_low.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 6,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": false
+    }
+  },
+  {
+    "id": "legacy:low",
+    "name": { "translate": "legacy.options.optionsPreset.low" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.low.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 10,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": false
+    }
+  },
+  {
+    "id": "legacy:medium",
+    "name": { "translate": "legacy.options.optionsPreset.medium" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.medium.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 18,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": true,
+      "overrideTerrainFogEnd": true,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": false
+    }
+  },
+  {
+    "id": "legacy:high",
+    "name": { "translate": "legacy.options.optionsPreset.high" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.high.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 24,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": false,
+      "overrideTerrainFogEnd": false,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": false
+    }
+  },
+  {
+    "id": "legacy:ultra",
+    "name": { "translate": "legacy.options.optionsPreset.ultra" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.ultra.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 32,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": false,
+      "overrideTerrainFogEnd": false,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": false
+    }
+  },
+  {
+    "id": "legacy:lmr_extreme",
+    "name": { "translate": "legacy.options.optionsPreset.lmr_extrene" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.lmr_extreme.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 64,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": false,
+      "overrideTerrainFogEnd": false,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": false
+    }
+  },
+  {
+    "id": "legacy:lmr_outrageous",
+    "name": { "translate": "legacy.options.optionsPreset.lmr_outrageous" },
+    "tooltip": { "translate": "legacy.options.optionsPreset.lmr_outrageous.tooltip" },
+    "vanilla": {
+      "options.renderDistance": 128,
+      "options.cutoutLeaves": true,
+      "options.ao": true
+    },
+    "legacy": {
+      "autoSaveCountdown": false,
+      "hudDistance": 1.0,
+      "fakeAutosaveScreen": false,
+      "fakeManualSaveScreen": false,
+      "legacySettingsMenus": false,
+      "overrideTerrainFogStart": false,
+      "overrideTerrainFogEnd": false,
+      "lceClouds": false,
+      "legacyCloudHeightAndTexture": false,
+      "slowChunkLoading": false
+    }
+  }
+]
+```
