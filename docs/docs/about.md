@@ -1,9 +1,37 @@
 ---
 title: About Us
 ---
-# Lasting Legacy
+Reverie Projects is a group of developers, artists, and contributors dedicated to making high quality Minecraft projects.
 
-Lasting Legacy is a group of developers, artists and contributors dedicated to maintaining a feature-complete and up-to-date vision of 4J Studios' Minecraft port, the Legacy Console Edition. <br>
+# Nostalgica Reverie
+Nostalgica Reverie is the sub-org behind Moderner Beta, Programmer Art Continuation Project and Nostalgic Tweaks!<br>
+<br>
+<br>
+
+# Credits
+## Mod Developers
+### Moderner Beta
+Icanttellyou <br>
+BlueStaggo <br>
+
+### Nostalgic Tweaks
+Adrenix <br>
+Icanttellyou <br>
+
+### RRDiscordBridge
+DexrnZacAttack
+
+## Visual Design
+**Branding** <br>
+NicSonic-_-
+
+### Programmer Art Continuation Project
+mzov_jen
+
+
+# Lasting Legacy Group
+
+Lasting Legacy Group is the sub-org behind all of our Legacy Console Edition content.<br>
 <br>
 <br>
 
@@ -11,9 +39,9 @@ Lasting Legacy is a group of developers, artists and contributors dedicated to m
 ## Mod Developers
 ### Legacy4J
 WilyIcaro <br>
+Creepereater201 <br>
 pizzart <br>
 #### Contributors
-Creepereater201 <br>
 BrandonItaly <br>
 Jab125 <br>
 RedRain0o0 <br>
@@ -61,9 +89,7 @@ NicSonic-_-
 ## Hosting Infrastructure
 Technocality
 
-## Publishing Software
-### PackItUp 
-Dexrn ZacAttack 
+## Development Software
 
 ### packwiz 
 comp500 <br>
