@@ -4,6 +4,7 @@ title: About Us
 Reverie Projects is a group of developers, artists, and contributors dedicated to making high quality Minecraft projects.
 
 # Nostalgica Reverie
+
 Nostalgica Reverie is the sub-org behind Moderner Beta, Programmer Art Continuation Project and Nostalgic Tweaks!<br>
 <br>
 <br>
@@ -26,8 +27,9 @@ DexrnZacAttack
 NicSonic-_-
 
 ### Programmer Art Continuation Project
-mzov_jen
-
+mzov_jen <br>
+<br>
+<br>
 
 # Lasting Legacy Group
 
