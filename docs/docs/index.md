@@ -25,7 +25,7 @@ features:
     link: /datapacks
     linkText: All Pages
   - title: Resource Packs
-    details: Resource Packs adding visual features from Legacy Console Edition
+    details: Resource Packs under our umbrella
     link: /resource-packs
     linkText: All Pages
   - title: Installation
