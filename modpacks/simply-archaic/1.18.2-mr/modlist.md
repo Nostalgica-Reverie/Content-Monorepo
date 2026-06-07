@@ -3,19 +3,15 @@
 ## Client Mods
 
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
-- [CrashPatch](https://modrinth.com/mod/nZ3E8WQz)
 - [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
-- [Idle Tweaks](https://modrinth.com/mod/Vnjlu1sC)
-- [beddium](https://modrinth.com/mod/kPtHpb7z)
+- [Ixeris](https://modrinth.com/mod/p8RJPJIC)
+- [Sodium](https://modrinth.com/mod/AANobbMI)
 
 ## Shared Mods
 
-- [FoamFix](https://modrinth.com/mod/jupr7Bf5)
-- [UniMixins](https://modrinth.com/mod/ghjoiQAl)
-- [VintageFix](https://modrinth.com/mod/e6vNsbAm)
-- [lwjgl3ify](https://modrinth.com/mod/eC4lt4Oy)
-
-## Server Mods
-
-- [AI Improvements](https://modrinth.com/mod/DSVgwcji)
-- [Born in a Barn](https://modrinth.com/mod/WfPGKC8F)
+- [FerriteCore](https://modrinth.com/mod/uXXizFIs)
+- [LazyDFU](https://modrinth.com/mod/hvFnDODi)
+- [Lithium](https://modrinth.com/mod/gvQqBUqZ)
+- [ModernFix](https://modrinth.com/mod/nmDcB62a)
+- [Phosphor](https://modrinth.com/mod/hEOCdOgW)
+- [Smooth Boot (Fabric)](https://modrinth.com/mod/FWumhS4T)

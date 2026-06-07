@@ -2,16 +2,18 @@
 
 ## Shared Mods
 
+- [Amecs (Fabric)]()
 - [Async Logger]()
 - [BadOptimizations]()
+- [Bedrock Skins]()
 - [Better Block Entities]()
 - [Bobby]()
+- [BugFixerUpper]()
 - [Cloth Config API (Fabric/Forge/NeoForge)]()
 - [Concurrent Chunk Management Engine]()
 - [Config Manager]()
 - [Crash Assistant]()
 - [Cubes Without Borders]()
-- [Customizable Player Models (Fabric)]()
 - [Dynamic FPS]()
 - [Entity Culling Fabric/Forge]()
 - [Fabric API]()
@@ -20,6 +22,7 @@
 - [Fast Noise]()
 - [FerriteCore (Fabric)]()
 - [Fzzy Config]()
+- [Global Packs]()
 - [Gnetum]()
 - [ImmediatelyFast]()
 - [Ixeris]()
@@ -38,18 +41,14 @@
 - [Raise Sound Limit Simplified]()
 - [ScalableLux]()
 - [ServerCore]()
+- [Shuttfup]()
 - [Simple Resource Loader]()
 - [Simple Voice Chat]()
 - [Sodium Shadowy Path Blocks]()
 - [Sodium]()
 - [Text Placeholder API]()
-- [ThreadTweak](https://modrinth.com/mod/vSEH1ERy)
 - [Very Many Players (Fabric)]()
 - [YetAnotherConfigLib]()
 - [[EMF] Entity Model Features [Fabric & Forge]]()
 - [[ETF] Entity Texture Features - [Fabric & Forge]]()
 - [e4mc]()
-
-## Server Mods
-
-- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)
