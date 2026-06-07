@@ -1,7 +1,9 @@
-# Re-Console Plus 26.06
+# Re-Console Plus 26.06.1
 Curseforge port of 26.1.2, and a few fixes.
 
 This also is the first release using our more modular system of development. If there are any bugs, please report them!
+
+26.06.1 is a small patch removing known problematic mods
 
 # Content Additions
 
