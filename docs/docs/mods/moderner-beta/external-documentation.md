@@ -1,0 +1,1 @@
+Due to its own complexity, Moderner Beta has its own dedicated wiki you can read [here](https://moderner.nostalgica.net/docs/)
