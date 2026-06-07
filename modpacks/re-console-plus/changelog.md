@@ -5,6 +5,8 @@ This also is the first release using our more modular system of development. If 
 
 26.06.1 is a small patch removing known problematic mods
 
+26.06.2 is a small patch fixing SMP compatibility with Open Parties and Claims
+
 # Content Additions
 
 ### Added Bedrock Skins
