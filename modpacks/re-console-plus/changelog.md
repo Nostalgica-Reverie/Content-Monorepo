@@ -1,2 +1,2 @@
-# Re-Console Plus 26.06.3
-A few fixes to resource albums on Modrinth, and updates
+# Re-Console Plus 26.06.4
+Adds in Bedrock Entity Models
