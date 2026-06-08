@@ -1,0 +1,24 @@
+{
+  "$schema": "../../tools/manifest/schema.json",
+  "id": "re-console-lts",
+  "name": "Re-Console LTS",
+  "type": "modpack",
+  "loader": "fabric",
+  "version": "26.06.0+LTS",
+  "release_type": "release",
+  "modrinth_id": "legacy-minecraft",
+  "role": "none",
+  "variants": [
+    { "mc_version": "1.20.1",  "loader": "fabric",   "id": "1.20.1-fabric" },
+    { "mc_version": "1.20.1",  "loader": "forge",    "id": "1.20.1-forge" },
+    { "mc_version": "1.20.4",  "loader": "fabric",   "id": "1.20.4-fabric" },
+    { "mc_version": "1.21.1",  "loader": "fabric",   "id": "1.21.1-fabric" },
+    { "mc_version": "1.21.1",  "loader": "neoforge", "id": "1.21.1-neoforge" },
+    { "mc_version": "1.21.3",  "loader": "fabric",   "id": "1.21.3-fabric" },
+    { "mc_version": "1.21.4",  "loader": "fabric",   "id": "1.21.4-fabric" },
+    { "mc_version": "1.21.5",  "loader": "fabric",   "id": "1.21.5-fabric" },
+    { "mc_version": "1.21.8",  "loader": "fabric",   "id": "1.21.8-fabric" },
+    { "mc_version": "1.21.10", "loader": "fabric",   "id": "1.21.10-fabric" },
+    { "mc_version": "1.21.11", "loader": "fabric",   "id": "1.21.11-fabric" }
+  ]
+}
