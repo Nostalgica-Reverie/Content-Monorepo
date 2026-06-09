@@ -7,12 +7,58 @@ import (
 	"path/filepath"
 )
 
+const somnusVersion = "26.06"
+
+const usageText = `somnus CLI tool%s
+
+usage: somnus <verb> [args]
+
+content
+  init <category> <name> [flags]      scaffold a pack (manifest, changelog, packwiz subdirs, .packwizignore)
+  bump <pack-dir> <new-version>       set a pack's manifest version
+  port <mr-subdir> <cf-subdir>        diff MR mods against the CF side (--add to port interactively)
+  test <pack-subdir>                  packwiz serve + install into a local test instance
+
+build & docs
+  export [pack]                       build changed (or one named) pack locally
+  build <sha> | --pack <name> <sha>   CI build of git-changed packs (or one named pack)
+  modlist <pack-subdir>               write crash-assistant modlist.json for a subdir
+  pages [pack]                        write modlist.md files; full runs also emit projects.json
+
+maintenance
+  update                              packwiz update --all in every pack subdir
+  refresh                             packwiz refresh in every pack subdir
+  loader-update [latest|recommended]  migrate loaders across all packs
+  sync [--dry-run]                    propagate performance bases into consumers
+  lint [files...]                     syntax-lint changed JSON / .pw.toml files
+
+meta
+  doctor                              check tools, repo root, and manifest health
+  help                                show this help
+  version                             print the somnus version
+`
+
+func usage() string {
+	return fmt.Sprintf(usageText, somnusVersion)
+}
+
 func main() {
 	if len(os.Args) < 2 {
-		fail("usage: somnus <init|bump|export|build|sync|update|refresh|loader-update|modlist|pages|test|lint|port> [args]")
+		fmt.Fprint(os.Stderr, usage())
+		os.Exit(1)
+	}
+	verb := os.Args[1]
+
+	switch verb {
+	case "help", "-h", "--help":
+		fmt.Print(usage())
+		return
+	case "version", "-v", "--version":
+		fmt.Println("somnus " + somnusVersion)
+		return
 	}
 
-	switch os.Args[1] {
+	switch verb {
 	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
@@ -23,7 +69,7 @@ func main() {
 		}
 	}
 
-	switch os.Args[1] {
+	switch verb {
 	case "init":
 		cmdInit(os.Args[2:])
 	case "bump":
@@ -50,8 +96,10 @@ func main() {
 		cmdLint(os.Args[2:])
 	case "port":
 		cmdPort(os.Args[2:])
+	case "doctor":
+		cmdDoctor(os.Args[2:])
 	default:
-		fail(fmt.Sprintf("unknown verb %q (expected init, bump, export, build, sync, update, refresh, loader-update, modlist, pages, test, lint, or port)", os.Args[1]))
+		fail(fmt.Sprintf("unknown verb %q — run 'somnus help' for usage", verb))
 	}
 }
 
