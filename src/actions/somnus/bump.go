@@ -12,6 +12,9 @@ func cmdBump(args []string) {
 		fail("usage: somnus bump <pack-dir> <new-version>\n  e.g. somnus bump modpacks/re-console-plus 26.06.1")
 	}
 	packDir, newVer := args[0], args[1]
+	if newVer == "" {
+		fail("new version must not be empty")
+	}
 	mfPath := filepath.Join(packDir, "manifest.json")
 
 	data, err := os.ReadFile(mfPath)
