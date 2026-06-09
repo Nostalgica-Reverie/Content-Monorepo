@@ -47,6 +47,12 @@ func cmdPages(args []string) {
 		written++
 	}
 	fmt.Printf("generated %d modlist.md file(s).\n", written)
+
+	if packArg == "" {
+		if _, err := writeProjectsIndex(); err != nil {
+			fmt.Fprintf(os.Stderr, "::warning::projects index not written: %v\n", err)
+		}
+	}
 }
 
 func packModSubdirs(packDir string) []string {

@@ -18,12 +18,12 @@ func cmdLint(args []string) {
 
 	var lintable []string
 	for _, f := range files {
-		if strings.HasSuffix(f, ".json") || strings.HasSuffix(f, ".toml") {
+		if strings.HasSuffix(f, ".json") || strings.HasSuffix(f, ".pw.toml") {
 			lintable = append(lintable, f)
 		}
 	}
 	if len(lintable) == 0 {
-		fmt.Println("no JSON/TOML files to lint.")
+		fmt.Println("no JSON or .pw.toml files to lint.")
 		return
 	}
 
@@ -58,10 +58,7 @@ func lintOne(path string) error {
 		}
 		return nil
 	}
-	if strings.HasSuffix(path, ".pw.toml") {
-		return lintTomlStructure(string(data))
-	}
-	return nil
+	return lintTomlStructure(string(data))
 }
 
 func lintTomlStructure(content string) error {
