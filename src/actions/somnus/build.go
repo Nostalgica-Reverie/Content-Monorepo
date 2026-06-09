@@ -220,11 +220,14 @@ func buildModpack(packID, sha string, artifactsDir string) error {
 
 	var wg sync.WaitGroup
 	errCh := make(chan error, len(jobs))
+	sem := make(chan struct{}, maxConcurrent)
 
 	for _, j := range jobs {
 		wg.Add(1)
 		go func(j exportJob) {
 			defer wg.Done()
+			sem <- struct{}{}
+			defer func() { <-sem }()
 			outputName := fmt.Sprintf("%s-%s-%s-%s-%s.%s",
 				packID, j.subKey, j.plat.short, m.Version, sha, j.plat.ext)
 			outputPath := filepath.Join(artifactsDir, outputName)
