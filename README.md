@@ -37,14 +37,13 @@ The repository makes usage of Forgejo actions, for CI/CD and general QoL improve
 - Auto Build
 - Bulk Refresh*
 - Bulk Update*
+- Bulk Loader Update*
 - Bulk PNG Optimizer
 - JSON Linter
 - TOML Linter
 - Modpack Sync*
 
 *for modpacks only
-
-**on publish and build only
 
 ### Using Auto Publish
 Every project in the repo must have a manifest.json. This manifest.json specifies stuff that our publish.yml then uses to auto publish. Once it is set up, you may simply bump version in the manifest.json and it will update across platforms.
