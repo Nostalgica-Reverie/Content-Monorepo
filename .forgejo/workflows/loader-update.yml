@@ -1,0 +1,25 @@
+name: "Loader Update"
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "loader target"
+        type: choice
+        options:
+          - latest
+          - recommended
+        default: latest
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  loader-update:
+    uses: ./.forgejo/workflows/somnus-task.yml
+    with:
+      verb: loader-update ${{ inputs.target }}
+      commit-message: 'actions: bulk loader update (${{ inputs.target }})'
+    secrets:
+      forgejo-token: ${{ secrets.FORGEJO_TOKEN }}
