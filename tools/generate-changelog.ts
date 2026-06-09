@@ -88,12 +88,18 @@ function diffMods(oldRef: string, newRef: string, repoRelDir: string): DiffResul
 
 function formatDiff(d: DiffResult): string {
     if (d.added.length === 0 && d.updated.length === 0 && d.removed.length === 0) return '';
-    const lines: string[] = [];
-    for (const m of d.added) lines.push(`🟢 Added \`${m}\``);
-    for (const m of d.updated) lines.push(`🟠 Updated \`${m}\``);
-    for (const m of d.removed) lines.push(`🔴 Removed \`${m}\``);
     const summary = `**${d.added.length} added, ${d.updated.length} updated, ${d.removed.length} removed**`;
-    return `${summary}\n\n${lines.join('\n')}`;
+    const blocks: string[] = [];
+    if (d.added.length > 0) {
+        blocks.push('### Added\n\n' + d.added.map((m) => `- 🟢 \`${m}\``).join('\n'));
+    }
+    if (d.updated.length > 0) {
+        blocks.push('### Updated\n\n' + d.updated.map((m) => `- 🟠 \`${m}\``).join('\n'));
+    }
+    if (d.removed.length > 0) {
+        blocks.push('### Removed\n\n' + d.removed.map((m) => `- 🔴 \`${m}\``).join('\n'));
+    }
+    return `${summary}\n\n${blocks.join('\n\n')}`;
 }
 
 function normalizeMarkdown(s: string): string {
@@ -105,9 +111,44 @@ interface ManifestVariant {
     mc_version?: string;
 }
 
+function parseCalVer(v: string): { cycle: string; patch: string } | null {
+    const m = v.match(/^(\d{2}\.\d{2})(?:\.(\d+))?/);
+    if (!m || !m[1]) return null;
+    return { cycle: m[1], patch: m[2] ?? '0' };
+}
+
+function previousVersionFromGit(pathRef: string): string | null {
+    try {
+        const log = runGit(['log', '-n', '2', '--format=%H', '--', pathRef]);
+        const hashes = log.split('\n').filter(Boolean);
+        if (hashes.length < 2 || !hashes[1]) return null;
+        const old = fileAtRef(hashes[1], pathRef);
+        if (!old) return null;
+        const parsed = JSON.parse(old) as { version?: string };
+        return parsed.version ?? null;
+    } catch {
+        return null;
+    }
+}
+
+function versionHeader(rawName: string, version: string, pathRef: string): string {
+    const today = new Date().toISOString().slice(0, 10);
+    let tag = '';
+    const cur = parseCalVer(version);
+    if (cur) {
+        const prev = previousVersionFromGit(pathRef);
+        const prevParsed = prev ? parseCalVer(prev) : null;
+        if (prevParsed && prevParsed.cycle !== cur.cycle) {
+            tag = ' — New monthly cycle';
+        }
+    }
+    return `# ${rawName} ${version} — ${today}${tag}`;
+}
+
 interface ManifestFile {
     name?: string;
     type?: string;
+    version?: string;
     mc_version?: string;
     variants?: ManifestVariant[];
 }
@@ -191,11 +232,19 @@ function generateChangelog(manifestPathStr: string): string {
         return `# Mod Updates\n\n${sections.join('\n\n')}\n`;
     }
 
+    const version = manifest.version;
     if (!isExperimental) {
         const changelogFile = path.join(pDir, 'changelog.md');
         let notes = fs.existsSync(changelogFile)
             ? fs.readFileSync(changelogFile, 'utf-8')
             : `update for ${rawName}`;
+
+        if (version) {
+            const header = versionHeader(rawName, version, manifestPathStr);
+            if (!notes.trimStart().startsWith('# ')) {
+                notes = `${header}\n\n${notes.trim()}`;
+            }
+        }
 
         const modUpdatesBlock = buildModUpdatesBlock();
         if (modUpdatesBlock) {
@@ -243,6 +292,7 @@ function collectCommitLines(prevHash: string | null, pDir: string): string[] {
             if (parts.length !== 3) continue;
             const [hash = '', subject = '', author = ''] = parts;
             if (!subject.includes(': ')) continue;
+            if (author === 'forgejo-actions[bot]') continue;
             out.push(`${hash} ${subject} - ${author}`);
         }
     } catch (e) {
