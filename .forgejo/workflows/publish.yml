@@ -28,41 +28,20 @@ jobs:
             modpacks
             datapacks
             src/actions/publish
+            .forgejo/actions
 
       - name: Set up Bun
         uses: https://github.com/oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: Cache Publisher Binary
-        id: cache-publisher
-        uses: actions/cache@v4
-        with:
-          path: ./publisher-bin
-          key: publisher-v4-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
-
-      - name: Install Rust
-        if: steps.cache-publisher.outputs.cache-hit != 'true'
-        uses: https://github.com/dtolnay/rust-toolchain@stable
-
-      - name: Rust Cache
-        if: steps.cache-publisher.outputs.cache-hit != 'true'
-        uses: https://github.com/Swatinem/rust-cache@v2
-        with:
-          workspaces: "src/actions/publish -> target"
-
-      - name: Build Publisher
-        if: steps.cache-publisher.outputs.cache-hit != 'true'
-        run: |
-          cargo build --release --manifest-path src/actions/publish/Cargo.toml --bin publish
-          mkdir -p ./publisher-bin
-          cp src/actions/publish/target/release/publish ./publisher-bin/publish
+      - name: Setup Publisher
+        uses: ./.forgejo/actions/setup-publisher
 
       - name: Expand changed manifests into matrix entries
         id: expand
         run: |
           set -eu
-          chmod +x ./publisher-bin/publish
 
           CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
 
@@ -99,7 +78,7 @@ jobs:
 
   publish:
     needs: detect
-    if: always()
+    if: needs.detect.outputs.has_entries == 'true'
     runs-on: technocality
     strategy:
       fail-fast: false
@@ -118,6 +97,7 @@ jobs:
             src/actions/publish
             tools/changelog
             tools/manifest
+            .forgejo/actions
 
       - name: Set up Bun
         uses: https://github.com/oven-sh/setup-bun@v2
@@ -127,59 +107,24 @@ jobs:
       - name: Validate Manifest
         run: bun tools/manifest/validate.ts "${{ matrix.entry.manifest }}"
 
-      - name: Cache Publisher Binary
-        id: cache-publisher
-        uses: actions/cache@v4
-        with:
-          path: ./publisher-bin
-          key: publisher-v4-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
-
-      - name: Install Rust
-        if: steps.cache-publisher.outputs.cache-hit != 'true'
-        uses: https://github.com/dtolnay/rust-toolchain@stable
-
-      - name: Rust Cache
-        if: steps.cache-publisher.outputs.cache-hit != 'true'
-        uses: https://github.com/Swatinem/rust-cache@v2
-        with:
-          workspaces: "src/actions/publish -> target"
-
-      - name: Build Publisher
-        if: steps.cache-publisher.outputs.cache-hit != 'true'
-        run: |
-          cargo build --release --manifest-path src/actions/publish/Cargo.toml --bin publish
-          mkdir -p ./publisher-bin
-          cp src/actions/publish/target/release/publish ./publisher-bin/publish
+      - name: Setup Publisher
+        uses: ./.forgejo/actions/setup-publisher
 
       - name: Generate Changelog
         id: changelog
         run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
 
-      - name: Cache Packwiz Binaries
-        id: cache-go
-        uses: actions/cache@v4
+      - name: Setup Packwiz
+        uses: ./.forgejo/actions/setup-somnus
         with:
-          path: ~/go/bin
-          key: go-bin-packwiz-v1-${{ runner.os }}
-
-      - name: Setup Go
-        if: steps.cache-go.outputs.cache-hit != 'true'
-        uses: https://github.com/actions/setup-go@v5
-        with: { go-version: 'stable', cache: true }
-
-      - name: Install Packwiz
-        if: steps.cache-go.outputs.cache-hit != 'true'
-        run: go install github.com/packwiz/packwiz@latest
-
-      - name: Add Go bin to PATH
-        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+          install-somnus: 'false'
+          install-packwiz: 'true'
 
       - name: Run Publisher (build this entry)
         id: meta
         env:
           GITHUB_SHA: ${{ github.sha }}
         run: |
-          chmod +x ./publisher-bin/publish
           VARIANT='${{ matrix.entry.variant }}'
           if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
             ./publisher-bin/publish build "${{ matrix.entry.manifest }}"
@@ -226,4 +171,3 @@ jobs:
           changelog: "${{ steps.changelog.outputs.notes }}"
           loaders: ${{ steps.meta.outputs.type == 'modpack' && steps.meta.outputs.loader || 'minecraft' }}
           game-versions: "${{ steps.meta.outputs.mc }}"
-

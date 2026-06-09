@@ -1,0 +1,50 @@
+name: "Somnus Task"
+
+on:
+  workflow_call:
+    inputs:
+      verb:
+        description: "somnus verb to run"
+        required: true
+        type: string
+      commit-message:
+        description: "commit message for resulting changes"
+        required: true
+        type: string
+      add:
+        description: "pathspec to commit"
+        required: false
+        type: string
+        default: "modpacks"
+    secrets:
+      forgejo-token:
+        required: true
+
+jobs:
+  somnus:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.forgejo-token }}
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            modpacks
+            src/actions/somnus
+            .forgejo/actions
+
+      - name: Setup Somnus
+        uses: ./.forgejo/actions/setup-somnus
+
+      - name: Run somnus ${{ inputs.verb }}
+        run: ./somnus-bin/somnus ${{ inputs.verb }}
+
+      - name: Commit
+        uses: https://github.com/EndBug/add-and-commit@v9
+        with:
+          author_name: forgejo-actions[bot]
+          author_email: omo50@noreply.nostalgica.net
+          message: ${{ inputs.commit-message }}
+          add: ${{ inputs.add }}

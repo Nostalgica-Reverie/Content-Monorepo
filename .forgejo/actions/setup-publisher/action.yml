@@ -1,0 +1,34 @@
+name: "Setup Publisher"
+description: "Cache or build the Rust publisher"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache Publisher Binary
+      id: cache-publisher
+      uses: actions/cache@v4
+      with:
+        path: ./publisher-bin
+        key: publisher-v4-${{ runner.os }}-${{ hashFiles('src/actions/publish/**/*.rs', 'src/actions/publish/Cargo.toml', 'src/actions/publish/Cargo.lock') }}
+
+    - name: Install Rust
+      if: steps.cache-publisher.outputs.cache-hit != 'true'
+      uses: https://github.com/dtolnay/rust-toolchain@stable
+
+    - name: Rust Cache
+      if: steps.cache-publisher.outputs.cache-hit != 'true'
+      uses: https://github.com/Swatinem/rust-cache@v2
+      with:
+        workspaces: "src/actions/publish -> target"
+
+    - name: Build Publisher
+      if: steps.cache-publisher.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        cargo build --release --manifest-path src/actions/publish/Cargo.toml --bin publish
+        mkdir -p ./publisher-bin
+        cp src/actions/publish/target/release/publish ./publisher-bin/publish
+
+    - name: Make Executable
+      shell: bash
+      run: chmod +x ./publisher-bin/publish

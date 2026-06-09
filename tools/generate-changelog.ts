@@ -1,35 +1,37 @@
-import { execFileSync } from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as crypto from 'crypto';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as crypto from 'node:crypto';
 
-function runGit(args: string[], cwd?: string): string {
-    return execFileSync('git', args, { cwd, encoding: 'utf-8' }).trim();
-}
-interface ModInfo {
-    name: string;
-    version: string;
-}
-
-function listModFilesAtRef(ref: string, repoRelDir: string): string[] {
-    try {
-        const out = runGit(['ls-tree', '-r', '--name-only', ref, '--', repoRelDir]);
-        return out
-            .split('\n')
-            .filter((f) => f.endsWith('.pw.toml'))
-            .map((f) => f.trim())
-            .filter(Boolean);
-    } catch {
-        return [];
+function runGit(args: string[]): string {
+    const proc = Bun.spawnSync(['git', ...args], { stdout: 'pipe', stderr: 'pipe' });
+    if (!proc.success) {
+        throw new Error(`git ${args.join(' ')} failed: ${proc.stderr.toString().trim()}`);
     }
+    return proc.stdout.toString().trim();
+}
+
+function listModBlobsAtRef(ref: string, repoRelDir: string): Map<string, string> {
+    const blobs = new Map<string, string>();
+    try {
+        const out = runGit(['ls-tree', '-r', ref, '--', repoRelDir]);
+        for (const line of out.split('\n')) {
+            const tab = line.indexOf('\t');
+            if (tab < 0) continue;
+            const filePath = line.slice(tab + 1).trim();
+            if (!filePath.endsWith('.pw.toml')) continue;
+            const meta = line.slice(0, tab).split(/\s+/);
+            const sha = meta[2];
+            if (sha) blobs.set(filePath, sha);
+        }
+    } catch {
+        return blobs;
+    }
+    return blobs;
 }
 
 function fileAtRef(ref: string, repoRelPath: string): string {
-    try {
-        return execFileSync('git', ['show', `${ref}:${repoRelPath}`], { encoding: 'utf-8' });
-    } catch {
-        return '';
-    }
+    const proc = Bun.spawnSync(['git', 'show', `${ref}:${repoRelPath}`], { stdout: 'pipe', stderr: 'pipe' });
+    return proc.success ? proc.stdout.toString() : '';
 }
 
 function changeSignal(content: string): string {
@@ -51,29 +53,31 @@ interface DiffResult {
 }
 
 function diffMods(oldRef: string, newRef: string, repoRelDir: string): DiffResult {
-    const oldFiles = listModFilesAtRef(oldRef, repoRelDir);
-    const newFiles = listModFilesAtRef(newRef, repoRelDir);
+    const oldBlobs = listModBlobsAtRef(oldRef, repoRelDir);
+    const newBlobs = listModBlobsAtRef(newRef, repoRelDir);
 
-    const oldMap = new Map<string, ModInfo>();
-    for (const f of oldFiles) {
-        oldMap.set(modNameFromPath(f), { name: modNameFromPath(f), version: changeSignal(fileAtRef(oldRef, f)) });
-    }
-    const newMap = new Map<string, ModInfo>();
-    for (const f of newFiles) {
-        newMap.set(modNameFromPath(f), { name: modNameFromPath(f), version: changeSignal(fileAtRef(newRef, f)) });
-    }
+    const oldByName = new Map<string, string>();
+    for (const p of oldBlobs.keys()) oldByName.set(modNameFromPath(p), p);
+    const newByName = new Map<string, string>();
+    for (const p of newBlobs.keys()) newByName.set(modNameFromPath(p), p);
 
     const added: string[] = [];
     const updated: string[] = [];
     const removed: string[] = [];
 
-    for (const [name, info] of newMap) {
-        const old = oldMap.get(name);
-        if (!old) added.push(name);
-        else if (old.version !== info.version) updated.push(name);
+    for (const [name, newPath] of newByName) {
+        const oldPath = oldByName.get(name);
+        if (!oldPath) {
+            added.push(name);
+            continue;
+        }
+        if (oldBlobs.get(oldPath) === newBlobs.get(newPath)) continue;
+        const oldSignal = changeSignal(fileAtRef(oldRef, oldPath));
+        const newSignal = changeSignal(fileAtRef(newRef, newPath));
+        if (oldSignal !== newSignal) updated.push(name);
     }
-    for (const name of oldMap.keys()) {
-        if (!newMap.has(name)) removed.push(name);
+    for (const name of oldByName.keys()) {
+        if (!newByName.has(name)) removed.push(name);
     }
 
     added.sort();
@@ -92,6 +96,22 @@ function formatDiff(d: DiffResult): string {
     return `${summary}\n\n${lines.join('\n')}`;
 }
 
+function normalizeMarkdown(s: string): string {
+    return s.replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n').trimEnd() + '\n';
+}
+
+interface ManifestVariant {
+    id?: string;
+    mc_version?: string;
+}
+
+interface ManifestFile {
+    name?: string;
+    type?: string;
+    mc_version?: string;
+    variants?: ManifestVariant[];
+}
+
 function generateChangelog(manifestPathStr: string): string {
     const manifestPath = path.resolve(manifestPathStr);
     const pDir = path.dirname(manifestPath);
@@ -102,7 +122,7 @@ function generateChangelog(manifestPathStr: string): string {
         throw new Error(`manifest not found: ${manifestPathStr}`);
     }
 
-    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8')) as ManifestFile;
     const rawName: string = manifest.name ?? path.basename(pDir);
 
     let prevHash: string | null = null;
@@ -110,11 +130,11 @@ function generateChangelog(manifestPathStr: string): string {
         if (isExperimental) {
             const packLog = runGit(['log', '-n', '2', '--format=%H', '--', pDir]);
             const hashes = packLog.split('\n').filter(Boolean);
-            if (hashes.length > 1) prevHash = hashes[1];
+            if (hashes.length > 1 && hashes[1]) prevHash = hashes[1];
         } else {
             const prevBumpLog = runGit(['log', '-n', '2', '--format=%H', '--', manifestPathStr]);
             const hashes = prevBumpLog.split('\n').filter(Boolean);
-            if (hashes.length > 1) prevHash = hashes[1];
+            if (hashes.length > 1 && hashes[1]) prevHash = hashes[1];
         }
     } catch (e) {
         console.warn(`could not read git log for anchor: ${e}`);
@@ -122,7 +142,9 @@ function generateChangelog(manifestPathStr: string): string {
 
     function subdirKeys(): string[] {
         if (Array.isArray(manifest.variants)) {
-            return manifest.variants.map((v: any) => v.id ?? v.mc_version);
+            return manifest.variants
+                .map((v) => v.id ?? v.mc_version)
+                .filter((k): k is string => typeof k === 'string' && k !== '');
         }
         if (manifest.mc_version) return [manifest.mc_version];
         return [];
@@ -130,21 +152,41 @@ function generateChangelog(manifestPathStr: string): string {
 
     function buildModUpdatesBlock(): string {
         if (!prevHash || manifest.type !== 'modpack') return '';
+        const anchor = prevHash;
+        const keys = subdirKeys();
         const sections: string[] = [];
-        for (const key of subdirKeys()) {
-            for (const platform of ['mr', 'cf']) {
+
+        for (const platform of ['mr', 'cf'] as const) {
+            const label = platform === 'mr' ? 'Modrinth' : 'CurseForge';
+            const groups = new Map<string, { keys: string[]; formatted: string }>();
+            let present = 0;
+
+            for (const key of keys) {
                 const subdir = path.join(pDir, `${key}-${platform}`);
                 if (!fs.existsSync(subdir)) continue;
+                present++;
                 const repoRel = path.relative(process.cwd(), subdir).split(path.sep).join('/');
-                const diff = diffMods(prevHash, 'HEAD', repoRel);
+                const diff = diffMods(anchor, 'HEAD', repoRel);
                 const formatted = formatDiff(diff);
-                if (formatted) {
-                    const label = platform === 'mr' ? 'Modrinth' : 'CurseForge';
-                    const variantLabel = subdirKeys().length > 1 ? ` (${key})` : '';
-                    sections.push(`## ${label}${variantLabel}\n\n${formatted}`);
+                if (!formatted) continue;
+                const sig = JSON.stringify(diff);
+                const group = groups.get(sig);
+                if (group) group.keys.push(key);
+                else groups.set(sig, { keys: [key], formatted });
+            }
+
+            for (const group of groups.values()) {
+                let variantLabel = '';
+                if (keys.length > 1) {
+                    variantLabel =
+                        group.keys.length === present && present > 1
+                            ? ' (all variants)'
+                            : ` (${group.keys.join(', ')})`;
                 }
+                sections.push(`## ${label}${variantLabel}\n\n${group.formatted}`);
             }
         }
+
         if (sections.length === 0) return '';
         return `# Mod Updates\n\n${sections.join('\n\n')}\n`;
     }
@@ -167,11 +209,11 @@ function generateChangelog(manifestPathStr: string): string {
         const commitLines = collectCommitLines(prevHash, pDir);
         if (commitLines.length > 0) {
             if (!notes.includes('# Meta-changes')) notes += '\n\n# Meta-changes\n';
-            notes += '\n### Automated Commit Log\n';
+            notes += '\n## Automated Commit Log\n\n';
             notes += commitLines.map((line) => `- ${line}`).join('\n') + '\n';
         }
 
-        return notes;
+        return normalizeMarkdown(notes);
     }
 
     let notes = `_Experimental commit build. Unfinished work for technical users. Here be dragons._\n`;
@@ -180,12 +222,12 @@ function generateChangelog(manifestPathStr: string): string {
 
     const commitLines = collectCommitLines(prevHash, pDir);
     if (commitLines.length > 0) {
-        notes += '\n# Meta-changes\n\n### Automated Commit Log\n';
+        notes += '\n# Meta-changes\n\n## Automated Commit Log\n\n';
         notes += commitLines.map((line) => `- ${line}`).join('\n') + '\n';
     } else {
         notes += '\n_No commits to report since last experimental build._\n';
     }
-    return notes;
+    return normalizeMarkdown(notes);
 }
 
 function collectCommitLines(prevHash: string | null, pDir: string): string[] {
@@ -199,7 +241,7 @@ function collectCommitLines(prevHash: string | null, pDir: string): string[] {
         for (const line of logs.split('\n')) {
             const parts = line.split('\t');
             if (parts.length !== 3) continue;
-            const [hash, subject, author] = parts;
+            const [hash = '', subject = '', author = ''] = parts;
             if (!subject.includes(': ')) continue;
             out.push(`${hash} ${subject} - ${author}`);
         }
@@ -210,14 +252,15 @@ function collectCommitLines(prevHash: string | null, pDir: string): string[] {
 }
 
 const args = process.argv.slice(2);
-if (args.length === 0) {
-    console.error('usage: tsx generate-changelog.ts <path/to/manifest.json>');
+const target = args[0];
+if (!target) {
+    console.error('usage: bun generate-changelog.ts <path/to/manifest.json>');
     process.exit(1);
 }
 
 let finalNotes: string;
 try {
-    finalNotes = generateChangelog(args[0]);
+    finalNotes = generateChangelog(target);
 } catch (e) {
     console.error(`${e instanceof Error ? e.message : e}`);
     process.exit(1);
@@ -227,7 +270,7 @@ const outPath = process.env.GITHUB_OUTPUT;
 if (outPath) {
     const delimiter = `EOF_${crypto.randomBytes(8).toString('hex')}`;
     fs.appendFileSync(outPath, `notes<<${delimiter}\n${finalNotes.trim()}\n${delimiter}\n`);
-    console.log(`wrote changelog for ${args[0]} to GITHUB_OUTPUT`);
+    console.log(`wrote changelog for ${target} to GITHUB_OUTPUT`);
 } else {
     console.log('\n--- CHANGELOG PREVIEW ---\n');
     console.log(finalNotes.trim());

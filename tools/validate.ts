@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 interface VariantEntry {
   mc_version: string;
@@ -31,6 +31,7 @@ interface Manifest {
   variants?: VariantEntry[];
   version?: string;
   release_type: 'release' | 'beta' | 'alpha';
+  description?: string;
   modrinth_id?: string;
   curseforge_id?: string;
   role: Role;
@@ -50,7 +51,7 @@ function warn(msg: string): void {
 function readManifest(p: string): Manifest {
   if (!fs.existsSync(p)) fail(`manifest not found: ${p}`);
   try {
-    return JSON.parse(fs.readFileSync(p, 'utf-8'));
+    return JSON.parse(fs.readFileSync(p, 'utf-8')) as Manifest;
   } catch (e) {
     fail(`failed to parse ${p}: ${e instanceof Error ? e.message : e}`);
   }
@@ -60,7 +61,7 @@ function loadReferencedManifest(packId: string): Manifest | null {
   const refPath = path.join(MODPACKS_DIR, packId, 'manifest.json');
   if (!fs.existsSync(refPath)) return null;
   try {
-    return JSON.parse(fs.readFileSync(refPath, 'utf-8'));
+    return JSON.parse(fs.readFileSync(refPath, 'utf-8')) as Manifest;
   } catch {
     return null;
   }
@@ -98,13 +99,15 @@ function validate(manifestPath: string): void {
     fail(`invalid 'type': ${manifest.type}`);
   }
 
-  if (manifest.type === 'modpack' && !manifest.variants && (!manifest.loader || manifest.loader.trim() === '')) {
+  const variants = manifest.variants ?? [];
+
+  if (manifest.type === 'modpack' && variants.length === 0 && (!manifest.loader || manifest.loader.trim() === '')) {
     fail(`modpack manifests must declare a 'loader'`);
   }
 
-  if (manifest.type === 'modpack' && manifest.variants) {
+  if (manifest.type === 'modpack' && variants.length > 0) {
     const byVersion = new Map<string, VariantEntry[]>();
-    for (const v of manifest.variants) {
+    for (const v of variants) {
       const list = byVersion.get(v.mc_version) ?? [];
       list.push(v);
       byVersion.set(v.mc_version, list);
@@ -119,19 +122,19 @@ function validate(manifestPath: string): void {
             fail(`variant '${v.id}' shares mc_version '${mc}' with another variant and must declare its own 'loader'`);
           }
         }
-        const ids = list.map((v) => v.id!);
+        const ids = list.map((v) => v.id ?? '');
         const dupeIds = ids.filter((id, i) => ids.indexOf(id) !== i);
         if (dupeIds.length > 0) {
           fail(`duplicate variant id(s) for mc_version '${mc}': ${[...new Set(dupeIds)].join(', ')}`);
         }
-        const loaders = list.map((v) => v.loader!);
+        const loaders = list.map((v) => v.loader ?? '');
         const dupeLoaders = loaders.filter((l, i) => loaders.indexOf(l) !== i);
         if (dupeLoaders.length > 0) {
           fail(`two variants share both mc_version '${mc}' and loader '${[...new Set(dupeLoaders)].join(', ')}' \u2014 they are indistinguishable`);
         }
       }
     }
-    for (const v of manifest.variants) {
+    for (const v of variants) {
       const resolvedLoader = v.loader ?? manifest.loader;
       if (!resolvedLoader || resolvedLoader.trim() === '') {
         const key = v.id ?? v.mc_version;
@@ -228,8 +231,8 @@ function validate(manifestPath: string): void {
       if (hasCf && !fs.existsSync(cf)) fail(`curseforge_id is set but ${cf} does not exist`);
       if (fs.existsSync(mr) && !hasMr) warn(`${mr} exists but modrinth_id is not set`);
       if (fs.existsSync(cf) && !hasCf) warn(`${cf} exists but curseforge_id is not set`);
-    } else if (hasVariants) {
-      for (const v of manifest.variants!) {
+    } else {
+      for (const v of variants) {
         const key = v.id ?? v.mc_version;
         const mr = path.join(packDir, `${key}-mr`);
         const cf = path.join(packDir, `${key}-cf`);
@@ -243,8 +246,8 @@ function validate(manifestPath: string): void {
 
   const label = isExperimental ? 'EXPERIMENTAL' : 'production';
   const version = manifest.version ?? '(generated)';
-  const shape = hasVariants ? `multi-variant (${manifest.variants!.length})` : 'single-version';
-  const roleStr = roleIsString ? (role as string) : `consumes ${pb!.pack} (${pb!.mappings.length} mappings)`;
+  const shape = hasVariants ? `multi-variant (${variants.length})` : 'single-version';
+  const roleStr = pb ? `consumes ${pb.pack} (${pb.mappings.length} mappings)` : (role as string);
   const sharedStr = manifest.shared_assets ? `, assets from ${manifest.shared_assets}` : '';
   console.log(`\u2713 ${manifest.id} ${version} (${manifest.release_type}, ${label}, ${shape}) [${roleStr}${sharedStr}] \u2014 manifest OK`);
 }
@@ -258,15 +261,34 @@ function validateZipPackStructure(packDir: string, type: string): void {
   if (versionDirs.length > 1) {
     fail(`${type} '${path.basename(packDir)}' must have exactly one version directory, found ${versionDirs.length}: ${versionDirs.join(', ')}`);
   }
-  const versionDir = path.join(packDir, versionDirs[0]);
+  const versionDir = path.join(packDir, versionDirs[0] ?? '');
   if (!fs.existsSync(path.join(versionDir, 'pack.mcmeta'))) {
     warn(`${type} version dir ${versionDir} has no pack.mcmeta at its root (Minecraft requires it)`);
   }
 }
 
+function discoverManifests(): string[] {
+  const found: string[] = [];
+  for (const root of [MODPACKS_DIR, 'datapacks', 'resourcepacks']) {
+    if (!fs.existsSync(root)) continue;
+    for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      for (const name of ['manifest.json', 'manifest-experimental.json']) {
+        const p = path.join(root, entry.name, name);
+        if (fs.existsSync(p)) found.push(p);
+      }
+    }
+  }
+  return found;
+}
+
 const args = process.argv.slice(2);
 if (args.length === 0) {
-  console.error('usage: tsx validate.ts <path/to/manifest.json> [more manifests...]');
+  console.error('usage: bun validate.ts <path/to/manifest.json> [more manifests...] | bun validate.ts --all');
   process.exit(1);
 }
-for (const manifestPath of args) validate(manifestPath);
+
+const targets = args[0] === '--all' ? discoverManifests() : args;
+if (targets.length === 0) fail('--all found no manifests (run from the repo root)');
+for (const manifestPath of targets) validate(manifestPath);
+if (args[0] === '--all') console.log(`\u2713 all ${targets.length} manifest(s) OK`);

@@ -35,6 +35,7 @@ jobs:
             src/actions/somnus
             tools/lint
             tools/manifest
+            .forgejo/actions
 
       - name: Meta
         id: meta
@@ -73,44 +74,10 @@ jobs:
           done <<< "$CHANGED_PACKS"
           exit $STATUS
 
-      - name: Cache Somnus Binary
-        id: cache-somnus
-        uses: actions/cache@v4
+      - name: Setup Somnus
+        uses: ./.forgejo/actions/setup-somnus
         with:
-          path: ./somnus-bin
-          key: somnus-go-v1-${{ runner.os }}-${{ hashFiles('src/actions/somnus/**/*.go', 'src/actions/somnus/go.mod') }}
-
-      - name: Setup Go
-        if: steps.cache-somnus.outputs.cache-hit != 'true'
-        uses: https://github.com/actions/setup-go@v5
-        with: { go-version: 'stable', cache: true }
-
-      - name: Build Binary
-        if: steps.cache-somnus.outputs.cache-hit != 'true'
-        run: |
-          go build -C src/actions/somnus -o "$GITHUB_WORKSPACE/somnus-bin/somnus" .
-          chmod +x ./somnus-bin/somnus
-
-      - name: Cache Packwiz
-        if: steps.meta.outputs.has_modpacks == 'true'
-        id: cache-go
-        uses: actions/cache@v4
-        with:
-          path: ~/go/bin
-          key: go-bin-packwiz-v1-${{ runner.os }}
-
-      - name: Setup Go Dos
-        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true' && steps.cache-somnus.outputs.cache-hit == 'true'
-        uses: https://github.com/actions/setup-go@v5
-        with: { go-version: 'stable', cache: true }
-
-      - name: Install Packwiz
-        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true'
-        run: go install github.com/packwiz/packwiz@latest
-
-      - name: Add Go bin to PATH
-        if: steps.meta.outputs.has_modpacks == 'true'
-        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+          install-packwiz: ${{ steps.meta.outputs.has_modpacks }}
 
       - name: Run Build
         run: ./somnus-bin/somnus build "${{ steps.meta.outputs.short_sha }}"

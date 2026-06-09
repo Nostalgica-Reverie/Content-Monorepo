@@ -1,0 +1,55 @@
+name: "Setup Somnus"
+description: "Cache or build the somnus binary and optionally install packwiz"
+
+inputs:
+  install-somnus:
+    description: "Cache-or-build the somnus binary"
+    required: false
+    default: "true"
+  install-packwiz:
+    description: "Install packwiz"
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache Somnus Binary
+      if: inputs.install-somnus == 'true'
+      id: cache-somnus
+      uses: actions/cache@v4
+      with:
+        path: ./somnus-bin
+        key: somnus-go-v1-${{ runner.os }}-${{ hashFiles('src/actions/somnus/**/*.go', 'src/actions/somnus/go.mod') }}
+
+    - name: Cache Packwiz Binary
+      if: inputs.install-packwiz == 'true'
+      id: cache-packwiz
+      uses: actions/cache@v4
+      with:
+        path: ~/go/bin
+        key: go-bin-packwiz-v1-${{ runner.os }}
+
+    - name: Setup Go
+      if: (inputs.install-somnus == 'true' && steps.cache-somnus.outputs.cache-hit != 'true') || (inputs.install-packwiz == 'true' && steps.cache-packwiz.outputs.cache-hit != 'true')
+      uses: https://github.com/actions/setup-go@v5
+      with:
+        go-version: 'stable'
+        cache: true
+
+    - name: Build Somnus
+      if: steps.cache-somnus.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        go build -C src/actions/somnus -o "$GITHUB_WORKSPACE/somnus-bin/somnus" .
+        chmod +x ./somnus-bin/somnus
+
+    - name: Install Packwiz
+      if: inputs.install-packwiz == 'true' && steps.cache-packwiz.outputs.cache-hit != 'true'
+      shell: bash
+      run: go install github.com/packwiz/packwiz@latest
+
+    - name: Add Go bin to PATH
+      if: inputs.install-packwiz == 'true'
+      shell: bash
+      run: echo "$HOME/go/bin" >> $GITHUB_PATH
