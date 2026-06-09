@@ -15,5 +15,3 @@ jobs:
     with:
       verb: update
       commit-message: 'actions: auto-update'
-    secrets:
-      forgejo-token: ${{ secrets.FORGEJO_TOKEN }}

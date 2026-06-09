@@ -33,7 +33,6 @@ jobs:
             datapacks
             resourcepacks
             src/actions/somnus
-            tools/lint
             tools/manifest
             .forgejo/actions
 
@@ -50,8 +49,13 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Setup Somnus
+        uses: ./.forgejo/actions/setup-somnus
+        with:
+          install-packwiz: ${{ steps.meta.outputs.has_modpacks }}
+
       - name: Lint changed files (syntax)
-        run: bun tools/lint/lint.ts
+        run: ./somnus-bin/somnus lint
 
       - name: Validate changed pack manifests
         run: |
@@ -73,11 +77,6 @@ jobs:
             done
           done <<< "$CHANGED_PACKS"
           exit $STATUS
-
-      - name: Setup Somnus
-        uses: ./.forgejo/actions/setup-somnus
-        with:
-          install-packwiz: ${{ steps.meta.outputs.has_modpacks }}
 
       - name: Run Build
         run: ./somnus-bin/somnus build "${{ steps.meta.outputs.short_sha }}"

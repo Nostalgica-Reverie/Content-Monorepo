@@ -13,5 +13,3 @@ jobs:
     with:
       verb: refresh
       commit-message: 'actions: bulk refresh'
-    secrets:
-      forgejo-token: ${{ secrets.FORGEJO_TOKEN }}

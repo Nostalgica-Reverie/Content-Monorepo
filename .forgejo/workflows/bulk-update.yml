@@ -13,5 +13,3 @@ jobs:
     with:
       verb: update
       commit-message: 'actions: bulk update all'
-    secrets:
-      forgejo-token: ${{ secrets.FORGEJO_TOKEN }}

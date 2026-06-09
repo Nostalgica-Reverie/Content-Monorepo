@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       verb:
-        description: "somnus verb to run"
+        description: "somnus verb (and args) to run"
         required: true
         type: string
       commit-message:
@@ -16,9 +16,6 @@ on:
         required: false
         type: string
         default: "modpacks"
-    secrets:
-      forgejo-token:
-        required: true
 
 jobs:
   somnus:
@@ -27,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          token: ${{ secrets.forgejo-token }}
+          token: ${{ secrets.FORGEJO_TOKEN }}
           fetch-depth: 1
           filter: blob:none
           sparse-checkout: |

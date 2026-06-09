@@ -21,5 +21,3 @@ jobs:
     with:
       verb: loader-update ${{ inputs.target }}
       commit-message: 'actions: bulk loader update (${{ inputs.target }})'
-    secrets:
-      forgejo-token: ${{ secrets.FORGEJO_TOKEN }}
