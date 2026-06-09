@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	defaultMCVersion   = "1.21.1"
-	defaultPackVersion = "0.0.0"
+	defaultMCVersion   = "26.1.2"
+	defaultPackVersion = "26.x"
 	placeholderAuthor  = "CHANGEME"
+	packwizIgnore      = "Logs\n*.zip\n*.mrpack\n"
 )
 
 func cmdInit(args []string) {
@@ -175,9 +176,12 @@ func cmdInit(args []string) {
 				if err := cmd.Run(); err != nil {
 					fail(fmt.Sprintf("packwiz init failed in %s: %v", sub, err))
 				}
+				if err := os.WriteFile(filepath.Join(sub, ".packwizignore"), []byte(packwizIgnore), 0o644); err != nil {
+					fail(fmt.Sprintf("failed to write .packwizignore in %s: %v", sub, err))
+				}
 			}
 		}
-		fmt.Printf("ready: %s initialized %d subdir-pair(s) (%s, latest). Add mods with packwiz, then fill manifest placeholders.\n",
+		fmt.Printf("ready: %s initialized %d subdir-pair(s) (%s, latest) with .packwizignore. Add mods with packwiz, then fill manifest placeholders.\n",
 			packDir, len(keys), loader)
 	} else {
 		fmt.Printf("next: create %s/{version}/ and add the pack contents (pack.mcmeta at its root).\n", packDir)
