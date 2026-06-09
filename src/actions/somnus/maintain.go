@@ -365,7 +365,7 @@ func runSync(dryRun bool) {
 			if err != nil {
 				fail(fmt.Sprintf("copy %s for %s failed: %v", folder, j.consumerID, err))
 			}
-			fmt.Printf("  %s: %d file(s) copied -> i did this!\n", folder, n)
+			fmt.Printf("  %s: %d file(s) copied\n", folder, n)
 		}
 
 		if len(toDelete) > 0 {
