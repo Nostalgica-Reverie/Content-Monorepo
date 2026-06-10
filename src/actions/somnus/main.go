@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-const somnusVersion = "26.0-dev"
+const somnusVersion = "26.1-dev"
 
 const usageText = `somnus CLI tool %s
 

@@ -108,10 +108,6 @@ func run(op operation) {
 	fmt.Printf("all %ss finished successfully.\n", op.name)
 }
 
-func packwizBin() string {
-	panic("unimplemented")
-}
-
 func collectTargets(root string, honorIgnore bool) (targets []string, skipped []string) {
 	packs, err := os.ReadDir(root)
 	if err != nil {
