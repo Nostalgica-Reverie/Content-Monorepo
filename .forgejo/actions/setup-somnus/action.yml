@@ -1,5 +1,5 @@
 name: "Setup Somnus"
-description: "Cache or build the somnus binary and optionally install packwiz"
+description: "Cache-or-build the somnus binary; optionally install packwiz. Requires Go on PATH — run actions/setup-go in the workflow before this action."
 
 inputs:
   install-somnus:
@@ -16,7 +16,6 @@ runs:
   steps:
     - name: Cache Somnus Binary
       if: inputs.install-somnus == 'true'
-      id: cache-somnus
       uses: actions/cache@v4
       with:
         path: ./somnus-bin
@@ -24,32 +23,35 @@ runs:
 
     - name: Cache Packwiz Binary
       if: inputs.install-packwiz == 'true'
-      id: cache-packwiz
       uses: actions/cache@v4
       with:
         path: ~/go/bin
         key: go-bin-packwiz-v1-${{ runner.os }}
 
-    - name: Setup Go
-      if: (inputs.install-somnus == 'true' && steps.cache-somnus.outputs.cache-hit != 'true') || (inputs.install-packwiz == 'true' && steps.cache-packwiz.outputs.cache-hit != 'true')
-      uses: https://github.com/actions/setup-go@v5
-      with:
-        go-version: 'stable'
-        cache: true
-
     - name: Build Somnus
-      if: steps.cache-somnus.outputs.cache-hit != 'true'
+      if: inputs.install-somnus == 'true'
       shell: bash
       run: |
+        if [ -x ./somnus-bin/somnus ]; then
+          echo "somnus: restored from cache, skipping build"
+          exit 0
+        fi
         go build -C src/actions/somnus -o "$GITHUB_WORKSPACE/somnus-bin/somnus" .
         chmod +x ./somnus-bin/somnus
 
     - name: Install Packwiz
-      if: inputs.install-packwiz == 'true' && steps.cache-packwiz.outputs.cache-hit != 'true'
-      shell: bash
-      run: go install github.com/packwiz/packwiz@latest
-
-    - name: Add Go bin to PATH
       if: inputs.install-packwiz == 'true'
       shell: bash
-      run: echo "$HOME/go/bin" >> $GITHUB_PATH
+      run: |
+        if [ -x "$HOME/go/bin/packwiz" ]; then
+          echo "packwiz: restored from cache, skipping install"
+          exit 0
+        fi
+        go install github.com/packwiz/packwiz@latest
+
+    - name: Export Paths
+      if: inputs.install-packwiz == 'true'
+      shell: bash
+      run: |
+        echo "$HOME/go/bin" >> "$GITHUB_PATH"
+        echo "PACKWIZ_BIN=$HOME/go/bin/packwiz" >> "$GITHUB_ENV"

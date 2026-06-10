@@ -70,6 +70,10 @@ fn main() -> Result<()> {
     }
 }
 
+fn packwiz_bin() -> String {
+    env::var("PACKWIZ_BIN").unwrap_or_else(|_| "packwiz".into())
+}
+
 fn read_manifest(manifest_path: &Path) -> Result<Value> {
     let content = fs::read_to_string(manifest_path)
         .with_context(|| format!("failed to read {}", manifest_path.display()))?;
@@ -305,7 +309,7 @@ fn build_modpack(
         let out_file = artifacts_dir.join(format!("{filename_base}-{}.{}", platform.short(), platform.ext()));
         let out_str = out_file.to_str().ok_or_else(|| anyhow!("non-UTF8 output path"))?;
 
-        let status = Command::new("packwiz")
+        let status = Command::new(packwiz_bin())
             .args([platform.cli(), "export", "--output", out_str])
             .current_dir(&target_path)
             .status()

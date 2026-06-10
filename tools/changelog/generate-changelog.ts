@@ -153,6 +153,35 @@ interface ManifestFile {
     variants?: ManifestVariant[];
 }
 
+interface OptOut {
+    auto_update?: boolean;
+    server_promo?: boolean;
+    sync_exclude?: string[];
+}
+
+function readOptOut(pDir: string): OptOut {
+    const p = path.join(pDir, 'opt-out.json');
+    if (!fs.existsSync(p)) return {};
+    try {
+        return JSON.parse(fs.readFileSync(p, 'utf-8')) as OptOut;
+    } catch {
+        console.warn(`::warning::invalid opt-out.json in ${pDir}; ignoring`);
+        return {};
+    }
+}
+
+const SERVER_PROMO =
+    '# Need a server?\n\n' +
+    '[![BisectHosting Partnership](https://cdn.modrinth.com/data/cached_images/3d811a958c28645cf1007ccc3d90cb282921bf7f.webp)](https://bh.naomieow.xyz/raamviot50)';
+
+function insertAfterFirstHeading(notes: string, block: string): string {
+    const lines = notes.split('\n');
+    const idx = lines.findIndex((l) => l.trimStart().startsWith('# '));
+    if (idx < 0) return `${block}\n\n${notes.trim()}`;
+    lines.splice(idx + 1, 0, '', block);
+    return lines.join('\n');
+}
+
 function generateChangelog(manifestPathStr: string): string {
     const manifestPath = path.resolve(manifestPathStr);
     const pDir = path.dirname(manifestPath);
@@ -244,6 +273,10 @@ function generateChangelog(manifestPathStr: string): string {
             if (!notes.trimStart().startsWith('# ')) {
                 notes = `${header}\n\n${notes.trim()}`;
             }
+        }
+
+        if (manifest.type === 'modpack' && readOptOut(pDir).server_promo !== false) {
+            notes = insertAfterFirstHeading(notes, SERVER_PROMO);
         }
 
         const modUpdatesBlock = buildModUpdatesBlock();

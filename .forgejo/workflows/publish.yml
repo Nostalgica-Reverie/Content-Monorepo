@@ -114,6 +114,12 @@ jobs:
         id: changelog
         run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
 
+      - name: Setup Go
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
       - name: Setup Packwiz
         uses: ./.forgejo/actions/setup-somnus
         with:
@@ -125,6 +131,7 @@ jobs:
         env:
           GITHUB_SHA: ${{ github.sha }}
         run: |
+          export PACKWIZ_BIN="$HOME/go/bin/packwiz"
           VARIANT='${{ matrix.entry.variant }}'
           if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
             ./publisher-bin/publish build "${{ matrix.entry.manifest }}"

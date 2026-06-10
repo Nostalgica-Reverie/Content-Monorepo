@@ -244,6 +244,11 @@ function validate(manifestPath: string): void {
     validateZipPackStructure(packDir, manifest.type);
   }
 
+  validateOptOut(packDir);
+  if (fs.existsSync(path.join(packDir, 'auto-update-ignore.json'))) {
+    warn(`${packDir}: legacy auto-update-ignore.json — migrate to opt-out.json {"auto_update": false}`);
+  }
+
   const label = isExperimental ? 'EXPERIMENTAL' : 'production';
   const version = manifest.version ?? '(generated)';
   const shape = hasVariants ? `multi-variant (${variants.length})` : 'single-version';
@@ -264,6 +269,37 @@ function validateZipPackStructure(packDir: string, type: string): void {
   const versionDir = path.join(packDir, versionDirs[0] ?? '');
   if (!fs.existsSync(path.join(versionDir, 'pack.mcmeta'))) {
     warn(`${type} version dir ${versionDir} has no pack.mcmeta at its root (Minecraft requires it)`);
+  }
+}
+
+function validateOptOut(packDir: string): void {
+  const p = path.join(packDir, 'opt-out.json');
+  if (!fs.existsSync(p)) return;
+  let obj: unknown;
+  try {
+    obj = JSON.parse(fs.readFileSync(p, 'utf-8'));
+  } catch (e) {
+    fail(`invalid JSON in ${p}: ${e instanceof Error ? e.message : e}`);
+  }
+  if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
+    fail(`${p} must be a JSON object`);
+  }
+  const allowed = ['auto_update', 'server_promo', 'sync_exclude'];
+  for (const key of Object.keys(obj)) {
+    if (!allowed.includes(key)) {
+      fail(`${p}: unknown key '${key}' (allowed: ${allowed.join(', ')})`);
+    }
+  }
+  const o = obj as Record<string, unknown>;
+  for (const boolKey of ['auto_update', 'server_promo']) {
+    if (boolKey in o && typeof o[boolKey] !== 'boolean') {
+      fail(`${p}: '${boolKey}' must be a boolean`);
+    }
+  }
+  if ('sync_exclude' in o) {
+    if (!Array.isArray(o.sync_exclude) || o.sync_exclude.some((x) => typeof x !== 'string')) {
+      fail(`${p}: 'sync_exclude' must be an array of strings`);
+    }
   }
 }
 

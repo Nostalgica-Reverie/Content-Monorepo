@@ -32,11 +32,17 @@ jobs:
             src/actions/somnus
             .forgejo/actions
 
+      - name: Setup Go
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
       - name: Setup Somnus
         uses: ./.forgejo/actions/setup-somnus
 
       - name: Run somnus ${{ inputs.verb }}
-        run: ./somnus-bin/somnus ${{ inputs.verb }}
+        run: PACKWIZ_BIN="$HOME/go/bin/packwiz" ./somnus-bin/somnus ${{ inputs.verb }}
 
       - name: Commit
         uses: https://github.com/EndBug/add-and-commit@v9

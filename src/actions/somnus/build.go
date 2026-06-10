@@ -44,8 +44,6 @@ type exportJob struct {
 	subKey string
 }
 
-// cmdBuild is the CI entry: `somnus build <sha>` builds what git changed;
-// `somnus build --pack <name> <sha>` builds one named pack.
 func cmdBuild(args []string) {
 	var targetedPack, shortSHA string
 	if len(args) >= 1 && args[0] == "--pack" {
@@ -220,7 +218,7 @@ func buildModpack(packID, sha string, artifactsDir string) error {
 
 	var wg sync.WaitGroup
 	errCh := make(chan error, len(jobs))
-	sem := make(chan struct{}, maxConcurrent)
+	sem := make(chan struct{}, maxConcurrent())
 
 	for _, j := range jobs {
 		wg.Add(1)

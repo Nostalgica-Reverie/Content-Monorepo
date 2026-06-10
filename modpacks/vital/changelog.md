@@ -1,4 +1,4 @@
-# Vital 26.05.4
+# Vital 26.06
 
 ### Whats New
 This is the first real "significant" update to Vital, adding in numerous new features that can improve QoL, match Essential features, and more!

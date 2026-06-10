@@ -8,11 +8,19 @@ import (
 	"os/exec"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 )
 
-const maxConcurrent = 8
+func maxConcurrent() int {
+	if v := os.Getenv("SOMNUS_CONCURRENCY"); v != "" {
+		if n, err := strconv.Atoi(v); err == nil && n > 0 {
+			return n
+		}
+	}
+	return 1
+}
 
 func cmdUpdate(args []string)  { run(opUpdate) }
 func cmdRefresh(args []string) { run(opRefresh) }
@@ -63,7 +71,7 @@ var (
 )
 
 func run(op operation) {
-	if _, err := exec.LookPath("packwiz"); err != nil {
+	if _, err := exec.LookPath(packwizBin()); err != nil {
 		fail("packwiz not found in PATH")
 	}
 	root := modpacksDir()
@@ -74,7 +82,7 @@ func run(op operation) {
 	targets, skipped := collectTargets(root, op.honorIgnore)
 
 	if len(skipped) > 0 {
-		fmt.Printf("skipping %d pack(s) with auto-update-ignore.json:\n", len(skipped))
+		fmt.Printf("skipping %d opted-out pack(s):\n", len(skipped))
 		for _, s := range skipped {
 			fmt.Printf("  - %s\n", s)
 		}
@@ -85,7 +93,7 @@ func run(op operation) {
 		return
 	}
 
-	fmt.Printf("queued %d subdir(s), running up to %d in parallel\n", len(targets), maxConcurrent)
+	fmt.Printf("queued %d subdir(s), running up to %d in parallel\n", len(targets), maxConcurrent())
 
 	failures := workPool(targets, op)
 
@@ -98,6 +106,10 @@ func run(op operation) {
 	}
 
 	fmt.Printf("all %ss finished successfully.\n", op.name)
+}
+
+func packwizBin() string {
+	panic("unimplemented")
 }
 
 func collectTargets(root string, honorIgnore bool) (targets []string, skipped []string) {
@@ -113,7 +125,10 @@ func collectTargets(root string, honorIgnore bool) (targets []string, skipped []
 		packPath := filepath.Join(root, p.Name())
 
 		if honorIgnore {
-			if _, err := os.Stat(filepath.Join(packPath, "auto-update-ignore.json")); err == nil {
+			if skip, legacy := optedOutOfAutoUpdate(packPath); skip {
+				if legacy {
+					fmt.Fprintf(os.Stderr, "::warning::%s uses legacy auto-update-ignore.json; migrate to opt-out.json {\"auto_update\": false}\n", packPath)
+				}
 				skipped = append(skipped, packPath)
 				continue
 			}
@@ -141,7 +156,7 @@ func workPool(targets []string, op operation) []string {
 	results := make(chan string, len(targets))
 	var wg sync.WaitGroup
 
-	workers := maxConcurrent
+	workers := maxConcurrent()
 	if len(targets) < workers {
 		workers = len(targets)
 	}
@@ -154,7 +169,7 @@ func workPool(targets []string, op operation) []string {
 				label := dir
 				fmt.Printf("[W%d] %s %s\n", id, op.gerund, label)
 
-				cmd := exec.Command("packwiz", op.packwizArgs...)
+				cmd := exec.Command(packwizBin(), op.packwizArgs...)
 				cmd.Dir = dir
 				out, err := cmd.CombinedOutput()
 				if err != nil {
@@ -227,7 +242,7 @@ type syncJob struct {
 }
 
 func runSync(dryRun bool) {
-	if _, err := exec.LookPath("packwiz"); err != nil {
+	if _, err := exec.LookPath(packwizBin()); err != nil {
 		fail("packwiz not found in PATH")
 	}
 	root := modpacksDir()
@@ -306,7 +321,13 @@ func runSync(dryRun bool) {
 
 		excluded := readSyncExclude(filepath.Join(j.targetDir, "sync-exclude.json"))
 		if len(excluded) > 0 {
-			fmt.Printf("  %d path(s) excluded from sync (sync-exclude.json)\n", len(excluded))
+			fmt.Fprintf(os.Stderr, "::warning::%s uses legacy sync-exclude.json; migrate to opt-out.json sync_exclude\n", j.targetDir)
+		}
+		for _, f := range readOptOut(filepath.Dir(j.targetDir)).SyncExclude {
+			excluded[f] = true
+		}
+		if len(excluded) > 0 {
+			fmt.Printf("  %d path(s) excluded from sync\n", len(excluded))
 		}
 
 		provided := map[string]bool{}
@@ -397,7 +418,7 @@ func runSync(dryRun bool) {
 			fail(fmt.Sprintf("failed to write %s: %v", statePath, err))
 		}
 
-		cmd := exec.Command("packwiz", "refresh")
+		cmd := exec.Command(packwizBin(), "refresh")
 		cmd.Dir = j.targetDir
 		if out, err := cmd.CombinedOutput(); err != nil {
 			fail(fmt.Sprintf("packwiz refresh failed in %s: %v\n%s", j.targetDir, err, indent(string(out), "    ")))
