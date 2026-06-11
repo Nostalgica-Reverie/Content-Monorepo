@@ -20,11 +20,14 @@ Properly configured as it is on latest Re-Console+
 ## Added e4mc
 This replaces World Host on all versions, as World Host seems to no longer be maintained.
 
-## Added Clean World Loading
+## Backported Clean World Loading
 Self explantory in title
 
-## Added Fixed Chest Models
+## Backported Fixed Chest Models
 Fixes chest model issues with Mash-up packs
+
+## Backported Tooltips Enhanced
+Adds in more modern L4J tooltips
 
 ## Updated all mods
 All mods on every version has been updated
