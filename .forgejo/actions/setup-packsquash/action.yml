@@ -1,0 +1,35 @@
+name: "Setup PackSquash"
+description: "Cache-or-download the PackSquash binary for optimized resource pack builds. Exports PACKSQUASH_BIN."
+
+inputs:
+  version:
+    description: "PackSquash release tag to install"
+    required: false
+    default: "v0.4.1"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache PackSquash Binary
+      uses: actions/cache@v4
+      with:
+        path: ./packsquash-bin
+        key: packsquash-${{ inputs.version }}-${{ runner.os }}
+
+    - name: Download PackSquash
+      shell: bash
+      run: |
+        if [ -x ./packsquash-bin/packsquash ]; then
+          echo "packsquash: restored from cache, skipping download"
+          exit 0
+        fi
+        mkdir -p ./packsquash-bin
+        curl -fsSL -o /tmp/packsquash.zip \
+          "https://github.com/ComunidadAylas/PackSquash/releases/download/${{ inputs.version }}/packsquash-x86_64-unknown-linux-musl.zip"
+        unzip -o /tmp/packsquash.zip -d ./packsquash-bin
+        chmod +x ./packsquash-bin/packsquash
+
+    - name: Export Path
+      shell: bash
+      run: |
+        echo "PACKSQUASH_BIN=$GITHUB_WORKSPACE/packsquash-bin/packsquash" >> "$GITHUB_ENV"

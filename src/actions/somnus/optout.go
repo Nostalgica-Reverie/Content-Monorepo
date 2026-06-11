@@ -11,6 +11,7 @@ type optOut struct {
 	AutoUpdate  *bool    `json:"auto_update"`
 	ServerPromo *bool    `json:"server_promo"`
 	SyncExclude []string `json:"sync_exclude"`
+	Freeze      []string `json:"freeze"`
 }
 
 func readOptOut(packDir string) optOut {

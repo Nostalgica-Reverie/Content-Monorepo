@@ -95,7 +95,9 @@ func run(op operation) {
 
 	fmt.Printf("queued %d subdir(s), running up to %d in parallel\n", len(targets), maxConcurrent())
 
-	failures := workPool(targets, op)
+	prog := newProgress(op.gerund, len(targets))
+	failures := workPool(targets, op, prog)
+	prog.done()
 
 	if len(failures) > 0 {
 		fmt.Fprintf(os.Stderr, "\n%d subdir(s) failed:\n", len(failures))
@@ -147,7 +149,7 @@ func collectTargets(root string, honorIgnore bool) (targets []string, skipped []
 	return targets, skipped
 }
 
-func workPool(targets []string, op operation) []string {
+func workPool(targets []string, op operation, prog *progress) []string {
 	jobs := make(chan string)
 	results := make(chan string, len(targets))
 	var wg sync.WaitGroup
@@ -175,7 +177,11 @@ func workPool(targets []string, op operation) []string {
 					}
 					results <- dir
 				} else {
-					fmt.Printf("[W%d] ok: %s\n", id, label)
+					if prog != nil && prog.tty {
+						prog.step(label)
+					} else {
+						fmt.Printf("[W%d] ok: %s\n", id, label)
+					}
 				}
 			}
 		}(w)

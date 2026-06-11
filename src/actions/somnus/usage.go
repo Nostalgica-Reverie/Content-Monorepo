@@ -9,6 +9,21 @@ var verbUsage = map[string]string{
   e.g. somnus bump modpacks/re-console-plus 26.06.1
   --configs  also update in-pack version configs (main menu credits, loader dependency overrides) and refresh`,
 
+	"packs": `usage: somnus packs list | packs get <id> [field] | packs set <id> <field> <value>
+  the pack registry: every manifest, addressable as an object
+  e.g. somnus packs list
+       somnus packs get re-console-plus version
+       somnus packs set re-console-plus release_type beta`,
+
+	"freeze": `usage: somnus freeze <pack-dir> [mod-slugs...]
+  pin mods across every -mr/-cf subdir of a pack so 'somnus update' skips them
+  with no slugs: list the pack's frozen mods
+  recorded declaratively in opt-out.json ("freeze"); doctor flags drift
+  e.g. somnus freeze modpacks/re-console-plus sodium iris`,
+
+	"unfreeze": `usage: somnus unfreeze <pack-dir> <mod-slugs...>
+  unpin previously frozen mods so updates apply to them again`,
+
 	"export": `usage: somnus export [pack]
   build changed packs locally (or one named pack); artifacts land in artifacts/
   e.g. somnus export re-console-plus`,

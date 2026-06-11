@@ -49,20 +49,13 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Setup Go
-        uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
-
-      - name: Install Packwiz
-        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true'
-        run: go install github.com/packwiz/packwiz@latest
-          
       - name: Setup Somnus
         uses: ./.forgejo/actions/setup-somnus
         with:
           install-packwiz: ${{ steps.meta.outputs.has_modpacks }}
+
+      - name: Setup PackSquash
+        uses: ./.forgejo/actions/setup-packsquash
 
       - name: Lint changed files (syntax)
         run: ./somnus-bin/somnus lint

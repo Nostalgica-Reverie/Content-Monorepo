@@ -25,6 +25,7 @@ func cmdDoctor(args []string) {
 	tool(packwizBin(), "every pack operation", true)
 	tool("java", "only needed for 'somnus test'", false)
 	tool("zip", "datapack/resourcepack builds via the publisher", false)
+	tool("packsquash", "optimized resource pack builds (plain zip used when absent)", false)
 
 	root := findRepoRoot()
 	if root == "" {
@@ -57,6 +58,11 @@ func cmdDoctor(args []string) {
 			packPath := filepath.Join(dir, e.Name())
 			if _, err := os.Stat(filepath.Join(packPath, "auto-update-ignore.json")); err == nil {
 				fmt.Printf("  warn  legacy    %s: auto-update-ignore.json -> migrate to opt-out.json\n", packPath)
+			}
+			if frozen := readOptOut(packPath).Freeze; len(frozen) > 0 {
+				for _, p := range pinDrift(packPath, frozen) {
+					fmt.Printf("  warn  freeze    %s: declared frozen but not pinned -> re-run somnus freeze\n", p)
+				}
 			}
 			if subs, err := os.ReadDir(packPath); err == nil {
 				for _, s := range subs {

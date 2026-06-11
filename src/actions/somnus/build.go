@@ -219,6 +219,8 @@ func buildModpack(packID, sha string, artifactsDir string) error {
 	var wg sync.WaitGroup
 	errCh := make(chan error, len(jobs))
 	sem := make(chan struct{}, maxConcurrent())
+	prog := newProgress("exporting", len(jobs))
+	defer prog.done()
 
 	for _, j := range jobs {
 		wg.Add(1)
@@ -236,7 +238,11 @@ func buildModpack(packID, sha string, artifactsDir string) error {
 				errCh <- fmt.Errorf("packwiz export failed for %s: %v\n%s", j.dir, err, out)
 				return
 			}
-			fmt.Printf("exported %s\n", outputName)
+			if prog.tty {
+				prog.step(outputName)
+			} else {
+				fmt.Printf("exported %s\n", outputName)
+			}
 		}(j)
 	}
 
@@ -257,7 +263,6 @@ func buildModpack(packID, sha string, artifactsDir string) error {
 }
 
 func buildZipPack(category, packID, sha, artifactsDir string) error {
-	fmt.Printf("zipping %s: %s\n", category, packID)
 	packDir := filepath.Join(category, packID)
 
 	versionDir, version, err := findSingleVersionDir(packDir)
@@ -266,7 +271,55 @@ func buildZipPack(category, packID, sha, artifactsDir string) error {
 	}
 
 	dest := filepath.Join(artifactsDir, fmt.Sprintf("%s-%s-%s.zip", packID, version, sha))
+
+	if category == "resourcepacks" {
+		if bin := packsquashBin(); bin != "" {
+			fmt.Printf("squashing %s: %s (PackSquash)\n", category, packID)
+			return squashContents(bin, packDir, versionDir, dest)
+		}
+		fmt.Printf("zipping %s: %s (packsquash not found; plain zip — install it or set PACKSQUASH_BIN for optimized builds)\n", category, packID)
+	} else {
+		fmt.Printf("zipping %s: %s\n", category, packID)
+	}
 	return zipContents(versionDir, dest)
+}
+
+func packsquashBin() string {
+	if b := os.Getenv("PACKSQUASH_BIN"); b != "" {
+		return b
+	}
+	if p, err := exec.LookPath("packsquash"); err == nil {
+		return p
+	}
+	return ""
+}
+
+// squashContents builds an optimized resource pack zip via PackSquash.
+// Base options are generated; a pack-level packsquash.toml (next to
+// manifest.json) is appended verbatim for per-pack tuning — it must NOT set
+// pack_directory or output_file_path, which somnus owns.
+func squashContents(bin, packDir, src, dest string) error {
+	opts := fmt.Sprintf("pack_directory = %q\noutput_file_path = %q\nzip_spec_conformance_level = \"high\"\n", src, dest)
+	if extra, err := os.ReadFile(filepath.Join(packDir, "packsquash.toml")); err == nil {
+		fmt.Printf("  applying pack-level packsquash.toml\n")
+		opts += "\n" + string(extra)
+	}
+	optFile, err := os.CreateTemp("", "somnus-packsquash-*.toml")
+	if err != nil {
+		return fmt.Errorf("failed to create packsquash options file: %w", err)
+	}
+	defer os.Remove(optFile.Name())
+	if _, err := optFile.WriteString(opts); err != nil {
+		return fmt.Errorf("failed to write packsquash options: %w", err)
+	}
+	optFile.Close()
+
+	cmd := exec.Command(bin, optFile.Name())
+	if out, err := cmd.CombinedOutput(); err != nil {
+		return fmt.Errorf("packsquash failed for %s: %v\n%s", src, err, indent(string(out), "    "))
+	}
+	fmt.Printf("squashed %s\n", filepath.Base(dest))
+	return nil
 }
 
 func findSingleVersionDir(packDir string) (dir string, version string, err error) {

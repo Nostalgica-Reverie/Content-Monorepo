@@ -15,7 +15,10 @@ usage: somnus <verb> [args]
 
 content
   init <category> <name> [flags]      scaffold a pack (manifest, changelog, packwiz subdirs, .packwizignore)
-  bump <pack-dir> <new-version>       set a pack's manifest version
+  bump <pack-dir> <new-version>       set a pack's manifest version (--configs: also in-pack version files)
+  packs list|get|set                  the pack registry: every manifest as an addressable object
+  freeze <pack-dir> [mods...]         pin mods across a whole pack so updates skip them (no args: list)
+  unfreeze <pack-dir> <mods...>       unpin previously frozen mods
   port <mr-subdir> <cf-subdir>        diff MR mods against the CF side (--add to port interactively)
   test <pack-subdir>                  packwiz serve + install into a local test instance
 
@@ -67,7 +70,7 @@ func main() {
 	}
 
 	switch verb {
-	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages":
+	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages", "packs":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -82,6 +85,12 @@ func main() {
 		cmdInit(os.Args[2:])
 	case "bump":
 		cmdBump(os.Args[2:])
+	case "packs":
+		cmdPacks(os.Args[2:])
+	case "freeze":
+		cmdFreeze(os.Args[2:])
+	case "unfreeze":
+		cmdUnfreeze(os.Args[2:])
 	case "export":
 		cmdExport(os.Args[2:])
 	case "build":

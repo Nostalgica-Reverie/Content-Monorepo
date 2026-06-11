@@ -284,7 +284,7 @@ function validateOptOut(packDir: string): void {
   if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
     fail(`${p} must be a JSON object`);
   }
-  const allowed = ['auto_update', 'server_promo', 'sync_exclude'];
+  const allowed = ['auto_update', 'server_promo', 'sync_exclude', 'freeze'];
   for (const key of Object.keys(obj)) {
     if (!allowed.includes(key)) {
       fail(`${p}: unknown key '${key}' (allowed: ${allowed.join(', ')})`);
@@ -296,9 +296,12 @@ function validateOptOut(packDir: string): void {
       fail(`${p}: '${boolKey}' must be a boolean`);
     }
   }
-  if ('sync_exclude' in o) {
-    if (!Array.isArray(o.sync_exclude) || o.sync_exclude.some((x) => typeof x !== 'string')) {
-      fail(`${p}: 'sync_exclude' must be an array of strings`);
+  for (const listKey of ['sync_exclude', 'freeze']) {
+    if (listKey in o) {
+      const v = o[listKey];
+      if (!Array.isArray(v) || v.some((x) => typeof x !== 'string')) {
+        fail(`${p}: '${listKey}' must be an array of strings`);
+      }
     }
   }
 }
