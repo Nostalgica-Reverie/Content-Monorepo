@@ -49,6 +49,10 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Install Packwiz
+        if: steps.meta.outputs.has_modpacks == 'true' && steps.cache-go.outputs.cache-hit != 'true'
+        run: go install github.com/packwiz/packwiz@latest
+
       - name: Setup Go
         uses: https://github.com/actions/setup-go@v5
         with:
