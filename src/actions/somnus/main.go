@@ -20,6 +20,8 @@ content
   freeze <pack-dir> [mods...]         pin mods across a whole pack so updates skip them (no args: list)
   unfreeze <pack-dir> <mods...>       unpin previously frozen mods
   port <mr-subdir> <cf-subdir>        diff MR mods against the CF side (--add to port interactively)
+  import <url-or-mrpack> [--id <id>]  import a Modrinth .mrpack as a new pack in this repo
+  side <pack-dir> <mod> [side]        show or fix a mod's side (client/server/both) across a pack
   test <pack-subdir>                  packwiz serve + install into a local test instance
 
 build & docs
@@ -62,15 +64,17 @@ func main() {
 			printVerbHelp(canonicalVerb(os.Args[2]))
 			return
 		}
+		printMascot()
 		fmt.Print(usage())
 		return
 	case "version", "-v", "--version":
+		printMascot()
 		fmt.Println("somnus " + somnusVersion)
 		return
 	}
 
 	switch verb {
-	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages", "packs":
+	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages", "packs", "import":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -87,6 +91,10 @@ func main() {
 		cmdBump(os.Args[2:])
 	case "packs":
 		cmdPacks(os.Args[2:])
+	case "side":
+		cmdSide(os.Args[2:])
+	case "import":
+		cmdImport(os.Args[2:])
 	case "freeze":
 		cmdFreeze(os.Args[2:])
 	case "unfreeze":

@@ -65,6 +65,16 @@ var verbUsage = map[string]string{
   --no-refresh  defer index rebuilds during --add, refresh once at the end (requires packwiz-tx via PACKWIZ_BIN)
   e.g. somnus port modpacks/rc-plus/26.1.2-mr modpacks/rc-plus/26.1.2-cf`,
 
+	"import": `usage: somnus import <url-or-mrpack-file> [--id <pack-id>]
+  import a Modrinth .mrpack into modpacks/ as a ready pack ({mc}-mr subdir, manifest, changelog)
+  update metadata is reconstructed from cdn.modrinth.com URLs, so imported mods stay updatable
+  e.g. somnus import https://cdn.modrinth.com/data/1KVo5zza/versions/g5RAIwpP/Fabulously.Optimized-v13.2.2.mrpack`,
+
+	"side": `usage: somnus side <pack-dir> <mod-slug> [client|server|both]
+  with no side: show the mod's current side per subdir
+  with a side: rewrite it in every subdir's .pw.toml and refresh (fixes mislabeled mods)
+  e.g. somnus side modpacks/re-console-plus some-mislabeled-mod client`,
+
 	"doctor": `usage: somnus doctor   (alias: check)
   verify tools (git, packwiz, java, zip), repo root, manifest health, and legacy opt-out files`,
 

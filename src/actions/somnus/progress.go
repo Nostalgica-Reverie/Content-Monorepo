@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var sleepFrames = []string{"(-.-) z  ", "(-.-) zz ", "(-.-) zzz", "(-.-)  zz", "(-.-)   z", "(o.o)    "}
+var sleepFrames = []string{"c(-.-)ɔ z  ", "c(-.-)ɔ zz ", "c(-.-)ɔ zzz", "c(-.-)ɔ  zz", "c(-.-)ɔ   z", "C(o.o)Ɔ !  "}
 
 func isTTY() bool {
 	fi, err := os.Stdout.Stat()
