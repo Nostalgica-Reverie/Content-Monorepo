@@ -1,4 +1,4 @@
-# Re-Console Plus 26.06.5
+# Re-Console Main 26.06.5
 
 Updates mods and panorama
 
