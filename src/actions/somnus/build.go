@@ -48,14 +48,14 @@ func cmdBuild(args []string) {
 	var targetedPack, shortSHA string
 	if len(args) >= 1 && args[0] == "--pack" {
 		if len(args) < 3 {
-			fail("usage: somnus build --pack <name> <short-sha>")
+			failUsage(verbUsage["build"])
 		}
 		targetedPack = args[1]
 		shortSHA = args[2]
 	} else if len(args) >= 1 {
 		shortSHA = args[0]
 	} else {
-		fail("usage: somnus build <short-sha>  |  somnus build --pack <name> <short-sha>")
+		failUsage(verbUsage["build"])
 	}
 	runBuild(targetedPack, shortSHA)
 }
@@ -230,7 +230,7 @@ func buildModpack(packID, sha string, artifactsDir string) error {
 				packID, j.subKey, j.plat.short, m.Version, sha, j.plat.ext)
 			outputPath := filepath.Join(artifactsDir, outputName)
 
-			cmd := exec.Command("packwiz", j.plat.cli, "export", "--output", outputPath)
+			cmd := exec.Command(packwizBin(), j.plat.cli, "export", "--output", outputPath)
 			cmd.Dir = j.dir
 			if out, err := cmd.CombinedOutput(); err != nil {
 				errCh <- fmt.Errorf("packwiz export failed for %s: %v\n%s", j.dir, err, out)

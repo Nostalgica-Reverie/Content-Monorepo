@@ -1,15 +1,16 @@
-name: Bug Report
-description: File a bug report.
-title: "[Issue]: "
+name: Resource Pack Bug Report
+description: File a bug report for one of our resource packs.
+title: "[Resource Pack]: "
 labels:
   - bug
+  - resourcepack
 body:
   - type: input
     id: issue
     attributes:
       label: What is the issue?
       description: Please describe what the issue is.
-      placeholder: "ex. Game crashes when [...]"
+      placeholder: "ex. Texture renders incorrectly when [...]"
     validations:
       required: true
   - type: textarea
@@ -25,6 +26,13 @@ body:
         4. See error
     validations:
       required: true
+  - type: input
+    id: resourcepack
+    attributes:
+      label: Resource Pack
+      description: Which resource pack (and version) are you using?
+    validations:
+      required: true
   - type: dropdown
     id: mc-version
     attributes:
@@ -32,6 +40,7 @@ body:
       description: What version of Minecraft are you running?
       options:
         - 26.1.2
+        - 1.21.11
         - 1.21.10
         - 1.21.8
         - 1.21.5
@@ -43,54 +52,18 @@ body:
       default: 0
     validations:
       required: true
-  - type: dropdown
-    id: loader
+  - type: input
+    id: other-packs
     attributes:
-      label: ModLoader
-      description: What ModLoader are you using?
-      options:
-        - Fabric
-        - Forge
-        - Neoforge
-        - Quilt
-      default: 0
-    validations:
-      required: true
-  - type: dropdown
-    id: modpack
-    attributes:
-      label: Modpack
-      description: What Modpack and what version are you on?
-      options:
-        - N/A
-        - Re-Console+ Modrinth
-        - Re-Console+ Curseforge
-        - Simply Legacy Modrinth
-        - Simply Legacy Curseforge
-        - Rekindled Legacy (List TU in your bug report)
-      default: 0
-    validations:
-      required: true
-  - type: dropdown
-    id: dp
-    attributes:
-      label: Datapack Pack
-      description: What Resource Pack are you using?
-      options:
-        - N/A
-        - Legacy Nether
-        - Legacy Nether Extended
-        - Legacy Mechanics
-      default: 0
+      label: Other resource packs active
+      description: List any other resource packs enabled at the same time, in order. Write "none" if N/A
     validations:
       required: true
   - type: textarea
-    id: logs
+    id: screenshot
     attributes:
-      label: Log and crash report
-      description: Please upload your log or crash report to mclo.gs and paste the link here.
-    validations:
-      required: true
+      label: Screenshot
+      description: A picture of the visual issue is incredibly useful
   - type: textarea
     id: extras
     attributes:

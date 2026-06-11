@@ -72,11 +72,11 @@ var (
 
 func run(op operation) {
 	if _, err := exec.LookPath(packwizBin()); err != nil {
-		fail("packwiz not found in PATH")
+		failEnv("packwiz not found", "install with 'go install github.com/packwiz/packwiz@latest' or point PACKWIZ_BIN at a binary")
 	}
 	root := modpacksDir()
 	if info, err := os.Stat(root); err != nil || !info.IsDir() {
-		fail(fmt.Sprintf("modpacks directory not found: %s", root))
+		failEnv(fmt.Sprintf("modpacks directory not found: %s", root), "run somnus from inside the monorepo")
 	}
 
 	targets, skipped := collectTargets(root, op.honorIgnore)
@@ -239,7 +239,7 @@ type syncJob struct {
 
 func runSync(dryRun bool) {
 	if _, err := exec.LookPath(packwizBin()); err != nil {
-		fail("packwiz not found in PATH")
+		failEnv("packwiz not found", "install with 'go install github.com/packwiz/packwiz@latest' or point PACKWIZ_BIN at a binary")
 	}
 	root := modpacksDir()
 	packs, err := os.ReadDir(root)

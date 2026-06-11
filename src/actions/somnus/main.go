@@ -33,9 +33,13 @@ maintenance
   lint [files...]                     syntax-lint changed JSON / .pw.toml files
 
 meta
-  doctor                              check tools, repo root, and manifest health
-  help                                show this help
+  doctor                              check tools, repo root, and manifest health (alias: check)
+  help [verb]                         show this help, or detailed usage for one verb
   version                             print the somnus version
+
+aliases: docs -> pages, instance -> test, check -> doctor
+
+exit codes: 0 ok | 1 runtime failure | 2 usage | 3 environment | 4 not found
 `
 
 func usage() string {
@@ -47,10 +51,14 @@ func main() {
 		fmt.Fprint(os.Stderr, usage())
 		os.Exit(1)
 	}
-	verb := os.Args[1]
+	verb := canonicalVerb(os.Args[1])
 
 	switch verb {
 	case "help", "-h", "--help":
+		if len(os.Args) > 2 {
+			printVerbHelp(canonicalVerb(os.Args[2]))
+			return
+		}
 		fmt.Print(usage())
 		return
 	case "version", "-v", "--version":
@@ -99,8 +107,29 @@ func main() {
 	case "doctor":
 		cmdDoctor(os.Args[2:])
 	default:
-		fail(fmt.Sprintf("unknown verb %q — run 'somnus help' for usage", verb))
+		failUsage(fmt.Sprintf("unknown verb %q", os.Args[1]))
 	}
+}
+
+var verbAliases = map[string]string{
+	"docs":     "pages",
+	"instance": "test",
+	"check":    "doctor",
+}
+
+func canonicalVerb(v string) string {
+	if c, ok := verbAliases[v]; ok {
+		return c
+	}
+	return v
+}
+
+func printVerbHelp(verb string) {
+	if u, ok := verbUsage[verb]; ok {
+		fmt.Println(u)
+		return
+	}
+	fmt.Printf("no detailed help for %q — run 'somnus help' for the full list\n", verb)
 }
 
 func findRepoRoot() string {
@@ -128,6 +157,13 @@ func modpacksDir() string {
 		return d
 	}
 	return "modpacks"
+}
+
+func packwizBin() string {
+	if b := os.Getenv("PACKWIZ_BIN"); b != "" {
+		return b
+	}
+	return "packwiz"
 }
 
 type manifest struct {
@@ -163,9 +199,4 @@ func writeJSON(path string, v any) {
 	if err := os.WriteFile(path, data, 0o644); err != nil {
 		fail(fmt.Sprintf("failed to write %s: %v", path, err))
 	}
-}
-
-func fail(msg string) {
-	fmt.Fprintf(os.Stderr, "::error::%s\n", msg)
-	os.Exit(1)
 }

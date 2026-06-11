@@ -17,13 +17,13 @@ const (
 
 func cmdInit(args []string) {
 	if len(args) < 2 {
-		fail("usage: somnus init <category> <name> [--mc <version>] [--loader fabric|forge|neoforge|quilt] [--base | --consumes <id>] [--variants a,b,c]\n  category: modpacks | datapacks | resourcepacks")
+		failUsage(verbUsage["init"])
 	}
 	category, name := args[0], args[1]
 	switch category {
 	case "modpacks", "datapacks", "resourcepacks":
 	default:
-		fail(fmt.Sprintf("invalid category %q (expected modpacks, datapacks, or resourcepacks)", category))
+		failUsage(fmt.Sprintf("invalid category %q (expected modpacks, datapacks, or resourcepacks)", category))
 	}
 
 	loader := "fabric"
@@ -62,11 +62,11 @@ func cmdInit(args []string) {
 		}
 	}
 	if asBase && consumesBase != "" {
-		fail("--base and --consumes are mutually exclusive (a pack is either a base or a consumer, not both)")
+		failUsage("--base and --consumes are mutually exclusive (a pack is either a base or a consumer, not both)")
 	}
 	loaderFlag, ok := loaderLatestFlag(loader)
 	if !ok {
-		fail(fmt.Sprintf("invalid loader %q (expected fabric, forge, neoforge, or quilt)", loader))
+		failUsage(fmt.Sprintf("invalid loader %q (expected fabric, forge, neoforge, or quilt)", loader))
 	}
 
 	packDir := filepath.Join(category, name)
@@ -150,7 +150,7 @@ func cmdInit(args []string) {
 	fmt.Printf("  changelog.md\n")
 
 	if category == "modpacks" {
-		if _, err := exec.LookPath("packwiz"); err != nil {
+		if _, err := exec.LookPath(packwizBin()); err != nil {
 			fmt.Println("note: packwiz not on PATH; skipped subdir init. Create the subdirs and run packwiz init manually.")
 			return
 		}
@@ -161,7 +161,7 @@ func cmdInit(args []string) {
 					fail(fmt.Sprintf("failed to create %s: %v", sub, err))
 				}
 				fmt.Printf("  packwiz init in %s ...\n", sub)
-				cmd := exec.Command("packwiz", "init",
+				cmd := exec.Command(packwizBin(), "init",
 					"--name", name,
 					"--author", placeholderAuthor,
 					"--mc-version", mcVersion,

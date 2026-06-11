@@ -9,7 +9,7 @@ import (
 
 func cmdBump(args []string) {
 	if len(args) < 2 {
-		fail("usage: somnus bump <pack-dir> <new-version> [--configs]\n  e.g. somnus bump modpacks/re-console-plus 26.06.1\n  --configs also updates in-pack version configs (main menu credits, loader dependency overrides)")
+		failUsage(verbUsage["bump"])
 	}
 	packDir, newVer := args[0], args[1]
 	doConfigs := false
@@ -19,13 +19,13 @@ func cmdBump(args []string) {
 		}
 	}
 	if newVer == "" {
-		fail("new version must not be empty")
+		failUsage("new version must not be empty\n" + verbUsage["bump"])
 	}
 	mfPath := filepath.Join(packDir, "manifest.json")
 
 	data, err := os.ReadFile(mfPath)
 	if err != nil {
-		fail(fmt.Sprintf("failed to read %s: %v", mfPath, err))
+		failNotFound(fmt.Sprintf("failed to read %s: %v", mfPath, err))
 	}
 	var obj map[string]any
 	if err := json.Unmarshal(data, &obj); err != nil {

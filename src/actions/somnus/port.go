@@ -10,27 +10,30 @@ import (
 
 func cmdPort(args []string) {
 	if len(args) < 2 {
-		fail("usage: somnus port <mr-subdir> <cf-subdir> [--add]\n" +
-			"  e.g. somnus port modpacks/rc-plus/26.1.2-mr modpacks/rc-plus/26.1.2-cf")
+		failUsage(verbUsage["port"])
 	}
 	mrDir, cfDir := args[0], args[1]
 	doAdd := false
+	noRefresh := false
 	for _, a := range args[2:] {
-		if a == "--add" {
+		switch a {
+		case "--add":
 			doAdd = true
+		case "--no-refresh":
+			noRefresh = true
 		}
 	}
 
 	mrMods := filepath.Join(mrDir, "mods")
 	if info, err := os.Stat(mrMods); err != nil || !info.IsDir() {
-		fail(fmt.Sprintf("no mods/ in MR subdir %s", mrDir))
+		failNotFound(fmt.Sprintf("no mods/ in MR subdir %s", mrDir))
 	}
 	if _, err := os.Stat(filepath.Join(cfDir, "pack.toml")); err != nil {
-		fail(fmt.Sprintf("CF subdir %s has no pack.toml (run packwiz/somnus init there first)", cfDir))
+		failNotFound(fmt.Sprintf("CF subdir %s has no pack.toml (run packwiz/somnus init there first)", cfDir))
 	}
 	if doAdd {
-		if _, err := exec.LookPath("packwiz"); err != nil {
-			fail("packwiz not found in PATH")
+		if _, err := exec.LookPath(packwizBin()); err != nil {
+			failEnv("packwiz not found", "install with 'go install github.com/packwiz/packwiz@latest' or point PACKWIZ_BIN at a binary")
 		}
 	}
 
@@ -83,7 +86,11 @@ func cmdPort(args []string) {
 	var added, skipped, notFound []string
 	for _, n := range missing {
 		fmt.Printf("\n=== %s ===\n", n)
-		cmd := exec.Command("packwiz", "curseforge", "add", n)
+		addArgs := []string{"curseforge", "add", n}
+		if noRefresh {
+			addArgs = append(addArgs, "--no-refresh")
+		}
+		cmd := exec.Command(packwizBin(), addArgs...)
 		cmd.Dir = cfDir
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
@@ -109,6 +116,16 @@ func cmdPort(args []string) {
 		for _, n := range notFound {
 			fmt.Printf("    - %s\n", n)
 		}
+	}
+	if noRefresh && len(added) > 0 {
+		fmt.Printf("\nrunning a single %s refresh in %s ...\n", packwizBin(), cfDir)
+		cmd := exec.Command(packwizBin(), "refresh")
+		cmd.Dir = cfDir
+		if out, err := cmd.CombinedOutput(); err != nil {
+			fail(fmt.Sprintf("final refresh failed in %s: %v\n%s", cfDir, err, out))
+		}
+		fmt.Println("index finalized; verify the matches are correct.")
+		return
 	}
 	fmt.Println("\nremember to run packwiz refresh in the CF subdir and verify the matches are correct.")
 }

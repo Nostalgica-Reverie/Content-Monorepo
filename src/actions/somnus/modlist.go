@@ -30,12 +30,12 @@ type pwMod struct {
 
 func cmdModlist(args []string) {
 	if len(args) < 1 {
-		fail("usage: somnus modlist <pack-subdir>\n  e.g. somnus modlist modpacks/rc-plus/26.1.2-mr")
+		failUsage(verbUsage["modlist"])
 	}
 	subdir := args[0]
 	modsDir := filepath.Join(subdir, "mods")
 	if info, err := os.Stat(modsDir); err != nil || !info.IsDir() {
-		fail(fmt.Sprintf("no mods/ directory at %s", modsDir))
+		failNotFound(fmt.Sprintf("no mods/ directory at %s", modsDir))
 	}
 
 	entries, err := os.ReadDir(modsDir)

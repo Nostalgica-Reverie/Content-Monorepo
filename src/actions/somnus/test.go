@@ -13,25 +13,25 @@ const servePort = "8080"
 
 func cmdTest(args []string) {
 	if len(args) < 1 {
-		fail("usage: somnus test <pack-subdir>\n  e.g. somnus test modpacks/rc-plus/26.1.2-mr")
+		failUsage(verbUsage["test"])
 	}
 	packSubdir := args[0]
 
 	if _, err := os.Stat(filepath.Join(packSubdir, "pack.toml")); err != nil {
-		fail(fmt.Sprintf("no pack.toml in %s", packSubdir))
+		failNotFound(fmt.Sprintf("no pack.toml in %s", packSubdir))
 	}
-	if _, err := exec.LookPath("packwiz"); err != nil {
-		fail("packwiz not found in PATH")
+	if _, err := exec.LookPath(packwizBin()); err != nil {
+		failEnv("packwiz not found", "install with 'go install github.com/packwiz/packwiz@latest' or point PACKWIZ_BIN at a binary")
 	}
 	if _, err := exec.LookPath("java"); err != nil {
-		fail("java not found in PATH (packwiz-installer is a Java jar)")
+		failEnv("java not found in PATH", "packwiz-installer is a Java jar; install a JRE/JDK")
 	}
 	installerJar := os.Getenv("PACKWIZ_INSTALLER_JAR")
 	if installerJar == "" {
-		fail("set $PACKWIZ_INSTALLER_JAR to the packwiz-installer-bootstrap.jar path\n  (download from https://github.com/packwiz/packwiz-installer-bootstrap/releases)")
+		failEnv("PACKWIZ_INSTALLER_JAR is not set", "download packwiz-installer-bootstrap.jar from https://github.com/packwiz/packwiz-installer-bootstrap/releases and export the path")
 	}
 	if _, err := os.Stat(installerJar); err != nil {
-		fail(fmt.Sprintf("packwiz-installer jar not found at %s", installerJar))
+		failNotFound(fmt.Sprintf("packwiz-installer jar not found at %s", installerJar))
 	}
 
 	instanceDir := os.Getenv("SOMNUS_TEST_INSTANCE")
@@ -52,7 +52,7 @@ func cmdTest(args []string) {
 	}
 
 	fmt.Printf("starting packwiz serve in %s ...\n", packSubdir)
-	serve := exec.Command("packwiz", "serve", "--port", servePort)
+	serve := exec.Command(packwizBin(), "serve", "--port", servePort)
 	serve.Dir = packSubdir
 	serve.Stdout = os.Stderr
 	serve.Stderr = os.Stderr

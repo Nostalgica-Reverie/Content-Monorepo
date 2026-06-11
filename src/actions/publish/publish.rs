@@ -66,7 +66,12 @@ fn main() -> Result<()> {
             }
             cmd_upload(Path::new(manifest_path), variant, live)
         }
-        _ => bail!("usage: publish <list|build|upload> <manifest> [variant] [--live]"),
+        Some("verify") => {
+            let manifest_path = args.get(2).ok_or_else(|| anyhow!("usage: publish verify <manifest> [variant]"))?;
+            let variant = args.get(3).map(String::as_str);
+            cmd_verify(Path::new(manifest_path), variant)
+        }
+        _ => bail!("usage: publish <list|build|upload|verify> <manifest> [variant] [--live]"),
     }
 }
 
@@ -226,6 +231,35 @@ fn cmd_list(manifest_path: &Path) -> Result<()> {
 
     println!("{}", serde_json::to_string(&entries)?);
     Ok(())
+}
+
+fn cmd_verify(manifest_path: &Path, variant: Option<&str>) -> Result<()> {
+    let r = resolve(manifest_path, variant)?;
+    if r.mr_id.is_empty() {
+        bail!("verify currently checks Modrinth only, and this manifest has no modrinth_id");
+    }
+    let url = format!("https://api.modrinth.com/v2/project/{}/version", r.mr_id);
+    let versions: Vec<serde_json::Value> = match ureq::get(&url).call() {
+        Ok(resp) => resp.into_json().context("parsing Modrinth version list")?,
+        Err(ureq::Error::Status(code, resp)) => {
+            let detail = resp.into_string().unwrap_or_default();
+            bail!("Modrinth version lookup failed (HTTP {code}): {detail}");
+        }
+        Err(e) => bail!("Modrinth version lookup failed: {e}"),
+    };
+    let found = versions.iter().find(|v| v["version_number"].as_str() == Some(r.p_ver.as_str()));
+    match found {
+        Some(v) => {
+            let vid = v["id"].as_str().unwrap_or("?");
+            let published = v["date_published"].as_str().unwrap_or("?");
+            println!("verified: {} {} is live on Modrinth (version id {vid}, published {published})", r.display_name, r.p_ver);
+            Ok(())
+        }
+        None => bail!(
+            "version '{}' NOT found on Modrinth project '{}' ({} version(s) listed) — upload may have failed",
+            r.p_ver, r.mr_id, versions.len()
+        ),
+    }
 }
 
 fn cmd_build(manifest_path: &Path, variant: Option<&str>) -> Result<()> {
