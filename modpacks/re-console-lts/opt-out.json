@@ -1,1 +1,7 @@
-{ "auto_update": true, "server_promo": false }
+{
+  "auto_update": true,
+  "freeze": [
+    "sodium"
+  ],
+  "server_promo": false
+}
