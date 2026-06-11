@@ -1,5 +1,5 @@
 # Re-Console LTS 26.06
-This is a large patch for LTS versions of Re-Console (1.20.1-1.21.10). Going forward, Re-Console LTS will be maintained again in a much more common update schedule compared to where we have been at since Re-Console+ launch this January. This is a reminder as well that on a technical level, Re-Console and Re-Console+ are two different projects.
+This is a large patch for LTS versions of Re-Console (1.20.1-1.21.10). Going forward, Re-Console LTS will be maintained again in a much more common update schedule compared to where we have been at since Re-Console+ launch this January. This is a reminder as well that on a technical and project level, Re-Console and Re-Console+ are two different projects. Re-Console will not receive any major feature backports, like Limited World Generation
 
 Some more notable changes off the rip:
 
@@ -49,3 +49,6 @@ Among others
 
 ## Removed Minimega
 Minimega is no longer functional on any LTS version.
+
+## Standardized Mod List between versions
+An attempt has been made to standardize mods across as many versions as possible.
