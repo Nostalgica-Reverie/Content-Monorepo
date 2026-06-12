@@ -1,6 +1,42 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/crash_assistant/config.toml"
+hash = "089e6b2a332dea632005768303c02bcbb05af9e5ae8fc3a19255cac425f6ec4f"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/config.toml"
+hash = "b58337040baffbc6d3adcc2befbb5d038546dff04d1081d8dfdc0c8f31933cc1"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/crash_assistant_localization_overrides/README.md"
+hash = "943e1c3672b8a03f27519b357091133205119c7b3db2fcc4c25b597cabf8926d"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/modlist.json"
+hash = "502fd26d2f1e71f73082c1d87fb5afa093b234213a0849c43f9b03235b6f77ad"
+
+[[files]]
+file = "config/crash_assistant/lang/README.md"
+hash = "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc"
+
+[[files]]
+file = "config/crash_assistant/lang/en_us.json"
+hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "d651eafb669a2560b732b38a78dae72be74892e02773db07dfc999de9d6b92bf"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "e73fe0b5a030c6562626e666dd37d323e192c49004fc706aa6b1c345cd17564f"
+
+[[files]]
 file = "config/modpack_defaults/config/badoptimizations.txt"
 hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
 
@@ -30,7 +66,7 @@ hash = "76aa2fb300513b5e5ce592c606da18a59ad07cc7d98b9a7cd3abc420fdddce13"
 
 [[files]]
 file = "config/modpack_defaults/config/ixeris.toml"
-hash = "e7fbd9d0e87ee689ddf2dff427177bb50ac818a055e4454ddbfa2bcbea3a73e4"
+hash = "8f1a267276cec9d77d19b7bd6175e1cf34c06a94f43296b5de90ae6cda25e396"
 
 [[files]]
 file = "config/modpack_defaults/config/lithium.properties"
@@ -39,6 +75,10 @@ hash = "928fdb1e604e394de7389a4b7a7f230fe6863a468e1839bee22d80652ea0d31f"
 [[files]]
 file = "config/modpack_defaults/config/modernfix-mixins.properties"
 hash = "9c7f4bf8628b8ba676d12987edb0185082bcefef2a070f1adf551a740667db82"
+
+[[files]]
+file = "config/modpack_defaults/config/modmenu.json"
+hash = "ff25d517ead111390aac5b5ee5c00ea4d8d6da1ffbe0d476f4ce08bab2ddc5d3"
 
 [[files]]
 file = "config/modpack_defaults/config/moreculling.toml"
@@ -50,7 +90,7 @@ hash = "128a7016ca5bfd22277f4ad447ea0db0863fc2e039c5c3dfb6e39e8c25766bbb"
 
 [[files]]
 file = "config/modpack_defaults/config/oxidizium.properties"
-hash = "cea355a7ed51de972174198021130739e2d32cd2d50fd13f2f4c34956c97d776"
+hash = "ab799b7aa01096cbad728dc3a3f3c09f1f705bccbbe7401299333c4dbf5df74e"
 
 [[files]]
 file = "config/modpack_defaults/config/particle_core_config.toml"
@@ -78,11 +118,16 @@ hash = "068fc165435c8734b43d5f735cfbe42d015356d157222d577012e45b3bf0a989"
 
 [[files]]
 file = "config/modpack_defaults/config/zfastnoise.mixin.toml"
-hash = "47e4810bca56258fe2ba501bd8872a59dd40433c202276f73c4e958563e0fe34"
+hash = "c84c554d17cc2563cb41bd81beb0db77015e7c5f37cc94db90456d7dce8be8e3"
 
 [[files]]
 file = "config/modpack_defaults/options.txt"
 hash = "bbe00f0d240ffd72688d89a328331937111049e802310ec1785eda6a67f6b2d3"
+
+[[files]]
+file = "mods/animatica-refabricated.pw.toml"
+hash = "aa7a3f7f064b63d0f9f41bf9143e005e641e7e188fa8c5fba7e489b2fe70d6d3"
+metafile = true
 
 [[files]]
 file = "mods/asynclogger.pw.toml"
@@ -100,8 +145,13 @@ hash = "ae591c95c3189ac3b08d7a07c1dd98e659f4d557654d5a4abc54f258b1aabebf"
 metafile = true
 
 [[files]]
+file = "mods/borderless-mining-updated.pw.toml"
+hash = "b8eb97e09bebaf0853db6681ae6209f901c7fadcea0577d7688399c0b0fd437b"
+metafile = true
+
+[[files]]
 file = "mods/c2me.pw.toml"
-hash = "14c693c3e055b95d7f2bc2bdd28c9aec089f75d79c3415094b37b09de9c751ff"
+hash = "bebfaa0ff9ec6789e71a1864456955f7fddeb3857cb607719be177b7cc2c758b"
 metafile = true
 
 [[files]]
@@ -115,13 +165,33 @@ hash = "1347ee8be0f38884db0791d81f9c846270ef052a8036d00643dd875ceac35d9c"
 metafile = true
 
 [[files]]
+file = "mods/crash-assistant.pw.toml"
+hash = "9e8100b2d8f488e7c41e1924466fffae411c47024d5943b006393182b8c820eb"
+metafile = true
+
+[[files]]
 file = "mods/dynamic-fps.pw.toml"
-hash = "368134f8b2f6182c120f2ecab1b3ff697feef674f8b772ecb994d498f55ea166"
+hash = "e5742554a280312a9749a20860a9cdfe97d9b59443d50fc8e67fd9df6d0cfe53"
+metafile = true
+
+[[files]]
+file = "mods/entity-model-features.pw.toml"
+hash = "e3f8454967909f3311f718919ff72ca9ca73f3351373524ba5de988a2ff381cc"
+metafile = true
+
+[[files]]
+file = "mods/entity-texture-features-fabric.pw.toml"
+hash = "ab7d970347d17f191255b4be1542a25ffc70029dd51c5abb2bf68f9aeeb51a05"
 metafile = true
 
 [[files]]
 file = "mods/entityculling.pw.toml"
 hash = "5ea042e29bbe3e08aa4ab40cd072227c2ff1b8ebeb35cbff61f471f6d036ae57"
+metafile = true
+
+[[files]]
+file = "mods/esf-entity-sound-features.pw.toml"
+hash = "87efc55667f13d048a0a419e3ae70da2fee7ae9b43e43bb6c2b8cea609e122a4"
 metafile = true
 
 [[files]]
@@ -131,7 +201,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "69c0b14fe1ceb54fc531c65d527de02d3a1bc51505b71a7346bdd548e00379bf"
+hash = "c740d8036d3f695c9e90ab61611ea870abe50990d7448b48daedbe50d3492816"
 metafile = true
 
 [[files]]
@@ -160,17 +230,32 @@ hash = "ce0289066c1544c5bd51cc0fc64b9540a2f5d5d3465227ddc650f1cf199244aa"
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "a564d03162fc3d67fb67aa37f12c1c5a92b5d014c7e0e5323c85517ce39eee19"
+hash = "52dfb359285d96d62a09c822dd59f8c373fd57fb0a74d30e6eba36f4624b4ea1"
+metafile = true
+
+[[files]]
+file = "mods/lambdabettergrass.pw.toml"
+hash = "27c08c88787543ee72b7fb9a43051bf342602350eb972772039261c9f62f7894"
+metafile = true
+
+[[files]]
+file = "mods/lambdynamiclights.pw.toml"
+hash = "fba3202c0a3b7a800063f918ba2623ca202ad6ec4a066b175b8a94031850a780"
 metafile = true
 
 [[files]]
 file = "mods/lithium.pw.toml"
-hash = "8741f946cb6f812d272fc7037ae42249d360d42662ae3cda668f71469a87d302"
+hash = "381c4a946353bb7ea81818d106d28548fd242a74096c552662237310f8df9928"
 metafile = true
 
 [[files]]
 file = "mods/modernfix-mvus.pw.toml"
 hash = "8905a84ee09f7af2240b36ee63346c60dd397f2bc66588a235f84b37af14d36d"
+metafile = true
+
+[[files]]
+file = "mods/modmenu.pw.toml"
+hash = "9d7b408467a39dbaa384319605d87e866015ef075b900f2d54db2b2888ecc105"
 metafile = true
 
 [[files]]
@@ -180,7 +265,17 @@ metafile = true
 
 [[files]]
 file = "mods/no-chat-restrictions.pw.toml"
-hash = "3ff0238578a8a895680c33fbde60cff4750b189bbd476fad6a854cdcb6318f78"
+hash = "111d55b6e3069f2f1768df973649681a919ff79ce44e0441f23640c93bc5470c"
+metafile = true
+
+[[files]]
+file = "mods/ok-zoomer.pw.toml"
+hash = "411f0d19e0256aa0d0ae5405501c5e279f374e3e782b96fcbb7f9e7127370829"
+metafile = true
+
+[[files]]
+file = "mods/optigui.pw.toml"
+hash = "00df34fbfa4914e2c43dee3ddc034afb9063616f19db12e453c2c9c1d5765a21"
 metafile = true
 
 [[files]]
@@ -199,13 +294,28 @@ hash = "2c72b218732e6bd71a91807f537acbdc2a464bc95a80bb9edc69e1dd4ff6dd4b"
 metafile = true
 
 [[files]]
+file = "mods/shuttfup.pw.toml"
+hash = "b9e65773d3c94b4e5c4d4356cc0b47161cefd917c66dc355525715785ec72ab8"
+metafile = true
+
+[[files]]
+file = "mods/skyboxify.pw.toml"
+hash = "5e3fd43707e32d371a3c0b156a773d998797090437d748983aa941dee1b29f53"
+metafile = true
+
+[[files]]
+file = "mods/sodium-extra.pw.toml"
+hash = "f1502d6549753845a7eea8b6ef2adc7e39f241cda6bff6a58f4a27b771cbb221"
+metafile = true
+
+[[files]]
 file = "mods/sodium.pw.toml"
 hash = "1f06af5ac10431bf9f8a509d62dda9ffe5ec41d4b1c4a5871f528e1d6adf7690"
 metafile = true
 
 [[files]]
-file = "mods/threadtweak.pw.toml"
-hash = "7c3e4630b35b3525d740be5b81b69af1462c8431a617233f9b0dadebb28a4f54"
+file = "mods/text-placeholder-api.pw.toml"
+hash = "f75e287c6c29b950c53c32bbd2d3b9fe9522b48b959ff2981ed20fd9cb7bf3ce"
 metafile = true
 
 [[files]]
@@ -214,8 +324,13 @@ hash = "4553ad551ce1252498a9f8f80e8933297e7a1974ac66e5356f3c91cff9a82a6f"
 metafile = true
 
 [[files]]
+file = "mods/yacl.pw.toml"
+hash = "f866bb3e6fd0c260b51fa8f645b98a4f79d7375307842e382fac62c155d3fb8f"
+metafile = true
+
+[[files]]
 file = "mods/zfastnoise.pw.toml"
-hash = "6fa0acd377fa070f0d7e254c793dc57e5fe9bc7451e5bf59de8a722790941a04"
+hash = "ad5a76a0a9a0ef5107a85aff3b7e97162e8ba60e86352ea183bd939f3ccfa8d7"
 metafile = true
 
 [[files]]
