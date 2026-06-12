@@ -4,7 +4,6 @@
 
 - [Amecs (Fabric)]()
 - [Async Logger]()
-- [BadOptimizations]()
 - [Bedrock Skins]()
 - [Better Block Entities]()
 - [Bobby]()
@@ -28,7 +27,6 @@
 - [Legacy Nether: Extended]()
 - [Legacy4J]()
 - [Lithium (Fabric/NeoForge)]()
-- [ModernFix-mVUS]()
 - [No Chat Reports]()
 - [No Chat Restrictions]()
 - [Particle Core]()

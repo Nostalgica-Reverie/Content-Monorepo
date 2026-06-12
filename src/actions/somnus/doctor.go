@@ -56,10 +56,13 @@ func cmdDoctor(args []string) {
 				broken++
 			}
 			packPath := filepath.Join(dir, e.Name())
-			if _, err := os.Stat(filepath.Join(packPath, "auto-update-ignore.json")); err == nil {
-				fmt.Printf("  warn  legacy    %s: auto-update-ignore.json -> migrate to opt-out.json\n", packPath)
+			if _, err := os.Stat(filepath.Join(packPath, "opt-out.json")); err == nil {
+				fmt.Printf("  warn  legacy    %s: opt-out.json -> migrate into manifest.json \"automation\"\n", packPath)
 			}
-			if frozen := readOptOut(packPath).Freeze; len(frozen) > 0 {
+			if _, err := os.Stat(filepath.Join(packPath, "auto-update-ignore.json")); err == nil {
+				fmt.Printf("  warn  legacy    %s: auto-update-ignore.json -> migrate to manifest.json automation\n", packPath)
+			}
+			if frozen := readAutomation(packPath).Freeze; len(frozen) > 0 {
 				for _, p := range pinDrift(packPath, frozen) {
 					fmt.Printf("  warn  freeze    %s: declared frozen but not pinned -> re-run somnus freeze\n", p)
 				}
@@ -68,7 +71,7 @@ func cmdDoctor(args []string) {
 				for _, s := range subs {
 					if s.IsDir() {
 						if _, err := os.Stat(filepath.Join(packPath, s.Name(), "sync-exclude.json")); err == nil {
-							fmt.Printf("  warn  legacy    %s: sync-exclude.json -> migrate to opt-out.json\n", filepath.Join(packPath, s.Name()))
+							fmt.Printf("  warn  legacy    %s: sync-exclude.json -> migrate to manifest.json automation\n", filepath.Join(packPath, s.Name()))
 						}
 					}
 				}

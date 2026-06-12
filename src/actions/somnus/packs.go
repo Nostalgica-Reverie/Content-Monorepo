@@ -37,6 +37,10 @@ func cmdPacks(args []string) {
 			failUsage(verbUsage["packs"])
 		}
 		packsSet(args[1], args[2], args[3])
+	case "index":
+		if _, err := writeProjectsIndex(); err != nil {
+			fail(fmt.Sprintf("index generation failed: %v", err))
+		}
 	default:
 		failUsage(fmt.Sprintf("unknown packs subcommand %q\n%s", args[0], verbUsage["packs"]))
 	}

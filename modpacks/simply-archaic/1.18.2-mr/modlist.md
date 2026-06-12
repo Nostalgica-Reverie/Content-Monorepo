@@ -9,6 +9,7 @@
 
 ## Shared Mods
 
+- [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [LazyDFU](https://modrinth.com/mod/hvFnDODi)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)

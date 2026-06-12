@@ -72,6 +72,26 @@ func docsPathFor(typ, id string) string {
 	return ""
 }
 
+func writeCategoryIndexes(entries []indexEntry) {
+	byCat := map[string][]indexEntry{}
+	for _, e := range entries {
+		cat := e.Type + "s"
+		byCat[cat] = append(byCat[cat], e)
+	}
+	for cat, list := range byCat {
+		if _, err := os.Stat(cat); err != nil {
+			continue
+		}
+		out := filepath.Join(cat, "Project.json")
+		writeJSON(out, map[string]any{
+			"_generated": "Used by Somnus do not touch pls thx",
+			"generated":  time.Now().UTC().Format(time.RFC3339),
+			"projects":   list,
+		})
+		fmt.Printf("wrote %s (%d project(s))\n", out, len(list))
+	}
+}
+
 func writeProjectsIndex() (int, error) {
 	var entries []indexEntry
 	seen := map[string]bool{}
@@ -147,5 +167,6 @@ func writeProjectsIndex() (int, error) {
 		Projects:  entries,
 	})
 	fmt.Printf("wrote %s (%d project(s))\n", out, len(entries))
+	writeCategoryIndexes(entries)
 	return len(entries), nil
 }

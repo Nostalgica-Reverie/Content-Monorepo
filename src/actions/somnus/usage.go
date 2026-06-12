@@ -9,19 +9,19 @@ var verbUsage = map[string]string{
   e.g. somnus bump modpacks/re-console-plus 26.06.1
   --configs  also update in-pack version configs (main menu credits, loader dependency overrides) and refresh`,
 
-	"packs": `usage: somnus packs list | packs get <id> [field] | packs set <id> <field> <value>
+	"packs": `usage: somnus packs list | get <id> [field] | set <id> <field> <value> | index
   the pack registry: every manifest, addressable as an object
+  'packs index' regenerates the derived <category>/Project.json files (also done by full 'pages' runs)
   e.g. somnus packs list
-       somnus packs get re-console-plus version
        somnus packs set re-console-plus release_type beta`,
 
-	"freeze": `usage: somnus freeze <pack-dir> [mod-slugs...]
-  pin mods across every -mr/-cf subdir of a pack so 'somnus update' skips them
-  with no slugs: list the pack's frozen mods
-  recorded declaratively in opt-out.json ("freeze"); doctor flags drift
-  e.g. somnus freeze modpacks/re-console-plus sodium iris`,
+	"freeze": `usage: somnus freeze <pack-subdir> [mod-slugs...]
+  pin mods in ONE subdir (e.g. modpacks/x/26.1.2-mr) so 'somnus update' skips them
+  with no slugs: list that subdir's frozen mods
+  recorded in the pack manifest (automation.freeze); doctor flags drift
+  e.g. somnus freeze modpacks/re-console-plus/26.1.2-mr sodium iris`,
 
-	"unfreeze": `usage: somnus unfreeze <pack-dir> <mod-slugs...>
+	"unfreeze": `usage: somnus unfreeze <pack-subdir> <mod-slugs...>
   unpin previously frozen mods so updates apply to them again`,
 
 	"export": `usage: somnus export [pack]
@@ -36,14 +36,16 @@ var verbUsage = map[string]string{
   propagate performance bases into consumers per manifest mappings
   --dry-run  show what would be copied, pruned, and refreshed without changing anything`,
 
-	"update": `usage: somnus update
-  packwiz update --all in every pack subdir (honors opt-out.json auto_update)`,
+	"update": `usage: somnus update [pack-dir] [--all]
+  packwiz update --all in every pack subdir (honors automation.auto_update)
+  with a pack-dir: just that pack (overrides its opt-out — explicit beats config)
+  run from inside a pack: scopes to it automatically; --all forces everything`,
 
-	"refresh": `usage: somnus refresh
-  packwiz refresh in every pack subdir`,
+	"refresh": `usage: somnus refresh [pack-dir] [--all]
+  packwiz refresh in every pack subdir; same scoping rules as update`,
 
-	"loader-update": `usage: somnus loader-update [latest|recommended]
-  migrate loaders across all packs (honors opt-out.json auto_update); default: latest`,
+	"loader-update": `usage: somnus loader-update [latest|recommended] [pack-dir] [--all]
+  migrate loaders (honors automation.auto_update); same scoping rules as update`,
 
 	"modlist": `usage: somnus modlist <pack-subdir>
   write crash-assistant modlist.json derived from the subdir's .pw.toml files

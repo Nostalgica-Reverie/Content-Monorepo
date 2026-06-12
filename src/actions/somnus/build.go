@@ -82,7 +82,7 @@ func runBuild(targetedPack, shortSHA string) {
 	if targetedPack != "" {
 		t, err := resolvePack(targetedPack)
 		if err != nil {
-			fail(err.Error())
+			failNotFound(err.Error())
 		}
 		changed = []target{t}
 	} else {
@@ -294,10 +294,6 @@ func packsquashBin() string {
 	return ""
 }
 
-// squashContents builds an optimized resource pack zip via PackSquash.
-// Base options are generated; a pack-level packsquash.toml (next to
-// manifest.json) is appended verbatim for per-pack tuning — it must NOT set
-// pack_directory or output_file_path, which somnus owns.
 func squashContents(bin, packDir, src, dest string) error {
 	opts := fmt.Sprintf("pack_directory = %q\noutput_file_path = %q\nzip_spec_conformance_level = \"high\"\n", src, dest)
 	if extra, err := os.ReadFile(filepath.Join(packDir, "packsquash.toml")); err == nil {

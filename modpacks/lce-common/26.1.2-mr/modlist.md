@@ -6,6 +6,7 @@
 - [Animatium](https://modrinth.com/mod/zy0karK1)
 - [Async Logger](https://modrinth.com/mod/zvNzKfGF)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
+- [Bedrock Entity Models](https://modrinth.com/mod/MmYSmcY6)
 - [BisectHosting Server Integration Menu](https://modrinth.com/mod/yWSAtnfH)
 - [Bobby](https://modrinth.com/mod/M08ruV16)
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
@@ -39,7 +40,6 @@
 - [Legacy4J](https://modrinth.com/mod/gHvKJofA)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
 - [Minimega](https://modrinth.com/mod/d4zJxq8p)
-- [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
 - [ModernRegSyncFix](https://modrinth.com/mod/U2w9BZus)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
 - [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
@@ -47,7 +47,3 @@
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [Simple Voice Chat](https://modrinth.com/mod/9eGKb6K1)
 - [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
-
-## Server Mods
-
-- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)

@@ -156,6 +156,38 @@
     "shared_assets": {
       "type": "string",
       "description": "ID of a pack providing shared assets (e.g. 'lce-common'). Must exist. Independent of 'role' \u2014 a pack of any role may also use shared assets."
+    },
+    "automation": {
+      "type": "object",
+      "description": "Per-pack automation settings consumed by somnus and the changelog generator. Replaces the old opt-out.json.",
+      "additionalProperties": false,
+      "properties": {
+        "auto_update": {
+          "type": "boolean",
+          "description": "false: somnus update / loader-update skip this pack."
+        },
+        "server_promo": {
+          "type": "boolean",
+          "description": "false: changelogs omit the BisectHosting block."
+        },
+        "sync_exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Paths sync never copies into this consumer."
+        },
+        "freeze": {
+          "type": "object",
+          "description": "Frozen (pinned) mods per subdir key, maintained by 'somnus freeze'.",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   },
   "required": [

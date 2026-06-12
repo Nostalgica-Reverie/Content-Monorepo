@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-const somnusVersion = "26.1-dev"
+const somnusVersion = "26.2-dev"
 
 const usageText = `somnus CLI tool %s
 
@@ -51,7 +51,10 @@ func usage() string {
 	return fmt.Sprintf(usageText, somnusVersion)
 }
 
+var startCwd string
+
 func main() {
+	startCwd, _ = os.Getwd()
 	if len(os.Args) < 2 {
 		fmt.Fprint(os.Stderr, usage())
 		os.Exit(1)

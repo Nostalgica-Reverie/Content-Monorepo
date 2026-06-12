@@ -22,20 +22,59 @@ func maxConcurrent() int {
 	return 1
 }
 
-func cmdUpdate(args []string)  { run(opUpdate) }
-func cmdRefresh(args []string) { run(opRefresh) }
+func cmdUpdate(args []string)  { runScoped(opUpdate, args) }
+func cmdRefresh(args []string) { runScoped(opRefresh, args) }
+
+func runScoped(op operation, args []string) {
+	packFilter, explicit := resolveScope(args)
+	run(op, packFilter, explicit)
+}
 
 func cmdLoaderUpdate(args []string) {
 	target := "latest"
-	if len(args) > 0 && (args[0] == "latest" || args[0] == "recommended") {
-		target = args[0]
+	var rest []string
+	for _, a := range args {
+		if a == "latest" || a == "recommended" {
+			target = a
+		} else {
+			rest = append(rest, a)
+		}
 	}
-	run(operation{
+	runScoped(operation{
 		name:        "loader-update",
 		gerund:      "migrating loader (" + target + ") in",
 		packwizArgs: []string{"migrate", "loader", target},
 		honorIgnore: true,
-	})
+	}, rest)
+}
+
+func resolveScope(args []string) (packFilter string, explicit bool) {
+	for _, a := range args {
+		if a == "--all" {
+			return "", false
+		}
+	}
+	for _, a := range args {
+		if strings.HasPrefix(a, "-") {
+			continue
+		}
+		dir := strings.TrimRight(a, "/")
+		if _, err := os.Stat(filepath.Join(dir, "manifest.json")); err != nil {
+			failNotFound(fmt.Sprintf("no manifest.json in %q — pass a pack directory, --all, or nothing", a))
+		}
+		return dir, true
+	}
+	if root, err := os.Getwd(); err == nil && startCwd != "" {
+		if rel, err := filepath.Rel(root, startCwd); err == nil && !strings.HasPrefix(rel, "..") && rel != "." {
+			parts := strings.Split(filepath.ToSlash(rel), "/")
+			if len(parts) >= 2 && parts[0] == filepath.Base(modpacksDir()) {
+				pack := filepath.Join(modpacksDir(), parts[1])
+				fmt.Printf("scoped to %s (somnus was run inside it; pass --all for every pack)\n", pack)
+				return pack, false
+			}
+		}
+	}
+	return "", false
 }
 
 func cmdSync(args []string) {
@@ -70,7 +109,7 @@ var (
 	}
 )
 
-func run(op operation) {
+func run(op operation, packFilter string, explicit bool) {
 	if _, err := exec.LookPath(packwizBin()); err != nil {
 		failEnv("packwiz not found", "install with 'go install github.com/packwiz/packwiz@latest' or point PACKWIZ_BIN at a binary")
 	}
@@ -79,7 +118,7 @@ func run(op operation) {
 		failEnv(fmt.Sprintf("modpacks directory not found: %s", root), "run somnus from inside the monorepo")
 	}
 
-	targets, skipped := collectTargets(root, op.honorIgnore)
+	targets, skipped := collectTargets(root, op.honorIgnore, packFilter, explicit)
 
 	if len(skipped) > 0 {
 		fmt.Printf("skipping %d opted-out pack(s):\n", len(skipped))
@@ -110,7 +149,7 @@ func run(op operation) {
 	fmt.Printf("all %ss finished successfully.\n", op.name)
 }
 
-func collectTargets(root string, honorIgnore bool) (targets []string, skipped []string) {
+func collectTargets(root string, honorIgnore bool, packFilter string, explicit bool) (targets []string, skipped []string) {
 	packs, err := os.ReadDir(root)
 	if err != nil {
 		fail(fmt.Sprintf("failed to read %s: %v", root, err))
@@ -122,29 +161,27 @@ func collectTargets(root string, honorIgnore bool) (targets []string, skipped []
 		}
 		packPath := filepath.Join(root, p.Name())
 
+		if packFilter != "" && filepath.Clean(packPath) != filepath.Clean(packFilter) {
+			continue
+		}
+		if packFilter != "" && explicit && honorIgnore {
+			if skip, _ := optedOutOfAutoUpdate(packPath); skip {
+				fmt.Printf("note: %s is opted out of auto-update, running anyway (explicitly named)\n", packPath)
+			}
+			targets = append(targets, modSubdirsOf(packPath)...)
+			continue
+		}
 		if honorIgnore {
 			if skip, legacy := optedOutOfAutoUpdate(packPath); skip {
 				if legacy {
-					fmt.Fprintf(os.Stderr, "::warning::%s uses legacy auto-update-ignore.json; migrate to opt-out.json {\"auto_update\": false}\n", packPath)
+					fmt.Fprintf(os.Stderr, "::warning::%s uses a legacy opt-out file; migrate to manifest.json automation\n", packPath)
 				}
 				skipped = append(skipped, packPath)
 				continue
 			}
 		}
 
-		subs, err := os.ReadDir(packPath)
-		if err != nil {
-			continue
-		}
-		for _, s := range subs {
-			if !s.IsDir() {
-				continue
-			}
-			name := s.Name()
-			if strings.HasSuffix(name, "-mr") || strings.HasSuffix(name, "-cf") {
-				targets = append(targets, filepath.Join(packPath, name))
-			}
-		}
+		targets = append(targets, modSubdirsOf(packPath)...)
 	}
 	return targets, skipped
 }
@@ -323,9 +360,9 @@ func runSync(dryRun bool) {
 
 		excluded := readSyncExclude(filepath.Join(j.targetDir, "sync-exclude.json"))
 		if len(excluded) > 0 {
-			fmt.Fprintf(os.Stderr, "::warning::%s uses legacy sync-exclude.json; migrate to opt-out.json sync_exclude\n", j.targetDir)
+			fmt.Fprintf(os.Stderr, "::warning::%s uses legacy sync-exclude.json; migrate to manifest.json automation.sync_exclude\n", j.targetDir)
 		}
-		for _, f := range readOptOut(filepath.Dir(j.targetDir)).SyncExclude {
+		for _, f := range readAutomation(filepath.Dir(j.targetDir)).SyncExclude {
 			excluded[f] = true
 		}
 		if len(excluded) > 0 {

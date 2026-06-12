@@ -3,6 +3,7 @@
 ## Client Mods
 
 - [Animatica](https://modrinth.com/mod/PRN43VSY)
+- [BetterF3](https://modrinth.com/mod/8shC1gFX)
 - [Bobby](https://modrinth.com/mod/M08ruV16)
 - [Capes](https://modrinth.com/mod/89Wsn8GD)
 - [Chat Heads](https://modrinth.com/mod/Wb5oqrBJ)
@@ -18,22 +19,15 @@
 - [Figura](https://modrinth.com/mod/s9gIPDom)
 - [Fix Keyboard on Linux](https://modrinth.com/mod/siXFh9dn)
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
-- [Iris/Oculus Shader Folder](https://modrinth.com/mod/yv6sGJzN)
 - [MacOS Input Fixes](https://modrinth.com/mod/x9BrsVME)
 - [Mod Menu](https://modrinth.com/mod/mOgUt4GM)
-- [ModListMemory](https://modrinth.com/mod/qap5C41G)
-- [More Culling](https://modrinth.com/mod/51shyZVL)
+- [Ok Zoomer - It's Zoom!](https://modrinth.com/mod/aXf2OSFU)
 - [Polytone](https://modrinth.com/mod/3qAYkBMB)
 - [Pro Placer](https://modrinth.com/mod/LhK0LkWd)
-- [Raise Sound Limit Simplified](https://modrinth.com/mod/SKW62Pht)
-- [ResourcePackCached](https://modrinth.com/mod/d4phKsx2)
 - [Sodium Shadowy Path Blocks](https://modrinth.com/mod/EIa1eiMm)
 - [Sodium](https://modrinth.com/mod/AANobbMI)
 - [Stfu](https://modrinth.com/mod/Rg9WdvvR)
 - [UniLib](https://modrinth.com/mod/nT86WUER)
-- [Variants-CIT](https://modrinth.com/mod/jURjbCaq)
-- [World Host](https://modrinth.com/mod/2AIZDfYo)
-- [Zume](https://modrinth.com/mod/o6qsdrrQ)
 - [[EMF] Entity Model Features](https://modrinth.com/mod/4I1XuqiY)
 - [[ESF] Entity Sound Features](https://modrinth.com/mod/IMuO8COj)
 - [[ETF] Entity Texture Features](https://modrinth.com/mod/BVzZfTc1)
@@ -45,7 +39,7 @@
 - [CalcMod](https://modrinth.com/mod/XoHTb2Ap)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
-- [Configured Defaults](https://modrinth.com/mod/SISoSFPP)
+- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
@@ -63,6 +57,7 @@
 - [Simple Voice Chat](https://modrinth.com/mod/9eGKb6K1)
 - [StackDeobfuscator](https://modrinth.com/mod/NusMqsjF)
 - [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
+- [e4mc](https://modrinth.com/mod/qANg5Jrr)
 
 ## Server Mods
 

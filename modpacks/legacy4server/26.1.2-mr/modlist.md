@@ -21,3 +21,7 @@
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [TT20 (TPS Fixer)](https://modrinth.com/mod/YS3ZignI)
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
+
+## Server Mods
+
+- [LazyAI](https://modrinth.com/mod/qgWgCnzi)

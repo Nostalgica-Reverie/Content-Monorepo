@@ -22,6 +22,13 @@ interface PerformanceBase {
 
 type Role = 'none' | 'base' | { performance_base: PerformanceBase };
 
+interface Automation {
+  auto_update?: boolean;
+  server_promo?: boolean;
+  sync_exclude?: string[];
+  freeze?: Record<string, string[]>;
+}
+
 interface Manifest {
   id: string;
   name: string;
@@ -36,6 +43,7 @@ interface Manifest {
   curseforge_id?: string;
   role: Role;
   shared_assets?: string;
+  automation?: Automation;
 }
 
 const MODPACKS_DIR = process.env.MODPACKS_DIR || 'modpacks';
@@ -244,9 +252,10 @@ function validate(manifestPath: string): void {
     validateZipPackStructure(packDir, manifest.type);
   }
 
+  validateAutomation(manifestPath, manifest.automation, packDir);
   validateOptOut(packDir);
   if (fs.existsSync(path.join(packDir, 'auto-update-ignore.json'))) {
-    warn(`${packDir}: legacy auto-update-ignore.json — migrate to opt-out.json {"auto_update": false}`);
+    warn(`${packDir}: legacy auto-update-ignore.json — migrate to manifest.json "automation"`);
   }
 
   const label = isExperimental ? 'EXPERIMENTAL' : 'production';
@@ -272,9 +281,49 @@ function validateZipPackStructure(packDir: string, type: string): void {
   }
 }
 
+function validateAutomation(manifestPath: string, auto: Automation | undefined, packDir: string): void {
+  if (auto === undefined) return;
+  if (typeof auto !== 'object' || auto === null || Array.isArray(auto)) {
+    fail(`${manifestPath}: 'automation' must be an object`);
+  }
+  const allowed = ['auto_update', 'server_promo', 'sync_exclude', 'freeze'];
+  for (const key of Object.keys(auto)) {
+    if (!allowed.includes(key)) {
+      fail(`${manifestPath}: automation: unknown key '${key}' (allowed: ${allowed.join(', ')})`);
+    }
+  }
+  const o = auto as Record<string, unknown>;
+  for (const boolKey of ['auto_update', 'server_promo']) {
+    if (boolKey in o && typeof o[boolKey] !== 'boolean') {
+      fail(`${manifestPath}: automation.'${boolKey}' must be a boolean`);
+    }
+  }
+  if ('sync_exclude' in o) {
+    const v = o.sync_exclude;
+    if (!Array.isArray(v) || v.some((x) => typeof x !== 'string')) {
+      fail(`${manifestPath}: automation.sync_exclude must be an array of strings`);
+    }
+  }
+  if ('freeze' in o) {
+    const f = o.freeze;
+    if (typeof f !== 'object' || f === null || Array.isArray(f)) {
+      fail(`${manifestPath}: automation.freeze must be an object of subdir-key -> string array`);
+    }
+    for (const [sub, list] of Object.entries(f as Record<string, unknown>)) {
+      if (!Array.isArray(list) || list.some((x) => typeof x !== 'string')) {
+        fail(`${manifestPath}: automation.freeze['${sub}'] must be an array of strings`);
+      }
+      if (!fs.existsSync(path.join(packDir, sub))) {
+        warn(`${manifestPath}: automation.freeze references subdir '${sub}' which does not exist`);
+      }
+    }
+  }
+}
+
 function validateOptOut(packDir: string): void {
   const p = path.join(packDir, 'opt-out.json');
   if (!fs.existsSync(p)) return;
+  warn(`${p}: opt-out.json is deprecated — migrate into manifest.json "automation"`);
   let obj: unknown;
   try {
     obj = JSON.parse(fs.readFileSync(p, 'utf-8'));

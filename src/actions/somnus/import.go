@@ -218,9 +218,6 @@ func detectLoader(deps map[string]string) (loader, version string) {
 
 func pinLoaderVersion(packToml, loader, version string) {
 	key := loader
-	if loader == "fabric" {
-		key = "fabric"
-	}
 	data, err := os.ReadFile(packToml)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "::warning::could not pin loader version: %v\n", err)

@@ -8,6 +8,7 @@
 - [Animatium](https://modrinth.com/mod/zy0karK1)
 - [Async Logger](https://modrinth.com/mod/zvNzKfGF)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
+- [Bedrock Entity Models](https://modrinth.com/mod/MmYSmcY6)
 - [BetterF3](https://modrinth.com/mod/8shC1gFX)
 - [BisectHosting Server Integration Menu](https://modrinth.com/mod/yWSAtnfH)
 - [Bobby](https://modrinth.com/mod/M08ruV16)
@@ -57,6 +58,7 @@
 
 - [Anti-Smooth](https://modrinth.com/mod/zlZC5n7T)
 - [Async](https://modrinth.com/mod/vEC2jm6I)
+- [Bannerpoint](https://modrinth.com/mod/IfTBNyjQ)
 - [Bedrock Skins](https://modrinth.com/mod/76lEgqhs)
 - [BugFixerUpper](https://modrinth.com/mod/gRMQvlnJ)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
@@ -78,7 +80,6 @@
 - [Legacy4J](https://modrinth.com/mod/gHvKJofA)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
 - [Minimega](https://modrinth.com/mod/d4zJxq8p)
-- [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
 - [ModernRegSyncFix](https://modrinth.com/mod/U2w9BZus)
 - [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
@@ -92,7 +93,3 @@
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
 - [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
 - [e4mc](https://modrinth.com/mod/qANg5Jrr)
-
-## Server Mods
-
-- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)

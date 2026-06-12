@@ -151,23 +151,22 @@ interface ManifestFile {
     version?: string;
     mc_version?: string;
     variants?: ManifestVariant[];
+    automation?: { server_promo?: boolean };
 }
 
-interface OptOut {
-    auto_update?: boolean;
-    server_promo?: boolean;
-    sync_exclude?: string[];
-}
-
-function readOptOut(pDir: string): OptOut {
+function serverPromoEnabled(pDir: string, manifest: ManifestFile): boolean {
+    const fromManifest = manifest.automation?.server_promo;
+    if (typeof fromManifest === 'boolean') return fromManifest;
     const p = path.join(pDir, 'opt-out.json');
-    if (!fs.existsSync(p)) return {};
-    try {
-        return JSON.parse(fs.readFileSync(p, 'utf-8')) as OptOut;
-    } catch {
-        console.warn(`::warning::invalid opt-out.json in ${pDir}; ignoring`);
-        return {};
+    if (fs.existsSync(p)) {
+        try {
+            const legacy = JSON.parse(fs.readFileSync(p, 'utf-8')) as { server_promo?: boolean };
+            if (typeof legacy.server_promo === 'boolean') return legacy.server_promo;
+        } catch {
+            console.warn(`::warning::invalid opt-out.json in ${pDir}; ignoring`);
+        }
     }
+    return true;
 }
 
 const SERVER_PROMO =
@@ -275,7 +274,7 @@ function generateChangelog(manifestPathStr: string): string {
             }
         }
 
-        if (manifest.type === 'modpack' && readOptOut(pDir).server_promo !== false) {
+        if (manifest.type === 'modpack' && serverPromoEnabled(pDir, manifest)) {
             notes = insertAfterFirstHeading(notes, SERVER_PROMO);
         }
 

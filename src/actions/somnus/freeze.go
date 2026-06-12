@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -14,88 +13,109 @@ func cmdFreeze(args []string) {
 	if len(args) < 1 {
 		failUsage(verbUsage["freeze"])
 	}
-	packDir := args[0]
+	subdir := strings.TrimRight(args[0], "/")
 	slugs := args[1:]
+	packDir, subKey := splitPackSubdir(subdir)
 	if len(slugs) == 0 {
-		listFrozen(packDir)
+		listFrozen(packDir, subKey)
 		return
 	}
-	applyFreeze(packDir, slugs, true)
+	applyFreeze(packDir, subKey, subdir, slugs, true)
 }
 
 func cmdUnfreeze(args []string) {
 	if len(args) < 2 {
 		failUsage(verbUsage["unfreeze"])
 	}
-	applyFreeze(args[0], args[1:], false)
+	subdir := strings.TrimRight(args[0], "/")
+	packDir, subKey := splitPackSubdir(subdir)
+	applyFreeze(packDir, subKey, subdir, args[1:], false)
 }
 
-func listFrozen(packDir string) {
-	o := readOptOut(packDir)
-	if len(o.Freeze) == 0 {
-		fmt.Printf("no frozen mods declared for %s.\n", packDir)
+func splitPackSubdir(subdir string) (packDir, subKey string) {
+	subKey = filepath.Base(subdir)
+	packDir = filepath.Dir(subdir)
+	if !strings.HasSuffix(subKey, "-mr") && !strings.HasSuffix(subKey, "-cf") {
+		failUsage(fmt.Sprintf("%q is not a pack subdir (expected a path ending in -mr or -cf, like modpacks/x/26.1.2-mr)", subdir))
+	}
+	if _, err := os.Stat(filepath.Join(packDir, "manifest.json")); err != nil {
+		failNotFound(fmt.Sprintf("no manifest.json in %s — freeze records into the pack manifest", packDir))
+	}
+	return packDir, subKey
+}
+
+func listFrozen(packDir, subKey string) {
+	frozen := readAutomation(packDir).Freeze[subKey]
+	if len(frozen) == 0 {
+		fmt.Printf("no frozen mods declared for %s/%s.\n", packDir, subKey)
 		return
 	}
-	sort.Strings(o.Freeze)
-	fmt.Printf("%d frozen mod(s) in %s:\n", len(o.Freeze), packDir)
-	for _, s := range o.Freeze {
+	sort.Strings(frozen)
+	fmt.Printf("%d frozen mod(s) in %s/%s:\n", len(frozen), packDir, subKey)
+	for _, s := range frozen {
 		fmt.Printf("  - %s\n", s)
 	}
 }
 
-func applyFreeze(packDir string, slugs []string, freeze bool) {
-	if _, err := os.Stat(filepath.Join(packDir, "manifest.json")); err != nil {
-		failNotFound(fmt.Sprintf("no manifest.json in %s — freeze operates on a pack directory", packDir))
-	}
+func applyFreeze(packDir, subKey, subdir string, slugs []string, freeze bool) {
 	if _, err := exec.LookPath(packwizBin()); err != nil {
 		failEnv("packwiz not found", "install with 'go install github.com/packwiz/packwiz@latest' or point PACKWIZ_BIN at a binary")
 	}
 
-	subdirs := modSubdirsOf(packDir)
-	if len(subdirs) == 0 {
-		failNotFound(fmt.Sprintf("no -mr/-cf subdirs in %s", packDir))
-	}
-
-	verb := "pin"
-	gerund := "freezing"
+	verb, gerund := "pin", "freezing"
 	if !freeze {
-		verb = "unpin"
-		gerund = "unfreezing"
+		verb, gerund = "unpin", "unfreezing"
 	}
 
 	failures := 0
+	var applied []string
 	for _, slug := range slugs {
-		fmt.Printf("%s %s ...\n", gerund, slug)
-		applied := 0
-		for _, sub := range subdirs {
-			if _, err := os.Stat(filepath.Join(sub, "mods", slug+".pw.toml")); err != nil {
-				continue
-			}
-			cmd := exec.Command(packwizBin(), verb, slug)
-			cmd.Dir = sub
-			if out, err := cmd.CombinedOutput(); err != nil {
-				fmt.Fprintf(os.Stderr, "  FAIL %s in %s: %v\n%s", verb, sub, err, indent(string(out), "    "))
-				failures++
-				continue
-			}
-			fmt.Printf("  %s: %s\n", verb, sub)
-			applied++
+		if _, err := os.Stat(filepath.Join(subdir, "mods", slug+".pw.toml")); err != nil {
+			fmt.Fprintf(os.Stderr, "::warning::%s not found in %s (no mods/%s.pw.toml); skipped\n", slug, subdir, slug)
+			continue
 		}
-		if applied == 0 {
-			fmt.Fprintf(os.Stderr, "::warning::%s not found in any subdir of %s (checked mods/%s.pw.toml)\n", slug, packDir, slug)
+		cmd := exec.Command(packwizBin(), verb, slug)
+		cmd.Dir = subdir
+		if out, err := cmd.CombinedOutput(); err != nil {
+			fmt.Fprintf(os.Stderr, "  FAIL %s %s: %v\n%s", verb, slug, err, indent(string(out), "    "))
+			failures++
+			continue
 		}
+		fmt.Printf("  %s %s: %s\n", gerund, slug, subdir)
+		applied = append(applied, slug)
 	}
 
 	if failures > 0 {
-		fail(fmt.Sprintf("%d %s operation(s) failed; opt-out.json NOT updated", failures, verb))
+		fail(fmt.Sprintf("%d %s operation(s) failed; manifest NOT updated", failures, verb))
+	}
+	if len(applied) == 0 {
+		fmt.Println("nothing changed.")
+		return
 	}
 
-	updateFreezeRecord(packDir, slugs, freeze)
+	current := map[string]bool{}
+	for _, s := range readAutomation(packDir).Freeze[subKey] {
+		current[s] = true
+	}
+	for _, s := range applied {
+		if freeze {
+			current[s] = true
+		} else {
+			delete(current, s)
+		}
+	}
+	var list []string
+	for s := range current {
+		list = append(list, s)
+	}
+	sort.Strings(list)
+	setAutomationFreeze(packDir, subKey, list)
+
 	state := "frozen (updates will skip them)"
 	if !freeze {
 		state = "unfrozen (updates apply again)"
 	}
-	fmt.Printf("%d mod(s) %s; recorded in %s/opt-out.json\n", len(slugs), state, packDir)
+	fmt.Printf("%d mod(s) %s; recorded in %s/manifest.json (automation.freeze.%s)\n", len(applied), state, packDir, subKey)
 }
 
 func modSubdirsOf(packDir string) []string {
@@ -115,51 +135,11 @@ func modSubdirsOf(packDir string) []string {
 	return out
 }
 
-func updateFreezeRecord(packDir string, slugs []string, freeze bool) {
-	p := filepath.Join(packDir, "opt-out.json")
-	raw := map[string]any{}
-	if data, err := os.ReadFile(p); err == nil {
-		if err := json.Unmarshal(data, &raw); err != nil {
-			fail(fmt.Sprintf("opt-out.json in %s exists but is invalid JSON; fix it before freezing: %v", packDir, err))
-		}
-	}
-	set := map[string]bool{}
-	if existing, ok := raw["freeze"].([]any); ok {
-		for _, v := range existing {
-			if s, ok := v.(string); ok {
-				set[s] = true
-			}
-		}
-	}
-	for _, s := range slugs {
-		if freeze {
-			set[s] = true
-		} else {
-			delete(set, s)
-		}
-	}
-	if len(set) == 0 {
-		delete(raw, "freeze")
-		if len(raw) == 0 {
-			_ = os.Remove(p)
-			return
-		}
-	} else {
-		var list []string
-		for s := range set {
-			list = append(list, s)
-		}
-		sort.Strings(list)
-		raw["freeze"] = list
-	}
-	writeJSON(p, raw)
-}
-
-func pinDrift(packDir string, frozen []string) []string {
+func pinDrift(packDir string, freezeMap map[string][]string) []string {
 	var drift []string
-	for _, slug := range frozen {
-		for _, sub := range modSubdirsOf(packDir) {
-			p := filepath.Join(sub, "mods", slug+".pw.toml")
+	for subKey, slugs := range freezeMap {
+		for _, slug := range slugs {
+			p := filepath.Join(packDir, subKey, "mods", slug+".pw.toml")
 			data, err := os.ReadFile(p)
 			if err != nil {
 				continue

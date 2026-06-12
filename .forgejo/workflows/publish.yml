@@ -45,7 +45,19 @@ jobs:
 
           CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
 
-          PROD=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks)/[^/]+/manifest\.json$' || true)
+          CANDIDATES=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks)/[^/]+/manifest\.json$' || true)
+          PROD=""
+          while IFS= read -r m; do
+            [ -n "$m" ] || continue
+            NEWV=$(bun -e "console.log(JSON.parse(require('fs').readFileSync('$m','utf8')).version ?? '')")
+            OLDV=$(git show "HEAD^:$m" 2>/dev/null | bun -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{console.log(JSON.parse(d).version ?? '')}catch{console.log('')}})" || echo "")
+            if [ "$NEWV" != "$OLDV" ] && [ -n "$NEWV" ]; then
+              echo "version change in $m: '$OLDV' -> '$NEWV'"
+              PROD="${PROD}${m}"$'\n'
+            else
+              echo "skipping $m (version unchanged: '$NEWV')"
+            fi
+          done <<< "$CANDIDATES"
 
           CHANGED_PACKS=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks)/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
           EXP=""
@@ -56,7 +68,7 @@ jobs:
             fi
           done <<< "$CHANGED_PACKS"
 
-          MANIFESTS=$(printf '%s\n%s' "$PROD" "$EXP" | grep -v '^$' | sort -u || true)
+          MANIFESTS=$(printf '%s\n%s' "$PROD" "$EXP" | grep -v '^$' | awk '!seen[$0]++' || true)
 
           if [ -z "$MANIFESTS" ]; then
             echo "has_entries=false" >> "$GITHUB_OUTPUT"
