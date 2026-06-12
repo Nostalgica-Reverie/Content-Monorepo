@@ -1,3 +1,1 @@
-# simply-modernized
-
-Initial scaffold. Describe the first release here.
+# Simply Modernized 26.06.1
