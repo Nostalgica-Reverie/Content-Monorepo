@@ -1,16 +1,13 @@
-name = "Rekindled Legacy"
-author = "omo50, Agari, Panduino"
-version = "25.0.3-TU3"
+name = "Rekindled Legacy TU5"
+author = "omo50, Panduino, Agari, hzsa, Cjnator38, AzaleaCatgirl99"
+version = "26.06.0"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "aff36491070c3561b9e8d6c9c5c3224638a3b687698914ee4817bc33ab5401c8"
+hash = "84dfd27d418d239bca9537225af5707e5323c6dbc215f41f85ad0f0eb755871d"
 
 [versions]
-minecraft = "1.21.1"
-neoforge = "21.1.233"
-
-[options]
-acceptable-game-versions = []
+fabric = "0.19.3"
+minecraft = "26.1.2"
