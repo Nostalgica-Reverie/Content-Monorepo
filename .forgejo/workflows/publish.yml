@@ -27,7 +27,7 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            src/actions/publish
+            src/actions/somnus
             .forgejo/actions
 
       - name: Set up Bun
@@ -35,8 +35,17 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Setup Publisher
-        uses: ./.forgejo/actions/setup-publisher
+      - name: Setup Go
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Setup Somnus
+        uses: ./.forgejo/actions/setup-somnus
+        with:
+          install-somnus: 'true'
+          install-packwiz: 'false'
 
       - name: Expand changed manifests into matrix entries
         id: expand
@@ -80,7 +89,7 @@ jobs:
           ALL="[]"
           while IFS= read -r m; do
             [ -n "$m" ] || continue
-            PART=$(./publisher-bin/publish list "$m")
+            PART=$(./somnus-bin/somnus publish list "$m")
             ALL=$(bun -e "const a=$ALL,b=$PART;console.log(JSON.stringify(a.concat(b)))")
           done <<< "$MANIFESTS"
 
@@ -106,7 +115,7 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            src/actions/publish
+            src/actions/somnus
             tools/changelog
             tools/manifest
             .forgejo/actions
@@ -119,9 +128,6 @@ jobs:
       - name: Validate Manifest
         run: bun tools/manifest/validate.ts "${{ matrix.entry.manifest }}"
 
-      - name: Setup Publisher
-        uses: ./.forgejo/actions/setup-publisher
-
       - name: Generate Changelog
         id: changelog
         run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
@@ -132,10 +138,10 @@ jobs:
           go-version: 'stable'
           cache: true
 
-      - name: Setup Packwiz
+      - name: Setup Somnus
         uses: ./.forgejo/actions/setup-somnus
         with:
-          install-somnus: 'false'
+          install-somnus: 'true'
           install-packwiz: 'true'
 
       - name: Run Publisher (build this entry)
@@ -146,9 +152,9 @@ jobs:
           export PACKWIZ_BIN="$HOME/go/bin/packwiz"
           VARIANT='${{ matrix.entry.variant }}'
           if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
-            ./publisher-bin/publish build "${{ matrix.entry.manifest }}"
+            ./somnus-bin/somnus publish build "${{ matrix.entry.manifest }}"
           else
-            ./publisher-bin/publish build "${{ matrix.entry.manifest }}" "$VARIANT"
+            ./somnus-bin/somnus publish build "${{ matrix.entry.manifest }}" "$VARIANT"
           fi
 
       - name: Stagger publish timing (preserve display order)
