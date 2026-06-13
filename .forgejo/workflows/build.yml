@@ -49,6 +49,12 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Setup Go
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
       - name: Setup Somnus
         uses: ./.forgejo/actions/setup-somnus
         with:
