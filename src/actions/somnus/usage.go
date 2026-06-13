@@ -77,6 +77,13 @@ var verbUsage = map[string]string{
   with a side: rewrite it in every subdir's .pw.toml and refresh (fixes mislabeled mods)
   e.g. somnus side modpacks/re-console-plus some-mislabeled-mod client`,
 
+	"publish": `usage: somnus publish <list|build|upload|verify> <manifest...> [variant] [--live]
+  the release pipeline (Go port of the Rust publisher; same outputs and artifact names)
+  list <manifests...>          print matrix entries as JSON (multiple manifests concatenate)
+  build <manifest> [variant]   export artifacts into <pack>/artifacts/, write GITHUB_OUTPUT metadata
+  upload <manifest> [variant]  send artifacts to Modrinth/CurseForge — DRY RUN unless --live
+  verify <manifest> [variant]  assert the version landed on Modrinth (post-upload CI check)`,
+
 	"doctor": `usage: somnus doctor   (alias: check)
   verify tools (git, packwiz, java, zip), repo root, manifest health, and legacy opt-out files`,
 

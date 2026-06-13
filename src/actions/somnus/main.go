@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-const somnusVersion = "26.2-dev"
+const somnusVersion = "26.1-dev"
 
 const usageText = `somnus CLI tool %s
 
@@ -29,6 +29,7 @@ build & docs
   build <sha> | --pack <name> <sha>   CI build of git-changed packs (or one named pack)
   modlist <pack-subdir>               write crash-assistant modlist.json for a subdir
   pages [pack]                        write modlist.md files; full runs also emit projects.json
+  publish <mode> <manifest> [variant] list | build | upload [--live] | verify; the release pipeline. Please do not run locally
 
 maintenance
   update                              packwiz update --all in every pack subdir
@@ -77,7 +78,7 @@ func main() {
 	}
 
 	switch verb {
-	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages", "packs", "import":
+	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages", "packs", "import", "publish":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -98,6 +99,8 @@ func main() {
 		cmdSide(os.Args[2:])
 	case "import":
 		cmdImport(os.Args[2:])
+	case "publish":
+		cmdPublish(os.Args[2:])
 	case "freeze":
 		cmdFreeze(os.Args[2:])
 	case "unfreeze":
