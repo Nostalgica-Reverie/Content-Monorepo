@@ -51,6 +51,7 @@
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
+- [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Forge Config API Port](https://modrinth.com/mod/ohNO6lps)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
@@ -76,5 +77,6 @@
 ## Server Mods
 
 - [Configured](https://modrinth.com/mod/HlpEBg3R)
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
 - [Voice Chat Interaction](https://modrinth.com/mod/qsSP2ZZ0)

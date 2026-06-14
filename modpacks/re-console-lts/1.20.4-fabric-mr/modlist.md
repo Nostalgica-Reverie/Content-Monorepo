@@ -51,6 +51,7 @@
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
+- [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Forge Config API Port](https://modrinth.com/mod/ohNO6lps)
 - [Legacy Skins](https://modrinth.com/mod/4UNJZ4cX)

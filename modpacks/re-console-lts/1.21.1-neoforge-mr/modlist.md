@@ -40,6 +40,7 @@
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
+- [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Forgified Fabric API](https://modrinth.com/mod/Aqlf1Shp)
 - [Global Packs](https://modrinth.com/mod/NRLPy2mk)
@@ -58,3 +59,7 @@
 - [ThreadTweak](https://modrinth.com/mod/vSEH1ERy)
 - [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
 - [e4mc](https://modrinth.com/mod/qANg5Jrr)
+
+## Server Mods
+
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)

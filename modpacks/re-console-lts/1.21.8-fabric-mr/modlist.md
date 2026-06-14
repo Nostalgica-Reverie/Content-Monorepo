@@ -2,6 +2,7 @@
 
 ## Client Mods
 
+- [Animatica Refabricated](https://modrinth.com/mod/xEyZuswh)
 - [Animatica](https://modrinth.com/mod/PRN43VSY)
 - [Animatium](https://modrinth.com/mod/zy0karK1)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
@@ -50,6 +51,7 @@
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
+- [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Forge Config API Port](https://modrinth.com/mod/ohNO6lps)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
