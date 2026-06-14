@@ -126,19 +126,17 @@ function validate(manifestPath: string): void {
           if (!v.id || v.id.trim() === '') {
             fail(`variant for mc_version '${mc}' shares that version with another variant and must declare a distinct 'id' (e.g. '${mc}-fabric')`);
           }
-          if (!v.loader || v.loader.trim() === '') {
-            fail(`variant '${v.id}' shares mc_version '${mc}' with another variant and must declare its own 'loader'`);
-          }
         }
         const ids = list.map((v) => v.id ?? '');
         const dupeIds = ids.filter((id, i) => ids.indexOf(id) !== i);
         if (dupeIds.length > 0) {
           fail(`duplicate variant id(s) for mc_version '${mc}': ${[...new Set(dupeIds)].join(', ')}`);
         }
-        const loaders = list.map((v) => v.loader ?? '');
+        const withLoader = list.filter((v) => v.loader && v.loader.trim() !== '');
+        const loaders = withLoader.map((v) => v.loader);
         const dupeLoaders = loaders.filter((l, i) => loaders.indexOf(l) !== i);
         if (dupeLoaders.length > 0) {
-          fail(`two variants share both mc_version '${mc}' and loader '${[...new Set(dupeLoaders)].join(', ')}' \u2014 they are indistinguishable`);
+          fail(`two variants share both mc_version '${mc}' and loader '${[...new Set(dupeLoaders)].join(', ')}' \u2014 give them distinct ids or loaders`);
         }
       }
     }
