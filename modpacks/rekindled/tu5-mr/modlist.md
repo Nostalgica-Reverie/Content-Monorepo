@@ -60,7 +60,6 @@
 - [No Chat Reports](https://modrinth.com/mod/qQyHxfxd)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
 - [Nostalgic Tweaks](https://modrinth.com/mod/l1rj36Ob)
-- [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
 - [Puzzles Lib](https://modrinth.com/mod/QAGBst4M)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [Sinytra Connector](https://modrinth.com/mod/u58R1TMW)

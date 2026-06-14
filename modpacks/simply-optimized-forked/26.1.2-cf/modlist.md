@@ -17,6 +17,7 @@
 - [Fzzy Config]()
 - [Gnetum]()
 - [ImmediatelyFast]()
+- [Immersive Optimization]()
 - [Ixeris]()
 - [Lithium (Fabric/NeoForge)]()
 - [ModernFix-mVUS]()

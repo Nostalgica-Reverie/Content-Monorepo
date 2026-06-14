@@ -25,6 +25,7 @@
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
 - [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)

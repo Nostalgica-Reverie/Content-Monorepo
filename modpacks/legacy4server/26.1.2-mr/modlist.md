@@ -8,6 +8,7 @@
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
 - [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
 - [KryptonReno's Fabric Patcher](https://modrinth.com/mod/yzkasIPx)
 - [Krypton](https://modrinth.com/mod/fQEb0iXm)
 - [Legacy4J](https://modrinth.com/mod/gHvKJofA)

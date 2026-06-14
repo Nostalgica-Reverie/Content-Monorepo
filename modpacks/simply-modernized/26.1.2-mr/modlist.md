@@ -32,3 +32,7 @@
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
+
+## Server Mods
+
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)

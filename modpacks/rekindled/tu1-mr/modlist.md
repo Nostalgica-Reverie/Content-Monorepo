@@ -19,6 +19,7 @@
 
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
+- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
@@ -30,13 +31,10 @@
 - [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
 - [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
-- [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
 
 ## Server Mods
 
 - [Async](https://modrinth.com/mod/vEC2jm6I)
-- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
-- [Worldthreader](https://modrinth.com/mod/LwH5rYyd)

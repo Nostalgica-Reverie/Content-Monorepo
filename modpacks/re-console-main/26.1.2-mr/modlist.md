@@ -57,7 +57,6 @@
 ## Shared Mods
 
 - [Anti-Smooth](https://modrinth.com/mod/zlZC5n7T)
-- [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Bannerpoint](https://modrinth.com/mod/IfTBNyjQ)
 - [Bedrock Skins](https://modrinth.com/mod/76lEgqhs)
 - [BugFixerUpper](https://modrinth.com/mod/gRMQvlnJ)
@@ -83,7 +82,6 @@
 - [ModernRegSyncFix](https://modrinth.com/mod/U2w9BZus)
 - [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
-- [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
 - [PneumonoCore](https://modrinth.com/mod/ZLKQjA7t)
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
 - [Puzzles Lib](https://modrinth.com/mod/QAGBst4M)

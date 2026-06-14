@@ -1,2 +1,2 @@
-# Simply Optimized Forked 26.06.2
-update mods
+# Simply Optimized Forked 26.06.3
+Add in Immersive Optimization

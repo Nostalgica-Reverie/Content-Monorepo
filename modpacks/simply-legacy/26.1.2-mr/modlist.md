@@ -50,7 +50,6 @@
 - [Minimega](https://modrinth.com/mod/d4zJxq8p)
 - [ModernRegSyncFix](https://modrinth.com/mod/U2w9BZus)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
-- [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [Simple Resource Loader](https://modrinth.com/mod/5e65FGXQ)

@@ -23,6 +23,7 @@
 - [Global Packs]()
 - [Gnetum]()
 - [ImmediatelyFast]()
+- [Immersive Optimization]()
 - [Ixeris]()
 - [Legacy Nether: Extended]()
 - [Legacy4J]()
