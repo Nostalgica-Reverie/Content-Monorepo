@@ -1,2 +1,2 @@
 # Re-Console Main 26.06.10
-Updates
+Updates + update bisectmenu config
