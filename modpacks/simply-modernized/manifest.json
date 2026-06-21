@@ -8,7 +8,6 @@
   "role": {
     "performance_base": {
       "mappings": [
-        { "source": "26.1.2-mr", "target": "26.1.2-mr" },
         { "source": "26.1.2-cf", "target": "26.1.2-cf" },
         { "source": "26.2-cf", "target": "26.2-cf" }
       ],
@@ -16,7 +15,7 @@
     }
   },
   "type": "modpack",
-  "version": "26.06.2",
+  "version": "26.06.1",
   "automation": {
     "server_promo": false
   },
