@@ -4,13 +4,16 @@
   "name": "Simply Optimized Forked",
   "type": "modpack",
   "loader": "fabric",
-  "mc_version": "26.1.2",
-  "version": "26.06.3",
+  "version": "26.06.4",
   "release_type": "release",
   "role": "base",
   "modrinth_id": "simply-optimized-forked",
   "curseforge_id": "simply-optimized-forked",
   "automation": {
-    "server_promo": false
-  }
+    "server_promo": true
+  },
+  "variants": [
+    { "mc_version": "26.1.2" },
+    { "mc_version": "26.2" }
+  ]
 }
