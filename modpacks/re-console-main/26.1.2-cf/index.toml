@@ -1,6 +1,18 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/bhmenu/bhmenu-general.properties"
+hash = "8276021dd8f38aa45a6411582905783a6760d81f5ba48770c1527c1ab1021ae5"
+
+[[files]]
+file = "config/bhmenu/bhmenu-public_server_list.properties"
+hash = "294b2b201df2fd00311682724be81157885eae783dc4f7b307bc448c7e2a2117"
+
+[[files]]
+file = "config/bhmenu/bhmenu-server_creator_banner.properties"
+hash = "a89ab44e8c3acb4e01e879b89ca7952eb4537eb95dd09f5794c6e2a3af5ea2a3"
+
+[[files]]
 file = "config/crash_assistant/config.toml"
 hash = "f72ab9f17eb198a42f181954a399aafdab5b697dbb0232d93c42403f3e9627f2"
 

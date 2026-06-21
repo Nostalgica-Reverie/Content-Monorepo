@@ -5,6 +5,18 @@ file = "config/animatium.json"
 hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
+file = "config/bhmenu/bhmenu-general.properties"
+hash = "8276021dd8f38aa45a6411582905783a6760d81f5ba48770c1527c1ab1021ae5"
+
+[[files]]
+file = "config/bhmenu/bhmenu-public_server_list.properties"
+hash = "294b2b201df2fd00311682724be81157885eae783dc4f7b307bc448c7e2a2117"
+
+[[files]]
+file = "config/bhmenu/bhmenu-server_creator_banner.properties"
+hash = "a89ab44e8c3acb4e01e879b89ca7952eb4537eb95dd09f5794c6e2a3af5ea2a3"
+
+[[files]]
 file = "config/bobby.conf"
 hash = "ad06499f99f6df191d540a1ade1f38e78d23aeefe9a6414f3009a012771c32bd"
 
@@ -1462,6 +1474,11 @@ metafile = true
 [[files]]
 file = "mods/better-block-entities.pw.toml"
 hash = "ae591c95c3189ac3b08d7a07c1dd98e659f4d557654d5a4abc54f258b1aabebf"
+metafile = true
+
+[[files]]
+file = "mods/bisecthosting-server-integration-menu-fabric.pw.toml"
+hash = "28db025559034a77bf8aa87d9939e914017980aafc5e564b3b36c60234bbe729"
 metafile = true
 
 [[files]]
