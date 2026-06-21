@@ -32,6 +32,10 @@ features:
     details: New here? Get any of our projects set up and running.
     link: /modpacks/installation
     linkText: Get Started
+  - title: Performance Guide
+    details: Want to find ways to improve your performance? Check this out!
+    link: /performance
+    linkText: Get Started
   - title: Community
     details: Join our Discord for support, updates, and discussion.
     link: "https://discord.gg/6pRkrYxbGW"
