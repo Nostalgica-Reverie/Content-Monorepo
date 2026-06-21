@@ -1762,7 +1762,7 @@ hash = "aafe91b1849fa17cf9b0474f3201770d94ca2be7b2ecfcbf9487b991642cc96f"
 
 [[files]]
 file = "global_packs/required_resources/Re-Console Resources/assets/legacy/lang/en_us.json"
-hash = "d0ecf7faa454656ca45f7917e2650ee667880167b89e9e6e908c9d53d90fe6f2"
+hash = "7a1dbc4c9553849c92b348be92796457278b03037d99f854d549148530b59b47"
 
 [[files]]
 file = "global_packs/required_resources/Re-Console Resources/assets/legacy/textures/gui/intro/loading.png"
@@ -1815,6 +1815,11 @@ metafile = true
 [[files]]
 file = "mods/anti-smooth.pw.toml"
 hash = "d4121a7eabd848f3f1720f035ee2a3773a598f0c2e155362e6fbbb29246ced12"
+metafile = true
+
+[[files]]
+file = "mods/async.pw.toml"
+hash = "774d857525a068e8b6e44bc5e856a3cb1af5c698941c3cc7d252a4b7558d2406"
 metafile = true
 
 [[files]]
@@ -2018,13 +2023,18 @@ hash = "d9f54bcf75d036c25ebe636abb7ffa7c2d21c3601fec13b0fa2cc8916120affa"
 metafile = true
 
 [[files]]
+file = "mods/immersive-optimization.pw.toml"
+hash = "149bb87e40a356a1b9bcfd80e0e694b56e4dbf6b739207d83d84ff960abe2ac9"
+metafile = true
+
+[[files]]
 file = "mods/iris.pw.toml"
 hash = "51fa2c64e9cf2d5558a2f1e575960a0a9f9f27f73486d0d679c2bc695eb11026"
 metafile = true
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "f0456d292dd2571e55100e7d0820209f557f2f36d99fe453ca0789dd1b1f9d04"
+hash = "6aee3605cacd549fa2d966fd355588240580f8c67685ba8e759cd3a9e425e5b1"
 metafile = true
 
 [[files]]
@@ -3883,4 +3893,4 @@ metafile = true
 
 [[files]]
 file = "sync.json"
-hash = "531b86576c84fc2dc41534abbd116a58a3e2f84ba46d4a0da410006cbbacaa91"
+hash = "ff028c889121acd8828939d828ede9753dbb9102880cde24eee2c6aebda41bdc"

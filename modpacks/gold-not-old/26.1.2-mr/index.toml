@@ -424,7 +424,12 @@ metafile = true
 
 [[files]]
 file = "mods/c2me-fabric.pw.toml"
-hash = "e5a8956baa88d67f3edd6e6960a4bfdb9f8bfef047f94e1055bb1c31dc0092f2"
+hash = "d8191c7ff64782b226c8689c168961f303b17638dded11522f25f0509db01c15"
+metafile = true
+
+[[files]]
+file = "mods/c2me-ocl.pw.toml"
+hash = "c9c0c41a017bdd86326e0b200d9fd247215be9728490d8a4beaba660c3894453"
 metafile = true
 
 [[files]]
@@ -484,12 +489,12 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "eb1024602a25b6fdee7b6adda63fe45fa6e39ac5e69b4df8b23448bef6d635fb"
+hash = "dbfc484ebc80a9b76e1fd95c89f9a63d702ee9eaa7051beaf1d609360afc2ef6"
 metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin.pw.toml"
-hash = "cddd387862d9fd61869e3e7e7217e864ef11089a383b8760be18224bf47f67be"
+hash = "9d37d326d9557fdd25c97d72ac1bbd1e74c524aa5dca437a91d0de645dff6545"
 metafile = true
 
 [[files]]
@@ -523,8 +528,13 @@ hash = "d9f54bcf75d036c25ebe636abb7ffa7c2d21c3601fec13b0fa2cc8916120affa"
 metafile = true
 
 [[files]]
+file = "mods/immersive-optimization.pw.toml"
+hash = "149bb87e40a356a1b9bcfd80e0e694b56e4dbf6b739207d83d84ff960abe2ac9"
+metafile = true
+
+[[files]]
 file = "mods/ixeris.pw.toml"
-hash = "6aee3605cacd549fa2d966fd355588240580f8c67685ba8e759cd3a9e425e5b1"
+hash = "f0456d292dd2571e55100e7d0820209f557f2f36d99fe453ca0789dd1b1f9d04"
 metafile = true
 
 [[files]]
@@ -534,7 +544,7 @@ metafile = true
 
 [[files]]
 file = "mods/lithium.pw.toml"
-hash = "e1384a5b0b2d3854a2b0f1ac5f7342a3e6d4b9fb2b413b9847f51f6f55595ab7"
+hash = "90d5603faf196b9c30274831dd042935311202a58baaa7c7e2e50df6198d85e3"
 metafile = true
 
 [[files]]
@@ -639,7 +649,7 @@ metafile = true
 
 [[files]]
 file = "mods/zfastnoise.pw.toml"
-hash = "182bfe7eb438d51475d60904088d36b3501143b43784fcbc0a6299d4221126e6"
+hash = "7255b76647b7f1e398149ba134b6b1caf16e4b5a89ab113ed4e4184a2578bf63"
 metafile = true
 
 [[files]]
@@ -703,4 +713,4 @@ hash = "a579a01f94690b531daba09ca16ffbdbfcafccf68f53539c37d2fe0ec3ad3f3f"
 
 [[files]]
 file = "sync.json"
-hash = "d50949ac62a5a474d9d0580f21d16dd98e8a2fd9535293a7be1c63b444c714e7"
+hash = "4edde18e214519f7f190a0e42aaf56d2146ec711ade1f5fcfc0c2d8d13c28696"
