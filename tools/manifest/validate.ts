@@ -242,8 +242,13 @@ function validate(manifestPath: string): void {
         const key = v.id ?? v.mc_version;
         const mr = path.join(packDir, `${key}-mr`);
         const cf = path.join(packDir, `${key}-cf`);
-        if (hasMr && !fs.existsSync(mr)) fail(`variant ${key}: modrinth_id is set but ${mr} does not exist`);
-        if (hasCf && !fs.existsSync(cf)) fail(`variant ${key}: curseforge_id is set but ${cf} does not exist`);
+        const mrPresent = fs.existsSync(mr);
+        const cfPresent = fs.existsSync(cf);
+        if (hasMr && !mrPresent && !cfPresent) {
+          fail(`variant ${key}: has neither ${path.basename(mr)} nor ${path.basename(cf)} — nothing to publish`);
+        }
+        if (hasMr && !mrPresent) warn(`variant ${key}: ${mr} absent — this variant will NOT publish to Modrinth`);
+        if (hasCf && !cfPresent) warn(`variant ${key}: ${cf} absent — this variant will NOT publish to CurseForge`);
       }
     }
   } else {

@@ -1,0 +1,56 @@
+var mods = ModListUtils.getCurrentModListMappedToModId();
+
+var m_embeddium = mods.get("embeddium");
+if (m_embeddium != null) {
+    var warn = Startup.addCrashWarning("⚠️ <strong>Embeddium Not Supported</strong>\n\nEmbeddium is not supported by Re-Console+.");
+    warn.withModActions(m_embeddium);
+    Startup.markForCrash();
+}
+
+var m_essential_container = mods.get("essential-container");
+if (m_essential_container != null) {
+    var warn = Startup.addCrashWarning("⚠️ <strong>Essential Mod Not Supported</strong>\n\nEssential is in absolutely no way supported by Re-Console+. It introduces long-standing GUI issues, in-game issues, performance problems and a lot more. If you would like to play multiplayer for free, open to LAN and you will recieve a link you can use for your friends to play with you! We also object heavily to Essentials usage of in-game microtransactions, in an otherwise completely free and open source modding community.");
+    warn.withModActions(m_essential_container);
+    Startup.markForCrash();
+}
+
+var m_faster_random = mods.get("faster-random");
+if (m_faster_random != null) {
+    var warn = Startup.addBootWarning("⚠️ <strong>Faster Random installed</strong>\n\nFaster Random is not supported.");
+    warn.withModActions(m_faster_random);
+}
+
+var m_legacy_mipmaps = mods.get("legacy-mipmaps");
+if (m_legacy_mipmaps != null) {
+    var warn = Startup.addBootWarning("⚠️ <strong>Legacy Mipmaps installed</strong>\n\nLegacy Mipmaps is abandoned and is not supported!");
+    warn.withModActions(m_legacy_mipmaps);
+}
+
+var m_nochatreports = mods.get("nochatreports");
+if (m_nochatreports != null) {
+    var warn = Startup.addCrashWarning("⚠️ <strong>No Chat Reports installed</strong>\n\nNo Chat Reports is superseded by No Prying Eyes, and adding it will just introduce compatibility and performance issues.");
+    warn.withModActions(m_nochatreports);
+    Startup.markForCrash();
+}
+
+var m_noisium = mods.get("noisium");
+if (m_noisium != null) {
+    var warn = Startup.addCrashWarning("⚠️ <strong>Noisium not supported</strong>\n\nNoisium is not supported, as the mod does not have significant performance boost and is superseded by Fast Noise!");
+    warn.withModActions(m_noisium);
+    Startup.markForCrash();
+}
+
+var m_notenoughcrashes = mods.get("notenoughcrashes");
+if (m_notenoughcrashes != null) {
+    var warn = Startup.addCrashWarning("⚠️ <strong>Not Enough Crashes installed</strong>\n\nYou have added the Not Enough Crashes mod. This may cause critical stability errors.");
+    warn.withModActions(m_notenoughcrashes);
+    Startup.markForCrash();
+}
+
+var m_zume = mods.get("zume");
+if (m_zume != null) {
+    var warn = Startup.addCrashWarning("⚠️ <strong>Zume installed</strong>\n\nZume is not supported.");
+    warn.withModActions(m_zume);
+    Startup.markForCrash();
+}
+

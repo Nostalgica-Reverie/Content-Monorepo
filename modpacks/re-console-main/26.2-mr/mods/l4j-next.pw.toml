@@ -1,0 +1,15 @@
+name = "mod3"
+filename = "Legacy4J-26.2-1.9-pre-2-fabric.jar"
+side = "both"
+
+[download]
+url = "https://github.com/omo50/mod3/releases/download/l4j-next/Legacy4J-26.2-1.9-pre-2-fabric.jar"
+hash-format = "sha256"
+hash = "f6f340c7bc927e0068049d2d309299a7e17b6eb0670c8d1bdf5d1b1b5bdef50b"
+
+[update]
+[update.github]
+branch = "main"
+regex = "^.+(?<!-api|-dev|-dev-preshadow|-sources)\\.jar$"
+slug = "omo50/mod3"
+tag = "l4j-next"

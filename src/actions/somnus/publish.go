@@ -46,6 +46,7 @@ type pubResolved struct {
 	mrID, cfID, subdirKey, mcVer, pVer         string
 	displayName                                string
 	isExperimental                             bool
+	builtMR, builtCF                           bool
 }
 
 func pubManifest(manifestPath string) map[string]any {
@@ -242,9 +243,11 @@ func pubBuild(manifestPath, variant string) {
 
 	switch r.pType {
 	case "modpack":
-		pubBuildModpack(pDir, artifactsDir, r)
+		pubBuildModpack(pDir, artifactsDir, &r)
 	case "datapack":
 		pubBuildDatapack(pDir, artifactsDir, m, r.pVer)
+		r.builtMR = r.mrID != ""
+		r.builtCF = r.cfID != ""
 	default:
 		fail(fmt.Sprintf("unsupported pack type: %s", r.pType))
 	}
@@ -253,20 +256,21 @@ func pubBuild(manifestPath, variant string) {
 	pubWriteOutputs(r, pDir)
 }
 
-func pubBuildModpack(pDir, artifactsDir string, r pubResolved) {
+func pubBuildModpack(pDir, artifactsDir string, r *pubResolved) {
 	filenameBase := fmt.Sprintf("%s-%s-%s-%s", r.pName, r.mcVer, r.loader, r.pVer)
 	built := 0
 
 	for _, pl := range []struct {
 		plat platform
 		id   string
-	}{{modrinth, r.mrID}, {curseforge, r.cfID}} {
+		flag *bool
+	}{{modrinth, r.mrID, &r.builtMR}, {curseforge, r.cfID, &r.builtCF}} {
 		if pl.id == "" {
 			continue
 		}
 		targetPath := filepath.Join(pDir, r.subdirKey+"-"+pl.plat.short)
 		if info, err := os.Stat(targetPath); err != nil || !info.IsDir() {
-			fmt.Printf("skipping %s: folder %s not found\n", pl.plat.short, targetPath)
+			fmt.Printf("skipping %s: folder %s not found (variant not published to this platform)\n", pl.plat.short, targetPath)
 			continue
 		}
 		outFile := filepath.Join(artifactsDir, fmt.Sprintf("%s-%s.%s", filenameBase, pl.plat.short, pl.plat.ext))
@@ -278,6 +282,7 @@ func pubBuildModpack(pDir, artifactsDir string, r pubResolved) {
 			fail(fmt.Sprintf("packwiz export failed for %s", targetPath))
 		}
 		fmt.Printf("exported %s\n", outFile)
+		*pl.flag = true
 		built++
 	}
 
@@ -308,8 +313,15 @@ func pubWriteOutputs(r pubResolved, pDir string) {
 		fail(fmt.Sprintf("failed to open GITHUB_OUTPUT: %v", err))
 	}
 	defer f.Close()
-	fmt.Fprintf(f, "mr_id=%s\n", r.mrID)
-	fmt.Fprintf(f, "cf_id=%s\n", r.cfID)
+	mrOut, cfOut := "", ""
+	if r.builtMR {
+		mrOut = r.mrID
+	}
+	if r.builtCF {
+		cfOut = r.cfID
+	}
+	fmt.Fprintf(f, "mr_id=%s\n", mrOut)
+	fmt.Fprintf(f, "cf_id=%s\n", cfOut)
 	fmt.Fprintf(f, "name=%s\n", r.displayName)
 	fmt.Fprintf(f, "ver=%s\n", r.pVer)
 	fmt.Fprintf(f, "mc=%s\n", r.mcVer)
