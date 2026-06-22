@@ -1,2 +1,2 @@
-# Vital 26.06.1
-Update to match new additive
+# Vital 26.06.2
+Despite Modrinth being acquired by the creators of Essential, Spark Universe, this modpack will continue to be maintained here.
