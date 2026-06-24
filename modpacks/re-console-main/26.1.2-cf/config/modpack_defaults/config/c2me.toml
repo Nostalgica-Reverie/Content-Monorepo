@@ -21,3 +21,7 @@ threadPoolPriority = 3
 [chunkSystem]
 	syncPlayerTickets = false
 	lowMemoryMode = "true"
+
+[openclAccel]
+	maxConcurrentTasksPerDevice = "48"
+	allowIncompatibilityFallback = "true"

@@ -1,0 +1,15 @@
+name = "Nvidium"
+filename = "nvidium-0.4.3-beta13-26.1.jar"
+side = "both"
+
+[download]
+url = "https://github.com/omo50/mod4/releases/download/1.0/nvidium-0.4.3-beta13-26.1.jar"
+hash-format = "sha256"
+hash = "be875e5b9cc1c62dcbd67666571daeafc5545e9b5953236be650e6ec9d389531"
+
+[update]
+[update.github]
+branch = "main"
+regex = "^.+(?<!-api|-dev|-dev-preshadow|-sources)\\.jar$"
+slug = "omo50/mod4"
+tag = "1.0"
