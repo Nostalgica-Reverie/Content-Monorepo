@@ -41,7 +41,6 @@ func cmdPages(args []string) {
 	sched := NewScheduler(maxConcurrent())
 	dones := make([]<-chan error, len(subdirs))
 	for i, sub := range subdirs {
-		sub := sub
 		dones[i] = sched.Submit(Task{
 			Name:  sub,
 			Needs: []Resource{Resource("pages:" + sub)},
@@ -133,9 +132,10 @@ func writeSection(b *strings.Builder, title string, lines []string) {
 		return
 	}
 	sort.Strings(lines)
-	b.WriteString("\n## " + title + "\n\n")
+	fmt.Fprintf(b, "\n## %s\n\n", title)
 	for _, l := range lines {
-		b.WriteString(l + "\n")
+		b.WriteString(l)
+		b.WriteByte('\n')
 	}
 }
 

@@ -15,7 +15,7 @@ func cmdTest(args []string) {
 	if len(args) < 1 {
 		failUsage(verbUsage["test"])
 	}
-	packSubdir := args[0]
+	packSubdir := absPath(args[0])
 
 	if _, err := os.Stat(filepath.Join(packSubdir, "pack.toml")); err != nil {
 		failNotFound(fmt.Sprintf("no pack.toml in %s", packSubdir))

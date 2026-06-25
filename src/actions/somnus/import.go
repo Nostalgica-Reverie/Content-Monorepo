@@ -35,6 +35,9 @@ func cmdImport(args []string) {
 		failUsage(verbUsage["import"])
 	}
 	source := args[0]
+	if !strings.HasPrefix(source, "http://") && !strings.HasPrefix(source, "https://") {
+		source = absPath(source)
+	}
 	customID := ""
 	for i := 1; i < len(args); i++ {
 		if args[i] == "--id" && i+1 < len(args) {

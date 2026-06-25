@@ -12,7 +12,10 @@ import (
 func cmdLint(args []string) {
 	var files []string
 	if len(args) > 0 {
-		files = args
+		files = make([]string, len(args))
+		for i, f := range args {
+			files[i] = absPath(f)
+		}
 	} else {
 		files = gitChangedFiles()
 	}
@@ -33,7 +36,6 @@ func cmdLint(args []string) {
 	var checked, failed int64
 	dones := make([]<-chan error, 0, len(lintable))
 	for _, f := range lintable {
-		f := f
 		if _, err := os.Stat(f); err != nil {
 			continue
 		}
@@ -100,7 +102,7 @@ func gitChangedFiles() []string {
 		return nil
 	}
 	var files []string
-	for _, l := range strings.Split(string(out), "\n") {
+	for l := range strings.SplitSeq(string(out), "\n") {
 		if l = strings.TrimSpace(l); l != "" {
 			files = append(files, l)
 		}

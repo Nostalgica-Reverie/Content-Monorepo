@@ -56,7 +56,6 @@ func (p *progress) step(item string) {
 	p.n++
 	p.last = item
 	p.mu.Unlock()
-	p.render()
 }
 
 func (p *progress) render() {

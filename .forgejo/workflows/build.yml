@@ -33,7 +33,6 @@ jobs:
             datapacks
             resourcepacks
             src/actions/somnus
-            tools/manifest
             .forgejo/actions
 
       - name: Meta
@@ -43,11 +42,6 @@ jobs:
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
           echo "$CHANGED" | grep -q '^modpacks/'  && echo "has_modpacks=true"  >> $GITHUB_OUTPUT || echo "has_modpacks=false"  >> $GITHUB_OUTPUT
-
-      - name: Set up Bun
-        uses: https://github.com/oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
 
       - name: Setup Go
         uses: https://github.com/actions/setup-go@v5
@@ -80,8 +74,7 @@ jobs:
             [ -n "$pack" ] || continue
             for mf in "$pack/manifest.json" "$pack/manifest-experimental.json"; do
               if [ -f "$mf" ]; then
-                echo "validating $mf"
-                bun tools/manifest/validate.ts "$mf" || STATUS=1
+                ./somnus-bin/somnus validate "$mf" || STATUS=1
               fi
             done
           done <<< "$CHANGED_PACKS"

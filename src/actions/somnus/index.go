@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -33,24 +32,6 @@ type indexEntry struct {
 type indexFile struct {
 	Generated string       `json:"generated"`
 	Projects  []indexEntry `json:"projects"`
-}
-
-type indexManifest struct {
-	ID           string `json:"id"`
-	Name         string `json:"name"`
-	Type         string `json:"type"`
-	Loader       string `json:"loader"`
-	MCVersion    string `json:"mc_version"`
-	Version      string `json:"version"`
-	ReleaseType  string `json:"release_type"`
-	Description  string `json:"description"`
-	ModrinthID   string `json:"modrinth_id"`
-	CurseforgeID string `json:"curseforge_id"`
-	Variants     []struct {
-		ID        string `json:"id"`
-		MCVersion string `json:"mc_version"`
-		Loader    string `json:"loader"`
-	} `json:"variants"`
 }
 
 func projectsIndexOutPath() string {
@@ -106,13 +87,9 @@ func writeProjectsIndex() (int, error) {
 				continue
 			}
 			path := filepath.Join(root, p.Name(), "manifest.json")
-			data, err := os.ReadFile(path)
+			m, err := ReadManifest(path)
 			if err != nil {
-				continue
-			}
-			var m indexManifest
-			if err := json.Unmarshal(data, &m); err != nil {
-				fmt.Fprintf(os.Stderr, "::warning::index: invalid JSON in %s: %v\n", path, err)
+				fmt.Fprintf(os.Stderr, "::warning::index: %v\n", err)
 				continue
 			}
 			if m.ID == "" || m.Name == "" || seen[m.ID] {
@@ -144,7 +121,9 @@ func writeProjectsIndex() (int, error) {
 					})
 				}
 			} else {
-				e.MCVersion = m.MCVersion
+				if m.MCVersion != nil {
+					e.MCVersion = *m.MCVersion
+				}
 				e.Loader = m.Loader
 			}
 			entries = append(entries, e)

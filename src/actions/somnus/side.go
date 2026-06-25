@@ -14,7 +14,7 @@ func cmdSide(args []string) {
 	if len(args) < 2 {
 		failUsage(verbUsage["side"])
 	}
-	packDir, slug := args[0], args[1]
+	packDir, slug := absPath(args[0]), args[1]
 	if _, err := os.Stat(filepath.Join(packDir, "manifest.json")); err != nil {
 		failNotFound(fmt.Sprintf("no manifest.json in %s — side operates on a pack directory", packDir))
 	}
@@ -86,7 +86,7 @@ func currentSide(content string) string {
 	for _, raw := range strings.Split(content, "\n") {
 		line := strings.TrimSpace(raw)
 		if strings.HasPrefix(line, "[") {
-			break // top-level section ended
+			break
 		}
 		if k, v, ok := splitKV(line); ok && k == "side" {
 			return v

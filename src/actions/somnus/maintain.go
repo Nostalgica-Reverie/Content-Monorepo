@@ -3,11 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -19,14 +19,7 @@ func maxConcurrent() int {
 			return n
 		}
 	}
-	n := runtime.NumCPU()
-	if n > 8 {
-		n = 8
-	}
-	if n < 1 {
-		n = 1
-	}
-	return n
+	return max(1, min(runtime.NumCPU(), 8))
 }
 
 func cacheSlotCount() int {
@@ -65,16 +58,14 @@ func cmdLoaderUpdate(args []string) {
 }
 
 func resolveScope(args []string) (packFilter string, explicit bool) {
-	for _, a := range args {
-		if a == "--all" {
-			return "", false
-		}
+	if slices.Contains(args, "--all") {
+		return "", false
 	}
 	for _, a := range args {
 		if strings.HasPrefix(a, "-") {
 			continue
 		}
-		dir := strings.TrimRight(a, "/")
+		dir := absPath(strings.TrimRight(a, "/"))
 		if _, err := os.Stat(filepath.Join(dir, "manifest.json")); err != nil {
 			failNotFound(fmt.Sprintf("no manifest.json in %q — pass a pack directory, --all, or nothing", a))
 		}
@@ -208,7 +199,6 @@ func workPool(targets []string, op operation, prog *progress) []string {
 
 	dones := make([]<-chan error, len(targets))
 	for i, dir := range targets {
-		dir := dir
 		dones[i] = sched.Submit(Task{
 			Name: dir,
 			Needs: []Resource{
@@ -246,30 +236,6 @@ func workPool(targets []string, op operation, prog *progress) []string {
 	return failures
 }
 
-type mapping struct {
-	Source string `json:"source"`
-	Target string `json:"target"`
-}
-
-type performanceBase struct {
-	Pack     string    `json:"pack"`
-	Mappings []mapping `json:"mappings"`
-}
-
-func parseRole(raw json.RawMessage) (kind string, pb *performanceBase) {
-	var s string
-	if err := json.Unmarshal(raw, &s); err == nil {
-		return s, nil
-	}
-	var obj struct {
-		PerformanceBase *performanceBase `json:"performance_base"`
-	}
-	if err := json.Unmarshal(raw, &obj); err == nil && obj.PerformanceBase != nil {
-		return "consumer", obj.PerformanceBase
-	}
-	return "", nil
-}
-
 func platformSuffix(s string) string {
 	if strings.HasSuffix(s, "-mr") {
 		return "mr"
@@ -297,17 +263,18 @@ func runSync(dryRun bool) {
 		fail(fmt.Sprintf("failed to read %s: %v", root, err))
 	}
 
-	roleOf := make(map[string]string)
+	isBase := make(map[string]bool)
 	for _, p := range packs {
 		if !p.IsDir() {
 			continue
 		}
-		m, err := readManifest(filepath.Join(root, p.Name(), "manifest.json"))
+		m, err := ReadManifest(filepath.Join(root, p.Name(), "manifest.json"))
 		if err != nil {
 			continue
 		}
-		kind, _ := parseRole(m.Role)
-		roleOf[m.ID] = kind
+		if m.Role.IsBase() {
+			isBase[m.ID] = true
+		}
 	}
 
 	var jobs []syncJob
@@ -316,16 +283,16 @@ func runSync(dryRun bool) {
 			continue
 		}
 		packPath := filepath.Join(root, p.Name())
-		m, err := readManifest(filepath.Join(packPath, "manifest.json"))
+		m, err := ReadManifest(filepath.Join(packPath, "manifest.json"))
 		if err != nil {
 			continue
 		}
-		kind, pb := parseRole(m.Role)
-		if kind != "consumer" || pb == nil {
+		pb := m.Role.ConsumerBase()
+		if pb == nil {
 			continue
 		}
 
-		if roleOf[pb.Pack] != "base" {
+		if !isBase[pb.Pack] {
 			fail(fmt.Sprintf("consumer '%s' references base '%s', which is not role 'base'", m.ID, pb.Pack))
 		}
 		basePackDir := filepath.Join(root, pb.Pack)
@@ -366,7 +333,6 @@ func runSync(dryRun bool) {
 	slots := cacheSlotCount()
 	dones := make([]<-chan error, len(jobs))
 	for i, j := range jobs {
-		j := j
 		dones[i] = sched.Submit(Task{
 			Name: j.consumerID,
 			Needs: []Resource{
@@ -594,7 +560,7 @@ func copyTreeRecording(src, dst, folder string, placed, excluded map[string]bool
 		if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
 			return err
 		}
-		if err := copyFile(path, target); err != nil {
+		if err := copyFileFast(path, target); err != nil {
 			return err
 		}
 		placed[slash] = true
@@ -620,20 +586,6 @@ func readSyncExclude(path string) map[string]bool {
 	return set
 }
 
-func copyFile(src, dst string) error {
-	in, err := os.Open(src)
-	if err != nil {
-		return err
-	}
-	defer in.Close()
-	out, err := os.Create(dst)
-	if err != nil {
-		return err
-	}
-	defer out.Close()
-	_, err = io.Copy(out, in)
-	return err
-}
 
 func indent(s, prefix string) string {
 	lines := strings.Split(strings.TrimRight(s, "\n"), "\n")

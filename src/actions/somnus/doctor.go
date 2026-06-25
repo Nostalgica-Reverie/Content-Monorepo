@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-func cmdDoctor(args []string) {
+func cmdDoctor(_ []string) {
 	fmt.Printf("somnus %s doctor\n\n", somnusVersion)
 	problems := 0
 
@@ -51,7 +51,7 @@ func cmdDoctor(args []string) {
 				continue
 			}
 			n++
-			if _, err := readManifest(mf); err != nil {
+			if _, err := ReadManifest(mf); err != nil {
 				fmt.Printf("  BAD   manifest  %s: %v\n", mf, err)
 				broken++
 			}

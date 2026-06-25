@@ -1,0 +1,13 @@
+{
+  "$schema": "../../tools/manifest/schema.json",
+  "id": "old-l4j-ui",
+  "name": "Old Legacy4J UI",
+  "type": "resourcepack",
+  "release_type": "release",
+  "role": "none",
+  "modrinth_id": "",
+  "variants": [
+    { "id": "no-vanilla-assets", "name": "Without Vanilla Assets", "mc_version": "1.21.1", "version": "1.0.0" },
+    { "id": "vanilla-assets",    "name": "With Vanilla Assets",    "mc_version": "1.21.1", "version": "1.0.0" }
+  ]
+}

@@ -14,7 +14,7 @@ func cmdPublish(args []string) {
 	if len(args) < 2 {
 		failUsage(verbUsage["publish"])
 	}
-	mode, manifestPath := args[0], args[1]
+	mode, manifestPath := args[0], absPath(args[1])
 	var variant string
 	live := false
 	for _, a := range args[2:] {
@@ -49,67 +49,53 @@ type pubResolved struct {
 	builtMR, builtCF                           bool
 }
 
-func pubManifest(manifestPath string) map[string]any {
-	data, err := os.ReadFile(manifestPath)
+func pubResolve(manifestPath, variant string) pubResolved {
+	isExperimental := filepath.Base(manifestPath) == "manifest-experimental.json"
+	m, err := ReadManifest(manifestPath)
 	if err != nil {
 		failNotFound(fmt.Sprintf("failed to read %s: %v", manifestPath, err))
 	}
-	var m map[string]any
-	if err := json.Unmarshal(data, &m); err != nil {
-		fail(fmt.Sprintf("invalid JSON in %s: %v", manifestPath, err))
+
+	if m.Name == "" {
+		fail(fmt.Sprintf("missing or non-string 'name' in %s", manifestPath))
 	}
-	return m
-}
-
-func reqStr(m map[string]any, key, where string) string {
-	s, _ := m[key].(string)
-	if s == "" {
-		fail(fmt.Sprintf("missing or non-string '%s' in %s", key, where))
+	if m.Type == "" {
+		fail(fmt.Sprintf("missing or non-string 'type' in %s", manifestPath))
 	}
-	return s
-}
+	if m.ReleaseType == "" {
+		fail(fmt.Sprintf("missing or non-string 'release_type' in %s", manifestPath))
+	}
+	if m.ID == "" {
+		fail(fmt.Sprintf("missing or non-string 'id' in %s", manifestPath))
+	}
 
-func optStr(m map[string]any, key string) string {
-	s, _ := m[key].(string)
-	return s
-}
-
-func pubResolve(manifestPath, variant string) pubResolved {
-	isExperimental := filepath.Base(manifestPath) == "manifest-experimental.json"
-	m := pubManifest(manifestPath)
-
-	rawName := reqStr(m, "name", manifestPath)
+	rawName := m.Name
 	r := pubResolved{
 		rawName:        rawName,
 		pName:          strings.ReplaceAll(rawName, " ", "-"),
-		pType:          reqStr(m, "type", manifestPath),
-		releaseType:    reqStr(m, "release_type", manifestPath),
-		mrID:           optStr(m, "modrinth_id"),
-		cfID:           optStr(m, "curseforge_id"),
+		pType:          m.Type,
+		releaseType:    m.ReleaseType,
+		mrID:           m.ModrinthID,
+		cfID:           m.CurseforgeID,
 		isExperimental: isExperimental,
 	}
-	id := reqStr(m, "id", manifestPath)
 	if r.mrID == "" && r.cfID == "" {
 		fail("manifest must set at least one of modrinth_id or curseforge_id")
 	}
 
-	packLoader := optStr(m, "loader")
+	packLoader := m.Loader
 	var variantName, variantVersion, variantLoader string
 
 	if variant != "" {
-		variants, ok := m["variants"].([]any)
-		if !ok {
+		if len(m.Variants) == 0 {
 			fail(fmt.Sprintf("variant '%s' requested but manifest has no 'variants'", variant))
 		}
-		var found map[string]any
-		for _, raw := range variants {
-			v, ok := raw.(map[string]any)
-			if !ok {
-				continue
-			}
-			key := optStr(v, "id")
+		var found *Variant
+		for i := range m.Variants {
+			v := &m.Variants[i]
+			key := v.ID
 			if key == "" {
-				key = optStr(v, "mc_version")
+				key = v.MCVersion
 			}
 			if key == variant {
 				found = v
@@ -120,15 +106,18 @@ func pubResolve(manifestPath, variant string) pubResolved {
 			fail(fmt.Sprintf("variant '%s' not found in manifest", variant))
 		}
 		r.subdirKey = variant
-		r.mcVer = optStr(found, "mc_version")
+		r.mcVer = found.MCVersion
 		if r.mcVer == "" {
 			fail(fmt.Sprintf("variant '%s' missing mc_version", variant))
 		}
-		variantName = optStr(found, "name")
-		variantVersion = optStr(found, "version")
-		variantLoader = optStr(found, "loader")
+		variantName = found.Name
+		variantVersion = found.Version
+		variantLoader = found.Loader
 	} else {
-		r.mcVer = reqStr(m, "mc_version", manifestPath)
+		if m.MCVersion == nil || *m.MCVersion == "" {
+			fail(fmt.Sprintf("missing or non-string 'mc_version' in %s", manifestPath))
+		}
+		r.mcVer = *m.MCVersion
 		r.subdirKey = r.mcVer
 	}
 
@@ -151,14 +140,14 @@ func pubResolve(manifestPath, variant string) pubResolved {
 		}
 		cycle := time.Now().UTC().Format("06.01")
 		if variant != "" {
-			r.pVer = fmt.Sprintf("%s-%s-%s-%s", id, variant, cycle, short)
+			r.pVer = fmt.Sprintf("%s-%s-%s-%s", m.ID, variant, cycle, short)
 		} else {
-			r.pVer = fmt.Sprintf("%s-%s-%s", id, cycle, short)
+			r.pVer = fmt.Sprintf("%s-%s-%s", m.ID, cycle, short)
 		}
 	} else {
 		baseVer := variantVersion
 		if baseVer == "" {
-			baseVer = optStr(m, "version")
+			baseVer = m.Version
 		}
 		if baseVer == "" {
 			fail("missing 'version'")
@@ -187,13 +176,15 @@ func pubResolve(manifestPath, variant string) pubResolved {
 func pubList(manifestPaths []string) {
 	entries := []map[string]any{}
 	for _, manifestPath := range manifestPaths {
-		m := pubManifest(manifestPath)
-		if variants, ok := m["variants"].([]any); ok {
-			for idx, raw := range variants {
-				v, _ := raw.(map[string]any)
-				key := optStr(v, "id")
+		m, err := ReadManifest(manifestPath)
+		if err != nil {
+			failNotFound(fmt.Sprintf("failed to read %s: %v", manifestPath, err))
+		}
+		if len(m.Variants) > 0 {
+			for idx, v := range m.Variants {
+				key := v.ID
 				if key == "" {
-					key = optStr(v, "mc_version")
+					key = v.MCVersion
 				}
 				if key == "" {
 					fail("variant missing both 'id' and 'mc_version'")
@@ -213,7 +204,10 @@ func pubList(manifestPaths []string) {
 
 func pubBuild(manifestPath, variant string) {
 	pDir := filepath.Dir(manifestPath)
-	m := pubManifest(manifestPath)
+	m, err := ReadManifest(manifestPath)
+	if err != nil {
+		failNotFound(fmt.Sprintf("failed to read %s: %v", manifestPath, err))
+	}
 	r := pubResolve(manifestPath, variant)
 
 	workspace := os.Getenv("GITHUB_WORKSPACE")
@@ -245,7 +239,7 @@ func pubBuild(manifestPath, variant string) {
 	case "modpack":
 		pubBuildModpack(pDir, artifactsDir, &r)
 	case "datapack":
-		pubBuildDatapack(pDir, artifactsDir, m, r.pVer)
+		pubBuildDatapack(pDir, artifactsDir, m.ID, r.pVer)
 		r.builtMR = r.mrID != ""
 		r.builtCF = r.cfID != ""
 	default:
@@ -296,7 +290,6 @@ func pubBuildModpack(pDir, artifactsDir string, r *pubResolved) {
 	slots := cacheSlotCount()
 	dones := make([]<-chan error, len(plans))
 	for i, p := range plans {
-		p := p
 		dones[i] = sched.Submit(Task{
 			Name: filepath.Base(p.outFile),
 			Needs: []Resource{
@@ -322,8 +315,7 @@ func pubBuildModpack(pDir, artifactsDir string, r *pubResolved) {
 	}
 }
 
-func pubBuildDatapack(pDir, artifactsDir string, m map[string]any, pVer string) {
-	id := reqStr(m, "id", pDir)
+func pubBuildDatapack(pDir, artifactsDir, id, pVer string) {
 	contentDir := filepath.Join(pDir, "content")
 	if info, err := os.Stat(contentDir); err != nil || !info.IsDir() {
 		fail(fmt.Sprintf("content directory not found at %s", contentDir))

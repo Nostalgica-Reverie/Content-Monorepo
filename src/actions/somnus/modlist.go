@@ -32,7 +32,7 @@ func cmdModlist(args []string) {
 	if len(args) < 1 {
 		failUsage(verbUsage["modlist"])
 	}
-	subdir := args[0]
+	subdir := absPath(args[0])
 	modsDir := filepath.Join(subdir, "mods")
 	if info, err := os.Stat(modsDir); err != nil || !info.IsDir() {
 		failNotFound(fmt.Sprintf("no mods/ directory at %s", modsDir))

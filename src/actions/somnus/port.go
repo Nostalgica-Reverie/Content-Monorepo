@@ -12,7 +12,7 @@ func cmdPort(args []string) {
 	if len(args) < 2 {
 		failUsage(verbUsage["port"])
 	}
-	mrDir, cfDir := args[0], args[1]
+	mrDir, cfDir := absPath(args[0]), absPath(args[1])
 	doAdd := false
 	noRefresh := false
 	for _, a := range args[2:] {

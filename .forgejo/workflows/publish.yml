@@ -117,20 +117,7 @@ jobs:
             datapacks
             src/actions/somnus
             tools/changelog
-            tools/manifest
             .forgejo/actions
-
-      - name: Set up Bun
-        uses: https://github.com/oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Validate Manifest
-        run: bun tools/manifest/validate.ts "${{ matrix.entry.manifest }}"
-
-      - name: Generate Changelog
-        id: changelog
-        run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
 
       - name: Setup Go
         uses: https://github.com/actions/setup-go@v5
@@ -143,6 +130,18 @@ jobs:
         with:
           install-somnus: 'true'
           install-packwiz: 'true'
+
+      - name: Set up Bun
+        uses: https://github.com/oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Validate Manifest
+        run: ./somnus-bin/somnus validate "${{ matrix.entry.manifest }}"
+
+      - name: Generate Changelog
+        id: changelog
+        run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
 
       - name: Run Publisher (build this entry)
         id: meta

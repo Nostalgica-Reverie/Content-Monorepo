@@ -16,6 +16,7 @@ usage: somnus <verb> [args]
 content
   init <category> <name> [flags]      scaffold a pack (manifest, changelog, packwiz subdirs, .packwizignore)
   bump <pack-dir> <new-version>       set a pack's manifest version (--configs: also in-pack version files)
+  automation get <pack-dir>            output effective automation settings for a pack as JSON
   packs list|get|set                  the pack registry: every manifest as an addressable object
   freeze <pack-dir> [mods...]         pin mods across a whole pack so updates skip them (no args: list)
   unfreeze <pack-dir> <mods...>       unpin previously frozen mods
@@ -37,6 +38,7 @@ maintenance
   loader-update [latest|recommended]  migrate loaders across all packs
   sync [--dry-run]                    propagate performance bases into consumers
   lint [files...]                     syntax-lint changed JSON / .pw.toml files
+  validate <manifest> [--all]          validate pack manifest(s): fields, subdirs, changelog, role, automation
 
 meta
   doctor                              check tools, repo root, and manifest health (alias: check)
@@ -78,7 +80,9 @@ func main() {
 	}
 
 	switch verb {
-	case "export", "build", "sync", "update", "refresh", "loader-update", "lint", "pages", "packs", "import", "publish":
+	case "init", "bump", "side", "freeze", "unfreeze", "test", "modlist", "port",
+		"export", "build", "sync", "update", "refresh", "loader-update", "lint",
+		"pages", "packs", "import", "publish", "validate", "automation":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -125,6 +129,10 @@ func main() {
 		cmdTest(os.Args[2:])
 	case "lint":
 		cmdLint(os.Args[2:])
+	case "validate":
+		cmdValidate(os.Args[2:])
+	case "automation":
+		cmdAutomation(os.Args[2:])
 	case "port":
 		cmdPort(os.Args[2:])
 	case "doctor":
@@ -189,28 +197,12 @@ func packwizBin() string {
 	return "packwiz"
 }
 
-type manifest struct {
-	ID       string          `json:"id"`
-	Version  string          `json:"version"`
-	Variants []variant       `json:"variants,omitempty"`
-	Role     json.RawMessage `json:"role"`
-}
 
-type variant struct {
-	MCVersion string `json:"mc_version"`
-	ID        string `json:"id,omitempty"`
-}
-
-func readManifest(path string) (*manifest, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open %s: %w", path, err)
+func absPath(p string) string {
+	if p == "" || filepath.IsAbs(p) {
+		return p
 	}
-	var m manifest
-	if err := json.Unmarshal(data, &m); err != nil {
-		return nil, fmt.Errorf("invalid JSON in %s: %w", path, err)
-	}
-	return &m, nil
+	return filepath.Join(startCwd, p)
 }
 
 func writeJSON(path string, v any) {

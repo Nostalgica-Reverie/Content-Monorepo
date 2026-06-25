@@ -13,7 +13,7 @@ func cmdFreeze(args []string) {
 	if len(args) < 1 {
 		failUsage(verbUsage["freeze"])
 	}
-	subdir := strings.TrimRight(args[0], "/")
+	subdir := absPath(strings.TrimRight(args[0], "/"))
 	slugs := args[1:]
 	packDir, subKey := splitPackSubdir(subdir)
 	if len(slugs) == 0 {
@@ -27,7 +27,7 @@ func cmdUnfreeze(args []string) {
 	if len(args) < 2 {
 		failUsage(verbUsage["unfreeze"])
 	}
-	subdir := strings.TrimRight(args[0], "/")
+	subdir := absPath(strings.TrimRight(args[0], "/"))
 	packDir, subKey := splitPackSubdir(subdir)
 	applyFreeze(packDir, subKey, subdir, args[1:], false)
 }

@@ -87,6 +87,16 @@ var verbUsage = map[string]string{
 	"doctor": `usage: somnus doctor   (alias: check)
   verify tools (git, packwiz, java, zip), repo root, manifest health, and legacy opt-out files`,
 
+	"validate": `usage: somnus validate <path/to/manifest.json> [more...] | somnus validate --all
+  validate pack manifest(s): required fields, type, platform subdirs, changelog, role, automation
+  --all  discover and validate every manifest under modpacks/, datapacks/, resourcepacks/
+  e.g. somnus validate modpacks/re-console-plus/manifest.json`,
+
+	"automation": `usage: somnus automation get <pack-dir>
+  output the effective automation settings for a pack as JSON
+  merges manifest.json automation field with legacy opt-out.json (if present)
+  e.g. somnus automation get modpacks/re-console-plus`,
+
 	"help": `usage: somnus help [verb]
   show the full verb list, or detailed usage for one verb`,
 

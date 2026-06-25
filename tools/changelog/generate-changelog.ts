@@ -154,18 +154,28 @@ interface ManifestFile {
     automation?: { server_promo?: boolean };
 }
 
+function findSomnus(): string | null {
+    const env = process.env.SOMNUS_BIN;
+    if (env && fs.existsSync(env)) return env;
+    if (fs.existsSync('./somnus-bin/somnus')) return './somnus-bin/somnus';
+    return null;
+}
+
 function serverPromoEnabled(pDir: string, manifest: ManifestFile): boolean {
-    const fromManifest = manifest.automation?.server_promo;
-    if (typeof fromManifest === 'boolean') return fromManifest;
-    const p = path.join(pDir, 'opt-out.json');
-    if (fs.existsSync(p)) {
-        try {
-            const legacy = JSON.parse(fs.readFileSync(p, 'utf-8')) as { server_promo?: boolean };
-            if (typeof legacy.server_promo === 'boolean') return legacy.server_promo;
-        } catch {
-            console.warn(`::warning::invalid opt-out.json in ${pDir}; ignoring`);
+    const somnus = findSomnus();
+    if (somnus) {
+        const proc = Bun.spawnSync([somnus, 'automation', 'get', pDir], { stdout: 'pipe', stderr: 'pipe' });
+        if (proc.success) {
+            try {
+                const auto = JSON.parse(proc.stdout.toString()) as { server_promo?: boolean };
+                if (typeof auto.server_promo === 'boolean') return auto.server_promo;
+                return true;
+            } catch { /* fall through */ }
         }
     }
+    // Fallback when somnus is unavailable: read from manifest directly
+    const fromManifest = manifest.automation?.server_promo;
+    if (typeof fromManifest === 'boolean') return fromManifest;
     return true;
 }
 

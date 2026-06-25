@@ -158,7 +158,7 @@ func detectChangedTargets() ([]target, error) {
 	seen := make(map[target]struct{})
 	var targets []target
 
-	for _, line := range strings.Split(string(out), "\n") {
+	for line := range strings.SplitSeq(string(out), "\n") {
 		if line == "" || strings.HasPrefix(line, "external/") || strings.HasPrefix(line, ".actions/") {
 			continue
 		}
@@ -175,7 +175,7 @@ func detectChangedTargets() ([]target, error) {
 	return targets, nil
 }
 
-func subdirKeys(m *manifest) []string {
+func subdirKeys(m *Manifest) []string {
 	if len(m.Variants) == 0 {
 		return nil
 	}
@@ -199,7 +199,7 @@ func queueModpackExports(sched *Scheduler, slots int, packID, sha, artifactsDir 
 	fmt.Printf("queueing modpack exports: %s\n", packID)
 	packDir := filepath.Join("modpacks", packID)
 
-	m, err := readManifest(filepath.Join(packDir, "manifest.json"))
+	m, err := ReadManifest(filepath.Join(packDir, "manifest.json"))
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +248,6 @@ func queueModpackExports(sched *Scheduler, slots int, packID, sha, artifactsDir 
 
 	out := make([]queuedJob, 0, len(jobs))
 	for _, j := range jobs {
-		j := j
 		outputName := fmt.Sprintf("%s-%s-%s-%s-%s.%s",
 			packID, j.subKey, j.plat.short, m.Version, sha, j.plat.ext)
 		outputPath := filepath.Join(artifactsDir, outputName)
