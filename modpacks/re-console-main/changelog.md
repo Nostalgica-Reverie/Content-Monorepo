@@ -1,31 +1,27 @@
-# Re-Console Main 26.06.11
-Fixes for multiple issues on 26.06.10, alongside 26.2 alphas!
+# Re-Console Main 26.06.12
+fixes 😘
 
 # 26.2
+Mod updates.
 
-## Ported to 26.2
-A WIP port of Legacy4J was made by Jab125. This is included on 26.2.
-
-This port is heavily unfinished, may have very odd bugs and quirks, among other things. Here be dragons.
-
-It is also missing numerous features, such as the Minigames, SMP support, Limited World Generation, and more. That is why it has been released underneath 26.1.2, as it is not compatible with worlds from 26.06.10 or lower on 26.2.
-
-## Added C2ME OpenCL Module
-This introduces GPU accelerated world-generation. This will massively speed up world-generation on compatible systems. For instance, to saturate a 1080 Ti, you must have a Ryzen 9 9950x or higher.
-
-Due to this, Async has been removed.
+## Updated Legacy4J
+This is the last patch of Legacy4J for 26.2.x, as we work on ports to 26.3 snapshots.
 
 # 26.1.2
-26.1.2 is merely a performance and fixing update.
 
-## Added C2ME OpenCL Module
-This is explained above.
+## Added Whiteout (Modrinth Only)
+Whiteout implements dozens of Paper Server Software QoL fixes.
 
-## Fixed "Sticky Keybind" Issue
-An odd issue where the game would keep registering inputs after letting go has been fixed.
+## Added Console Advancement Sounds (Modrinth Only)
+It has been updated to latest.
+
+## Improved C2ME OpenCL config file
+The config has been updated to improve chunk throughput by about 20%, as minor tweaks have been made.
+
+This also now auto-disables itself if a non-compatible device is found.
+
+## Fixed sky issue
+Skies now look normal again.
 
 ## Updated all mods
 All mods in the pack have been updated.
-
-## Temporarily disabled LambDynamicLights
-Minor issue regarding Fabric API.

@@ -22,7 +22,7 @@ hash = "a6d8ef3f954ce616cef80214f61678db469dfde26dc1edaced9583f079b1ed31"
 
 [[files]]
 file = "config/c2me.toml"
-hash = "711e0664920627670c5638e9e29acba8f410d90b2f6091479e2cb8a08f764c35"
+hash = "69460df66dd007e2e76abdd64417ab10ec0a0d46d82012fcafe0c712197024a6"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
@@ -105,6 +105,10 @@ file = "config/modpack_defaults/config/animatium.json"
 hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
+file = "config/modpack_defaults/config/animatium3.json"
+hash = "d5bba534f817e78190419a79a7073449af261e38d460ec4367a12e17a5a5cb27"
+
+[[files]]
 file = "config/modpack_defaults/config/badoptimizations.txt"
 hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
 
@@ -126,7 +130,7 @@ hash = "dd1df2f250035bbcb151ab104fd1e5b4cf5d5475caff872e15d9497859cc5e7d"
 
 [[files]]
 file = "config/modpack_defaults/config/c2me.toml"
-hash = "10744721de30447cc0291e82bf3ae41a2d6ba8c451ed7eded71c6c1e77ce484a"
+hash = "fdaee9e01213de2771fac78c8ecaf067943110cc9420fec6816e984e52a00482"
 
 [[files]]
 file = "config/modpack_defaults/config/capes.json5"
@@ -1854,12 +1858,12 @@ metafile = true
 
 [[files]]
 file = "mods/c2me-fabric.pw.toml"
-hash = "28eb18c27957ff822c1206d9b196c2b2736636947904b61ae23382110d895dbf"
+hash = "392d3e72fde76165eb1505dcf9aab2759841e31f1735de4b8cb730599222fe43"
 metafile = true
 
 [[files]]
 file = "mods/c2me-ocl.pw.toml"
-hash = "45e53c7e1ee3983b64af202d197873bbf0936041843bace8dad93bb9cfd7e51f"
+hash = "0d1029fd48f7a60a11e798fd03414502525abb697b0bdd6a56a468a09f634281"
 metafile = true
 
 [[files]]
@@ -1879,7 +1883,7 @@ metafile = true
 
 [[files]]
 file = "mods/collective.pw.toml"
-hash = "a8b7b670568a93d900dcd412a47fa9495c437a6c19fe5f82e55540beb2389e8e"
+hash = "ba1c05ad3efd6fb088405dcd50e07601aaf0cf5cb25b9c1892b8b2be424af3c0"
 metafile = true
 
 [[files]]
@@ -1924,7 +1928,7 @@ metafile = true
 
 [[files]]
 file = "mods/entity-model-features.pw.toml"
-hash = "8acf16506251f6b0e96ef3e1d76f83cda767389917c89cc01623dafddb20646b"
+hash = "88467a7bdda3717c87a35e0833daf833d69603794746106ae20c56408bc2f854"
 metafile = true
 
 [[files]]
@@ -1939,7 +1943,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "91cbd0f5accaeb5ba27077286c6f4d149d1ac348626623b47ca5392e39625972"
+hash = "fdc6309bf3420b7e358737b05877335191021e8a2376def243deb0e521797166"
 metafile = true
 
 [[files]]
@@ -2034,7 +2038,7 @@ metafile = true
 
 [[files]]
 file = "mods/macos-input-fixes.pw.toml"
-hash = "ae057f4cbe01acc8387f5d9dcab2b5ea49dd4a3d0b00b2a138ca6cd07ed5c518"
+hash = "478081de97d4987a2aca06cf0c17880bf37faa71c3adf40ca698f83ce606ca97"
 metafile = true
 
 [[files]]
@@ -2049,7 +2053,7 @@ metafile = true
 
 [[files]]
 file = "mods/modmenu.pw.toml"
-hash = "64eee34685461c44e657b33d9a982c1da9b3e21f2fe139907fc8a6d68359be14"
+hash = "7acfb9e9d7b052728f518574f1e79d20a2ec3296e147fbd3794b033fef381947"
 metafile = true
 
 [[files]]
@@ -2099,7 +2103,7 @@ metafile = true
 
 [[files]]
 file = "mods/renderscale.pw.toml"
-hash = "0929a6deaa7f8438bad52dbc90bf37872f765b4e40c61c2fef73ea153b512d39"
+hash = "d2c1ec87f6cd482a7a5972c02f110e4810dcfb1d9e62d3f3412d96d9853db2b2"
 metafile = true
 
 [[files]]
@@ -2114,7 +2118,7 @@ metafile = true
 
 [[files]]
 file = "mods/servercore.pw.toml"
-hash = "240eae323e28bd90c2897ba5804a70966076ae9b2ba2ec49a4279f0c82dd9fdc"
+hash = "1fbd0db88b5cd60fe3efeba493d56ba7247f244dbf5fb9a26ef300e01d0d1280"
 metafile = true
 
 [[files]]
@@ -2144,7 +2148,7 @@ metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "61b0b90fdcece885bca2ca639e5ddf696b374d51a93e3ee3deb8ecd07d57b9b0"
+hash = "73915f100ddd393168b4cd5dbc2a5057e2470624c837d91eb9a7ff8c6f3977fe"
 metafile = true
 
 [[files]]
@@ -2153,8 +2157,13 @@ hash = "ffe92a9980943bdaf1312eb098266a7b1d1a4e0e63ec3bd09659b8ee8e617eec"
 metafile = true
 
 [[files]]
+file = "mods/whiteout.pw.toml"
+hash = "a1fd93501ab40afb070baa6e6d58f6894c7f145f208f28b91846d6945b650788"
+metafile = true
+
+[[files]]
 file = "mods/yacl.pw.toml"
-hash = "164ef0e26bba18089a0df494623e8f87ed0be9ba143ed8ddcdd8c8c538eaf1c5"
+hash = "da2b918e1ae55d1073b87bfc3236f37d106f80e0e295e99d374642f35531ada8"
 metafile = true
 
 [[files]]
@@ -3539,7 +3548,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/fresh-animations-extensions.pw.toml"
-hash = "8d9d00fa48314d096fb69e860dd08c8981f9b8d5ac3a5a2b51a1d9930a08004f"
+hash = "e1af84dc1ee6d650fb01a6fb55aa375c5423fdc517cc799fd4542de0a0dfe53d"
 metafile = true
 
 [[files]]
@@ -3694,7 +3703,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/super-cute.pw.toml"
-hash = "1fc8fab8866f8a2c974800140f165f13a2df9a3c56c7ad1980bc925d640bfe12"
+hash = "eb4dac5c927f180615349c864c90fd05663cc2a17a3c983f938e158cbbdba4ec"
 metafile = true
 
 [[files]]

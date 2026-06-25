@@ -10,10 +10,10 @@ threadPoolPriority = 3
 
 [noTickViewDistance]
 	compatibilityMode = false
-	maxConcurrentChunkLoads = 18
+	maxConcurrentChunkLoads = 24
 	enableExtRenderDistanceProtocol = false
 	maxViewDistance = 32
-	chunkSendingSpeedMultiplierPercentage = "250"
+	chunkSendingSpeedMultiplierPercentage = "300"
 	
 [ioSystem]
 	gcFreeChunkSerializer = true

@@ -22,7 +22,7 @@ hash = "a6d8ef3f954ce616cef80214f61678db469dfde26dc1edaced9583f079b1ed31"
 
 [[files]]
 file = "config/c2me.toml"
-hash = "f7762e854ddeb0f661d4b9003211979f1282860b65479ff42991ef87c67fcda8"
+hash = "69460df66dd007e2e76abdd64417ab10ec0a0d46d82012fcafe0c712197024a6"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
@@ -105,6 +105,10 @@ file = "config/modpack_defaults/config/animatium.json"
 hash = "b17369e039780cedeeda73c3818734263c6601e41e9fc2ddfa2531acb2c5a397"
 
 [[files]]
+file = "config/modpack_defaults/config/animatium3.json"
+hash = "d5bba534f817e78190419a79a7073449af261e38d460ec4367a12e17a5a5cb27"
+
+[[files]]
 file = "config/modpack_defaults/config/badoptimizations.txt"
 hash = "2917a8f8112e36e27b240bdbe0e6987c5e8b0964595ed42ca2fbe1b16350df71"
 
@@ -126,7 +130,7 @@ hash = "dd1df2f250035bbcb151ab104fd1e5b4cf5d5475caff872e15d9497859cc5e7d"
 
 [[files]]
 file = "config/modpack_defaults/config/c2me.toml"
-hash = "dd7022a2b469a5451222f321ca20c93338b11f4dcf399f51a572f493aa141150"
+hash = "fdaee9e01213de2771fac78c8ecaf067943110cc9420fec6816e984e52a00482"
 
 [[files]]
 file = "config/modpack_defaults/config/capes.json5"
@@ -1814,7 +1818,7 @@ metafile = true
 
 [[files]]
 file = "mods/anti-smooth.pw.toml"
-hash = "d4121a7eabd848f3f1720f035ee2a3773a598f0c2e155362e6fbbb29246ced12"
+hash = "ab9abc72d3b92174efa8969451157f64fb27ce305cfeba3beac053386b60d111"
 metafile = true
 
 [[files]]
@@ -1869,12 +1873,12 @@ metafile = true
 
 [[files]]
 file = "mods/c2me-fabric.pw.toml"
-hash = "d738fe51b20c8da621e36a0d65e15d7f4f9f8e2e8162670a2798610079790ee3"
+hash = "298bb7ba6652ce3664375e597c4a2e54510e840d22ac656fefc36096335c9202"
 metafile = true
 
 [[files]]
 file = "mods/c2me-ocl.pw.toml"
-hash = "bd2af0e11ac1cb40eb79d28df9ee185e501bf79d23a5c232a90c98301e51c839"
+hash = "6ecec2391048df85b01834c14b785052fa89a4cfc41fa1fed493d4ab7f871562"
 metafile = true
 
 [[files]]
@@ -1899,12 +1903,17 @@ metafile = true
 
 [[files]]
 file = "mods/collective.pw.toml"
-hash = "5ab7e2da8d9939db5d6de2faa1bbe826ea90027e51658fdfd1a98e83dc0e1680"
+hash = "9908a5a97b50a87f15316bac574871e99d04eb35945fdc9cd2b1d9a49e5a83bc"
 metafile = true
 
 [[files]]
 file = "mods/configmanager.pw.toml"
 hash = "e08e93d88a313318cc507bb5d9c00b486d7a424b4efce256f05aae087bd35dbc"
+metafile = true
+
+[[files]]
+file = "mods/console-advancement-sounds.pw.toml"
+hash = "91dab7bf6b5140fcef408e6d338e70579bf2ba9d884daec78577fc64b1ad2e8a"
 metafile = true
 
 [[files]]
@@ -1964,7 +1973,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "962937fb541b646bddb28e1503a7c36b2409fbe7f24d7f041f45f583a7f92b42"
+hash = "cab10ce7de1bd313d5dc6753f402f1123ff7571373ef185675c862e7cbf4369e"
 metafile = true
 
 [[files]]
@@ -2068,10 +2077,6 @@ hash = "d7e34117f2a40e2d5a3c0c41dd236d85d228e39b09fe670effd33d343d3eeced"
 metafile = true
 
 [[files]]
-file = "mods/lithium.pw copy.toml"
-hash = "5a114e21e8d069509174fd2c526e0ac3e58f7a7c6b10484aa6ba9988c1f3606a"
-
-[[files]]
 file = "mods/lithium.pw.toml"
 hash = "cd37520fbb14b8d5e9471d8c25324736e02dcf3be4b7c5df1699757b2264049f"
 metafile = true
@@ -2088,7 +2093,7 @@ metafile = true
 
 [[files]]
 file = "mods/macos-input-fixes.pw.toml"
-hash = "ae057f4cbe01acc8387f5d9dcab2b5ea49dd4a3d0b00b2a138ca6cd07ed5c518"
+hash = "478081de97d4987a2aca06cf0c17880bf37faa71c3adf40ca698f83ce606ca97"
 metafile = true
 
 [[files]]
@@ -2117,18 +2122,13 @@ hash = "02b2589dea8edaeaab3639a589ddaba5f233093cf87fff192a855e1a999f6f91"
 metafile = true
 
 [[files]]
-file = "mods/nvidium.pw.toml"
-hash = "ebf2100d212e80c8209fbccb1fcb4fcacbc6c12455715c479c649354cc5b2b8a"
-metafile = true
-
-[[files]]
 file = "mods/ok-zoomer.pw.toml"
 hash = "cb9054df12ba8eae7da1b0f3c754bcc53e8f11e3e11187e91c394b5f8f24d994"
 metafile = true
 
 [[files]]
 file = "mods/optiboxes.pw.toml"
-hash = "63fdd2b23b59250f9d2272f6eb116a40f60fe9463044eb8a539d492df3a30782"
+hash = "09525097c96e7b5daf28249487785a88baf179b566ed206d8b6712863296203a"
 metafile = true
 
 [[files]]
@@ -2143,7 +2143,7 @@ metafile = true
 
 [[files]]
 file = "mods/ping-view.pw.toml"
-hash = "98a92f0c03295ca10a5ae86a83ec3427a4ef71be9fda5473dcf1b4a9810006c3"
+hash = "8b4bed2afc433588cfd479236120575d61e55e909f8104af89c7011419eb09ca"
 metafile = true
 
 [[files]]
@@ -2173,7 +2173,7 @@ metafile = true
 
 [[files]]
 file = "mods/renderscale.pw.toml"
-hash = "1a6f4919590130cb8cd5cf1d225b164c5957124a5f29a294f2b0f1d8ea7f43a2"
+hash = "0ccac081efd9cfee6d2a13b87f571938292069888f6259f823a94302db8c39fc"
 metafile = true
 
 [[files]]
@@ -2188,7 +2188,7 @@ metafile = true
 
 [[files]]
 file = "mods/servercore.pw.toml"
-hash = "df1139314775df66addb44bd1fcebae5f5ec292256a429604acbd31130d75107"
+hash = "b0cdcd549efde7f6451af476771fed0a247e6c3db9284073d0041efb6632c8da"
 metafile = true
 
 [[files]]
@@ -2218,7 +2218,7 @@ metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "5d7fa8b559788b5014f4ee869cc98d30e0a6141dfbb2cf54d5e6e9237adced76"
+hash = "e5278cc1dcda4fe789eaf05318fa5885f9f3412685f8ac231fe9a395409089e0"
 metafile = true
 
 [[files]]
@@ -2227,8 +2227,13 @@ hash = "96c75aa9280fb3704a4c729b1b1a03d0660af2848455db627e3bdf84170f3f25"
 metafile = true
 
 [[files]]
+file = "mods/whiteout.pw.toml"
+hash = "ee7aadc3c53e40bc1cc8005095e92c78c23e040004dffce9dbd86f907a98552b"
+metafile = true
+
+[[files]]
 file = "mods/yacl.pw.toml"
-hash = "64d3a31b66eedae01be7d826100a3ef9dd4254a85cd22a5372a047e4d3758781"
+hash = "e212db98871e5d51f2015f3134090353cec414333af3ba2e6015b8c642f5267b"
 metafile = true
 
 [[files]]
@@ -3513,7 +3518,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/ashen.pw.toml"
-hash = "3b12b08bd3d5762e9cee59d89f66af09053ea61a726ddc4cb48484da58bf2ead"
+hash = "8fbab0e1f83ee99f5ab8794c777eebb26c1e0bda4214400ac2e527f0ee4fbc1e"
 metafile = true
 
 [[files]]
@@ -3613,7 +3618,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/fresh-animations-extensions.pw.toml"
-hash = "8d9d00fa48314d096fb69e860dd08c8981f9b8d5ac3a5a2b51a1d9930a08004f"
+hash = "e1af84dc1ee6d650fb01a6fb55aa375c5423fdc517cc799fd4542de0a0dfe53d"
 metafile = true
 
 [[files]]
@@ -3623,7 +3628,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/golden-days-alpha.pw.toml"
-hash = "8f4afd2d072ac317d51809a07f459537503c11adb92f3533b93b5b09d6af4e28"
+hash = "7a16bbd6ad0de6bcd72f769c0015a266fb0c1fcf265a00ec46f92c850bb087db"
 metafile = true
 
 [[files]]
@@ -3768,7 +3773,7 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/super-cute.pw.toml"
-hash = "1fc8fab8866f8a2c974800140f165f13a2df9a3c56c7ad1980bc925d640bfe12"
+hash = "eb4dac5c927f180615349c864c90fd05663cc2a17a3c983f938e158cbbdba4ec"
 metafile = true
 
 [[files]]
