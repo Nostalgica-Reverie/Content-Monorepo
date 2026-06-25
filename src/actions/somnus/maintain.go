@@ -7,10 +7,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
-	"sync"
 )
 
 func maxConcurrent() int {
@@ -19,7 +19,23 @@ func maxConcurrent() int {
 			return n
 		}
 	}
-	return 1
+	n := runtime.NumCPU()
+	if n > 8 {
+		n = 8
+	}
+	if n < 1 {
+		n = 1
+	}
+	return n
+}
+
+func cacheSlotCount() int {
+	if v := os.Getenv("SOMNUS_CACHE_SLOTS"); v != "" {
+		if n, err := strconv.Atoi(v); err == nil && n > 0 {
+			return n
+		}
+	}
+	return maxConcurrent()
 }
 
 func cmdUpdate(args []string)  { runScoped(opUpdate, args) }
@@ -187,54 +203,45 @@ func collectTargets(root string, honorIgnore bool, packFilter string, explicit b
 }
 
 func workPool(targets []string, op operation, prog *progress) []string {
-	jobs := make(chan string)
-	results := make(chan string, len(targets))
-	var wg sync.WaitGroup
+	sched := NewScheduler(maxConcurrent())
+	slots := cacheSlotCount()
 
-	workers := maxConcurrent()
-	if len(targets) < workers {
-		workers = len(targets)
-	}
-
-	for w := 0; w < workers; w++ {
-		wg.Add(1)
-		go func(id int) {
-			defer wg.Done()
-			for dir := range jobs {
-				label := dir
-				fmt.Printf("[W%d] %s %s\n", id, op.gerund, label)
-
+	dones := make([]<-chan error, len(targets))
+	for i, dir := range targets {
+		dir := dir
+		dones[i] = sched.Submit(Task{
+			Name: dir,
+			Needs: []Resource{
+				Resource("subdir:" + dir),
+				CacheSlot(dir, slots),
+			},
+			Run: func() error {
+				fmt.Printf("%s %s\n", op.gerund, dir)
 				cmd := exec.Command(packwizBin(), op.packwizArgs...)
 				cmd.Dir = dir
 				out, err := cmd.CombinedOutput()
 				if err != nil {
-					fmt.Fprintf(os.Stderr, "[W%d] FAIL %s: %v\n", id, label, err)
+					fmt.Fprintf(os.Stderr, "FAIL %s: %v\n", dir, err)
 					if len(out) > 0 {
 						fmt.Fprintf(os.Stderr, "%s\n", indent(string(out), "    "))
 					}
-					results <- dir
-				} else {
-					if prog != nil && prog.tty {
-						prog.step(label)
-					} else {
-						fmt.Printf("[W%d] ok: %s\n", id, label)
-					}
+					return err
 				}
-			}
-		}(w)
+				if prog != nil && prog.tty {
+					prog.step(dir)
+				} else {
+					fmt.Printf("ok: %s\n", dir)
+				}
+				return nil
+			},
+		})
 	}
-
-	for _, t := range targets {
-		jobs <- t
-	}
-	close(jobs)
-
-	wg.Wait()
-	close(results)
 
 	var failures []string
-	for f := range results {
-		failures = append(failures, f)
+	for i, c := range dones {
+		if err := <-c; err != nil {
+			failures = append(failures, targets[i])
+		}
 	}
 	return failures
 }
@@ -355,121 +362,150 @@ func runSync(dryRun bool) {
 
 	syncedFolders := []string{"mods", "config", "resourcepacks", "global_packs"}
 
-	for _, j := range jobs {
-		fmt.Printf("syncing %s -> %s (base %s)\n", j.sourceDir, j.targetDir, j.baseID)
+	sched := NewScheduler(maxConcurrent())
+	slots := cacheSlotCount()
+	dones := make([]<-chan error, len(jobs))
+	for i, j := range jobs {
+		j := j
+		dones[i] = sched.Submit(Task{
+			Name: j.consumerID,
+			Needs: []Resource{
+				Resource("sync-target:" + j.targetDir),
+				CacheSlot(j.targetDir, slots),
+			},
+			Run: func() error { return runSyncJob(j, dryRun, syncedFolders) },
+		})
+	}
 
-		excluded := readSyncExclude(filepath.Join(j.targetDir, "sync-exclude.json"))
-		if len(excluded) > 0 {
-			fmt.Fprintf(os.Stderr, "::warning::%s uses legacy sync-exclude.json; migrate to manifest.json automation.sync_exclude\n", j.targetDir)
+	failed := 0
+	for _, c := range dones {
+		if err := <-c; err != nil {
+			fmt.Fprintf(os.Stderr, "sync error: %v\n", err)
+			failed++
 		}
-		for _, f := range readAutomation(filepath.Dir(j.targetDir)).SyncExclude {
-			excluded[f] = true
-		}
-		if len(excluded) > 0 {
-			fmt.Printf("  %d path(s) excluded from sync\n", len(excluded))
-		}
-
-		provided := map[string]bool{}
-		for _, folder := range syncedFolders {
-			srcFolder := filepath.Join(j.sourceDir, folder)
-			if _, err := os.Stat(srcFolder); err != nil {
-				continue
-			}
-			rels, err := relFilesUnder(srcFolder)
-			if err != nil {
-				fail(fmt.Sprintf("scanning %s for %s failed: %v", folder, j.consumerID, err))
-			}
-			for _, r := range rels {
-				slash := filepath.ToSlash(filepath.Join(folder, r))
-				if excluded[slash] {
-					continue
-				}
-				provided[slash] = true
-			}
-		}
-
-		statePath := filepath.Join(j.targetDir, "sync.json")
-		prev := readSyncState(statePath)
-		var toDelete []string
-		for f := range prev {
-			if excluded[f] {
-				continue
-			}
-			if !provided[f] {
-				toDelete = append(toDelete, f)
-			}
-		}
-		sort.Strings(toDelete)
-
-		placed := map[string]bool{}
-		for _, folder := range syncedFolders {
-			srcFolder := filepath.Join(j.sourceDir, folder)
-			if _, err := os.Stat(srcFolder); err != nil {
-				continue
-			}
-			if dryRun {
-				rels, _ := relFilesUnder(srcFolder)
-				kept := 0
-				for _, r := range rels {
-					slash := filepath.ToSlash(filepath.Join(folder, r))
-					if excluded[slash] {
-						continue
-					}
-					placed[slash] = true
-					kept++
-				}
-				fmt.Printf("  [DRY RUN] would copy %d file(s) into %s/\n", kept, folder)
-				continue
-			}
-			n, err := copyTreeRecording(srcFolder, filepath.Join(j.targetDir, folder), folder, placed, excluded)
-			if err != nil {
-				fail(fmt.Sprintf("copy %s for %s failed: %v", folder, j.consumerID, err))
-			}
-			fmt.Printf("  %s: %d file(s) copied\n", folder, n)
-		}
-
-		if len(toDelete) > 0 {
-			if len(toDelete) > len(provided) {
-				fail(fmt.Sprintf("ABORT: %s delete-set (%d) exceeds files the base provides (%d). Prior sync.json is likely stale/mismatched. Delete sync.json in this target and re-run to reset state. NO files were deleted.",
-					j.targetDir, len(toDelete), len(provided)))
-			}
-			if dryRun {
-				fmt.Printf("  [DRY RUN] would delete %d base-removed file(s):\n", len(toDelete))
-				for _, f := range toDelete {
-					fmt.Printf("      - %s\n", f)
-				}
-			} else {
-				for _, f := range toDelete {
-					p := filepath.FromSlash(filepath.Join(j.targetDir, f))
-					if err := os.Remove(p); err != nil && !os.IsNotExist(err) {
-						fmt.Fprintf(os.Stderr, "::warning::could not delete %s: %v\n", p, err)
-					}
-				}
-				fmt.Printf("  pruned %d base-removed file(s)\n", len(toDelete))
-			}
-		}
-
-		if dryRun {
-			continue
-		}
-
-		if err := writeSyncState(statePath, placed); err != nil {
-			fail(fmt.Sprintf("failed to write %s: %v", statePath, err))
-		}
-
-		cmd := exec.Command(packwizBin(), "refresh")
-		cmd.Dir = j.targetDir
-		if out, err := cmd.CombinedOutput(); err != nil {
-			fail(fmt.Sprintf("packwiz refresh failed in %s: %v\n%s", j.targetDir, err, indent(string(out), "    ")))
-		}
-		fmt.Printf("  refreshed %s\n", j.targetDir)
+	}
+	if failed > 0 {
+		fail(fmt.Sprintf("%d sync(s) failed", failed))
 	}
 
 	if dryRun {
 		fmt.Println("[DRY RUN] complete \u2014 nothing was changed.")
 	} else {
 		fmt.Println("all syncs completed.")
+		fmt.Println()
+		cmdPages(nil)
 	}
+}
+
+func runSyncJob(j syncJob, dryRun bool, syncedFolders []string) error {
+	fmt.Printf("syncing %s -> %s (base %s)\n", j.sourceDir, j.targetDir, j.baseID)
+
+	excluded := readSyncExclude(filepath.Join(j.targetDir, "sync-exclude.json"))
+	if len(excluded) > 0 {
+		fmt.Fprintf(os.Stderr, "::warning::%s uses legacy sync-exclude.json; migrate to manifest.json automation.sync_exclude\n", j.targetDir)
+	}
+	for _, f := range readAutomation(filepath.Dir(j.targetDir)).SyncExclude {
+		excluded[f] = true
+	}
+	if len(excluded) > 0 {
+		fmt.Printf("  %s: %d path(s) excluded from sync\n", j.consumerID, len(excluded))
+	}
+
+	provided := map[string]bool{}
+	for _, folder := range syncedFolders {
+		srcFolder := filepath.Join(j.sourceDir, folder)
+		if _, err := os.Stat(srcFolder); err != nil {
+			continue
+		}
+		rels, err := relFilesUnder(srcFolder)
+		if err != nil {
+			return fmt.Errorf("scanning %s for %s failed: %w", folder, j.consumerID, err)
+		}
+		for _, r := range rels {
+			slash := filepath.ToSlash(filepath.Join(folder, r))
+			if excluded[slash] {
+				continue
+			}
+			provided[slash] = true
+		}
+	}
+
+	statePath := filepath.Join(j.targetDir, "sync.json")
+	prev := readSyncState(statePath)
+	var toDelete []string
+	for f := range prev {
+		if excluded[f] {
+			continue
+		}
+		if !provided[f] {
+			toDelete = append(toDelete, f)
+		}
+	}
+	sort.Strings(toDelete)
+
+	placed := map[string]bool{}
+	for _, folder := range syncedFolders {
+		srcFolder := filepath.Join(j.sourceDir, folder)
+		if _, err := os.Stat(srcFolder); err != nil {
+			continue
+		}
+		if dryRun {
+			rels, _ := relFilesUnder(srcFolder)
+			kept := 0
+			for _, r := range rels {
+				slash := filepath.ToSlash(filepath.Join(folder, r))
+				if excluded[slash] {
+					continue
+				}
+				placed[slash] = true
+				kept++
+			}
+			fmt.Printf("  %s: [DRY RUN] would copy %d file(s) into %s/\n", j.consumerID, kept, folder)
+			continue
+		}
+		n, err := copyTreeRecording(srcFolder, filepath.Join(j.targetDir, folder), folder, placed, excluded)
+		if err != nil {
+			return fmt.Errorf("copy %s for %s failed: %w", folder, j.consumerID, err)
+		}
+		fmt.Printf("  %s: %s: %d file(s) copied\n", j.consumerID, folder, n)
+	}
+
+	if len(toDelete) > 0 {
+		if len(toDelete) > len(provided) {
+			return fmt.Errorf("ABORT: %s delete-set (%d) exceeds files the base provides (%d). Prior sync.json is likely stale/mismatched. Delete sync.json in this target and re-run to reset state. NO files were deleted",
+				j.targetDir, len(toDelete), len(provided))
+		}
+		if dryRun {
+			fmt.Printf("  %s: [DRY RUN] would delete %d base-removed file(s):\n", j.consumerID, len(toDelete))
+			for _, f := range toDelete {
+				fmt.Printf("      - %s\n", f)
+			}
+		} else {
+			for _, f := range toDelete {
+				p := filepath.FromSlash(filepath.Join(j.targetDir, f))
+				if err := os.Remove(p); err != nil && !os.IsNotExist(err) {
+					fmt.Fprintf(os.Stderr, "::warning::could not delete %s: %v\n", p, err)
+				}
+			}
+			fmt.Printf("  %s: pruned %d base-removed file(s)\n", j.consumerID, len(toDelete))
+		}
+	}
+
+	if dryRun {
+		return nil
+	}
+
+	if err := writeSyncState(statePath, placed); err != nil {
+		return fmt.Errorf("failed to write %s: %w", statePath, err)
+	}
+
+	cmd := exec.Command(packwizBin(), "refresh")
+	cmd.Dir = j.targetDir
+	if out, err := cmd.CombinedOutput(); err != nil {
+		return fmt.Errorf("packwiz refresh failed in %s: %v\n%s", j.targetDir, err, indent(string(out), "    "))
+	}
+	fmt.Printf("  refreshed %s\n", j.targetDir)
+	return nil
 }
 
 func relFilesUnder(root string) ([]string, error) {

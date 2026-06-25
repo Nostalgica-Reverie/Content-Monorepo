@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync/atomic"
 )
 
 func cmdPages(args []string) {
@@ -36,15 +37,28 @@ func cmdPages(args []string) {
 		}
 	}
 
-	written := 0
-	for _, sub := range subdirs {
-		n, err := writeModlistMD(sub)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "::warning::%s: %v\n", sub, err)
-			continue
-		}
-		fmt.Printf("wrote %s/modlist.md (%d mods)\n", sub, n)
-		written++
+	var written int64
+	sched := NewScheduler(maxConcurrent())
+	dones := make([]<-chan error, len(subdirs))
+	for i, sub := range subdirs {
+		sub := sub
+		dones[i] = sched.Submit(Task{
+			Name:  sub,
+			Needs: []Resource{Resource("pages:" + sub)},
+			Run: func() error {
+				n, err := writeModlistMD(sub)
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "::warning::%s: %v\n", sub, err)
+					return nil
+				}
+				fmt.Printf("wrote %s/modlist.md (%d mods)\n", sub, n)
+				atomic.AddInt64(&written, 1)
+				return nil
+			},
+		})
+	}
+	for _, c := range dones {
+		<-c
 	}
 	fmt.Printf("generated %d modlist.md file(s).\n", written)
 

@@ -3,10 +3,20 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "lib": ["ESNext"],
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "noEmit": true,
     "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "types": ["bun"]
   },
-  "include": ["*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

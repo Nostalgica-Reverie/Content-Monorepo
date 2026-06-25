@@ -36,9 +36,9 @@ function fileAtRef(ref: string, repoRelPath: string): string {
 
 function changeSignal(content: string): string {
     const hashMatch = content.match(/hash\s*=\s*"([^"]+)"/);
-    if (hashMatch) return hashMatch[1];
+    if (hashMatch?.[1]) return hashMatch[1];
     const verMatch = content.match(/version\s*=\s*"([^"]+)"/);
-    if (verMatch) return verMatch[1];
+    if (verMatch?.[1]) return verMatch[1];
     return crypto.createHash('sha1').update(content).digest('hex');
 }
 

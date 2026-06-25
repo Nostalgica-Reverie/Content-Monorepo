@@ -8,7 +8,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"sync"
 )
 
 type platform struct {
@@ -96,19 +95,45 @@ func runBuild(targetedPack, shortSHA string) {
 		}
 	}
 
+	sched := NewScheduler(maxConcurrent())
+	slots := cacheSlotCount()
+
+	type pending struct {
+		label string
+		done  <-chan error
+	}
+	var jobs []pending
+
 	for _, t := range changed {
 		switch t.category {
 		case "modpacks":
-			if err := buildModpack(t.pack, shortSHA, artifactsDir); err != nil {
-				fail(fmt.Sprintf("modpack '%s' failed: %v", t.pack, err))
+			ps, err := queueModpackExports(sched, slots, t.pack, shortSHA, artifactsDir)
+			if err != nil {
+				fail(fmt.Sprintf("modpack '%s' failed to enqueue: %v", t.pack, err))
+			}
+			for _, p := range ps {
+				jobs = append(jobs, pending{label: p.label, done: p.done})
 			}
 		case "datapacks", "resourcepacks":
-			if err := buildZipPack(t.category, t.pack, shortSHA, artifactsDir); err != nil {
-				fail(fmt.Sprintf("%s '%s' failed: %v", t.category, t.pack, err))
+			p, err := queueZipPackBuild(sched, t.category, t.pack, shortSHA, artifactsDir)
+			if err != nil {
+				fail(fmt.Sprintf("%s '%s' failed to enqueue: %v", t.category, t.pack, err))
 			}
+			jobs = append(jobs, pending{label: p.label, done: p.done})
 		default:
 			fmt.Printf("category '%s' does not require a build.\n", t.category)
 		}
+	}
+
+	var failed int
+	for _, j := range jobs {
+		if err := <-j.done; err != nil {
+			fmt.Fprintf(os.Stderr, "build failed: %s: %v\n", j.label, err)
+			failed++
+		}
+	}
+	if failed > 0 {
+		fail(fmt.Sprintf("%d build(s) failed", failed))
 	}
 
 	fmt.Println("all builds completed successfully.")
@@ -165,16 +190,21 @@ func subdirKeys(m *manifest) []string {
 	return keys
 }
 
-func buildModpack(packID, sha string, artifactsDir string) error {
-	fmt.Printf("building modpack: %s\n", packID)
+type queuedJob struct {
+	label string
+	done  <-chan error
+}
+
+func queueModpackExports(sched *Scheduler, slots int, packID, sha, artifactsDir string) ([]queuedJob, error) {
+	fmt.Printf("queueing modpack exports: %s\n", packID)
 	packDir := filepath.Join("modpacks", packID)
 
 	m, err := readManifest(filepath.Join(packDir, "manifest.json"))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if m.Version == "" {
-		return fmt.Errorf("missing 'version' in %s/manifest.json", packDir)
+		return nil, fmt.Errorf("missing 'version' in %s/manifest.json", packDir)
 	}
 
 	var jobs []exportJob
@@ -192,7 +222,7 @@ func buildModpack(packID, sha string, artifactsDir string) error {
 	} else {
 		entries, err := os.ReadDir(packDir)
 		if err != nil {
-			return fmt.Errorf("failed to read %s: %w", packDir, err)
+			return nil, fmt.Errorf("failed to read %s: %w", packDir, err)
 		}
 		for _, e := range entries {
 			if !e.IsDir() {
@@ -213,75 +243,64 @@ func buildModpack(packID, sha string, artifactsDir string) error {
 	}
 
 	if len(jobs) == 0 {
-		return fmt.Errorf("no valid version dirs (expected '{key}-mr' or '{key}-cf') for %s", packID)
+		return nil, fmt.Errorf("no valid version dirs (expected '{key}-mr' or '{key}-cf') for %s", packID)
 	}
 
-	var wg sync.WaitGroup
-	errCh := make(chan error, len(jobs))
-	sem := make(chan struct{}, maxConcurrent())
-	prog := newProgress("exporting", len(jobs))
-	defer prog.done()
-
+	out := make([]queuedJob, 0, len(jobs))
 	for _, j := range jobs {
-		wg.Add(1)
-		go func(j exportJob) {
-			defer wg.Done()
-			sem <- struct{}{}
-			defer func() { <-sem }()
-			outputName := fmt.Sprintf("%s-%s-%s-%s-%s.%s",
-				packID, j.subKey, j.plat.short, m.Version, sha, j.plat.ext)
-			outputPath := filepath.Join(artifactsDir, outputName)
-
-			cmd := exec.Command(packwizBin(), j.plat.cli, "export", "--output", outputPath)
-			cmd.Dir = j.dir
-			if out, err := cmd.CombinedOutput(); err != nil {
-				errCh <- fmt.Errorf("packwiz export failed for %s: %v\n%s", j.dir, err, out)
-				return
-			}
-			if prog.tty {
-				prog.step(outputName)
-			} else {
+		j := j
+		outputName := fmt.Sprintf("%s-%s-%s-%s-%s.%s",
+			packID, j.subKey, j.plat.short, m.Version, sha, j.plat.ext)
+		outputPath := filepath.Join(artifactsDir, outputName)
+		done := sched.Submit(Task{
+			Name: outputName,
+			Needs: []Resource{
+				Resource("export:" + j.dir),
+				CacheSlot(j.dir, slots),
+			},
+			Run: func() error {
+				cmd := exec.Command(packwizBin(), j.plat.cli, "export", "--output", outputPath)
+				cmd.Dir = j.dir
+				if out, err := cmd.CombinedOutput(); err != nil {
+					return fmt.Errorf("packwiz export failed for %s: %v\n%s", j.dir, err, out)
+				}
 				fmt.Printf("exported %s\n", outputName)
-			}
-		}(j)
+				return nil
+			},
+		})
+		out = append(out, queuedJob{label: outputName, done: done})
 	}
-
-	wg.Wait()
-	close(errCh)
-
-	var errs []error
-	for e := range errCh {
-		errs = append(errs, e)
-	}
-	if len(errs) > 0 {
-		for _, e := range errs {
-			fmt.Fprintf(os.Stderr, "error: %v\n", e)
-		}
-		return fmt.Errorf("%d export(s) failed for %s", len(errs), packID)
-	}
-	return nil
+	return out, nil
 }
 
-func buildZipPack(category, packID, sha, artifactsDir string) error {
+func queueZipPackBuild(sched *Scheduler, category, packID, sha, artifactsDir string) (queuedJob, error) {
 	packDir := filepath.Join(category, packID)
 
 	versionDir, version, err := findSingleVersionDir(packDir)
 	if err != nil {
-		return err
+		return queuedJob{}, err
 	}
 
 	dest := filepath.Join(artifactsDir, fmt.Sprintf("%s-%s-%s.zip", packID, version, sha))
+	label := filepath.Base(dest)
 
-	if category == "resourcepacks" {
-		if bin := packsquashBin(); bin != "" {
-			fmt.Printf("squashing %s: %s (PackSquash)\n", category, packID)
-			return squashContents(bin, packDir, versionDir, dest)
-		}
-		fmt.Printf("zipping %s: %s (packsquash not found; plain zip — install it or set PACKSQUASH_BIN for optimized builds)\n", category, packID)
-	} else {
-		fmt.Printf("zipping %s: %s\n", category, packID)
-	}
-	return zipContents(versionDir, dest)
+	done := sched.Submit(Task{
+		Name:  label,
+		Needs: []Resource{Resource("zip:" + packDir)},
+		Run: func() error {
+			if category == "resourcepacks" {
+				if bin := packsquashBin(); bin != "" {
+					fmt.Printf("squashing %s: %s (PackSquash)\n", category, packID)
+					return squashContents(bin, packDir, versionDir, dest)
+				}
+				fmt.Printf("zipping %s: %s (packsquash not found; plain zip — install it or set PACKSQUASH_BIN for optimized builds)\n", category, packID)
+			} else {
+				fmt.Printf("zipping %s: %s\n", category, packID)
+			}
+			return zipContents(versionDir, dest)
+		},
+	})
+	return queuedJob{label: label, done: done}, nil
 }
 
 func packsquashBin() string {

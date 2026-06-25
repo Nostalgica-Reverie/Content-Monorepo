@@ -15,11 +15,18 @@ somnus-bin/
 somnus/somnus
 src/actions/somnus/somnus
 
-# Docs
+# Go
+*.test
+coverage.out
+coverage.html
+
+# Bun / Node
 node_modules
+.bun/
+
+# Docs
 docs/docs/.vitepress/cache
 docs/docs/.vitepress/dist
-.idea
 
 # IntelliJ
 .idea/

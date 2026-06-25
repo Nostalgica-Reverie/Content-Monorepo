@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"sync/atomic"
 )
 
 func cmdLint(args []string) {
@@ -28,16 +29,28 @@ func cmdLint(args []string) {
 	}
 
 	fmt.Printf("linting %d file(s)...\n", len(lintable))
-	checked, failed := 0, 0
+	sched := NewScheduler(maxConcurrent())
+	var checked, failed int64
+	dones := make([]<-chan error, 0, len(lintable))
 	for _, f := range lintable {
+		f := f
 		if _, err := os.Stat(f); err != nil {
 			continue
 		}
-		checked++
-		if err := lintOne(f); err != nil {
-			fmt.Fprintf(os.Stderr, "::error file=%s::%v\n", f, err)
-			failed++
-		}
+		atomic.AddInt64(&checked, 1)
+		dones = append(dones, sched.Submit(Task{
+			Name: f,
+			Run: func() error {
+				if err := lintOne(f); err != nil {
+					fmt.Fprintf(os.Stderr, "::error file=%s::%v\n", f, err)
+					atomic.AddInt64(&failed, 1)
+				}
+				return nil
+			},
+		}))
+	}
+	for _, c := range dones {
+		<-c
 	}
 
 	if failed > 0 {

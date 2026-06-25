@@ -258,7 +258,14 @@ func pubBuild(manifestPath, variant string) {
 
 func pubBuildModpack(pDir, artifactsDir string, r *pubResolved) {
 	filenameBase := fmt.Sprintf("%s-%s-%s-%s", r.pName, r.mcVer, r.loader, r.pVer)
-	built := 0
+
+	type exportPlan struct {
+		plat       platform
+		targetPath string
+		outFile    string
+		flag       *bool
+	}
+	var plans []exportPlan
 
 	for _, pl := range []struct {
 		plat platform
@@ -273,21 +280,45 @@ func pubBuildModpack(pDir, artifactsDir string, r *pubResolved) {
 			fmt.Printf("skipping %s: folder %s not found (variant not published to this platform)\n", pl.plat.short, targetPath)
 			continue
 		}
-		outFile := filepath.Join(artifactsDir, fmt.Sprintf("%s-%s.%s", filenameBase, pl.plat.short, pl.plat.ext))
-		cmd := exec.Command(packwizBin(), pl.plat.cli, "export", "--output", outFile)
-		cmd.Dir = targetPath
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		if err := cmd.Run(); err != nil {
-			fail(fmt.Sprintf("packwiz export failed for %s", targetPath))
-		}
-		fmt.Printf("exported %s\n", outFile)
-		*pl.flag = true
-		built++
+		plans = append(plans, exportPlan{
+			plat:       pl.plat,
+			targetPath: targetPath,
+			outFile:    filepath.Join(artifactsDir, fmt.Sprintf("%s-%s.%s", filenameBase, pl.plat.short, pl.plat.ext)),
+			flag:       pl.flag,
+		})
 	}
 
-	if built == 0 {
+	if len(plans) == 0 {
 		fail(fmt.Sprintf("no platform folders found for subdir key '%s' (expected %s-mr / %s-cf)", r.subdirKey, r.subdirKey, r.subdirKey))
+	}
+
+	sched := NewScheduler(maxConcurrent())
+	slots := cacheSlotCount()
+	dones := make([]<-chan error, len(plans))
+	for i, p := range plans {
+		p := p
+		dones[i] = sched.Submit(Task{
+			Name: filepath.Base(p.outFile),
+			Needs: []Resource{
+				Resource("export:" + p.targetPath),
+				CacheSlot(p.targetPath, slots),
+			},
+			Run: func() error {
+				cmd := exec.Command(packwizBin(), p.plat.cli, "export", "--output", p.outFile)
+				cmd.Dir = p.targetPath
+				if out, err := cmd.CombinedOutput(); err != nil {
+					return fmt.Errorf("packwiz export failed for %s: %v\n%s", p.targetPath, err, indent(string(out), "    "))
+				}
+				fmt.Printf("exported %s\n", p.outFile)
+				*p.flag = true
+				return nil
+			},
+		})
+	}
+	for _, c := range dones {
+		if err := <-c; err != nil {
+			fail(err.Error())
+		}
 	}
 }
 
