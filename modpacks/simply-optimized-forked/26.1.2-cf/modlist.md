@@ -5,6 +5,7 @@
 - [Async Logger]()
 - [BadOptimizations]()
 - [Better Block Entities]()
+- [C2ME OpenCL Acceleration Module]()
 - [Cloth Config API (Fabric/Forge/NeoForge)]()
 - [Concurrent Chunk Management Engine]()
 - [Config Manager]()
@@ -27,5 +28,4 @@
 - [ScalableLux]()
 - [ServerCore]()
 - [Sodium]()
-- [ThreadTweak](https://modrinth.com/mod/vSEH1ERy)
 - [Very Many Players (Fabric)]()

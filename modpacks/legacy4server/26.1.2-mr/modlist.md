@@ -2,6 +2,7 @@
 
 ## Shared Mods
 
+- [C2ME OpenCL Acceleration Module](https://modrinth.com/mod/qtPMklut)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
 - [Customizable Player Models](https://modrinth.com/mod/h1E7sQNL)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
