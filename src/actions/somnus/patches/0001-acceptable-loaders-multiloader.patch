@@ -123,6 +123,3 @@ index 0000000..b4b1b54
 +	acceptableLoadersCommand.Flags().BoolVarP(&flagAlAdd, "add", "a", false, "Add a loader to the list")
 +	acceptableLoadersCommand.Flags().BoolVarP(&flagAlRemove, "remove", "r", false, "Remove a loader from the list")
 +}
--- 
-2.52.0.windows.1
-
