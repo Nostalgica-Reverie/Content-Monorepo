@@ -1,0 +1,140 @@
+From b8afc30ea624f26ac4b244714d08aec7803b5784 Mon Sep 17 00:00:00 2001
+From: omo50 <144749186+omo50@users.noreply.github.com>
+Date: Fri, 26 Jun 2026 02:02:52 -0500
+Subject: [PATCH] patch 0004: parallelize file downloads with bounded goroutine
+ pool
+
+---
+ core/download.go | 63 +++++++++++++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 25 deletions(-)
+
+diff --git a/core/download.go b/core/download.go
+index 9a8866c..d90e8c2 100644
+--- a/core/download.go
++++ b/core/download.go
+@@ -8,7 +8,9 @@ import (
+ 	"net/http"
+ 	"os"
+ 	"path/filepath"
++	"runtime"
+ 	"strings"
++	"sync"
+ 
+ 	"slices"
+ )
+@@ -47,6 +49,7 @@ type CompletedDownload struct {
+ 
+ type downloadSessionInternal struct {
+ 	cacheIndex           CacheIndex
++	cacheIndexMu         sync.Mutex
+ 	cacheFolder          string
+ 	hashesToObtain       []string
+ 	manualDownloads      []ManualDownload
+@@ -72,35 +75,42 @@ func (d *downloadSessionInternal) StartDownloads() chan CompletedDownload {
+ 		for _, found := range d.foundManualDownloads {
+ 			downloads <- found
+ 		}
++		sem := make(chan struct{}, max(1, min(runtime.NumCPU(), 8)))
++		var wg sync.WaitGroup
+ 		for _, task := range d.downloadTasks {
+-			warnings := make([]error, 0)
++			wg.Add(1)
++			sem <- struct{}{}
++			go func(task downloadTask) {
++				defer wg.Done()
++				defer func() { <-sem }()
++				warnings := make([]error, 0)
++
++				d.cacheIndexMu.Lock()
++				cacheHandle := d.cacheIndex.GetHandleFromHash(task.hashFormat, task.hash)
++				d.cacheIndexMu.Unlock()
++				if cacheHandle != nil {
++					download, err := reuseExistingFile(cacheHandle, d.hashesToObtain, task.mod, &d.cacheIndexMu)
++					if err != nil {
++						d.cacheIndexMu.Lock()
++						cacheHandle.Remove()
++						d.cacheIndexMu.Unlock()
++						warnings = append(warnings, fmt.Errorf("redownloading cached file: %w", err))
++					} else {
++						downloads <- download
++						return
++					}
++				}
+ 
+-			// Get handle for mod
+-			cacheHandle := d.cacheIndex.GetHandleFromHash(task.hashFormat, task.hash)
+-			if cacheHandle != nil {
+-				download, err := reuseExistingFile(cacheHandle, d.hashesToObtain, task.mod)
++				download, err := downloadNewFile(&task, d.cacheFolder, d.hashesToObtain, &d.cacheIndex, &d.cacheIndexMu)
+ 				if err != nil {
+-					// Remove handle and try again
+-					cacheHandle.Remove()
+-					cacheHandle = nil
+-					warnings = append(warnings, fmt.Errorf("redownloading cached file: %w", err))
++					downloads <- CompletedDownload{Error: err, Mod: task.mod}
+ 				} else {
++					download.Warnings = warnings
+ 					downloads <- download
+-					continue
+ 				}
+-			}
+-
+-			download, err := downloadNewFile(&task, d.cacheFolder, d.hashesToObtain, &d.cacheIndex)
+-			if err != nil {
+-				downloads <- CompletedDownload{
+-					Error: err,
+-					Mod:   task.mod,
+-				}
+-			} else {
+-				download.Warnings = warnings
+-				downloads <- download
+-			}
++			}(task)
+ 		}
++		wg.Wait()
+ 		close(downloads)
+ 	}()
+ 	return downloads
+@@ -118,7 +128,7 @@ func (d *downloadSessionInternal) SaveIndex() error {
+ 	return nil
+ }
+ 
+-func reuseExistingFile(cacheHandle *CacheIndexHandle, hashesToObtain []string, mod *Mod) (CompletedDownload, error) {
++func reuseExistingFile(cacheHandle *CacheIndexHandle, hashesToObtain []string, mod *Mod, mu *sync.Mutex) (CompletedDownload, error) {
+ 	// Already stored; try using it!
+ 	file, err := cacheHandle.Open()
+ 	if err == nil {
+@@ -135,7 +145,9 @@ func reuseExistingFile(cacheHandle *CacheIndexHandle, hashesToObtain []string, m
+ 				_ = file.Close()
+ 				return CompletedDownload{}, fmt.Errorf("failed to seek file %s in cache: %w", cacheHandle.Path(), err)
+ 			}
++			mu.Lock()
+ 			warnings = cacheHandle.UpdateIndex()
++			mu.Unlock()
+ 		}
+ 
+ 		return CompletedDownload{
+@@ -149,7 +161,7 @@ func reuseExistingFile(cacheHandle *CacheIndexHandle, hashesToObtain []string, m
+ 	}
+ }
+ 
+-func downloadNewFile(task *downloadTask, cacheFolder string, hashesToObtain []string, index *CacheIndex) (CompletedDownload, error) {
++func downloadNewFile(task *downloadTask, cacheFolder string, hashesToObtain []string, index *CacheIndex, mu *sync.Mutex) (CompletedDownload, error) {
+ 	// Create temp file to download to
+ 	tempFile, err := os.CreateTemp(filepath.Join(cacheFolder, "temp"), "download-tmp")
+ 	if err != nil {
+@@ -182,9 +194,10 @@ func downloadNewFile(task *downloadTask, cacheFolder string, hashesToObtain []st
+ 	}
+ 
+ 	// Create handle with calculated hashes
++	mu.Lock()
+ 	cacheHandle, alreadyExists := index.NewHandleFromHashes(hashes)
+-	// Update index stored hashes
+ 	warnings := cacheHandle.UpdateIndex()
++	mu.Unlock()
+ 
+ 	var file *os.File
+ 	if alreadyExists {
+-- 
+2.52.0.windows.1
+

@@ -41,6 +41,7 @@ maintenance
   validate <manifest> [--all]          validate pack manifest(s): fields, subdirs, changelog, role, automation
 
 meta
+  packwiz build [--output <path>]     clone packwiz, apply patches/, build a patched binary
   doctor                              check tools, repo root, and manifest health (alias: check)
   help [verb]                         show this help, or detailed usage for one verb
   version                             print the somnus version
@@ -82,7 +83,7 @@ func main() {
 	switch verb {
 	case "init", "bump", "side", "freeze", "unfreeze", "test", "modlist", "port",
 		"export", "build", "sync", "update", "refresh", "loader-update", "lint",
-		"pages", "packs", "import", "publish", "validate", "automation":
+		"pages", "packs", "import", "publish", "validate", "automation", "packwiz":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -135,6 +136,8 @@ func main() {
 		cmdAutomation(os.Args[2:])
 	case "port":
 		cmdPort(os.Args[2:])
+	case "packwiz":
+		cmdPackwiz(os.Args[2:])
 	case "doctor":
 		cmdDoctor(os.Args[2:])
 	default:

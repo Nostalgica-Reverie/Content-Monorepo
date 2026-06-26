@@ -84,6 +84,12 @@ var verbUsage = map[string]string{
   upload <manifest> [variant]  send artifacts to Modrinth/CurseForge — DRY RUN unless --live
   verify <manifest> [variant]  assert the version landed on Modrinth (post-upload CI check)`,
 
+	"packwiz": `usage: somnus packwiz build [--output <path>]
+  clone packwiz at the pinned SHA, apply all patches in patches/, and build the binary
+  default output: ./packwiz-bin/packwiz (./packwiz-bin/packwiz.exe on Windows)
+  set PACKWIZ_BIN to the output path so somnus commands pick up the patched binary
+  e.g. somnus packwiz build --output ./bin/packwiz`,
+
 	"doctor": `usage: somnus doctor   (alias: check)
   verify tools (git, packwiz, java, zip), repo root, manifest health, and legacy opt-out files`,
 
