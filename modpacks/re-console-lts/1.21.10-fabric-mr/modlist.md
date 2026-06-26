@@ -3,7 +3,6 @@
 ## Client Mods
 
 - [Animatica Refabricated](https://modrinth.com/mod/xEyZuswh)
-- [Animatica](https://modrinth.com/mod/PRN43VSY)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
 - [Better Block Entities](https://modrinth.com/mod/ONZm0H7Y)
 - [BetterF3](https://modrinth.com/mod/8shC1gFX)

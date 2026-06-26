@@ -14,7 +14,6 @@
 - [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [Gnetum](https://modrinth.com/mod/7MoE34WK)
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
-- [Ixeris](https://modrinth.com/mod/p8RJPJIC)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
 - [Raise Sound Limit Simplified](https://modrinth.com/mod/SKW62Pht)
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
@@ -23,7 +22,6 @@
 
 ## Shared Mods
 
-- [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Bedrock Skins](https://modrinth.com/mod/76lEgqhs)
 - [BugFixerUpper](https://modrinth.com/mod/gRMQvlnJ)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)

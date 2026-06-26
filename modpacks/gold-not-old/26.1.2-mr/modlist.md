@@ -32,6 +32,7 @@
 
 - [Anti-Smooth](https://modrinth.com/mod/zlZC5n7T)
 - [Async](https://modrinth.com/mod/vEC2jm6I)
+- [C2ME OpenCL Acceleration Module](https://modrinth.com/mod/qtPMklut)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)
@@ -41,6 +42,7 @@
 - [Forge Config API Port](https://modrinth.com/mod/ohNO6lps)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
 - [Golden Age Combat](https://modrinth.com/mod/U5I04KQ6)
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
 - [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
 - [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)

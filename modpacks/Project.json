@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Somnus do not touch pls thx",
-  "generated": "2026-06-14T23:21:42Z",
+  "generated": "2026-06-25T23:12:58Z",
   "projects": [
     {
       "id": "2k",
@@ -42,9 +42,10 @@
       "type": "modpack",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.06.2",
+      "version": "26.06.3",
       "release_type": "release",
       "modrinth_id": "legacy4server",
+      "curseforge_id": "1583815",
       "docs_path": "/modpacks/legacy4server/"
     },
     {
@@ -57,6 +58,26 @@
       "release_type": "release",
       "modrinth_id": "minigameclient",
       "docs_path": "/modpacks/minigameclient/"
+    },
+    {
+      "id": "re-console-main",
+      "name": "Re-Console",
+      "type": "modpack",
+      "version": "26.06.12.main",
+      "release_type": "release",
+      "modrinth_id": "legacy-minecraft",
+      "curseforge_id": "re-console",
+      "docs_path": "/modpacks/re-console-main/",
+      "variants": [
+        {
+          "mc_version": "26.2",
+          "loader": "fabric"
+        },
+        {
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        }
+      ]
     },
     {
       "id": "re-console-lts",
@@ -113,18 +134,6 @@
           "loader": "fabric"
         }
       ]
-    },
-    {
-      "id": "re-console-main",
-      "name": "Re-Console",
-      "type": "modpack",
-      "loader": "fabric",
-      "mc_version": "26.1.2",
-      "version": "26.06.9+main",
-      "release_type": "release",
-      "modrinth_id": "legacy-minecraft",
-      "curseforge_id": "re-console",
-      "docs_path": "/modpacks/re-console-main/"
     },
     {
       "id": "reimagined",
@@ -210,7 +219,7 @@
       "type": "modpack",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.05.10",
+      "version": "26.06",
       "release_type": "release",
       "modrinth_id": "simply-legacy",
       "curseforge_id": "simply-legacy",
@@ -220,13 +229,21 @@
       "id": "simply-optimized-forked",
       "name": "Simply Optimized Forked",
       "type": "modpack",
-      "loader": "fabric",
-      "mc_version": "26.1.2",
-      "version": "26.06.3",
+      "version": "26.06.6",
       "release_type": "release",
       "modrinth_id": "simply-optimized-forked",
       "curseforge_id": "simply-optimized-forked",
-      "docs_path": "/modpacks/simply-optimized-forked/"
+      "docs_path": "/modpacks/simply-optimized-forked/",
+      "variants": [
+        {
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        },
+        {
+          "mc_version": "26.2",
+          "loader": "fabric"
+        }
+      ]
     },
     {
       "id": "vital",
@@ -254,13 +271,20 @@
       "id": "simply-modernized",
       "name": "simply-modernized",
       "type": "modpack",
-      "loader": "fabric",
-      "mc_version": "26.1.2",
-      "version": "26.06.1",
+      "version": "26.06.2",
       "release_type": "release",
-      "modrinth_id": "simply-modernized",
       "curseforge_id": "1571429",
-      "docs_path": "/modpacks/simply-modernized/"
+      "docs_path": "/modpacks/simply-modernized/",
+      "variants": [
+        {
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        },
+        {
+          "mc_version": "26.2",
+          "loader": "fabric"
+        }
+      ]
     }
   ]
 }
