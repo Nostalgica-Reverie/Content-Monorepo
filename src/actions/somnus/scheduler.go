@@ -24,6 +24,7 @@ type Scheduler struct {
 	seq     uint64
 	readyQ  []*sTask
 	inReady map[*sTask]bool
+	closed  bool
 }
 
 type sTask struct {
@@ -53,7 +54,7 @@ func (s *Scheduler) worker() {
 	defer s.mu.Unlock()
 	for {
 		for len(s.readyQ) == 0 {
-			if s.pending == 0 {
+			if s.pending == 0 && s.closed {
 				s.cond.Broadcast()
 				return
 			}
@@ -119,6 +120,15 @@ func (s *Scheduler) Submit(t Task) <-chan error {
 
 func (s *Scheduler) SubmitWait(t Task) error {
 	return <-s.Submit(t)
+}
+
+// Close signals that no more tasks will be submitted. Workers exit once all
+// pending tasks finish. Must be called after the last Submit.
+func (s *Scheduler) Close() {
+	s.mu.Lock()
+	s.closed = true
+	s.cond.Broadcast()
+	s.mu.Unlock()
 }
 
 func (s *Scheduler) Wait() {

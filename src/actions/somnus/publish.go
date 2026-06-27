@@ -308,6 +308,7 @@ func pubBuildModpack(pDir, artifactsDir string, r *pubResolved) {
 			},
 		})
 	}
+	sched.Close()
 	for _, c := range dones {
 		if err := <-c; err != nil {
 			fail(err.Error())

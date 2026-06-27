@@ -226,6 +226,7 @@ func workPool(targets []string, op operation, prog *progress) []string {
 			},
 		})
 	}
+	sched.Close()
 
 	var failures []string
 	for i, c := range dones {
@@ -342,6 +343,7 @@ func runSync(dryRun bool) {
 			Run: func() error { return runSyncJob(j, dryRun, syncedFolders) },
 		})
 	}
+	sched.Close()
 
 	failed := 0
 	for _, c := range dones {

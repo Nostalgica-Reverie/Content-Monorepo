@@ -51,6 +51,7 @@ func cmdLint(args []string) {
 			},
 		}))
 	}
+	sched.Close()
 	for _, c := range dones {
 		<-c
 	}

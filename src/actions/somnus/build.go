@@ -125,6 +125,7 @@ func runBuild(targetedPack, shortSHA string) {
 		}
 	}
 
+	sched.Close()
 	var failed int
 	for _, j := range jobs {
 		if err := <-j.done; err != nil {
