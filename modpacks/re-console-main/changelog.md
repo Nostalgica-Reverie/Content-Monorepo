@@ -1,2 +1,2 @@
-# Re-Console Main 26.06.13
-fixes and updates
+# Re-Console Main 26.06.15
+fixes for sodium on 26.1.2
