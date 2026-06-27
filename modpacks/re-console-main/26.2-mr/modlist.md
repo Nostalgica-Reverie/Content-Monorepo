@@ -65,6 +65,7 @@
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
 - [Global Packs](https://modrinth.com/mod/NRLPy2mk)
 - [KryptonReno's Fabric Patcher](https://modrinth.com/mod/yzkasIPx)
+- [L4J Next](https://github.com/omo50/mod3/releases/download/l4j-next/Legacy4J-26.2-1.9-pre-2-fabric.jar)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
 - [ModernRegSyncFix](https://modrinth.com/mod/U2w9BZus)
 - [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)
@@ -79,4 +80,3 @@
 - [Whiteout](https://modrinth.com/mod/5piZC07n)
 - [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
 - [e4mc](https://modrinth.com/mod/qANg5Jrr)
-- [mod3](https://github.com/omo50/mod3/releases/download/l4j-next/Legacy4J-26.2-1.9-pre-2-fabric.jar)
