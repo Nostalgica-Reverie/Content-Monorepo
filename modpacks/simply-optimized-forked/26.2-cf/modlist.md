@@ -19,8 +19,6 @@
 - [Ixeris]()
 - [Lithium (Fabric/NeoForge)]()
 - [ModernFix-mVUS]()
-- [No Chat Reports]()
-- [No Chat Restrictions]()
 - [ScalableLux]()
 - [ServerCore]()
 - [Sodium]()

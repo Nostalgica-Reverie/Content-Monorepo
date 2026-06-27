@@ -24,8 +24,6 @@
 - [Lithium (Fabric/NeoForge)]()
 - [Mod Menu]()
 - [ModernFix-mVUS]()
-- [No Chat Reports]()
-- [No Chat Restrictions]()
 - [ScalableLux]()
 - [ServerCore]()
 - [Sodium Extra]()
