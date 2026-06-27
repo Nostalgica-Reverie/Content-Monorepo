@@ -12,7 +12,9 @@ First, please refer to the CONTRIBUTING.md file in the repository. This will tel
 
 ### How to work on the repo
 1. Install Go (1.24 or newer) from https://golang.org/dl/
-2. run `go install git.nostalgica.net/Reverie-Projects/monorepo/src/packwand@latest`
+2. run `cd src\packwand`
+3. run `go install`
+
 Now you have our tooling set up.
 
 # Documentation
