@@ -1,0 +1,156 @@
+From 0000000000000000000000000000000000000005 Mon Sep 17 00:00:00 2001
+From: omo50 <144749186+omo50@users.noreply.github.com>
+Date: Fri, 27 Jun 2026 00:00:00 -0500
+Subject: [PATCH 5/7] patch 0005: parallelize github update checks
+
+Mirrors the modrinth parallelization from patch 0003.
+Each getLatestRelease call hits the GitHub API independently,
+so a bounded goroutine pool gives the same speedup.
+
+---
+ github/updater.go | 44 +++++++++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
+
+diff --git a/github/updater.go b/github/updater.go
+index a1b2c3d..b4c5d6e 100644
+--- a/github/updater.go
++++ b/github/updater.go
+@@ -3,8 +3,10 @@ package github
+
+ import (
+ 	"errors"
+ 	"fmt"
++	"runtime"
+ 	"strings"
++	"sync"
+
+ 	"github.com/dlclark/regexp2"
+ 	"github.com/mitchellh/mapstructure"
+@@ -33,62 +35,66 @@ type cachedStateStore struct {
+
+ func (u ghUpdater) CheckUpdate(mods []*core.Mod, pack core.Pack) ([]core.UpdateCheck, error) {
+ 	results := make([]core.UpdateCheck, len(mods))
+-
+-	for i, mod := range mods {
+-		rawData, ok := mod.GetParsedUpdateData("github")
+-		if !ok {
+-			results[i] = core.UpdateCheck{Error: errors.New("failed to parse update metadata")}
+-			continue
+-		}
+-
+-		data := rawData.(ghUpdateData)
+-
+-		newRelease, err := getLatestRelease(data.Slug, data.Branch)
+-		if err != nil {
+-			results[i] = core.UpdateCheck{Error: fmt.Errorf("failed to get latest release: %v", err)}
+-			continue
+-		}
+-
+-		if newRelease.TagName == data.Tag { // The latest release is the same as the installed one
+-			results[i] = core.UpdateCheck{UpdateAvailable: false}
+-			continue
+-		}
+-
+-		expr := regexp2.MustCompile(data.Regex, 0)
+-
+-		if len(newRelease.Assets) == 0 {
+-			results[i] = core.UpdateCheck{Error: errors.New("new release doesn't have any assets")}
+-			continue
+-		}
+-
+-		var newFiles []Asset
+-
+-		for _, v := range newRelease.Assets {
+-			bl, _ := expr.MatchString(v.Name)
+-			if bl {
+-				newFiles = append(newFiles, v)
++	sem := make(chan struct{}, max(1, min(runtime.NumCPU(), 8)))
++	var wg sync.WaitGroup
++	for i, mod := range mods {
++		wg.Add(1)
++		sem <- struct{}{}
++		go func(i int, mod *core.Mod) {
++			defer wg.Done()
++			defer func() { <-sem }()
++
++			rawData, ok := mod.GetParsedUpdateData("github")
++			if !ok {
++				results[i] = core.UpdateCheck{Error: errors.New("failed to parse update metadata")}
++				return
+ 			}
+-		}
+-
+-		if len(newFiles) == 0 {
+-			results[i] = core.UpdateCheck{Error: errors.New("release doesn't have any assets matching regex")}
+-			continue
+-		}
+-
+-		if len(newFiles) > 1 {
+-			// TODO: also print file names
+-			results[i] = core.UpdateCheck{Error: errors.New("release has more than one asset matching regex")}
+-			continue
+-		}
+-
+-		newFile := newFiles[0]
+-
+-		results[i] = core.UpdateCheck{
+-			UpdateAvailable: true,
+-			UpdateString:    mod.FileName + " -> " + newFile.Name,
+-			CachedState:     cachedStateStore{data.Slug, newRelease},
+-		}
++
++			data := rawData.(ghUpdateData)
++
++			newRelease, err := getLatestRelease(data.Slug, data.Branch)
++			if err != nil {
++				results[i] = core.UpdateCheck{Error: fmt.Errorf("failed to get latest release: %v", err)}
++				return
++			}
++
++			if newRelease.TagName == data.Tag {
++				results[i] = core.UpdateCheck{UpdateAvailable: false}
++				return
++			}
++
++			expr := regexp2.MustCompile(data.Regex, 0)
++
++			if len(newRelease.Assets) == 0 {
++				results[i] = core.UpdateCheck{Error: errors.New("new release doesn't have any assets")}
++				return
++			}
++
++			var newFiles []Asset
++
++			for _, v := range newRelease.Assets {
++				bl, _ := expr.MatchString(v.Name)
++				if bl {
++					newFiles = append(newFiles, v)
++				}
++			}
++
++			if len(newFiles) == 0 {
++				results[i] = core.UpdateCheck{Error: errors.New("release doesn't have any assets matching regex")}
++				return
++			}
++
++			if len(newFiles) > 1 {
++				// TODO: also print file names
++				results[i] = core.UpdateCheck{Error: errors.New("release has more than one asset matching regex")}
++				return
++			}
++
++			newFile := newFiles[0]
++
++			results[i] = core.UpdateCheck{
++				UpdateAvailable: true,
++				UpdateString:    mod.FileName + " -> " + newFile.Name,
++				CachedState:     cachedStateStore{data.Slug, newRelease},
++			}
++		}(i, mod)
+ 	}
+-
++	wg.Wait()
+ 	return results, nil
+ }
+--
+2.52.0.windows.1

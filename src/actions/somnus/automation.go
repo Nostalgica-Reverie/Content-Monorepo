@@ -32,7 +32,7 @@ func readAutomation(packDir string) Automation {
 	}
 	var legacy legacyOptOut
 	if err := json.Unmarshal(data, &legacy); err != nil {
-		fmt.Fprintf(os.Stderr, "::warning::invalid opt-out.json in %s: %v\n", packDir, err)
+		warnf("invalid opt-out.json in %s: %v", packDir, err)
 		return a
 	}
 	if a.AutoUpdate == nil {

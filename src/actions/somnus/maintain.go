@@ -31,7 +31,22 @@ func cacheSlotCount() int {
 	return maxConcurrent()
 }
 
-func cmdUpdate(args []string)  { runScoped(opUpdate, args) }
+func cmdUpdate(args []string) {
+	check := false
+	var rest []string
+	for _, a := range args {
+		if a == "--check" {
+			check = true
+		} else {
+			rest = append(rest, a)
+		}
+	}
+	if check {
+		runUpdateCheck(rest)
+		return
+	}
+	runScoped(opUpdate, rest)
+}
 func cmdRefresh(args []string) { runScoped(opRefresh, args) }
 
 func runScoped(op operation, args []string) {
@@ -154,6 +169,7 @@ func run(op operation, packFilter string, explicit bool) {
 	}
 
 	fmt.Printf("all %ss finished successfully.\n", op.name)
+	autoLintDirs(targets)
 }
 
 func collectTargets(root string, honorIgnore bool, packFilter string, explicit bool) (targets []string, skipped []string) {
@@ -181,7 +197,7 @@ func collectTargets(root string, honorIgnore bool, packFilter string, explicit b
 		if honorIgnore {
 			if skip, legacy := optedOutOfAutoUpdate(packPath); skip {
 				if legacy {
-					fmt.Fprintf(os.Stderr, "::warning::%s uses a legacy opt-out file; migrate to manifest.json automation\n", packPath)
+					warnf("%s uses a legacy opt-out file; migrate to manifest.json automation", packPath)
 				}
 				skipped = append(skipped, packPath)
 				continue
@@ -235,6 +251,65 @@ func workPool(targets []string, op operation, prog *progress) []string {
 		}
 	}
 	return failures
+}
+
+func runUpdateCheck(args []string) {
+	packFilter, _ := resolveScope(args)
+	root := modpacksDir()
+	targets, _ := collectTargets(root, true, packFilter, false)
+	if len(targets) == 0 {
+		fmt.Println("no pack subdirs to check")
+		return
+	}
+
+	totalUpdates := 0
+	for _, dir := range targets {
+		updates, err := checkUpdatesInDir(dir)
+		if err != nil {
+			warnf("%s: check failed: %v", dir, err)
+			continue
+		}
+		if len(updates) > 0 {
+			fmt.Printf("%s: %d update(s) available\n", dir, len(updates))
+			for _, u := range updates {
+				fmt.Printf("  ~ %s\n", u)
+			}
+			totalUpdates += len(updates)
+		} else {
+			fmt.Printf("%s: up to date\n", dir)
+		}
+	}
+	if totalUpdates == 0 {
+		fmt.Println("\neverything is up to date")
+	} else {
+		fmt.Printf("\n%d update(s) available — run 'somnus update' to apply\n", totalUpdates)
+	}
+}
+
+func checkUpdatesInDir(dir string) ([]string, error) {
+	cmd := exec.Command(packwizBin(), "update", "--all", "-y", "--dry-run")
+	cmd.Dir = dir
+	out, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("packwiz update --dry-run: %w", err)
+	}
+
+	var updates []string
+	inUpdates := false
+	for line := range strings.SplitSeq(string(out), "\n") {
+		line = strings.TrimSpace(line)
+		if line == "Updates found:" {
+			inUpdates = true
+			continue
+		}
+		if strings.HasPrefix(line, "dry-run:") {
+			break
+		}
+		if inUpdates && line != "" {
+			updates = append(updates, line)
+		}
+	}
+	return updates, nil
 }
 
 func platformSuffix(s string) string {
@@ -370,7 +445,7 @@ func runSyncJob(j syncJob, dryRun bool, syncedFolders []string) error {
 
 	excluded := readSyncExclude(filepath.Join(j.targetDir, "sync-exclude.json"))
 	if len(excluded) > 0 {
-		fmt.Fprintf(os.Stderr, "::warning::%s uses legacy sync-exclude.json; migrate to manifest.json automation.sync_exclude\n", j.targetDir)
+		warnf("%s uses legacy sync-exclude.json; migrate to manifest.json automation.sync_exclude", j.targetDir)
 	}
 	for _, f := range readAutomation(filepath.Dir(j.targetDir)).SyncExclude {
 		excluded[f] = true
@@ -452,7 +527,7 @@ func runSyncJob(j syncJob, dryRun bool, syncedFolders []string) error {
 			for _, f := range toDelete {
 				p := filepath.FromSlash(filepath.Join(j.targetDir, f))
 				if err := os.Remove(p); err != nil && !os.IsNotExist(err) {
-					fmt.Fprintf(os.Stderr, "::warning::could not delete %s: %v\n", p, err)
+					warnf("could not delete %s: %v", p, err)
 				}
 			}
 			fmt.Printf("  %s: pruned %d base-removed file(s)\n", j.consumerID, len(toDelete))
@@ -513,7 +588,7 @@ func readSyncState(path string) map[string]bool {
 		return set
 	}
 	if st.Version != syncStateVersion {
-		fmt.Fprintf(os.Stderr, "::warning::ignoring %s (state version %d != %d); treating as fresh, no prune this run\n",
+		warnf("ignoring %s (state version %d != %d); treating as fresh, no prune this run",
 			path, st.Version, syncStateVersion)
 		return set
 	}

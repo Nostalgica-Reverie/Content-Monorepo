@@ -422,6 +422,4 @@ func fileExists(path string) bool {
 	return err == nil && !info.IsDir()
 }
 
-func vwarn(msg string) {
-	fmt.Fprintf(os.Stderr, "::warning::%s\n", msg)
-}
+func vwarn(msg string) { warnf("%s", msg) }

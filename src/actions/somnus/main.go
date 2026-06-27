@@ -10,41 +10,46 @@ import (
 const somnusVersion = "26.1-dev"
 
 const usageText = `somnus CLI tool %s
+packwiz: custom patched build — run 'somnus packwiz build' to compile from source
 
 usage: somnus <verb> [args]
 
 content
-  init <category> <name> [flags]      scaffold a pack (manifest, changelog, packwiz subdirs, .packwizignore)
-  bump <pack-dir> <new-version>       set a pack's manifest version (--configs: also in-pack version files)
-  automation get <pack-dir>            output effective automation settings for a pack as JSON
-  packs list|get|set                  the pack registry: every manifest as an addressable object
-  freeze <pack-dir> [mods...]         pin mods across a whole pack so updates skip them (no args: list)
-  unfreeze <pack-dir> <mods...>       unpin previously frozen mods
-  port <mr-subdir> <cf-subdir>        diff MR mods against the CF side (--add to port interactively)
-  import <url-or-mrpack> [--id <id>]  import a Modrinth .mrpack as a new pack in this repo
-  side <pack-dir> <mod> [side]        show or fix a mod's side (client/server/both) across a pack
-  test <pack-subdir>                  packwiz serve + install into a local test instance
+  init <category> <name> [flags]      sets up a new pack with a manifest, changelog, and packwiz subdirs
+  bump <pack-dir> <new-version>       bumps the manifest version (--configs: also bumps in-pack version files)
+  add <slug> [subdir] [--no-refresh]  adds a mod by slug, routes to modrinth or curseforge by subdir suffix
+  automation get <pack-dir>           spits out the effective automation settings for a pack as json
+  packs list|get|set                  look up or tweak any pack's manifest fields by id
+  freeze <pack-dir> [mods...]         pins mods so updates skip them — no args lists what's frozen
+  unfreeze <pack-dir> <mods...>       unpins mods so they're fair game for updates again
+  port <mr-subdir> <cf-subdir>        shows which mr mods are missing on the cf side (--add to fill them in)
+  import <url-or-file> [--id <id>]    pulls a modrinth mrpack or curseforge zip in as a new pack
+  side <pack-dir> <mod> [side]        checks or fixes a mod's side across all subdirs in a pack
+  test <pack-subdir>                  spins up packwiz serve and installs into a local test instance
 
 build & docs
-  export [pack]                       build changed (or one named) pack locally
-  build <sha> | --pack <name> <sha>   CI build of git-changed packs (or one named pack)
-  modlist <pack-subdir>               write crash-assistant modlist.json for a subdir
-  pages [pack]                        write modlist.md files; full runs also emit projects.json
-  publish <mode> <manifest> [variant] list | build | upload [--live] | verify; the release pipeline. Please do not run locally
+  export [pack]                       builds changed (or one named) pack locally into artifacts/
+  build <sha> | --pack <name> <sha>   ci-style build of git-changed packs tagged with the sha
+  modlist <pack-subdir>               writes the crash-assistant modlist.json for a subdir
+  pages [pack]                        writes modlist.md files and projects.json for the docs site
+  publish <mode> <manifest> [variant] runs the release pipeline — please don't poke this locally
 
 maintenance
-  update                              packwiz update --all in every pack subdir
-  refresh                             packwiz refresh in every pack subdir
-  loader-update [latest|recommended]  migrate loaders across all packs
-  sync [--dry-run]                    propagate performance bases into consumers
-  lint [files...]                     syntax-lint changed JSON / .pw.toml files
-  validate <manifest> [--all]          validate pack manifest(s): fields, subdirs, changelog, role, automation
+  update [--check]                    runs packwiz update --all across every pack subdir (--check: dry run)
+  refresh                             runs packwiz refresh across every pack subdir
+  loader-update [latest|recommended]  migrates loaders across all packs
+  sync [--dry-run]                    copies performance base content into consumer packs
+  lint [files...]                     checks changed json and pw.toml files for syntax errors
+  validate <manifest> [--all]         validates manifests — fields, subdirs, changelog, role, automation
+  status [--json]                     shows a dashboard of all packs with version, mods, and frozen counts
+  diff <old-ref> <new-ref> [path]     shows mod changes between two git refs
 
 meta
-  packwiz build [--output <path>]     clone packwiz, apply patches/, build a patched binary
-  doctor                              check tools, repo root, and manifest health (alias: check)
-  help [verb]                         show this help, or detailed usage for one verb
-  version                             print the somnus version
+  packwiz build [--output <path>]     clones packwiz at the pinned sha, applies patches, and builds it
+  doctor                              checks that tools, repo root, and manifests are all looking good
+  completion bash|fish|zsh            prints shell completion script — eval it in your rc file
+  help [verb]                         shows this text, or detailed usage for a specific verb
+  version                             prints the somnus version
 
 aliases: docs -> pages, instance -> test, check -> doctor
 
@@ -60,8 +65,9 @@ var startCwd string
 func main() {
 	startCwd, _ = os.Getwd()
 	if len(os.Args) < 2 {
-		fmt.Fprint(os.Stderr, usage())
-		os.Exit(1)
+		printMascot()
+		fmt.Print(usage())
+		return
 	}
 	verb := canonicalVerb(os.Args[1])
 
@@ -81,9 +87,10 @@ func main() {
 	}
 
 	switch verb {
-	case "init", "bump", "side", "freeze", "unfreeze", "test", "modlist", "port",
+	case "init", "bump", "add", "side", "freeze", "unfreeze", "test", "modlist", "port",
 		"export", "build", "sync", "update", "refresh", "loader-update", "lint",
-		"pages", "packs", "import", "publish", "validate", "automation", "packwiz":
+		"pages", "packs", "import", "publish", "validate", "automation", "packwiz",
+		"status", "diff":
 		if root := findRepoRoot(); root != "" {
 			if err := os.Chdir(root); err != nil {
 				fail(fmt.Sprintf("failed to enter repo root %s: %v", root, err))
@@ -98,6 +105,8 @@ func main() {
 		cmdInit(os.Args[2:])
 	case "bump":
 		cmdBump(os.Args[2:])
+	case "add":
+		cmdAdd(os.Args[2:])
 	case "packs":
 		cmdPacks(os.Args[2:])
 	case "side":
@@ -140,6 +149,12 @@ func main() {
 		cmdPackwiz(os.Args[2:])
 	case "doctor":
 		cmdDoctor(os.Args[2:])
+	case "status":
+		cmdStatus(os.Args[2:])
+	case "diff":
+		cmdDiff(os.Args[2:])
+	case "completion":
+		cmdCompletion(os.Args[2:])
 	default:
 		failUsage(fmt.Sprintf("unknown verb %q", os.Args[1]))
 	}

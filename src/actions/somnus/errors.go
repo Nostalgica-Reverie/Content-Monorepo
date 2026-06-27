@@ -30,9 +30,33 @@ func failNotFound(msg string) {
 }
 
 func failWith(code int, msg, hint string) {
-	fmt.Fprintf(os.Stderr, "::error::%s\n", msg)
+	if isTTY() {
+		fmt.Fprintf(os.Stderr, "error: %s\n", msg)
+	} else {
+		fmt.Fprintf(os.Stderr, "::error::%s\n", msg)
+	}
 	if hint != "" {
 		fmt.Fprintf(os.Stderr, "  hint: %s\n", hint)
 	}
 	os.Exit(code)
+}
+
+// warnf prints a warning — plain on a TTY, ::warning:: annotation in CI.
+func warnf(format string, args ...any) {
+	msg := fmt.Sprintf(format, args...)
+	if isTTY() {
+		fmt.Fprintf(os.Stderr, "warning: %s\n", msg)
+	} else {
+		fmt.Fprintf(os.Stderr, "::warning::%s\n", msg)
+	}
+}
+
+// errf prints a file-annotated error — inline in CI, plain on a TTY.
+func errf(path, format string, args ...any) {
+	msg := fmt.Sprintf(format, args...)
+	if isTTY() {
+		fmt.Fprintf(os.Stderr, "  error: %s: %s\n", path, msg)
+	} else {
+		fmt.Fprintf(os.Stderr, "::error file=%s::%s\n", path, msg)
+	}
 }

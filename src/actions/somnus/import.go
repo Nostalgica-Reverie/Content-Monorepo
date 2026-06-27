@@ -30,6 +30,33 @@ type mrIndexFile struct {
 
 var mrCDNRe = regexp.MustCompile(`^https://cdn\.modrinth\.com/data/([^/]+)/versions/([^/]+)/`)
 
+// cfManifest is the manifest.json inside a CurseForge modpack zip.
+type cfManifest struct {
+	ManifestType string      `json:"manifestType"`
+	Name         string      `json:"name"`
+	Version      string      `json:"version"`
+	Author       string      `json:"author"`
+	Minecraft    cfMinecraft `json:"minecraft"`
+	Files        []cfFile    `json:"files"`
+	Overrides    string      `json:"overrides"`
+}
+
+type cfMinecraft struct {
+	Version    string        `json:"version"`
+	ModLoaders []cfModLoader `json:"modLoaders"`
+}
+
+type cfModLoader struct {
+	ID      string `json:"id"`
+	Primary bool   `json:"primary"`
+}
+
+type cfFile struct {
+	ProjectID int  `json:"projectID"`
+	FileID    int  `json:"fileID"`
+	Required  bool `json:"required"`
+}
+
 func cmdImport(args []string) {
 	if len(args) < 1 {
 		failUsage(verbUsage["import"])
@@ -49,28 +76,67 @@ func cmdImport(args []string) {
 		failEnv("packwiz not found", "import scaffolds via packwiz init and refresh; install it or set PACKWIZ_BIN")
 	}
 
-	mrpackPath := source
+	archivePath := source
 	if strings.HasPrefix(source, "http://") || strings.HasPrefix(source, "https://") {
 		var err error
-		mrpackPath, err = downloadToTemp(source)
+		archivePath, err = downloadToTemp(source)
 		if err != nil {
 			fail(fmt.Sprintf("download failed: %v", err))
 		}
-		defer os.Remove(mrpackPath)
+		defer os.Remove(archivePath)
 	} else if _, err := os.Stat(source); err != nil {
 		failNotFound(fmt.Sprintf("no such file: %s", source))
 	}
 
-	zr, err := zip.OpenReader(mrpackPath)
+	zr, err := zip.OpenReader(archivePath)
 	if err != nil {
-		fail(fmt.Sprintf("not a readable zip/mrpack: %v", err))
+		fail(fmt.Sprintf("not a readable zip: %v", err))
 	}
 	defer zr.Close()
 
-	idx, err := readMrIndex(&zr.Reader)
-	if err != nil {
-		fail(err.Error())
+	// Detect format: mrpack (modrinth.index.json) or CF zip (manifest.json with manifestType)
+	if _, found := findZipEntry(&zr.Reader, "modrinth.index.json"); found {
+		idx, err := readMrIndex(&zr.Reader)
+		if err != nil {
+			fail(err.Error())
+		}
+		importMrpack(archivePath, &zr.Reader, idx, customID)
+		return
 	}
+	if data, found := findZipEntry(&zr.Reader, "manifest.json"); found {
+		var cfm cfManifest
+		if err := json.Unmarshal(data, &cfm); err != nil {
+			fail(fmt.Sprintf("manifest.json is not valid JSON: %v", err))
+		}
+		if cfm.ManifestType != "minecraftModpack" {
+			fail(fmt.Sprintf("unrecognised manifest type %q in manifest.json", cfm.ManifestType))
+		}
+		importCFZip(archivePath, &zr.Reader, &cfm, customID)
+		return
+	}
+	fail("not an mrpack or curseforge modpack zip (no modrinth.index.json or manifest.json found)")
+}
+
+func findZipEntry(zr *zip.Reader, name string) ([]byte, bool) {
+	for _, f := range zr.File {
+		if f.Name != name {
+			continue
+		}
+		rc, err := f.Open()
+		if err != nil {
+			return nil, false
+		}
+		defer rc.Close()
+		data, err := io.ReadAll(rc)
+		if err != nil {
+			return nil, false
+		}
+		return data, true
+	}
+	return nil, false
+}
+
+func importMrpack(archivePath string, zr *zip.Reader, idx *mrIndex, customID string) {
 
 	mc := idx.Dependencies["minecraft"]
 	if mc == "" {
@@ -117,7 +183,7 @@ func cmdImport(args []string) {
 	wrote, updatable := 0, 0
 	for _, f := range idx.Files {
 		if len(f.Downloads) == 0 {
-			fmt.Fprintf(os.Stderr, "::warning::%s has no download URL; skipped\n", f.Path)
+			warnf("%s has no download URL; skipped", f.Path)
 			continue
 		}
 		ok, hasUpdate := writeImportedToml(subdir, f)
@@ -129,7 +195,7 @@ func cmdImport(args []string) {
 		}
 	}
 
-	overrides := extractOverrides(&zr.Reader, subdir)
+	overrides := extractOverrides(zr, subdir)
 
 	if err := os.WriteFile(filepath.Join(subdir, ".packwizignore"), []byte(packwizIgnore), 0o644); err != nil {
 		fail(fmt.Sprintf("failed to write .packwizignore: %v", err))
@@ -163,6 +229,139 @@ func cmdImport(args []string) {
 	if wrote > updatable {
 		fmt.Printf("  note: files without cdn.modrinth.com URLs lack [update.modrinth]; 'somnus update' will leave them as-is\n")
 	}
+}
+
+func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID string) {
+	mc := cfm.Minecraft.Version
+	if mc == "" {
+		fail("CF manifest.json has no minecraft.version")
+	}
+	loader, loaderVersion := detectCFLoader(cfm.Minecraft.ModLoaders)
+	if loader == "" {
+		fail("could not detect a mod loader in CF manifest.json modLoaders")
+	}
+
+	packID := customID
+	if packID == "" {
+		packID = slugify(cfm.Name)
+	}
+	packDir := filepath.Join("modpacks", packID)
+	if _, err := os.Stat(packDir); err == nil {
+		fail(fmt.Sprintf("pack already exists: %s (use --id for a different name)", packDir))
+	}
+	subdir := filepath.Join(packDir, mc+"-cf")
+	if err := os.MkdirAll(subdir, 0o755); err != nil {
+		fail(fmt.Sprintf("failed to create %s: %v", subdir, err))
+	}
+
+	fmt.Printf("importing CF pack %q (%s %s, mc %s) -> %s\n", cfm.Name, loader, loaderVersion, mc, packDir)
+
+	// Try packwiz curseforge import — it handles the mod files via CF API.
+	cmd := exec.Command(packwizBin(), "curseforge", "import", archivePath)
+	cmd.Dir = subdir
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		// If packwiz doesn't have cf import, fall back to manual scaffold.
+		fmt.Printf("packwiz curseforge import not available (%v); scaffolding pack structure only\n", err)
+		initFlag, _ := loaderLatestFlag(loader)
+		init2 := exec.Command(packwizBin(), "init",
+			"--name", cfm.Name,
+			"--author", placeholderAuthor,
+			"--mc-version", mc,
+			"--modloader", loader,
+			initFlag,
+			"--version", cfm.Version,
+			"-y",
+		)
+		init2.Dir = subdir
+		if out, err2 := init2.CombinedOutput(); err2 != nil {
+			fail(fmt.Sprintf("packwiz init failed in %s: %v\n%s", subdir, err2, indent(string(out), "    ")))
+		}
+		fmt.Printf("  note: %d mod file(s) require manual 'packwiz curseforge add' — see cf-pending.txt\n", len(cfm.Files))
+		var pending strings.Builder
+		for _, f := range cfm.Files {
+			if f.Required {
+				fmt.Fprintf(&pending, "packwiz curseforge install --project-id %d --file-id %d\n", f.ProjectID, f.FileID)
+			}
+		}
+		_ = os.WriteFile(filepath.Join(subdir, "cf-pending.txt"), []byte(pending.String()), 0o644)
+	}
+
+	overrideDir := cfm.Overrides
+	if overrideDir == "" {
+		overrideDir = "overrides"
+	}
+	overrides := extractOverridesPrefix(zr, subdir, overrideDir+"/")
+
+	if err := os.WriteFile(filepath.Join(subdir, ".packwizignore"), []byte(packwizIgnore), 0o644); err != nil {
+		fail(fmt.Sprintf("failed to write .packwizignore: %v", err))
+	}
+
+	writeJSON(filepath.Join(packDir, "manifest.json"), map[string]any{
+		"$schema":      "../../tools/manifest/schema.json",
+		"id":           packID,
+		"name":         cfm.Name,
+		"type":         "modpack",
+		"role":         "none",
+		"release_type": "release",
+		"version":      cfm.Version,
+		"mc_version":   mc,
+		"loader":       loader,
+		"curseforge_id": "",
+	})
+	changelog := fmt.Sprintf("# %s\n\nImported from CurseForge zip (%s).\n", cfm.Name, cfm.Version)
+	_ = os.WriteFile(filepath.Join(packDir, "changelog.md"), []byte(changelog), 0o644)
+
+	fmt.Printf("\nimported %s:\n", packID)
+	fmt.Printf("  %d override file(s) copied\n", overrides)
+	fmt.Printf("  manifest.json scaffolded — fill curseforge_id/modrinth_id before publishing\n")
+}
+
+func detectCFLoader(loaders []cfModLoader) (loader, version string) {
+	for _, l := range loaders {
+		id := l.ID
+		for _, prefix := range []string{"fabric-", "quilt-", "neoforge-", "forge-"} {
+			if strings.HasPrefix(id, prefix) {
+				return strings.TrimSuffix(prefix, "-"), strings.TrimPrefix(id, prefix)
+			}
+		}
+	}
+	return "", ""
+}
+
+func extractOverridesPrefix(zr *zip.Reader, subdir, prefix string) int {
+	count := 0
+	for _, f := range zr.File {
+		if !strings.HasPrefix(f.Name, prefix) || strings.HasSuffix(f.Name, "/") {
+			continue
+		}
+		rel := strings.TrimPrefix(f.Name, prefix)
+		dest := filepath.Join(subdir, filepath.FromSlash(rel))
+		if !strings.HasPrefix(filepath.Clean(dest), filepath.Clean(subdir)+string(os.PathSeparator)) {
+			warnf("skipping suspicious archive path %s", f.Name)
+			continue
+		}
+		if err := os.MkdirAll(filepath.Dir(dest), 0o755); err != nil {
+			continue
+		}
+		rc, err := f.Open()
+		if err != nil {
+			continue
+		}
+		out, err := os.Create(dest)
+		if err != nil {
+			rc.Close()
+			continue
+		}
+		_, err = io.Copy(out, rc)
+		out.Close()
+		rc.Close()
+		if err == nil {
+			count++
+		}
+	}
+	return count
 }
 
 func downloadToTemp(url string) (string, error) {
@@ -223,7 +422,7 @@ func pinLoaderVersion(packToml, loader, version string) {
 	key := loader
 	data, err := os.ReadFile(packToml)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "::warning::could not pin loader version: %v\n", err)
+		warnf("could not pin loader version: %v", err)
 		return
 	}
 	lines := strings.Split(string(data), "\n")
@@ -240,19 +439,19 @@ func pinLoaderVersion(packToml, loader, version string) {
 		if k, _, ok := splitKV(line); ok && k == key {
 			lines[i] = fmt.Sprintf("%s = %q", key, version)
 			if err := os.WriteFile(packToml, []byte(strings.Join(lines, "\n")), 0o644); err != nil {
-				fmt.Fprintf(os.Stderr, "::warning::could not pin loader version: %v\n", err)
+				warnf("could not pin loader version: %v", err)
 			}
 			return
 		}
 	}
-	fmt.Fprintf(os.Stderr, "::warning::no %q key under [versions] in %s; loader left at latest\n", key, packToml)
+	warnf("no %q key under [versions] in %s; loader left at latest", key, packToml)
 }
 
 func writeImportedToml(subdir string, f mrIndexFile) (ok bool, hasUpdate bool) {
 	base := filepath.Base(f.Path)
 	metaPath := filepath.Join(subdir, filepath.Dir(f.Path), strings.TrimSuffix(base, filepath.Ext(base))+".pw.toml")
 	if err := os.MkdirAll(filepath.Dir(metaPath), 0o755); err != nil {
-		fmt.Fprintf(os.Stderr, "::warning::%s: %v; skipped\n", f.Path, err)
+		warnf("%s: %v; skipped", f.Path, err)
 		return false, false
 	}
 
@@ -261,7 +460,7 @@ func writeImportedToml(subdir string, f mrIndexFile) (ok bool, hasUpdate bool) {
 		hashFormat, hash = "sha1", f.Hashes["sha1"]
 	}
 	if hash == "" {
-		fmt.Fprintf(os.Stderr, "::warning::%s has no sha512/sha1 hash; skipped\n", f.Path)
+		warnf("%s has no sha512/sha1 hash; skipped", f.Path)
 		return false, false
 	}
 
@@ -282,7 +481,7 @@ func writeImportedToml(subdir string, f mrIndexFile) (ok bool, hasUpdate bool) {
 	}
 
 	if err := os.WriteFile(metaPath, []byte(b.String()), 0o644); err != nil {
-		fmt.Fprintf(os.Stderr, "::warning::failed to write %s: %v\n", metaPath, err)
+		warnf("failed to write %s: %v", metaPath, err)
 		return false, false
 	}
 	return true, hasUpdate
@@ -311,7 +510,7 @@ func extractOverrides(zr *zip.Reader, subdir string) int {
 			rel := strings.TrimPrefix(f.Name, prefix)
 			dest := filepath.Join(subdir, filepath.FromSlash(rel))
 			if !strings.HasPrefix(filepath.Clean(dest), filepath.Clean(subdir)+string(os.PathSeparator)) {
-				fmt.Fprintf(os.Stderr, "::warning::skipping suspicious archive path %s\n", f.Name)
+				warnf("skipping suspicious archive path %s", f.Name)
 				continue
 			}
 			if err := os.MkdirAll(filepath.Dir(dest), 0o755); err != nil {

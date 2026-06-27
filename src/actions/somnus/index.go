@@ -89,7 +89,7 @@ func writeProjectsIndex() (int, error) {
 			path := filepath.Join(root, p.Name(), "manifest.json")
 			m, err := ReadManifest(path)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "::warning::index: %v\n", err)
+				warnf("index: %v", err)
 				continue
 			}
 			if m.ID == "" || m.Name == "" || seen[m.ID] {

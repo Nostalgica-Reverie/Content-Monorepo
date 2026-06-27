@@ -47,7 +47,7 @@ func cmdPages(args []string) {
 			Run: func() error {
 				n, err := writeModlistMD(sub)
 				if err != nil {
-					fmt.Fprintf(os.Stderr, "::warning::%s: %v\n", sub, err)
+					warnf("%s: %v", sub, err)
 					return nil
 				}
 				fmt.Printf("wrote %s/modlist.md (%d mods)\n", sub, n)
@@ -64,7 +64,7 @@ func cmdPages(args []string) {
 
 	if packArg == "" {
 		if _, err := writeProjectsIndex(); err != nil {
-			fmt.Fprintf(os.Stderr, "::warning::projects index not written: %v\n", err)
+			warnf("projects index not written: %v", err)
 		}
 	}
 }

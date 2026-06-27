@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"sync/atomic"
 )
@@ -32,10 +33,18 @@ func cmdLint(args []string) {
 	}
 
 	fmt.Printf("linting %d file(s)...\n", len(lintable))
+	failed, checked := runLintFiles(lintable)
+	if failed > 0 {
+		fail(fmt.Sprintf("%d of %d file(s) failed syntax linting", failed, checked))
+	}
+	fmt.Printf("\u2713 all %d file(s) parsed OK\n", checked)
+}
+
+// runLintFiles lints a list of files concurrently and returns (failed, checked) counts.
+func runLintFiles(files []string) (failed, checked int64) {
 	sched := NewScheduler(maxConcurrent())
-	var checked, failed int64
-	dones := make([]<-chan error, 0, len(lintable))
-	for _, f := range lintable {
+	dones := make([]<-chan error, 0, len(files))
+	for _, f := range files {
 		if _, err := os.Stat(f); err != nil {
 			continue
 		}
@@ -44,7 +53,7 @@ func cmdLint(args []string) {
 			Name: f,
 			Run: func() error {
 				if err := lintOne(f); err != nil {
-					fmt.Fprintf(os.Stderr, "::error file=%s::%v\n", f, err)
+					errf(f, "%v", err)
 					atomic.AddInt64(&failed, 1)
 				}
 				return nil
@@ -55,11 +64,37 @@ func cmdLint(args []string) {
 	for _, c := range dones {
 		<-c
 	}
+	return failed, checked
+}
 
-	if failed > 0 {
-		fail(fmt.Sprintf("%d of %d file(s) failed syntax linting", failed, checked))
+// autoLintDirs lints all .pw.toml files found under mods/ in each given subdir.
+// Warnings are printed but the function never exits \u2014 it's a best-effort post-op check.
+func autoLintDirs(dirs []string) {
+	seen := map[string]bool{}
+	var files []string
+	for _, dir := range dirs {
+		modsDir := filepath.Join(dir, "mods")
+		entries, _ := os.ReadDir(modsDir)
+		for _, e := range entries {
+			if !e.IsDir() && strings.HasSuffix(e.Name(), ".pw.toml") {
+				p := filepath.Join(modsDir, e.Name())
+				if !seen[p] {
+					files = append(files, p)
+					seen[p] = true
+				}
+			}
+		}
 	}
-	fmt.Printf("\u2713 all %d file(s) parsed OK\n", checked)
+	if len(files) == 0 {
+		return
+	}
+	fmt.Printf("linting %d mod file(s)...\n", len(files))
+	failed, checked := runLintFiles(files)
+	if failed > 0 {
+		warnf("%d of %d mod file(s) failed lint \u2014 run 'somnus lint' for details", failed, checked)
+	} else {
+		fmt.Printf("\u2713 %d mod file(s) lint clean\n", checked)
+	}
 }
 
 func lintOne(path string) error {
@@ -99,7 +134,7 @@ func lintTomlStructure(content string) error {
 func gitChangedFiles() []string {
 	out, err := exec.Command("git", "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").Output()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "::warning::could not read git diff-tree: %v\n", err)
+		warnf("could not read git diff-tree: %v", err)
 		return nil
 	}
 	var files []string

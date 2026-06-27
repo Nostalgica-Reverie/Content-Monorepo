@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -10,14 +11,23 @@ import (
 )
 
 func cmdFreeze(args []string) {
-	if len(args) < 1 {
+	asJSON := false
+	var rest []string
+	for _, a := range args {
+		if a == "--json" {
+			asJSON = true
+		} else {
+			rest = append(rest, a)
+		}
+	}
+	if len(rest) < 1 {
 		failUsage(verbUsage["freeze"])
 	}
-	subdir := absPath(strings.TrimRight(args[0], "/"))
-	slugs := args[1:]
+	subdir := absPath(strings.TrimRight(rest[0], "/"))
+	slugs := rest[1:]
 	packDir, subKey := splitPackSubdir(subdir)
 	if len(slugs) == 0 {
-		listFrozen(packDir, subKey)
+		listFrozen(packDir, subKey, asJSON)
 		return
 	}
 	applyFreeze(packDir, subKey, subdir, slugs, true)
@@ -44,8 +54,17 @@ func splitPackSubdir(subdir string) (packDir, subKey string) {
 	return packDir, subKey
 }
 
-func listFrozen(packDir, subKey string) {
+func listFrozen(packDir, subKey string, asJSON bool) {
 	frozen := readAutomation(packDir).Freeze[subKey]
+	if asJSON {
+		if frozen == nil {
+			frozen = []string{}
+		}
+		sort.Strings(frozen)
+		data, _ := json.MarshalIndent(frozen, "", "  ")
+		fmt.Println(string(data))
+		return
+	}
 	if len(frozen) == 0 {
 		fmt.Printf("no frozen mods declared for %s/%s.\n", packDir, subKey)
 		return
@@ -71,7 +90,7 @@ func applyFreeze(packDir, subKey, subdir string, slugs []string, freeze bool) {
 	var applied []string
 	for _, slug := range slugs {
 		if _, err := os.Stat(filepath.Join(subdir, "mods", slug+".pw.toml")); err != nil {
-			fmt.Fprintf(os.Stderr, "::warning::%s not found in %s (no mods/%s.pw.toml); skipped\n", slug, subdir, slug)
+			warnf("%s not found in %s (no mods/%s.pw.toml); skipped", slug, subdir, slug)
 			continue
 		}
 		cmd := exec.Command(packwizBin(), verb, slug)

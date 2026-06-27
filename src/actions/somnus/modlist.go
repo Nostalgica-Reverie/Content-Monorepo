@@ -52,7 +52,7 @@ func cmdModlist(args []string) {
 		}
 		mod, err := parsePwToml(filepath.Join(modsDir, e.Name()))
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "::warning::skipping %s: %v\n", e.Name(), err)
+			warnf("skipping %s: %v", e.Name(), err)
 			continue
 		}
 		parsed++

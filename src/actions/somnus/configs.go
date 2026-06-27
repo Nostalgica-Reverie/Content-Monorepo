@@ -71,17 +71,17 @@ func updateMenuCredits(path, packName, version string) bool {
 	}
 	mainMenu, ok := obj["main_menu"].(map[string]any)
 	if !ok {
-		fmt.Fprintf(os.Stderr, "::warning::%s: no 'main_menu' object; skipped\n", path)
+		warnf("%s: no 'main_menu' object; skipped", path)
 		return false
 	}
 	bottomRight, ok := mainMenu["bottom_right"].([]any)
 	if !ok || len(bottomRight) == 0 {
-		fmt.Fprintf(os.Stderr, "::warning::%s: no 'main_menu.bottom_right' entries; skipped\n", path)
+		warnf("%s: no 'main_menu.bottom_right' entries; skipped", path)
 		return false
 	}
 	first, ok := bottomRight[0].(map[string]any)
 	if !ok {
-		fmt.Fprintf(os.Stderr, "::warning::%s: bottom_right[0] is not an object; skipped\n", path)
+		warnf("%s: bottom_right[0] is not an object; skipped", path)
 		return false
 	}
 	first["text"] = packName + " " + version
@@ -97,17 +97,17 @@ func updateLoaderDeps(path, packName, version string) bool {
 	}
 	overrides, ok := obj["overrides"].(map[string]any)
 	if !ok {
-		fmt.Fprintf(os.Stderr, "::warning::%s: no 'overrides' object; skipped\n", path)
+		warnf("%s: no 'overrides' object; skipped", path)
 		return false
 	}
 	minecraft, ok := overrides["minecraft"].(map[string]any)
 	if !ok {
-		fmt.Fprintf(os.Stderr, "::warning::%s: no 'overrides.minecraft' object; skipped\n", path)
+		warnf("%s: no 'overrides.minecraft' object; skipped", path)
 		return false
 	}
 	recommends, ok := minecraft["+recommends"].(map[string]any)
 	if !ok {
-		fmt.Fprintf(os.Stderr, "::warning::%s: no 'overrides.minecraft.+recommends' object; skipped\n", path)
+		warnf("%s: no 'overrides.minecraft.+recommends' object; skipped", path)
 		return false
 	}
 	recommends[packName] = ">" + version
@@ -123,7 +123,7 @@ func loadJSONMap(path string) (map[string]any, bool) {
 	}
 	var obj map[string]any
 	if err := json.Unmarshal(data, &obj); err != nil {
-		fmt.Fprintf(os.Stderr, "::warning::invalid JSON in %s: %v; skipped\n", path, err)
+		warnf("invalid JSON in %s: %v; skipped", path, err)
 		return nil, false
 	}
 	return obj, true

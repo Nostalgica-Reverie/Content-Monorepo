@@ -1,0 +1,60 @@
+From 0000000000000000000000000000000000000008 Mon Sep 17 00:00:00 2001
+From: omo50 <144749186+omo50@users.noreply.github.com>
+Date: Fri, 27 Jun 2026 00:00:00 -0500
+Subject: [PATCH 8/11] patch 0008: add --dry-run flag to packwiz update
+
+Without --dry-run, somnus update --check has to snapshot every mod file,
+run the real update, compare before/after, then restore everything. That
+is fragile (any crash between update and restore leaves the pack dirty)
+and slow (two full disk traversals).
+
+With --dry-run, the update pipeline runs exactly up to the apply step and
+then prints "dry-run: N file(s) would be updated" and exits without
+touching any files. somnus can then parse that output directly.
+
+The flag is only meaningful with --all; for a single-mod check the
+command is fast enough to just run and inspect.
+
+---
+ cmd/update.go | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/cmd/update.go b/cmd/update.go
+index a1b2c3d..b4c5d6e 100644
+--- a/cmd/update.go
++++ b/cmd/update.go
+@@ -1,6 +1,5 @@
+ package cmd
+
+-// TODO: --check flag?
+ // TODO: specify multiple files to update at once?
+
+ import (
+@@ -100,11 +99,19 @@ var UpdateCmd = &cobra.Command{
+
+ 		if !updatesFound {
+ 			fmt.Println("All files are up to date!")
+ 			return
+ 		}
+
++		if viper.GetBool("update.dry-run") {
++			count := 0
++			for _, v := range updatableFiles {
++				count += len(v)
++			}
++			fmt.Printf("dry-run: %d file(s) would be updated — rerun without --dry-run to apply\n", count)
++			return
++		}
++
+ 		if !cmdshared.PromptYesNo("Do you want to update? [Y/n]: ") {
+ 			fmt.Println("Cancelled!")
+ 			return
+@@ -156,4 +163,5 @@ func init() {
+
+ 	UpdateCmd.Flags().BoolP("all", "a", false, "Update all external files")
+ 	_ = viper.BindPFlag("update.all", UpdateCmd.Flags().Lookup("all"))
++	UpdateCmd.Flags().Bool("dry-run", false, "Show what would be updated without making any changes")
++	_ = viper.BindPFlag("update.dry-run", UpdateCmd.Flags().Lookup("dry-run"))
+ }
+--
+2.52.0.windows.1

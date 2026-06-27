@@ -17,32 +17,41 @@ type packRef struct {
 }
 
 func cmdPacks(args []string) {
-	if len(args) == 0 {
+	asJSON := false
+	var rest []string
+	for _, a := range args {
+		if a == "--json" {
+			asJSON = true
+		} else {
+			rest = append(rest, a)
+		}
+	}
+	if len(rest) == 0 {
 		failUsage(verbUsage["packs"])
 	}
-	switch args[0] {
+	switch rest[0] {
 	case "list":
-		packsList()
+		packsList(asJSON)
 	case "get":
-		if len(args) < 2 {
+		if len(rest) < 2 {
 			failUsage(verbUsage["packs"])
 		}
 		field := ""
-		if len(args) > 2 {
-			field = args[2]
+		if len(rest) > 2 {
+			field = rest[2]
 		}
-		packsGet(args[1], field)
+		packsGet(rest[1], field)
 	case "set":
-		if len(args) < 4 {
+		if len(rest) < 4 {
 			failUsage(verbUsage["packs"])
 		}
-		packsSet(args[1], args[2], args[3])
+		packsSet(rest[1], rest[2], rest[3])
 	case "index":
 		if _, err := writeProjectsIndex(); err != nil {
 			fail(fmt.Sprintf("index generation failed: %v", err))
 		}
 	default:
-		failUsage(fmt.Sprintf("unknown packs subcommand %q\n%s", args[0], verbUsage["packs"]))
+		failUsage(fmt.Sprintf("unknown packs subcommand %q\n%s", rest[0], verbUsage["packs"]))
 	}
 }
 
@@ -60,7 +69,7 @@ func loadAllPacks() []packRef {
 			dir := filepath.Join(cat, e.Name())
 			m, err := ReadManifest(filepath.Join(dir, "manifest.json"))
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "::warning::packs: %v; skipped\n", err)
+				warnf("packs: %v; skipped", err)
 				continue
 			}
 			id := m.ID
@@ -94,10 +103,25 @@ func findPack(id string) packRef {
 	return packRef{} // unreachable
 }
 
-func packsList() {
+func packsList(asJSON bool) {
 	packs := loadAllPacks()
 	if len(packs) == 0 {
 		failNotFound("no packs found — run somnus from the repo root")
+	}
+	if asJSON {
+		type jsonEntry struct {
+			ID       string    `json:"id"`
+			Category string    `json:"category"`
+			Dir      string    `json:"dir"`
+			Manifest *Manifest `json:"manifest"`
+		}
+		out := make([]jsonEntry, len(packs))
+		for i, p := range packs {
+			out[i] = jsonEntry{ID: p.ID, Category: p.Category, Dir: p.Dir, Manifest: p.M}
+		}
+		data, _ := json.MarshalIndent(out, "", "  ")
+		fmt.Println(string(data))
+		return
 	}
 	idW, verW := 4, 7
 	for _, p := range packs {

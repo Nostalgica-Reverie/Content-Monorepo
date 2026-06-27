@@ -1,12 +1,19 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 )
+
+type portResult struct {
+	MRTotal   int      `json:"mr_total"`
+	CFMatched int      `json:"cf_matched"`
+	Missing   []string `json:"missing"`
+}
 
 func cmdPort(args []string) {
 	if len(args) < 2 {
@@ -15,12 +22,15 @@ func cmdPort(args []string) {
 	mrDir, cfDir := absPath(args[0]), absPath(args[1])
 	doAdd := false
 	noRefresh := false
+	asJSON := false
 	for _, a := range args[2:] {
 		switch a {
 		case "--add":
 			doAdd = true
 		case "--no-refresh":
 			noRefresh = true
+		case "--json":
+			asJSON = true
 		}
 	}
 
@@ -73,6 +83,19 @@ func cmdPort(args []string) {
 	}
 
 	if !doAdd {
+		if asJSON {
+			res := portResult{
+				MRTotal:   len(mrNames),
+				CFMatched: len(mrNames) - len(missing),
+				Missing:   missing,
+			}
+			if res.Missing == nil {
+				res.Missing = []string{}
+			}
+			data, _ := json.MarshalIndent(res, "", "  ")
+			fmt.Println(string(data))
+			return
+		}
 		fmt.Println("\nmods needing a CF entry (re-run with --add to add them interactively):")
 		for _, n := range missing {
 			fmt.Printf("  - %s\n", n)
