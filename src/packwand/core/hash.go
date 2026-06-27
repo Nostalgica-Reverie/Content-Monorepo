@@ -1,4 +1,4 @@
-package core
+﻿package core
 
 import (
 	"crypto/md5"
@@ -8,11 +8,14 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"packwand/curseforge/murmur2"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/curseforge/murmur2"
 	"hash"
 	"strconv"
 	"strings"
 )
+
+// DefaultHashFormat is the hash algorithm used for all new files and index entries.
+const DefaultHashFormat = "sha512"
 
 // GetHashImpl gets an implementation of hash.Hash for the given hash type string
 func GetHashImpl(hashType string) (HashStringer, error) {
@@ -33,6 +36,8 @@ func GetHashImpl(hashType string) (HashStringer, error) {
 	return nil, fmt.Errorf("hash implementation %s not found", hashType)
 }
 
+// preferredHashList controls download verification priority; later entries win.
+// sha512 is last so it is always chosen when available.
 var preferredHashList = []string{
 	"murmur2",
 	"md5",

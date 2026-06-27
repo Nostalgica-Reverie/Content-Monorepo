@@ -1,4 +1,4 @@
-package curseforge
+﻿package curseforge
 
 import (
 	"errors"
@@ -14,8 +14,8 @@ import (
 	"github.com/unascribed/FlexVer/go/flexver"
 
 	"github.com/mitchellh/mapstructure"
-	"packwand/cmd"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 )
 
@@ -26,7 +26,7 @@ var curseforgeCmd = &cobra.Command{
 }
 
 func init() {
-	cmd.Add(curseforgeCmd)
+	cmd.AddToGroup(curseforgeCmd, cmd.GroupPackManagement)
 	core.Updaters["curseforge"] = cfUpdater{}
 	core.MetaDownloaders["curseforge"] = cfDownloader{}
 }

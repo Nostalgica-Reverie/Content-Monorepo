@@ -1,14 +1,14 @@
-package cmd
+﻿package cmd
 
 import (
 	"fmt"
 	"os"
 
-	"packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
 
 	"slices"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 )
 
@@ -74,8 +74,7 @@ var rehashCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		err = index.Refresh()
-		if err != nil {
+		if _, err = index.Refresh(); err != nil {
 			fmt.Printf("Error refreshing index: %v\n", err)
 			os.Exit(1)
 		}
@@ -88,5 +87,6 @@ var rehashCmd = &cobra.Command{
 }
 
 func init() {
+	rehashCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(rehashCmd)
 }

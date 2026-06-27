@@ -1,7 +1,7 @@
-package url
+﻿package url
 
 import (
-	"packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmd"
 	"github.com/spf13/cobra"
 )
 
@@ -11,5 +11,5 @@ var urlCmd = &cobra.Command{
 }
 
 func init() {
-	cmd.Add(urlCmd)
+	cmd.AddToGroup(urlCmd, cmd.GroupPackManagement)
 }

@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"encoding/json"
@@ -9,24 +9,28 @@ import (
 	"sort"
 	"strings"
 
-	"packwand/manifest"
-	"packwand/workspace"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
 	"github.com/spf13/cobra"
 )
 
 func init() {
 	// bump
 	llBumpCmd.Flags().Bool("configs", false, "Also update in-pack version files and refresh")
+	llBumpCmd.GroupID = GroupBuildExport
 	rootCmd.AddCommand(llBumpCmd)
 
 	// freeze
 	llFreezeCmd.Flags().Bool("json", false, "Output frozen list as JSON")
+	llFreezeCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(llFreezeCmd)
 
 	// unfreeze
+	llUnfreezeCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(llUnfreezeCmd)
 
 	// side
+	llSideCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(llSideCmd)
 
 	// packs
@@ -35,14 +39,16 @@ func init() {
 	llPacksCmd.AddCommand(llPacksGetCmd)
 	llPacksCmd.AddCommand(llPacksSetCmd)
 	llPacksCmd.AddCommand(llPacksIndexCmd)
+	llPacksCmd.GroupID = GroupWorkspace
 	rootCmd.AddCommand(llPacksCmd)
 
 	// automation
 	llAutomationCmd.AddCommand(llAutomationGetCmd)
+	llAutomationCmd.GroupID = GroupOther
 	rootCmd.AddCommand(llAutomationCmd)
 }
 
-// — bump —
+// â€” bump â€”
 
 var llBumpCmd = &cobra.Command{
 	Use:   "bump <pack-dir> <new-version>",
@@ -205,7 +211,7 @@ func writeCompactJSON(path string, v any) {
 	}
 }
 
-// — freeze / unfreeze —
+// â€” freeze / unfreeze â€”
 
 var llFreezeCmd = &cobra.Command{
 	Use:   "freeze <pack-subdir> [mod-slugs...]",
@@ -351,12 +357,23 @@ func pinDrift(packDir string, freezeMap map[string][]string) []string {
 	return drift
 }
 
-// — side —
+// â€” side â€”
 
-var validSides = map[string]bool{"client": true, "server": true, "both": true}
+var validSides = map[string]bool{"client": true, "server": true, "both": true, "either": true}
+
+// contentFolders are scanned when looking for a mod file by slug.
+var contentFolders = []string{"mods", "resourcepacks", "shaderpacks"}
+
+// normalizeSide maps "either" to "both" for storage (they are semantically equivalent).
+func normalizeSide(side string) string {
+	if side == "either" {
+		return "both"
+	}
+	return side
+}
 
 var llSideCmd = &cobra.Command{
-	Use:   "side <pack-dir> <mod-slug> [client|server|both]",
+	Use:   "side <pack-dir> <mod-slug> [client|server|both|either]",
 	Short: "Check or fix a mod's side across all subdirs in a pack",
 	Args:  cobra.RangeArgs(2, 3),
 	Run: func(cmd *cobra.Command, args []string) {
@@ -374,25 +391,49 @@ var llSideCmd = &cobra.Command{
 		}
 		newSide := args[2]
 		if !validSides[newSide] {
-			llFail(fmt.Sprintf("invalid side %q (expected client, server, or both)", newSide))
+			llFail(fmt.Sprintf("invalid side %q (expected client, server, both, or either)", newSide))
 		}
-		setSides(packDir, slug, newSide)
+		setSides(packDir, slug, normalizeSide(newSide))
 	},
 }
 
+type sideEntry struct{ side, folder, sub string }
+
 func showSides(packDir, slug string) {
-	found := 0
+	var found []sideEntry
 	for _, sub := range manifest.SubDirsOf(packDir) {
-		p := filepath.Join(sub, "mods", slug+".pw.toml")
-		data, err := os.ReadFile(p)
-		if err != nil {
-			continue
+		for _, folder := range contentFolders {
+			p := filepath.Join(sub, folder, slug+".pw.toml")
+			data, err := os.ReadFile(p)
+			if err != nil {
+				continue
+			}
+			found = append(found, sideEntry{currentSide(string(data)), folder, sub})
 		}
-		found++
-		fmt.Printf("  %-10s %s\n", currentSide(string(data)), sub)
 	}
-	if found == 0 {
+	if len(found) == 0 {
 		llFail(fmt.Sprintf("%s not found in any subdir of %s", slug, packDir))
+	}
+
+	sides := map[string]bool{}
+	for _, e := range found {
+		sides[e.side] = true
+	}
+
+	for _, e := range found {
+		folderNote := ""
+		if e.folder != "mods" {
+			folderNote = " [" + e.folder + "]"
+		}
+		fmt.Printf("  %-8s  %s%s\n", e.side, e.sub, folderNote)
+	}
+
+	if len(sides) > 1 {
+		var sideList []string
+		for s := range sides {
+			sideList = append(sideList, s)
+		}
+		llWarn("%s has inconsistent sides across subdirs: %s", slug, strings.Join(sideList, ", "))
 	}
 }
 
@@ -402,21 +443,23 @@ func setSides(packDir, slug, newSide string) {
 	}
 	var touched []string
 	for _, sub := range manifest.SubDirsOf(packDir) {
-		p := filepath.Join(sub, "mods", slug+".pw.toml")
-		data, err := os.ReadFile(p)
-		if err != nil {
-			continue
+		for _, folder := range contentFolders {
+			p := filepath.Join(sub, folder, slug+".pw.toml")
+			data, err := os.ReadFile(p)
+			if err != nil {
+				continue
+			}
+			updated, old, changed := rewriteSide(string(data), newSide)
+			if !changed {
+				fmt.Printf("  ok (already %s): %s\n", newSide, sub)
+				continue
+			}
+			if err := os.WriteFile(p, []byte(updated), 0o644); err != nil {
+				llFail(fmt.Sprintf("failed to write %s: %v", p, err))
+			}
+			fmt.Printf("  %s -> %s: %s\n", old, newSide, sub)
+			touched = append(touched, sub)
 		}
-		updated, old, changed := rewriteSide(string(data), newSide)
-		if !changed {
-			fmt.Printf("  ok (already %s): %s\n", newSide, sub)
-			continue
-		}
-		if err := os.WriteFile(p, []byte(updated), 0o644); err != nil {
-			llFail(fmt.Sprintf("failed to write %s: %v", p, err))
-		}
-		fmt.Printf("  %s -> %s: %s\n", old, newSide, sub)
-		touched = append(touched, sub)
 	}
 	if len(touched) == 0 {
 		fmt.Printf("nothing to change for %s in %s.\n", slug, packDir)
@@ -481,7 +524,7 @@ func rewriteSide(content, newSide string) (updated, old string, changed bool) {
 	return strings.Join(lines, "\n"), old, true
 }
 
-// — packs —
+// â€” packs â€”
 
 type packRef struct {
 	Category string
@@ -591,7 +634,7 @@ func findPack(id string) packRef {
 func packsList(asJSON bool) {
 	packs := loadAllPacks()
 	if len(packs) == 0 {
-		llFail("no packs found — run packwand from the repo root")
+		llFail("no packs found â€” run packwand from the repo root")
 	}
 	if asJSON {
 		type jsonEntry struct {
@@ -718,7 +761,7 @@ func packsSet(id, field, value string) {
 	}
 }
 
-// — automation —
+// â€” automation â€”
 
 var llAutomationCmd = &cobra.Command{
 	Use:   "automation",

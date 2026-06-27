@@ -1,15 +1,14 @@
-package github
+﻿package github
 
 import (
 	"errors"
 	"fmt"
 	"runtime"
-	"strings"
 	"sync"
 
 	"github.com/dlclark/regexp2"
 	"github.com/mitchellh/mapstructure"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 )
 
 type ghUpdateData struct {
@@ -102,17 +101,27 @@ func (u ghUpdater) CheckUpdate(mods []*core.Mod, pack core.Pack) ([]core.UpdateC
 func (u ghUpdater) DoUpdate(mods []*core.Mod, cachedState []interface{}) error {
 	for i, mod := range mods {
 		modState := cachedState[i].(cachedStateStore)
-		var release = modState.Release
+		release := modState.Release
 
-		// yes, this is duplicated - i guess we should just cache asset + tag instead of entire release...?
-		var file = release.Assets[0]
+		rawData, ok := mod.GetParsedUpdateData("github")
+		if !ok {
+			return fmt.Errorf("missing github update metadata for %s", mod.Name)
+		}
+		data := rawData.(ghUpdateData)
+
+		expr := regexp2.MustCompile(data.Regex, 0)
+		var file Asset
 		for _, v := range release.Assets {
-			if strings.HasSuffix(v.Name, ".jar") {
+			if bl, _ := expr.MatchString(v.Name); bl {
 				file = v
+				break
 			}
 		}
+		if file.Name == "" {
+			return fmt.Errorf("no asset matching regex %q in release %s for %s", data.Regex, release.TagName, mod.Name)
+		}
 
-		hash, err := file.getSha256()
+		hash, err := file.getHash()
 		if err != nil {
 			return err
 		}
@@ -120,7 +129,7 @@ func (u ghUpdater) DoUpdate(mods []*core.Mod, cachedState []interface{}) error {
 		mod.FileName = file.Name
 		mod.Download = core.ModDownload{
 			URL:        file.BrowserDownloadURL,
-			HashFormat: "sha256",
+			HashFormat: core.DefaultHashFormat,
 			Hash:       hash,
 		}
 		mod.Update["github"]["tag"] = release.TagName

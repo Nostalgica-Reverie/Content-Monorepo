@@ -1,4 +1,4 @@
-package packinterop
+﻿package packinterop
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 )
 
 func ReadMetadata(s ImportPackSource) ImportPackMetadata {

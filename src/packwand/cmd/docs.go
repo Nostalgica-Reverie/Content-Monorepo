@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"encoding/json"
@@ -11,22 +11,25 @@ import (
 	"sync/atomic"
 	"time"
 
-	"packwand/manifest"
-	"packwand/workspace"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
 	"github.com/spf13/cobra"
 )
 
 func init() {
 	llModlistCmd.Flags().StringP("subdir", "s", "", "Pack subdir to read mods from (e.g. nightfall-mr)")
+	llModlistCmd.GroupID = GroupOther
 	rootCmd.AddCommand(llModlistCmd)
 
 	llPagesCmd.Flags().StringP("pack", "p", "", "Pack directory to regenerate (default: all)")
+	llPagesCmd.GroupID = GroupOther
 	rootCmd.AddCommand(llPagesCmd)
 
+	llDiffCmd.GroupID = GroupOther
 	rootCmd.AddCommand(llDiffCmd)
 }
 
-// — types shared by modlist and pages —
+// â€” types shared by modlist and pages â€”
 
 type modlistEntry struct {
 	JarName        string `json:"jarName"`
@@ -48,7 +51,7 @@ type pwMod struct {
 	mrModID    string
 }
 
-// — modlist —
+// â€” modlist â€”
 
 var llModlistCmd = &cobra.Command{
 	Use:   "modlist <subdir>",
@@ -191,7 +194,7 @@ func versionFromFilename(filename string) string {
 	return strings.TrimSuffix(filename, ".jar")
 }
 
-// — pages —
+// â€” pages â€”
 
 var llPagesCmd = &cobra.Command{
 	Use:     "pages [pack-dir]",
@@ -352,7 +355,7 @@ func modPageURL(m *pwMod) string {
 	return ""
 }
 
-// — diff —
+// â€” diff â€”
 
 var llDiffCmd = &cobra.Command{
 	Use:   "diff <old-ref> <new-ref> [path-prefix]",
@@ -500,7 +503,7 @@ func pwVersion(content string) string {
 	return ""
 }
 
-// — index types and writers (used by runPages and llPacksIndexCmd) —
+// â€” index types and writers (used by runPages and llPacksIndexCmd) â€”
 
 type indexVariant struct {
 	ID        string `json:"id,omitempty"`

@@ -1,11 +1,11 @@
-package curseforge
+﻿package curseforge
 
 import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"io"
 	"net/http"
 	"net/url"

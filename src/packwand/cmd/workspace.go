@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"encoding/json"
@@ -7,13 +7,13 @@ import (
 	"path/filepath"
 	"strings"
 
-	"packwand/manifest"
-	"packwand/workspace"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
 
 	"github.com/spf13/cobra"
 )
 
-// — workspace command group —
+// â€” workspace command group â€”
 
 var workspaceCmd = &cobra.Command{
 	Use:   "workspace",
@@ -21,6 +21,7 @@ var workspaceCmd = &cobra.Command{
 }
 
 func init() {
+	workspaceCmd.GroupID = GroupWorkspace
 	rootCmd.AddCommand(workspaceCmd)
 
 	// status
@@ -39,12 +40,15 @@ func init() {
 	// loader-update
 	workspaceCmd.AddCommand(wsLoaderUpdateCmd)
 
+	// migrate
+	workspaceCmd.AddCommand(wsMigrateCmd)
+
 	// sync
 	wsSyncCmd.Flags().Bool("dry-run", false, "Show what would be synced without making changes")
 	workspaceCmd.AddCommand(wsSyncCmd)
 }
 
-// — status —
+// â€” status â€”
 
 type packStatus struct {
 	ID         string       `json:"id"`
@@ -67,7 +71,7 @@ type subdirStat struct {
 
 var wsStatusCmd = &cobra.Command{
 	Use:     "status",
-	Short:   "Dashboard of all packs — version, mc, loader, mod counts, frozen mods",
+	Short:   "Dashboard of all packs â€” version, mc, loader, mod counts, frozen mods",
 	Aliases: []string{"info"},
 	Run: func(cmd *cobra.Command, args []string) {
 		llChdir()
@@ -178,7 +182,7 @@ var wsStatusCmd = &cobra.Command{
 	},
 }
 
-// — update —
+// â€” update â€”
 
 var wsUpdateCmd = &cobra.Command{
 	Use:   "update [pack-dir]",
@@ -226,11 +230,11 @@ func wsRunUpdateCheck(args []string) {
 	if totalUpdates == 0 {
 		fmt.Println("\neverything is up to date")
 	} else {
-		fmt.Printf("\n%d update(s) available — run 'packwand workspace update' to apply\n", totalUpdates)
+		fmt.Printf("\n%d update(s) available â€” run 'packwand workspace update' to apply\n", totalUpdates)
 	}
 }
 
-// — refresh —
+// â€” refresh â€”
 
 var wsRefreshCmd = &cobra.Command{
 	Use:   "refresh [pack-dir]",
@@ -244,7 +248,7 @@ var wsRefreshCmd = &cobra.Command{
 	},
 }
 
-// — loader-update —
+// â€” loader-update â€”
 
 var wsLoaderUpdateCmd = &cobra.Command{
 	Use:   "loader-update [latest|recommended] [pack-dir]",
@@ -273,7 +277,28 @@ var wsLoaderUpdateCmd = &cobra.Command{
 	},
 }
 
-// — sync —
+// â€” migrate â€”
+
+var wsMigrateCmd = &cobra.Command{
+	Use:   "migrate [format|loader [version]|minecraft [version]]",
+	Short: "Run packwand migrate across all pack subdirs",
+	Args:  cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		llChdir()
+		packFilter, explicit := workspace.ResolveScope(nil, llStartCwd)
+		op := workspace.Operation{
+			Name:        "migrate-" + args[0],
+			Gerund:      "migrating (" + strings.Join(args, " ") + ") in",
+			PackwizArgs: append([]string{"migrate"}, args...),
+			HonorIgnore: false,
+		}
+		if err := workspace.Run(op, packFilter, explicit); err != nil {
+			llFail(err.Error())
+		}
+	},
+}
+
+// â€” sync â€”
 
 var wsSyncCmd = &cobra.Command{
 	Use:   "sync",

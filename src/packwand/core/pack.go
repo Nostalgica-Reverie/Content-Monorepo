@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
 
 	"github.com/BurntSushi/toml"
@@ -30,9 +31,18 @@ type Pack struct {
 	Versions map[string]string                 `toml:"versions"`
 	Export   map[string]map[string]interface{} `toml:"export"`
 	Options  map[string]interface{}            `toml:"options"`
+	// Scripts defines user-runnable commands: packwand run <name>
+	Scripts map[string]string `toml:"scripts,omitempty"`
 }
 
-const CurrentPackFormat = "packwiz:1.1.0"
+// CurrentPackFormat is the format written by packwand for new packs.
+const CurrentPackFormat = "packwand:26"
+
+// PackwandGeneration is the current packwand format generation number.
+const PackwandGeneration = 26
+
+// CurrentPackFormatPackwiz is the legacy packwiz format, accepted for backward compatibility.
+const CurrentPackFormatPackwiz = "packwiz:1.1.0"
 
 var PackFormatConstraintAccepted = mustParseConstraint("~1")
 var PackFormatConstraintSuggestUpgrade = mustParseConstraint("~1.1")
@@ -57,25 +67,39 @@ func LoadPack() (Pack, error) {
 		fmt.Println("Modpack manifest has no pack-format field; assuming packwiz:1.1.0")
 		modpack.PackFormat = "packwiz:1.1.0"
 	}
-	// Auto-migrate versions
+	// Auto-migrate packwiz:1.0.0 → packwiz:1.1.0
 	if modpack.PackFormat == "packwiz:1.0.0" {
 		fmt.Println("Automatically migrating pack to packwiz:1.1.0 format...")
 		modpack.PackFormat = "packwiz:1.1.0"
 	}
-	if !strings.HasPrefix(modpack.PackFormat, "packwiz:") {
-		return Pack{}, errors.New("pack-format field does not indicate a valid packwiz pack")
+
+	switch {
+	case strings.HasPrefix(modpack.PackFormat, "packwand:"):
+		genStr := strings.TrimPrefix(modpack.PackFormat, "packwand:")
+		gen, err := strconv.Atoi(genStr)
+		if err != nil {
+			return Pack{}, fmt.Errorf("pack-format generation is not a valid integer: %w", err)
+		}
+		if gen < PackwandGeneration {
+			return Pack{}, fmt.Errorf("pack-format packwand:%d predates the minimum supported generation (%d); run 'packwand migrate format'", gen, PackwandGeneration)
+		}
+		if gen > PackwandGeneration {
+			fmt.Printf("Warning: pack uses packwand:%d which is newer than this build (packwand:%d); update packwand for full support\n", gen, PackwandGeneration)
+		}
+	case strings.HasPrefix(modpack.PackFormat, "packwiz:"):
+		ver, err := semver.StrictNewVersion(strings.TrimPrefix(modpack.PackFormat, "packwiz:"))
+		if err != nil {
+			return Pack{}, fmt.Errorf("pack-format field is not valid semver: %w", err)
+		}
+		if !PackFormatConstraintAccepted.Check(ver) {
+			return Pack{}, errors.New("the modpack is incompatible with this version of packwand; please update")
+		}
+		if !PackFormatConstraintSuggestUpgrade.Check(ver) {
+			fmt.Println("Modpack has a newer feature number than is supported by this version of packwand. Update to the latest version of packwand for new features and bugfixes!")
+		}
+	default:
+		return Pack{}, errors.New("pack-format does not indicate a valid packwiz or packwand pack")
 	}
-	ver, err := semver.StrictNewVersion(strings.TrimPrefix(modpack.PackFormat, "packwiz:"))
-	if err != nil {
-		return Pack{}, fmt.Errorf("pack-format field is not valid semver: %w", err)
-	}
-	if !PackFormatConstraintAccepted.Check(ver) {
-		return Pack{}, errors.New("the modpack is incompatible with this version of packwand; please update")
-	}
-	if !PackFormatConstraintSuggestUpgrade.Check(ver) {
-		fmt.Println("Modpack has a newer feature number than is supported by this version of packwand. Update to the latest version of packwand for new features and bugfixes!")
-	}
-	// TODO: suggest migration if necessary (primarily for 2.0.0)
 
 	// Read options into viper
 	if modpack.Options != nil {
@@ -100,10 +124,10 @@ func (pack Pack) LoadIndex() (Index, error) {
 	return LoadIndex(filepath.Join(filepath.Dir(viper.GetString("pack-file")), fileNative))
 }
 
-// UpdateIndexHash recalculates the hash of the index file of this modpack
+// UpdateIndexHash recalculates the hash of the index file of this modpack.
 func (pack *Pack) UpdateIndexHash() error {
 	if viper.GetBool("no-internal-hashes") {
-		pack.Index.HashFormat = "sha256"
+		pack.Index.HashFormat = DefaultHashFormat
 		pack.Index.Hash = ""
 		return nil
 	}
@@ -116,10 +140,7 @@ func (pack *Pack) UpdateIndexHash() error {
 		return err
 	}
 
-	// Hash usage strategy (may change):
-	// Just use SHA256, overwrite existing hash regardless of what it is
-	// May update later to continue using the same hash that was already being used
-	h, err := GetHashImpl("sha256")
+	h, err := GetHashImpl(DefaultHashFormat)
 	if err != nil {
 		_ = f.Close()
 		return err
@@ -130,7 +151,7 @@ func (pack *Pack) UpdateIndexHash() error {
 	}
 	hashString := h.HashToString(h.Sum(nil))
 
-	pack.Index.HashFormat = "sha256"
+	pack.Index.HashFormat = DefaultHashFormat
 	pack.Index.Hash = hashString
 	return f.Close()
 }

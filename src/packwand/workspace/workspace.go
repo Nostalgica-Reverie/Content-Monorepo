@@ -1,4 +1,4 @@
-// Package workspace implements the multi-pack orchestration engine.
+﻿// Package workspace implements the multi-pack orchestration engine.
 // It provides tools discovery, parallel pack operations, progress display, linting,
 // and the sync engine used by packwand workspace commands.
 package workspace
@@ -18,10 +18,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"packwand/manifest"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
 )
 
-// — Environment helpers —
+// â€” Environment helpers â€”
 
 // SelfBin returns the path to the running packwand binary for sub-invocations.
 func SelfBin() string {
@@ -103,9 +103,9 @@ func Indent(s, prefix string) string {
 	return strings.Join(lines, "\n")
 }
 
-// — Progress display —
+// â€” Progress display â€”
 
-var sleepFrames = []string{"c(-.-)ɔ z  ", "c(-.-)ɔ zz ", "c(-.-)ɔ zzz", "c(-.-)ɔ  zz", "c(-.-)ɔ   z", "C(o.o)Ɔ !  "}
+var sleepFrames = []string{"c(-.-)É” z  ", "c(-.-)É” zz ", "c(-.-)É” zzz", "c(-.-)É”  zz", "c(-.-)É”   z", "C(o.o)Æ† !  "}
 
 func isTTY() bool {
 	fi, err := os.Stdout.Stat()
@@ -179,7 +179,7 @@ func (p *Progress) Done() {
 	fmt.Printf("\r%-100s\r", "")
 }
 
-// — File copy —
+// â€” File copy â€”
 
 const copyBufSize = 1 << 20
 
@@ -200,7 +200,7 @@ func CopyFileFast(src, dst string) error {
 	return err
 }
 
-// — Pack target collection —
+// â€” Pack target collection â€”
 
 // Operation describes a packwand sub-command to run across pack subdirectories.
 type Operation struct {
@@ -407,10 +407,10 @@ func CheckUpdatesInDir(dir string) ([]string, error) {
 	return updates, nil
 }
 
-// — Linting —
+// â€” Linting â€”
 
 // AutoLintDirs lints all .pw.toml files under mods/ in each given dir.
-// Warnings are printed but the function never exits — it is a best-effort post-op check.
+// Warnings are printed but the function never exits â€” it is a best-effort post-op check.
 func AutoLintDirs(dirs []string) {
 	seen := map[string]bool{}
 	var files []string
@@ -433,9 +433,9 @@ func AutoLintDirs(dirs []string) {
 	fmt.Printf("linting %d mod file(s)...\n", len(files))
 	failed, checked := RunLintFiles(files)
 	if failed > 0 {
-		fmt.Fprintf(os.Stderr, "warning: %d of %d mod file(s) failed lint — run 'packwand lint' for details\n", failed, checked)
+		fmt.Fprintf(os.Stderr, "warning: %d of %d mod file(s) failed lint â€” run 'packwand lint' for details\n", failed, checked)
 	} else {
-		fmt.Printf("✓ %d mod file(s) lint clean\n", checked)
+		fmt.Printf("âœ“ %d mod file(s) lint clean\n", checked)
 	}
 }
 
@@ -521,7 +521,7 @@ func GitChangedFiles() []string {
 	return files
 }
 
-// — Sync engine —
+// â€” Sync engine â€”
 
 type syncJob struct {
 	consumerID string
@@ -530,7 +530,7 @@ type syncJob struct {
 	targetDir  string
 }
 
-// RunSync performs the base→consumer pack sync. dryRun prints what would change.
+// RunSync performs the baseâ†’consumer pack sync. dryRun prints what would change.
 func RunSync(dryRun bool) error {
 	if _, err := exec.LookPath(SelfBin()); err != nil {
 		return fmt.Errorf("packwand binary not found: %w", err)
@@ -630,7 +630,7 @@ func RunSync(dryRun bool) error {
 		return fmt.Errorf("%d sync(s) failed", failed)
 	}
 	if dryRun {
-		fmt.Println("[DRY RUN] complete — nothing was changed.")
+		fmt.Println("[DRY RUN] complete â€” nothing was changed.")
 	} else {
 		fmt.Println("all syncs completed.")
 	}

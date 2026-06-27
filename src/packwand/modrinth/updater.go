@@ -1,4 +1,4 @@
-package modrinth
+﻿package modrinth
 
 import (
 	modrinthApi "codeberg.org/jmansfield/go-modrinth/modrinth"
@@ -8,7 +8,7 @@ import (
 	"sync"
 
 	"github.com/mitchellh/mapstructure"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 )
 
 type mrUpdateData struct {

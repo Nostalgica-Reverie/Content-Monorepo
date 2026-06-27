@@ -1,11 +1,11 @@
-package curseforge
+﻿package curseforge
 
 import (
 	"fmt"
 	"os"
 	"strconv"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/skratchdot/open-golang/open"
 	"github.com/spf13/cobra"
 )

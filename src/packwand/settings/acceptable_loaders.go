@@ -1,4 +1,4 @@
-package settings
+﻿package settings
 
 import (
 	"fmt"
@@ -6,7 +6,8 @@ import (
 	"slices"
 	"strings"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 )
 
@@ -19,11 +20,9 @@ var acceptableLoadersCommand = &cobra.Command{
 		modpack, err := core.LoadPack()
 		if err != nil {
 			if os.IsNotExist(err) {
-				fmt.Println("No pack.toml file found, run 'packwiz init' to create one!")
-				os.Exit(1)
+				cmdshared.Fail("no pack.toml found â€” run 'packwand init' to create one")
 			}
-			fmt.Printf("Error loading pack: %s\n", err)
-			os.Exit(1)
+			cmdshared.Failf("loading pack: %v", err)
 		}
 		var currentLoaders []string
 		if modpack.Options == nil {
@@ -37,30 +36,26 @@ var acceptableLoadersCommand = &cobra.Command{
 		if flagAlAdd {
 			loader := args[0]
 			if slices.Contains(currentLoaders, loader) {
-				fmt.Printf("Loader %s is already in your acceptable loaders list!\n", loader)
-				os.Exit(1)
+				cmdshared.Failf("loader %q is already in the acceptable loaders list", loader)
 			}
 			currentLoaders = append(currentLoaders, loader)
 			modpack.Options["acceptable-game-loaders"] = currentLoaders
 			err = modpack.Write()
 			if err != nil {
-				fmt.Printf("Error writing pack: %s\n", err)
-				os.Exit(1)
+				cmdshared.Failf("writing pack: %v", err)
 			}
 			fmt.Printf("Added %s to acceptable loaders list, now %s\n", loader, strings.Join(currentLoaders, ", "))
 		} else if flagAlRemove {
 			loader := args[0]
 			if !slices.Contains(currentLoaders, loader) {
-				fmt.Printf("Loader %s is not in your acceptable loaders list!\n", loader)
-				os.Exit(1)
+				cmdshared.Failf("loader %q is not in the acceptable loaders list", loader)
 			}
 			i := slices.Index(currentLoaders, loader)
 			currentLoaders = slices.Delete(currentLoaders, i, i+1)
 			modpack.Options["acceptable-game-loaders"] = currentLoaders
 			err = modpack.Write()
 			if err != nil {
-				fmt.Printf("Error writing pack: %s\n", err)
-				os.Exit(1)
+				cmdshared.Failf("writing pack: %v", err)
 			}
 			fmt.Printf("Removed %s from acceptable loaders list, now %s\n", loader, strings.Join(currentLoaders, ", "))
 		} else {
@@ -74,8 +69,7 @@ var acceptableLoadersCommand = &cobra.Command{
 			modpack.Options["acceptable-game-loaders"] = loadersDeduped
 			err = modpack.Write()
 			if err != nil {
-				fmt.Printf("Error writing pack: %s\n", err)
-				os.Exit(1)
+				cmdshared.Failf("writing pack: %v", err)
 			}
 			fmt.Printf("Set acceptable loaders to %s\n", strings.Join(loadersDeduped, ", "))
 		}

@@ -1,4 +1,4 @@
-package github
+﻿package github
 
 import (
 	"encoding/json"
@@ -6,8 +6,8 @@ import (
 	"io"
 
 	"github.com/mitchellh/mapstructure"
-	"packwand/cmd"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +18,7 @@ var githubCmd = &cobra.Command{
 }
 
 func init() {
-	cmd.Add(githubCmd)
+	cmd.AddToGroup(githubCmd, cmd.GroupPackManagement)
 	core.Updaters["github"] = ghUpdater{}
 }
 
@@ -76,9 +76,8 @@ func (u ghUpdateData) ToMap() (map[string]interface{}, error) {
 	return newMap, err
 }
 
-func (u Asset) getSha256() (string, error) {
-	// TODO potentionally cache downloads to speed things up and avoid getting ratelimited by github!
-	mainHasher, err := core.GetHashImpl("sha256")
+func (u Asset) getHash() (string, error) {
+	mainHasher, err := core.GetHashImpl(core.DefaultHashFormat)
 	if err != nil {
 		return "", err
 	}
@@ -87,17 +86,11 @@ func (u Asset) getSha256() (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
+	if _, err := io.Copy(mainHasher, resp.Body); err != nil {
 		return "", err
 	}
 
-	mainHasher.Write(body)
-
-	hash := mainHasher.Sum(nil)
-
-	return mainHasher.HashToString(hash), nil
+	return mainHasher.HashToString(mainHasher.Sum(nil)), nil
 }

@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strings"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -98,6 +98,7 @@ var listCmd = &cobra.Command{
 }
 
 func init() {
+	listCmd.GroupID = GroupInfo
 	rootCmd.AddCommand(listCmd)
 
 	listCmd.Flags().BoolP("version", "v", false, "Print name and version")

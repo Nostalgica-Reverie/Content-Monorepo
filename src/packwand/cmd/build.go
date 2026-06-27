@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"archive/zip"
@@ -15,25 +15,28 @@ import (
 	"strings"
 	"time"
 
-	"packwand/manifest"
-	"packwand/workspace"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
 	"github.com/spf13/cobra"
 )
 
 func init() {
 	llBuildCmd.Flags().StringP("pack", "p", "", "Build a specific pack by name (skip git diff detection)")
+	llBuildCmd.GroupID = GroupBuildExport
 	rootCmd.AddCommand(llBuildCmd)
 
+	llExportCmd.GroupID = GroupBuildExport
 	rootCmd.AddCommand(llExportCmd)
 
 	llPublishCmd.AddCommand(llPublishListCmd)
 	llPublishCmd.AddCommand(llPublishBuildCmd)
 	llPublishCmd.AddCommand(llPublishUploadCmd)
 	llPublishCmd.AddCommand(llPublishVerifyCmd)
+	llPublishCmd.GroupID = GroupBuildExport
 	rootCmd.AddCommand(llPublishCmd)
 }
 
-// — platform type —
+// â€” platform type â€”
 
 type platform struct {
 	short string
@@ -73,7 +76,7 @@ type queuedJob struct {
 	done  <-chan error
 }
 
-// — build —
+// â€” build â€”
 
 var llBuildCmd = &cobra.Command{
 	Use:   "build [sha]",
@@ -431,7 +434,7 @@ func zipContents(src, dest string) error {
 	})
 }
 
-// — publish —
+// â€” publish â€”
 
 var llPublishCmd = &cobra.Command{
 	Use:   "publish",
@@ -498,7 +501,7 @@ func init() {
 	llPublishUploadCmd.Flags().Bool("live", false, "Actually upload (default: dry run)")
 }
 
-// — publish types and helpers —
+// â€” publish types and helpers â€”
 
 type pubResolved struct {
 	pName, rawName, pType, loader, releaseType string
@@ -816,7 +819,7 @@ func pubWriteOutputs(r pubResolved, pDir string) {
 	fmt.Fprintf(f, "is_experimental=%t\n", r.isExperimental)
 }
 
-// — upload / verify —
+// â€” upload / verify â€”
 
 const (
 	modrinthAPI   = "https://api.modrinth.com/v2"
@@ -844,7 +847,7 @@ func pubUpload(manifestPath, variant string, live bool) {
 	filenameBase := fmt.Sprintf("%s-%s-%s-%s", r.pName, r.mcVer, r.loader, r.pVer)
 
 	if !live {
-		fmt.Println("[DRY RUN] publish upload — nothing will be sent (pass --live to upload)")
+		fmt.Println("[DRY RUN] publish upload â€” nothing will be sent (pass --live to upload)")
 	}
 
 	attempted, uploaded := 0, 0
@@ -877,7 +880,7 @@ func pubUpload(manifestPath, variant string, live bool) {
 	}
 
 	if attempted == 0 {
-		llFail(fmt.Sprintf("no artifacts found for '%s' in %s — run 'publish build' before 'publish upload'", r.subdirKey, artifactsDir))
+		llFail(fmt.Sprintf("no artifacts found for '%s' in %s â€” run 'publish build' before 'publish upload'", r.subdirKey, artifactsDir))
 	}
 	mode := "validated (dry run)"
 	if live {

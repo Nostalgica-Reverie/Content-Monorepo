@@ -1,12 +1,12 @@
 name = "Legacy4Server"
 author = "omo50"
 version = "26.05"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "7f06f67fcecb1b159c14028fb6970d4a5ff5136edcd5ab19f9ac40d6886aa05b"
+hash-format = "sha512"
+hash = "f3ae12da4ad4ace489484742b77fe600c19eea4ab44f9b30ab821177027bb91ce40e3b90780ea35f451548577a6f54ca701f3df9b7643c98351949b390f474ff"
 
 [versions]
 fabric = "0.19.3"

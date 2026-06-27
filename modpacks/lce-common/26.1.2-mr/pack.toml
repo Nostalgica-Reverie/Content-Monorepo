@@ -1,12 +1,12 @@
 name = "Legacy Console Edition Common Assets"
 author = "omo50, hzsa, Cjnator38"
 version = "26.06"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "21c7bc051dfb23065fdf0857b707ce99c4b033c427304ac9e48bbef3cfad0714"
+hash-format = "sha512"
+hash = "ea75ea21429660b8de5c8ee9663d1b5c976792936463bf4ee78493e66bd42ee294f4f1840f7ba3cbb06647876f0bc01a7db398752352647b88693514b4256cbd"
 
 [versions]
 fabric = "0.19.3"

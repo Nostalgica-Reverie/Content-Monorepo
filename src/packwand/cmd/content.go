@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"archive/zip"
@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"packwand/manifest"
-	"packwand/workspace"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
 	"github.com/spf13/cobra"
 )
 
@@ -25,23 +25,28 @@ func init() {
 	llInitCmd.Flags().Bool("base", false, "Scaffold this pack as a performance base")
 	llInitCmd.Flags().String("consumes", "", "ID of the performance base this pack consumes")
 	llInitCmd.Flags().String("variants", "", "Comma-separated variant IDs (multi-MC-version packs)")
+	llInitCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(llInitCmd)
 
 	llAddCmd.Flags().Bool("no-refresh", false, "Skip packwand refresh after add (batch adds)")
+	llAddCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(llAddCmd)
 
 	llPortCmd.Flags().Bool("add", false, "Interactively add missing CurseForge entries via packwand")
 	llPortCmd.Flags().Bool("no-refresh", false, "Batch the refresh until the end")
 	llPortCmd.Flags().Bool("json", false, "Output missing list as JSON (dry-run only)")
+	llPortCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(llPortCmd)
 
 	llImportCmd.Flags().String("id", "", "Override the pack ID derived from the archive name")
+	llImportCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(llImportCmd)
 
+	llTestCmd.GroupID = GroupInfo
 	rootCmd.AddCommand(llTestCmd)
 }
 
-// — init —
+// â€” init â€”
 
 const (
 	defaultMCVersion   = "26.1.2"
@@ -163,7 +168,7 @@ var llInitCmd = &cobra.Command{
 		if asBase {
 			roleDesc = "base"
 		} else if consumesBase != "" {
-			roleDesc = "consumer of " + consumesBase + " (mappings are CHANGEME stubs — fill them in)"
+			roleDesc = "consumer of " + consumesBase + " (mappings are CHANGEME stubs â€” fill them in)"
 		}
 		fmt.Printf("scaffolded %s\n", packDir)
 		fmt.Printf("  manifest.json (role: %s; fill in modrinth_id/curseforge_id, version, author)\n", roleDesc)
@@ -235,7 +240,7 @@ func loaderLatestFlag(loader string) (string, bool) {
 	}
 }
 
-// — add —
+// â€” add â€”
 
 var llAddCmd = &cobra.Command{
 	Use:   "add <mod-slug> [pack-dir|pack-subdir]",
@@ -251,7 +256,7 @@ var llAddCmd = &cobra.Command{
 		}
 
 		if _, err := exec.LookPath(workspace.SelfBin()); err != nil {
-			llFail("packwand not found on PATH — install it or set PACKWIZ_BIN")
+			llFail("packwand not found on PATH â€” install it or set PACKWIZ_BIN")
 		}
 
 		llChdir()
@@ -274,7 +279,7 @@ var llAddCmd = &cobra.Command{
 			case "cf":
 				pwArgs = []string{"curseforge", "add", "-y", slug}
 			default:
-				llWarn("skipping %s — unrecognised suffix (need -mr or -cf)", dir)
+				llWarn("skipping %s â€” unrecognised suffix (need -mr or -cf)", dir)
 				skipped++
 				continue
 			}
@@ -288,7 +293,7 @@ var llAddCmd = &cobra.Command{
 			c.Stdout = os.Stdout
 			c.Stderr = os.Stderr
 			if err := c.Run(); err != nil {
-				llWarn("%s: add failed — slug may not exist on %s under this name", dir, plat)
+				llWarn("%s: add failed â€” slug may not exist on %s under this name", dir, plat)
 				failed++
 				continue
 			}
@@ -330,12 +335,12 @@ func resolveAddTargets(targetArg string) []string {
 	}
 
 	if _, err := os.Stat(filepath.Join(targetArg, "manifest.json")); err != nil {
-		llFail(fmt.Sprintf("no manifest.json in %s — pass a pack dir, a subdir, or nothing for all packs", targetArg))
+		llFail(fmt.Sprintf("no manifest.json in %s â€” pass a pack dir, a subdir, or nothing for all packs", targetArg))
 	}
 	return manifest.SubDirsOf(targetArg)
 }
 
-// — port —
+// â€” port â€”
 
 type portResult struct {
 	MRTotal   int      `json:"mr_total"`
@@ -400,7 +405,7 @@ var llPortCmd = &cobra.Command{
 		fmt.Printf("MR mods: %d | already on CF: %d | missing on CF: %d\n",
 			len(mrNames), len(mrNames)-len(missing), len(missing))
 		if len(missing) == 0 {
-			fmt.Println("nothing to port — CF side already has matching slugs for every MR mod.")
+			fmt.Println("nothing to port â€” CF side already has matching slugs for every MR mod.")
 			return
 		}
 
@@ -423,7 +428,7 @@ var llPortCmd = &cobra.Command{
 				fmt.Printf("  - %s\n", n)
 			}
 			fmt.Println("\nNote: 'missing' is matched by .pw.toml slug. Some may be Modrinth-only")
-			fmt.Println("(no CF release) — those will simply not be found when you --add, which is fine.")
+			fmt.Println("(no CF release) â€” those will simply not be found when you --add, which is fine.")
 			return
 		}
 
@@ -457,7 +462,7 @@ var llPortCmd = &cobra.Command{
 		fmt.Printf("  skipped (declined/no file written): %d\n", len(skipped))
 		fmt.Printf("  not found / errored: %d\n", len(notFound))
 		if len(notFound) > 0 {
-			fmt.Println("  these likely have no CurseForge release (Modrinth-only) — handle manually:")
+			fmt.Println("  these likely have no CurseForge release (Modrinth-only) â€” handle manually:")
 			for _, n := range notFound {
 				fmt.Printf("    - %s\n", n)
 			}
@@ -476,7 +481,7 @@ var llPortCmd = &cobra.Command{
 	},
 }
 
-// — import —
+// â€” import â€”
 
 type mrIndex struct {
 	FormatVersion int               `json:"formatVersion"`
@@ -533,7 +538,7 @@ var llImportCmd = &cobra.Command{
 		customID, _ := cmd.Flags().GetString("id")
 
 		if _, err := exec.LookPath(workspace.SelfBin()); err != nil {
-			llFail("packwand not found; ll-import scaffolds via packwand init and refresh — install it or set PACKWIZ_BIN")
+			llFail("packwand not found; ll-import scaffolds via packwand init and refresh â€” install it or set PACKWIZ_BIN")
 		}
 
 		llChdir()
@@ -686,7 +691,7 @@ func importMrpack(archivePath string, zr *zip.Reader, idx *mrIndex, customID str
 	fmt.Printf("\nimported %s:\n", packID)
 	fmt.Printf("  %d file(s) written (%d with update metadata, %d pinned-by-URL only)\n", wrote, updatable, wrote-updatable)
 	fmt.Printf("  %d override file(s) copied\n", overrides)
-	fmt.Printf("  manifest.json scaffolded — fill modrinth_id/curseforge_id before publishing\n")
+	fmt.Printf("  manifest.json scaffolded â€” fill modrinth_id/curseforge_id before publishing\n")
 	if wrote > updatable {
 		fmt.Printf("  note: files without cdn.modrinth.com URLs lack [update.modrinth]; 'packwand workspace update' will leave them as-is\n")
 	}
@@ -737,7 +742,7 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 		if out, err2 := init2.CombinedOutput(); err2 != nil {
 			llFail(fmt.Sprintf("packwand init failed in %s: %v\n%s", subdir, err2, workspace.Indent(string(out), "    ")))
 		}
-		fmt.Printf("  note: %d mod file(s) require manual 'packwand curseforge add' — see cf-pending.txt\n", len(cfm.Files))
+		fmt.Printf("  note: %d mod file(s) require manual 'packwand curseforge add' â€” see cf-pending.txt\n", len(cfm.Files))
 		var pending strings.Builder
 		for _, f := range cfm.Files {
 			if f.Required {
@@ -774,7 +779,7 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 
 	fmt.Printf("\nimported %s:\n", packID)
 	fmt.Printf("  %d override file(s) copied\n", overrides)
-	fmt.Printf("  manifest.json scaffolded — fill curseforge_id/modrinth_id before publishing\n")
+	fmt.Printf("  manifest.json scaffolded â€” fill curseforge_id/modrinth_id before publishing\n")
 }
 
 func detectCFLoader(loaders []cfModLoader) (loader, version string) {
@@ -862,7 +867,7 @@ func readMrIndex(zr *zip.Reader) (*mrIndex, error) {
 		}
 		return &idx, nil
 	}
-	return nil, fmt.Errorf("no modrinth.index.json in archive — not an mrpack?")
+	return nil, fmt.Errorf("no modrinth.index.json in archive â€” not an mrpack?")
 }
 
 func detectLoader(deps map[string]string) (loader, version string) {
@@ -1000,7 +1005,7 @@ func slugify(name string) string {
 	return strings.Trim(s, "-")
 }
 
-// — test —
+// â€” test â€”
 
 const servePort = "8080"
 

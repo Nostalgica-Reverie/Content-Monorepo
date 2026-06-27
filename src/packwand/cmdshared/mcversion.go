@@ -1,10 +1,8 @@
-package cmdshared
+﻿package cmdshared
 
 import (
 	"encoding/json"
-	"fmt"
-	"packwand/core"
-	"os"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"sort"
 	"time"
 )
@@ -29,8 +27,7 @@ func (m McVersionManifest) CheckValid(version string) {
 			return
 		}
 	}
-	fmt.Println("Given version is not a valid Minecraft version!")
-	os.Exit(1)
+	Failf("%q is not a valid Minecraft version", version)
 }
 
 func GetValidMCVersions() (McVersionManifest, error) {

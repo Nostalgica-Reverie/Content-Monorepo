@@ -1,4 +1,4 @@
-package github
+﻿package github
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ import (
 	"regexp"
 
 	"github.com/dlclark/regexp2"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -160,14 +160,14 @@ func installRelease(repo Repo, release Release, regex string, pack core.Pack) er
 	updateMap["github"], err = ghUpdateData{
 		Slug:   repo.FullName,
 		Tag:    release.TagName,
-		Branch: release.TargetCommitish, // TODO: if no branch is specified by the user, we shouldn't record it - in order to remain branch-agnostic in getLatestRelease()
-		Regex:  regex,                   // TODO: ditto!
+		Branch: branchFlag, // only stored when user specified --branch
+		Regex:  regex,
 	}.ToMap()
 	if err != nil {
 		return err
 	}
 
-	hash, err := file.getSha256()
+	hash, err := file.getHash()
 	if err != nil {
 		return err
 	}
@@ -178,7 +178,7 @@ func installRelease(repo Repo, release Release, regex string, pack core.Pack) er
 		Side:     core.UniversalSide,
 		Download: core.ModDownload{
 			URL:        file.BrowserDownloadURL,
-			HashFormat: "sha256",
+			HashFormat: core.DefaultHashFormat,
 			Hash:       hash,
 		},
 		Update: updateMap,

@@ -1,4 +1,4 @@
-package curseforge
+﻿package curseforge
 
 import (
 	"errors"
@@ -7,11 +7,11 @@ import (
 	"slices"
 	"strings"
 
-	"packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
 	"github.com/sahilm/fuzzy"
 	"github.com/spf13/viper"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"gopkg.in/dixonwille/wmenu.v4"
 )

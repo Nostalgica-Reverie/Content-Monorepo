@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"fmt"
@@ -6,7 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"packwand/workspace"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
 )
 
 // llStartCwd is captured at startup before any chdir by workspace commands.
@@ -25,43 +26,16 @@ func llAbs(p string) string {
 }
 
 // llFail prints msg to stderr in TTY or CI annotation format, then exits 1.
-func llFail(msg string) {
-	if llIsTTY() {
-		fmt.Fprintln(os.Stderr, "error: "+msg)
-	} else {
-		fmt.Fprintln(os.Stderr, "::error::"+msg)
-	}
-	os.Exit(1)
-}
+func llFail(msg string) { cmdshared.Fail(msg) }
 
 // llWarn prints a warning in TTY or CI annotation format.
-func llWarn(format string, a ...any) {
-	msg := fmt.Sprintf(format, a...)
-	if llIsTTY() {
-		fmt.Fprintf(os.Stderr, "warning: %s\n", msg)
-	} else {
-		fmt.Fprintf(os.Stderr, "::warning::%s\n", msg)
-	}
-}
+func llWarn(format string, a ...any) { cmdshared.Warn(format, a...) }
 
 // llErrFile prints a file-annotated error in TTY or CI annotation format.
-func llErrFile(path, format string, a ...any) {
-	msg := fmt.Sprintf(format, a...)
-	if llIsTTY() {
-		fmt.Fprintf(os.Stderr, "  error: %s: %s\n", path, msg)
-	} else {
-		fmt.Fprintf(os.Stderr, "::error file=%s::%s\n", path, msg)
-	}
-}
+func llErrFile(path, format string, a ...any) { cmdshared.ErrFile(path, format, a...) }
 
 // llIsTTY reports whether stdout is a terminal.
-func llIsTTY() bool {
-	fi, err := os.Stdout.Stat()
-	if err != nil {
-		return false
-	}
-	return fi.Mode()&os.ModeCharDevice != 0
-}
+func llIsTTY() bool { return cmdshared.IsTTY() }
 
 // llChdir changes directory to the repo root, calling llFail if it cannot be found.
 func llChdir() {

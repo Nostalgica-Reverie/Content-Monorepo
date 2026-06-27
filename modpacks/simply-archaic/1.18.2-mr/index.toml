@@ -1,96 +1,96 @@
-hash-format = "sha256"
+hash-format = "sha512"
 
 [[files]]
 file = "config/crash_assistant/config.toml"
-hash = "6188ae51e7357b443c512fa255c9d3537351ab1e8abec89acc7aff9c8482d3d4"
+hash = "13c7262bf430ca66eedc127552bcb37f2e1d931ed2d72a9af7a08a439d74ad1da8a1f183cb8808f428711c78c1e857fb88187610e8d4ef52af8fd0adfa0e860c"
 
 [[files]]
 file = "config/crash_assistant/crash_assistant_localization_overrides/README.md"
-hash = "52f394cd3754a29a6f236b1fe622bb430fa7e4632bce262eeb0333d71842bb52"
+hash = "68f6a54674ac029664728e94ccf1001e583ed9b6fddbdcb218fddf7c620d4798e59d2a7fa045bd1f08ca167e469cf8e8ca7c0c6813be97b6ef931c26bb37d125"
 
 [[files]]
 file = "config/crash_assistant/modlist.json"
-hash = "60e0798dd91cadd99c5b3c8c13d819147617ab41e94585f1fa6e5066fce448ce"
+hash = "6e56317afe55739fd882a70cd8805421d692328f57d206a981413a0a7a8ee430ee59c3016cc9207a57dd87716dc319c6bcb907eea7af08b80873dba39474a853"
 
 [[files]]
 file = "config/crash_assistant/scripts/log_analysis/example.jexl"
-hash = "798a496ac9989f59c3041147173d7f22719918d3a52f8dbddca318a33b730816"
+hash = "87b92b52d35572dccfb5c89235b090762c193305d9d2c353e28001658ac8ddf9b4a46529deac425de480d332322a968ca4b8aac29e2e9f3cd8efd0946dd342bc"
 
 [[files]]
 file = "config/crash_assistant/scripts/startup/example.jexl"
-hash = "10df5835f981e9688351b2c90521932d5955189d70f773e6b3119370bd9dd49e"
+hash = "205a02b0e763c935999299cf6494e2b32ceb671e218471e4d93f47898a1243baff4eab96794fc2756f8e385b88bef8d104c7244a27182a66c64d33cd1555ffad"
 
 [[files]]
 file = "config/fabric/indigo-renderer.properties"
-hash = "bfb8a9843ff557a013a227b4d5937ce5435b3ada81157273b98048831668d94b"
+hash = "6103084c1ab80cbcc1a0327e3482cfe1ad95b474a73d32fd1c91dd2137f9fd68c8ac5bbe2f79541cce7f8c313dab705fdb4fbc1f1f208113b7671df8f9333e34"
 
 [[files]]
 file = "config/ferritecore.mixin.properties"
-hash = "1fbbea658d8af2a751857e70cf2d5930a24490cc4c24f8db9b49630a818b895c"
+hash = "d4adeef869d7387700c0307def2414ff701998bb25aa3113a0d234408444b10e671dd195d9ab116dcf1655a218a9cc8f11f48d9a6ba161be2111ac05c0588b38"
 
 [[files]]
 file = "config/ixeris.toml"
-hash = "c102765dd82a838e2df9492dd9017941fba6e6ddd89d06b5a5c96cf781d30d97"
+hash = "2b411b4e816e7cff9888cde659674b3d4f1975216a015f1fcfafb345e16063ff73b83c4f98cd428fe162ba8d34336116550d18daec7c57cd507d08413c7cf35b"
 
 [[files]]
 file = "config/modernfix-mixins.properties"
-hash = "3c5317882a50941e2384b9739ec3aa688f297105691c9d8d577936ad29c1d575"
+hash = "7b0e8af66df5abdfb8b421b5472e139966a944643ae5cad8c84513e5a672fadd64ef19e3f2c1b20856516c445dbfc7802a0e7b795473107495a0715b43dba6ea"
 
 [[files]]
 file = "modlist.md"
-hash = "a8a23b3741ac3640838d2e92c3beed4ff0642c669a70f418fd0931d1e5e2d5a1"
+hash = "5bc4d87d43d2301eb2bc6e36e315e46615de37a45e83fe5e675a98693fa5f01a3b5eb50b00368a8d6f1ceea0d9ed1ac6006843b60687831f68184320f2746d80"
 
 [[files]]
 file = "mods/crash-assistant.pw.toml"
-hash = "05e4be5ffa0440930f8163c1b3287f057d3a8c5a1ff2f389302758acc72f168e"
+hash = "0343c1d3d50258468ed1d47dd94bb1fba30f7d11e7e742b09ba73e3d85d3bd791de2196c86f08274cac35f2fe7046b45a9a7aeee876ef148d6cff4b41df1d344"
 metafile = true
 
 [[files]]
 file = "mods/entityculling.pw.toml"
-hash = "9a841db493bca20c66d30fc6c45607d84004ae9e7d1894f61970411e9763a615"
+hash = "c706af1ffd9fd38f917fb49ec46a4997992fb91a9310b9f02320c865efd16ef2c5b1708a68e13b2f73c5eaa5cfae0c7d1aac7bac7cf4a17997e5eb1d5b3f4ed1"
 metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "0494afe4f7ac42d72eb0af1e89f8db29f0b062bfbbf197882005341c1c2c60b3"
+hash = "9fc4ae9f617920650753044faa406b039f787198b07a17ed405adc28a6f63edbb3769431d5d98bb7e3160257fa78446f6247dcb46c3f9cb90a4e56c3255c4cc0"
 metafile = true
 
 [[files]]
 file = "mods/ferrite-core.pw.toml"
-hash = "63471178eca2f5d0d36036761b9e4a1728cef8371e08e7e7048112f3fa839105"
+hash = "fe9c986f729254273fa890639d11e0c591722521cf32e88dec559916379e4d20ea0e824b0f63eda245ede0fd7f0dd401ef093b8c04d78a67bd4fa18b3be6e6e1"
 metafile = true
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "95d9e059a8c22c1d5ad8803b6e9d4c718089979a6a1cfc10fc7902e3bcabccdf"
+hash = "da55c03c3550633355be25b691e56c16744d40b2a99c93bedabc823a4775646b5c10fa4aba8aa1335d517cb90c22ce5dfc743143d610aa0866b124d7e73cfa23"
 metafile = true
 
 [[files]]
 file = "mods/lazydfu.pw.toml"
-hash = "7afa8c84512137ca4abe89199feeccac1554d02bd83c5e011c052eef3c4448a3"
+hash = "5417bf20410d472f6e2d2499e49dbb267e4a304ab05ff2309938bda02439298006282eaa32c3d021a073edce6187d3adfefae7266d5604f2ad74db11fc1bdcb3"
 metafile = true
 
 [[files]]
 file = "mods/lithium.pw.toml"
-hash = "a58428d8595db30e38ecff09e7ed9bba7b4bbb3702da12d4142f21b71f8fa194"
+hash = "9abdddacc15863ddc31a5bf801944ed85d726f4089341afdbe4395f09600753fdc275b25fa5701519f261764363c2fc40bd31be473d2492c822aa8aa8c0eb36b"
 metafile = true
 
 [[files]]
 file = "mods/modernfix.pw.toml"
-hash = "5ef1c49aa278a7ef68591738d941e8553b1368d8223f1e7eaea29a385a765a06"
+hash = "18b523f19c977025553cff25dd93859189b6182353e455be59908ac1e72b734334f33c33941fd50400e20c5bbe18edd3d6fe135cb33e4d139d6b0e2f3fa6009c"
 metafile = true
 
 [[files]]
 file = "mods/phosphor.pw.toml"
-hash = "e76e313cd43205fbd348d03031e1c5ebe366c045217d4195b88ac0ad3b762769"
+hash = "7c0f2378f88159c5aa9f677ce04bc470dd105ff4a520ac73ae51e25cdfc834f0a3b6c8816a20323c365bab15dada1568d8935fb8c853134207cd8d0aa548179f"
 metafile = true
 
 [[files]]
 file = "mods/smoothboot-fabric.pw.toml"
-hash = "0d70acdcbabace61b1c8a3dca7be2b6a83705c66cdca88c51a89158746e86fda"
+hash = "967a471b3d6b6877a858fdf63e7b6acc3d1692c80560f140d05afce727c4231e1cfbed92dcf4565570a0007142efe434606473472cb50ef77090518b38ac2b5f"
 metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "9fed95294dd9681e08673577eb9a4981d45e657e9331d4f89c9c009bab5756c3"
+hash = "0ef785cf918a33820e0c0671c088afded58b17d417c9e2139bdd5060464f229b94017606dff6b00c73fc3a1ec8ed7339ff9ec41d48cde417b50c62d55231f3b6"
 metafile = true

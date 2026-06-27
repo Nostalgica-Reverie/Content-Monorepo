@@ -1,69 +1,69 @@
-hash-format = "sha256"
+hash-format = "sha512"
 
 [[files]]
 file = "config/archaicfix.cfg"
-hash = "ebf5ba5329f389a91a4ef000e5fa00f14719a033c2f6a32fd7ea97c1c76ef771"
+hash = "0a05fbac488aadb09fd9f846f63dbc9d1e02ab4cb6d1175d7e61210775c3b2392f5f6e5e1c018b464512fca708009e1bb6cfd5a46b780af88f6e98c31cac6517"
 
 [[files]]
 file = "modlist.md"
-hash = "d82b5e5cf1dfde4011ac83467ec4a273622934666a701f99d0243859ebd42d28"
+hash = "5d1e6da1ddbb92e0299006a9622c39eaf1c9d70712cd5c6cdce847b460e3643bf50db21e0e374b0aa5b751e9ae783b2b930884d243f9735e6f683a4f43482bca"
 
 [[files]]
 file = "mods/ai-improvements.pw.toml"
-hash = "7e6856ca40cfd0842cf0f9deeab164563f5731637fbb84814ab0ee339ea72405"
+hash = "99276deb8476fda085656d0670d698ef7b82bdfce87bd6fd4d56020df3bcd8ce0e139514a51d7a84349ac87a0c2cc66e0683fe848cac6a9d5f287323b8998933"
 metafile = true
 
 [[files]]
 file = "mods/angelica.pw.toml"
-hash = "4821331faced00b7128c4c75ce05ab0f05f06ae19a1c5fa6c6ebcbd75f4b9c46"
+hash = "72e44668ffad878809e5c1b674613407d7db5ae65aa27e132af5fb895f548aab86c0d0a16ebfc7d364446ad3d7d0889e4c3e000f1206d2759652aab1057efc8d"
 metafile = true
 
 [[files]]
 file = "mods/archaicfix.pw.toml"
-hash = "586cb8aea1c6bab41dde354b498e23149ddcb25a4151b9bdc2f23202d3cbdb4a"
+hash = "4291abe6508179a11030804612120549669a242bd8cf5d8b385b2c0e54dd89da642c44695bd7d357c16a5b7321934bec14a5ae8d025e28ac7d4e2629472d1683"
 metafile = true
 
 [[files]]
 file = "mods/beddium.pw.toml"
-hash = "cd16d8276c4da306fca009ec7a7ea642ee18b139976bb677c776d38f3fef8d4b"
+hash = "94f779443ed22c925fb26ad417f9901fa6e828c46300cf9b1fcd5bc35b71ee09a0e933fa19e333ee6a109d65d96d78d11049464342062b74dc080606ee2d61c3"
 metafile = true
 
 [[files]]
 file = "mods/born-in-a-barn.pw.toml"
-hash = "6eec1f0955ff15fbe49f33ad1311b63269a977c1a1b92e78d8ef0f56a9b6faa2"
+hash = "73ef5ba5df0675b7f64b2631a5bc4ba565d3d88591ad502820516a453856e8562f560ae590c35e8779af6b97a1f5bf4e519aff92b8ff8f2cb7135dcb02e4611e"
 metafile = true
 
 [[files]]
 file = "mods/crash-assistant.pw.toml"
-hash = "1454be53e3854794cb1aad56764c46d51f45be18bac7af0a4914616a362bce94"
+hash = "fe77c982d6a4cfbe9829381db402b0291df31738ea5b879da25618e3a457dd8f616ff77ee5005f95db7eca265c5100de2057df3ce7ad1ea1191bfc8c021162bf"
 metafile = true
 
 [[files]]
 file = "mods/entityculling.pw.toml"
-hash = "a3e4eb5256612db0684dff2da6e8feca2782f67c1337bc77bf505d89a3bae4b5"
+hash = "acf771b9bc19d2533b842aac333d79d4d15396ecdfeb05d978b375889587b336b8e7680abffa0d92ef61f1b87a18cbde8b3ef059d033207400bfa447d28da5b2"
 metafile = true
 
 [[files]]
 file = "mods/foamfix.pw.toml"
-hash = "1711d9d97af767be57c2422cc969359dd233c17d5cde60a2ab964ef5fa4ceae4"
+hash = "e070b3ffbb5ab86fa5a36d8947e55eea26173b0c5595da6a4bbef073ef871f3162c93a11abdc7fb14e385a80f055c4afa26a119b58c201d552b372520d4cb4ff"
 metafile = true
 
 [[files]]
 file = "mods/fplib.pw.toml"
-hash = "973bb72ca1d3ce2f6f34c5e85655f962b2d4831f0ee3862fd8e5d3601f87e3ee"
+hash = "f92989e7f85dce6b09bb6661b2f6854fbc8967e538cfe8139437331cd0a4b2d6b6f55b3387008bd8e30fbe57b541812ae7500de3fe5d29801837e25ee86a3823"
 metafile = true
 
 [[files]]
 file = "mods/gtnhlib.pw.toml"
-hash = "6b4828edf5c571271e81df3ba8d45d9a824b6df132589496712e8de7a4b6a5de"
+hash = "68061cd14e9d4205a823aca8181b2acd9009c0e7d89bedefefbbc8a5b67c18355ebd75d3db8329a0704f763b9cc0db33dbaa07d7b7f090a298df60784a237e24"
 metafile = true
 
 [[files]]
 file = "mods/lwjgl3ify.pw.toml"
-hash = "41f033b64443313b1a7eed966f183550d02b0409306cded424c2061dbb67119b"
+hash = "5115636b79a054ad29f109212c38603c55066108bed6aa8529ba5f3ce7fd466635774a50d7368bb40d08340f64510edfafc8847e1bb8fec188917b8c407d770f"
 metafile = true
 
 [[files]]
 file = "mods/unimixins.pw.toml"
-hash = "2b956fea4e220af23e507b65fa05af1c832a649d2b2dc9db54113a96a9fe2091"
+hash = "257fd71be7377cbfa0467f1c0d43d6eeeefab8703b9649542d563945d1ec2a82b981d54473a133e981f17df18facf5d10ec57d70d6991670f477fc8fab1c08a0"
 metafile = true

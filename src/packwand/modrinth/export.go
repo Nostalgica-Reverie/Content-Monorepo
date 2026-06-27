@@ -1,4 +1,4 @@
-package modrinth
+﻿package modrinth
 
 import (
 	"archive/zip"
@@ -10,10 +10,10 @@ import (
 	"sort"
 	"strconv"
 
-	"packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
 	"github.com/spf13/viper"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 )
 
@@ -35,8 +35,7 @@ var exportCmd = &cobra.Command{
 			os.Exit(1)
 		}
 		// Do a refresh to ensure files are up to date
-		err = index.Refresh()
-		if err != nil {
+		if _, err = index.Refresh(); err != nil {
 			fmt.Println(err)
 			return
 		}

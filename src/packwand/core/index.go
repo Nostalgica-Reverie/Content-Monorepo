@@ -41,7 +41,7 @@ func LoadIndex(indexFile string) (Index, error) {
 		return Index{}, err
 	}
 	if len(rep.HashFormat) == 0 {
-		rep.HashFormat = "sha256"
+		rep.HashFormat = DefaultHashFormat
 	}
 	index := Index{
 		HashFormat: rep.HashFormat,
@@ -77,15 +77,15 @@ func (in *Index) updateFileHashGiven(path, format, hash string, markAsMetaFile b
 	return nil
 }
 
-// computeFileHash returns the SHA256 hash string and metafile flag for a path.
+// computeFileHash returns the hash string and metafile flag for a path using the given format.
 // Pure and goroutine-safe: reads from disk only, no shared state.
-func computeFileHash(path string) (hashString string, metaFile bool, err error) {
+func computeFileHash(path string, format string) (hashString string, metaFile bool, err error) {
 	if !viper.GetBool("no-internal-hashes") {
 		f, err := os.Open(path)
 		if err != nil {
 			return "", false, err
 		}
-		h, err := GetHashImpl("sha256")
+		h, err := GetHashImpl(format)
 		if err != nil {
 			_ = f.Close()
 			return "", false, err
@@ -104,11 +104,11 @@ func computeFileHash(path string) (hashString string, metaFile bool, err error) 
 
 // updateFile calculates the hash for a given path and updates it in the index.
 func (in *Index) updateFile(path string) error {
-	hashString, metaFile, err := computeFileHash(path)
+	hashString, metaFile, err := computeFileHash(path, in.HashFormat)
 	if err != nil {
 		return err
 	}
-	return in.updateFileHashGiven(path, "sha256", hashString, metaFile)
+	return in.updateFileHashGiven(path, in.HashFormat, hashString, metaFile)
 }
 
 // ResolveIndexPath turns a path from the index into a file path on disk
@@ -163,8 +163,25 @@ func readGitignore(path string) (*gitignore.GitIgnore, bool) {
 	return gitignore.CompileIgnoreLines(lines...), true
 }
 
-// Refresh updates the hashes of all the files in the index, and adds new files to the index
-func (in *Index) Refresh() error {
+// RefreshStats summarises what changed during a Refresh call.
+type RefreshStats struct {
+	Added   int
+	Updated int
+	Removed int
+	// HashUpgraded is true when the index hash-format was promoted to DefaultHashFormat.
+	HashUpgraded bool
+}
+
+// Refresh updates the hashes of all the files in the index, and adds new files to the index.
+// It automatically upgrades the index hash-format to DefaultHashFormat when it detects an older format.
+func (in *Index) Refresh() (RefreshStats, error) {
+	var stats RefreshStats
+
+	// Upgrade legacy hash format transparently.
+	if in.HashFormat != DefaultHashFormat {
+		in.HashFormat = DefaultHashFormat
+		stats.HashUpgraded = true
+	}
 
 	// Is case-sensitivity a problem?
 	pathPF, _ := filepath.Abs(viper.GetString("pack-file"))
@@ -176,7 +193,6 @@ func (in *Index) Refresh() error {
 	var fileList []string
 	err := filepath.WalkDir(in.packRoot, func(path string, info os.DirEntry, err error) error {
 		if err != nil {
-			// TODO: Handle errors on individual files properly
 			return err
 		}
 
@@ -190,10 +206,8 @@ func (in *Index) Refresh() error {
 			if ignore.MatchesPath(path) {
 				return fs.SkipDir
 			}
-			// Don't add directories to the file list
 			return nil
 		}
-		// Exit if the files are the same as the pack/index files
 		absPath, _ := filepath.Abs(path)
 		if absPath == pathPF || absPath == pathIndex {
 			return nil
@@ -211,21 +225,23 @@ func (in *Index) Refresh() error {
 		return nil
 	})
 	if err != nil {
-		return err
+		return stats, err
+	}
+
+	// Capture which paths are already indexed so we can distinguish adds from updates.
+	knownPaths := make(map[string]bool, len(in.Files))
+	for p := range in.Files {
+		knownPaths[p] = true
 	}
 
 	progressContainer := mpb.New()
 	progress := progressContainer.AddBar(int64(len(fileList)),
 		mpb.PrependDecorators(
-			// simple name decorator
 			decor.Name("Refreshing index..."),
-			// decor.DSyncWidth bit enables column width synchronization
 			decor.Percentage(decor.WCSyncSpace),
 		),
 		mpb.AppendDecorators(
-			// replace ETA decorator with "done" message, OnComplete event
 			decor.OnComplete(
-				// ETA decorator with ewma age of 60
 				decor.EwmaETA(decor.ET_STYLE_GO, 60), "done",
 			),
 		),
@@ -247,7 +263,7 @@ func (in *Index) Refresh() error {
 			defer wg.Done()
 			defer func() { <-sem }()
 			start := time.Now()
-			hash, meta, err := computeFileHash(v)
+			hash, meta, err := computeFileHash(v, in.HashFormat)
 			hashResults[i] = hashResult{v, hash, meta, err}
 			progress.Increment(time.Since(start))
 		}(i, v)
@@ -258,21 +274,31 @@ func (in *Index) Refresh() error {
 
 	for _, r := range hashResults {
 		if r.err != nil {
-			return r.err
+			return stats, r.err
 		}
-		if err := in.updateFileHashGiven(r.path, "sha256", r.hash, r.meta); err != nil {
-			return err
+		relPath, err := in.RelIndexPath(r.path)
+		if err != nil {
+			return stats, err
+		}
+		if knownPaths[relPath] {
+			stats.Updated++
+		} else {
+			stats.Added++
+		}
+		if err := in.updateFileHashGiven(r.path, in.HashFormat, r.hash, r.meta); err != nil {
+			return stats, err
 		}
 	}
 
-	// Check all the files exist, remove them if they don't
+	// Remove entries for files that no longer exist on disk.
 	for p, file := range in.Files {
 		if !file.markedFound() {
 			delete(in.Files, p)
+			stats.Removed++
 		}
 	}
 
-	return nil
+	return stats, nil
 }
 
 // Write saves the index file

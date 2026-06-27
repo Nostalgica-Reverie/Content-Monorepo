@@ -1,11 +1,11 @@
-package github
+﻿package github
 
 import (
 	"fmt"
 	"net/http"
 	"strconv"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/viper"
 )
 

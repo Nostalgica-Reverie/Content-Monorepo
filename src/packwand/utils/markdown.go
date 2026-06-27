@@ -1,9 +1,10 @@
-package utils
+﻿package utils
 
 import (
 	"fmt"
 	"os"
 
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
 	"github.com/spf13/viper"
@@ -17,16 +18,12 @@ var markdownCmd = &cobra.Command{
 	Args:    cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		outDir := viper.GetString("utils.markdown.dir")
-		err := os.MkdirAll(outDir, os.ModePerm)
-		if err != nil {
-			fmt.Printf("Error creating directory: %s\n", err)
-			os.Exit(1)
+		if err := os.MkdirAll(outDir, os.ModePerm); err != nil {
+			cmdshared.Failf("creating output directory: %v", err)
 		}
 		disableTag(cmd.Root())
-		err = doc.GenMarkdownTree(cmd.Root(), outDir)
-		if err != nil {
-			fmt.Printf("Error generating markdown: %s\n", err)
-			os.Exit(1)
+		if err := doc.GenMarkdownTree(cmd.Root(), outDir); err != nil {
+			cmdshared.Failf("generating markdown: %v", err)
 		}
 		fmt.Println("Generated markdown successfully!")
 	},

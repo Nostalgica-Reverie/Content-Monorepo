@@ -1,11 +1,11 @@
-package cmd
+﻿package cmd
 
 import (
 	"fmt"
 	"github.com/spf13/viper"
 	"os"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 )
 
@@ -32,7 +32,7 @@ var refreshCmd = &cobra.Command{
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		err = index.Refresh()
+		stats, err := index.Refresh()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -52,12 +52,16 @@ var refreshCmd = &cobra.Command{
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		fmt.Println("Index refreshed!")
+		if stats.HashUpgraded {
+			fmt.Printf("Index hash-format upgraded to %s\n", core.DefaultHashFormat)
+		}
+		fmt.Printf("Index refreshed: +%d added  ~%d updated  -%d removed\n", stats.Added, stats.Updated, stats.Removed)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(refreshCmd)
+	refreshCmd.GroupID = GroupUpdates
 
 	refreshCmd.Flags().Bool("build", false, "Only has an effect in no-internal-hashes mode: generates internal hashes for distribution with packwiz-installer")
 }

@@ -1,4 +1,4 @@
-package modrinth
+﻿package modrinth
 
 import (
 	"errors"
@@ -10,8 +10,8 @@ import (
 	"slices"
 
 	modrinthApi "codeberg.org/jmansfield/go-modrinth/modrinth"
-	"packwand/cmd"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/unascribed/FlexVer/go/flexver"
@@ -26,7 +26,7 @@ var modrinthCmd = &cobra.Command{
 var mrDefaultClient = modrinthApi.NewClient(&http.Client{})
 
 func init() {
-	cmd.Add(modrinthCmd)
+	cmd.AddToGroup(modrinthCmd, cmd.GroupPackManagement)
 	core.Updaters["modrinth"] = mrUpdater{}
 
 	mrDefaultClient.UserAgent = core.UserAgent

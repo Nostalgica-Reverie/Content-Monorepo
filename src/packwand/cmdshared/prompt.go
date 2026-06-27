@@ -16,8 +16,8 @@ func PromptYesNo(prompt string) bool {
 	}
 	answer, err := bufio.NewReader(os.Stdin).ReadString('\n')
 	if err != nil {
-		fmt.Printf("Failed to prompt user: %v\n", err)
-		os.Exit(1)
+		// EOF means stdin is closed (e.g. in a subprocess / non-interactive context); default to false.
+		return false
 	}
 
 	ansNormal := strings.ToLower(strings.TrimSpace(answer))

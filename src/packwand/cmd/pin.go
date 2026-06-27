@@ -1,10 +1,10 @@
-package cmd
+﻿package cmd
 
 import (
 	"fmt"
 	"os"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 )
 
@@ -76,6 +76,8 @@ var unpinCmd = &cobra.Command{
 }
 
 func init() {
+	pinCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(pinCmd)
+	unpinCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(unpinCmd)
 }

@@ -1,4 +1,4 @@
-package core
+﻿package core
 
 import (
 	"encoding/json"
@@ -16,7 +16,7 @@ import (
 	"slices"
 )
 
-const UserAgent = "packwand/packwand"
+const UserAgent = "git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/packwand"
 
 func GetWithUA(url string, contentType string) (resp *http.Response, err error) {
 	const maxRetries = 3

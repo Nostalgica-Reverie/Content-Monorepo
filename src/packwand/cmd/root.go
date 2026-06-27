@@ -1,8 +1,8 @@
-package cmd
+﻿package cmd
 
 import (
 	"fmt"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/pflag"
 	"os"
 	"path/filepath"
@@ -12,13 +12,23 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Command group IDs â€” used by subpackages to slot commands into the right section.
+const (
+	GroupPackManagement = "pack"
+	GroupUpdates        = "update"
+	GroupBuildExport    = "build"
+	GroupWorkspace      = "workspace"
+	GroupInfo           = "info"
+	GroupOther          = "other"
+)
+
 var packFile string
 var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "packwand",
-	Short: "Minecraft modpack toolchain — packwiz core with multi-pack workspace management",
+	Short: "Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management",
 	Run: func(cmd *cobra.Command, args []string) {
 		printMascot()
 		_ = cmd.Help()
@@ -26,8 +36,9 @@ var rootCmd = &cobra.Command{
 }
 
 var versionCmd = &cobra.Command{
-	Use:   "version",
-	Short: "Print the packwand version",
+	Use:     "version",
+	Short:   "Print the packwand version",
+	GroupID: GroupInfo,
 	Run: func(cmd *cobra.Command, args []string) {
 		printMascot()
 		fmt.Println("packwand " + packwandVersion)
@@ -43,13 +54,30 @@ func Execute() {
 	}
 }
 
-// Add adds a new command as a subcommand to packwiz
+// Add adds a new command as a subcommand to packwand (no group).
 func Add(newCommand *cobra.Command) {
+	rootCmd.AddCommand(newCommand)
+}
+
+// AddToGroup adds a new command to rootCmd under the given group.
+func AddToGroup(newCommand *cobra.Command, groupID string) {
+	newCommand.GroupID = groupID
 	rootCmd.AddCommand(newCommand)
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
+
+	// Register command groups so they appear as sections in --help output.
+	rootCmd.AddGroup(
+		&cobra.Group{ID: GroupPackManagement, Title: "Pack Management:"},
+		&cobra.Group{ID: GroupUpdates, Title: "Updates & Refresh:"},
+		&cobra.Group{ID: GroupBuildExport, Title: "Build & Export:"},
+		&cobra.Group{ID: GroupWorkspace, Title: "Workspace (multi-pack):"},
+		&cobra.Group{ID: GroupInfo, Title: "Information & Diagnostics:"},
+		&cobra.Group{ID: GroupOther, Title: "Other:"},
+	)
+
 	rootCmd.AddCommand(versionCmd)
 
 	rootCmd.PersistentFlags().StringVar(&packFile, "pack-file", "pack.toml", "The modpack metadata file to use")

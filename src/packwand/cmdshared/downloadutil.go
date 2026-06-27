@@ -1,13 +1,14 @@
-package cmdshared
+﻿package cmdshared
 
 import (
 	"archive/zip"
 	"fmt"
-	"packwand/core"
 	"io"
 	"os"
 	"path"
 	"path/filepath"
+
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 )
 
 func ListManualDownloads(session core.DownloadSession) {
@@ -20,13 +21,12 @@ func ListManualDownloads(session core.DownloadSession) {
 		}
 		cacheDir, err := core.GetPackwizCache()
 		if err != nil {
-			fmt.Printf("Error locating cache folder: %v", err)
-			os.Exit(1)
+			Failf("locating cache folder: %v", err)
 		}
 
 		fmt.Printf("Once you have done so, place these files in %s and re-run this command.\n",
 			filepath.Join(cacheDir, core.DownloadCacheImportFolder))
-		os.Exit(1)
+		Fail("manual downloads required before continuing")
 	}
 }
 

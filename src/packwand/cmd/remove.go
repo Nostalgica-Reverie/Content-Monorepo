@@ -1,10 +1,10 @@
-package cmd
+﻿package cmd
 
 import (
 	"fmt"
 	"os"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 )
 
@@ -52,5 +52,6 @@ var removeCmd = &cobra.Command{
 }
 
 func init() {
+	removeCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(removeCmd)
 }

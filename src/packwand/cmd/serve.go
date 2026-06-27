@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"bytes"
@@ -14,7 +14,7 @@ import (
 	"strings"
 	"sync"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -159,8 +159,7 @@ func doServeRefresh(pack *core.Pack, index *core.Index) error {
 	if err != nil {
 		return err
 	}
-	err = index.Refresh()
-	if err != nil {
+	if _, err = index.Refresh(); err != nil {
 		return err
 	}
 	if err = core.CommitChanges(index, pack); err != nil {
@@ -172,6 +171,7 @@ func doServeRefresh(pack *core.Pack, index *core.Index) error {
 }
 
 func init() {
+	serveCmd.GroupID = GroupOther
 	rootCmd.AddCommand(serveCmd)
 
 	serveCmd.Flags().IntP("port", "p", 8080, "The port to run the server on")

@@ -1,4 +1,4 @@
-package curseforge
+﻿package curseforge
 
 import (
 	"archive/zip"
@@ -6,14 +6,14 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"packwand/curseforge/packinterop"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/curseforge/packinterop"
 	"io"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -344,8 +344,7 @@ var importCmd = &cobra.Command{
 		}
 		if len(filesList) > 0 {
 			fmt.Printf("Successfully copied %d/%d files!\n", successes, len(filesList))
-			err = index.Refresh()
-			if err != nil {
+			if _, err = index.Refresh(); err != nil {
 				fmt.Println(err)
 				os.Exit(1)
 			}

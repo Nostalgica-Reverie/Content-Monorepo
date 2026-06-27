@@ -1,9 +1,9 @@
-package curseforge
+﻿package curseforge
 
 import (
 	"fmt"
 	"github.com/aviddiviner/go-murmur"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
@@ -114,8 +114,7 @@ var detectCmd = &cobra.Command{
 		}
 		fmt.Println("Detection complete!")
 
-		err = index.Refresh()
-		if err != nil {
+		if _, err = index.Refresh(); err != nil {
 			fmt.Println(err)
 			return
 		}

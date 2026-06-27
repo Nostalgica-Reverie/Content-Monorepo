@@ -16,10 +16,14 @@ packwand is not so great for...
 packwand comes with:
 - Auto-publishing 
 - Acceptable loaders being able to have multiple modloaders - very useful for modpacks using Sinytra Connector
+- Arbitrary command support
 - Batch updating
 - Batch refreshing
 - Batch exporting
+- Better erroring
 - Build tools
+- ForgeJo/Codeberg/Gitea support (similar to packwiz gh add!)
+- Higher security via mandatory sha-512
 - Inter-platform porting (from  modrinth to curseforge and vice versa)
 - Linting of config files
 - Modpack importing from .mrpack or .zip (curseforge format)
@@ -27,6 +31,8 @@ packwand comes with:
 - Manifest based systems (which runs auto publish and other things)
 - Opt-in automations like auto changelog generation and hard validation to ensure pack compliance
 - Pack initialization
+- Pack siding (Client, Server, Either/Or, or both)
+- Pack syncing; a system where modpacks can become a set of shared utilities, where a performance pack you use can be automatically mirrored to any pack it needs
 - Proper CI/CD support, where the CI is the tool
 - --no-refresh flag implemented to save on speed on batch updates, at the cost of potential breakage
 

@@ -10,7 +10,10 @@ This repository hosts all the source and files for all of our resource packs, da
 ## Contributing
 First, please refer to the CONTRIBUTING.md file in the repository. This will tell you some basics.
 
-To work on the repo, please install Packwiz. It is also helpful to install Packwiz Wrapper, as it can do some batch commands. Alternatively, you may also use the WIP tool Somnus, which is detailed below.
+### How to work on the repo
+1. Install Go (1.24 or newer) from https://golang.org/dl/
+2. run `go install git.nostalgica.net/Reverie-Projects/monorepo/src/packwand@latest`
+Now you have our tooling set up.
 
 # Documentation
 - Install [Node.js](https://nodejs.org/en/download) version 18 or higher
@@ -26,7 +29,7 @@ npm run docs:dev
 Any changes made in the docs segment of the repo will now automatically update locally
 
 # Modpacks
-To work on modpacks, you must install Packwiz and Somnus, which are detailed below
+To work on modpacks, you must install Packwand, which the download was provided above.
 
 # Actions
 The repository makes usage of Forgejo actions, for CI/CD and general QoL improvements to our dev process.

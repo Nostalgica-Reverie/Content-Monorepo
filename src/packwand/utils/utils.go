@@ -1,7 +1,7 @@
-package utils
+﻿package utils
 
 import (
-	"packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmd"
 	"github.com/spf13/cobra"
 )
 
@@ -12,5 +12,5 @@ var utilsCmd = &cobra.Command{
 }
 
 func init() {
-	cmd.Add(utilsCmd)
+	cmd.AddToGroup(utilsCmd, cmd.GroupOther)
 }

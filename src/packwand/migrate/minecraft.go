@@ -1,13 +1,14 @@
-package migrate
+﻿package migrate
 
 import (
 	"fmt"
-	packCmd "packwand/cmd"
-	"packwand/cmdshared"
-	"packwand/core"
+	"os"
+
+	packCmd "git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"os"
 )
 
 var minecraftCommand = &cobra.Command{
@@ -18,18 +19,14 @@ var minecraftCommand = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		modpack, err := core.LoadPack()
 		if err != nil {
-			// Check if it's a no such file or directory error
 			if os.IsNotExist(err) {
-				fmt.Println("No pack.toml file found, run 'packwiz init' to create one!")
-				os.Exit(1)
+				cmdshared.Fail("no pack.toml found â€” run 'packwand init' to create one")
 			}
-			fmt.Printf("Error loading pack: %s\n", err)
-			os.Exit(1)
+			cmdshared.Failf("loading pack: %v", err)
 		}
 		currentVersion, err := modpack.GetMCVersion()
 		if err != nil {
-			fmt.Printf("Error getting Minecraft version from pack: %s\n", err)
-			os.Exit(1)
+			cmdshared.Failf("getting Minecraft version from pack: %v", err)
 		}
 		wantedMCVersion := args[0]
 		if wantedMCVersion == currentVersion {
@@ -38,27 +35,19 @@ var minecraftCommand = &cobra.Command{
 		}
 		mcVersions, err := cmdshared.GetValidMCVersions()
 		if err != nil {
-			fmt.Printf("Error getting Minecraft versions: %s\n", err)
-			os.Exit(1)
+			cmdshared.Failf("fetching Minecraft version list: %v", err)
 		}
 		mcVersions.CheckValid(wantedMCVersion)
-		// Set the version in the pack
 		modpack.Versions["minecraft"] = wantedMCVersion
-		// Write the pack to disk
 		err = modpack.Write()
 		if err != nil {
-			fmt.Printf("Error writing pack.toml: %s\n", err)
-			os.Exit(1)
+			cmdshared.Failf("writing pack.toml: %v", err)
 		}
 		fmt.Printf("Successfully updated Minecraft version to %s\n", wantedMCVersion)
-		// Prompt the user if they want to update the loader too while they're at it.
 		if cmdshared.PromptYesNo("Would you like to update your loader version to the latest version for this Minecraft version? [Y/n] ") {
-			// We'll run the loader command to update to latest
 			loaderCommand.Run(loaderCommand, []string{"latest"})
 		}
-		// Prompt the user to update their mods too.
 		if cmdshared.PromptYesNo("Would you like to update your mods to the latest versions for this Minecraft version? [Y/n] ") {
-			// Run the update command
 			viper.Set("update.all", true)
 			packCmd.UpdateCmd.Run(packCmd.UpdateCmd, []string{})
 		}

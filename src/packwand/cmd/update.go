@@ -1,12 +1,12 @@
-package cmd
+﻿package cmd
 
 import (
 	"fmt"
 	"os"
 	"sync"
 
-	"packwand/cmdshared"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -121,7 +121,7 @@ var UpdateCmd = &cobra.Command{
 				for _, v := range updatableFiles {
 					count += len(v)
 				}
-				fmt.Printf("dry-run: %d file(s) would be updated — rerun without --dry-run to apply\n", count)
+				fmt.Printf("dry-run: %d file(s) would be updated â€” rerun without --dry-run to apply\n", count)
 				return
 			}
 
@@ -234,6 +234,7 @@ var UpdateCmd = &cobra.Command{
 }
 
 func init() {
+	UpdateCmd.GroupID = GroupUpdates
 	rootCmd.AddCommand(UpdateCmd)
 
 	UpdateCmd.Flags().BoolP("all", "a", false, "Update all external files")

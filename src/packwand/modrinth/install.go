@@ -1,4 +1,4 @@
-package modrinth
+﻿package modrinth
 
 import (
 	"errors"
@@ -9,10 +9,10 @@ import (
 	"strings"
 
 	modrinthApi "codeberg.org/jmansfield/go-modrinth/modrinth"
-	"packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
 	"github.com/spf13/viper"
 
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"gopkg.in/dixonwille/wmenu.v4"
 )

@@ -1,7 +1,7 @@
-package settings
+﻿package settings
 
 import (
-	"packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmd"
 	"github.com/spf13/cobra"
 )
 
@@ -12,5 +12,5 @@ var settingsCmd = &cobra.Command{
 }
 
 func init() {
-	cmd.Add(settingsCmd)
+	cmd.AddToGroup(settingsCmd, cmd.GroupOther)
 }

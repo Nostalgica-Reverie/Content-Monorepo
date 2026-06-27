@@ -1,4 +1,4 @@
-package cmd
+﻿package cmd
 
 import (
 	"bufio"
@@ -11,8 +11,8 @@ import (
 
 	"github.com/fatih/camelcase"
 	"github.com/igorsobreira/titlecase"
-	"packwand/cmdshared"
-	"packwand/core"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -167,8 +167,7 @@ var initCmd = &cobra.Command{
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		err = index.Refresh()
-		if err != nil {
+		if _, err = index.Refresh(); err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
@@ -181,6 +180,7 @@ var initCmd = &cobra.Command{
 }
 
 func init() {
+	initCmd.GroupID = GroupPackManagement
 	rootCmd.AddCommand(initCmd)
 
 	initCmd.Flags().String("name", "", "The name of the modpack (omit to define interactively)")
