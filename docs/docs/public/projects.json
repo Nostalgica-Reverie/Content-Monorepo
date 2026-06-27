@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-14T23:21:42Z",
+  "generated": "2026-06-27T10:06:51Z",
   "projects": [
     {
       "id": "legacy-mechanics",
@@ -74,9 +74,10 @@
       "type": "modpack",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.06.2",
+      "version": "26.06.3",
       "release_type": "release",
       "modrinth_id": "legacy4server",
+      "curseforge_id": "1583815",
       "docs_path": "/modpacks/legacy4server/"
     },
     {
@@ -150,13 +151,21 @@
       "id": "re-console-main",
       "name": "Re-Console",
       "type": "modpack",
-      "loader": "fabric",
-      "mc_version": "26.1.2",
-      "version": "26.06.9+main",
+      "version": "26.06.15.main",
       "release_type": "release",
       "modrinth_id": "legacy-minecraft",
       "curseforge_id": "re-console",
-      "docs_path": "/modpacks/re-console-main/"
+      "docs_path": "/modpacks/re-console-main/",
+      "variants": [
+        {
+          "mc_version": "26.2",
+          "loader": "fabric"
+        },
+        {
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        }
+      ]
     },
     {
       "id": "reimagined",
@@ -242,7 +251,7 @@
       "type": "modpack",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.05.10",
+      "version": "26.06",
       "release_type": "release",
       "modrinth_id": "simply-legacy",
       "curseforge_id": "simply-legacy",
@@ -252,13 +261,21 @@
       "id": "simply-optimized-forked",
       "name": "Simply Optimized Forked",
       "type": "modpack",
-      "loader": "fabric",
-      "mc_version": "26.1.2",
-      "version": "26.06.3",
+      "version": "26.06.8",
       "release_type": "release",
       "modrinth_id": "simply-optimized-forked",
       "curseforge_id": "simply-optimized-forked",
-      "docs_path": "/modpacks/simply-optimized-forked/"
+      "docs_path": "/modpacks/simply-optimized-forked/",
+      "variants": [
+        {
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        },
+        {
+          "mc_version": "26.2",
+          "loader": "fabric"
+        }
+      ]
     },
     {
       "id": "vital",
@@ -286,13 +303,218 @@
       "id": "simply-modernized",
       "name": "simply-modernized",
       "type": "modpack",
-      "loader": "fabric",
-      "mc_version": "26.1.2",
-      "version": "26.06.1",
+      "version": "26.06.2",
       "release_type": "release",
-      "modrinth_id": "simply-modernized",
       "curseforge_id": "1571429",
-      "docs_path": "/modpacks/simply-modernized/"
+      "docs_path": "/modpacks/simply-modernized/",
+      "variants": [
+        {
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        },
+        {
+          "mc_version": "26.2",
+          "loader": "fabric"
+        }
+      ]
+    },
+    {
+      "id": "1080p-kbm",
+      "name": "1080p Keyboard and Mouse Tooltips",
+      "type": "resourcepack",
+      "mc_version": "1.21.10",
+      "version": "1.0.1",
+      "release_type": "release",
+      "modrinth_id": "1080p-kbm-tooltips",
+      "docs_path": "/resource-packs/1080p-kbm/"
+    },
+    {
+      "id": "extra-controller-tooltips",
+      "name": "Extra Controller Tooltips",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/extra-controller-tooltips/"
+    },
+    {
+      "id": "faithful-legacy",
+      "name": "Faithful Legacy",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/faithful-legacy/"
+    },
+    {
+      "id": "lce-panorama-collection",
+      "name": "LCE Panorama Collection",
+      "type": "resourcepack",
+      "release_type": "release",
+      "docs_path": "/resource-packs/lce-panorama-collection/",
+      "variants": [
+        {
+          "id": "build0016",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "build0054",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "tu5",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "tu7",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "tu12",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "tu20",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "tu31",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "tu46",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "tu69",
+          "mc_version": "1.21.1"
+        }
+      ]
+    },
+    {
+      "id": "legacy-mechanics-addon",
+      "name": "Legacy Mechanics Addon",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/legacy-mechanics-addon/"
+    },
+    {
+      "id": "legacy-modpack-lang",
+      "name": "Legacy Modpack Language Files",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/legacy-modpack-lang/"
+    },
+    {
+      "id": "legacy-modpack-resources",
+      "name": "Legacy Modpack Resources",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/legacy-modpack-resources/"
+    },
+    {
+      "id": "legacy-skin-packs",
+      "name": "Legacy Skin Packs",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/legacy-skin-packs/"
+    },
+    {
+      "id": "legacy-titles",
+      "name": "Legacy Titles",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/legacy-titles/"
+    },
+    {
+      "id": "modern-how-to-play",
+      "name": "Modern How to Play",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/modern-how-to-play/"
+    },
+    {
+      "id": "modern-skin-packs",
+      "name": "Modern Skin Packs",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/modern-skin-packs/"
+    },
+    {
+      "id": "old-l4j-ui",
+      "name": "Old Legacy4J UI",
+      "type": "resourcepack",
+      "release_type": "release",
+      "docs_path": "/resource-packs/old-l4j-ui/",
+      "variants": [
+        {
+          "id": "no-vanilla-assets",
+          "mc_version": "1.21.1"
+        },
+        {
+          "id": "vanilla-assets",
+          "mc_version": "1.21.1"
+        }
+      ]
+    },
+    {
+      "id": "ore4j",
+      "name": "Ore4J",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/ore4j/"
+    },
+    {
+      "id": "playstation-skin-packs",
+      "name": "PlayStation Skin Packs",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/playstation-skin-packs/"
+    },
+    {
+      "id": "tutorial-world-addon",
+      "name": "Tutorial World Addon",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/tutorial-world-addon/"
+    },
+    {
+      "id": "vanilla-live",
+      "name": "Vanilla Live",
+      "type": "resourcepack",
+      "mc_version": "1.21.4",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/vanilla-live/"
+    },
+    {
+      "id": "xbox-skin-packs",
+      "name": "Xbox Skin Packs",
+      "type": "resourcepack",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "docs_path": "/resource-packs/xbox-skin-packs/"
     }
   ]
 }
