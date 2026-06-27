@@ -96,49 +96,8 @@ All linters automatically run on commit, and will fail if the modified JSON/TOML
 ### Using Bulk Actions
 Bulk Actions allow you to a lot of one thing, in a single button push via our ForgeJo. This allows for bulk PNG compression, a bulk refresh (which will fix any broken modpacks), and a bulk update (does the same as auto update and auto refresh!)
 
-# Somnus
-Somnus is a WIP CLI tool written in go that is built directly into the Monorepository. To utilize it, you must install it locally. It can be very helpful to modpack development!
-
-## Installing Somnus
-To install Somnus, you can simply navigate to the src/actions/somnus directory and run ```go install .```.
-
-Afterward, you can run somnus in the CLI and see the current commands.
-
-## Using Somnus
-Somnus is primarily a tool to accelerate some hurdles in pack development, regarding exporting with packwiz, initiating new packs under our monorepo structure, and to also allow CI to be ran locally in a better way.
-
-### Somnus Init
-```somnus init``` will initiate a new modpack with a manifest.json and a changelog.md, along with 2 sub-directories for Modrinth and CurseForge. You may set this to any loader (will always use latest) and Minecraft version while running the command.
-
-### Somnus Bump
-```somnus bump``` will bump manifest via CLI.
-
-### Somnus Export
-```somnus export``` will batch export every version of the pack in a .mrpack/.zip format in a non tracked folder for you to use.
-
-### Somnus Sync
-```somnus sync``` runs the sync command detailed in the prior CI section locally.
-
-### Somnus Modlist
-```somnus modlist``` will generate a Crash Assistant mod list derived from the packs ```index.toml```. This may be buggy as it will add both serverside and clientside mods to the mod-list, so be aware.
-
-### Somnus Test
-```somnus test``` will (attempt) to set up an untracked auto-updating MultiMC instance, currently for testing purposes.
-
-### Somnus Lint
-```somnus lint``` will check if your JSON or TOML is valid and yell at you if it isnt.
-
-### Somnus Update
-```somnus update``` runs update on every modpack.
-
-### Somnus Refresh
-```somnus refresh``` runs refresh on every modpack.
-
-### Somnus Port
-```somnus port``` (attempts) to port a Modrinth or Curseforge pack to the other distribution platform. This will likely be high in error, but may accelerate porting by providing a majority of the core mods.
-
-### Somnus Pages
-```somnus pages``` generates a modlist.md inside each subdirectory, which can be linked to users, or saved for reference at a specific point in time.
+# Packwand
+To address issues found in packwiz, we forked it and merged it with our existing tooling. For more info, please read the readme in src/packwand.
 
 ## Credits
 stale.yml forked from JEI, licensed under MIT.

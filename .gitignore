@@ -9,17 +9,27 @@ modpacks/**/packitup.schema.json
 modpacks/**/Logs
 artifacts/
 
-# Somnus
-.somnus-test-instance
-somnus-bin/
-somnus/somnus
-src/actions/somnus/somnus
-packwiz-bin
+# Packwand
+.packwand-test-instance
+packwand-bin/
+src/packwand/packwand
+/packwand
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Nix build output
+result
+dist/
 
 # Go
 *.test
 coverage.out
 coverage.html
+*.out
+
 
 # Bun / Node
 node_modules

@@ -1,0 +1,28 @@
+name: "Setup Packwand"
+description: "Cache-or-build the packwand binary. Requires Go on PATH — run actions/setup-go in the workflow before this action."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache Packwand Binary
+      uses: https://code.forgejo.org/actions/cache@v4
+      with:
+        path: ./packwand-bin
+        key: packwand-go-v1-${{ runner.os }}-${{ hashFiles('src/packwand/**/*.go', 'src/packwand/go.mod', 'src/packwand/go.sum') }}
+
+    - name: Build Packwand
+      shell: bash
+      run: |
+        if [ -x ./packwand-bin/packwand ]; then
+          echo "packwand: restored from cache, skipping build"
+          exit 0
+        fi
+        mkdir -p ./packwand-bin
+        go build -C src/packwand -o "$GITHUB_WORKSPACE/packwand-bin/packwand" .
+        chmod +x ./packwand-bin/packwand
+
+    - name: Export Paths
+      shell: bash
+      run: |
+        echo "$GITHUB_WORKSPACE/packwand-bin" >> "$GITHUB_PATH"
+        echo "PACKWIZ_BIN=$GITHUB_WORKSPACE/packwand-bin/packwand" >> "$GITHUB_ENV"

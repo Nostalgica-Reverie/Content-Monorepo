@@ -24,7 +24,7 @@ jobs:
     runs-on: technocality
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: https://code.forgejo.org/actions/checkout@v5
         with:
           fetch-depth: 2
           filter: blob:none
@@ -32,7 +32,7 @@ jobs:
             modpacks
             datapacks
             resourcepacks
-            src/actions/somnus
+            src/packwand
             .forgejo/actions
 
       - name: Meta
@@ -49,16 +49,14 @@ jobs:
           go-version: 'stable'
           cache: true
 
-      - name: Setup Somnus
-        uses: ./.forgejo/actions/setup-somnus
-        with:
-          install-packwiz: ${{ steps.meta.outputs.has_modpacks }}
+      - name: Setup Packwand
+        uses: ./.forgejo/actions/setup-packwand
 
       - name: Setup PackSquash
         uses: ./.forgejo/actions/setup-packsquash
 
       - name: Lint changed files (syntax)
-        run: ./somnus-bin/somnus lint
+        run: packwand lint
 
       - name: Validate changed pack manifests
         run: |
@@ -74,14 +72,14 @@ jobs:
             [ -n "$pack" ] || continue
             for mf in "$pack/manifest.json" "$pack/manifest-experimental.json"; do
               if [ -f "$mf" ]; then
-                ./somnus-bin/somnus validate "$mf" || STATUS=1
+                packwand validate "$mf" || STATUS=1
               fi
             done
           done <<< "$CHANGED_PACKS"
           exit $STATUS
 
       - name: Run Build
-        run: ./somnus-bin/somnus build "${{ steps.meta.outputs.short_sha }}"
+        run: packwand build "${{ steps.meta.outputs.short_sha }}"
 
       - name: Upload
         uses: https://code.forgejo.org/forgejo/upload-artifact@v4

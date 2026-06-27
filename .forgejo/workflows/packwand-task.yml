@@ -1,0 +1,53 @@
+name: "Packwand Task"
+
+on:
+  workflow_call:
+    inputs:
+      verb:
+        description: "packwand command (and args) to run"
+        required: true
+        type: string
+      commit-message:
+        description: "commit message for resulting changes"
+        required: true
+        type: string
+      add:
+        description: "pathspec to commit"
+        required: false
+        type: string
+        default: "modpacks"
+
+jobs:
+  packwand:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          token: ${{ secrets.FORGEJO_TOKEN }}
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            modpacks
+            src/packwand
+            .forgejo/actions
+
+      - name: Setup Go
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Setup Packwand
+        uses: ./.forgejo/actions/setup-packwand
+
+      - name: Run packwand ${{ inputs.verb }}
+        run: packwand ${{ inputs.verb }}
+
+      - name: Commit
+        uses: https://github.com/EndBug/add-and-commit@v9
+        with:
+          author_name: forgejo-actions[bot]
+          author_email: omo50@noreply.nostalgica.net
+          message: ${{ inputs.commit-message }}
+          add: ${{ inputs.add }}
