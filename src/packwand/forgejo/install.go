@@ -1,14 +1,14 @@
-﻿package forgejo
+package forgejo
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"regexp"
+	"strings"
 
+	gitea "code.gitea.io/sdk/gitea"
 	"github.com/dlclark/regexp2"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"github.com/spf13/cobra"
@@ -81,41 +81,33 @@ var installCmd = &cobra.Command{
 
 const defaultRegex = `^.+(?<!-api|-dev|-dev-preshadow|-sources)\.jar$`
 
-func getLatestRelease(instance, slug, branch string) (Release, error) {
-	var releases []Release
-
-	resp, err := newClient(instance).getReleases(slug)
-	if err != nil {
-		return Release{}, err
+func getLatestRelease(instance, slug, branch string) (*gitea.Release, error) {
+	parts := strings.SplitN(slug, "/", 2)
+	if len(parts) != 2 {
+		return nil, fmt.Errorf("invalid slug %q: expected owner/repo", slug)
 	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
+	releases, _, err := newClient(instance).ListReleases(parts[0], parts[1], gitea.ListReleasesOptions{})
 	if err != nil {
-		return Release{}, err
-	}
-
-	if err = json.Unmarshal(body, &releases); err != nil {
-		return Release{}, err
+		return nil, err
 	}
 
 	if len(releases) == 0 {
-		return Release{}, errors.New("no releases found")
+		return nil, errors.New("no releases found")
 	}
 
 	if branch != "" {
 		for _, r := range releases {
-			if r.TargetCommitish == branch {
+			if r.Target == branch {
 				return r, nil
 			}
 		}
-		return Release{}, fmt.Errorf("no release found for branch %q", branch)
+		return nil, fmt.Errorf("no release found for branch %q", branch)
 	}
 
 	return releases[0], nil
 }
 
-func installMod(repo Repo, instance, branch, regex string, pack core.Pack) error {
+func installMod(repo *gitea.Repository, instance, branch, regex string, pack core.Pack) error {
 	latestRelease, err := getLatestRelease(instance, repo.FullName, branch)
 	if err != nil {
 		return fmt.Errorf("failed to get latest release: %v", err)
@@ -123,15 +115,15 @@ func installMod(repo Repo, instance, branch, regex string, pack core.Pack) error
 	return installRelease(repo, instance, branch, latestRelease, regex, pack)
 }
 
-func installRelease(repo Repo, instance, branch string, release Release, regex string, pack core.Pack) error {
+func installRelease(repo *gitea.Repository, instance, branch string, release *gitea.Release, regex string, pack core.Pack) error {
 	expr := regexp2.MustCompile(regex, 0)
 
-	if len(release.Assets) == 0 {
+	if len(release.Attachments) == 0 {
 		return errors.New("release doesn't have any assets attached")
 	}
 
-	var files []Asset
-	for _, v := range release.Assets {
+	var files []*gitea.Attachment
+	for _, v := range release.Attachments {
 		if bl, _ := expr.MatchString(v.Name); bl {
 			files = append(files, v)
 		}
@@ -166,7 +158,7 @@ func installRelease(repo Repo, instance, branch string, release Release, regex s
 		return err
 	}
 
-	hash, err := file.getHash()
+	hash, err := getAttachmentHash(file)
 	if err != nil {
 		return err
 	}
@@ -176,7 +168,7 @@ func installRelease(repo Repo, instance, branch string, release Release, regex s
 		FileName: file.Name,
 		Side:     core.UniversalSide,
 		Download: core.ModDownload{
-			URL:        file.BrowserDownloadURL,
+			URL:        file.DownloadURL,
 			HashFormat: core.DefaultHashFormat,
 			Hash:       hash,
 		},

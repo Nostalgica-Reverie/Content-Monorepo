@@ -7,9 +7,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"runtime"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/BurntSushi/toml"
@@ -234,6 +232,29 @@ func (in *Index) Refresh() (RefreshStats, error) {
 		knownPaths[p] = true
 	}
 
+	// Build a cache of existing hashes for mtime-based skip: if a file's mtime
+	// predates the index file's mtime, the stored hash is still valid.
+	type cachedEntry struct {
+		hash string
+		meta bool
+	}
+	existing := make(map[string]cachedEntry, len(in.Files))
+	for relPath, holder := range in.Files {
+		switch h := holder.(type) {
+		case *indexFile:
+			existing[relPath] = cachedEntry{h.Hash, h.MetaFile}
+		case *indexFileMultipleAlias:
+			for _, f := range *h {
+				existing[relPath] = cachedEntry{f.Hash, f.MetaFile}
+				break
+			}
+		}
+	}
+	var indexMtime time.Time
+	if fi, err := os.Stat(in.indexFile); err == nil {
+		indexMtime = fi.ModTime()
+	}
+
 	progressContainer := mpb.New()
 	progress := progressContainer.AddBar(int64(len(fileList)),
 		mpb.PrependDecorators(
@@ -253,22 +274,26 @@ func (in *Index) Refresh() (RefreshStats, error) {
 		meta bool
 		err  error
 	}
-	sem := make(chan struct{}, max(1, min(runtime.NumCPU(), 8)))
-	var wg sync.WaitGroup
 	hashResults := make([]hashResult, len(fileList))
-	for i, v := range fileList {
-		wg.Add(1)
-		sem <- struct{}{}
-		go func(i int, v string) {
-			defer wg.Done()
-			defer func() { <-sem }()
-			start := time.Now()
-			hash, meta, err := computeFileHash(v, in.HashFormat)
-			hashResults[i] = hashResult{v, hash, meta, err}
-			progress.Increment(time.Since(start))
-		}(i, v)
-	}
-	wg.Wait()
+	ParallelFor(fileList, HashConcurrent(), func(i int, v string) {
+		// Mtime short-circuit: if the file hasn't changed since the last
+		// index write, reuse the stored hash instead of reading the file.
+		relPath, _ := in.RelIndexPath(v)
+		if !indexMtime.IsZero() {
+			if fi, err := os.Stat(v); err == nil && !fi.ModTime().After(indexMtime) {
+				if ce, ok := existing[relPath]; ok {
+					hashResults[i] = hashResult{v, ce.hash, ce.meta, nil}
+					progress.Increment(0)
+					return
+				}
+			}
+		}
+
+		start := time.Now()
+		hash, meta, err := computeFileHash(v, in.HashFormat)
+		hashResults[i] = hashResult{v, hash, meta, err}
+		progress.Increment(time.Since(start))
+	})
 	progress.SetTotal(int64(len(fileList)), true)
 	progressContainer.Wait()
 
@@ -364,23 +389,14 @@ func (in Index) LoadAllMods() ([]*Mod, error) {
 	modPaths := in.getAllMods()
 	results := make([]*Mod, len(modPaths))
 	errs := make([]error, len(modPaths))
-	sem := make(chan struct{}, max(1, min(runtime.NumCPU(), 8)))
-	var wg sync.WaitGroup
-	for i, v := range modPaths {
-		wg.Add(1)
-		sem <- struct{}{}
-		go func(i int, v string) {
-			defer wg.Done()
-			defer func() { <-sem }()
-			modData, err := LoadMod(v)
-			if err != nil {
-				errs[i] = fmt.Errorf("failed to read metadata file %s: %w", v, err)
-				return
-			}
-			results[i] = &modData
-		}(i, v)
-	}
-	wg.Wait()
+	ParallelFor(modPaths, HashConcurrent(), func(i int, v string) {
+		modData, err := LoadMod(v)
+		if err != nil {
+			errs[i] = fmt.Errorf("failed to read metadata file %s: %w", v, err)
+			return
+		}
+		results[i] = &modData
+	})
 	mods := make([]*Mod, len(modPaths))
 	for i, err := range errs {
 		if err != nil {

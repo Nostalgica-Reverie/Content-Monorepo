@@ -1,4 +1,4 @@
-﻿package cmd
+package cmd
 
 import (
 	"encoding/json"
@@ -144,8 +144,19 @@ func validateManifestFile(manifestPath string) {
 
 	hasMr := strings.TrimSpace(m.ModrinthID) != ""
 	hasCf := strings.TrimSpace(m.CurseforgeID) != ""
-	if !hasMr && !hasCf {
-		llFail("manifest must set at least one of modrinth_id or curseforge_id")
+	hasGH := strings.TrimSpace(m.GitHubID) != ""
+	hasGitea := strings.TrimSpace(m.GiteaID) != ""
+	hasGL := strings.TrimSpace(m.GitLabID) != ""
+	if !hasMr && !hasCf && !hasGH && !hasGitea && !hasGL {
+		llFail("manifest must set at least one platform id (modrinth_id, curseforge_id, github_id, gitea_id, or gitlab_id)")
+	}
+
+	validLifecycles := map[string]bool{"": true, "active": true, "maintenance": true, "archived": true, "eol": true}
+	if !validLifecycles[m.Lifecycle] {
+		llFail(fmt.Sprintf("invalid 'lifecycle': %q (valid: active, maintenance, archived, eol)", m.Lifecycle))
+	}
+	if m.Lifecycle == "archived" || m.Lifecycle == "eol" {
+		llWarn("%s is lifecycle=%s; excluded from workspace auto-update", m.ID, m.Lifecycle)
 	}
 
 	pb, roleLabel := validateRole(m, isExperimental)
@@ -167,7 +178,7 @@ func validateManifestFile(manifestPath string) {
 	}
 
 	if m.Type == "modpack" {
-		validateModpackSubdirs(m, packDir, variants, hasMcVersion, hasMr, hasCf)
+		validateModpackSubdirs(m, packDir, variants, hasMcVersion, hasMr, hasCf, hasGH || hasGitea || hasGL)
 	} else {
 		validateZipPackStructure(packDir, m.Type)
 	}
@@ -333,7 +344,11 @@ func validateChangelog(packDir string) {
 	llFail(fmt.Sprintf("changelog.md has headers but no content at %s", changelogPath))
 }
 
-func validateModpackSubdirs(m *manifest.Manifest, packDir string, variants []manifest.Variant, hasMcVersion, hasMr, hasCf bool) {
+func validateModpackSubdirs(m *manifest.Manifest, packDir string, variants []manifest.Variant, hasMcVersion, hasMr, hasCf, hasForge bool) {
+	if !hasMr && !hasCf && hasForge {
+		return
+	}
+
 	if hasMcVersion {
 		mc := *m.MCVersion
 		mr := filepath.Join(packDir, mc+"-mr")
@@ -442,6 +457,26 @@ func fileExists(path string) bool {
 	info, err := os.Stat(path)
 	return err == nil && !info.IsDir()
 }
+func checkPackFormat(subDir string, cc *catCheck, warnings *int) {
+	packToml, err := os.ReadFile(filepath.Join(subDir, "pack.toml"))
+	if err != nil {
+		return // subdir may not be a packwand pack
+	}
+	content := string(packToml)
+	if strings.Contains(content, "pack-format") && !strings.Contains(content, "packwand:") {
+		cc.Warnings = append(cc.Warnings, fmt.Sprintf("pack-format is not packwand: in %s/pack.toml (run: packwand workspace migrate format)", subDir))
+		(*warnings)++
+	}
+	indexToml, err := os.ReadFile(filepath.Join(subDir, "index.toml"))
+	if err != nil {
+		return
+	}
+	if strings.Contains(string(indexToml), "hash-format") && strings.Contains(string(indexToml), "sha256") {
+		cc.Warnings = append(cc.Warnings, fmt.Sprintf("index uses sha256 in %s (run: packwand refresh to upgrade to sha512)", subDir))
+		(*warnings)++
+	}
+}
+
 
 // â€” doctor â€”
 
@@ -552,6 +587,19 @@ var llDoctorCmd = &cobra.Command{
 					for _, p := range pinDrift(packPath, frozen) {
 						cc.Warnings = append(cc.Warnings, fmt.Sprintf("freeze drift: %s declared frozen but not pinned", p))
 						warnings++
+					}
+				}
+				// lifecycle check
+				if m, rErr := manifest.Read(mf); rErr == nil {
+					lc := m.Lifecycle
+					validLC := map[string]bool{"": true, "active": true, "maintenance": true, "archived": true, "eol": true}
+					if !validLC[lc] {
+						cc.Errors = append(cc.Errors, fmt.Sprintf("invalid lifecycle %q in %s", lc, mf))
+						broken++
+					}
+					// pack-format check across subdirs
+					for _, sub := range manifest.SubDirsOf(packPath) {
+						checkPackFormat(sub, &cc, &warnings)
 					}
 				}
 				if subs, err := os.ReadDir(packPath); err == nil {

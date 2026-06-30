@@ -91,6 +91,23 @@
     "curseforge_id": {
       "type": "string"
     },
+    "github_id": {
+      "type": "string",
+      "description": "GitHub owner/repo slug if the pack is distributed via GitHub Releases."
+    },
+    "gitea_id": {
+      "type": "string",
+      "description": "Forgejo/Gitea/Codeberg owner/repo slug if the pack is distributed via a Forgejo-compatible forge."
+    },
+    "gitlab_id": {
+      "type": "string",
+      "description": "GitLab project path (owner/repo) if the pack is distributed via GitLab."
+    },
+    "lifecycle": {
+      "type": "string",
+      "enum": ["active", "maintenance", "archived", "eol"],
+      "description": "Pack maintenance state. 'archived' and 'eol' packs are excluded from workspace auto-update operations. If omitted, 'active' is assumed."
+    },
     "role": {
       "description": "REQUIRED. Declares this pack's performance relationship. One of: 'none' (standalone), 'base' (a performance base others consume), or an object declaring the base this pack consumes from. Forces every pack to state its role explicitly rather than by omission.",
       "oneOf": [
@@ -220,15 +237,10 @@
     }
   ],
   "anyOf": [
-    {
-      "required": [
-        "modrinth_id"
-      ]
-    },
-    {
-      "required": [
-        "curseforge_id"
-      ]
-    }
+    { "required": ["modrinth_id"] },
+    { "required": ["curseforge_id"] },
+    { "required": ["github_id"] },
+    { "required": ["gitea_id"] },
+    { "required": ["gitlab_id"] }
   ]
 }

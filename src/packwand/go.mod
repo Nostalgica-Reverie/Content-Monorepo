@@ -19,10 +19,10 @@ require (
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
 	github.com/vbauerster/mpb/v4 v4.12.2
-	golang.org/x/crypto v0.41.0 // indirect
-	golang.org/x/sys v0.35.0
-	golang.org/x/term v0.34.0 // indirect
-	golang.org/x/text v0.28.0 // indirect
+	golang.org/x/crypto v0.50.0 // indirect
+	golang.org/x/sys v0.43.0
+	golang.org/x/term v0.42.0 // indirect
+	golang.org/x/text v0.36.0 // indirect
 	gopkg.in/dixonwille/wlog.v2 v2.0.0 // indirect
 	gopkg.in/dixonwille/wmenu.v4 v4.0.2
 )
@@ -31,6 +31,14 @@ require (
 	codeberg.org/jmansfield/go-modrinth v0.6.0
 	github.com/spf13/pflag v1.0.7
 	github.com/unascribed/FlexVer/go/flexver v1.0.0
+)
+
+require (
+	code.gitea.io/sdk/gitea v0.25.1 // indirect
+	github.com/42wim/httpsig v1.2.4 // indirect
+	github.com/davidmz/go-pageant v1.0.2 // indirect
+	github.com/go-fed/httpsig v1.1.0 // indirect
+	github.com/hashicorp/go-version v1.9.0 // indirect
 )
 
 require (
@@ -51,6 +59,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-go 1.23.0
-
-toolchain go1.24.6
+go 1.26

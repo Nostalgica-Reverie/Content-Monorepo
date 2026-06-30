@@ -1,14 +1,12 @@
-﻿package modrinth
+package modrinth
 
 import (
 	modrinthApi "codeberg.org/jmansfield/go-modrinth/modrinth"
 	"errors"
 	"fmt"
-	"runtime"
-	"sync"
 
-	"github.com/mitchellh/mapstructure"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
+	"github.com/mitchellh/mapstructure"
 )
 
 type mrUpdateData struct {
@@ -39,54 +37,44 @@ type cachedStateStore struct {
 
 func (u mrUpdater) CheckUpdate(mods []*core.Mod, pack core.Pack) ([]core.UpdateCheck, error) {
 	results := make([]core.UpdateCheck, len(mods))
-	sem := make(chan struct{}, max(1, min(runtime.NumCPU(), 8)))
-	var wg sync.WaitGroup
-	for i, mod := range mods {
-		wg.Add(1)
-		sem <- struct{}{}
-		go func(i int, mod *core.Mod) {
-			defer wg.Done()
-			defer func() { <-sem }()
+	core.ParallelFor(mods, core.NetworkConcurrent(), func(i int, mod *core.Mod) {
+		rawData, ok := mod.GetParsedUpdateData("modrinth")
+		if !ok {
+			results[i] = core.UpdateCheck{Error: errors.New("failed to parse update metadata")}
+			return
+		}
 
-			rawData, ok := mod.GetParsedUpdateData("modrinth")
-			if !ok {
-				results[i] = core.UpdateCheck{Error: errors.New("failed to parse update metadata")}
-				return
+		data := rawData.(mrUpdateData)
+
+		newVersion, err := getLatestVersion(data.ProjectID, mod.Name, pack)
+		if err != nil {
+			results[i] = core.UpdateCheck{Error: fmt.Errorf("failed to get latest version: %v", err)}
+			return
+		}
+
+		if *newVersion.ID == data.InstalledVersion {
+			results[i] = core.UpdateCheck{UpdateAvailable: false}
+			return
+		}
+
+		if len(newVersion.Files) == 0 {
+			results[i] = core.UpdateCheck{Error: errors.New("new version doesn't have any files")}
+			return
+		}
+
+		newFilename := newVersion.Files[0].Filename
+		for _, v := range newVersion.Files {
+			if *v.Primary {
+				newFilename = v.Filename
 			}
+		}
 
-			data := rawData.(mrUpdateData)
-
-			newVersion, err := getLatestVersion(data.ProjectID, mod.Name, pack)
-			if err != nil {
-				results[i] = core.UpdateCheck{Error: fmt.Errorf("failed to get latest version: %v", err)}
-				return
-			}
-
-			if *newVersion.ID == data.InstalledVersion {
-				results[i] = core.UpdateCheck{UpdateAvailable: false}
-				return
-			}
-
-			if len(newVersion.Files) == 0 {
-				results[i] = core.UpdateCheck{Error: errors.New("new version doesn't have any files")}
-				return
-			}
-
-			newFilename := newVersion.Files[0].Filename
-			for _, v := range newVersion.Files {
-				if *v.Primary {
-					newFilename = v.Filename
-				}
-			}
-
-			results[i] = core.UpdateCheck{
-				UpdateAvailable: true,
-				UpdateString:    mod.FileName + " -> " + *newFilename,
-				CachedState:     cachedStateStore{data.ProjectID, newVersion},
-			}
-		}(i, mod)
-	}
-	wg.Wait()
+		results[i] = core.UpdateCheck{
+			UpdateAvailable: true,
+			UpdateString:    mod.FileName + " -> " + *newFilename,
+			CachedState:     cachedStateStore{data.ProjectID, newVersion},
+		}
+	})
 	return results, nil
 }
 

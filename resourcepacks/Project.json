@@ -1,77 +1,196 @@
 {
-  "_generated": "Used by Somnus do not touch pls thx",
-  "generated": "2026-06-27T10:06:51Z",
+  "_generated": "Used by Packwand do not touch pls thx",
+  "generated": "2026-06-30T12:05:56Z",
   "projects": [
     {
       "id": "1080p-kbm",
       "name": "1080p Keyboard and Mouse Tooltips",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/1080p-kbm",
+      "manifest_path": "resourcepacks/1080p-kbm/manifest.json",
       "mc_version": "1.21.10",
       "version": "1.0.1",
       "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
       "modrinth_id": "1080p-kbm-tooltips",
-      "docs_path": "/resource-packs/1080p-kbm/"
+      "platforms": {
+        "modrinth": "1080p-kbm-tooltips"
+      },
+      "docs_path": "/resource-packs/1080p-kbm/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/1080p-kbm/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "extra-controller-tooltips",
       "name": "Extra Controller Tooltips",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/extra-controller-tooltips",
+      "manifest_path": "resourcepacks/extra-controller-tooltips/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/extra-controller-tooltips/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/extra-controller-tooltips/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/extra-controller-tooltips/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "faithful-legacy",
       "name": "Faithful Legacy",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/faithful-legacy",
+      "manifest_path": "resourcepacks/faithful-legacy/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/faithful-legacy/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/faithful-legacy/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/faithful-legacy/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "lce-panorama-collection",
       "name": "LCE Panorama Collection",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/lce-panorama-collection",
+      "manifest_path": "resourcepacks/lce-panorama-collection/manifest.json",
       "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
       "docs_path": "/resource-packs/lce-panorama-collection/",
       "variants": [
         {
           "id": "build0016",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "build0054",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "tu5",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "tu7",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "tu12",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "tu20",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "tu31",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "tu46",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "tu69",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "build0016",
+          "path": "resourcepacks/lce-panorama-collection/build0016",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "build0054",
+          "path": "resourcepacks/lce-panorama-collection/build0054",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "tu12",
+          "path": "resourcepacks/lce-panorama-collection/tu12",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "tu20",
+          "path": "resourcepacks/lce-panorama-collection/tu20",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "tu31",
+          "path": "resourcepacks/lce-panorama-collection/tu31",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "tu46",
+          "path": "resourcepacks/lce-panorama-collection/tu46",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "tu5",
+          "path": "resourcepacks/lce-panorama-collection/tu5",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "tu69",
+          "path": "resourcepacks/lce-panorama-collection/tu69",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "tu7",
+          "path": "resourcepacks/lce-panorama-collection/tu7",
+          "has_index": false,
+          "has_pack": false
         }
       ]
     },
@@ -79,79 +198,207 @@
       "id": "legacy-mechanics-addon",
       "name": "Legacy Mechanics Addon",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-mechanics-addon",
+      "manifest_path": "resourcepacks/legacy-mechanics-addon/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/legacy-mechanics-addon/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-mechanics-addon/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/legacy-mechanics-addon/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "legacy-modpack-lang",
       "name": "Legacy Modpack Language Files",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-modpack-lang",
+      "manifest_path": "resourcepacks/legacy-modpack-lang/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/legacy-modpack-lang/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-modpack-lang/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/legacy-modpack-lang/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "legacy-modpack-resources",
       "name": "Legacy Modpack Resources",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-modpack-resources",
+      "manifest_path": "resourcepacks/legacy-modpack-resources/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/legacy-modpack-resources/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-modpack-resources/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/legacy-modpack-resources/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "legacy-skin-packs",
       "name": "Legacy Skin Packs",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-skin-packs",
+      "manifest_path": "resourcepacks/legacy-skin-packs/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/legacy-skin-packs/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-skin-packs/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/legacy-skin-packs/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "legacy-titles",
       "name": "Legacy Titles",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-titles",
+      "manifest_path": "resourcepacks/legacy-titles/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/legacy-titles/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-titles/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/legacy-titles/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "modern-how-to-play",
       "name": "Modern How to Play",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/modern-how-to-play",
+      "manifest_path": "resourcepacks/modern-how-to-play/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/modern-how-to-play/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/modern-how-to-play/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/modern-how-to-play/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "modern-skin-packs",
       "name": "Modern Skin Packs",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/modern-skin-packs",
+      "manifest_path": "resourcepacks/modern-skin-packs/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/modern-skin-packs/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/modern-skin-packs/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/modern-skin-packs/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "old-l4j-ui",
       "name": "Old Legacy4J UI",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/old-l4j-ui",
+      "manifest_path": "resourcepacks/old-l4j-ui/manifest.json",
       "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
       "docs_path": "/resource-packs/old-l4j-ui/",
       "variants": [
         {
           "id": "no-vanilla-assets",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
         },
         {
           "id": "vanilla-assets",
-          "mc_version": "1.21.1"
+          "mc_version": "1.21.1",
+          "version": "1.0.0"
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "no-vanilla-assets",
+          "path": "resourcepacks/old-l4j-ui/no-vanilla-assets",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "vanilla-assets",
+          "path": "resourcepacks/old-l4j-ui/vanilla-assets",
+          "has_index": false,
+          "has_pack": false
         }
       ]
     },
@@ -159,46 +406,121 @@
       "id": "ore4j",
       "name": "Ore4J",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/ore4j",
+      "manifest_path": "resourcepacks/ore4j/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/ore4j/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/ore4j/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/ore4j/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "playstation-skin-packs",
       "name": "PlayStation Skin Packs",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/playstation-skin-packs",
+      "manifest_path": "resourcepacks/playstation-skin-packs/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/playstation-skin-packs/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/playstation-skin-packs/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/playstation-skin-packs/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "tutorial-world-addon",
       "name": "Tutorial World Addon",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/tutorial-world-addon",
+      "manifest_path": "resourcepacks/tutorial-world-addon/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/tutorial-world-addon/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/tutorial-world-addon/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/tutorial-world-addon/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "vanilla-live",
       "name": "Vanilla Live",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/vanilla-live",
+      "manifest_path": "resourcepacks/vanilla-live/manifest.json",
       "mc_version": "1.21.4",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/vanilla-live/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/vanilla-live/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/vanilla-live/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "xbox-skin-packs",
       "name": "Xbox Skin Packs",
       "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/xbox-skin-packs",
+      "manifest_path": "resourcepacks/xbox-skin-packs/manifest.json",
       "mc_version": "1.21.1",
       "version": "1.0.0",
       "release_type": "release",
-      "docs_path": "/resource-packs/xbox-skin-packs/"
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/xbox-skin-packs/",
+      "subdirs": [
+        {
+          "key": "assets",
+          "path": "resourcepacks/xbox-skin-packs/assets",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     }
   ]
 }

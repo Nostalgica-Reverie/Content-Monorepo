@@ -1,4 +1,4 @@
-﻿package core
+package core
 
 import (
 	"encoding/json"
@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -95,42 +94,33 @@ func (d *downloadSessionInternal) StartDownloads() chan CompletedDownload {
 		for _, found := range d.foundManualDownloads {
 			downloads <- found
 		}
-		sem := make(chan struct{}, max(1, min(runtime.NumCPU(), 8)))
-		var wg sync.WaitGroup
-		for _, task := range d.downloadTasks {
-			wg.Add(1)
-			sem <- struct{}{}
-			go func(task downloadTask) {
-				defer wg.Done()
-				defer func() { <-sem }()
-				warnings := make([]error, 0)
+		ParallelFor(d.downloadTasks, NetworkConcurrent(), func(_ int, task downloadTask) {
+			warnings := make([]error, 0)
 
-				d.cacheIndexMu.Lock()
-				cacheHandle := d.cacheIndex.GetHandleFromHash(task.hashFormat, task.hash)
-				d.cacheIndexMu.Unlock()
-				if cacheHandle != nil {
-					download, err := reuseExistingFile(cacheHandle, d.hashesToObtain, task.mod, &d.cacheIndexMu)
-					if err != nil {
-						d.cacheIndexMu.Lock()
-						cacheHandle.Remove()
-						d.cacheIndexMu.Unlock()
-						warnings = append(warnings, fmt.Errorf("redownloading cached file: %w", err))
-					} else {
-						downloads <- download
-						return
-					}
-				}
-
-				download, err := downloadNewFile(&task, d.cacheFolder, d.hashesToObtain, &d.cacheIndex, &d.cacheIndexMu)
+			d.cacheIndexMu.Lock()
+			cacheHandle := d.cacheIndex.GetHandleFromHash(task.hashFormat, task.hash)
+			d.cacheIndexMu.Unlock()
+			if cacheHandle != nil {
+				download, err := reuseExistingFile(cacheHandle, d.hashesToObtain, task.mod, &d.cacheIndexMu)
 				if err != nil {
-					downloads <- CompletedDownload{Error: err, Mod: task.mod}
+					d.cacheIndexMu.Lock()
+					cacheHandle.Remove()
+					d.cacheIndexMu.Unlock()
+					warnings = append(warnings, fmt.Errorf("redownloading cached file: %w", err))
 				} else {
-					download.Warnings = warnings
 					downloads <- download
+					return
 				}
-			}(task)
-		}
-		wg.Wait()
+			}
+
+			download, err := downloadNewFile(&task, d.cacheFolder, d.hashesToObtain, &d.cacheIndex, &d.cacheIndexMu)
+			if err != nil {
+				downloads <- CompletedDownload{Error: err, Mod: task.mod}
+			} else {
+				download.Warnings = warnings
+				downloads <- download
+			}
+		})
 		close(downloads)
 	}()
 	return downloads
@@ -645,7 +635,7 @@ func removeEmpty(hashList []string) ([]string, []int) {
 func CreateDownloadSession(mods []*Mod, hashesToObtain []string) (DownloadSession, error) {
 	// Load cache index
 	cacheIndex := CacheIndex{Version: cacheLatestVersion, Hashes: make(map[string][]string)}
-	cachePath, err := GetPackwizCache()
+	cachePath, err := GetPackwandCache()
 	if err != nil {
 		return nil, fmt.Errorf("failed to load cache: %w", err)
 	}

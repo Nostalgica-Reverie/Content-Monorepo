@@ -19,7 +19,7 @@ func ListManualDownloads(session core.DownloadSession) {
 		for _, dl := range manualDownloads {
 			fmt.Printf("%s (%s) from %s\n", dl.Name, dl.FileName, dl.URL)
 		}
-		cacheDir, err := core.GetPackwizCache()
+		cacheDir, err := core.GetPackwandCache()
 		if err != nil {
 			Failf("locating cache folder: %v", err)
 		}

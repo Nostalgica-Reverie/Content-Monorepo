@@ -1,7 +1,8 @@
-﻿package cmd
+package cmd
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -509,21 +510,52 @@ type indexVariant struct {
 	ID        string `json:"id,omitempty"`
 	MCVersion string `json:"mc_version"`
 	Loader    string `json:"loader,omitempty"`
+	Version   string `json:"version,omitempty"`
+}
+
+type indexPlatforms struct {
+	Modrinth   string `json:"modrinth,omitempty"`
+	Curseforge string `json:"curseforge,omitempty"`
+	GitHub     string `json:"github,omitempty"`
+	Gitea      string `json:"gitea,omitempty"`
+	GitLab     string `json:"gitlab,omitempty"`
+}
+
+type indexSubdir struct {
+	Key      string `json:"key"`
+	Path     string `json:"path"`
+	Platform string `json:"platform,omitempty"`
+	ModCount int    `json:"mod_count,omitempty"`
+	HasIndex bool   `json:"has_index"`
+	HasPack  bool   `json:"has_pack"`
 }
 
 type indexEntry struct {
-	ID           string         `json:"id"`
-	Name         string         `json:"name"`
-	Type         string         `json:"type"`
-	Loader       string         `json:"loader,omitempty"`
-	MCVersion    string         `json:"mc_version,omitempty"`
-	Version      string         `json:"version,omitempty"`
-	ReleaseType  string         `json:"release_type,omitempty"`
-	Description  string         `json:"description,omitempty"`
-	ModrinthID   string         `json:"modrinth_id,omitempty"`
-	CurseforgeID string         `json:"curseforge_id,omitempty"`
-	DocsPath     string         `json:"docs_path,omitempty"`
-	Variants     []indexVariant `json:"variants,omitempty"`
+	ID              string         `json:"id"`
+	Name            string         `json:"name"`
+	Type            string         `json:"type"`
+	Category        string         `json:"category,omitempty"`
+	Dir             string         `json:"dir,omitempty"`
+	ManifestPath    string         `json:"manifest_path,omitempty"`
+	Loader          string         `json:"loader,omitempty"`
+	MCVersion       string         `json:"mc_version,omitempty"`
+	Version         string         `json:"version,omitempty"`
+	ReleaseType     string         `json:"release_type,omitempty"`
+	Description     string         `json:"description,omitempty"`
+	Lifecycle       string         `json:"lifecycle,omitempty"`
+	Role            string         `json:"role,omitempty"`
+	PerformanceBase string         `json:"performance_base,omitempty"`
+	SharedAssets    string         `json:"shared_assets,omitempty"`
+	AutoUpdate      bool           `json:"auto_update"`
+	ModrinthID      string         `json:"modrinth_id,omitempty"`
+	CurseforgeID    string         `json:"curseforge_id,omitempty"`
+	GitHubID        string         `json:"github_id,omitempty"`
+	GiteaID         string         `json:"gitea_id,omitempty"`
+	GitLabID        string         `json:"gitlab_id,omitempty"`
+	Platforms       indexPlatforms `json:"platforms"`
+	DocsPath        string         `json:"docs_path,omitempty"`
+	Variants        []indexVariant `json:"variants,omitempty"`
+	Subdirs         []indexSubdir  `json:"subdirs,omitempty"`
 }
 
 type indexFile struct {
@@ -548,6 +580,68 @@ func docsPathFor(typ, id string) string {
 		return "/resource-packs/" + id + "/"
 	}
 	return ""
+}
+
+func categoryForRoot(root string) string {
+	return strings.TrimSuffix(root, "s")
+}
+
+func indexTypeRank(typ string) int {
+	switch typ {
+	case "modpack":
+		return 0
+	case "resourcepack":
+		return 1
+	case "datapack":
+		return 2
+	default:
+		return 99
+	}
+}
+
+func indexPlatformFromSubdir(key string) string {
+	switch {
+	case strings.HasSuffix(key, "-mr"):
+		return "modrinth"
+	case strings.HasSuffix(key, "-cf"):
+		return "curseforge"
+	default:
+		return ""
+	}
+}
+
+func indexSubdirs(packDir string) []indexSubdir {
+	entries, err := os.ReadDir(packDir)
+	if err != nil {
+		return nil
+	}
+	out := make([]indexSubdir, 0, len(entries))
+	for _, entry := range entries {
+		if !entry.IsDir() {
+			continue
+		}
+		sub := filepath.Join(packDir, entry.Name())
+		key := filepath.Base(sub)
+		modCount := 0
+		if entries, err := os.ReadDir(filepath.Join(sub, "mods")); err == nil {
+			for _, e := range entries {
+				if !e.IsDir() && strings.HasSuffix(e.Name(), ".pw.toml") {
+					modCount++
+				}
+			}
+		}
+		_, indexErr := os.Stat(filepath.Join(sub, "index.toml"))
+		_, packErr := os.Stat(filepath.Join(sub, "pack.toml"))
+		out = append(out, indexSubdir{
+			Key:      key,
+			Path:     filepath.ToSlash(sub),
+			Platform: indexPlatformFromSubdir(key),
+			ModCount: modCount,
+			HasIndex: indexErr == nil,
+			HasPack:  packErr == nil,
+		})
+	}
+	return out
 }
 
 func writeCategoryIndexes(entries []indexEntry) {
@@ -586,6 +680,9 @@ func writeProjectsIndex() (int, error) {
 			path := filepath.Join(root, p.Name(), "manifest.json")
 			m, err := manifest.Read(path)
 			if err != nil {
+				if errors.Is(err, os.ErrNotExist) {
+					continue
+				}
 				llWarn("index: %v", err)
 				continue
 			}
@@ -594,16 +691,46 @@ func writeProjectsIndex() (int, error) {
 			}
 			seen[m.ID] = true
 
+			auto := manifest.ReadAutomation(filepath.Join(root, p.Name()))
+			autoUpdate := auto.AutoUpdate == nil || *auto.AutoUpdate
+			lifecycle := m.Lifecycle
+			if lifecycle == "" {
+				lifecycle = "active"
+			}
+			role := m.Role.Label()
+			performanceBase := ""
+			if pb := m.Role.ConsumerBase(); pb != nil {
+				performanceBase = pb.Pack
+			}
 			e := indexEntry{
-				ID:           m.ID,
-				Name:         m.Name,
-				Type:         m.Type,
-				Version:      m.Version,
-				ReleaseType:  m.ReleaseType,
-				Description:  m.Description,
-				ModrinthID:   m.ModrinthID,
-				CurseforgeID: m.CurseforgeID,
-				DocsPath:     docsPathFor(m.Type, m.ID),
+				ID:              m.ID,
+				Name:            m.Name,
+				Type:            m.Type,
+				Category:        categoryForRoot(root),
+				Dir:             filepath.ToSlash(filepath.Join(root, p.Name())),
+				ManifestPath:    filepath.ToSlash(path),
+				Version:         m.Version,
+				ReleaseType:     m.ReleaseType,
+				Description:     m.Description,
+				Lifecycle:       lifecycle,
+				Role:            role,
+				PerformanceBase: performanceBase,
+				SharedAssets:    m.SharedAssets,
+				AutoUpdate:      autoUpdate,
+				ModrinthID:      m.ModrinthID,
+				CurseforgeID:    m.CurseforgeID,
+				GitHubID:        m.GitHubID,
+				GiteaID:         m.GiteaID,
+				GitLabID:        m.GitLabID,
+				Platforms: indexPlatforms{
+					Modrinth:   m.ModrinthID,
+					Curseforge: m.CurseforgeID,
+					GitHub:     m.GitHubID,
+					Gitea:      m.GiteaID,
+					GitLab:     m.GitLabID,
+				},
+				DocsPath: docsPathFor(m.Type, m.ID),
+				Subdirs:  indexSubdirs(filepath.Join(root, p.Name())),
 			}
 			if len(m.Variants) > 0 {
 				for _, v := range m.Variants {
@@ -615,6 +742,7 @@ func writeProjectsIndex() (int, error) {
 						ID:        v.ID,
 						MCVersion: v.MCVersion,
 						Loader:    loader,
+						Version:   v.Version,
 					})
 				}
 			} else {
@@ -628,8 +756,11 @@ func writeProjectsIndex() (int, error) {
 	}
 
 	sort.Slice(entries, func(i, j int) bool {
-		if entries[i].Type != entries[j].Type {
-			return entries[i].Type < entries[j].Type
+		if indexTypeRank(entries[i].Type) != indexTypeRank(entries[j].Type) {
+			return indexTypeRank(entries[i].Type) < indexTypeRank(entries[j].Type)
+		}
+		if entries[i].ID != entries[j].ID {
+			return entries[i].ID < entries[j].ID
 		}
 		return entries[i].Name < entries[j].Name
 	})

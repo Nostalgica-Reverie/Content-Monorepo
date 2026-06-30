@@ -1,4 +1,4 @@
-﻿package cmd
+package cmd
 
 import (
 	"encoding/json"
@@ -56,6 +56,7 @@ type packStatus struct {
 	Version    string       `json:"version"`
 	MCVersion  string       `json:"mc_version,omitempty"`
 	Loader     string       `json:"loader,omitempty"`
+	Lifecycle  string       `json:"lifecycle"`
 	AutoUpdate bool         `json:"auto_update"`
 	Subdirs    []subdirStat `json:"subdirs"`
 	TotalMods  int          `json:"total_mods"`
@@ -141,6 +142,7 @@ var wsStatusCmd = &cobra.Command{
 				Version:    m.Version,
 				MCVersion:  mcVersion,
 				Loader:     m.Loader,
+				Lifecycle:  m.Lifecycle,
 				AutoUpdate: autoUpdate,
 				Subdirs:    subdirs,
 				TotalMods:  totalMods,
@@ -168,8 +170,12 @@ var wsStatusCmd = &cobra.Command{
 			if s.FrozenMods > 0 {
 				frozenNote = fmt.Sprintf("  %d frozen", s.FrozenMods)
 			}
-			fmt.Printf("%s  v%s  mc%s  %s  [%s]  %d mods%s\n",
-				s.ID, s.Version, s.MCVersion, s.Loader, autoStr, s.TotalMods, frozenNote)
+			lcStr := s.Lifecycle
+			if lcStr == "" {
+				lcStr = "active"
+			}
+			fmt.Printf("%s  v%s  mc%s  %s  [%s]  [%s]  %d mods%s\n",
+				s.ID, s.Version, s.MCVersion, s.Loader, autoStr, lcStr, s.TotalMods, frozenNote)
 			for _, sub := range s.Subdirs {
 				subFrozen := ""
 				if len(sub.Frozen) > 0 {
@@ -210,21 +216,46 @@ func wsRunUpdateCheck(args []string) {
 		return
 	}
 
+	type checkOutput struct {
+		dir     string
+		updates []string
+		err     error
+	}
+	fmt.Printf("checking %d subdir(s), running up to %d in parallel\n", len(targets), workspace.MaxConcurrent())
+	results := make([]checkOutput, len(targets))
+	sched := workspace.NewScheduler(workspace.MaxConcurrent())
+	dones := make([]<-chan error, len(targets))
+	for i, dir := range targets {
+		i, dir := i, dir
+		dones[i] = sched.Submit(workspace.Task{
+			Name:  dir,
+			Needs: []workspace.Resource{workspace.Resource("check:" + dir)},
+			Run: func() error {
+				updates, err := workspace.CheckUpdatesInDir(dir)
+				results[i] = checkOutput{dir: dir, updates: updates, err: err}
+				return nil
+			},
+		})
+	}
+	sched.Close()
+	for _, done := range dones {
+		<-done
+	}
+
 	totalUpdates := 0
-	for _, dir := range targets {
-		updates, err := workspace.CheckUpdatesInDir(dir)
-		if err != nil {
-			llWarn("%s: check failed: %v", dir, err)
+	for _, result := range results {
+		if result.err != nil {
+			llWarn("%s: check failed: %v", result.dir, result.err)
 			continue
 		}
-		if len(updates) > 0 {
-			fmt.Printf("%s: %d update(s) available\n", dir, len(updates))
-			for _, u := range updates {
+		if len(result.updates) > 0 {
+			fmt.Printf("%s: %d update(s) available\n", result.dir, len(result.updates))
+			for _, u := range result.updates {
 				fmt.Printf("  ~ %s\n", u)
 			}
-			totalUpdates += len(updates)
+			totalUpdates += len(result.updates)
 		} else {
-			fmt.Printf("%s: up to date\n", dir)
+			fmt.Printf("%s: up to date\n", result.dir)
 		}
 	}
 	if totalUpdates == 0 {

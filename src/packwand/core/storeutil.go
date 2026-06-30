@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func GetPackwizLocalStore() (string, error) {
+func GetPackwandLocalStore() (string, error) {
 	if //goland:noinspection GoBoolExpressions
 	runtime.GOOS == "linux" {
 		// Prefer $XDG_DATA_HOME over $XDG_CACHE_HOME
@@ -24,7 +24,7 @@ func GetPackwizLocalStore() (string, error) {
 	return filepath.Join(userConfigDir, "packwand"), nil
 }
 
-func GetPackwizLocalCache() (string, error) {
+func GetPackwandLocalCache() (string, error) {
 	userCacheDir, err := os.UserCacheDir()
 	if err != nil {
 		return "", err
@@ -32,16 +32,16 @@ func GetPackwizLocalCache() (string, error) {
 	return filepath.Join(userCacheDir, "packwand"), nil
 }
 
-func GetPackwizInstallBinPath() (string, error) {
-	localStore, err := GetPackwizLocalStore()
+func GetPackwandInstallBinPath() (string, error) {
+	localStore, err := GetPackwandLocalStore()
 	if err != nil {
 		return "", err
 	}
 	return filepath.Join(localStore, "bin"), nil
 }
 
-func GetPackwizInstallBinFile() (string, error) {
-	binPath, err := GetPackwizInstallBinPath()
+func GetPackwandInstallBinFile() (string, error) {
+	binPath, err := GetPackwandInstallBinPath()
 	if err != nil {
 		return "", err
 	}
@@ -55,12 +55,12 @@ func GetPackwizInstallBinFile() (string, error) {
 	return filepath.Join(binPath, exeName), nil
 }
 
-func GetPackwizCache() (string, error) {
+func GetPackwandCache() (string, error) {
 	configuredCache := viper.GetString("cache.directory")
 	if configuredCache != "" {
 		return configuredCache, nil
 	}
-	localStore, err := GetPackwizLocalCache()
+	localStore, err := GetPackwandLocalCache()
 	if err != nil {
 		return "", err
 	}

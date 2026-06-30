@@ -1,11 +1,17 @@
-﻿package cmdshared
+package cmdshared
 
 import (
 	"encoding/json"
-	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
+	"os"
+	"path/filepath"
 	"sort"
 	"time"
+
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 )
+
+const mcVersionManifestURL = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
+const mcVersionCacheTTL = time.Hour
 
 type McVersionManifest struct {
 	Latest struct {
@@ -31,19 +37,47 @@ func (m McVersionManifest) CheckValid(version string) {
 }
 
 func GetValidMCVersions() (McVersionManifest, error) {
-	res, err := core.GetWithUA("https://launchermeta.mojang.com/mc/game/version_manifest.json", "application/json")
+	cacheDir, err := core.GetPackwandCache()
+	if err == nil {
+		cacheFile := filepath.Join(cacheDir, "mc-version-manifest.json")
+		if fi, err := os.Stat(cacheFile); err == nil && time.Since(fi.ModTime()) < mcVersionCacheTTL {
+			if data, err := os.ReadFile(cacheFile); err == nil {
+				var cached McVersionManifest
+				if json.Unmarshal(data, &cached) == nil {
+					sortManifest(&cached)
+					return cached, nil
+				}
+			}
+		}
+		manifest, err := fetchVersionManifest()
+		if err != nil {
+			return McVersionManifest{}, err
+		}
+		_ = os.MkdirAll(cacheDir, 0o755)
+		if data, err := json.Marshal(manifest); err == nil {
+			_ = os.WriteFile(cacheFile, data, 0o644)
+		}
+		return manifest, nil
+	}
+	return fetchVersionManifest()
+}
+
+func fetchVersionManifest() (McVersionManifest, error) {
+	res, err := core.GetWithUA(mcVersionManifestURL, "application/json")
 	if err != nil {
 		return McVersionManifest{}, err
 	}
-	dec := json.NewDecoder(res.Body)
-	out := McVersionManifest{}
-	err = dec.Decode(&out)
-	if err != nil {
+	defer res.Body.Close()
+	var out McVersionManifest
+	if err := json.NewDecoder(res.Body).Decode(&out); err != nil {
 		return McVersionManifest{}, err
 	}
-	// Sort by newest to oldest
-	sort.Slice(out.Versions, func(i, j int) bool {
-		return out.Versions[i].ReleaseTime.Before(out.Versions[j].ReleaseTime)
-	})
+	sortManifest(&out)
 	return out, nil
+}
+
+func sortManifest(m *McVersionManifest) {
+	sort.Slice(m.Versions, func(i, j int) bool {
+		return m.Versions[i].ReleaseTime.Before(m.Versions[j].ReleaseTime)
+	})
 }

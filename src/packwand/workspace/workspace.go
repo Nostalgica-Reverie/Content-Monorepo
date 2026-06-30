@@ -1,4 +1,4 @@
-﻿// Package workspace implements the multi-pack orchestration engine.
+// Package workspace implements the multi-pack orchestration engine.
 // It provides tools discovery, parallel pack operations, progress display, linting,
 // and the sync engine used by packwand workspace commands.
 package workspace
@@ -10,7 +10,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -18,14 +17,20 @@ import (
 	"sync/atomic"
 	"time"
 
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
 )
 
 // â€” Environment helpers â€”
 
 // SelfBin returns the path to the running packwand binary for sub-invocations.
+// Reads PACKWAND_BIN first; falls back to PACKWIZ_BIN for backward compatibility.
 func SelfBin() string {
+	if b := os.Getenv("PACKWAND_BIN"); b != "" {
+		return b
+	}
 	if b := os.Getenv("PACKWIZ_BIN"); b != "" {
+		fmt.Fprintln(os.Stderr, "warning: PACKWIZ_BIN is deprecated; use PACKWAND_BIN instead")
 		return b
 	}
 	if exe, err := os.Executable(); err == nil {
@@ -65,12 +70,7 @@ func FindRepoRoot() string {
 
 // MaxConcurrent returns the number of parallel workers to use.
 func MaxConcurrent() int {
-	if v := os.Getenv("SOMNUS_CONCURRENCY"); v != "" {
-		if n, err := strconv.Atoi(v); err == nil && n > 0 {
-			return n
-		}
-	}
-	return max(1, min(runtime.NumCPU(), 8))
+	return core.MaxConcurrent()
 }
 
 // CacheSlotCount returns the number of packwand export operations that may run
@@ -82,6 +82,31 @@ func CacheSlotCount() int {
 		}
 	}
 	return MaxConcurrent()
+}
+
+func envHasAny(names ...string) bool {
+	for _, name := range names {
+		if os.Getenv(name) != "" {
+			return true
+		}
+	}
+	return false
+}
+
+// ConfigureSubprocess keeps workspace-level fanout from multiplying by each
+// child packwand process's internal fanout. Explicit user limits are preserved.
+func ConfigureSubprocess(c *exec.Cmd) {
+	env := os.Environ()
+	if !envHasAny("PACKWAND_CONCURRENCY", "SOMNUS_CONCURRENCY") {
+		env = append(env, "PACKWAND_CONCURRENCY=1")
+	}
+	if !envHasAny("PACKWAND_NETWORK_CONCURRENCY") {
+		env = append(env, "PACKWAND_NETWORK_CONCURRENCY=1")
+	}
+	if !envHasAny("PACKWAND_HASH_CONCURRENCY") {
+		env = append(env, "PACKWAND_HASH_CONCURRENCY=1")
+	}
+	c.Env = env
 }
 
 // WriteJSON writes v as indented JSON to path.
@@ -240,13 +265,27 @@ func CollectTargets(root string, honorIgnore bool, packFilter string, explicit b
 			continue
 		}
 		if packFilter != "" && explicit && honorIgnore {
-			if skip, _ := manifest.OptedOutOfAutoUpdate(packPath); skip {
-				fmt.Printf("note: %s is opted out of auto-update, running anyway (explicitly named)\n", packPath)
+			lc := manifest.LifecycleState(packPath)
+			switch lc {
+			case "eol":
+				fmt.Fprintf(os.Stderr, "warning: %s is end-of-life; running anyway (explicitly named)\n", packPath)
+			case "archived":
+				fmt.Printf("note: %s is archived; running anyway (explicitly named)\n", packPath)
+			default:
+				if skip, _ := manifest.OptedOutOfAutoUpdate(packPath); skip {
+					fmt.Printf("note: %s is opted out of auto-update, running anyway (explicitly named)\n", packPath)
+				}
 			}
 			targets = append(targets, manifest.SubDirsOf(packPath)...)
 			continue
 		}
 		if honorIgnore {
+			lc := manifest.LifecycleState(packPath)
+			if lc == "archived" || lc == "eol" {
+				label := lc
+				skipped = append(skipped, packPath+" ("+label+")")
+				continue
+			}
 			if skip, legacy := manifest.OptedOutOfAutoUpdate(packPath); skip {
 				if legacy {
 					fmt.Fprintf(os.Stderr, "warning: %s uses a legacy opt-out file; migrate to manifest.json automation\n", packPath)
@@ -278,6 +317,7 @@ func WorkPool(targets []string, op Operation, prog *Progress) []string {
 				fmt.Printf("%s %s\n", op.Gerund, dir)
 				cmd := exec.Command(SelfBin(), op.PackwizArgs...)
 				cmd.Dir = dir
+				ConfigureSubprocess(cmd)
 				out, err := cmd.CombinedOutput()
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "FAIL %s: %v\n", dir, err)
@@ -385,6 +425,7 @@ func ResolveScope(args []string, startCwd string) (packFilter string, explicit b
 func CheckUpdatesInDir(dir string) ([]string, error) {
 	cmd := exec.Command(SelfBin(), "update", "--all", "-y", "--dry-run")
 	cmd.Dir = dir
+	ConfigureSubprocess(cmd)
 	out, err := cmd.Output()
 	if err != nil {
 		return nil, fmt.Errorf("packwand update --dry-run: %w", err)
@@ -730,6 +771,7 @@ func runSyncJob(j syncJob, dryRun bool, syncedFolders []string) error {
 	}
 	cmd := exec.Command(SelfBin(), "refresh")
 	cmd.Dir = j.targetDir
+	ConfigureSubprocess(cmd)
 	if out, err := cmd.CombinedOutput(); err != nil {
 		return fmt.Errorf("packwand refresh failed in %s: %v\n%s", j.targetDir, err, Indent(string(out), "    "))
 	}

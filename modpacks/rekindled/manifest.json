@@ -18,8 +18,11 @@
     }
   },
   "variants": [
-    { "id": "tu1",     "mc_version": "26.1.2", "name": "TU1"       },
-    { "id": "tu3",     "mc_version": "26.1.2", "name": "TU3"       },
-    { "id": "tu5",     "mc_version": "26.1.2", "name": "TU5"       }
-  ]
+    { "id": "tu1", "mc_version": "26.1.2", "name": "TU1" },
+    { "id": "tu3", "mc_version": "26.1.2", "name": "TU3" },
+    { "id": "tu5", "mc_version": "26.1.2", "name": "TU5" }
+  ],
+  "automation": {
+    "server_promo": true
+  }
 }

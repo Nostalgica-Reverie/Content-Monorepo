@@ -1,4 +1,4 @@
-﻿package cmd
+package cmd
 
 import (
 	"encoding/json"
@@ -279,7 +279,7 @@ func listFrozen(packDir, subKey string, asJSON bool) {
 
 func applyFreeze(packDir, subKey, subdir string, slugs []string, freeze bool) {
 	if _, err := exec.LookPath(workspace.SelfBin()); err != nil {
-		llFail("packwand binary not found; check PACKWIZ_BIN or PATH")
+		llFail("packwand binary not found; check PACKWAND_BIN or PATH")
 	}
 
 	verb, gerund := "pin", "freezing"
@@ -439,7 +439,7 @@ func showSides(packDir, slug string) {
 
 func setSides(packDir, slug, newSide string) {
 	if _, err := exec.LookPath(workspace.SelfBin()); err != nil {
-		llFail("packwand binary not found; check PACKWIZ_BIN or PATH")
+		llFail("packwand binary not found; check PACKWAND_BIN or PATH")
 	}
 	var touched []string
 	for _, sub := range manifest.SubDirsOf(packDir) {
@@ -660,7 +660,7 @@ func packsList(asJSON bool) {
 			verW = len(p.M.Version)
 		}
 	}
-	fmt.Printf("%-*s  %-13s  %-*s  %-8s  %-10s  platforms\n", idW, "id", "type", verW, "version", "loader", "role")
+	fmt.Printf("%-*s  %-13s  %-*s  %-8s  %-10s  %-12s  platforms\n", idW, "id", "type", verW, "version", "loader", "role", "lifecycle")
 	for _, p := range packs {
 		m := p.M
 		loader := m.Loader
@@ -675,6 +675,15 @@ func packsList(asJSON bool) {
 		if m.CurseforgeID != "" {
 			plats = append(plats, "cf")
 		}
+		if m.GitHubID != "" {
+			plats = append(plats, "gh")
+		}
+		if m.GiteaID != "" {
+			plats = append(plats, "gitea")
+		}
+		if m.GitLabID != "" {
+			plats = append(plats, "gl")
+		}
 		platStr := strings.Join(plats, "+")
 		if platStr == "" {
 			platStr = "-"
@@ -683,7 +692,11 @@ func packsList(asJSON bool) {
 		if len(m.Variants) > 0 {
 			typ = fmt.Sprintf("%s(%dv)", typ, len(m.Variants))
 		}
-		fmt.Printf("%-*s  %-13s  %-*s  %-8s  %-10s  %s\n", idW, p.ID, typ, verW, m.Version, loader, role, platStr)
+		lc := m.Lifecycle
+		if lc == "" {
+			lc = "active"
+		}
+		fmt.Printf("%-*s  %-13s  %-*s  %-8s  %-10s  %-12s  %s\n", idW, p.ID, typ, verW, m.Version, loader, role, lc, platStr)
 	}
 	fmt.Printf("\n%d pack(s) registered\n", len(packs))
 }
@@ -716,7 +729,8 @@ func packsGet(id, field string) {
 
 var settablePackFields = map[string]bool{
 	"name": true, "version": true, "release_type": true, "description": true,
-	"modrinth_id": true, "curseforge_id": true, "mc_version": true, "loader": true,
+	"modrinth_id": true, "curseforge_id": true, "github_id": true, "gitea_id": true, "gitlab_id": true,
+	"mc_version": true, "loader": true, "lifecycle": true,
 }
 
 func packsSet(id, field, value string) {
@@ -744,6 +758,12 @@ func packsSet(id, field, value string) {
 		old, m.ModrinthID = m.ModrinthID, value
 	case "curseforge_id":
 		old, m.CurseforgeID = m.CurseforgeID, value
+	case "github_id":
+		old, m.GitHubID = m.GitHubID, value
+	case "gitea_id":
+		old, m.GiteaID = m.GiteaID, value
+	case "gitlab_id":
+		old, m.GitLabID = m.GitLabID, value
 	case "mc_version":
 		if m.MCVersion != nil {
 			old = *m.MCVersion
@@ -751,6 +771,12 @@ func packsSet(id, field, value string) {
 		m.MCVersion = &value
 	case "loader":
 		old, m.Loader = m.Loader, value
+	case "lifecycle":
+		validLifecycles := map[string]bool{"active": true, "maintenance": true, "archived": true, "eol": true}
+		if value != "" && !validLifecycles[value] {
+			llFail(fmt.Sprintf("invalid lifecycle %q (valid: active, maintenance, archived, eol)", value))
+		}
+		old, m.Lifecycle = m.Lifecycle, value
 	}
 	if err := manifest.Write(filepath.Join(p.Dir, "manifest.json"), m); err != nil {
 		llFail(fmt.Sprintf("failed to write manifest: %v", err))

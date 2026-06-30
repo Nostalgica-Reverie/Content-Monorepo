@@ -1,0 +1,14 @@
+name = "packwand_gui"
+version = "0.1.0"
+target = "javascript"
+
+description = "Gleam frontend for the local Packwand web GUI"
+licences = ["AGPL-3.0-or-later"]
+
+[javascript]
+runtime = "nodejs"
+
+[dependencies]
+gleam_stdlib = ">= 0.44.0 and < 2.0.0"
+
+[dev-dependencies]

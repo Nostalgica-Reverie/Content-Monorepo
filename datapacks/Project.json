@@ -1,39 +1,93 @@
 {
-  "_generated": "Used by Somnus do not touch pls thx",
-  "generated": "2026-06-27T10:06:51Z",
+  "_generated": "Used by Packwand do not touch pls thx",
+  "generated": "2026-06-30T12:05:56Z",
   "projects": [
     {
       "id": "legacy-mechanics",
       "name": "Legacy Mechanics",
       "type": "datapack",
+      "category": "datapack",
+      "dir": "datapacks/legacy-mechanics",
+      "manifest_path": "datapacks/legacy-mechanics/manifest.json",
       "mc_version": "26.1.2",
       "version": "1.1.0",
       "release_type": "beta",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
       "modrinth_id": "legacy-mechanics",
       "curseforge_id": "legacy-mechanics",
-      "docs_path": "/datapacks/legacy-mechanics/"
-    },
-    {
-      "id": "legacy-nether-extended",
-      "name": "Legacy Nether",
-      "type": "datapack",
-      "mc_version": "26.1.2",
-      "version": "3.0.0",
-      "release_type": "release",
-      "modrinth_id": "legacy-nether-extended",
-      "curseforge_id": "legacy-nether-extended",
-      "docs_path": "/datapacks/legacy-nether-extended/"
+      "platforms": {
+        "modrinth": "legacy-mechanics",
+        "curseforge": "legacy-mechanics"
+      },
+      "docs_path": "/datapacks/legacy-mechanics/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "datapacks/legacy-mechanics/26.1.2",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     },
     {
       "id": "legacy-nether",
       "name": "Legacy Nether",
       "type": "datapack",
+      "category": "datapack",
+      "dir": "datapacks/legacy-nether",
+      "manifest_path": "datapacks/legacy-nether/manifest.json",
       "mc_version": "26.1.2",
       "version": "3.0.0",
       "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
       "modrinth_id": "legacy-nether",
       "curseforge_id": "legacy-nether",
-      "docs_path": "/datapacks/legacy-nether/"
+      "platforms": {
+        "modrinth": "legacy-nether",
+        "curseforge": "legacy-nether"
+      },
+      "docs_path": "/datapacks/legacy-nether/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "datapacks/legacy-nether/26.1.2",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
+    },
+    {
+      "id": "legacy-nether-extended",
+      "name": "Legacy Nether",
+      "type": "datapack",
+      "category": "datapack",
+      "dir": "datapacks/legacy-nether-extended",
+      "manifest_path": "datapacks/legacy-nether-extended/manifest.json",
+      "mc_version": "26.1.2",
+      "version": "3.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "legacy-nether-extended",
+      "curseforge_id": "legacy-nether-extended",
+      "platforms": {
+        "modrinth": "legacy-nether-extended",
+        "curseforge": "legacy-nether-extended"
+      },
+      "docs_path": "/datapacks/legacy-nether-extended/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "datapacks/legacy-nether-extended/26.1.2",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
     }
   ]
 }

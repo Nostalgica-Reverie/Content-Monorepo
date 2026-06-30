@@ -21,9 +21,15 @@ type Manifest struct {
 	Description  string      `json:"description,omitempty"`
 	ModrinthID   string      `json:"modrinth_id,omitempty"`
 	CurseforgeID string      `json:"curseforge_id,omitempty"`
+	GitHubID     string      `json:"github_id,omitempty"`
+	GiteaID      string      `json:"gitea_id,omitempty"`
+	GitLabID     string      `json:"gitlab_id,omitempty"`
 	Role         Role        `json:"role"`
 	SharedAssets string      `json:"shared_assets,omitempty"`
-	Automation   *Automation `json:"automation,omitempty"`
+	// Lifecycle declares the pack's maintenance state: active, maintenance, archived, eol.
+	// archived and eol packs are excluded from workspace auto-update operations.
+	Lifecycle  string      `json:"lifecycle,omitempty"`
+	Automation *Automation `json:"automation,omitempty"`
 }
 
 type Variant struct {
@@ -198,8 +204,23 @@ func HasLegacyOptOut(packDir string) bool {
 	return err == nil
 }
 
+// LifecycleState returns the lifecycle value for the pack at packDir,
+// or "active" if unset or the manifest cannot be read.
+func LifecycleState(packDir string) string {
+	m, err := Read(filepath.Join(packDir, "manifest.json"))
+	if err != nil || m.Lifecycle == "" {
+		return "active"
+	}
+	return m.Lifecycle
+}
+
 // OptedOutOfAutoUpdate reports whether auto-update is disabled for packDir.
+// Packs with lifecycle "archived" or "eol" are always skipped.
 func OptedOutOfAutoUpdate(packDir string) (skip bool, legacy bool) {
+	lc := LifecycleState(packDir)
+	if lc == "archived" || lc == "eol" {
+		return true, false
+	}
 	a := ReadAutomation(packDir)
 	if a.AutoUpdate != nil && !*a.AutoUpdate {
 		return true, HasLegacyOptOut(packDir)

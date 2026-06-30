@@ -17,6 +17,17 @@ func init() {
 	llStartCwd, _ = os.Getwd()
 }
 
+// Exported variants for use by sub-packages (build/, content/, etc.)
+
+func Fail(msg string)                         { llFail(msg) }
+func Warn(format string, a ...any)            { llWarn(format, a...) }
+func ErrFile(path, format string, a ...any)   { llErrFile(path, format, a...) }
+func IsTTY() bool                             { return llIsTTY() }
+func Chdir()                                  { llChdir() }
+func Abs(p string) string                     { return llAbs(p) }
+func WriteJSON(path string, v any)            { llWriteJSON(path, v) }
+func PlatformSuffix(s string) string          { return llPlatformSuffix(s) }
+
 // llAbs resolves p relative to llStartCwd (the directory the user ran packwand from).
 func llAbs(p string) string {
 	if p == "" || filepath.IsAbs(p) {

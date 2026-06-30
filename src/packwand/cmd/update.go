@@ -1,9 +1,8 @@
-﻿package cmd
+package cmd
 
 import (
 	"fmt"
 	"os"
-	"sync"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
@@ -70,17 +69,19 @@ var UpdateCmd = &cobra.Command{
 				checks []core.UpdateCheck
 				err    error
 			}
-			ch := make(chan checkResult, len(filesWithUpdater))
-			var wg sync.WaitGroup
-			for k, v := range filesWithUpdater {
-				wg.Add(1)
-				go func(k string, v []*core.Mod) {
-					defer wg.Done()
-					checks, err := core.Updaters[k].CheckUpdate(v, pack)
-					ch <- checkResult{k, v, checks, err}
-				}(k, v)
+			type providerCheck struct {
+				key  string
+				mods []*core.Mod
 			}
-			wg.Wait()
+			var providerChecks []providerCheck
+			for k, v := range filesWithUpdater {
+				providerChecks = append(providerChecks, providerCheck{key: k, mods: v})
+			}
+			ch := make(chan checkResult, len(filesWithUpdater))
+			core.ParallelFor(providerChecks, core.NetworkConcurrent(), func(_ int, check providerCheck) {
+				checks, err := core.Updaters[check.key].CheckUpdate(check.mods, pack)
+				ch <- checkResult{check.key, check.mods, checks, err}
+			})
 			close(ch)
 			for r := range ch {
 				if r.err != nil {
