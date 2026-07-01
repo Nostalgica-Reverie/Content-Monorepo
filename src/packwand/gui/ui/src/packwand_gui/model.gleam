@@ -1,5 +1,18 @@
 import gleam/string
 
+pub type Health {
+  Health(root: String, version: String)
+}
+
+pub type ApiError {
+  ApiError(String)
+  DecodeError(String)
+}
+
+pub type ProjectIndex {
+  ProjectIndex(projects: List(Project))
+}
+
 pub type Project {
   Project(
     id: String,
@@ -38,6 +51,29 @@ pub type Subdir {
     has_index: Bool,
     has_pack: Bool,
   )
+}
+
+pub type ModEntry {
+  ModEntry(
+    slug: String,
+    name: String,
+    filename: String,
+    side: String,
+    pin: Bool,
+    platform: String,
+  )
+}
+
+pub type ContentResponse {
+  ContentResponse(path: String, content: String)
+}
+
+pub type ActionResponse {
+  ActionResponse(job_id: String)
+}
+
+pub type CreatedProject {
+  CreatedProject(id: String, dir: String)
 }
 
 pub type Action {
@@ -109,9 +145,22 @@ pub fn action_dry_run(action: Action) -> Bool {
   }
 }
 
+pub fn action_refreshes_mods(action: Action) -> Bool {
+  case action {
+    AddMod(_, _)
+    | RemoveMod(_, _)
+    | PinMod(_, _)
+    | UnpinMod(_, _)
+    | UpdateMod(_, _)
+    | UpdateAll(_)
+    | RefreshSubdir(_) -> True
+    _ -> False
+  }
+}
+
 pub fn project_summary(project: Project) -> String {
   [
-    project.id,
+    project.name,
     project.kind,
     prefix("v", project.version),
     prefix("mc", project.minecraft),

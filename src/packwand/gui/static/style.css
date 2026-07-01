@@ -379,12 +379,31 @@ h2 {
   grid-template-columns: minmax(0, 1fr) auto auto auto auto;
 }
 
-body[data-view="mods"] .mod-list {
+[data-current-view="mods"] .mod-list {
   max-height: calc(100vh - 270px);
 }
 
-body[data-view="mods"] .panel[data-view-section~="mods"] {
+[data-current-view="mods"] .mods-panel {
   min-height: auto;
+}
+
+.compact-panel {
+  min-height: auto;
+}
+
+.notice {
+  margin-top: 10px;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.changelog-preview {
+  min-height: 320px;
+  max-height: calc(100vh - 180px);
+  margin: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  font: 14px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .icon-btn {

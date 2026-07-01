@@ -1,0 +1,703 @@
+// IMPORTS ---------------------------------------------------------------------
+
+import { escape } from "../../../houdini/houdini.mjs";
+
+import {
+  element_kind,
+  text_kind,
+  fragment_kind,
+  unsafe_inner_html_kind,
+  map_kind,
+  memo_kind,
+} from "./vnode.mjs";
+
+import {
+  attribute_kind,
+  property_kind,
+  event_kind,
+  never_kind,
+  always_kind,
+} from "./vattr.mjs";
+
+import {
+  insert_kind,
+  move_kind,
+  remove_kind,
+  replace_kind,
+  replace_inner_html_kind,
+  replace_text_kind,
+  update_kind,
+} from "./patch.mjs";
+
+import { separator_element, separator_subtree } from "./path.mjs";
+
+import { iterate } from "../internals/list.ffi.mjs";
+
+import {
+  SUPPORTS_MOVE_BEFORE,
+  NAMESPACE_HTML,
+} from "../internals/constants.ffi.mjs";
+
+//
+
+// DOM API ---------------------------------------------------------------------
+
+// We do this for 2 reasons:
+//
+// - Improve code size by only spelling out the property names in one place
+//
+// - Avoid megamorphic call sites by avoiding direct DOM accesses in the
+//   reconciler main functions.
+//
+// We could directly store references to the Node.protoype functions too and
+// avoid chasing the prototype chains, however that would break many DOM crimes
+// we want to do: for example for the portal or transition components.
+
+const setTimeout = globalThis.setTimeout;
+const clearTimeout = globalThis.clearTimeout;
+
+const createElementNS = (ns, name) =>
+  globalThis.document.createElementNS(ns, name);
+const createTextNode = (data) => globalThis.document.createTextNode(data);
+const createComment = (data) => globalThis.document.createComment(data);
+const createDocumentFragment = () =>
+  globalThis.document.createDocumentFragment();
+
+const insertBefore = (parent, node, reference) =>
+  parent.insertBefore(node, reference);
+const moveBefore = SUPPORTS_MOVE_BEFORE
+  ? (parent, node, reference) => parent.moveBefore(node, reference)
+  : insertBefore;
+const removeChild = (parent, child) => parent.removeChild(child);
+
+const getAttribute = (node, name) => node.getAttribute(name);
+const setAttribute = (node, name, value) => node.setAttribute(name, value);
+const removeAttribute = (node, name) => node.removeAttribute(name);
+
+const addEventListener = (node, name, handler, options) =>
+  node.addEventListener(name, handler, options);
+const removeEventListener = (node, name, handler) =>
+  node.removeEventListener(name, handler);
+
+const setInnerHtml = (node, innerHtml) => (node.innerHTML = innerHtml);
+const setData = (node, data) => (node.data = data);
+
+// METADATA / STATEFUL TREE ----------------------------------------------------
+
+// We store some additional data for every node that we create.
+// We store that "metadata" using a symbol on each DOM node.
+
+const meta = Symbol("lustre");
+
+class MetadataNode {
+  constructor(kind, parent, node, key) {
+    this.kind = kind;
+
+    // store the key of the element to be able to reconstruct the path
+    // once an event gets dispatched.
+    this.key = key;
+
+    // parent and children point to the _metadata_ nodes.
+    this.parent = parent;
+    this.children = [];
+
+    // a reference back to the "real" DOM node.
+    this.node = node;
+
+    // in "debug" mode or after virtualisation, fragments also have an "end" marker.
+    // we need to move and modify that end marker with the fragment if it exists.
+    this.endNode = null;
+
+    // data for the event handlers and attached throttlers and debouncers.
+    this.handlers = new Map();
+    this.throttles = new Map();
+    this.debouncers = new Map();
+  }
+
+  get isVirtual() {
+    return this.kind === fragment_kind || this.kind === map_kind;
+  }
+
+  get parentNode() {
+    return this.isVirtual ? this.node.parentNode : this.node;
+  }
+}
+
+// A node is a Lustre node if it has this metadata.
+export const isLustreNode = (node) => node[meta] instanceof MetadataNode;
+
+//
+export const insertMetadataChild = (kind, parent, node, index, key) => {
+  const child = new MetadataNode(kind, parent, node, key);
+
+  node[meta] = child;
+  parent?.children.splice(index, 0, child);
+
+  return child;
+};
+
+const getPath = (node) => {
+  let path = "";
+
+  for (let current = node[meta]; current.parent; current = current.parent) {
+    // Map nodes use a different separator to mark isolated event subtrees.
+    // This allows the cache to split paths and look up handlers in the correct
+    // subtree, keeping event handlers stable when parent Map nodes update.
+    const separator =
+      current.parent && current.parent.kind === map_kind
+        ? separator_subtree
+        : separator_element;
+
+    if (current.key) {
+      path = `${separator}${current.key}${path}`;
+    } else {
+      const index = current.parent.children.indexOf(current);
+      path = `${separator}${index}${path}`;
+    }
+  }
+
+  // remove the leading separator.
+  return path.slice(1);
+};
+
+// RECONCILER ------------------------------------------------------------------
+
+export class Reconciler {
+  #root = null;
+
+  #decodeEvent;
+  #dispatch;
+
+  #debug = false;
+
+  constructor(root, decodeEvent, dispatch, { debug = false } = {}) {
+    this.#root = root;
+    this.#decodeEvent = decodeEvent;
+    this.#dispatch = dispatch;
+    this.#debug = debug;
+  }
+
+  mount(vdom) {
+    insertMetadataChild(element_kind, null, this.#root, 0, null);
+    this.#insertChild(this.#root, null, this.#root[meta], 0, vdom);
+  }
+
+  push(patch, memos = null) {
+    this.#memos = memos;
+    this.#stack.push({ node: this.#root[meta], patch: patch });
+    this.#reconcile();
+  }
+
+  // PATCHING ------------------------------------------------------------------
+
+  #memos;
+  #stack = [];
+
+  #reconcile() {
+    const stack = this.#stack;
+
+    while (stack.length) {
+      let { node, patch } = stack.pop();
+      const { path, changes, removed, children: childPatches } = patch;
+
+      iterate(path, (index) => {
+        node = node.children[index];
+      });
+
+      const { children: childNodes } = node;
+
+      iterate(changes, (change) => this.#patch(node, change));
+
+      if (removed) {
+        this.#removeChildren(node, childNodes.length - removed, removed);
+      }
+
+      iterate(childPatches, (childPatch) => {
+        const child = childNodes[childPatch.index | 0];
+        this.#stack.push({ node: child, patch: childPatch });
+      });
+    }
+  }
+
+  #patch(node, change) {
+    switch (change.kind) {
+      case replace_text_kind:
+        this.#replaceText(node, change);
+        break;
+
+      case replace_inner_html_kind:
+        this.#replaceInnerHtml(node, change);
+        break;
+
+      case update_kind:
+        this.#update(node, change);
+        break;
+
+      case move_kind:
+        this.#move(node, change);
+        break;
+
+      case remove_kind:
+        this.#remove(node, change);
+        break;
+
+      case replace_kind:
+        this.#replace(node, change);
+        break;
+
+      case insert_kind:
+        this.#insert(node, change);
+        break;
+    }
+  }
+
+  // CHANGES -------------------------------------------------------------------
+
+  #insert(parent, { children, before }) {
+    const fragment = createDocumentFragment();
+    const beforeEl = this.#getReference(parent, before);
+
+    this.#insertChildren(fragment, null, parent, before | 0, children);
+
+    insertBefore(parent.parentNode, fragment, beforeEl);
+  }
+
+  #replace(parent, { index, with: child }) {
+    this.#removeChildren(parent, index | 0, 1);
+    const beforeEl = this.#getReference(parent, index);
+    this.#insertChild(parent.parentNode, beforeEl, parent, index | 0, child);
+  }
+
+  #getReference(node, index) {
+    index = index | 0;
+    const { children } = node;
+    const childCount = children.length;
+
+    if (index < childCount) return children[index].node;
+    if (node.endNode) return node.endNode;
+    if (!node.isVirtual) return null;
+
+    // unwrap the last child as long as we point to a fragment.
+    // otherwise, the fragments next sibling would be the first child of the
+    // fragment, not the first element after it.
+    while (node.isVirtual && node.children.length) {
+      if (node.endNode) return node.endNode.nextSibling;
+      node = node.children[node.children.length - 1];
+    }
+
+    return node.node.nextSibling;
+  }
+
+  #move(parent, { key, before }) {
+    before = before | 0;
+
+    const { children, parentNode } = parent;
+
+    // unlike insert, we always have to have the before element here!
+    const beforeEl = children[before].node;
+
+    let prev = children[before];
+    // we only move items to earlier positions, so we can start searching at before + 1.
+    for (let i = before + 1; i < children.length; ++i) {
+      const next = children[i];
+      // we shift items from before to the key over one-by-one, to make room
+      // for the moved element at children[before].
+      children[i] = prev;
+      prev = next;
+
+      if (next.key === key) {
+        children[before] = next;
+        break;
+      }
+    }
+
+    // prev now is the same as `next` inside the loop, and points to the element
+    // we found that matches the key! all that's left is to move it before `beforeEl`.
+    this.#moveChild(parentNode, prev, beforeEl);
+  }
+
+  #moveChildren(domParent, children, beforeEl) {
+    for (let i = 0; i < children.length; ++i) {
+      this.#moveChild(domParent, children[i], beforeEl);
+    }
+  }
+
+  #moveChild(domParent, child, beforeEl) {
+    moveBefore(domParent, child.node, beforeEl);
+
+    // child might be a fragment, in which case we need do move all its child dom nodes too
+    if (child.isVirtual) {
+      this.#moveChildren(domParent, child.children, beforeEl);
+    }
+
+    // if "endNode" is set, that node is also a sibling node that we need to move with the children
+    if (child.endNode) {
+      moveBefore(domParent, child.endNode, beforeEl);
+    }
+  }
+
+  #remove(parent, { index }) {
+    this.#removeChildren(parent, index, 1);
+  }
+
+  #removeChildren(parent, index, count) {
+    const { children, parentNode } = parent;
+    const deleted = children.splice(index, count);
+
+    for (let i = 0; i < deleted.length; ++i) {
+      const child = deleted[i];
+      const { node, endNode, isVirtual, children: nestedChildren } = child;
+
+      removeChild(parentNode, node);
+      if (endNode) {
+        removeChild(parentNode, endNode);
+      }
+
+      this.#removeDebouncers(child);
+
+      if (isVirtual) {
+        deleted.push(...nestedChildren);
+      }
+    }
+  }
+
+  #removeDebouncers(node) {
+    const { debouncers, children } = node;
+    for (const { timeout } of debouncers.values()) {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    }
+
+    debouncers.clear();
+
+    iterate(children, (child) => this.#removeDebouncers(child));
+  }
+
+  #update({ node, handlers, throttles, debouncers }, { added, removed }) {
+    iterate(removed, ({ name }) => {
+      if (handlers.delete(name)) {
+        removeEventListener(node, name, handleEvent);
+        this.#updateDebounceThrottle(throttles, name, 0);
+        this.#updateDebounceThrottle(debouncers, name, 0);
+      } else {
+        removeAttribute(node, name);
+        SYNCED_ATTRIBUTES[name]?.removed?.(node, name);
+      }
+    });
+
+    iterate(added, (attribute) => this.#createAttribute(node, attribute));
+  }
+
+  #replaceText({ node }, { content }) {
+    setData(node, content ?? "");
+  }
+
+  #replaceInnerHtml({ node }, { inner_html }) {
+    setInnerHtml(node, inner_html ?? "");
+  }
+
+  // INSERT --------------------------------------------------------------------
+
+  #insertChildren(domParent, beforeEl, metaParent, index, children) {
+    iterate(children, (child) =>
+      this.#insertChild(domParent, beforeEl, metaParent, index++, child),
+    );
+  }
+
+  #insertChild(domParent, beforeEl, metaParent, index, vnode) {
+    switch (vnode.kind) {
+      case element_kind: {
+        const node = this.#createElement(metaParent, index, vnode);
+        this.#insertChildren(node, null, node[meta], 0, vnode.children);
+        insertBefore(domParent, node, beforeEl);
+
+        break;
+      }
+
+      case text_kind: {
+        const node = this.#createTextNode(metaParent, index, vnode);
+        insertBefore(domParent, node, beforeEl);
+
+        break;
+      }
+
+      case fragment_kind: {
+        const marker = "lustre:fragment";
+        const head = this.#createHead(marker, metaParent, index, vnode);
+
+        insertBefore(domParent, head, beforeEl);
+        this.#insertChildren(
+          domParent,
+          beforeEl,
+          head[meta],
+          0,
+          vnode.children,
+        );
+
+        if (this.#debug) {
+          head[meta].endNode = createComment(` /${marker} `);
+          insertBefore(domParent, head[meta].endNode, beforeEl);
+        }
+
+        break;
+      }
+
+      case unsafe_inner_html_kind: {
+        const node = this.#createElement(metaParent, index, vnode);
+        this.#replaceInnerHtml({ node }, vnode);
+        insertBefore(domParent, node, beforeEl);
+
+        break;
+      }
+
+      case map_kind: {
+        // Map nodes are virtual like fragments; this allows us to track
+        // subtree boundaries in the real DOM and construct event paths accordingly.
+        const head = this.#createHead("lustre:map", metaParent, index, vnode);
+        insertBefore(domParent, head, beforeEl);
+        this.#insertChild(domParent, beforeEl, head[meta], 0, vnode.child);
+
+        break;
+      }
+
+      case memo_kind: {
+        // NOTE: we do not get memo nodes when running as a server component!
+        // Memo nodes are always transparent - they don't create DOM nodes even in debug mode.
+        const child = this.#memos?.get(vnode.view) ?? vnode.view();
+        this.#insertChild(domParent, beforeEl, metaParent, index, child);
+
+        break;
+      }
+    }
+  }
+
+  #createElement(parent, index, { kind, key, tag, namespace, attributes }) {
+    const node = createElementNS(namespace || NAMESPACE_HTML, tag);
+    insertMetadataChild(kind, parent, node, index, key);
+
+    if (this.#debug && key) {
+      setAttribute(node, "data-lustre-key", key);
+    }
+    iterate(attributes, (attribute) => this.#createAttribute(node, attribute));
+
+    return node;
+  }
+
+  #createTextNode(parent, index, { kind, key, content }) {
+    const node = createTextNode(content ?? "");
+    insertMetadataChild(kind, parent, node, index, key);
+
+    return node;
+  }
+
+  #createHead(marker, parent, index, { kind, key }) {
+    const node = this.#debug
+      ? createComment(markerComment(marker, key))
+      : createTextNode("");
+    insertMetadataChild(kind, parent, node, index, key);
+
+    return node;
+  }
+
+  #createAttribute(node, attribute) {
+    const { debouncers, handlers, throttles } = node[meta];
+
+    const {
+      kind,
+      name,
+      value,
+      prevent_default: prevent,
+      debounce: debounceDelay,
+      throttle: throttleDelay,
+    } = attribute;
+
+    switch (kind) {
+      case attribute_kind: {
+        const valueOrDefault = value ?? "";
+        if (name === "virtual:defaultValue") {
+          node.defaultValue = valueOrDefault;
+          return;
+        } else if (name === "virtual:defaultChecked") {
+          node.defaultChecked = true;
+          return;
+        } else if (name === "virtual:defaultSelected") {
+          node.defaultSelected = true;
+          return;
+        }
+
+        if (valueOrDefault !== getAttribute(node, name)) {
+          setAttribute(node, name, valueOrDefault);
+        }
+
+        SYNCED_ATTRIBUTES[name]?.added?.(node, valueOrDefault);
+
+        break;
+      }
+
+      case property_kind:
+        node[name] = value;
+        break;
+
+      case event_kind: {
+        if (handlers.has(name)) {
+          // we re-attach an event listener on every change in case we need
+          // to change the options we pass.
+          removeEventListener(node, name, handleEvent);
+        }
+
+        const passive = prevent.kind === never_kind;
+        addEventListener(node, name, handleEvent, { passive });
+
+        this.#updateDebounceThrottle(throttles, name, throttleDelay);
+        this.#updateDebounceThrottle(debouncers, name, debounceDelay);
+
+        handlers.set(name, (event) => this.#handleEvent(attribute, event));
+
+        break;
+      }
+    }
+  }
+
+  #updateDebounceThrottle(map, name, delay) {
+    const debounceOrThrottle = map.get(name);
+
+    if (delay > 0) {
+      if (debounceOrThrottle) {
+        debounceOrThrottle.delay = delay;
+      } else {
+        map.set(name, { delay });
+      }
+    } else if (debounceOrThrottle) {
+      const { timeout } = debounceOrThrottle;
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      map.delete(name);
+    }
+  }
+
+  #handleEvent(attribute, event) {
+    const { currentTarget, type } = event;
+    const { debouncers, throttles } = currentTarget[meta];
+    const path = getPath(currentTarget);
+
+    const {
+      prevent_default: prevent,
+      stop_propagation: stop,
+      include,
+    } = attribute;
+
+    if (prevent.kind === always_kind) event.preventDefault();
+    if (stop.kind === always_kind) event.stopPropagation();
+
+    if (type === "submit") {
+      event.detail ??= {};
+      event.detail.formData = [
+        ...new FormData(event.target, event.submitter).entries(),
+      ];
+    }
+
+    const data = this.#decodeEvent(event, path, type, include);
+
+    const throttle = throttles.get(type);
+    if (throttle) {
+      const now = Date.now();
+      const last = throttle.last || 0;
+
+      if (now > last + throttle.delay) {
+        throttle.last = now;
+        throttle.lastEvent = event;
+        this.#dispatch(event, data);
+      }
+    }
+
+    const debounce = debouncers.get(type);
+    if (debounce) {
+      clearTimeout(debounce.timeout);
+
+      debounce.timeout = setTimeout(() => {
+        if (event === throttles.get(type)?.lastEvent) return;
+        this.#dispatch(event, data);
+      }, debounce.delay);
+    }
+
+    if (!throttle && !debounce) {
+      this.#dispatch(event, data);
+    }
+  }
+}
+
+// UTILS -----------------------------------------------------------------------
+
+const markerComment = (marker, key) => {
+  if (key) {
+    return ` ${marker} key="${escape(key)}" `;
+  } else {
+    return ` ${marker} `;
+  }
+};
+
+// EVENTS ----------------------------------------------------------------------
+
+/** Stable references to an element's event handler are necessary if you ever want
+ *  to actually remove them. To achieve that we define this shell `handleEvent`
+ *  function that just delegates to an actual event handler stored on the node
+ *  itself.
+ *
+ *  Doing things this way lets us swap out the underlying handler – which may
+ *  happen regularly - without needing to rebind the event listener.
+ *
+ */
+const handleEvent = (event) => {
+  const { currentTarget, type } = event;
+  const handler = currentTarget[meta].handlers.get(type);
+  handler(event);
+};
+
+// ATTRIBUTE SPECIAL CASES -----------------------------------------------------
+
+/* @__NO_SIDE_EFFECTS__ */
+const syncedBooleanAttribute = (name) => {
+  return {
+    added(node) {
+      node[name] = true;
+    },
+    removed(node) {
+      node[name] = false;
+    },
+  };
+};
+
+/* @__NO_SIDE_EFFECTS__ */
+const syncedAttribute = (name) => {
+  return {
+    added(node, value) {
+      node[name] = value;
+    },
+  };
+};
+
+const SYNCED_ATTRIBUTES = {
+  checked: syncedBooleanAttribute("checked"),
+  selected: syncedBooleanAttribute("selected"),
+  value: syncedAttribute("value"),
+
+  autofocus: {
+    added(node) {
+      queueMicrotask(() => {
+        node.focus?.();
+      });
+    },
+  },
+
+  autoplay: {
+    added(node) {
+      try {
+        node.play?.();
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  },
+};
