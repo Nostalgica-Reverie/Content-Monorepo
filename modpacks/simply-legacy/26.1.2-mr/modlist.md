@@ -7,7 +7,6 @@
 - [Async Logger](https://modrinth.com/mod/zvNzKfGF)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
 - [Bedrock Entity Models](https://modrinth.com/mod/MmYSmcY6)
-- [BisectHosting Server Integration Menu](https://modrinth.com/mod/yWSAtnfH)
 - [Bobby](https://modrinth.com/mod/M08ruV16)
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
 - [Cubes Without Borders](https://modrinth.com/mod/ETlrkaYF)

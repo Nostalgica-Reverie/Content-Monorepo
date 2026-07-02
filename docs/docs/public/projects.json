@@ -1,53 +1,6 @@
 {
-  "generated": "2026-06-30T12:05:56Z",
+  "generated": "2026-07-02T10:25:06Z",
   "projects": [
-    {
-      "id": "2k",
-      "name": "2000s Edition",
-      "type": "modpack",
-      "category": "modpack",
-      "dir": "modpacks/2k",
-      "manifest_path": "modpacks/2k/manifest.json",
-      "loader": "fabric",
-      "mc_version": "26.1.2",
-      "version": "26.04",
-      "release_type": "release",
-      "lifecycle": "active",
-      "role": "none",
-      "auto_update": true,
-      "modrinth_id": "2000s-edition",
-      "curseforge_id": "lce-2000s-edition",
-      "platforms": {
-        "modrinth": "2000s-edition",
-        "curseforge": "lce-2000s-edition"
-      },
-      "docs_path": "/modpacks/2k/",
-      "subdirs": [
-        {
-          "key": "1.21.1-cf",
-          "path": "modpacks/2k/1.21.1-cf",
-          "platform": "curseforge",
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "1.21.1-mr",
-          "path": "modpacks/2k/1.21.1-mr",
-          "platform": "modrinth",
-          "mod_count": 56,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.1.2-mr",
-          "path": "modpacks/2k/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 20,
-          "has_index": true,
-          "has_pack": true
-        }
-      ]
-    },
     {
       "id": "gold-not-old",
       "name": "Gold Not Old",
@@ -630,7 +583,7 @@
       "manifest_path": "modpacks/simply-legacy/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.06",
+      "version": "26.07",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
@@ -656,7 +609,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/simply-legacy/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 51,
+          "mod_count": 50,
           "has_index": true,
           "has_pack": true
         }
