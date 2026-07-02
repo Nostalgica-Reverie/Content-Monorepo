@@ -45,10 +45,47 @@ var versionCmd = &cobra.Command{
 	},
 }
 
-const packwandVersion = "26.2.0"
+// packwandVersion is the fallback for source builds; release builds override it
+// via -ldflags "-X .../cmd.packwandVersion=<version>" (see .goreleaser.yml).
+var packwandVersion = "26.2.0"
 
 func Version() string {
 	return packwandVersion
+}
+
+// CommandInfo is the stable, read-only command metadata exposed to local tools
+// such as the GUI. It is generated from Cobra's registered command tree so
+// consumers do not need to maintain a second list of Packwand features.
+type CommandInfo struct {
+	Path     string `json:"path"`
+	Use      string `json:"use"`
+	Summary  string `json:"summary"`
+	Group    string `json:"group,omitempty"`
+	Runnable bool   `json:"runnable"`
+}
+
+// CommandCatalog returns all visible Packwand commands except the root.
+func CommandCatalog() []CommandInfo {
+	commands := make([]CommandInfo, 0)
+	var visit func(*cobra.Command)
+	visit = func(parent *cobra.Command) {
+		for _, command := range parent.Commands() {
+			if command.Hidden {
+				continue
+			}
+			path := strings.TrimPrefix(command.CommandPath(), rootCmd.Name()+" ")
+			commands = append(commands, CommandInfo{
+				Path:     path,
+				Use:      command.Use,
+				Summary:  command.Short,
+				Group:    command.GroupID,
+				Runnable: command.Runnable(),
+			})
+			visit(command)
+		}
+	}
+	visit(rootCmd)
+	return commands
 }
 
 // Execute starts the root command for packwand

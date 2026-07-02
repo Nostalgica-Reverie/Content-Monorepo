@@ -1,0 +1,27 @@
+[package]
+name = "curseforge_webview"
+version = "0.1.0"
+authors = ["comp500"]
+edition = "2021"
+description = "A webview using wry, used by other applications to display the CurseForge website"
+repository = "https://github.com/packwiz/curseforge_webview"
+homepage = "https://packwiz.infra.link/"
+license = "MIT"
+keywords = ["minecraft"]
+exclude = ["about.hbs", "about.toml", "rustfmt.toml"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+wry = { version = "0.27.0", default_features = false, features = ["objc-exception"] }
+open = "3.2"
+anyhow = "1.0"
+regex = { version = "1", default_features = false, features = ["std"] }
+lazy_static = "1.4.0"
+json = "0.12"
+closure = "0.3.0"
+rand = "0.8.5"
+
+[profile.release]
+opt-level = "z"
+lto = true

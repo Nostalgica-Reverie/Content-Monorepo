@@ -1,0 +1,144 @@
+{
+	"type": "object",
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"title": "pack.toml",
+	"description": "The main modpack file for a packwand modpack.\n\tThis is the first file loaded, to allow the modpack downloader to download all the files in the modpack.",
+	"examples": [
+		"name = \"packwand Example Pack\"\nauthor = \"comp500\"\nversion = \"1.0.0\"\npack-format = \"packwand:26\"\n\n[index]\nfile = \"index.toml\"\nhash-format = \"sha512\"\nhash = \"...\"\n\n[versions]\nminecraft = \"1.19\"\nquilt = \"0.17.0\"\n"
+	],
+	"properties": {
+		"pack-format": {
+			"description": "A version string identifying the pack format and version of it. packwand writes \"packwand:26\" for new packs.\nIf it is not defined, default to \"packwiz:1.1.0\" for backwards-compatibility with packs created before this field was added.\n\nFor \"packwand:<generation>\" values:\n- All consumers should fail to load the modpack if the generation is not a valid integer\n- All consumers should fail to load the modpack if the generation predates the minimum generation they support (packwand migrate format upgrades old packs)\n- Consumers should warn, but continue, when the generation is newer than the one they implement\n\nFor legacy \"packwiz:<semver>\" values:\n- All consumers should fail to load the modpack if the latter section is not valid semver as defined in https://semver.org/spec/v2.0.0.html\n- All consumers should fail to load the modpack if the major version is greater than the version they support\n- Consumers can suggest updating themselves if the minor version is greater than the version they implement\n- \"packwiz:1.0.0\" is migrated to \"packwiz:1.1.0\" automatically on load",
+			"default": "packwand:26",
+			"type": "string"
+		},
+		"name": {
+			"description": "The name of the modpack. This can be displayed in user interfaces to identify the pack, and it does not need to be unique between packs.",
+			"type": "string"
+		},
+		"author": {
+			"description": "The author(s) of the modpack. This is output when exporting to the CurseForge pack format, and can be displayed in user interfaces.",
+			"type": "string"
+		},
+		"version": {
+			"description": "The version of the modpack. This is output when exporting to the CurseForge pack format, but is not currently used elsewhere by the tools or installer. It must not be used for determining if the modpack is outdated.",
+			"type": "string"
+		},
+		"description": {
+			"description": "A short description of the modpack. This is output when exporting to the Modrinth pack format, but is not currently used elsewhere by the tools or installer.",
+			"type": "string"
+		},
+		"index": {
+			"type": "object",
+			"properties": {
+				"file": {
+					"type": "string",
+					"description": "The path to the file that contains the index.\n\nA relative path using forward slashes. Must not reference a file outside the pack root, and should not include characters or filenames restricted on common operating systems.\n\nImplementations must support special characters including those that are percent-encoded in URLs, such as spaces and square brackets. Implementations must guard against path traversal attacks and manually validate paths.",
+					"pattern": "^([^/\\x00-\\x1F\\x7F\"*/:<>?\\\\|]+\\/)*[^/\\x00-\\x1F\\x7F\"*/:<>?\\\\|]*$"
+				},
+				"hash": {
+					"type": "string",
+					"description": "The hash of the index file, as a string. May be omitted when the pack uses no-internal-hashes mode; run packwand refresh --build to generate hashes for distribution.\n\nBinary hashes should be stored as hexadecimal, and case should be ignored during parsing. Numeric hashes (e.g. Murmur2) should still be stored as a string, to ensure the value is preserved correctly.",
+					"examples": [
+						"08f98e28057a0fbdb288c947b7871def4b18b176"
+					]
+				},
+				"hash-format": {
+					"type": "string",
+					"description": "The hash format for the hash of the index file.\n\nThe hash algorithm used to determine if a file is valid. All functions listed must be supported by tools implementing the packwand pack format.",
+					"enum": [
+						"sha256",
+						"sha512",
+						"sha1",
+						"md5",
+						"murmur2"
+					],
+					"x-taplo": {
+						"docs": {
+							"enumValues": [
+								"The SHA2-256 hashing standard. Used as the download-cache key format.",
+								"The SHA2-512 hashing standard. Used by default for all new files and index entries.",
+								"The SHA1 hashing standard.",
+								"The MD5 hashing standard.",
+								"The CurseForge variant of MurmurHash2: MurmurHash2 32-bit hashing standard (seed 1) with some characters removed before applying the hash (decimal bytes 9, 10, 13, 32), stored as an unsigned integer.\n\nIn Java, use Integer.parseUnsignedInt to parse this value."
+							]
+						}
+					}
+				}
+			},
+			"required": [
+				"file",
+				"hash-format"
+			],
+			"description": "Information about the index file in this modpack."
+		},
+		"versions": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "string"
+			},
+			"properties": {
+				"minecraft": {
+					"description": "The version of Minecraft used by this modpack. This should be in the format used by the version.json files.",
+					"examples": [
+						"1.17.1",
+						"16w02a"
+					],
+					"type": "string"
+				},
+				"fabric": {
+					"description": "The version of Fabric loader used by this modpack.",
+					"examples": [
+						"0.12.1"
+					],
+					"type": "string"
+				},
+				"forge": {
+					"description": "The version of Forge used by this modpack. This version must not include the Minecraft version as a prefix.",
+					"examples": [
+						"14.23.5.2838"
+					],
+					"type": "string"
+				},
+				"liteloader": {
+					"description": "The version of Liteloader used by this modpack.",
+					"examples": [
+						"1.12.2-SNAPSHOT"
+					],
+					"type": "string"
+				},
+				"neoforge": {
+					"description": "The version of NeoForge used by this modpack.",
+					"examples": [
+						"21.1.77"
+					],
+					"type": "string"
+				},
+				"quilt": {
+					"description": "The version of Quilt loader used by this modpack.",
+					"examples": [
+						"0.12.1"
+					],
+					"type": "string"
+				}
+			},
+			"required": [
+				"minecraft"
+			],
+			"description": "The versions of components used by this modpack - usually Minecraft and the mod loader this pack uses. The existence of a component implies that it should be installed. These values can also be used by tools to determine which versions of mods should be installed. A pack declaring quilt is also compatible with fabric mods, and a pack declaring neoforge is also compatible with forge mods."
+		},
+		"scripts": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "string"
+			},
+			"description": "packwand extension: named commands runnable with packwand run <name>. Each value is a shell command executed from the pack directory."
+		}
+	},
+	"required": [
+		"pack-format",
+		"name",
+		"index",
+		"versions"
+	]
+}

@@ -25,7 +25,7 @@ func GetWithUA(url string, contentType string) (resp *http.Response, err error) 
 			time.Sleep(backoff)
 			backoff *= 2
 		}
-		req, reqErr := http.NewRequest("GET", url, nil)
+		req, reqErr := http.NewRequest(http.MethodGet, url, nil)
 		if reqErr != nil {
 			return nil, reqErr
 		}
@@ -150,7 +150,7 @@ func reuseExistingFile(cacheHandle *CacheIndexHandle, hashesToObtain []string, m
 				_ = file.Close()
 				return CompletedDownload{}, fmt.Errorf("failed to read hashes of file %s from cache: %w", cacheHandle.Path(), err)
 			}
-			_, err := file.Seek(0, 0)
+			_, err := file.Seek(0, io.SeekStart)
 			if err != nil {
 				_ = file.Close()
 				return CompletedDownload{}, fmt.Errorf("failed to seek file %s in cache: %w", cacheHandle.Path(), err)
@@ -278,7 +278,7 @@ func teeHashes(hashesToObtain []string, hashes map[string]string,
 		return fmt.Errorf("failed to get hash format %s", validateHashFormat)
 	}
 	hashers := make(map[string]HashStringer, len(hashesToObtain))
-	allWriters := make([]io.Writer, len(hashesToObtain))
+	allWriters := make([]io.Writer, len(hashesToObtain), len(hashesToObtain)+2)
 	for i, v := range hashesToObtain {
 		hashers[v], err = GetHashImpl(v)
 		if err != nil {
@@ -298,7 +298,7 @@ func teeHashes(hashesToObtain []string, hashes map[string]string,
 	calculatedHash := mainHasher.HashToString(mainHasher.Sum(nil))
 
 	// Check if the hash of the downloaded file matches the expected hash
-	if strings.ToLower(calculatedHash) != strings.ToLower(validateHash) {
+	if !strings.EqualFold(calculatedHash, validateHash) {
 		return fmt.Errorf(
 			"%s hash of downloaded file does not match with expected hash!\n download hash: %s\n expected hash: %s\n",
 			validateHashFormat, calculatedHash, validateHash)
@@ -483,16 +483,15 @@ func (c *CacheIndex) NewHandleFromHashes(hashes map[string]string) (*CacheIndexH
 }
 
 func (c *CacheIndex) MoveImportFiles() error {
-	return filepath.Walk(filepath.Join(c.cachePath, DownloadCacheImportFolder), func(path string, info os.FileInfo, err error) error {
+	return filepath.WalkDir(filepath.Join(c.cachePath, DownloadCacheImportFolder), func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if info.IsDir() {
+		if entry.IsDir() {
 			return nil
 		}
 		file, err := os.Open(path)
 		if err != nil {
-			_ = file.Close()
 			return fmt.Errorf("failed to open imported file %s: %w", path, err)
 		}
 		hasher, err := GetHashImpl(cacheHashFormat)

@@ -1,6 +1,6 @@
 import * as $list from "../../gleam_stdlib/gleam/list.mjs";
 import * as $string from "../../gleam_stdlib/gleam/string.mjs";
-import { toList, CustomType as $CustomType } from "../gleam.mjs";
+import { toList, prepend as listPrepend, CustomType as $CustomType } from "../gleam.mjs";
 import * as $domain from "../packwand_gui/model.mjs";
 
 export class Overview extends $CustomType {}
@@ -58,11 +58,12 @@ export const NewPack$NewPack$description = (value) => value.description;
 export const NewPack$NewPack$6 = (value) => value.description;
 
 export class Model extends $CustomType {
-  constructor(root, version, projects, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) {
+  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) {
     super();
     this.root = root;
     this.version = version;
     this.projects = projects;
+    this.features = features;
     this.selected_id = selected_id;
     this.selected_subdir = selected_subdir;
     this.view = view;
@@ -79,10 +80,11 @@ export class Model extends $CustomType {
     this.notice = notice;
   }
 }
-export const Model$Model = (root, version, projects, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) =>
+export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) =>
   new Model(root,
   version,
   projects,
+  features,
   selected_id,
   selected_subdir,
   view,
@@ -104,35 +106,37 @@ export const Model$Model$version = (value) => value.version;
 export const Model$Model$1 = (value) => value.version;
 export const Model$Model$projects = (value) => value.projects;
 export const Model$Model$2 = (value) => value.projects;
+export const Model$Model$features = (value) => value.features;
+export const Model$Model$3 = (value) => value.features;
 export const Model$Model$selected_id = (value) => value.selected_id;
-export const Model$Model$3 = (value) => value.selected_id;
+export const Model$Model$4 = (value) => value.selected_id;
 export const Model$Model$selected_subdir = (value) => value.selected_subdir;
-export const Model$Model$4 = (value) => value.selected_subdir;
+export const Model$Model$5 = (value) => value.selected_subdir;
 export const Model$Model$view = (value) => value.view;
-export const Model$Model$5 = (value) => value.view;
+export const Model$Model$6 = (value) => value.view;
 export const Model$Model$search = (value) => value.search;
-export const Model$Model$6 = (value) => value.search;
+export const Model$Model$7 = (value) => value.search;
 export const Model$Model$mods = (value) => value.mods;
-export const Model$Model$7 = (value) => value.mods;
+export const Model$Model$8 = (value) => value.mods;
 export const Model$Model$mod_slug = (value) => value.mod_slug;
-export const Model$Model$8 = (value) => value.mod_slug;
+export const Model$Model$9 = (value) => value.mod_slug;
 export const Model$Model$changelog = (value) => value.changelog;
-export const Model$Model$9 = (value) => value.changelog;
+export const Model$Model$10 = (value) => value.changelog;
 export const Model$Model$manifest = (value) => value.manifest;
-export const Model$Model$10 = (value) => value.manifest;
+export const Model$Model$11 = (value) => value.manifest;
 export const Model$Model$logs = (value) => value.logs;
-export const Model$Model$11 = (value) => value.logs;
+export const Model$Model$12 = (value) => value.logs;
 export const Model$Model$job_status = (value) => value.job_status;
-export const Model$Model$12 = (value) => value.job_status;
+export const Model$Model$13 = (value) => value.job_status;
 export const Model$Model$refresh_mods_after_job = (value) =>
   value.refresh_mods_after_job;
-export const Model$Model$13 = (value) => value.refresh_mods_after_job;
+export const Model$Model$14 = (value) => value.refresh_mods_after_job;
 export const Model$Model$icon_failed = (value) => value.icon_failed;
-export const Model$Model$14 = (value) => value.icon_failed;
+export const Model$Model$15 = (value) => value.icon_failed;
 export const Model$Model$new_pack = (value) => value.new_pack;
-export const Model$Model$15 = (value) => value.new_pack;
+export const Model$Model$16 = (value) => value.new_pack;
 export const Model$Model$notice = (value) => value.notice;
-export const Model$Model$16 = (value) => value.notice;
+export const Model$Model$17 = (value) => value.notice;
 
 export class GotHealth extends $CustomType {
   constructor($0) {
@@ -153,6 +157,16 @@ export class GotProjects extends $CustomType {
 export const Msg$GotProjects = ($0) => new GotProjects($0);
 export const Msg$isGotProjects = (value) => value instanceof GotProjects;
 export const Msg$GotProjects$0 = (value) => value[0];
+
+export class GotFeatures extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotFeatures = ($0) => new GotFeatures($0);
+export const Msg$isGotFeatures = (value) => value instanceof GotFeatures;
+export const Msg$GotFeatures$0 = (value) => value[0];
 
 export class SelectProject extends $CustomType {
   constructor($0) {
@@ -255,6 +269,30 @@ export const Msg$GotAction = ($0, $1) => new GotAction($0, $1);
 export const Msg$isGotAction = (value) => value instanceof GotAction;
 export const Msg$GotAction$0 = (value) => value[0];
 export const Msg$GotAction$1 = (value) => value[1];
+
+export class RunWebview extends $CustomType {
+  constructor(slug, file_id) {
+    super();
+    this.slug = slug;
+    this.file_id = file_id;
+  }
+}
+export const Msg$RunWebview = (slug, file_id) => new RunWebview(slug, file_id);
+export const Msg$isRunWebview = (value) => value instanceof RunWebview;
+export const Msg$RunWebview$slug = (value) => value.slug;
+export const Msg$RunWebview$0 = (value) => value.slug;
+export const Msg$RunWebview$file_id = (value) => value.file_id;
+export const Msg$RunWebview$1 = (value) => value.file_id;
+
+export class WebviewStarted extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$WebviewStarted = ($0) => new WebviewStarted($0);
+export const Msg$isWebviewStarted = (value) => value instanceof WebviewStarted;
+export const Msg$WebviewStarted$0 = (value) => value[0];
 
 export class JobLine extends $CustomType {
   constructor($0) {
@@ -403,6 +441,7 @@ export function initial() {
     "Loading repo...",
     "",
     toList([]),
+    toList([]),
     "",
     "",
     new Overview(),
@@ -441,6 +480,7 @@ export function append_log(model, line) {
     model.root,
     model.version,
     model.projects,
+    model.features,
     model.selected_id,
     model.selected_subdir,
     model.view,
@@ -449,13 +489,17 @@ export function append_log(model, line) {
     model.mod_slug,
     model.changelog,
     model.manifest,
-    $list.append(model.logs, toList([line])),
+    listPrepend(line, model.logs),
     model.job_status,
     model.refresh_mods_after_job,
     model.icon_failed,
     model.new_pack,
     model.notice,
   );
+}
+
+export function job_running(model) {
+  return (model.job_status === "starting") || (model.job_status === "running");
 }
 
 export function http_error(error) {

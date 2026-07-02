@@ -28,6 +28,7 @@ pub type Model {
     root: String,
     version: String,
     projects: List(domain.Project),
+    features: List(domain.Feature),
     selected_id: String,
     selected_subdir: String,
     view: View,
@@ -36,6 +37,7 @@ pub type Model {
     mod_slug: String,
     changelog: String,
     manifest: String,
+    /// Stored newest-first so appending a line is O(1); reverse for display.
     logs: List(String),
     job_status: String,
     refresh_mods_after_job: Bool,
@@ -48,6 +50,7 @@ pub type Model {
 pub type Msg {
   GotHealth(Result(domain.Health, domain.ApiError))
   GotProjects(Result(domain.ProjectIndex, domain.ApiError))
+  GotFeatures(Result(domain.FeatureIndex, domain.ApiError))
   SelectProject(String)
   SelectSubdir(String)
   Navigate(View)
@@ -58,6 +61,8 @@ pub type Msg {
   GotManifest(Result(domain.ContentResponse, domain.ApiError))
   RunAction(domain.Action)
   GotAction(domain.Action, Result(domain.ActionResponse, domain.ApiError))
+  RunWebview(slug: String, file_id: Int)
+  WebviewStarted(Result(domain.ActionResponse, domain.ApiError))
   JobLine(String)
   JobFinished(String, String)
   SaveManifest
@@ -81,6 +86,7 @@ pub fn initial() -> Model {
     root: "Loading repo...",
     version: "",
     projects: [],
+    features: [],
     selected_id: "",
     selected_subdir: "",
     view: Overview,
@@ -108,7 +114,11 @@ pub fn query_matches(query: String, text: String) -> Bool {
 }
 
 pub fn append_log(model: Model, line: String) -> Model {
-  Model(..model, logs: list.append(model.logs, [line]))
+  Model(..model, logs: [line, ..model.logs])
+}
+
+pub fn job_running(model: Model) -> Bool {
+  model.job_status == "starting" || model.job_status == "running"
 }
 
 pub fn http_error(error: domain.ApiError) -> String {

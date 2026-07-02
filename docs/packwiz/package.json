@@ -1,0 +1,14 @@
+{
+  "name": "packwiz-components-docs",
+  "private": true,
+  "devDependencies": {
+    "vitepress": "^2.0.0-alpha.17",
+    "vitepress-plugin-lightbox": "^1.0.3",
+    "vitepress-sidebar": "^1.33.1"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  }
+}

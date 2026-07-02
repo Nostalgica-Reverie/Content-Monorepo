@@ -10,19 +10,24 @@ import { Ok, toList, Empty as $Empty, prepend as listPrepend, isEqual } from "..
 import * as $model from "../packwand_gui/model.mjs";
 import {
   AddMod,
+  Build,
+  Doctor,
   ExportCurseforge,
   ExportModrinth,
+  Lint,
   PacksIndex,
   PinMod,
   RefreshSubdir,
+  Rehash,
   RemoveMod,
   UnpinMod,
   UpdateAll,
   UpdateMod,
-  ValidateAll,
+  ValidateProject,
   WorkspaceRefresh,
   WorkspaceStatus,
   WorkspaceSync,
+  WorkspaceUpdate,
   project_summary,
 } from "../packwand_gui/model.mjs";
 import * as $state from "../packwand_gui/state.mjs";
@@ -37,6 +42,7 @@ import {
   Navigate,
   Overview,
   RunAction,
+  RunWebview,
   SaveManifest,
   SelectProject,
   SelectSubdir,
@@ -51,6 +57,7 @@ import {
   SetNewPackVersion,
   SetSearch,
   Settings,
+  job_running,
   query_matches,
   selected_project,
 } from "../packwand_gui/state.mjs";
@@ -388,6 +395,81 @@ function new_pack_panel(model) {
   );
 }
 
+function feature_row(feature) {
+  return $html.div(
+    toList([$attribute.class$("feature-row")]),
+    toList([
+      $html.code(
+        toList([]),
+        toList([$html.text("packwand " + feature.command)]),
+      ),
+      $html.span(
+        toList([$attribute.class$("feature-summary")]),
+        toList([$html.text(fallback(feature.summary, feature.usage))]),
+      ),
+      $html.span(
+        toList([
+          $attribute.classes(
+            toList([
+              ["status-badge", true],
+              ["integrated", feature.gui_status === "integrated"],
+            ]),
+          ),
+        ]),
+        toList([
+          $html.text(
+            (() => {
+              let $ = feature.gui_status;
+              if ($ === "integrated") {
+                return "GUI";
+              } else {
+                return "CLI";
+              }
+            })(),
+          ),
+        ]),
+      ),
+    ]),
+  );
+}
+
+function capabilities_panel(features) {
+  let runnable = $list.filter(
+    features,
+    (feature) => { return feature.runnable; },
+  );
+  let integrated = $list.filter(
+    runnable,
+    (feature) => { return feature.gui_status === "integrated"; },
+  );
+  return panel_with_head(
+    "span-12 capabilities-panel",
+    "Packwand Feature Coverage",
+    pill(
+      (($int.to_string($list.length(integrated)) + " / ") + $int.to_string(
+        $list.length(runnable),
+      )) + " commands integrated",
+    ),
+    toList([
+      $html.p(
+        toList([$attribute.class$("panel-copy")]),
+        toList([
+          $html.text(
+            "This matrix is generated from Packwand's live command tree. CLI-only commands remain available in the terminal but are not exposed as unrestricted web actions.",
+          ),
+        ]),
+      ),
+      $html.div(
+        toList([$attribute.class$("feature-list")]),
+        (() => {
+          let _pipe = runnable;
+          return $list.map(_pipe, feature_row);
+        })(),
+      ),
+    ]),
+  );
+}
+
 function manifest_panel(model) {
   return panel_with_head(
     "span-12",
@@ -528,7 +610,7 @@ function logs_panel(model) {
     toList([
       $html.pre(
         toList([$attribute.id("logPane")]),
-        toList([$html.text($string.join(model.logs, "\n"))]),
+        toList([$html.text($string.join($list.reverse(model.logs), "\n"))]),
       ),
     ]),
   );
@@ -567,11 +649,25 @@ function changelog_panel(model) {
   );
 }
 
+function button_disabled(class$, label, message, is_disabled) {
+  return $html.button(
+    toList([
+      $attribute.class$(class$),
+      $attribute.type_("button"),
+      $attribute.disabled(is_disabled),
+      $attribute.aria_disabled(is_disabled),
+      $event.on_click(message),
+    ]),
+    toList([$html.text(label)]),
+  );
+}
+
 function non_empty(values) {
   return $list.filter(values, (value) => { return $string.trim(value) !== ""; });
 }
 
-function mod_row(subdir, mod) {
+function mod_row(model, mod) {
+  let subdir = model.selected_subdir;
   let _block;
   let $1 = mod.pin;
   if ($1) {
@@ -582,6 +678,21 @@ function mod_row(subdir, mod) {
   let $ = _block;
   let pin_label = $[0];
   let pin_action = $[1];
+  let _block$1;
+  let $2 = mod.platform;
+  let $3 = $int.parse(mod.version_id);
+  if ($3 instanceof Ok && $2 === "curseforge") {
+    let file_id = $3[0];
+    _block$1 = button_disabled(
+      "icon-btn",
+      "CF Fetch",
+      new RunWebview(mod.slug, file_id),
+      job_running(model),
+    );
+  } else {
+    _block$1 = $html.text("");
+  }
+  let webview_button = _block$1;
   return $html.div(
     toList([$attribute.class$("row search-item")]),
     toList([
@@ -611,16 +722,24 @@ function mod_row(subdir, mod) {
           ),
         ]),
       ),
-      button(
+      webview_button,
+      button_disabled(
         "icon-btn",
         "Update",
         new RunAction(new UpdateMod(subdir, mod.slug)),
+        job_running(model),
       ),
-      button("icon-btn", pin_label, new RunAction(pin_action)),
-      button(
+      button_disabled(
+        "icon-btn",
+        pin_label,
+        new RunAction(pin_action),
+        job_running(model),
+      ),
+      button_disabled(
         "icon-btn danger",
         "Remove",
         new RunAction(new RemoveMod(subdir, mod.slug)),
+        job_running(model),
       ),
     ]),
   );
@@ -638,10 +757,7 @@ function mods_panel(model) {
       );
     },
   );
-  _block = $list.map(
-    _pipe$1,
-    (mod) => { return mod_row(model.selected_subdir, mod); },
-  );
+  _block = $list.map(_pipe$1, (mod) => { return mod_row(model, mod); });
   let rows = _block;
   return panel_with_head(
     "span-12 mods-panel",
@@ -681,12 +797,13 @@ function add_mod_panel(model) {
               $event.on_input((var0) => { return new SetModSlug(var0); }),
             ]),
           ),
-          button(
+          button_disabled(
             "",
             "Add",
             new RunAction(
               new AddMod(model.selected_subdir, $string.trim(model.mod_slug)),
             ),
+            (job_running(model) || ($string.trim(model.mod_slug) === "")) || (model.selected_subdir === ""),
           ),
         ]),
       ),
@@ -694,7 +811,23 @@ function add_mod_panel(model) {
   );
 }
 
+function platform_matches(platform, expected) {
+  return ((platform === expected) || ((platform === "mr") && (expected === "modrinth"))) || ((platform === "cf") && (expected === "curseforge"));
+}
+
+function selected_platform(subdirs, path) {
+  let $ = $list.find(subdirs, (subdir) => { return subdir.path === path; });
+  if ($ instanceof Ok) {
+    let subdir = $[0];
+    return subdir.platform;
+  } else {
+    return "";
+  }
+}
+
 function actions_panel(model, subdirs) {
+  let platform = selected_platform(subdirs, model.selected_subdir);
+  let disabled = (model.selected_subdir === "") || job_running(model);
   return panel(
     "span-12",
     "Actions",
@@ -720,25 +853,41 @@ function actions_panel(model, subdirs) {
               );
             })(),
           ),
-          button(
+          button_disabled(
             "",
             "Refresh",
             new RunAction(new RefreshSubdir(model.selected_subdir)),
+            disabled,
           ),
-          button(
+          button_disabled(
             "",
             "Update All",
             new RunAction(new UpdateAll(model.selected_subdir)),
+            disabled,
           ),
-          button(
-            "",
-            "MR Export",
+          button_disabled(
+            "ghost",
+            "Build",
+            new RunAction(new Build(model.selected_subdir)),
+            disabled,
+          ),
+          button_disabled(
+            "ghost",
+            "Rehash",
+            new RunAction(new Rehash(model.selected_subdir)),
+            disabled,
+          ),
+          button_disabled(
+            "ghost",
+            "Modrinth Export",
             new RunAction(new ExportModrinth(model.selected_subdir)),
+            disabled || !platform_matches(platform, "modrinth"),
           ),
-          button(
-            "",
+          button_disabled(
+            "ghost",
             "CF Export",
             new RunAction(new ExportCurseforge(model.selected_subdir)),
+            disabled || !platform_matches(platform, "curseforge"),
           ),
         ]),
       ),
@@ -833,6 +982,7 @@ function sections_for_view(model, project) {
       project_panel(model, project),
       subdir_panel(model, project.subdirs),
       manifest_panel(model),
+      capabilities_panel(model.features),
       new_pack_panel(model),
     ]);
   }
@@ -847,16 +997,60 @@ function sections(model, project) {
   }
 }
 
-function toolbar(view) {
-  let $ = ((view instanceof Overview) || (view instanceof Settings)) || (view instanceof Logs);
+function toolbar(model, project) {
+  let $ = ((model.view instanceof Overview) || (model.view instanceof Settings)) || (model.view instanceof Logs);
   if ($) {
     return $html.section(
       toList([$attribute.class$("toolbar")]),
       toList([
-        button("", "Workspace Status", new RunAction(new WorkspaceStatus())),
-        button("", "Regenerate Projects", new RunAction(new PacksIndex())),
-        button("", "Dry Sync", new RunAction(new WorkspaceSync(true))),
-        button("", "Workspace Refresh", new RunAction(new WorkspaceRefresh())),
+        button_disabled(
+          "",
+          "Status",
+          new RunAction(new WorkspaceStatus()),
+          job_running(model),
+        ),
+        button_disabled(
+          "",
+          "Doctor",
+          new RunAction(new Doctor()),
+          job_running(model),
+        ),
+        button_disabled(
+          "",
+          "Lint",
+          new RunAction(new Lint()),
+          job_running(model),
+        ),
+        button_disabled(
+          "",
+          "Check Updates",
+          new RunAction(new WorkspaceUpdate(true)),
+          job_running(model),
+        ),
+        button_disabled(
+          "ghost",
+          "Dry Sync",
+          new RunAction(new WorkspaceSync(true)),
+          job_running(model),
+        ),
+        (() => {
+          let $1 = model.view instanceof Settings;
+          if ($1) {
+            return button_disabled(
+              "ghost",
+              "Refresh Workspace",
+              new RunAction(new WorkspaceRefresh()),
+              job_running(model),
+            );
+          } else {
+            return button_disabled(
+              "ghost",
+              "Validate Pack",
+              new RunAction(new ValidateProject(project.dir)),
+              job_running(model),
+            );
+          }
+        })(),
       ]),
     );
   } else {
@@ -923,8 +1117,18 @@ function topbar(model, project) {
               $event.on("error", $decode.success(new IconFailed())),
             ]),
           ),
-          button("ghost", "Refresh Index", new RunAction(new PacksIndex())),
-          button("danger", "Validate", new RunAction(new ValidateAll())),
+          button_disabled(
+            "ghost",
+            "Refresh Index",
+            new RunAction(new PacksIndex()),
+            job_running(model),
+          ),
+          button_disabled(
+            "",
+            "Validate Pack",
+            new RunAction(new ValidateProject(project.dir)),
+            job_running(model),
+          ),
         ]),
       ),
     ]),
@@ -939,7 +1143,7 @@ function main_view(model) {
       toList([]),
       toList([
         topbar(model, project),
-        toolbar(model.view),
+        toolbar(model, project),
         $html.section(
           toList([$attribute.class$("grid")]),
           sections(model, project),
@@ -962,18 +1166,32 @@ function main_view(model) {
             ),
           ]),
         ),
-        panel(
-          "span-12",
-          "Projects",
+        $html.section(
+          toList([$attribute.class$("grid empty-workspace")]),
           toList([
-            $html.p(
-              toList([]),
+            panel_with_head(
+              "span-12",
+              "Projects",
+              button_disabled(
+                "",
+                "Regenerate Index",
+                new RunAction(new PacksIndex()),
+                job_running(model),
+              ),
               toList([
-                $html.text(
-                  "Run packwand packs index to populate projects.json.",
+                $html.p(
+                  toList([$attribute.class$("panel-copy")]),
+                  toList([
+                    $html.text(
+                      "No projects are currently indexed. Regenerate the index or scaffold the first project below.",
+                    ),
+                  ]),
                 ),
+                notice(model.notice),
               ]),
             ),
+            new_pack_panel(model),
+            logs_panel(model),
           ]),
         ),
       ]),

@@ -7,18 +7,20 @@ import lustre/element.{type Element}
 import lustre/element/html
 import lustre/event
 import packwand_gui/model.{
-  type ModEntry, type Project, type Subdir, type Variant, AddMod,
-  ExportCurseforge, ExportModrinth, PacksIndex, PinMod, RefreshSubdir, RemoveMod,
-  UnpinMod, UpdateAll, UpdateMod, ValidateAll, WorkspaceRefresh, WorkspaceStatus,
-  WorkspaceSync, project_summary,
+  type Feature, type ModEntry, type Project, type Subdir, type Variant, AddMod,
+  Build, Doctor, ExportCurseforge, ExportModrinth, Lint, PacksIndex, PinMod,
+  RefreshSubdir, Rehash, RemoveMod, UnpinMod, UpdateAll, UpdateMod,
+  ValidateProject, WorkspaceRefresh, WorkspaceStatus, WorkspaceSync,
+  WorkspaceUpdate, project_summary,
 }
 import packwand_gui/state.{
   type Model, type Msg, type View, Changelog, CopyChangelog, CreateProject,
-  Exports, IconFailed, Logs, Mods, Navigate, Overview, RunAction, SaveManifest,
+  Exports, IconFailed, Logs, Mods, Navigate, Overview, RunAction, RunWebview,
+  SaveManifest,
   SelectProject, SelectSubdir, SetManifest, SetModSlug, SetNewPackDescription,
   SetNewPackID, SetNewPackLoader, SetNewPackMinecraft, SetNewPackName,
-  SetNewPackType, SetNewPackVersion, SetSearch, Settings, query_matches,
-  selected_project,
+  SetNewPackType, SetNewPackVersion, SetSearch, Settings, job_running,
+  query_matches, selected_project,
 }
 
 @external(javascript, "./ffi.mjs", "currentHash")
@@ -124,16 +126,33 @@ fn main_view(model: Model) {
             html.p([], [html.text("No projects indexed")]),
           ]),
         ]),
-        panel("span-12", "Projects", [
-          html.p([], [
-            html.text("Run packwand packs index to populate projects.json."),
-          ]),
+        html.section([attribute.class("grid empty-workspace")], [
+          panel_with_head(
+            "span-12",
+            "Projects",
+            button_disabled(
+              "",
+              "Regenerate Index",
+              RunAction(PacksIndex),
+              job_running(model),
+            ),
+            [
+              html.p([attribute.class("panel-copy")], [
+                html.text(
+                  "No projects are currently indexed. Regenerate the index or scaffold the first project below.",
+                ),
+              ]),
+              notice(model.notice),
+            ],
+          ),
+          new_pack_panel(model),
+          logs_panel(model),
         ]),
       ])
     Ok(project) ->
       html.main([], [
         topbar(model, project),
-        toolbar(model.view),
+        toolbar(model, project),
         html.section([attribute.class("grid")], sections(model, project)),
       ])
   }
@@ -170,21 +189,56 @@ fn topbar(model: Model, project: Project) {
         attribute.alt(""),
         event.on("error", decode.success(IconFailed)),
       ]),
-      button("ghost", "Refresh Index", RunAction(PacksIndex)),
-      button("danger", "Validate", RunAction(ValidateAll)),
+      button_disabled(
+        "ghost",
+        "Refresh Index",
+        RunAction(PacksIndex),
+        job_running(model),
+      ),
+      button_disabled(
+        "",
+        "Validate Pack",
+        RunAction(ValidateProject(project.dir)),
+        job_running(model),
+      ),
     ]),
   ])
 }
 
-fn toolbar(view: View) {
-  case view == Overview || view == Settings || view == Logs {
+fn toolbar(model: Model, project: Project) {
+  case model.view == Overview || model.view == Settings || model.view == Logs {
     False -> html.text("")
     True ->
       html.section([attribute.class("toolbar")], [
-        button("", "Workspace Status", RunAction(WorkspaceStatus)),
-        button("", "Regenerate Projects", RunAction(PacksIndex)),
-        button("", "Dry Sync", RunAction(WorkspaceSync(True))),
-        button("", "Workspace Refresh", RunAction(WorkspaceRefresh)),
+        button_disabled("", "Status", RunAction(WorkspaceStatus), job_running(model)),
+        button_disabled("", "Doctor", RunAction(Doctor), job_running(model)),
+        button_disabled("", "Lint", RunAction(Lint), job_running(model)),
+        button_disabled(
+          "",
+          "Check Updates",
+          RunAction(WorkspaceUpdate(True)),
+          job_running(model),
+        ),
+        button_disabled(
+          "ghost",
+          "Dry Sync",
+          RunAction(WorkspaceSync(True)),
+          job_running(model),
+        ),
+        case model.view == Settings {
+          True -> button_disabled(
+            "ghost",
+            "Refresh Workspace",
+            RunAction(WorkspaceRefresh),
+            job_running(model),
+          )
+          False -> button_disabled(
+            "ghost",
+            "Validate Pack",
+            RunAction(ValidateProject(project.dir)),
+            job_running(model),
+          )
+        },
       ])
   }
 }
@@ -212,6 +266,7 @@ fn sections_for_view(model: Model, project: Project) -> List(Element(Msg)) {
       project_panel(model, project),
       subdir_panel(model, project.subdirs),
       manifest_panel(model),
+      capabilities_panel(model.features),
       new_pack_panel(model),
     ]
   }
@@ -373,6 +428,8 @@ fn subdir_panel(model: Model, subdirs: List(Subdir)) {
 }
 
 fn actions_panel(model: Model, subdirs: List(Subdir)) {
+  let platform = selected_platform(subdirs, model.selected_subdir)
+  let disabled = model.selected_subdir == "" || job_running(model)
   panel("span-12", "Actions", [
     html.div([attribute.class("action-row")], [
       html.select(
@@ -382,13 +439,21 @@ fn actions_panel(model: Model, subdirs: List(Subdir)) {
             html.option([attribute.value(subdir.path)], subdir.key)
           }),
       ),
-      button("", "Refresh", RunAction(RefreshSubdir(model.selected_subdir))),
-      button("", "Update All", RunAction(UpdateAll(model.selected_subdir))),
-      button("", "MR Export", RunAction(ExportModrinth(model.selected_subdir))),
-      button(
-        "",
+      button_disabled("", "Refresh", RunAction(RefreshSubdir(model.selected_subdir)), disabled),
+      button_disabled("", "Update All", RunAction(UpdateAll(model.selected_subdir)), disabled),
+      button_disabled("ghost", "Build", RunAction(Build(model.selected_subdir)), disabled),
+      button_disabled("ghost", "Rehash", RunAction(Rehash(model.selected_subdir)), disabled),
+      button_disabled(
+        "ghost",
+        "Modrinth Export",
+        RunAction(ExportModrinth(model.selected_subdir)),
+        disabled || !platform_matches(platform, "modrinth"),
+      ),
+      button_disabled(
+        "ghost",
         "CF Export",
         RunAction(ExportCurseforge(model.selected_subdir)),
+        disabled || !platform_matches(platform, "curseforge"),
       ),
     ]),
   ])
@@ -402,10 +467,13 @@ fn add_mod_panel(model: Model) {
         attribute.value(model.mod_slug),
         event.on_input(SetModSlug),
       ]),
-      button(
+      button_disabled(
         "",
         "Add",
         RunAction(AddMod(model.selected_subdir, string.trim(model.mod_slug))),
+        job_running(model)
+          || string.trim(model.mod_slug) == ""
+          || model.selected_subdir == "",
       ),
     ]),
   ])
@@ -426,7 +494,7 @@ fn mods_panel(model: Model) {
           <> mod.platform,
       )
     })
-    |> list.map(fn(mod) { mod_row(model.selected_subdir, mod) })
+    |> list.map(fn(mod) { mod_row(model, mod) })
   panel_with_head(
     "span-12 mods-panel",
     "Mods",
@@ -520,8 +588,57 @@ fn new_pack_panel(model: Model) {
 fn logs_panel(model: Model) {
   panel_with_head("span-12", "Command Logs", pill(model.job_status), [
     html.pre([attribute.id("logPane")], [
-      html.text(string.join(model.logs, "\n")),
+      html.text(string.join(list.reverse(model.logs), "\n")),
     ]),
+  ])
+}
+
+fn capabilities_panel(features: List(Feature)) {
+  let runnable = list.filter(features, fn(feature) { feature.runnable })
+  let integrated = list.filter(runnable, fn(feature) {
+    feature.gui_status == "integrated"
+  })
+  panel_with_head(
+    "span-12 capabilities-panel",
+    "Packwand Feature Coverage",
+    pill(
+      int.to_string(list.length(integrated))
+        <> " / "
+        <> int.to_string(list.length(runnable))
+        <> " commands integrated",
+    ),
+    [
+      html.p([attribute.class("panel-copy")], [
+        html.text(
+          "This matrix is generated from Packwand's live command tree. CLI-only commands remain available in the terminal but are not exposed as unrestricted web actions.",
+        ),
+      ]),
+      html.div(
+        [attribute.class("feature-list")],
+        runnable |> list.map(feature_row),
+      ),
+    ],
+  )
+}
+
+fn feature_row(feature: Feature) {
+  html.div([attribute.class("feature-row")], [
+    html.code([], [html.text("packwand " <> feature.command)]),
+    html.span([attribute.class("feature-summary")], [
+      html.text(fallback(feature.summary, feature.usage)),
+    ]),
+    html.span(
+      [
+        attribute.classes([
+          #("status-badge", True),
+          #("integrated", feature.gui_status == "integrated"),
+        ]),
+      ],
+      [html.text(case feature.gui_status {
+        "integrated" -> "GUI"
+        _ -> "CLI"
+      })],
+    ),
   ])
 }
 
@@ -587,10 +704,21 @@ fn subdir_row(subdir: Subdir) {
   ])
 }
 
-fn mod_row(subdir: String, mod: ModEntry) {
+fn mod_row(model: Model, mod: ModEntry) {
+  let subdir = model.selected_subdir
   let #(pin_label, pin_action) = case mod.pin {
     True -> #("Unpin", UnpinMod(subdir, mod.slug))
     False -> #("Pin", PinMod(subdir, mod.slug))
+  }
+  let webview_button = case mod.platform, int.parse(mod.version_id) {
+    "curseforge", Ok(file_id) ->
+      button_disabled(
+        "icon-btn",
+        "CF Fetch",
+        RunWebview(mod.slug, file_id),
+        job_running(model),
+      )
+    _, _ -> html.text("")
   }
   html.div([attribute.class("row search-item")], [
     html.div([], [
@@ -603,9 +731,10 @@ fn mod_row(subdir: String, mod: ModEntry) {
         ),
       ]),
     ]),
-    button("icon-btn", "Update", RunAction(UpdateMod(subdir, mod.slug))),
-    button("icon-btn", pin_label, RunAction(pin_action)),
-    button("icon-btn danger", "Remove", RunAction(RemoveMod(subdir, mod.slug))),
+    webview_button,
+    button_disabled("icon-btn", "Update", RunAction(UpdateMod(subdir, mod.slug)), job_running(model)),
+    button_disabled("icon-btn", pin_label, RunAction(pin_action), job_running(model)),
+    button_disabled("icon-btn danger", "Remove", RunAction(RemoveMod(subdir, mod.slug)), job_running(model)),
   ])
 }
 
@@ -663,6 +792,37 @@ fn button(class: String, label: String, message: Msg) {
     [attribute.class(class), attribute.type_("button"), event.on_click(message)],
     [html.text(label)],
   )
+}
+
+fn button_disabled(
+  class: String,
+  label: String,
+  message: Msg,
+  is_disabled: Bool,
+) {
+  html.button(
+    [
+      attribute.class(class),
+      attribute.type_("button"),
+      attribute.disabled(is_disabled),
+      attribute.aria_disabled(is_disabled),
+      event.on_click(message),
+    ],
+    [html.text(label)],
+  )
+}
+
+fn selected_platform(subdirs: List(Subdir), path: String) -> String {
+  case list.find(subdirs, fn(subdir) { subdir.path == path }) {
+    Ok(subdir) -> subdir.platform
+    Error(_) -> ""
+  }
+}
+
+fn platform_matches(platform: String, expected: String) -> Bool {
+  platform == expected
+    || { platform == "mr" && expected == "modrinth" }
+    || { platform == "cf" && expected == "curseforge" }
 }
 
 fn pill(value: String) {

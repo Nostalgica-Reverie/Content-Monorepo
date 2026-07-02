@@ -14,6 +14,7 @@ import * as $model from "./packwand_gui/model.mjs";
 import {
   ContentResponse,
   CreatedProject,
+  FeatureIndex,
   ProjectIndex,
   action_name,
   action_refreshes_mods,
@@ -24,6 +25,7 @@ import {
   CreateProject,
   GotAction,
   GotChangelog,
+  GotFeatures,
   GotHealth,
   GotManifest,
   GotMods,
@@ -37,6 +39,7 @@ import {
   NewPack,
   ProjectCreated,
   RunAction,
+  RunWebview,
   SaveManifest,
   SelectProject,
   SelectSubdir,
@@ -50,6 +53,7 @@ import {
   SetNewPackType,
   SetNewPackVersion,
   SetSearch,
+  WebviewStarted,
   append_log,
   http_error,
   initial,
@@ -71,6 +75,7 @@ function with_error(model, error) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -101,6 +106,7 @@ function create_project(model) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -124,6 +130,7 @@ function create_project(model) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -195,6 +202,7 @@ function select_project(model) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         subdir,
         model.view,
@@ -249,6 +257,7 @@ function select_after_projects(model, projects) {
       model.root,
       model.version,
       projects,
+      model.features,
       selected,
       model.selected_subdir,
       model.view,
@@ -277,6 +286,7 @@ function update(model, msg) {
           health.root,
           health.version,
           model.projects,
+          model.features,
           model.selected_id,
           model.selected_subdir,
           model.view,
@@ -307,6 +317,45 @@ function update(model, msg) {
       let error = $[0];
       return with_error(model, error);
     }
+  } else if (msg instanceof GotFeatures) {
+    let $ = msg[0];
+    if ($ instanceof Ok) {
+      let version = $[0].packwand_version;
+      let features = $[0].features;
+      return [
+        new Model(
+          model.root,
+          (() => {
+            let $1 = model.version;
+            if ($1 === "") {
+              return version;
+            } else {
+              return model.version;
+            }
+          })(),
+          model.projects,
+          features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          model.notice,
+        ),
+        $effect.none(),
+      ];
+    } else {
+      let error = $[0];
+      return with_error(model, error);
+    }
   } else if (msg instanceof SelectProject) {
     let id = msg[0];
     return select_project(
@@ -314,6 +363,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         id,
         model.selected_subdir,
         model.view,
@@ -337,6 +387,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         path,
         model.view,
@@ -361,6 +412,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         next,
@@ -385,6 +437,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -409,6 +462,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -435,6 +489,7 @@ function update(model, msg) {
           model.root,
           model.version,
           model.projects,
+          model.features,
           model.selected_id,
           model.selected_subdir,
           model.view,
@@ -465,6 +520,7 @@ function update(model, msg) {
           model.root,
           model.version,
           model.projects,
+          model.features,
           model.selected_id,
           model.selected_subdir,
           model.view,
@@ -495,6 +551,7 @@ function update(model, msg) {
           model.root,
           model.version,
           model.projects,
+          model.features,
           model.selected_id,
           model.selected_subdir,
           model.view,
@@ -527,6 +584,7 @@ function update(model, msg) {
         running.root,
         running.version,
         running.projects,
+        running.features,
         running.selected_id,
         running.selected_subdir,
         running.view,
@@ -554,6 +612,7 @@ function update(model, msg) {
           model.root,
           model.version,
           model.projects,
+          model.features,
           model.selected_id,
           model.selected_subdir,
           model.view,
@@ -575,6 +634,71 @@ function update(model, msg) {
       let error = $[0];
       return with_error(model, error);
     }
+  } else if (msg instanceof RunWebview) {
+    let slug = msg.slug;
+    let file_id = msg.file_id;
+    let _block;
+    let _pipe = model;
+    _block = append_log(_pipe, "> curseforge_webview " + slug);
+    let running = _block;
+    return [
+      new Model(
+        running.root,
+        running.version,
+        running.projects,
+        running.features,
+        running.selected_id,
+        running.selected_subdir,
+        running.view,
+        running.search,
+        running.mods,
+        running.mod_slug,
+        running.changelog,
+        running.manifest,
+        running.logs,
+        "starting",
+        running.refresh_mods_after_job,
+        running.icon_failed,
+        running.new_pack,
+        "",
+      ),
+      $api.webview_fetch(
+        slug,
+        file_id,
+        (var0) => { return new WebviewStarted(var0); },
+      ),
+    ];
+  } else if (msg instanceof WebviewStarted) {
+    let $ = msg[0];
+    if ($ instanceof Ok) {
+      let response = $[0];
+      return [
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          model.logs,
+          "running",
+          false,
+          model.icon_failed,
+          model.new_pack,
+          model.notice,
+        ),
+        watch_job_effect(response.job_id),
+      ];
+    } else {
+      let error = $[0];
+      return with_error(model, error);
+    }
   } else if (msg instanceof JobLine) {
     let line = msg[0];
     return [append_log(model, line), $effect.none()];
@@ -585,6 +709,7 @@ function update(model, msg) {
       model.root,
       model.version,
       model.projects,
+      model.features,
       model.selected_id,
       model.selected_subdir,
       model.view,
@@ -612,6 +737,7 @@ function update(model, msg) {
         finished$1.root,
         finished$1.version,
         finished$1.projects,
+        finished$1.features,
         finished$1.selected_id,
         finished$1.selected_subdir,
         finished$1.view,
@@ -647,6 +773,7 @@ function update(model, msg) {
           model.root,
           model.version,
           model.projects,
+          model.features,
           model.selected_id,
           model.selected_subdir,
           model.view,
@@ -676,6 +803,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -702,6 +830,7 @@ function update(model, msg) {
             model.root,
             model.version,
             model.projects,
+            model.features,
             model.selected_id,
             model.selected_subdir,
             model.view,
@@ -737,6 +866,7 @@ function update(model, msg) {
             model.root,
             model.version,
             model.projects,
+            model.features,
             id,
             model.selected_subdir,
             model.view,
@@ -767,6 +897,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -802,6 +933,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -837,6 +969,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -872,6 +1005,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -907,6 +1041,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -942,6 +1077,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -977,6 +1113,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -1011,6 +1148,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -1034,6 +1172,7 @@ function update(model, msg) {
         model.root,
         model.version,
         model.projects,
+        model.features,
         model.selected_id,
         model.selected_subdir,
         model.view,
@@ -1072,6 +1211,7 @@ function init(_) {
       toList([
         $api.health((var0) => { return new GotHealth(var0); }),
         $api.projects((var0) => { return new GotProjects(var0); }),
+        $api.features((var0) => { return new GotFeatures(var0); }),
         browser_view_effect(),
       ]),
     ),
@@ -1091,10 +1231,10 @@ export function main() {
       "Pattern match failed, no pattern matched the value.",
       {
         value: $,
-        start: 1351,
-        end: 1400,
-        pattern_start: 1362,
-        pattern_end: 1367
+        start: 1406,
+        end: 1455,
+        pattern_start: 1417,
+        pattern_end: 1422
       }
     )
   }

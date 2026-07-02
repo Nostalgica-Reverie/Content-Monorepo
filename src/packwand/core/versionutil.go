@@ -130,8 +130,8 @@ func DoQuery(q VersionListQuery) (*ModLoaderVersions, error) {
 
 // Retrieve a list of versions from maven, with no filtering or processing of the maven data
 func fetchVersionsFromMaven(q VersionListQuery, url string) (*ModLoaderVersions, error) {
-	identity_function := func(version string) *string { return &version }
-	return fetchMavenWithFilterMap(q, url, identity_function)
+	identity := func(version string) *string { return &version }
+	return fetchMavenWithFilterMap(q, url, identity)
 }
 
 func fetchForgeStyle(q VersionListQuery, url string) (*ModLoaderVersions, error) {
@@ -241,6 +241,7 @@ func fetchMavenWithFilterMap(q VersionListQuery, url string, filterMap func(vers
 	if err != nil {
 		return nil, err
 	}
+	defer func() { _ = res.Body.Close() }()
 	dec := xml.NewDecoder(res.Body)
 	out := MavenMetadata{}
 	err = dec.Decode(&out)
@@ -348,6 +349,7 @@ func getForgeRecommended(q VersionListQuery) string {
 	if err != nil {
 		return ""
 	}
+	defer func() { _ = res.Body.Close() }()
 	dec := json.NewDecoder(res.Body)
 	out := ForgeRecommended{}
 	err = dec.Decode(&out)

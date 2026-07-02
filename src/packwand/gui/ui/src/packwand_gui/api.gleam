@@ -26,6 +26,12 @@ pub fn projects(
   request("GET", "/api/projects", "", project_index_decoder(), to_msg)
 }
 
+pub fn features(
+  to_msg: fn(Result(domain.FeatureIndex, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request("GET", "/api/features", "", feature_index_decoder(), to_msg)
+}
+
 pub fn mods(
   path: String,
   to_msg: fn(Result(List(domain.ModEntry), domain.ApiError)) -> msg,
@@ -103,6 +109,38 @@ pub fn create_project(
   )
 }
 
+/// Opens the native CurseForge webview (lib/curseforge_webview) for the given
+/// mod, bridged by the Go server; download/navigation events stream through
+/// the returned job's event feed.
+pub fn webview_fetch(
+  slug: String,
+  file_id: Int,
+  to_msg: fn(Result(domain.ActionResponse, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  let body =
+    json.object([
+      #(
+        "files",
+        json.array(
+          [
+            json.object([
+              #("file_id", json.int(file_id)),
+              #("slug", json.string(slug)),
+            ]),
+          ],
+          fn(file) { file },
+        ),
+      ),
+    ])
+  request(
+    "POST",
+    "/api/webview/open",
+    json.to_string(body),
+    action_response_decoder(),
+    to_msg,
+  )
+}
+
 pub fn action(
   action: domain.Action,
   to_msg: fn(Result(domain.ActionResponse, domain.ApiError)) -> msg,
@@ -160,6 +198,43 @@ fn project_index_decoder() {
     decode.list(project_decoder()),
   )
   decode.success(domain.ProjectIndex(projects:))
+}
+
+fn feature_index_decoder() {
+  use packwand_version <- decode.optional_field(
+    "packwand_version",
+    "",
+    decode.string,
+  )
+  use features <- decode.optional_field(
+    "features",
+    [],
+    decode.list(feature_decoder()),
+  )
+  decode.success(domain.FeatureIndex(packwand_version:, features:))
+}
+
+fn feature_decoder() {
+  use command <- decode.field("command", decode.string)
+  use usage <- decode.optional_field("use", "", decode.string)
+  use summary <- decode.optional_field("summary", "", decode.string)
+  use group <- decode.optional_field("group", "", decode.string)
+  use runnable <- decode.optional_field("runnable", False, decode.bool)
+  use gui_status <- decode.optional_field("gui_status", "cli-only", decode.string)
+  use gui_action <- decode.optional_field("gui_action", "", decode.string)
+  use scope <- decode.optional_field("scope", "", decode.string)
+  use destructive <- decode.optional_field("destructive", False, decode.bool)
+  decode.success(domain.Feature(
+    command:,
+    usage:,
+    summary:,
+    group:,
+    runnable:,
+    gui_status:,
+    gui_action:,
+    scope:,
+    destructive:,
+  ))
 }
 
 fn project_decoder() {
@@ -247,6 +322,7 @@ fn mod_decoder() {
   use side <- decode.optional_field("side", "", decode.string)
   use pin <- decode.optional_field("pin", False, decode.bool)
   use platform <- decode.optional_field("platform", "", decode.string)
+  use version_id <- decode.optional_field("version_id", "", decode.string)
   decode.success(domain.ModEntry(
     slug:,
     name:,
@@ -254,6 +330,7 @@ fn mod_decoder() {
     side:,
     pin:,
     platform:,
+    version_id:,
   ))
 }
 

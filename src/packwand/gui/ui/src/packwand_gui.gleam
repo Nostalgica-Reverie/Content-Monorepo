@@ -4,17 +4,17 @@ import lustre
 import lustre/effect.{type Effect}
 import packwand_gui/api
 import packwand_gui/model.{
-  type Project, ContentResponse, CreatedProject, ProjectIndex, action_name,
-  action_refreshes_mods,
+  type Project, ContentResponse, CreatedProject, FeatureIndex, ProjectIndex,
+  action_name, action_refreshes_mods,
 }
 import packwand_gui/state.{
   type Model, type Msg, CopyChangelog, CreateProject, GotAction, GotChangelog,
-  GotHealth, GotManifest, GotMods, GotProjects, IconFailed, JobFinished, JobLine,
-  ManifestSaved, Model, Navigate, NewPack, ProjectCreated, RunAction,
-  SaveManifest, SelectProject, SelectSubdir, SetManifest, SetModSlug,
+  GotFeatures, GotHealth, GotManifest, GotMods, GotProjects, IconFailed,
+  JobFinished, JobLine, ManifestSaved, Model, Navigate, NewPack, ProjectCreated, RunAction,
+  RunWebview, SaveManifest, SelectProject, SelectSubdir, SetManifest, SetModSlug,
   SetNewPackDescription, SetNewPackID, SetNewPackLoader, SetNewPackMinecraft,
-  SetNewPackName, SetNewPackType, SetNewPackVersion, SetSearch, append_log,
-  http_error, initial, selected_project,
+  SetNewPackName, SetNewPackType, SetNewPackVersion, SetSearch, WebviewStarted,
+  append_log, http_error, initial, selected_project,
 }
 import packwand_gui/view
 
@@ -46,6 +46,7 @@ fn init(_) -> #(Model, Effect(Msg)) {
     effect.batch([
       api.health(GotHealth),
       api.projects(GotProjects),
+      api.features(GotFeatures),
       browser_view_effect(),
     ]),
   )
@@ -61,6 +62,18 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
     GotProjects(Ok(ProjectIndex(projects))) ->
       select_after_projects(model, projects)
     GotProjects(Error(error)) -> with_error(model, error)
+    GotFeatures(Ok(FeatureIndex(version, features))) -> #(
+      Model(
+        ..model,
+        features: features,
+        version: case model.version {
+          "" -> version
+          _ -> model.version
+        },
+      ),
+      effect.none(),
+    )
+    GotFeatures(Error(error)) -> with_error(model, error)
     SelectProject(id) ->
       select_project(Model(..model, selected_id: id, icon_failed: False))
     SelectSubdir(path) -> #(
@@ -103,6 +116,20 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       watch_job_effect(response.job_id),
     )
     GotAction(_, Error(error)) -> with_error(model, error)
+    RunWebview(slug, file_id) -> {
+      let running =
+        model
+        |> append_log("> curseforge_webview " <> slug)
+      #(
+        Model(..running, job_status: "starting", notice: ""),
+        api.webview_fetch(slug, file_id, WebviewStarted),
+      )
+    }
+    WebviewStarted(Ok(response)) -> #(
+      Model(..model, job_status: "running", refresh_mods_after_job: False),
+      watch_job_effect(response.job_id),
+    )
+    WebviewStarted(Error(error)) -> with_error(model, error)
     JobLine(line) -> #(append_log(model, line), effect.none())
     JobFinished(status, error) -> {
       let finished = Model(..model, job_status: status)

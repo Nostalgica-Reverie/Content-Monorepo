@@ -101,6 +101,46 @@ type newPackRequest struct {
 	Description string `json:"description,omitempty"`
 }
 
+type featureCapability struct {
+	Command     string `json:"command"`
+	Use         string `json:"use"`
+	Summary     string `json:"summary"`
+	Group       string `json:"group,omitempty"`
+	Runnable    bool   `json:"runnable"`
+	GUIStatus   string `json:"gui_status"`
+	GUIAction   string `json:"gui_action,omitempty"`
+	Scope       string `json:"scope,omitempty"`
+	Destructive bool   `json:"destructive,omitempty"`
+}
+
+type guiIntegration struct {
+	action      string
+	scope       string
+	destructive bool
+}
+
+var guiIntegrations = map[string]guiIntegration{
+	"build":             {action: "build", scope: "subdir"},
+	"curseforge add":    {action: "add-mod", scope: "curseforge-subdir", destructive: true},
+	"curseforge export": {action: "export-curseforge", scope: "curseforge-subdir"},
+	"doctor":            {action: "doctor", scope: "workspace"},
+	"lint":              {action: "lint", scope: "workspace"},
+	"modrinth add":      {action: "add-mod", scope: "modrinth-subdir", destructive: true},
+	"modrinth export":   {action: "export-modrinth", scope: "modrinth-subdir"},
+	"packs index":       {action: "packs-index", scope: "workspace", destructive: true},
+	"pin":               {action: "pin-mod", scope: "subdir", destructive: true},
+	"refresh":           {action: "refresh", scope: "subdir", destructive: true},
+	"rehash":            {action: "rehash", scope: "subdir", destructive: true},
+	"remove":            {action: "remove-mod", scope: "subdir", destructive: true},
+	"unpin":             {action: "unpin-mod", scope: "subdir", destructive: true},
+	"update":            {action: "update-mod/update-all", scope: "subdir", destructive: true},
+	"validate":          {action: "validate-all/validate-project", scope: "workspace/project"},
+	"workspace refresh": {action: "workspace-refresh", scope: "workspace", destructive: true},
+	"workspace status":  {action: "workspace-status", scope: "workspace"},
+	"workspace sync":    {action: "workspace-sync", scope: "workspace", destructive: true},
+	"workspace update":  {action: "workspace-update", scope: "workspace", destructive: true},
+}
+
 var projectIDPattern = regexp.MustCompile(`^[a-z0-9][a-z0-9_-]*$`)
 
 var guiCmd = &cobra.Command{
@@ -160,6 +200,7 @@ func listenAddr(port int) (string, error) {
 func (s *server) routes() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /api/health", s.handleHealth)
+	mux.HandleFunc("GET /api/features", s.handleFeatures)
 	mux.HandleFunc("GET /api/projects", s.handleProjects)
 	mux.HandleFunc("POST /api/projects", s.handleCreateProject)
 	mux.HandleFunc("GET /api/project-icon/{id}", s.handleProjectIcon)
@@ -171,16 +212,11 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /api/jobs/{id}", s.handleJob)
 	mux.HandleFunc("GET /api/jobs/{id}/events", s.handleJobEvents)
 	mux.HandleFunc("POST /api/actions", s.handleAction)
+	mux.HandleFunc("POST /api/webview/open", s.handleWebviewOpen)
 
 	static, _ := fs.Sub(staticFiles, "static")
 	mux.Handle("/", http.FileServer(http.FS(static)))
-	return logRequests(mux)
-}
-
-func logRequests(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		next.ServeHTTP(w, r)
-	})
+	return mux
 }
 
 func (s *server) handleHealth(w http.ResponseWriter, r *http.Request) {
@@ -188,6 +224,34 @@ func (s *server) handleHealth(w http.ResponseWriter, r *http.Request) {
 		"ok":      true,
 		"root":    filepath.ToSlash(s.root),
 		"version": cmd.Version(),
+	})
+}
+
+func (s *server) handleFeatures(w http.ResponseWriter, r *http.Request) {
+	catalog := cmd.CommandCatalog()
+	features := make([]featureCapability, 0, len(catalog))
+	for _, command := range catalog {
+		feature := featureCapability{
+			Command:   command.Path,
+			Use:       command.Use,
+			Summary:   command.Summary,
+			Group:     command.Group,
+			Runnable:  command.Runnable,
+			GUIStatus: "cli-only",
+		}
+		if integration, ok := guiIntegrations[command.Path]; ok {
+			feature.GUIStatus = "integrated"
+			feature.GUIAction = integration.action
+			feature.Scope = integration.scope
+			feature.Destructive = integration.destructive
+		} else if !command.Runnable {
+			feature.GUIStatus = "group"
+		}
+		features = append(features, feature)
+	}
+	writeJSON(w, map[string]any{
+		"packwand_version": cmd.Version(),
+		"features":         features,
 	})
 }
 
@@ -439,9 +503,11 @@ func (s *server) handleJobEvents(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ch := j.subscribe()
+	// Take the replay snapshot and subscribe under one lock acquisition so
+	// lines appended in between are neither dropped nor sent twice.
+	replay, ch := j.subscribe()
 	defer j.unsubscribe(ch)
-	for _, line := range j.snapshot().Lines {
+	for _, line := range replay {
 		writeEvent(w, line)
 	}
 	flusher.Flush()
@@ -482,6 +548,13 @@ func (s *server) resolveAction(req actionRequest) (string, []string, error) {
 		return s.root, []string{"packs", "index"}, nil
 	case "validate-all":
 		return s.root, []string{"validate", "--all"}, nil
+	case "validate-project":
+		dir, err := s.cleanRepoPath(firstNonEmpty(req.Subdir, req.Path))
+		return dir, []string{"validate", "manifest.json"}, err
+	case "doctor":
+		return s.root, []string{"doctor"}, nil
+	case "lint":
+		return s.root, []string{"lint"}, nil
 	case "workspace-status":
 		return s.root, []string{"workspace", "status"}, nil
 	case "workspace-sync":
@@ -492,6 +565,10 @@ func (s *server) resolveAction(req actionRequest) (string, []string, error) {
 		return s.root, args, nil
 	case "workspace-refresh":
 		return s.root, []string{"workspace", "refresh"}, nil
+	case "workspace-update-check":
+		return s.root, []string{"workspace", "update", "--all", "--check"}, nil
+	case "workspace-update":
+		return s.root, []string{"workspace", "update", "--all"}, nil
 	case "refresh":
 		dir, err := s.cleanRepoPath(firstNonEmpty(req.Subdir, req.Path))
 		return dir, []string{"refresh"}, err
@@ -558,6 +635,12 @@ func (s *server) resolveAction(req actionRequest) (string, []string, error) {
 			return "", nil, err
 		}
 		return dir, []string{"update", "--all", "-y"}, nil
+	case "build":
+		dir, err := s.cleanRepoPath(firstNonEmpty(req.Subdir, req.Path))
+		return dir, []string{"build"}, err
+	case "rehash":
+		dir, err := s.cleanRepoPath(firstNonEmpty(req.Subdir, req.Path))
+		return dir, []string{"rehash"}, err
 	case "export-modrinth":
 		dir, err := s.cleanRepoPath(firstNonEmpty(req.Subdir, req.Path))
 		return dir, []string{"modrinth", "export"}, err
@@ -897,16 +980,17 @@ func (j *job) finish(exitCode int, err error) {
 	j.mu.Unlock()
 }
 
-func (j *job) subscribe() chan string {
+func (j *job) subscribe() ([]string, chan string) {
 	ch := make(chan string, 128)
 	j.mu.Lock()
+	replay := append([]string(nil), j.lines...)
 	if j.Status == "running" {
 		j.subscribers[ch] = struct{}{}
 	} else {
 		close(ch)
 	}
 	j.mu.Unlock()
-	return ch
+	return replay, ch
 }
 
 func (j *job) unsubscribe(ch chan string) {

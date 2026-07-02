@@ -1,16 +1,18 @@
 :root {
   color-scheme: dark;
-  --bg: #181b22;
-  --bg-2: #1d212a;
-  --surface: #20242d;
-  --surface-2: #272c36;
-  --surface-3: #1b1f27;
-  --surface-soft: #232832;
-  --line: #343b48;
-  --text: #e7eaf2;
-  --muted: #9aa5b8;
-  --accent: #ffaff3;
-  --accent-2: #f67fe5;
+  --bg: #15171b;
+  --bg-2: #1c1f24;
+  --surface: #21252b;
+  --surface-2: #272c32;
+  --surface-3: #181b20;
+  --surface-soft: #24282f;
+  --line: #2d323b;
+  --text: #e6e8eb;
+  --muted: #9aa3ad;
+  --accent: #1bd96a;
+  --accent-2: #2fe57c;
+  --accent-dim: #16ae55;
+  --accent-soft: rgba(27, 217, 106, 0.14);
   --danger: #b63d4d;
   --danger-bg: #321a22;
 }
@@ -67,18 +69,37 @@ select:hover {
 button:not(.ghost):not(.danger):not(.nav-btn) {
   background: var(--accent);
   border-color: var(--accent);
-  color: #20101e;
+  color: #082012;
 }
 
 button.ghost {
-  background: #222637;
-  color: #ffd5f8;
+  background: #20272a;
+  color: #8df4b8;
 }
 
 button.danger {
   background: var(--danger-bg);
   border-color: #512633;
   color: #ff7d90;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.35);
+  opacity: 0.48;
+}
+
+button:not(:disabled):not(.ghost):not(.danger):not(.nav-btn):hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
 }
 
 select {
@@ -146,7 +167,7 @@ textarea {
   height: 34px;
   border-radius: 6px;
   background: var(--accent);
-  color: #20101e;
+  color: #082012;
   font-weight: 900;
 }
 
@@ -196,7 +217,7 @@ nav {
 .nav-btn.active {
   background: var(--accent) !important;
   border-color: var(--accent);
-  color: #20101e;
+  color: #082012;
 }
 
 main {
@@ -282,6 +303,10 @@ h2 {
   gap: 16px;
 }
 
+.empty-workspace {
+  margin-top: 18px;
+}
+
 .span-5 {
   grid-column: span 5;
 }
@@ -317,11 +342,11 @@ h2 {
 }
 
 .pill {
-  border: 1px solid #4b374a;
+  border: 1px solid rgba(27, 217, 106, 0.36);
   border-radius: 999px;
   padding: 3px 9px;
-  color: #ffc7f7;
-  background: #151923;
+  color: #8df4b8;
+  background: var(--accent-soft);
   font-size: 12px;
   font-weight: 800;
 }
@@ -395,6 +420,62 @@ h2 {
   margin-top: 10px;
   color: var(--accent);
   font-size: 12px;
+}
+
+.panel-copy {
+  max-width: 860px;
+  margin-bottom: 14px;
+  color: var(--muted);
+}
+
+.feature-list {
+  display: grid;
+  max-height: 460px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.feature-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(260px, 1.4fr) auto;
+  gap: 14px;
+  align-items: center;
+  min-height: 48px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.feature-row:last-child {
+  border-bottom: 0;
+}
+
+.feature-row code {
+  overflow: hidden;
+  color: var(--text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feature-summary {
+  color: var(--muted);
+}
+
+.status-badge {
+  min-width: 42px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.status-badge.integrated {
+  border-color: rgba(27, 217, 106, 0.36);
+  background: var(--accent-soft);
+  color: #8df4b8;
 }
 
 .changelog-preview {
@@ -505,6 +586,19 @@ h2 {
     position: static;
   }
 
+  nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  main {
+    padding: 0 16px 24px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    padding: 14px 0;
+  }
+
   .span-5,
   .span-6,
   .span-7,
@@ -514,5 +608,45 @@ h2 {
 
   .details {
     grid-template-columns: 1fr;
+  }
+
+  .feature-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .feature-summary {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar,
+  .top-actions,
+  .action-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search-wrap,
+  .action-row select {
+    min-width: 0;
+    max-width: none;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .span-form {
+    grid-column: span 1;
+  }
+
+  .mod-list .row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mod-list .row > div {
+    grid-column: 1 / -1;
   }
 }

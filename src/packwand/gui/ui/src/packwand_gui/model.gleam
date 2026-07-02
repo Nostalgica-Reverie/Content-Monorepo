@@ -1,3 +1,4 @@
+import gleam/list
 import gleam/string
 
 pub type Health {
@@ -61,6 +62,7 @@ pub type ModEntry {
     side: String,
     pin: Bool,
     platform: String,
+    version_id: String,
   )
 }
 
@@ -76,12 +78,34 @@ pub type CreatedProject {
   CreatedProject(id: String, dir: String)
 }
 
+pub type FeatureIndex {
+  FeatureIndex(packwand_version: String, features: List(Feature))
+}
+
+pub type Feature {
+  Feature(
+    command: String,
+    usage: String,
+    summary: String,
+    group: String,
+    runnable: Bool,
+    gui_status: String,
+    gui_action: String,
+    scope: String,
+    destructive: Bool,
+  )
+}
+
 pub type Action {
   PacksIndex
   ValidateAll
+  ValidateProject(path: String)
+  Doctor
+  Lint
   WorkspaceStatus
   WorkspaceSync(dry_run: Bool)
   WorkspaceRefresh
+  WorkspaceUpdate(check: Bool)
   RefreshSubdir(path: String)
   AddMod(path: String, slug: String)
   RemoveMod(path: String, slug: String)
@@ -89,6 +113,8 @@ pub type Action {
   UnpinMod(path: String, slug: String)
   UpdateMod(path: String, slug: String)
   UpdateAll(path: String)
+  Build(path: String)
+  Rehash(path: String)
   ExportModrinth(path: String)
   ExportCurseforge(path: String)
 }
@@ -97,9 +123,14 @@ pub fn action_name(action: Action) -> String {
   case action {
     PacksIndex -> "packs-index"
     ValidateAll -> "validate-all"
+    ValidateProject(_) -> "validate-project"
+    Doctor -> "doctor"
+    Lint -> "lint"
     WorkspaceStatus -> "workspace-status"
     WorkspaceSync(_) -> "workspace-sync"
     WorkspaceRefresh -> "workspace-refresh"
+    WorkspaceUpdate(True) -> "workspace-update-check"
+    WorkspaceUpdate(False) -> "workspace-update"
     RefreshSubdir(_) -> "refresh"
     AddMod(_, _) -> "add-mod"
     RemoveMod(_, _) -> "remove-mod"
@@ -107,6 +138,8 @@ pub fn action_name(action: Action) -> String {
     UnpinMod(_, _) -> "unpin-mod"
     UpdateMod(_, _) -> "update-mod"
     UpdateAll(_) -> "update-all"
+    Build(_) -> "build"
+    Rehash(_) -> "rehash"
     ExportModrinth(_) -> "export-modrinth"
     ExportCurseforge(_) -> "export-curseforge"
   }
@@ -115,12 +148,15 @@ pub fn action_name(action: Action) -> String {
 pub fn action_subdir(action: Action) -> String {
   case action {
     RefreshSubdir(path)
+    | ValidateProject(path)
     | AddMod(path, _)
     | RemoveMod(path, _)
     | PinMod(path, _)
     | UnpinMod(path, _)
     | UpdateMod(path, _)
     | UpdateAll(path)
+    | Build(path)
+    | Rehash(path)
     | ExportModrinth(path)
     | ExportCurseforge(path) -> path
     _ -> ""
@@ -153,6 +189,8 @@ pub fn action_refreshes_mods(action: Action) -> Bool {
     | UnpinMod(_, _)
     | UpdateMod(_, _)
     | UpdateAll(_)
+    | Build(_)
+    | Rehash(_)
     | RefreshSubdir(_) -> True
     _ -> False
   }
@@ -166,7 +204,7 @@ pub fn project_summary(project: Project) -> String {
     prefix("mc", project.minecraft),
     project.loader,
   ]
-  |> list_filter_non_empty
+  |> list.filter(fn(value) { value != "" })
   |> string.join("  ")
 }
 
@@ -174,18 +212,5 @@ fn prefix(prefix: String, value: String) -> String {
   case value {
     "" -> ""
     _ -> prefix <> value
-  }
-}
-
-fn list_filter_non_empty(values: List(String)) -> List(String) {
-  case values {
-    [] -> []
-    [first, ..rest] -> {
-      let filtered = list_filter_non_empty(rest)
-      case first {
-        "" -> filtered
-        _ -> [first, ..filtered]
-      }
-    }
   }
 }

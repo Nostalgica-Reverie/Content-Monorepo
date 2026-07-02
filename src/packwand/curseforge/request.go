@@ -1,4 +1,4 @@
-﻿package curseforge
+package curseforge
 
 import (
 	"bytes"
@@ -35,14 +35,19 @@ type cfApiClient struct {
 
 var cfDefaultClient = cfApiClient{&http.Client{}}
 
-func (c *cfApiClient) makeGet(endpoint string) (*http.Response, error) {
-	req, err := http.NewRequest("GET", "https://"+cfApiServer+endpoint, nil)
+// doJSON performs an API request and decodes the JSON response into target,
+// always closing the response body.
+func (c *cfApiClient) doJSON(method, endpoint string, body io.Reader, target any) error {
+	req, err := http.NewRequest(method, "https://"+cfApiServer+endpoint, body)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	req.Header.Set("User-Agent", core.UserAgent)
 	req.Header.Set("Accept", "application/json")
+	if body != nil {
+		req.Header.Set("Content-Type", "application/json")
+	}
 	if cfApiKey == "" {
 		cfApiKey = decodeDefaultKey()
 	}
@@ -50,38 +55,29 @@ func (c *cfApiClient) makeGet(endpoint string) (*http.Response, error) {
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
+	defer func() { _ = resp.Body.Close() }()
 
-	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("invalid response status: %v", resp.Status)
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("invalid response status: %v", resp.Status)
 	}
-	return resp, nil
+	if err := json.NewDecoder(resp.Body).Decode(target); err != nil && err != io.EOF {
+		return err
+	}
+	return nil
 }
 
-func (c *cfApiClient) makePost(endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest("POST", "https://"+cfApiServer+endpoint, body)
+func (c *cfApiClient) getJSON(endpoint string, target any) error {
+	return c.doJSON(http.MethodGet, endpoint, nil, target)
+}
+
+func (c *cfApiClient) postJSON(endpoint string, requestBody any, target any) error {
+	data, err := json.Marshal(requestBody)
 	if err != nil {
-		return nil, err
+		return err
 	}
-
-	req.Header.Set("User-Agent", core.UserAgent)
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-Type", "application/json")
-	if cfApiKey == "" {
-		cfApiKey = decodeDefaultKey()
-	}
-	req.Header.Set("X-API-Key", cfApiKey)
-
-	resp, err := c.httpClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("invalid response status: %v", resp.Status)
-	}
-	return resp, nil
+	return c.doJSON(http.MethodPost, endpoint, bytes.NewReader(data), target)
 }
 
 type fileType uint8
@@ -178,13 +174,7 @@ func (c *cfApiClient) getModInfo(modID uint32) (modInfo, error) {
 	}
 
 	idStr := strconv.FormatUint(uint64(modID), 10)
-	resp, err := c.makeGet("/v1/mods/" + idStr)
-	if err != nil {
-		return modInfo{}, fmt.Errorf("failed to request project data for ID %d: %w", modID, err)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&infoRes)
-	if err != nil && err != io.EOF {
+	if err := c.getJSON("/v1/mods/"+idStr, &infoRes); err != nil {
 		return modInfo{}, fmt.Errorf("failed to request project data for ID %d: %w", modID, err)
 	}
 
@@ -200,22 +190,10 @@ func (c *cfApiClient) getModInfoMultiple(modIDs []uint32) ([]modInfo, error) {
 		Data []modInfo `json:"data"`
 	}
 
-	modIDsData, err := json.Marshal(struct {
+	body := struct {
 		ModIDs []uint32 `json:"modIds"`
-	}{
-		ModIDs: modIDs,
-	})
-	if err != nil {
-		return []modInfo{}, err
-	}
-
-	resp, err := c.makePost("/v1/mods", bytes.NewBuffer(modIDsData))
-	if err != nil {
-		return []modInfo{}, fmt.Errorf("failed to request project data: %w", err)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&infoRes)
-	if err != nil && err != io.EOF {
+	}{ModIDs: modIDs}
+	if err := c.postJSON("/v1/mods", body, &infoRes); err != nil {
 		return []modInfo{}, fmt.Errorf("failed to request project data: %w", err)
 	}
 
@@ -253,19 +231,17 @@ func (i modFileInfo) getBestHash() (hash string, hashFormat string) {
 	hashPreferred := 0
 
 	// Prefer SHA1, then MD5 if found:
-	if i.Hashes != nil {
-		for _, v := range i.Hashes {
-			if v.Algorithm == hashAlgoMD5 && hashPreferred < 1 {
-				hashPreferred = 1
+	for _, v := range i.Hashes {
+		if v.Algorithm == hashAlgoMD5 && hashPreferred < 1 {
+			hashPreferred = 1
 
-				hash = v.Value
-				hashFormat = "md5"
-			} else if v.Algorithm == hashAlgoSHA1 && hashPreferred < 2 {
-				hashPreferred = 2
+			hash = v.Value
+			hashFormat = "md5"
+		} else if v.Algorithm == hashAlgoSHA1 && hashPreferred < 2 {
+			hashPreferred = 2
 
-				hash = v.Value
-				hashFormat = "sha1"
-			}
+			hash = v.Value
+			hashFormat = "sha1"
 		}
 	}
 
@@ -280,13 +256,7 @@ func (c *cfApiClient) getFileInfo(modID uint32, fileID uint32) (modFileInfo, err
 	modIDStr := strconv.FormatUint(uint64(modID), 10)
 	fileIDStr := strconv.FormatUint(uint64(fileID), 10)
 
-	resp, err := c.makeGet("/v1/mods/" + modIDStr + "/files/" + fileIDStr)
-	if err != nil {
-		return modFileInfo{}, fmt.Errorf("failed to request file data for project ID %d, file ID %d: %w", modID, fileID, err)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&infoRes)
-	if err != nil && err != io.EOF {
+	if err := c.getJSON("/v1/mods/"+modIDStr+"/files/"+fileIDStr, &infoRes); err != nil {
 		return modFileInfo{}, fmt.Errorf("failed to request file data for project ID %d, file ID %d: %w", modID, fileID, err)
 	}
 
@@ -302,22 +272,10 @@ func (c *cfApiClient) getFileInfoMultiple(fileIDs []uint32) ([]modFileInfo, erro
 		Data []modFileInfo `json:"data"`
 	}
 
-	fileIDsData, err := json.Marshal(struct {
+	body := struct {
 		FileIDs []uint32 `json:"fileIds"`
-	}{
-		FileIDs: fileIDs,
-	})
-	if err != nil {
-		return []modFileInfo{}, err
-	}
-
-	resp, err := c.makePost("/v1/mods/files", bytes.NewBuffer(fileIDsData))
-	if err != nil {
-		return []modFileInfo{}, fmt.Errorf("failed to request file data: %w", err)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&infoRes)
-	if err != nil && err != io.EOF {
+	}{FileIDs: fileIDs}
+	if err := c.postJSON("/v1/mods/files", body, &infoRes); err != nil {
 		return []modFileInfo{}, fmt.Errorf("failed to request file data: %w", err)
 	}
 
@@ -354,14 +312,8 @@ func (c *cfApiClient) getSearch(searchTerm string, slug string, gameID uint32, c
 		}
 	}
 
-	resp, err := c.makeGet("/v1/mods/search?" + q.Encode())
-	if err != nil {
+	if err := c.getJSON("/v1/mods/search?"+q.Encode(), &infoRes); err != nil {
 		return []modInfo{}, fmt.Errorf("failed to retrieve search results: %w", err)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&infoRes)
-	if err != nil && err != io.EOF {
-		return []modInfo{}, fmt.Errorf("failed to parse search results: %w", err)
 	}
 
 	return infoRes.Data, nil
@@ -400,14 +352,8 @@ func (c *cfApiClient) getGames() ([]cfGame, error) {
 		Data []cfGame `json:"data"`
 	}
 
-	resp, err := c.makeGet("/v1/games")
-	if err != nil {
+	if err := c.getJSON("/v1/games", &infoRes); err != nil {
 		return []cfGame{}, fmt.Errorf("failed to retrieve game list: %w", err)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&infoRes)
-	if err != nil && err != io.EOF {
-		return []cfGame{}, fmt.Errorf("failed to parse game list: %w", err)
 	}
 
 	return infoRes.Data, nil
@@ -425,14 +371,8 @@ func (c *cfApiClient) getCategories(gameID uint32) ([]cfCategory, error) {
 		Data []cfCategory `json:"data"`
 	}
 
-	resp, err := c.makeGet("/v1/categories?gameId=" + strconv.FormatUint(uint64(gameID), 10))
-	if err != nil {
+	if err := c.getJSON("/v1/categories?gameId="+strconv.FormatUint(uint64(gameID), 10), &infoRes); err != nil {
 		return []cfCategory{}, fmt.Errorf("failed to retrieve category list for game %v: %w", gameID, err)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&infoRes)
-	if err != nil && err != io.EOF {
-		return []cfCategory{}, fmt.Errorf("failed to parse category list for game %v: %w", gameID, err)
 	}
 
 	return infoRes.Data, nil
@@ -457,23 +397,11 @@ func (c *cfApiClient) getFingerprintInfo(hashes []uint32) (addonFingerprintRespo
 		Data addonFingerprintResponse `json:"data"`
 	}
 
-	hashesData, err := json.Marshal(struct {
+	body := struct {
 		Fingerprints []uint32 `json:"fingerprints"`
-	}{
-		Fingerprints: hashes,
-	})
-	if err != nil {
-		return addonFingerprintResponse{}, err
-	}
-
-	resp, err := c.makePost("/v1/fingerprints", bytes.NewBuffer(hashesData))
-	if err != nil {
+	}{Fingerprints: hashes}
+	if err := c.postJSON("/v1/fingerprints", body, &infoRes); err != nil {
 		return addonFingerprintResponse{}, fmt.Errorf("failed to retrieve fingerprint results: %w", err)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&infoRes)
-	if err != nil && err != io.EOF {
-		return addonFingerprintResponse{}, err
 	}
 
 	return infoRes.Data, nil

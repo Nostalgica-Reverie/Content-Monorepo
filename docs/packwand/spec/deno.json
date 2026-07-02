@@ -1,0 +1,15 @@
+{
+	"tasks": {
+		"build": "deno run --allow-env --allow-write=schemas --allow-read=example-pack ./src/genSchemas.ts"
+	},
+	"fmt": {
+		"files": {
+			"include": ["src/", ".vscode/"]
+		},
+		"options": {
+			"useTabs": true,
+			"indentWidth": 4,
+			"lineWidth": 120
+		}
+	}
+}

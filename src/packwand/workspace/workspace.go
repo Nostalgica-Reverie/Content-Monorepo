@@ -306,7 +306,6 @@ func WorkPool(targets []string, op Operation, prog *Progress) []string {
 
 	dones := make([]<-chan error, len(targets))
 	for i, dir := range targets {
-		dir := dir
 		dones[i] = sched.Submit(Task{
 			Name: dir,
 			Needs: []Resource{
@@ -485,7 +484,6 @@ func RunLintFiles(files []string) (failed, checked int64) {
 	sched := NewScheduler(MaxConcurrent())
 	dones := make([]<-chan error, 0, len(files))
 	for _, f := range files {
-		f := f
 		if _, err := os.Stat(f); err != nil {
 			continue
 		}
@@ -648,7 +646,6 @@ func RunSync(dryRun bool) error {
 	slots := CacheSlotCount()
 	dones := make([]<-chan error, len(jobs))
 	for i, j := range jobs {
-		j := j
 		dones[i] = sched.Submit(Task{
 			Name: j.consumerID,
 			Needs: []Resource{
@@ -690,6 +687,7 @@ func runSyncJob(j syncJob, dryRun bool, syncedFolders []string) error {
 	}
 
 	provided := map[string]bool{}
+	folderRels := make(map[string][]string, len(syncedFolders))
 	for _, folder := range syncedFolders {
 		srcFolder := filepath.Join(j.sourceDir, folder)
 		if _, err := os.Stat(srcFolder); err != nil {
@@ -699,6 +697,7 @@ func runSyncJob(j syncJob, dryRun bool, syncedFolders []string) error {
 		if err != nil {
 			return fmt.Errorf("scanning %s for %s failed: %w", folder, j.consumerID, err)
 		}
+		folderRels[folder] = rels
 		for _, r := range rels {
 			slash := filepath.ToSlash(filepath.Join(folder, r))
 			if !excluded[slash] {
@@ -719,12 +718,11 @@ func runSyncJob(j syncJob, dryRun bool, syncedFolders []string) error {
 
 	placed := map[string]bool{}
 	for _, folder := range syncedFolders {
-		srcFolder := filepath.Join(j.sourceDir, folder)
-		if _, err := os.Stat(srcFolder); err != nil {
+		rels, scanned := folderRels[folder]
+		if !scanned {
 			continue
 		}
 		if dryRun {
-			rels, _ := relFilesUnder(srcFolder)
 			kept := 0
 			for _, r := range rels {
 				slash := filepath.ToSlash(filepath.Join(folder, r))
@@ -736,7 +734,7 @@ func runSyncJob(j syncJob, dryRun bool, syncedFolders []string) error {
 			fmt.Printf("  %s: [DRY RUN] would copy %d file(s) into %s/\n", j.consumerID, kept, folder)
 			continue
 		}
-		n, err := copyTreeRecording(srcFolder, filepath.Join(j.targetDir, folder), folder, placed, excluded)
+		n, err := copyTreeRecording(filepath.Join(j.sourceDir, folder), filepath.Join(j.targetDir, folder), folder, placed, excluded)
 		if err != nil {
 			return fmt.Errorf("copy %s for %s failed: %w", folder, j.consumerID, err)
 		}
@@ -791,11 +789,11 @@ func platformSuffix(s string) string {
 
 func relFilesUnder(root string) ([]string, error) {
 	var out []string
-	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if info.IsDir() {
+		if entry.IsDir() {
 			return nil
 		}
 		rel, err := filepath.Rel(root, path)
@@ -868,7 +866,7 @@ func readSyncExclude(path string) map[string]bool {
 
 func copyTreeRecording(src, dst, folder string, placed, excluded map[string]bool) (int, error) {
 	count := 0
-	err := filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
+	err := filepath.WalkDir(src, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -880,11 +878,11 @@ func copyTreeRecording(src, dst, folder string, placed, excluded map[string]bool
 			return nil
 		}
 		slash := filepath.ToSlash(filepath.Join(folder, rel))
-		if !info.IsDir() && excluded[slash] {
+		if !entry.IsDir() && excluded[slash] {
 			return nil
 		}
 		target := filepath.Join(dst, rel)
-		if info.IsDir() {
+		if entry.IsDir() {
 			return os.MkdirAll(target, 0o755)
 		}
 		if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {

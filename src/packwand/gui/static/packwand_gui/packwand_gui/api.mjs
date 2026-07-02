@@ -333,6 +333,108 @@ export function projects(to_msg) {
   return request("GET", "/api/projects", "", project_index_decoder(), to_msg);
 }
 
+function feature_decoder() {
+  return $decode.field(
+    "command",
+    $decode.string,
+    (command) => {
+      return $decode.optional_field(
+        "use",
+        "",
+        $decode.string,
+        (usage) => {
+          return $decode.optional_field(
+            "summary",
+            "",
+            $decode.string,
+            (summary) => {
+              return $decode.optional_field(
+                "group",
+                "",
+                $decode.string,
+                (group) => {
+                  return $decode.optional_field(
+                    "runnable",
+                    false,
+                    $decode.bool,
+                    (runnable) => {
+                      return $decode.optional_field(
+                        "gui_status",
+                        "cli-only",
+                        $decode.string,
+                        (gui_status) => {
+                          return $decode.optional_field(
+                            "gui_action",
+                            "",
+                            $decode.string,
+                            (gui_action) => {
+                              return $decode.optional_field(
+                                "scope",
+                                "",
+                                $decode.string,
+                                (scope) => {
+                                  return $decode.optional_field(
+                                    "destructive",
+                                    false,
+                                    $decode.bool,
+                                    (destructive) => {
+                                      return $decode.success(
+                                        new $domain.Feature(
+                                          command,
+                                          usage,
+                                          summary,
+                                          group,
+                                          runnable,
+                                          gui_status,
+                                          gui_action,
+                                          scope,
+                                          destructive,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+function feature_index_decoder() {
+  return $decode.optional_field(
+    "packwand_version",
+    "",
+    $decode.string,
+    (packwand_version) => {
+      return $decode.optional_field(
+        "features",
+        toList([]),
+        $decode.list(feature_decoder()),
+        (features) => {
+          return $decode.success(
+            new $domain.FeatureIndex(packwand_version, features),
+          );
+        },
+      );
+    },
+  );
+}
+
+export function features(to_msg) {
+  return request("GET", "/api/features", "", feature_index_decoder(), to_msg);
+}
+
 function mod_decoder() {
   return $decode.field(
     "slug",
@@ -363,15 +465,23 @@ function mod_decoder() {
                         "",
                         $decode.string,
                         (platform) => {
-                          return $decode.success(
-                            new $domain.ModEntry(
-                              slug,
-                              name,
-                              filename,
-                              side,
-                              pin,
-                              platform,
-                            ),
+                          return $decode.optional_field(
+                            "version_id",
+                            "",
+                            $decode.string,
+                            (version_id) => {
+                              return $decode.success(
+                                new $domain.ModEntry(
+                                  slug,
+                                  name,
+                                  filename,
+                                  side,
+                                  pin,
+                                  platform,
+                                  version_id,
+                                ),
+                              );
+                            },
                           );
                         },
                       );
@@ -495,6 +605,39 @@ function action_response_decoder() {
     "job_id",
     $decode.string,
     (job_id) => { return $decode.success(new $domain.ActionResponse(job_id)); },
+  );
+}
+
+/**
+ * Opens the native CurseForge webview (lib/curseforge_webview) for the given
+ * mod, bridged by the Go server; download/navigation events stream through
+ * the returned job's event feed.
+ */
+export function webview_fetch(slug, file_id, to_msg) {
+  let body = $json.object(
+    toList([
+      [
+        "files",
+        $json.array(
+          toList([
+            $json.object(
+              toList([
+                ["file_id", $json.int(file_id)],
+                ["slug", $json.string(slug)],
+              ]),
+            ),
+          ]),
+          (file) => { return file; },
+        ),
+      ],
+    ]),
+  );
+  return request(
+    "POST",
+    "/api/webview/open",
+    $json.to_string(body),
+    action_response_decoder(),
+    to_msg,
   );
 }
 

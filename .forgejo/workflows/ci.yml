@@ -1,0 +1,179 @@
+name: "CI"
+
+# Unified monorepo pipeline: lint → test → build (parallel per language) → deploy.
+# Every step goes through the root Taskfile so CI and local development run the
+# exact same commands. Replaces packwand-ci.yml and docs-build.yml.
+# Tag releases are handled separately by packwand-release.yml.
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "src/**"
+      - "lib/**"
+      - "docs/**"
+      - "tools/**"
+      - "Taskfile.yml"
+      - ".forgejo/workflows/ci.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "src/**"
+      - "lib/**"
+      - "docs/**"
+      - "tools/**"
+      - "Taskfile.yml"
+      - ".forgejo/workflows/ci.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: technocality
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 1
+          filter: blob:none
+      - uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
+      - uses: https://github.com/actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - uses: https://github.com/dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: https://github.com/Swatinem/rust-cache@v2
+        with:
+          workspaces: lib/curseforge_webview
+      - name: Install Task
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Lint
+        run: $(go env GOPATH)/bin/task lint
+
+  test:
+    runs-on: technocality
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 1
+          filter: blob:none
+      - uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
+      - uses: https://github.com/actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - uses: https://github.com/dtolnay/rust-toolchain@stable
+      - uses: https://github.com/Swatinem/rust-cache@v2
+        with:
+          workspaces: lib/curseforge_webview
+      - name: Install Task
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Test
+        run: $(go env GOPATH)/bin/task test
+
+  build:
+    needs: [lint, test]
+    runs-on: technocality
+    strategy:
+      matrix:
+        include:
+          - name: packwand (Go)
+            task: build-packwand
+            toolchains: go
+          - name: packwiz-bootstrap (Go)
+            task: build-bootstrap
+            toolchains: go
+          - name: packwiz-installer (Kotlin)
+            task: build-installer
+            toolchains: java
+          - name: curseforge_webview (Rust)
+            task: build-webview
+            toolchains: rust
+    name: "build: ${{ matrix.name }}"
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 1
+          filter: blob:none
+      - uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
+      - uses: https://github.com/actions/setup-java@v4
+        if: matrix.toolchains == 'java'
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - uses: https://github.com/dtolnay/rust-toolchain@stable
+        if: matrix.toolchains == 'rust'
+      - uses: https://github.com/Swatinem/rust-cache@v2
+        if: matrix.toolchains == 'rust'
+        with:
+          workspaces: lib/curseforge_webview
+      - name: Install Task
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Build
+        run: $(go env GOPATH)/bin/task ${{ matrix.task }}
+
+  deploy:
+    # Artifact preparation on main: docs sites + GoReleaser snapshot archives.
+    # Tagged releases publish through packwand-release.yml instead.
+    if: github.event_name != 'pull_request'
+    needs: [build]
+    runs-on: technocality
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
+      - uses: https://github.com/actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Task
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Build docs sites
+        run: $(go env GOPATH)/bin/task docs-build
+      - name: GoReleaser snapshot
+        uses: https://github.com/goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --snapshot --clean --skip=publish
+          workdir: src/packwand
+      - name: Upload binary snapshot
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: packwand-snapshot-${{ github.sha }}
+          path: |
+            src/packwand/dist/*.tar.gz
+            src/packwand/dist/*.zip
+            src/packwand/dist/checksums.txt
+          compression-level: 0
+      - name: Upload docs
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: docs-${{ github.sha }}
+          path: |
+            docs/docs/.vitepress/dist
+            docs/packwand/docs/.vitepress/dist
+            docs/packwiz/docs/.vitepress/dist

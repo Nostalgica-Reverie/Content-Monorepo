@@ -38,6 +38,8 @@ node_modules
 # Docs
 docs/docs/.vitepress/cache
 docs/docs/.vitepress/dist
+docs/packwand/docs/.vitepress/cache
+docs/packwand/docs/.vitepress/dist
 
 # IntelliJ
 .idea/
@@ -56,3 +58,13 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+
+# lib/ build outputs
+lib/packwiz-installer/build/
+lib/packwiz-installer/bootstrap/build/
+lib/packwiz-installer/.gradle/
+lib/curseforge_webview/target/
+docs/packwiz/docs/.vitepress/cache
+docs/packwiz/docs/.vitepress/dist
+src/packwand/gui/tauri/src-tauri/target/
+src/packwand/gui/tauri/src-tauri/gen/

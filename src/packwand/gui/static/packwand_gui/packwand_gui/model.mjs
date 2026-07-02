@@ -1,10 +1,6 @@
+import * as $list from "../../gleam_stdlib/gleam/list.mjs";
 import * as $string from "../../gleam_stdlib/gleam/string.mjs";
-import {
-  toList,
-  Empty as $Empty,
-  prepend as listPrepend,
-  CustomType as $CustomType,
-} from "../gleam.mjs";
+import { toList, CustomType as $CustomType } from "../gleam.mjs";
 
 export class Health extends $CustomType {
   constructor(root, version) {
@@ -190,7 +186,7 @@ export const Subdir$Subdir$has_pack = (value) => value.has_pack;
 export const Subdir$Subdir$5 = (value) => value.has_pack;
 
 export class ModEntry extends $CustomType {
-  constructor(slug, name, filename, side, pin, platform) {
+  constructor(slug, name, filename, side, pin, platform, version_id) {
     super();
     this.slug = slug;
     this.name = name;
@@ -198,10 +194,11 @@ export class ModEntry extends $CustomType {
     this.side = side;
     this.pin = pin;
     this.platform = platform;
+    this.version_id = version_id;
   }
 }
-export const ModEntry$ModEntry = (slug, name, filename, side, pin, platform) =>
-  new ModEntry(slug, name, filename, side, pin, platform);
+export const ModEntry$ModEntry = (slug, name, filename, side, pin, platform, version_id) =>
+  new ModEntry(slug, name, filename, side, pin, platform, version_id);
 export const ModEntry$isModEntry = (value) => value instanceof ModEntry;
 export const ModEntry$ModEntry$slug = (value) => value.slug;
 export const ModEntry$ModEntry$0 = (value) => value.slug;
@@ -215,6 +212,8 @@ export const ModEntry$ModEntry$pin = (value) => value.pin;
 export const ModEntry$ModEntry$4 = (value) => value.pin;
 export const ModEntry$ModEntry$platform = (value) => value.platform;
 export const ModEntry$ModEntry$5 = (value) => value.platform;
+export const ModEntry$ModEntry$version_id = (value) => value.version_id;
+export const ModEntry$ModEntry$6 = (value) => value.version_id;
 
 export class ContentResponse extends $CustomType {
   constructor(path, content) {
@@ -261,6 +260,67 @@ export const CreatedProject$CreatedProject$0 = (value) => value.id;
 export const CreatedProject$CreatedProject$dir = (value) => value.dir;
 export const CreatedProject$CreatedProject$1 = (value) => value.dir;
 
+export class FeatureIndex extends $CustomType {
+  constructor(packwand_version, features) {
+    super();
+    this.packwand_version = packwand_version;
+    this.features = features;
+  }
+}
+export const FeatureIndex$FeatureIndex = (packwand_version, features) =>
+  new FeatureIndex(packwand_version, features);
+export const FeatureIndex$isFeatureIndex = (value) =>
+  value instanceof FeatureIndex;
+export const FeatureIndex$FeatureIndex$packwand_version = (value) =>
+  value.packwand_version;
+export const FeatureIndex$FeatureIndex$0 = (value) => value.packwand_version;
+export const FeatureIndex$FeatureIndex$features = (value) => value.features;
+export const FeatureIndex$FeatureIndex$1 = (value) => value.features;
+
+export class Feature extends $CustomType {
+  constructor(command, usage, summary, group, runnable, gui_status, gui_action, scope, destructive) {
+    super();
+    this.command = command;
+    this.usage = usage;
+    this.summary = summary;
+    this.group = group;
+    this.runnable = runnable;
+    this.gui_status = gui_status;
+    this.gui_action = gui_action;
+    this.scope = scope;
+    this.destructive = destructive;
+  }
+}
+export const Feature$Feature = (command, usage, summary, group, runnable, gui_status, gui_action, scope, destructive) =>
+  new Feature(command,
+  usage,
+  summary,
+  group,
+  runnable,
+  gui_status,
+  gui_action,
+  scope,
+  destructive);
+export const Feature$isFeature = (value) => value instanceof Feature;
+export const Feature$Feature$command = (value) => value.command;
+export const Feature$Feature$0 = (value) => value.command;
+export const Feature$Feature$usage = (value) => value.usage;
+export const Feature$Feature$1 = (value) => value.usage;
+export const Feature$Feature$summary = (value) => value.summary;
+export const Feature$Feature$2 = (value) => value.summary;
+export const Feature$Feature$group = (value) => value.group;
+export const Feature$Feature$3 = (value) => value.group;
+export const Feature$Feature$runnable = (value) => value.runnable;
+export const Feature$Feature$4 = (value) => value.runnable;
+export const Feature$Feature$gui_status = (value) => value.gui_status;
+export const Feature$Feature$5 = (value) => value.gui_status;
+export const Feature$Feature$gui_action = (value) => value.gui_action;
+export const Feature$Feature$6 = (value) => value.gui_action;
+export const Feature$Feature$scope = (value) => value.scope;
+export const Feature$Feature$7 = (value) => value.scope;
+export const Feature$Feature$destructive = (value) => value.destructive;
+export const Feature$Feature$8 = (value) => value.destructive;
+
 export class PacksIndex extends $CustomType {}
 export const Action$PacksIndex = () => new PacksIndex();
 export const Action$isPacksIndex = (value) => value instanceof PacksIndex;
@@ -268,6 +328,26 @@ export const Action$isPacksIndex = (value) => value instanceof PacksIndex;
 export class ValidateAll extends $CustomType {}
 export const Action$ValidateAll = () => new ValidateAll();
 export const Action$isValidateAll = (value) => value instanceof ValidateAll;
+
+export class ValidateProject extends $CustomType {
+  constructor(path) {
+    super();
+    this.path = path;
+  }
+}
+export const Action$ValidateProject = (path) => new ValidateProject(path);
+export const Action$isValidateProject = (value) =>
+  value instanceof ValidateProject;
+export const Action$ValidateProject$path = (value) => value.path;
+export const Action$ValidateProject$0 = (value) => value.path;
+
+export class Doctor extends $CustomType {}
+export const Action$Doctor = () => new Doctor();
+export const Action$isDoctor = (value) => value instanceof Doctor;
+
+export class Lint extends $CustomType {}
+export const Action$Lint = () => new Lint();
+export const Action$isLint = (value) => value instanceof Lint;
 
 export class WorkspaceStatus extends $CustomType {}
 export const Action$WorkspaceStatus = () => new WorkspaceStatus();
@@ -289,6 +369,18 @@ export class WorkspaceRefresh extends $CustomType {}
 export const Action$WorkspaceRefresh = () => new WorkspaceRefresh();
 export const Action$isWorkspaceRefresh = (value) =>
   value instanceof WorkspaceRefresh;
+
+export class WorkspaceUpdate extends $CustomType {
+  constructor(check) {
+    super();
+    this.check = check;
+  }
+}
+export const Action$WorkspaceUpdate = (check) => new WorkspaceUpdate(check);
+export const Action$isWorkspaceUpdate = (value) =>
+  value instanceof WorkspaceUpdate;
+export const Action$WorkspaceUpdate$check = (value) => value.check;
+export const Action$WorkspaceUpdate$0 = (value) => value.check;
 
 export class RefreshSubdir extends $CustomType {
   constructor(path) {
@@ -382,6 +474,28 @@ export const Action$isUpdateAll = (value) => value instanceof UpdateAll;
 export const Action$UpdateAll$path = (value) => value.path;
 export const Action$UpdateAll$0 = (value) => value.path;
 
+export class Build extends $CustomType {
+  constructor(path) {
+    super();
+    this.path = path;
+  }
+}
+export const Action$Build = (path) => new Build(path);
+export const Action$isBuild = (value) => value instanceof Build;
+export const Action$Build$path = (value) => value.path;
+export const Action$Build$0 = (value) => value.path;
+
+export class Rehash extends $CustomType {
+  constructor(path) {
+    super();
+    this.path = path;
+  }
+}
+export const Action$Rehash = (path) => new Rehash(path);
+export const Action$isRehash = (value) => value instanceof Rehash;
+export const Action$Rehash$path = (value) => value.path;
+export const Action$Rehash$0 = (value) => value.path;
+
 export class ExportModrinth extends $CustomType {
   constructor(path) {
     super();
@@ -411,12 +525,25 @@ export function action_name(action) {
     return "packs-index";
   } else if (action instanceof ValidateAll) {
     return "validate-all";
+  } else if (action instanceof ValidateProject) {
+    return "validate-project";
+  } else if (action instanceof Doctor) {
+    return "doctor";
+  } else if (action instanceof Lint) {
+    return "lint";
   } else if (action instanceof WorkspaceStatus) {
     return "workspace-status";
   } else if (action instanceof WorkspaceSync) {
     return "workspace-sync";
   } else if (action instanceof WorkspaceRefresh) {
     return "workspace-refresh";
+  } else if (action instanceof WorkspaceUpdate) {
+    let $ = action.check;
+    if ($) {
+      return "workspace-update-check";
+    } else {
+      return "workspace-update";
+    }
   } else if (action instanceof RefreshSubdir) {
     return "refresh";
   } else if (action instanceof AddMod) {
@@ -431,6 +558,10 @@ export function action_name(action) {
     return "update-mod";
   } else if (action instanceof UpdateAll) {
     return "update-all";
+  } else if (action instanceof Build) {
+    return "build";
+  } else if (action instanceof Rehash) {
+    return "rehash";
   } else if (action instanceof ExportModrinth) {
     return "export-modrinth";
   } else {
@@ -439,7 +570,10 @@ export function action_name(action) {
 }
 
 export function action_subdir(action) {
-  if (action instanceof RefreshSubdir) {
+  if (action instanceof ValidateProject) {
+    let path = action.path;
+    return path;
+  } else if (action instanceof RefreshSubdir) {
     let path = action.path;
     return path;
   } else if (action instanceof AddMod) {
@@ -458,6 +592,12 @@ export function action_subdir(action) {
     let path = action.path;
     return path;
   } else if (action instanceof UpdateAll) {
+    let path = action.path;
+    return path;
+  } else if (action instanceof Build) {
+    let path = action.path;
+    return path;
+  } else if (action instanceof Rehash) {
     let path = action.path;
     return path;
   } else if (action instanceof ExportModrinth) {
@@ -516,23 +656,12 @@ export function action_refreshes_mods(action) {
     return true;
   } else if (action instanceof UpdateAll) {
     return true;
+  } else if (action instanceof Build) {
+    return true;
+  } else if (action instanceof Rehash) {
+    return true;
   } else {
     return false;
-  }
-}
-
-function list_filter_non_empty(values) {
-  if (values instanceof $Empty) {
-    return values;
-  } else {
-    let first = values.head;
-    let rest = values.tail;
-    let filtered = list_filter_non_empty(rest);
-    if (first === "") {
-      return filtered;
-    } else {
-      return listPrepend(first, filtered);
-    }
   }
 }
 
@@ -552,6 +681,6 @@ export function project_summary(project) {
     prefix("mc", project.minecraft),
     project.loader,
   ]);
-  let _pipe$1 = list_filter_non_empty(_pipe);
+  let _pipe$1 = $list.filter(_pipe, (value) => { return value !== ""; });
   return $string.join(_pipe$1, "  ");
 }

@@ -1,0 +1,30 @@
+name: "Packwand Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: technocality
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 0 # goreleaser needs tags + history for the changelog
+
+      - uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache: true
+
+      - name: Run GoReleaser
+        uses: https://github.com/goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean
+          workdir: src/packwand
+        env:
+          GITEA_TOKEN: ${{ secrets.RELEASE_TOKEN }}

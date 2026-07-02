@@ -28,13 +28,13 @@ require (
 )
 
 require (
+	code.gitea.io/sdk/gitea v0.25.1
 	codeberg.org/jmansfield/go-modrinth v0.6.0
 	github.com/spf13/pflag v1.0.7
 	github.com/unascribed/FlexVer/go/flexver v1.0.0
 )
 
 require (
-	code.gitea.io/sdk/gitea v0.25.1 // indirect
 	github.com/42wim/httpsig v1.2.4 // indirect
 	github.com/davidmz/go-pageant v1.0.2 // indirect
 	github.com/go-fed/httpsig v1.1.0 // indirect

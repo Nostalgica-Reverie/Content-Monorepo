@@ -975,42 +975,16 @@ func sideFromEnv(env map[string]string) string {
 func extractOverrides(zr *zip.Reader, subdir string) int {
 	count := 0
 	for _, prefix := range []string{"overrides/", "client-overrides/"} {
-		for _, f := range zr.File {
-			if !strings.HasPrefix(f.Name, prefix) || strings.HasSuffix(f.Name, "/") {
-				continue
-			}
-			rel := strings.TrimPrefix(f.Name, prefix)
-			dest := filepath.Join(subdir, filepath.FromSlash(rel))
-			if !strings.HasPrefix(filepath.Clean(dest), filepath.Clean(subdir)+string(os.PathSeparator)) {
-				cmd.Warn("skipping suspicious archive path %s", f.Name)
-				continue
-			}
-			if err := os.MkdirAll(filepath.Dir(dest), 0o755); err != nil {
-				continue
-			}
-			rc, err := f.Open()
-			if err != nil {
-				continue
-			}
-			out, err := os.Create(dest)
-			if err != nil {
-				rc.Close()
-				continue
-			}
-			_, err = io.Copy(out, rc)
-			out.Close()
-			rc.Close()
-			if err == nil {
-				count++
-			}
-		}
+		count += extractOverridesPrefix(zr, subdir, prefix)
 	}
 	return count
 }
 
+var slugifyRe = regexp.MustCompile(`[^a-z0-9]+`)
+
 func slugify(name string) string {
 	s := strings.ToLower(name)
-	s = regexp.MustCompile(`[^a-z0-9]+`).ReplaceAllString(s, "-")
+	s = slugifyRe.ReplaceAllString(s, "-")
 	return strings.Trim(s, "-")
 }
 

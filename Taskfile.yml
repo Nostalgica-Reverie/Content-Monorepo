@@ -1,0 +1,144 @@
+version: "3"
+
+# Monorepo build tasks. Install Task from https://taskfile.dev (or `go install
+# github.com/go-task/task/v3/cmd/task@latest`), then run e.g. `task build-installer`.
+# CI (.forgejo/workflows/ci.yml) drives these same tasks, so local runs match the
+# build server exactly.
+
+vars:
+  INSTALLER_DIR: lib/packwiz-installer
+  WEBVIEW_DIR: lib/curseforge_webview
+  GUI_TAURI_DIR: src/packwand/gui/tauri
+
+tasks:
+  # — Lint —
+
+  lint-go:
+    desc: Vet the Go module
+    dir: src/packwand
+    cmds:
+      - go vet ./...
+
+  lint-webview:
+    desc: Clippy on curseforge_webview
+    dir: "{{.WEBVIEW_DIR}}"
+    cmds:
+      - cargo clippy --all-targets
+
+  lint-installer:
+    desc: Compile-check packwiz-installer (Gradle has no separate lint; compilation surfaces diagnostics)
+    dir: "{{.INSTALLER_DIR}}"
+    cmds:
+      - cmd: ./gradlew classes bootstrap:classes
+        platforms: [linux, darwin]
+      - cmd: cmd /c '.\gradlew.bat' classes bootstrap:classes
+        platforms: [windows]
+
+  lint:
+    desc: All linters/vetters
+    deps: [lint-go, lint-webview, lint-installer]
+
+  # — Test —
+
+  test-go:
+    desc: Go tests
+    dir: src/packwand
+    cmds:
+      - go test ./...
+
+  test-installer:
+    desc: Gradle tests (installer + bootstrap)
+    dir: "{{.INSTALLER_DIR}}"
+    cmds:
+      - cmd: ./gradlew test
+        platforms: [linux, darwin]
+      - cmd: cmd /c '.\gradlew.bat' test
+        platforms: [windows]
+
+  test-webview:
+    desc: Cargo tests
+    dir: "{{.WEBVIEW_DIR}}"
+    cmds:
+      - cargo test
+
+  test:
+    desc: All tests
+    deps: [test-go, test-installer, test-webview]
+
+  # — Build —
+
+  build-packwand:
+    desc: Build the packwand CLI
+    dir: src/packwand
+    cmds:
+      - go build -o packwand{{exeExt}} .
+
+  build-installer:
+    desc: Build packwiz-installer (and the legacy Java bootstrap) via Gradle
+    dir: "{{.INSTALLER_DIR}}"
+    cmds:
+      - cmd: ./gradlew build -x test
+        platforms: [linux, darwin]
+      - cmd: cmd /c '.\gradlew.bat' build -x test
+        platforms: [windows]
+    sources:
+      - "src/**/*"
+      - "bootstrap/src/**/*"
+      - "build.gradle.kts"
+      - "bootstrap/build.gradle"
+      - "settings.gradle"
+    generates:
+      - "build/dist/packwiz-installer.jar"
+
+  build-webview:
+    desc: Build curseforge_webview (release). Linux requires webkit2gtk; Windows requires the WebView2 runtime at run time.
+    dir: "{{.WEBVIEW_DIR}}"
+    cmds:
+      - cargo build --release
+    sources:
+      - "src/**/*"
+      - "Cargo.toml"
+      - "Cargo.lock"
+    generates:
+      - "target/release/curseforge_webview{{exeExt}}"
+
+  build-bootstrap:
+    desc: Build the Go packwiz-bootstrap wrapper
+    dir: src/packwand
+    cmds:
+      - go build -o packwiz-bootstrap{{exeExt}} ./cmd/packwiz-bootstrap
+
+  build-gui:
+    desc: Build the native Packwand GUI app (Tauri v2) for the host OS. Requires cargo tauri-cli; see docs/packwand/docs/development/gui-build.md
+    dir: "{{.GUI_TAURI_DIR}}"
+    deps: [build-packwand]
+    cmds:
+      - cargo tauri build
+
+  gen-licenses:
+    desc: Regenerate the webview third-party licenses page (embedded at build time)
+    dir: "{{.WEBVIEW_DIR}}"
+    cmds:
+      - cargo install --locked cargo-about
+      - cargo about generate about.hbs -o src/licenses.html
+
+  build:
+    desc: Build everything (CLI, installer, webview, bootstrap)
+    deps: [build-packwand, build-installer, build-webview, build-bootstrap]
+
+  # — Docs —
+
+  docs-build:
+    desc: Build all three docs sites (main, packwand, packwiz)
+    cmds:
+      - cd docs && npm ci && npm run docs:build
+      - cd docs/packwand && npm ci && npm run docs:build
+      - cd docs/packwiz && npm ci && npm run docs:build
+
+  # — Frontend —
+
+  gui-frontend:
+    desc: Rebuild the Gleam GUI frontend into gui/static
+    dir: src/packwand/gui/ui
+    cmds:
+      - node build.mjs

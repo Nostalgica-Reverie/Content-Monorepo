@@ -20,7 +20,7 @@ var ghDefaultClient = ghApiClient{&http.Client{}}
 func (c *ghApiClient) makeGet(url string) (*http.Response, error) {
 	ghApiToken := viper.GetString("github.token")
 
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -36,21 +36,21 @@ func (c *ghApiClient) makeGet(url string) (*http.Response, error) {
 		return nil, err
 	}
 
-	// TODO: there is likely a better way to do this
 	ratelimit := 999
-
-	ratelimit_header := resp.Header.Get("x-ratelimit-remaining")
-	if ratelimit_header != "" {
-		ratelimit, err = strconv.Atoi(ratelimit_header)
+	if header := resp.Header.Get("x-ratelimit-remaining"); header != "" {
+		ratelimit, err = strconv.Atoi(header)
 		if err != nil {
+			_ = resp.Body.Close()
 			return nil, err
 		}
 	}
 
-	if resp.StatusCode == 403 && ratelimit == 0 {
+	if resp.StatusCode == http.StatusForbidden && ratelimit == 0 {
+		_ = resp.Body.Close()
 		return nil, fmt.Errorf("GitHub API ratelimit exceeded; time of reset: %v", resp.Header.Get("x-ratelimit-reset"))
 	}
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
+		_ = resp.Body.Close()
 		return nil, fmt.Errorf("invalid response status: %v", resp.Status)
 	}
 

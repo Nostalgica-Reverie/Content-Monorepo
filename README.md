@@ -105,7 +105,7 @@ Bulk Actions allow you to a lot of one thing, in a single button push via our Fo
 To address issues found in packwiz, we forked it and merged it with our existing tooling. For more info, please read the readme in src/packwand.
 
 ## Credits
-stale.yml forked from JEI, licensed under MIT.
+stale.yml forked from JEI, licensed under MIT. Packwand and Packwand Documentation forked from Packwiz, licensed under MIT. Packwand Spec forked from Packwiz Spec, licensed under CC0-1.0. All credits to their original authors
 
 # License
 As all of these projects are different, the license may vary. Most packs are under GPL-3.0, or MIT. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.
