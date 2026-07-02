@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   bulk-update:
-    uses: ./.forgejo/workflows/somnus-task.yml
+    uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: update
+      verb: workspace update
       commit-message: 'actions: bulk update all'

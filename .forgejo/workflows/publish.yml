@@ -20,14 +20,14 @@ jobs:
       has_entries: ${{ steps.expand.outputs.has_entries }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: https://code.forgejo.org/actions/checkout@v5
         with:
           fetch-depth: 2
           filter: blob:none
           sparse-checkout: |
             modpacks
             datapacks
-            src/actions/somnus
+            src/packwand
             .forgejo/actions
 
       - name: Set up Bun
@@ -41,11 +41,8 @@ jobs:
           go-version: 'stable'
           cache: true
 
-      - name: Setup Somnus
-        uses: ./.forgejo/actions/setup-somnus
-        with:
-          install-somnus: 'true'
-          install-packwiz: 'false'
+      - name: Setup Packwand
+        uses: ./.forgejo/actions/setup-packwand
 
       - name: Expand changed manifests into matrix entries
         id: expand
@@ -89,7 +86,7 @@ jobs:
           ALL="[]"
           while IFS= read -r m; do
             [ -n "$m" ] || continue
-            PART=$(./somnus-bin/somnus publish list "$m")
+            PART=$(packwand publish list "$m")
             ALL=$(bun -e "const a=$ALL,b=$PART;console.log(JSON.stringify(a.concat(b)))")
           done <<< "$MANIFESTS"
 
@@ -108,29 +105,16 @@ jobs:
         entry: ${{ fromJson(needs.detect.outputs.entries) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: https://code.forgejo.org/actions/checkout@v5
         with:
           fetch-depth: 5
           filter: blob:none
           sparse-checkout: |
             modpacks
             datapacks
-            src/actions/somnus
+            src/packwand
             tools/changelog
-            tools/manifest
             .forgejo/actions
-
-      - name: Set up Bun
-        uses: https://github.com/oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Validate Manifest
-        run: bun tools/manifest/validate.ts "${{ matrix.entry.manifest }}"
-
-      - name: Generate Changelog
-        id: changelog
-        run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
 
       - name: Setup Go
         uses: https://github.com/actions/setup-go@v5
@@ -138,23 +122,31 @@ jobs:
           go-version: 'stable'
           cache: true
 
-      - name: Setup Somnus
-        uses: ./.forgejo/actions/setup-somnus
+      - name: Setup Packwand
+        uses: ./.forgejo/actions/setup-packwand
+
+      - name: Set up Bun
+        uses: https://github.com/oven-sh/setup-bun@v2
         with:
-          install-somnus: 'true'
-          install-packwiz: 'true'
+          bun-version: latest
+
+      - name: Validate Manifest
+        run: packwand validate "${{ matrix.entry.manifest }}"
+
+      - name: Generate Changelog
+        id: changelog
+        run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
 
       - name: Run Publisher (build this entry)
         id: meta
         env:
           GITHUB_SHA: ${{ github.sha }}
         run: |
-          export PACKWIZ_BIN="$HOME/go/bin/packwiz"
           VARIANT='${{ matrix.entry.variant }}'
           if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
-            ./somnus-bin/somnus publish build "${{ matrix.entry.manifest }}"
+            packwand publish build "${{ matrix.entry.manifest }}"
           else
-            ./somnus-bin/somnus publish build "${{ matrix.entry.manifest }}" "$VARIANT"
+            packwand publish build "${{ matrix.entry.manifest }}" "$VARIANT"
           fi
 
       - name: Stagger publish timing (preserve display order)

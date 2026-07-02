@@ -1,79 +1,79 @@
-hash-format = "sha256"
+hash-format = "sha512"
 
 [[files]]
 file = "config/ferritecore.mixin.properties"
-hash = "dc95b343dfcae85c62ca38a7c378e02839a98f13f161058381e1a5a404222a2d"
+hash = "ec23e3fe117d71cae21cbbd402b0b21e142ab6d85412f93480ef3a4effd8357469042dfcdcaac54415e01e27812b91c62c9f3d9b2e41134108aede64d72076af"
 
 [[files]]
 file = "config/lithium.properties"
-hash = "b099d76bcdc3a4ef7949b91189f05470d3301fc66f8559b9dc159c3c2791509a"
+hash = "fe1c6dedc1832a1ba7a61b3700536da9c387bbc9bb0a4bc1403b0b0180a67885042519d2d6b6704ad935cfe9f5f097298716c5c2c2ae3754b24a61b965dc5495"
 
 [[files]]
 file = "config/modernfix-mixins.properties"
-hash = "b8c6fd33fb3846cf144666f8a358f208c3d8796ec8a7390bfa9361381f787047"
+hash = "4dbe977223b60dde1c756259d9a95139e8cfb30431e5de6b77480f90f410453f6ffdea0922aab750adfe770b566efe24d2b16ed158c4bde70d2aeaee9549c15c"
 
 [[files]]
 file = "config/smoothboot.json"
-hash = "becf9c9a79c385a744da84a51d1ed657dd9a14da4d8e948dea4241aefcd3d79d"
+hash = "0e24e7381bbd5a16fb2db59e2a7ed513702ca5cb59e61899a0bcd6dd3c30771fceb911207fd8cde23070d5cec79857b398b27ab0dc4dba15e03eaa0c1ad68fcd"
 
 [[files]]
 file = "config/sodium-mixins.properties"
-hash = "b35b099a51f0cc1cfd94b1a1444de0d0d0c4e1b3399575504bbdcfaf02c359b0"
+hash = "8670f2ff5fccea3ae759a2f2ec1019d1f8f3050e19aea52cb3eee17c45dc4f795c923bfabcef5a18bf827e6fc807f46063ba78a70202290b9200e397917cf3aa"
 
 [[files]]
 file = "config/sodium-options.json"
-hash = "0914a12ed11dfd7943c5e9608462994a0565c7c13cd215bb84b1b90db493b806"
+hash = "bc4a7a3b9b495507e62507a0dd395cf54dddbff57b150e444c1f5f840bed7de9c4704ea2b0c71d1305a07db4223ef548e22176dd3e50d41189e5529bd1fe3c88"
 
 [[files]]
 file = "modlist.md"
-hash = "ad9ae59858ed30c8f96ea78d0c7111393efabc1d7818ccaf6acacc30231965ec"
+hash = "945e9a99fa095cb6506840f87b35179a4ad93350df04929ca0aa9f92a4d8a0fde98c2d511c206cebc6697511caae347bb1dd949352661bbdcc33393f994a3252"
 
 [[files]]
 file = "mods/crash-assistant.pw.toml"
-hash = "a4d2f82f33177e2ded0c99a72e501df704a269ddf3bb7bd19231a39e0df5bbd8"
+hash = "00805e8df240cc9cc1384eb33992643ef51177c20d29f0f7060bec960ef6dd4bc5c20ccc7de3f01adc193a2dcfc034dd975779e86abd4bb700505632a6983ea1"
 metafile = true
 
 [[files]]
 file = "mods/entityculling.pw.toml"
-hash = "9e813af716eaa3f64c87090d4f9fef61698d92264081619c8d2dfc26e70d3315"
+hash = "3ff1724c227833c34d4628bbf7422d2a641853fab25e42577e481714f03515bd1f54243a138d9b738a51de2773a0690e3c4374a293cd18f1b666942eb668f96e"
 metafile = true
 
 [[files]]
 file = "mods/ferrite-core.pw.toml"
-hash = "3667b3279e55a832ff40a373a5d9c81305ad7bc788fcf5a5f0ca37279cf1f6a9"
+hash = "a043a378238fb3c976ff6b6301c8369739a473510bae7ee8902388678990034c906e40a8092053a2aec1ddf79660e6facb04f036f376e4d6df9dd9d57f7b8142"
 metafile = true
 
 [[files]]
 file = "mods/ixeris.pw.toml"
-hash = "c59d288c2920163b2554f43cd6915e7af122746e2616649b109450f07e207d5a"
+hash = "f50b828cb5d01ec9754a530cf3b1395380ce78ca86edab18481a744a5ee720cb11e52a9c6503c0f9f04a4a7f60db7a2f8e5fe017c23d938dc58809b9aef6fc02"
 metafile = true
 
 [[files]]
 file = "mods/lazydfu.pw.toml"
-hash = "7afa8c84512137ca4abe89199feeccac1554d02bd83c5e011c052eef3c4448a3"
+hash = "5417bf20410d472f6e2d2499e49dbb267e4a304ab05ff2309938bda02439298006282eaa32c3d021a073edce6187d3adfefae7266d5604f2ad74db11fc1bdcb3"
 metafile = true
 
 [[files]]
 file = "mods/lithium.pw.toml"
-hash = "ebc535e394cb223028c7b933583ed120b514be1ba019c867e2f2fbfd28fa2c62"
+hash = "e657cbef8e48cbb2109c8b6ae9992db79e7962b8da7161a5fcde81e6a2ac411cf2a543ec84e2db0e34a2803a6df64f5b540850ec57e719b30ca8cef38e55d0af"
 metafile = true
 
 [[files]]
 file = "mods/modernfix.pw.toml"
-hash = "c47c5e2bf84db4f0c01756efaebae2fbfd2c63a02e37ae2eea60f40fda6559ed"
+hash = "df8f8e113b75040be803698fc1dabf17eebbc7f0543f979733ab42dfc3dc8349e0c08b4c0d3fe282e860303e0e218cbd0b09ea4df4943eb3e607f7c26a91a0bb"
 metafile = true
 
 [[files]]
 file = "mods/phosphor.pw.toml"
-hash = "1d6e2422a182b1dc772aaf50e27b183dfd9194046cfbf83e38c9e3c9fb821ca9"
+hash = "31e0e3eaf1b320d81890a93870a8890a4b7b539a127ea0e79168afb9755f7ebb825f20f035ef78a5fc0a474123b6755aa9c7dff61a7940e0f346c1cbc5243f57"
 metafile = true
 
 [[files]]
 file = "mods/smoothboot-fabric.pw.toml"
-hash = "728f5e656e9614da3c057a41e07093e243c2d6da7cfe5a3838ab9b8219e017e7"
+hash = "e32c2ef039141b12d9a87f08ba8a1a6e885382b21fd9aebaec3cc062a055e8f40815886f394bb4fc358f8125a7421cb185614072608e8b13710f9eaa8b5cebf1"
 metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "80c4eaa62522306792ac91bddd81b730a7806077054136a4a0a61226b9f90b9b"
+hash = "5c2c46f53cf17663616e83d6204c3ae9e42a475ab77898a60300c1be7213d4559a36c353d61c4de1fb3be01d3d68039121c59238fa443b18a74b0cb81197b219"
 metafile = true

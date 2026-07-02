@@ -1,0 +1,265 @@
+{
+	"type": "object",
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"title": "mod.pw.toml",
+	"description": "A metadata file which references an external file from a URL (or a metadata-based downloader). This allows for side-only mods, optional mods and pinning, and stores metadata to allow finding updates from Modrinth, CurseForge, GitHub, GitLab, and Forgejo. The \"mod\" terminology is used a lot here, but this should work for any file.",
+	"examples": [
+		"name = \"Borderless Mining\"\nfilename = \"borderless-mining-1.1.5+1.19.jar\"\nside = \"client\"\n\n[download]\nurl = \"https://cdn.modrinth.com/data/kYq5qkSL/versions/1.1.5+1.19/borderless-mining-1.1.5%2B1.19.jar\"\nhash-format = \"sha1\"\nhash = \"08f98e28057a0fbdb288c947b7871def4b18b176\"\n\n[update]\n[update.modrinth]\nmod-id = \"kYq5qkSL\"\nversion = \"gqoXgtxO\"\n"
+	],
+	"properties": {
+		"name": {
+			"description": "The name of the mod, which can be displayed in user interfaces to identify the mod. It does not need to be unique between mods, although this may cause confusion.",
+			"examples": [
+				"Borderless Mining"
+			],
+			"type": "string"
+		},
+		"filename": {
+			"type": "string",
+			"description": "The destination path of the mod file, relative to this file.\n\nA relative path using forward slashes. Must not reference a file outside the pack root, and should not include characters or filenames restricted on common operating systems.\n\nImplementations must support special characters including those that are percent-encoded in URLs, such as spaces and square brackets. Implementations must guard against path traversal attacks and manually validate paths.",
+			"pattern": "^([^/\\x00-\\x1F\\x7F\"*/:<>?\\\\|]+\\/)*[^/\\x00-\\x1F\\x7F\"*/:<>?\\\\|]*$",
+			"examples": [
+				"borderless-mining-1.1.5+1.19.jar"
+			]
+		},
+		"side": {
+			"description": "The side on which this mod should be installed.\n\nA physical Minecraft side. Server applies to the dedicated server, client applies to the client (and integrated server), and both applies to every installation.",
+			"enum": [
+				"both",
+				"client",
+				"server"
+			],
+			"default": "both",
+			"type": "string"
+		},
+		"pin": {
+			"description": "packwand extension: when true, the file is pinned and update commands skip it until it is unpinned (packwand pin / packwand unpin).",
+			"default": false,
+			"type": "boolean"
+		},
+		"download": {
+			"type": "object",
+			"description": "Information about how to download this mod.",
+			"properties": {
+				"url": {
+					"type": "string",
+					"description": "The URL to download the mod from. Required when mode is \"url\" or omitted; not present in metadata download modes.\n\nAn absolute URI compliant with RFC 3986. Implementations may need to be more lenient in accepting reserved characters in paths due to historical implementation bugs. Only the HTTP/HTTPS protocols must be supported, other protocols should not be used.",
+					"format": "uri"
+				},
+				"mode": {
+					"type": "string",
+					"description": "The download mode. \"url\" (or omitted/empty) downloads from the url field. \"metadata:curseforge\" resolves the download URL through the CurseForge API using the [update.curseforge] metadata, as required by CurseForge's distribution rules; such files have no url field.",
+					"enum": [
+						"url",
+						"metadata:curseforge"
+					],
+					"default": "url"
+				},
+				"hash": {
+					"type": "string",
+					"description": "The hash of the specified file, as a string.\n\nBinary hashes should be stored as hexadecimal, and case should be ignored during parsing. Numeric hashes (e.g. Murmur2) should still be stored as a string, to ensure the value is preserved correctly.",
+					"examples": [
+						"08f98e28057a0fbdb288c947b7871def4b18b176"
+					]
+				},
+				"hash-format": {
+					"type": "string",
+					"description": "The hash format for the hash of the specified file.\n\nThe hash algorithm used to determine if a file is valid. All functions listed must be supported by tools implementing the packwiz pack format.",
+					"enum": [
+						"sha256",
+						"sha512",
+						"sha1",
+						"md5",
+						"murmur2"
+					],
+					"x-taplo": {
+						"docs": {
+							"enumValues": [
+								"The SHA2-256 hashing standard. Used by default for metadata files.",
+								"The SHA2-512 hashing standard.",
+								"The SHA1 hashing standard.",
+								"The MD5 hashing standard.",
+								"The CurseForge variant of MurmurHash2: MurmurHash2 32-bit hashing standard (seed 1) with some characters removed before applying the hash (decimal bytes 9, 10, 13, 32), stored as an unsigned integer.\n\nIn Java, use Integer.parseUnsignedInt to parse this value."
+							]
+						}
+					}
+				}
+			},
+			"required": [
+				"hash",
+				"hash-format"
+			]
+		},
+		"option": {
+			"type": "object",
+			"description": "Information about the optional state of this mod. When excluded, this indicates that the mod is not optional.",
+			"properties": {
+				"optional": {
+					"description": "Whether or not the mod is optional. This can be set to false if you want to keep the description but make the mod required.",
+					"default": false,
+					"type": "boolean"
+				},
+				"description": {
+					"description": "A description displayed to the user when they select optional mods. This should explain why or why not the user should enable the mod.",
+					"type": "string"
+				},
+				"default": {
+					"description": "If true, the mod will be enabled by default. If false, the mod will be disabled by default. If a pack format does not support optional mods but it does support disabling mods, the mod will be disabled if it defaults to being disabled.",
+					"default": false,
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"optional"
+			]
+		},
+		"update": {
+			"type": "object",
+			"description": "Information about how to update the download details of this mod with tools.\n\nIf this object does not exist or there are no defined update sources, the mod will not be automatically updated.\n\nIf there are multiple defined update sources, one of them will be chosen. The source that is chosen is not defined, so it is therefore dependent on the implementation of the tool (may not be deterministic, so do not rely on one source being chosen over another).",
+			"additionalProperties": {
+				"type": "object",
+				"description": "Implementations are free to support other update sources, but it would be beneficial to document and standardise these."
+			},
+			"properties": {
+				"curseforge": {
+					"type": "object",
+					"description": "An update source for updating mods downloaded from CurseForge.",
+					"properties": {
+						"project-id": {
+							"description": "An integer representing the unique project ID of this mod. Updating will retrieve the latest file for this project ID that is valid (correct Minecraft version, release channel, modloader, etc.).",
+							"examples": [
+								327154
+							],
+							"type": "number"
+						},
+						"file-id": {
+							"description": "An integer representing the unique file ID of this mod file. This can be used if more metadata needs to be obtained relating to the mod.",
+							"examples": [
+								3643025
+							],
+							"type": "number"
+						}
+					},
+					"required": [
+						"project-id",
+						"file-id"
+					]
+				},
+				"modrinth": {
+					"type": "object",
+					"description": "An update source for updating mods downloaded from Modrinth.",
+					"properties": {
+						"mod-id": {
+							"description": "A string representing the unique mod ID of this mod. Updating will retrieve the latest file for this project ID that is valid (correct Minecraft version, release channel, modloader, etc.).",
+							"examples": [
+								"kYq5qkSL"
+							],
+							"type": "string"
+						},
+						"version": {
+							"description": "A string representing the unique version ID of this file. This can be used if more metadata needs to be obtained relating to the mod.",
+							"examples": [
+								"gqoXgtxO"
+							],
+							"type": "string"
+						}
+					},
+					"required": [
+						"mod-id",
+						"version"
+					]
+				},
+				"github": {
+					"type": "object",
+					"description": "packwand extension: an update source for updating mods downloaded from GitHub release assets.",
+					"properties": {
+						"slug": {
+							"description": "The repository, as owner/repo.",
+							"examples": [
+								"CaffeineMC/sodium"
+							],
+							"type": "string"
+						},
+						"tag": {
+							"description": "The currently-installed release tag.",
+							"type": "string"
+						},
+						"branch": {
+							"description": "Restrict updates to releases targeting this branch.",
+							"type": "string"
+						},
+						"regex": {
+							"description": "A regular expression an asset filename must match to be selected.",
+							"type": "string"
+						}
+					},
+					"required": [
+						"slug"
+					]
+				},
+				"gitlab": {
+					"type": "object",
+					"description": "packwand extension: an update source for updating mods downloaded from GitLab release assets.",
+					"properties": {
+						"instance": {
+							"description": "The GitLab instance hostname. Defaults to gitlab.com.",
+							"default": "gitlab.com",
+							"type": "string"
+						},
+						"slug": {
+							"description": "The project path, as owner/repo.",
+							"type": "string"
+						},
+						"tag": {
+							"description": "The currently-installed release tag.",
+							"type": "string"
+						},
+						"regex": {
+							"description": "A regular expression an asset filename must match to be selected.",
+							"type": "string"
+						}
+					},
+					"required": [
+						"slug"
+					]
+				},
+				"forgejo": {
+					"type": "object",
+					"description": "packwand extension: an update source for updating mods downloaded from Forgejo/Gitea release assets (including Codeberg).",
+					"properties": {
+						"instance": {
+							"description": "The Forgejo/Gitea instance hostname. Defaults to codeberg.org.",
+							"default": "codeberg.org",
+							"type": "string"
+						},
+						"slug": {
+							"description": "The repository, as owner/repo.",
+							"type": "string"
+						},
+						"tag": {
+							"description": "The currently-installed release tag.",
+							"type": "string"
+						},
+						"branch": {
+							"description": "Restrict updates to releases targeting this branch.",
+							"type": "string"
+						},
+						"regex": {
+							"description": "A regular expression an asset filename must match to be selected.",
+							"type": "string"
+						}
+					},
+					"required": [
+						"slug"
+					]
+				}
+			},
+			"required": []
+		}
+	},
+	"required": [
+		"name",
+		"filename",
+		"download"
+	]
+}

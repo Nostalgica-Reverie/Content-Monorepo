@@ -18,6 +18,7 @@
 ## Shared Mods
 
 - [Async](https://modrinth.com/mod/vEC2jm6I)
+- [C2ME OpenCL Acceleration Module](https://modrinth.com/mod/qtPMklut)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)
@@ -25,6 +26,7 @@
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
 - [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
@@ -32,7 +34,3 @@
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
-
-## Server Mods
-
-- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)

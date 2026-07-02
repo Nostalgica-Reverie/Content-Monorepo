@@ -1,12 +1,12 @@
 name = "Gold Not Old"
 author = "Cjnator38"
 version = "1.2.0"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "38c6108a01ca2138f43fbcab6ab32229968159ed6d91648ae1d4b2bc2f89695b"
+hash-format = "sha512"
+hash = "78b5a8e57475ac9cde341f0d36e5415b9df81c2cd893e841481c435154628e2609113e7ccb45fafcbc0be165758009e791f7c4d5210437f56528d79192659a26"
 
 [versions]
 fabric = "0.19.3"

@@ -1,12 +1,12 @@
 name = "qualt"
 author = "omo50"
 version = "26.06"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "906aa1dce85aace53a84f5892a460353d8826bfd12aab9685e8930758aa6d40d"
+hash-format = "sha512"
+hash = "12c109fc1b7bb2d575cd007ecdd6aa8ae2f90111b7e344bf4a88f149b121f5ebdeb4cb3a4346327722e4a48ac3a7d2aaba9383e03cb3403da78efbe176b2e009"
 
 [versions]
 fabric = "0.19.3"

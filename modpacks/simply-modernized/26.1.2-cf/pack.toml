@@ -1,12 +1,12 @@
 name = "simply-modernized"
 author = "omo50, hzsa"
 version = "26.06"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "95191413753eec38d5f2f9ce331b5dd761a7e48da9d216132fc71129fec36aad"
+hash-format = "sha512"
+hash = "99f1b99a020cef6a9f32421c2ca6830daf937a8c9210b268fb4a62f26ac95e0132e12f7b97e6c08a4accd4151cc40e8041ebd616a34aa00527164249794d7f94"
 
 [versions]
 fabric = "0.19.3"

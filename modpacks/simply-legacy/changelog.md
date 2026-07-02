@@ -1,2 +1,2 @@
-# Simply Legacy 26.06
-Minor patch updating mods to latest and adding the BisectHosting menu
+# Simply Legacy 26.07.1
+Minor patch updating all mods

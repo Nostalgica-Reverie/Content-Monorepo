@@ -8,6 +8,9 @@
   "release_type": "release",
   "modrinth_id": "legacy-minecraft",
   "role": "none",
+  "automation": {
+    "server_promo": true
+  },
   "variants": [
     { "mc_version": "1.20.1",  "loader": "fabric",   "id": "1.20.1-fabric" },
     { "mc_version": "1.20.4",  "loader": "fabric",   "id": "1.20.4-fabric" },

@@ -1,12 +1,12 @@
 name = "Reimagined Legacy"
 author = "omo50, Cjnator38"
 version = "26.05-dev"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "90f12eaa01944edaf8d8d69ebeec9abd15f219230381df9feaa94d68bfecc610"
+hash-format = "sha512"
+hash = "1127bf63d4251ae63933922606fbe2600f4f76f9be272e1779300ea4d9eb0fcd8a67db9d6c420d2f69402f66e28dcb159f50ffbbb724ef1167629bda369fd9ab"
 
 [versions]
 fabric = "0.19.3"

@@ -1,0 +1,9 @@
+{
+	"$schema": "../gen/schemas/desktop-schema.json",
+	"identifier": "default",
+	"description": "Minimal capability for the bundled boot page: core defaults only. The packwand gui server pages (http://127.0.0.1:*) are intentionally NOT granted IPC access; all pack management flows through the server's own HTTP API.",
+	"windows": ["main"],
+	"permissions": [
+		"core:default"
+	]
+}

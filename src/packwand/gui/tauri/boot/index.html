@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Packwand</title>
+	<style>
+		body {
+			margin: 0;
+			display: grid;
+			place-items: center;
+			min-height: 100vh;
+			background: #1b1b1f;
+			color: #e0e0e6;
+			font-family: system-ui, sans-serif;
+		}
+		.error { color: #ff6e6e; max-width: 40rem; white-space: pre-wrap; }
+	</style>
+</head>
+<body>
+	<p id="status">Starting Packwand…</p>
+	<script>
+		const invoke = window.__TAURI__.core.invoke;
+		invoke("backend_url")
+			.then((url) => window.location.replace(url))
+			.catch((err) => {
+				const el = document.getElementById("status");
+				el.className = "error";
+				el.textContent = "Failed to start the Packwand backend:\n" + err +
+					"\n\nEnsure the packwand binary is next to this app, on PATH, or set PACKWAND_BIN.";
+			});
+	</script>
+</body>
+</html>

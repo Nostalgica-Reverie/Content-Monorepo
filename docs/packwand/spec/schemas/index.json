@@ -1,0 +1,99 @@
+{
+	"type": "object",
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"title": "index.toml",
+	"description": "The index file of the modpack, storing references to every file to be downloaded in the pack.",
+	"examples": [
+		"hash-format = \"sha512\"\n\n[[files]]\nfile = \"LICENSE\"\nhash = \"...\"\n\n[[files]]\nfile = \"mods/borderless-mining.pw.toml\"\nhash = \"...\"\nmetafile = true\n\n[[files]]\nfile = \"mods/screenshot-to-clipboard-fabric.pw.toml\"\nhash = \"...\"\nmetafile = true\n"
+	],
+	"properties": {
+		"files": {
+			"description": "The files listed in this index. If it is not defined, defaults to an empty list.",
+			"uniqueItems": true,
+			"type": "array",
+			"items": {
+				"type": "object",
+				"description": "A single file in the index, to be downloaded by the modpack installer.",
+				"properties": {
+					"file": {
+						"type": "string",
+						"description": "The path to the file to be downloaded, relative to this index file.\n\nA relative path using forward slashes. Must not reference a file outside the pack root, and should not include characters or filenames restricted on common operating systems.\n\nImplementations must support special characters including those that are percent-encoded in URLs, such as spaces and square brackets. Implementations must guard against path traversal attacks and manually validate paths.",
+						"pattern": "^([^/\\x00-\\x1F\\x7F\"*/:<>?\\\\|]+\\/)*[^/\\x00-\\x1F\\x7F\"*/:<>?\\\\|]*$"
+					},
+					"hash": {
+						"type": "string",
+						"description": "The hash of the specified file, as a string. May be omitted when the pack uses no-internal-hashes mode.\n\nBinary hashes should be stored as hexadecimal, and case should be ignored during parsing. Numeric hashes (e.g. Murmur2) should still be stored as a string, to ensure the value is preserved correctly.",
+						"examples": [
+							"08f98e28057a0fbdb288c947b7871def4b18b176"
+						]
+					},
+					"hash-format": {
+						"type": "string",
+						"description": "The hash format for the hash of the specified file. Defaults to the hash format specified in the index - ideally remove this value if it is equal to the hash format for the index to save space.\n\nThe hash algorithm used to determine if a file is valid. All functions listed must be supported by tools implementing the packwiz pack format.",
+						"enum": [
+							"sha256",
+							"sha512",
+							"sha1",
+							"md5",
+							"murmur2"
+						],
+						"x-taplo": {
+							"docs": {
+								"enumValues": [
+									"The SHA2-256 hashing standard. Used by default for metadata files.",
+									"The SHA2-512 hashing standard.",
+									"The SHA1 hashing standard.",
+									"The MD5 hashing standard.",
+									"The CurseForge variant of MurmurHash2: MurmurHash2 32-bit hashing standard (seed 1) with some characters removed before applying the hash (decimal bytes 9, 10, 13, 32), stored as an unsigned integer.\n\nIn Java, use Integer.parseUnsignedInt to parse this value."
+								]
+							}
+						}
+					},
+					"metafile": {
+						"description": "True when this entry points to a .toml metadata file, which references a file outside the pack.",
+						"default": false,
+						"type": "boolean"
+					},
+					"preserve": {
+						"description": "When this is set to true, the file is not overwritten if it already exists, to preserve changes made by a user.",
+						"default": false,
+						"type": "boolean"
+					},
+					"alias": {
+						"description": "The name with which this file should be downloaded, instead of the filename specified in the path. Not compatible with metafile, and may not be very well supported.",
+						"type": "string"
+					}
+				},
+				"required": [
+					"file"
+				]
+			}
+		},
+		"hash-format": {
+			"type": "string",
+			"description": "The default hash format for every file in the index. If missing, consumers assume sha512; packwand transparently upgrades older indexes to sha512 on refresh.\n\nThe hash algorithm used to determine if a file is valid. All functions listed must be supported by tools implementing the packwand pack format.",
+			"enum": [
+				"sha256",
+				"sha512",
+				"sha1",
+				"md5",
+				"murmur2"
+			],
+			"x-taplo": {
+				"docs": {
+					"enumValues": [
+						"The SHA2-256 hashing standard. Used as the download-cache key format.",
+						"The SHA2-512 hashing standard. Used by default for all new files and index entries.",
+						"The SHA1 hashing standard.",
+						"The MD5 hashing standard.",
+						"The CurseForge variant of MurmurHash2: MurmurHash2 32-bit hashing standard (seed 1) with some characters removed before applying the hash (decimal bytes 9, 10, 13, 32), stored as an unsigned integer.\n\nIn Java, use Integer.parseUnsignedInt to parse this value."
+					]
+				}
+			},
+			"default": "sha512"
+		}
+	},
+	"required": [
+		"hash-format"
+	]
+}

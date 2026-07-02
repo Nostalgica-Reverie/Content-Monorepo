@@ -1,12 +1,12 @@
 name = "Rekindled Legacy Common"
 author = "omo50, Panduino, Agari, hzsa, Cjnator38, AzaleaCatgirl99"
 version = "26.05"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "d55f6a40b46f324a322c229484368df92c0b269a28ccc1dd074e675d7831925b"
+hash-format = "sha512"
+hash = "1923e38394162135bf1004c88dbe57ba685cc61798d5afee621b76a0070884d32ef1b306e67f2bac01b0386ee22b16be0a8c5f07b4c60130fec98aa90735eaed"
 
 [versions]
 fabric = "0.19.3"

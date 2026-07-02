@@ -1,5 +1,4 @@
 # General
-build
 .DS_Store
 *.exe
 *.mrpack
@@ -9,17 +8,38 @@ modpacks/**/packitup.schema.json
 modpacks/**/Logs
 artifacts/
 
-# Somnus
-.somnus-test-instance
-somnus-bin/
-somnus/somnus
-src/actions/somnus/somnus
+# Packwand
+.packwand-test-instance
+packwand-bin/
+src/packwand/gui/ui/build/
+src/packwand/packwand
+/packwand
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Nix build output
+result
+dist/
+
+# Go
+*.test
+coverage.out
+coverage.html
+*.out
+
+
+# Bun / Node
+node_modules
+.bun/
 
 # Docs
-node_modules
 docs/docs/.vitepress/cache
 docs/docs/.vitepress/dist
-.idea
+docs/packwand/docs/.vitepress/cache
+docs/packwand/docs/.vitepress/dist
 
 # IntelliJ
 .idea/
@@ -38,3 +58,13 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+
+# lib/ build outputs
+lib/packwiz-installer/build/
+lib/packwiz-installer/bootstrap/build/
+lib/packwiz-installer/.gradle/
+lib/mod-browser-webview/target/
+docs/packwiz/docs/.vitepress/cache
+docs/packwiz/docs/.vitepress/dist
+src/packwand/gui/tauri/src-tauri/target/
+src/packwand/gui/tauri/src-tauri/gen/

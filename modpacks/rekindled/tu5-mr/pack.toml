@@ -1,12 +1,12 @@
 name = "Rekindled Legacy TU5"
 author = "omo50, Panduino, Agari, hzsa, Cjnator38, AzaleaCatgirl99"
 version = "26.06.0"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "cc9c50895791eec803bb90eddccda7fc4e0236fa24549e72f2aad4df8e76a3af"
+hash-format = "sha512"
+hash = "c5e73814a9b89bd8c5867a6226b0ee0a345995cf68ea0267d358318b8c81fbd425ae6849859d9d5ed67d7c5a985a9c17aaebcaea0a184d809dee06bcf5bd3480"
 
 [versions]
 fabric = "0.19.3"

@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   sync:
-    uses: ./.forgejo/workflows/somnus-task.yml
+    uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: sync
+      verb: workspace sync
       commit-message: 'actions: sync'

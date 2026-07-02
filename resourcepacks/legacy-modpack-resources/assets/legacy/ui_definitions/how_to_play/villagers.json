@@ -1,0 +1,103 @@
+{
+  "elements": {
+    "scrollable_renderer": {
+      "type": "put_scrollable_renderer",
+      "x": "(${width}-${scrollable_renderer.width})/2",
+      "y": "(${height}-${scrollable_renderer.height})/2 + 31",
+      "width": 456,
+      "height": 222,
+      "elements": {
+        "text": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_message"},
+          "width": 433
+        },
+        "none": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_none"},
+          "width": 433
+        },
+        "nitwit": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_nitwit"},
+          "width": 433
+        },
+        "armorer": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_armorer"},
+          "width": 433
+        },
+        "butcher": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_butcher"},
+          "width": 433
+        },
+        "cartographer": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_cartographer"},
+          "width": 433
+        },
+        "cleric": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_cleric"},
+          "width": 433
+        },
+        "farmer": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_farmer"},
+          "width": 433
+        },
+        "fisherman": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_fisherman"},
+          "width": 433
+        },
+        "fletcher": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_fletcher"},
+          "width": 433
+        },
+        "leatherworker": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_leatherworker"},
+          "width": 433
+        },
+        "librarian": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_librarian"},
+          "width": 433
+        },
+        "mason": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_mason"},
+          "width": 433
+        },
+        "shepard": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_shepard"},
+          "width": 433
+        },
+        "toolsmith": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_toolsmith"},
+          "width": 433
+        },
+        "weaponsmith": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_weaponsmith"},
+          "width": 433
+        },
+        "wandering-trader": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_wandering-trader"},
+          "width": 433
+        },
+        "zombie": {
+          "type": "draw_multiline_string",
+          "component": {"translate": "legacy.menu.how_to_play.villagers_zombie"},
+          "width": 433
+        }
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@
   "type": "modpack",
   "loader": "fabric",
   "mc_version": "26.1.2",
-  "version": "26.06",
+  "version": "26.07",
   "release_type": "release",
   "modrinth_id": "simply-legacy",
   "curseforge_id": "simply-legacy",
@@ -17,5 +17,8 @@
         { "source": "26.1.2-cf", "target": "26.1.2-cf" }
       ]
     }
+  },
+  "automation": {
+    "server_promo": true
   }
 }

@@ -1,12 +1,12 @@
 name = "Re-Console"
 author = "omo50, Technocality, Cjnator38"
 version = "26.1.0"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "c57d82059040f6d85125ade81f5a3c6256ad9d5187b0d632e3476f01a0e30923"
+hash-format = "sha512"
+hash = "f125f1cdbf4237e978a12fc40bbf0c954ea2749c83cfe25d4e6eb35e9cead7cc82121b1384db6fd85cdbbf071f1acbedf8d6bf46742112335ecba12a20b2e718"
 
 [versions]
 fabric = "0.19.3"

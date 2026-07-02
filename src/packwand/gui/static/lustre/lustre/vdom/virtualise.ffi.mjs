@@ -1,0 +1,260 @@
+import { List$NonEmpty } from "../../gleam.mjs";
+import { text, none, memo, ref, map } from "../element.mjs";
+import { element, namespaced, fragment } from "../element/keyed.mjs";
+import { attribute } from "../attribute.mjs";
+import { insertMetadataChild } from "./reconciler.ffi.mjs";
+import { element_kind, fragment_kind, text_kind, map_kind } from "./vnode.mjs";
+import { empty_list } from "../internals/constants.mjs";
+import {
+  ELEMENT_NODE,
+  TEXT_NODE,
+  COMMENT_NODE,
+  NAMESPACE_HTML,
+} from "../internals/constants.ffi.mjs";
+
+export const virtualise = (root) => {
+  // no matter what, we want to initialise the metadata for our root element.
+  // we pass an empty stringh here as the index to make sure that the root node
+  // does not have a path.
+  const rootMeta = insertMetadataChild(element_kind, null, root, 0, null);
+
+  const { children } = virtualiseChildren(rootMeta, root, root.firstChild);
+
+  // If there are multiple children inside the root we know we want to virtualise
+  // this as a fragment.
+  //
+  // It's possible that the HTML we're virtualising wasn't rendered by Lustre,
+  // but by some other library or server: in those cases they won't know that
+  // we inject comment markers around fragments. While children nested in the
+  // tree will never be virtualised as fragments in that case, here at the root
+  // we are permissive and will virtualise the children as a fragment even without
+  // those markers. To do that we inject them directly ourselves.
+  if (children.length > 1) {
+    // we need to rewrite the rootMeta node to represent a fragment, and then
+    // insert a _new_ element rootMeta instead
+    const rootNodeMeta = insertMetadataChild(element_kind, null, root, 0, null);
+
+    rootMeta.kind = fragment_kind;
+    rootMeta.node = globalThis.document.createTextNode("");
+    rootMeta.parent = rootNodeMeta;
+
+    rootNodeMeta.children.push(rootMeta);
+    root.insertBefore(rootMeta.node, root.firstChild);
+
+    return fragment(toList(children));
+  }
+
+  if (children.length === 1) {
+    return children[0][1];
+  }
+
+  // no virtualisable children, we can empty the node and return our default text node.
+  const placeholder = globalThis.document.createTextNode("");
+  insertMetadataChild(text_kind, rootMeta, placeholder, 0, null);
+  root.insertBefore(placeholder, root.firstChild);
+
+  return none();
+};
+
+const virtualiseChild = (meta, domParent, child, index) => {
+  if (child.nodeType === COMMENT_NODE) {
+    const data = child.data.trim();
+
+    if (data.startsWith("lustre:fragment")) {
+      return virtualiseFragment(meta, domParent, child, index);
+    }
+
+    if (data.startsWith("lustre:map")) {
+      return virtualiseMap(meta, domParent, child, index);
+    }
+
+    if (data.startsWith("lustre:memo")) {
+      return virtualiseMemo(meta, domParent, child, index);
+    }
+
+    return null;
+  }
+
+  if (child.nodeType === ELEMENT_NODE) {
+    return virtualiseElement(meta, child, index);
+  }
+
+  if (child.nodeType === TEXT_NODE) {
+    return virtualiseText(meta, child, index);
+  }
+
+  return null;
+};
+
+const virtualiseElement = (metaParent, node, index) => {
+  const key = node.getAttribute("data-lustre-key") ?? "";
+  if (key) {
+    node.removeAttribute("data-lustre-key");
+  }
+
+  const meta = insertMetadataChild(element_kind, metaParent, node, index, key);
+
+  const tag = node.localName;
+  const namespace = node.namespaceURI;
+  const isHtmlElement = !namespace || namespace === NAMESPACE_HTML;
+
+  if (isHtmlElement && INPUT_ELEMENTS.includes(tag)) {
+    virtualiseInputEvents(tag, node);
+  }
+
+  const attributes = virtualiseAttributes(node);
+  const { children } = virtualiseChildren(meta, node, node.firstChild);
+
+  const vnode = isHtmlElement
+    ? element(tag, attributes, toList(children))
+    : namespaced(namespace, tag, attributes, toList(children));
+
+  return childResult(key, vnode, node.nextSibling);
+};
+
+const virtualiseChildren = (meta, domParent, childNode) => {
+  const children = [];
+
+  while (
+    childNode &&
+    (childNode.nodeType !== COMMENT_NODE ||
+      childNode.data.trim() !== "/lustre:fragment")
+  ) {
+    const child = virtualiseChild(meta, domParent, childNode, children.length);
+
+    if (child) {
+      children.push([child.key, child.vnode]);
+      childNode = child.next;
+    } else {
+      childNode = childNode.nextSibling;
+    }
+  }
+
+  return { children, end: childNode };
+};
+
+const virtualiseText = (meta, node, index) => {
+  insertMetadataChild(text_kind, meta, node, index, null);
+  return childResult("", text(node.data), node.nextSibling);
+};
+
+const virtualiseFragment = (metaParent, domParent, node, index) => {
+  const key = parseKey(node.data);
+
+  const meta = insertMetadataChild(fragment_kind, metaParent, node, index, key);
+
+  const { children, end } = virtualiseChildren(meta, domParent, node.nextSibling);
+  meta.endNode = end;
+
+  const vnode = fragment(toList(children));
+  return childResult(key, vnode, end?.nextSibling);
+};
+
+const virtualiseMap = (metaParent, domParent, node, index) => {
+  const key = parseKey(node.data);
+
+  const meta = insertMetadataChild(map_kind, metaParent, node, index, key);
+
+  const child = virtualiseNextChild(meta, domParent, node, 0);
+  if (!child) return null;
+
+  const vnode = map(child.vnode, (x) => x);
+  return childResult(key, vnode, child.next);
+};
+
+const virtualiseMemo = (meta, domParent, node, index) => {
+  const key = parseKey(node.data);
+
+  // Memo nodes are transparent - they don't create metadata nodes!
+  // Just virtualise the child directly with the parent metadata
+  const child = virtualiseNextChild(meta, domParent, node, index);
+  if (!child) return null;
+
+  domParent.removeChild(node);
+
+  // We cannot recover the dependencies -
+  // so we add an anonymous object here that for sure compares falsy with
+  // anything the user will pass us.
+  const vnode = memo(toList([ref({})]), () => child.vnode);
+  return childResult(key, vnode, child.next);
+};
+
+const virtualiseNextChild = (meta, domParent, node, index) => {
+  while (true) {
+    node = node.nextSibling;
+    if (!node) return null;
+
+    const child = virtualiseChild(meta, domParent, node, index);
+    if (child) return child;
+  }
+};
+
+const childResult = (key, vnode, next) => {
+  return { key, vnode, next };
+};
+
+const virtualiseAttributes = (node) => {
+  const attributes = [];
+  for (let i = 0; i < node.attributes.length; i++) {
+    const attr = node.attributes[i];
+    if (attr.name !== "xmlns") {
+      attributes.push(attribute(attr.localName, attr.value));
+    }
+  }
+  return toList(attributes);
+};
+
+const INPUT_ELEMENTS = ["input", "select", "textarea"];
+
+const virtualiseInputEvents = (tag, node) => {
+  const value = node.value;
+  const checked = node.checked;
+  // For inputs that reflect their default state (eg not checked for checkboxes
+  // and radios, empty for all other inputs) then we don't need to schedule any
+  // virtual events.
+  if (tag === "input" && node.type === "checkbox" && !checked) return;
+  if (tag === "input" && node.type === "radio" && !checked) return;
+  if (node.type !== "checkbox" && node.type !== "radio" && !value) return;
+
+  // We schedule a microtask instead of dispatching the events immediately to
+  // give the runtime a chance to finish virtualising the DOM and set up the
+  // runtime.
+  //
+  // Microtasks are flushed once the current task has completed, and will block
+  // the browser from painting until the queue is empty, so we can be sure that
+  // these events will be processed before the user sees the first render.
+  queueMicrotask(() => {
+    // Since the first patch will have overridden our values, we will reset them
+    // here and trigger events, which the runtime can then pick up.
+    node.value = value;
+    node.checked = checked;
+
+    node.dispatchEvent(new Event("input", { bubbles: true }));
+    node.dispatchEvent(new Event("change", { bubbles: true }));
+
+    // User apps may be using semi-controlled inputs where they listen to blur
+    // events to save the value rather than using the input event. To account for
+    // those, we dispatch a blur event if the input is not currently focused.
+    if (globalThis.document.activeElement !== node) {
+      node.dispatchEvent(new Event("blur", { bubbles: true }));
+    }
+  });
+};
+
+const parseKey = (data) => {
+  const keyMatch = data.match(/key="([^"]*)"/);
+  if (!keyMatch) return "";
+  return unescapeKey(keyMatch[1]);
+};
+
+const unescapeKey = (key) => {
+  return key
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&")
+    .replace(/&#39;/g, "'");
+};
+
+const toList = (arr) =>
+  arr.reduceRight((xs, x) => List$NonEmpty(x, xs), empty_list);

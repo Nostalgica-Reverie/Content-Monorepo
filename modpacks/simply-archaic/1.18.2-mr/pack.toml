@@ -1,12 +1,12 @@
 name = "Simply Archaic"
 author = "omo50"
 version = "26.05-mc1.18.2"
-pack-format = "packwiz:1.1.0"
+pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
-hash-format = "sha256"
-hash = "14fef3d8e761825bb935f6fa5e2fc9390d1f8563f89d7dff28dd2df5739ebdbb"
+hash-format = "sha512"
+hash = "6511dbb7bc0d95a12611584129a8822a31c43b29abf6c49167123b6267d362ca1c3c973a866fd51877a4da0611f3366e6773b2389ddca7ef704dd94bc3e85d5c"
 
 [versions]
 fabric = "0.19.3"

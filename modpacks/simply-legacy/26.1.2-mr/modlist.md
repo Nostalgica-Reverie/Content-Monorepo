@@ -15,7 +15,6 @@
 - [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [Gnetum](https://modrinth.com/mod/7MoE34WK)
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
-- [Ixeris](https://modrinth.com/mod/p8RJPJIC)
 - [Mod Menu](https://modrinth.com/mod/mOgUt4GM)
 - [More Culling](https://modrinth.com/mod/51shyZVL)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
@@ -29,7 +28,6 @@
 
 ## Shared Mods
 
-- [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Bedrock Skins](https://modrinth.com/mod/76lEgqhs)
 - [BugFixerUpper](https://modrinth.com/mod/gRMQvlnJ)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
@@ -41,6 +39,7 @@
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
 - [Global Packs](https://modrinth.com/mod/NRLPy2mk)
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
 - [KryptonReno's Fabric Patcher](https://modrinth.com/mod/yzkasIPx)
 - [LazyAI](https://modrinth.com/mod/qgWgCnzi)
 - [Legacy Nether: Extended](https://modrinth.com/mod/l54rfVmm)

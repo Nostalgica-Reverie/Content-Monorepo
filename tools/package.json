@@ -1,8 +1,15 @@
 {
   "name": "ll-tools",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "validate": "bun manifest/validate.ts",
+    "changelog": "bun changelog/generate-changelog.ts",
+    "stats": "bun stats/stats.ts"
+  },
   "devDependencies": {
-    "@types/bun": "^1.3.0",
-    "typescript": "^5.9.0"
+    "@types/bun": "^1.3.14",
+    "typescript": "^5.9.3"
   }
 }

@@ -10,7 +10,12 @@ This repository hosts all the source and files for all of our resource packs, da
 ## Contributing
 First, please refer to the CONTRIBUTING.md file in the repository. This will tell you some basics.
 
-To work on the repo, please install Packwiz. It is also helpful to install Packwiz Wrapper, as it can do some batch commands. Alternatively, you may also use the WIP tool Somnus, which is detailed below.
+### How to work on the repo
+1. Install Go (1.24 or newer) from https://golang.org/dl/
+2. run `cd src\packwand`
+3. run `go install`
+
+Now you have our tooling set up.
 
 # Documentation
 - Install [Node.js](https://nodejs.org/en/download) version 18 or higher
@@ -26,7 +31,7 @@ npm run docs:dev
 Any changes made in the docs segment of the repo will now automatically update locally
 
 # Modpacks
-To work on modpacks, you must install Packwiz and Somnus, which are detailed below
+To work on modpacks, you must install Packwand, which the download was provided above.
 
 # Actions
 The repository makes usage of Forgejo actions, for CI/CD and general QoL improvements to our dev process.
@@ -96,52 +101,11 @@ All linters automatically run on commit, and will fail if the modified JSON/TOML
 ### Using Bulk Actions
 Bulk Actions allow you to a lot of one thing, in a single button push via our ForgeJo. This allows for bulk PNG compression, a bulk refresh (which will fix any broken modpacks), and a bulk update (does the same as auto update and auto refresh!)
 
-# Somnus
-Somnus is a WIP CLI tool written in go that is built directly into the Monorepository. To utilize it, you must install it locally. It can be very helpful to modpack development!
-
-## Installing Somnus
-To install Somnus, you can simply navigate to the src/actions/somnus directory and run ```go install .```.
-
-Afterward, you can run somnus in the CLI and see the current commands.
-
-## Using Somnus
-Somnus is primarily a tool to accelerate some hurdles in pack development, regarding exporting with packwiz, initiating new packs under our monorepo structure, and to also allow CI to be ran locally in a better way.
-
-### Somnus Init
-```somnus init``` will initiate a new modpack with a manifest.json and a changelog.md, along with 2 sub-directories for Modrinth and CurseForge. You may set this to any loader (will always use latest) and Minecraft version while running the command.
-
-### Somnus Bump
-```somnus bump``` will bump manifest via CLI.
-
-### Somnus Export
-```somnus export``` will batch export every version of the pack in a .mrpack/.zip format in a non tracked folder for you to use.
-
-### Somnus Sync
-```somnus sync``` runs the sync command detailed in the prior CI section locally.
-
-### Somnus Modlist
-```somnus modlist``` will generate a Crash Assistant mod list derived from the packs ```index.toml```. This may be buggy as it will add both serverside and clientside mods to the mod-list, so be aware.
-
-### Somnus Test
-```somnus test``` will (attempt) to set up an untracked auto-updating MultiMC instance, currently for testing purposes.
-
-### Somnus Lint
-```somnus lint``` will check if your JSON or TOML is valid and yell at you if it isnt.
-
-### Somnus Update
-```somnus update``` runs update on every modpack.
-
-### Somnus Refresh
-```somnus refresh``` runs refresh on every modpack.
-
-### Somnus Port
-```somnus port``` (attempts) to port a Modrinth or Curseforge pack to the other distribution platform. This will likely be high in error, but may accelerate porting by providing a majority of the core mods.
-
-### Somnus Pages
-```somnus pages``` generates a modlist.md inside each subdirectory, which can be linked to users, or saved for reference at a specific point in time.
+# Packwand
+To address issues found in packwiz, we forked it and merged it with our existing tooling. For more info, please read the readme in src/packwand.
 
 ## Credits
-stale.yml forked from JEI, licensed under MIT.
+stale.yml forked from JEI, licensed under MIT. Packwand and Packwand Documentation forked from Packwiz, licensed under MIT. Packwand Spec forked from Packwiz Spec, licensed under CC0-1.0. All credits to their original authors
 
 # License
 As all of these projects are different, the license may vary. Most packs are under GPL-3.0, or MIT. Please check the pack folder or the pages on official sites (Modrinth, CurseForge) for the license.

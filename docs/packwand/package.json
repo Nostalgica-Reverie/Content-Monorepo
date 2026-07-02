@@ -1,0 +1,15 @@
+{
+  "name": "packwand-docs",
+  "private": true,
+  "devDependencies": {
+    "vitepress": "^2.0.0-alpha.17",
+    "vitepress-plugin-lightbox": "^1.0.3",
+    "vitepress-sidebar": "^1.33.1"
+  },
+  "scripts": {
+    "docs:commands": "node build-commands.mjs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "npm run docs:commands && vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  }
+}

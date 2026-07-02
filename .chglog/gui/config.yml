@@ -1,0 +1,37 @@
+style: none
+template: ../CHANGELOG.tpl.md
+info:
+  title: CHANGELOG (gui)
+  repository_url: https://git.nostalgica.net/Reverie-Projects/monorepo
+options:
+  tag_filter_pattern: "^gui-v"
+  commits:
+    filters:
+      Type:
+        - feat
+        - fix
+        - perf
+        - refactor
+        - docs
+        - build
+        - ci
+        - chore
+  commit_groups:
+    title_maps:
+      feat: Features
+      fix: Bug Fixes
+      perf: Performance
+      refactor: Refactoring
+      docs: Documentation
+      build: Build
+      ci: CI
+      chore: Chores
+  header:
+    pattern: '^(\w*)(?:\(([\w$.\-*\s+/]*)\))?!?:\s(.*)$'
+    pattern_maps:
+      - Type
+      - Scope
+      - Subject
+  notes:
+    keywords:
+      - BREAKING CHANGE

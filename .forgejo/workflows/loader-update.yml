@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   loader-update:
-    uses: ./.forgejo/workflows/somnus-task.yml
+    uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: loader-update ${{ inputs.target }}
+      verb: workspace loader-update ${{ inputs.target }}
       commit-message: 'actions: bulk loader update (${{ inputs.target }})'

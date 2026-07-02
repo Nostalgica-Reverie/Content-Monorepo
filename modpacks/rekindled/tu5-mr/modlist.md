@@ -37,6 +37,7 @@
 - [Collective](https://modrinth.com/mod/e0M1UDsY)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
 - [Concurrent Chunk Management Engine (NeoForge)](https://modrinth.com/mod/COlSi5iR)
+- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Configured Defaults](https://modrinth.com/mod/SISoSFPP)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
@@ -72,6 +73,5 @@
 ## Server Mods
 
 - [Async](https://modrinth.com/mod/vEC2jm6I)
-- [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
 - [Worldthreader](https://modrinth.com/mod/LwH5rYyd)

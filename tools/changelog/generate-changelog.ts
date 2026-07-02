@@ -34,11 +34,38 @@ function fileAtRef(ref: string, repoRelPath: string): string {
     return proc.success ? proc.stdout.toString() : '';
 }
 
+// blobContents reads many blobs with a single `git cat-file --batch` process
+// instead of spawning `git show` once per file.
+function blobContents(shas: string[]): Map<string, string> {
+    const contents = new Map<string, string>();
+    if (shas.length === 0) return contents;
+    const proc = Bun.spawnSync(['git', 'cat-file', '--batch'], {
+        stdin: Buffer.from(shas.join('\n') + '\n'),
+        stdout: 'pipe',
+        stderr: 'pipe',
+    });
+    if (!proc.success) return contents;
+    const data = Buffer.from(proc.stdout);
+    let offset = 0;
+    while (offset < data.length) {
+        const nl = data.indexOf(10, offset);
+        if (nl < 0) break;
+        const header = data.toString('utf-8', offset, nl).split(' ');
+        offset = nl + 1;
+        const [sha, type, sizeStr] = header;
+        if (!sha || type !== 'blob' || !sizeStr) continue; // "<sha> missing" has no body
+        const size = Number.parseInt(sizeStr, 10);
+        contents.set(sha, data.toString('utf-8', offset, offset + size));
+        offset += size + 1; // skip trailing newline after each object body
+    }
+    return contents;
+}
+
 function changeSignal(content: string): string {
     const hashMatch = content.match(/hash\s*=\s*"([^"]+)"/);
-    if (hashMatch) return hashMatch[1];
+    if (hashMatch?.[1]) return hashMatch[1];
     const verMatch = content.match(/version\s*=\s*"([^"]+)"/);
-    if (verMatch) return verMatch[1];
+    if (verMatch?.[1]) return verMatch[1];
     return crypto.createHash('sha1').update(content).digest('hex');
 }
 
@@ -62,8 +89,8 @@ function diffMods(oldRef: string, newRef: string, repoRelDir: string): DiffResul
     for (const p of newBlobs.keys()) newByName.set(modNameFromPath(p), p);
 
     const added: string[] = [];
-    const updated: string[] = [];
     const removed: string[] = [];
+    const candidates: Array<{ name: string; oldSha: string; newSha: string }> = [];
 
     for (const [name, newPath] of newByName) {
         const oldPath = oldByName.get(name);
@@ -71,14 +98,19 @@ function diffMods(oldRef: string, newRef: string, repoRelDir: string): DiffResul
             added.push(name);
             continue;
         }
-        if (oldBlobs.get(oldPath) === newBlobs.get(newPath)) continue;
-        const oldSignal = changeSignal(fileAtRef(oldRef, oldPath));
-        const newSignal = changeSignal(fileAtRef(newRef, newPath));
-        if (oldSignal !== newSignal) updated.push(name);
+        const oldSha = oldBlobs.get(oldPath) ?? '';
+        const newSha = newBlobs.get(newPath) ?? '';
+        if (oldSha === newSha) continue;
+        candidates.push({ name, oldSha, newSha });
     }
     for (const name of oldByName.keys()) {
         if (!newByName.has(name)) removed.push(name);
     }
+
+    const contents = blobContents(candidates.flatMap((c) => [c.oldSha, c.newSha]));
+    const updated = candidates
+        .filter((c) => changeSignal(contents.get(c.oldSha) ?? '') !== changeSignal(contents.get(c.newSha) ?? ''))
+        .map((c) => c.name);
 
     added.sort();
     updated.sort();
@@ -154,18 +186,28 @@ interface ManifestFile {
     automation?: { server_promo?: boolean };
 }
 
+function findSomnus(): string | null {
+    const env = process.env.SOMNUS_BIN;
+    if (env && fs.existsSync(env)) return env;
+    if (fs.existsSync('./somnus-bin/somnus')) return './somnus-bin/somnus';
+    return null;
+}
+
 function serverPromoEnabled(pDir: string, manifest: ManifestFile): boolean {
-    const fromManifest = manifest.automation?.server_promo;
-    if (typeof fromManifest === 'boolean') return fromManifest;
-    const p = path.join(pDir, 'opt-out.json');
-    if (fs.existsSync(p)) {
-        try {
-            const legacy = JSON.parse(fs.readFileSync(p, 'utf-8')) as { server_promo?: boolean };
-            if (typeof legacy.server_promo === 'boolean') return legacy.server_promo;
-        } catch {
-            console.warn(`::warning::invalid opt-out.json in ${pDir}; ignoring`);
+    const somnus = findSomnus();
+    if (somnus) {
+        const proc = Bun.spawnSync([somnus, 'automation', 'get', pDir], { stdout: 'pipe', stderr: 'pipe' });
+        if (proc.success) {
+            try {
+                const auto = JSON.parse(proc.stdout.toString()) as { server_promo?: boolean };
+                if (typeof auto.server_promo === 'boolean') return auto.server_promo;
+                return true;
+            } catch { /* fall through */ }
         }
     }
+    // Fallback when somnus is unavailable: read from manifest directly
+    const fromManifest = manifest.automation?.server_promo;
+    if (typeof fromManifest === 'boolean') return fromManifest;
     return true;
 }
 

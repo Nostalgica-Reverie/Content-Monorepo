@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   bulk-refresh:
-    uses: ./.forgejo/workflows/somnus-task.yml
+    uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: refresh
+      verb: workspace refresh
       commit-message: 'actions: bulk refresh'
