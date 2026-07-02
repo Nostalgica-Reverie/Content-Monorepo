@@ -15,7 +15,6 @@
 - [Gnetum](https://modrinth.com/mod/7MoE34WK)
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
-- [Raise Sound Limit Simplified](https://modrinth.com/mod/SKW62Pht)
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Sodium](https://modrinth.com/mod/AANobbMI)
 - [Stfu](https://modrinth.com/mod/Rg9WdvvR)

@@ -17,7 +17,6 @@
 - [Mod Menu](https://modrinth.com/mod/mOgUt4GM)
 - [More Culling](https://modrinth.com/mod/51shyZVL)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
-- [Raise Sound Limit Simplified](https://modrinth.com/mod/SKW62Pht)
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Sodium Shadowy Path Blocks](https://modrinth.com/mod/EIa1eiMm)
 - [Sodium](https://modrinth.com/mod/AANobbMI)

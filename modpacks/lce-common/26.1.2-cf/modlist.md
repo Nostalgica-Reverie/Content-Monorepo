@@ -29,7 +29,6 @@
 - [No Chat Reports]()
 - [No Chat Restrictions]()
 - [Particle Core]()
-- [Raise Sound Limit Simplified]()
 - [ScalableLux]()
 - [ServerCore]()
 - [Shuttfup]()
