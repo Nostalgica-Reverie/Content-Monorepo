@@ -635,11 +635,15 @@ function update(model, msg) {
       return with_error(model, error);
     }
   } else if (msg instanceof RunWebview) {
+    let provider = msg.provider;
     let slug = msg.slug;
     let file_id = msg.file_id;
     let _block;
     let _pipe = model;
-    _block = append_log(_pipe, "> curseforge_webview " + slug);
+    _block = append_log(
+      _pipe,
+      (("> mod_browser_webview --provider " + provider) + " ") + slug,
+    );
     let running = _block;
     return [
       new Model(
@@ -663,6 +667,7 @@ function update(model, msg) {
         "",
       ),
       $api.webview_fetch(
+        provider,
         slug,
         file_id,
         (var0) => { return new WebviewStarted(var0); },

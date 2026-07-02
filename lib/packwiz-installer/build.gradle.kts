@@ -28,12 +28,12 @@ repositories {
 val r8 by configurations.creating
 
 dependencies {
-	implementation("commons-cli:commons-cli:1.5.0")
-	implementation("com.google.code.gson:gson:2.9.0")
-	implementation("com.squareup.okio:okio:3.1.0")
+	implementation("commons-cli:commons-cli:1.9.0")
+	implementation("com.google.code.gson:gson:2.13.1")
+	implementation("com.squareup.okio:okio:3.15.0")
 	implementation(kotlin("stdlib-jdk8"))
-	implementation("com.squareup.okhttp3:okhttp:4.10.0")
-	implementation("cc.ekblad:4koma:1.1.0")
+	implementation("com.squareup.okhttp3:okhttp:4.12.0")
+	implementation("cc.ekblad:4koma:1.1.0") // pinned: 1.2.x targets JVM 17, installer targets Java 8
 
 	r8("com.android.tools:r8:8.5.35")
 }

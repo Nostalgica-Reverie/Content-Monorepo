@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"sync/atomic"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
@@ -59,7 +60,6 @@ var UpdateCmd = &cobra.Command{
 				}
 			}
 
-			fmt.Println("Checking for updates...")
 			updatesFound := false
 			updatableFiles := make(map[string][]*core.Mod)
 			updaterCachedStateMap := make(map[string][]interface{})
@@ -78,9 +78,15 @@ var UpdateCmd = &cobra.Command{
 				providerChecks = append(providerChecks, providerCheck{key: k, mods: v})
 			}
 			ch := make(chan checkResult, len(filesWithUpdater))
-			core.ParallelFor(providerChecks, core.NetworkConcurrent(), func(_ int, check providerCheck) {
-				checks, err := core.Updaters[check.key].CheckUpdate(check.mods, pack)
-				ch <- checkResult{check.key, check.mods, checks, err}
+			_ = cmdshared.WithSpinner("Checking for updates", func(update func(string)) error {
+				var checked atomic.Int32
+				core.ParallelFor(providerChecks, core.NetworkConcurrent(), func(_ int, check providerCheck) {
+					update(fmt.Sprintf("%d/%d providers  (%s: %d mod(s))", checked.Load(), len(providerChecks), check.key, len(check.mods)))
+					checks, err := core.Updaters[check.key].CheckUpdate(check.mods, pack)
+					checked.Add(1)
+					ch <- checkResult{check.key, check.mods, checks, err}
+				})
+				return nil
 			})
 			close(ch)
 			for r := range ch {

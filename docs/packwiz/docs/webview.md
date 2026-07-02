@@ -1,8 +1,8 @@
-# curseforge_webview
+# mod_browser_webview
 
-A native webview (Rust, using [wry](https://github.com/tauri-apps/wry)) that displays real CurseForge project pages so users can download files that may not be distributed through the CurseForge API. Host applications drive it over a simple stdin/stdout line protocol and receive the resolved CDN download URLs.
+A native webview (Rust, using [wry](https://github.com/tauri-apps/wry)) that displays real CurseForge or Modrinth project pages so users can download files that may not be distributed through the CurseForge API. Host applications drive it over a simple stdin/stdout line protocol and receive the resolved CDN download URLs.
 
-Source: `lib/curseforge_webview`. Build output: `lib/curseforge_webview/target/release/curseforge_webview`.
+Source: `lib/mod-browser-webview`. Build output: `lib/mod-browser-webview/target/release/mod_browser_webview`.
 
 ## Platform requirements
 
@@ -11,6 +11,8 @@ Source: `lib/curseforge_webview`. Build output: `lib/curseforge_webview/target/r
 - **macOS**: WKWebView (built in)
 
 ## Protocol
+
+The provider is selected with a CLI flag: `--provider curseforge` (default) or `--provider modrinth`.
 
 The host writes to the webview's **stdin**, one request per line, then `DONE`:
 
@@ -21,14 +23,14 @@ DATA /path/to/profile/dir        (optional: persistent browser profile)
 DONE
 ```
 
-Each request line is a numeric file ID, a space, and the project's page URL (which must match `https://(www.|beta.)curseforge.com/<game>/<category>/<slug>`).
+Each request line is a file/version ID, a space, and the project page URL. For CurseForge the ID is numeric and the URL must match `https://(www.|beta.)curseforge.com/<game>/<category>/<slug>`; for Modrinth the ID is an alphanumeric version ID and the URL must match `https://modrinth.com/<type>/<slug>` (the file page becomes `<url>/version/<id>`).
 
 The webview then opens the file page for each request in turn. Navigation is sandboxed: only pages for the requested file are allowed, `curseforge://` and other external links prompt the user, and unrelated links open in the system browser. A **Reload** and **Skip** menu are available; skipping a file advances to the next one without emitting output.
 
 The host reads **stdout**:
 
 ```
-curseforge_webview 0.1.0                          (version banner)
+mod_browser_webview 0.1.0                          (version banner)
 0 https://edge.forgecdn.net/files/.../mod.jar     (index + captured CDN URL)
 1 https://media.forgecdn.net/files/.../other.jar
 ```
@@ -41,11 +43,11 @@ curseforge_webview 0.1.0                          (version banner)
 
 The packwand GUI (`packwand gui`) bridges this protocol over HTTP + Server-Sent Events:
 
-- `POST /api/webview/open` with `{"files": [{"file_id": 3643025, "slug": "jei"}]}` (or an explicit `"url"`) spawns the webview and returns a job ID.
+- `POST /api/webview/open` with `{"provider": "curseforge", "files": [{"file_id": "3643025", "slug": "jei"}]}` (or an explicit `"url"`; provider may be `"modrinth"`) spawns the webview and returns a job ID.
 - The job's event stream (`GET /api/jobs/{id}/events`) then carries a `DOWNLOAD <fileID> <url>` line for every captured file, live, followed by a summary line.
-- The binary is located via `CURSEFORGE_WEBVIEW_BIN`, the in-repo cargo output (`lib/curseforge_webview/target/{release,debug}`), or `PATH`.
+- The binary is located via `MOD_BROWSER_WEBVIEW_BIN`, the in-repo cargo output (`lib/mod-browser-webview/target/{release,debug}`), or `PATH`.
 
-In the GUI's Mods view, CurseForge mods with a known file ID show a **CF Fetch** button that opens the webview for that mod and streams the captured URL into the Logs view.
+In the GUI's Mods view, CurseForge and Modrinth mods with a known file/version ID show a **CF Fetch** / **MR Fetch** button that opens the webview for that mod and streams the captured URL into the Logs view.
 
 ## Licenses page
 

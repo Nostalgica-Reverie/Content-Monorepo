@@ -710,12 +710,20 @@ fn mod_row(model: Model, mod: ModEntry) {
     True -> #("Unpin", UnpinMod(subdir, mod.slug))
     False -> #("Pin", PinMod(subdir, mod.slug))
   }
-  let webview_button = case mod.platform, int.parse(mod.version_id) {
-    "curseforge", Ok(file_id) ->
+  let webview_button = case mod.platform, mod.version_id {
+    _, "" -> html.text("")
+    "curseforge", file_id ->
       button_disabled(
         "icon-btn",
         "CF Fetch",
-        RunWebview(mod.slug, file_id),
+        RunWebview("curseforge", mod.slug, file_id),
+        job_running(model),
+      )
+    "modrinth", file_id ->
+      button_disabled(
+        "icon-btn",
+        "MR Fetch",
+        RunWebview("modrinth", mod.slug, file_id),
         job_running(model),
       )
     _, _ -> html.text("")

@@ -7,7 +7,7 @@ version: "3"
 
 vars:
   INSTALLER_DIR: lib/packwiz-installer
-  WEBVIEW_DIR: lib/curseforge_webview
+  WEBVIEW_DIR: lib/mod-browser-webview
   GUI_TAURI_DIR: src/packwand/gui/tauri
 
 tasks:
@@ -20,7 +20,7 @@ tasks:
       - go vet ./...
 
   lint-webview:
-    desc: Clippy on curseforge_webview
+    desc: Clippy on mod-browser-webview
     dir: "{{.WEBVIEW_DIR}}"
     cmds:
       - cargo clippy --all-targets
@@ -34,9 +34,21 @@ tasks:
       - cmd: cmd /c '.\gradlew.bat' classes bootstrap:classes
         platforms: [windows]
 
+  audit-go:
+    desc: Scan the Go module for known vulnerabilities
+    dir: src/packwand
+    cmds:
+      - go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+
+  audit-rust:
+    desc: Scan Rust lockfiles for RUSTSEC advisories (requires cargo-audit)
+    cmds:
+      - cargo audit --file {{.WEBVIEW_DIR}}/Cargo.lock
+      - cargo audit --file {{.GUI_TAURI_DIR}}/src-tauri/Cargo.lock
+
   lint:
-    desc: All linters/vetters
-    deps: [lint-go, lint-webview, lint-installer]
+    desc: All linters/vetters and vulnerability scans
+    deps: [lint-go, lint-webview, lint-installer, audit-go, audit-rust]
 
   # — Test —
 
@@ -91,7 +103,7 @@ tasks:
       - "build/dist/packwiz-installer.jar"
 
   build-webview:
-    desc: Build curseforge_webview (release). Linux requires webkit2gtk; Windows requires the WebView2 runtime at run time.
+    desc: Build mod-browser-webview (release). Linux requires webkit2gtk; Windows requires the WebView2 runtime at run time.
     dir: "{{.WEBVIEW_DIR}}"
     cmds:
       - cargo build --release
@@ -100,7 +112,7 @@ tasks:
       - "Cargo.toml"
       - "Cargo.lock"
     generates:
-      - "target/release/curseforge_webview{{exeExt}}"
+      - "target/release/mod_browser_webview{{exeExt}}"
 
   build-bootstrap:
     desc: Build the Go packwiz-bootstrap wrapper
@@ -114,6 +126,11 @@ tasks:
     deps: [build-packwand]
     cmds:
       - cargo tauri build
+
+  gen-nix:
+    desc: Generate/update packwiz2nix checksums.json for every modpack subdir via packwand's internal generator
+    cmds:
+      - go run -C src/packwand . nix gen --all
 
   gen-licenses:
     desc: Regenerate the webview third-party licenses page (embedded at build time)

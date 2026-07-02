@@ -4,7 +4,7 @@ use std::{
     sync::{Arc, Mutex, MutexGuard},
 };
 
-use anyhow::{ensure, Context};
+use anyhow::{bail, ensure, Context};
 use closure::closure;
 use json::{object, JsonValue};
 use lazy_static::lazy_static;
@@ -20,8 +20,119 @@ use wry::{
     webview::{WebContext, WebView, WebViewBuilder},
 };
 
+/// The mod-hosting site to browse. Selected with `--provider <name>`;
+/// defaults to CurseForge for backward compatibility with curseforge_webview.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Provider {
+    CurseForge,
+    Modrinth,
+}
+
+impl Provider {
+    fn from_args() -> anyhow::Result<Provider> {
+        let mut args = std::env::args().skip(1);
+        while let Some(arg) = args.next() {
+            if arg == "--provider" {
+                let value = args
+                    .next()
+                    .context("--provider requires a value (curseforge or modrinth)")?;
+                return match value.as_str() {
+                    "curseforge" => Ok(Provider::CurseForge),
+                    "modrinth" => Ok(Provider::Modrinth),
+                    other => bail!("unknown provider {other:?} (expected curseforge or modrinth)"),
+                };
+            }
+        }
+        Ok(Provider::CurseForge)
+    }
+
+    /// Validates a base project page URL for this provider.
+    fn project_url_valid(self, url: &str) -> bool {
+        lazy_static! {
+            static ref CF: Regex =
+                Regex::new("^https?://(?:(?:www|beta)\\.)?curseforge\\.com/[^/]+/[^/]+/[^/]+$")
+                    .unwrap();
+            static ref MR: Regex =
+                Regex::new("^https?://(?:www\\.)?modrinth\\.com/[^/]+/[^/]+$").unwrap();
+        }
+        match self {
+            Provider::CurseForge => CF.is_match(url),
+            Provider::Modrinth => MR.is_match(url),
+        }
+    }
+
+    /// Validates a file/version identifier for this provider.
+    fn id_valid(self, id: &str) -> bool {
+        lazy_static! {
+            static ref CF_ID: Regex = Regex::new("^[0-9]+$").unwrap();
+            static ref MR_ID: Regex = Regex::new("^[a-zA-Z0-9]+$").unwrap();
+        }
+        match self {
+            Provider::CurseForge => CF_ID.is_match(id),
+            Provider::Modrinth => MR_ID.is_match(id),
+        }
+    }
+
+    /// The page opened for a requested file.
+    fn file_page(self, base_url: &str, id: &str) -> String {
+        match self {
+            Provider::CurseForge => format!("{base_url}/files/{id}"),
+            Provider::Modrinth => format!("{base_url}/version/{id}"),
+        }
+    }
+
+    /// Matches a direct download URL served by the provider's CDN.
+    fn download_url_valid(self, uri: &str) -> bool {
+        lazy_static! {
+            static ref CF_DL: Regex =
+                Regex::new("^https?://(?:edge|media)\\.forgecdn\\.net/files/.+$").unwrap();
+            static ref MR_DL: Regex =
+                Regex::new("^https?://cdn\\.modrinth\\.com/data/[^/]+/versions/.+$").unwrap();
+        }
+        match self {
+            Provider::CurseForge => CF_DL.is_match(uri),
+            Provider::Modrinth => MR_DL.is_match(uri),
+        }
+    }
+
+    /// Matches navigation to the page(s) belonging to the requested file.
+    fn nav_regex(self, file_id: &str) -> Regex {
+        match self {
+            Provider::CurseForge => Regex::new(&format!(
+                "^https?://(?:(?:www|beta)\\.)?curseforge\\.com/+[^/]+/[^/]+/[^/]+/(?:files|download)/{}",
+                regex::escape(file_id)
+            ))
+            .unwrap(),
+            Provider::Modrinth => Regex::new(&format!(
+                "^https?://(?:www\\.)?modrinth\\.com/+[^/]+/[^/]+/version/{}",
+                regex::escape(file_id)
+            ))
+            .unwrap(),
+        }
+    }
+
+    /// Matches navigation to a *different* file's page (the wrong download).
+    fn bad_nav_valid(self, uri: &str) -> bool {
+        lazy_static! {
+            // Note: + after / due to bad path normalisation in beta redirect
+            static ref CF_BAD: Regex = Regex::new(
+                "^https?://(?:(?:www|beta)\\.)?curseforge\\.com/+[^/]+/[^/]+/[^/]+/(?:files/[0-9]+|download)"
+            )
+            .unwrap();
+            static ref MR_BAD: Regex = Regex::new(
+                "^https?://(?:www\\.)?modrinth\\.com/+[^/]+/[^/]+/version/[a-zA-Z0-9.+-]+"
+            )
+            .unwrap();
+        }
+        match self {
+            Provider::CurseForge => CF_BAD.is_match(uri),
+            Provider::Modrinth => MR_BAD.is_match(uri),
+        }
+    }
+}
+
 fn main() {
-    println!("curseforge_webview {}", env!("CARGO_PKG_VERSION"));
+    println!("mod_browser_webview {}", env!("CARGO_PKG_VERSION"));
 
     if let Err(e) = start() {
         println!("ERROR");
@@ -50,11 +161,12 @@ fn create_confirm<T: Into<JsonValue>>(
 }
 
 struct File {
-    id: u32,
+    id: String,
     url: String,
 }
 
 fn start() -> anyhow::Result<()> {
+    let provider = Provider::from_args()?;
     let mut data_dir: Option<PathBuf> = None;
     let files = {
         let mut files: Vec<File> = Vec::new();
@@ -66,9 +178,9 @@ fn start() -> anyhow::Result<()> {
             } else if line.starts_with("DATA ") {
                 data_dir = Some(line.strip_prefix("DATA ").unwrap().into())
             } else {
-                let (id, url) = parse_url_line(&line).context("Failed to read URL")?;
+                let (id, url) = parse_url_line(&line, provider).context("Failed to read URL")?;
                 files.push(File {
-                    id,
+                    id: id.to_string(),
                     url: url.to_string(),
                 });
             }
@@ -97,7 +209,7 @@ fn start() -> anyhow::Result<()> {
     let mut about_menu = MenuBar::new();
     about_menu.add_item(
         MenuItemAttributes::new(&format!(
-            "curseforge_webview version {}",
+            "mod_browser_webview version {}",
             env!("CARGO_PKG_VERSION")
         ))
         .with_enabled(false),
@@ -112,7 +224,7 @@ fn start() -> anyhow::Result<()> {
 
     let window = WindowBuilder::new()
         .with_title(format!(
-            "(1/{num_files}) curseforge_webview {}",
+            "(1/{num_files}) mod_browser_webview {}",
             env!("CARGO_PKG_VERSION")
         ))
         .with_focused(true)
@@ -127,12 +239,12 @@ fn start() -> anyhow::Result<()> {
 		.with_html(&format!(
 			"{}<script>window.location.href = {};</script>",
 			include_str!("loading.html"),
-			json::stringify(format!("{}/files/{}", files[0].url, files[0].id))
+			json::stringify(provider.file_page(&files[0].url, &files[0].id))
 		))
 		.context("Failed to load HTML")?
 		.with_web_context(&mut webcontext)
 		.with_navigation_handler(closure!(clone proxy, clone files, clone cur_file, |uri: String| {
-			let (evt, nav) = handle_uri(uri.clone(), false, files[*cur_file.lock().unwrap()].id);
+			let (evt, nav) = handle_uri(uri.clone(), false, &files[*cur_file.lock().unwrap()], provider);
 			if cfg!(debug_assertions) {
 				eprintln!("Navigating {} -> {:?} (allow: {})", &uri, evt, nav);
 			}
@@ -140,7 +252,7 @@ fn start() -> anyhow::Result<()> {
 			nav
 		}))
 		.with_new_window_req_handler(closure!(clone proxy, clone files, clone cur_file, |uri: String| {
-			let (evt, nav) = handle_uri(uri.clone(), true, files[*cur_file.lock().unwrap()].id);
+			let (evt, nav) = handle_uri(uri.clone(), true, &files[*cur_file.lock().unwrap()], provider);
 			if cfg!(debug_assertions) {
 				eprintln!("New window: {} -> {:?} (allow: {})", &uri, evt, nav);
 			}
@@ -197,7 +309,7 @@ fn start() -> anyhow::Result<()> {
                 // Return file to client
                 println!("{} {}", f, uri);
                 *f += 1;
-                update_page(f, &webview, &files, num_files, control_flow);
+                update_page(f, &webview, &files, num_files, control_flow, provider);
                 Ok(())
             }
             Event::UserEvent(NavigationEvent::NonHTTPNavigation(uri)) => {
@@ -237,8 +349,16 @@ Do you want to continue opening the external program anyway?"#
             }
             Event::UserEvent(NavigationEvent::BadNavigationWrongPage) => create_alert(
                 &webview,
-                r#"Wrong link opened:
-Please click the correct download button, below "File Details""#,
+                match provider {
+                    Provider::CurseForge => {
+                        r#"Wrong link opened:
+Please click the correct download button, below "File Details""#
+                    }
+                    Provider::Modrinth => {
+                        r#"Wrong link opened:
+Please use the Download button on the requested version's page"#
+                    }
+                },
             )
             .context("Failed to display wrong link message"),
             Event::UserEvent(NavigationEvent::BadNavigationNewWindow) => create_alert(
@@ -261,13 +381,13 @@ Please use the primary mouse button to open this link"#,
                         .context("Failed to open source link"),
                     id if id == reload_menu_id => {
                         let f = cur_file.lock().unwrap();
-                        update_page(f, &webview, &files, num_files, control_flow);
+                        update_page(f, &webview, &files, num_files, control_flow, provider);
                         Ok(())
                     }
                     id if id == skip_menu_id => {
                         let mut f = cur_file.lock().unwrap();
                         *f += 1;
-                        update_page(f, &webview, &files, num_files, control_flow);
+                        update_page(f, &webview, &files, num_files, control_flow, provider);
                         Ok(())
                     }
                     _ => Ok(()),
@@ -284,24 +404,21 @@ Please use the primary mouse button to open this link"#,
     });
 }
 
-fn parse_url_line(line: &str) -> Result<(u32, &str), anyhow::Error> {
-    lazy_static! {
-        static ref RE: Regex =
-            Regex::new("^https?://(?:(?:www|beta)\\.)?curseforge\\.com/[^/]+/[^/]+/[^/]+$")
-                .unwrap();
-    }
-
+fn parse_url_line(line: &str, provider: Provider) -> Result<(&str, &str), anyhow::Error> {
     let split: Vec<_> = line.split(' ').collect();
     ensure!(
         split.len() == 2,
         "Invalid line format (requires ID, then space, then base project URL)"
     );
     ensure!(
-        RE.is_match(split[1]),
-        "Invalid URL (must be a CurseForge project URL)"
+        provider.id_valid(split[0]),
+        "Invalid file/version ID for provider"
     );
-    let id: u32 = split[0].parse().context("Failed to parse file ID")?;
-    Ok((id, split[1]))
+    ensure!(
+        provider.project_url_valid(split[1]),
+        "Invalid URL (must be a project URL of the selected provider)"
+    );
+    Ok((split[0], split[1]))
 }
 
 #[derive(Debug)]
@@ -310,9 +427,10 @@ enum NavigationEvent {
     NonHTTPNavigation(String),
     // External protocols after confirming by user
     NonHTTPNavigationConfirmed(String),
-    // edge.forgecdn.net/media.forgecdn.net
+    // edge.forgecdn.net/media.forgecdn.net or cdn.modrinth.com
     DownloadUrl(String),
     // File page, file download page, download/file page
+    #[allow(dead_code)]
     Navigation(String),
     // Wrong file/download page, general download page
     BadNavigationWrongPage,
@@ -322,17 +440,13 @@ enum NavigationEvent {
     ExternalNavigation(String),
 }
 
-fn handle_uri(uri: String, is_new_window: bool, file_id: u32) -> (NavigationEvent, bool) {
-    lazy_static! {
-        static ref DL_URL_REGEX: Regex = Regex::new("^https?://(?:edge|media)\\.forgecdn\\.net/files/.+$").unwrap();
-        // Note: + after / due to bad path normalisation in beta redirect
-        static ref BAD_NAV_REGEX: Regex = Regex::new("^https?://(?:(?:www|beta)\\.)?curseforge\\.com/+[^/]+/[^/]+/[^/]+/(?:files/[0-9]+|download)").unwrap();
-    }
-    let nav_regex = Regex::new(&format!(
-        "^https?://(?:(?:www|beta)\\.)?curseforge\\.com/+[^/]+/[^/]+/[^/]+/(?:files|download)/{}",
-        file_id
-    ))
-    .unwrap();
+fn handle_uri(
+    uri: String,
+    is_new_window: bool,
+    file: &File,
+    provider: Provider,
+) -> (NavigationEvent, bool) {
+    let nav_regex = provider.nav_regex(&file.id);
 
     // Internal (for the loading screen)
     if uri.starts_with("data:") || uri.starts_with("http://localhost") {
@@ -345,7 +459,7 @@ fn handle_uri(uri: String, is_new_window: bool, file_id: u32) -> (NavigationEven
     if !uri.starts_with("http://") && !uri.starts_with("https://") {
         return (NavigationEvent::NonHTTPNavigation(uri), false);
     }
-    if DL_URL_REGEX.is_match(&uri) {
+    if provider.download_url_valid(&uri) {
         return (NavigationEvent::DownloadUrl(uri), false);
     }
     if nav_regex.is_match(&uri) {
@@ -354,7 +468,13 @@ fn handle_uri(uri: String, is_new_window: bool, file_id: u32) -> (NavigationEven
         }
         return (NavigationEvent::Navigation(uri), true);
     }
-    if BAD_NAV_REGEX.is_match(&uri) {
+    // Allow browsing within the requested project's own pages (Modrinth shows
+    // the download button on the project's version pages).
+    if provider == Provider::Modrinth && uri.starts_with(&file.url) && !provider.bad_nav_valid(&uri)
+    {
+        return (NavigationEvent::Navigation(uri), true);
+    }
+    if provider.bad_nav_valid(&uri) {
         return (NavigationEvent::BadNavigationWrongPage, false);
     }
 
@@ -369,7 +489,7 @@ fn handle_uri(uri: String, is_new_window: bool, file_id: u32) -> (NavigationEven
 
 fn show_licenses(event_loop: &EventLoopWindowTarget<NavigationEvent>) -> anyhow::Result<WebView> {
     let window = WindowBuilder::new()
-        .with_title("curseforge_webview licenses")
+        .with_title("mod_browser_webview licenses")
         .with_focused(true)
         .build(event_loop)
         .context("Failed to create webview window")?;
@@ -397,15 +517,16 @@ fn update_page(
     files: &[File],
     num_files: usize,
     control_flow: &mut ControlFlow,
+    provider: Provider,
 ) {
     if *f >= num_files {
         // No more files: quit!
         *control_flow = ControlFlow::Exit;
     } else {
         // Load next file
-        webview.load_url(&format!("{}/files/{}", files[*f].url, files[*f].id));
+        webview.load_url(&provider.file_page(&files[*f].url, &files[*f].id));
         webview.window().set_title(&format!(
-            "({}/{num_files}) curseforge_webview {}",
+            "({}/{num_files}) mod_browser_webview {}",
             *f + 1,
             env!("CARGO_PKG_VERSION")
         ));

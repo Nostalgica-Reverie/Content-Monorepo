@@ -8,6 +8,10 @@ name: "CI"
 on:
   push:
     branches: ["main"]
+    tags:
+      - "v*"
+      - "installer-v*"
+      - "gui-v*"
     paths:
       - "src/**"
       - "lib/**"
@@ -36,7 +40,7 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           filter: blob:none
       - uses: https://github.com/actions/setup-go@v5
         with:
@@ -53,7 +57,10 @@ jobs:
           components: clippy
       - uses: https://github.com/Swatinem/rust-cache@v2
         with:
-          workspaces: lib/curseforge_webview
+          workspaces: lib/mod-browser-webview
+      - uses: https://github.com/taiki-e/install-action@v2
+        with:
+          tool: cargo-audit
       - name: Install Task
         run: go install github.com/go-task/task/v3/cmd/task@latest
       - name: Lint
@@ -64,7 +71,7 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           filter: blob:none
       - uses: https://github.com/actions/setup-go@v5
         with:
@@ -79,7 +86,7 @@ jobs:
       - uses: https://github.com/dtolnay/rust-toolchain@stable
       - uses: https://github.com/Swatinem/rust-cache@v2
         with:
-          workspaces: lib/curseforge_webview
+          workspaces: lib/mod-browser-webview
       - name: Install Task
         run: go install github.com/go-task/task/v3/cmd/task@latest
       - name: Test
@@ -100,14 +107,14 @@ jobs:
           - name: packwiz-installer (Kotlin)
             task: build-installer
             toolchains: java
-          - name: curseforge_webview (Rust)
+          - name: mod-browser-webview (Rust)
             task: build-webview
             toolchains: rust
     name: "build: ${{ matrix.name }}"
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           filter: blob:none
       - uses: https://github.com/actions/setup-go@v5
         with:
@@ -125,7 +132,7 @@ jobs:
       - uses: https://github.com/Swatinem/rust-cache@v2
         if: matrix.toolchains == 'rust'
         with:
-          workspaces: lib/curseforge_webview
+          workspaces: lib/mod-browser-webview
       - name: Install Task
         run: go install github.com/go-task/task/v3/cmd/task@latest
       - name: Build
@@ -133,14 +140,15 @@ jobs:
 
   deploy:
     # Artifact preparation on main: docs sites + GoReleaser snapshot archives.
-    # Tagged releases publish through packwand-release.yml instead.
-    if: github.event_name != 'pull_request'
+    # Tagged releases publish through packwand-release.yml and release-notes.
+    if: github.ref == 'refs/heads/main'
     needs: [build]
     runs-on: technocality
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
           fetch-depth: 0
+          filter: blob:none
       - uses: https://github.com/actions/setup-go@v5
         with:
           go-version: "stable"
@@ -177,3 +185,44 @@ jobs:
             docs/docs/.vitepress/dist
             docs/packwand/docs/.vitepress/dist
             docs/packwiz/docs/.vitepress/dist
+
+  release-notes:
+    # On component tags: generate the component's changelog with git-chglog
+    # (.chglog/<component>/config.yml) and attach it to the Forgejo release.
+    # packwand binaries themselves are attached by packwand-release.yml.
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build]
+    runs-on: technocality
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
+      - name: Generate component changelog
+        run: |
+          set -eu
+          go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
+          TAG="${GITHUB_REF#refs/tags/}"
+          case "$TAG" in
+            installer-v*) COMPONENT=installer ;;
+            gui-v*)       COMPONENT=gui ;;
+            v*)           COMPONENT=packwand ;;
+            *) echo "unrecognised tag $TAG"; exit 1 ;;
+          esac
+          echo "component: $COMPONENT"
+          "$(go env GOPATH)/bin/git-chglog" --config ".chglog/$COMPONENT/config.yml" --output release-notes.md "$TAG"
+          cat release-notes.md
+          mkdir -p release-assets
+      - name: Create/update Forgejo release with notes
+        uses: https://code.forgejo.org/actions/forgejo-release@v2
+        with:
+          direction: upload
+          tag: ${{ github.ref_name }}
+          token: ${{ secrets.RELEASE_TOKEN }}
+          release-dir: release-assets
+          release-notes: release-notes.md

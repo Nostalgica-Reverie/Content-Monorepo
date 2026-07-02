@@ -61,7 +61,7 @@ pub type Msg {
   GotManifest(Result(domain.ContentResponse, domain.ApiError))
   RunAction(domain.Action)
   GotAction(domain.Action, Result(domain.ActionResponse, domain.ApiError))
-  RunWebview(slug: String, file_id: Int)
+  RunWebview(provider: String, slug: String, file_id: String)
   WebviewStarted(Result(domain.ActionResponse, domain.ApiError))
   JobLine(String)
   JobFinished(String, String)

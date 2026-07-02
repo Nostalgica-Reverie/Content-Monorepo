@@ -29,6 +29,18 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "packwand",
 	Short: "Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management",
+	// The branded status bar is printed once per invocation (to stderr, and
+	// only on interactive terminals) before any subcommand runs.
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		if cmd.Name() == "help" || cmd.Name() == "completion" {
+			return
+		}
+		context := cmd.CommandPath()
+		if cwd, err := os.Getwd(); err == nil {
+			context += "  " + filepath.Base(cwd)
+		}
+		StatusBar(context)
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		printMascot()
 		_ = cmd.Help()

@@ -680,13 +680,23 @@ function mod_row(model, mod) {
   let pin_action = $[1];
   let _block$1;
   let $2 = mod.platform;
-  let $3 = $int.parse(mod.version_id);
-  if ($3 instanceof Ok && $2 === "curseforge") {
-    let file_id = $3[0];
+  let $3 = mod.version_id;
+  if ($3 === "") {
+    _block$1 = $html.text("");
+  } else if ($2 === "curseforge") {
+    let file_id = $3;
     _block$1 = button_disabled(
       "icon-btn",
       "CF Fetch",
-      new RunWebview(mod.slug, file_id),
+      new RunWebview("curseforge", mod.slug, file_id),
+      job_running(model),
+    );
+  } else if ($2 === "modrinth") {
+    let file_id = $3;
+    _block$1 = button_disabled(
+      "icon-btn",
+      "MR Fetch",
+      new RunWebview("modrinth", mod.slug, file_id),
       job_running(model),
     );
   } else {

@@ -1,9 +1,9 @@
 [package]
-name = "curseforge_webview"
+name = "mod_browser_webview"
 version = "0.1.0"
 authors = ["comp500"]
 edition = "2021"
-description = "A webview using wry, used by other applications to display the CurseForge website"
+description = "A webview using wry, used by other applications to display the CurseForge and Modrinth websites"
 repository = "https://github.com/packwiz/curseforge_webview"
 homepage = "https://packwiz.infra.link/"
 license = "MIT"

@@ -3,6 +3,8 @@ package cmdshared
 import (
 	"fmt"
 	"os"
+
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/clistyle"
 )
 
 // IsTTY reports whether stdout is a terminal.
@@ -14,9 +16,12 @@ func IsTTY() bool {
 	return fi.Mode()&os.ModeCharDevice != 0
 }
 
-// Fail prints msg to stderr in TTY or CI annotation format, then exits 1.
+// Fail prints msg to stderr (styled on terminals, CI annotation format
+// otherwise), then exits 1.
 func Fail(msg string) {
-	if IsTTY() {
+	if clistyle.Interactive() {
+		fmt.Fprintln(os.Stderr, clistyle.ErrorText.Render("✗ error: ")+msg)
+	} else if IsTTY() {
 		fmt.Fprintln(os.Stderr, "error: "+msg)
 	} else {
 		fmt.Fprintln(os.Stderr, "::error::"+msg)
@@ -29,10 +34,12 @@ func Failf(format string, a ...any) {
 	Fail(fmt.Sprintf(format, a...))
 }
 
-// Warn prints a warning in TTY or CI annotation format.
+// Warn prints a warning (styled on terminals, CI annotation format otherwise).
 func Warn(format string, a ...any) {
 	msg := fmt.Sprintf(format, a...)
-	if IsTTY() {
+	if clistyle.Interactive() {
+		fmt.Fprintln(os.Stderr, clistyle.WarnText.Render("⚠ warning: ")+msg)
+	} else if IsTTY() {
 		fmt.Fprintf(os.Stderr, "warning: %s\n", msg)
 	} else {
 		fmt.Fprintf(os.Stderr, "::warning::%s\n", msg)

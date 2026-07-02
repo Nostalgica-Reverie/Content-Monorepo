@@ -271,18 +271,22 @@ export const Msg$GotAction$0 = (value) => value[0];
 export const Msg$GotAction$1 = (value) => value[1];
 
 export class RunWebview extends $CustomType {
-  constructor(slug, file_id) {
+  constructor(provider, slug, file_id) {
     super();
+    this.provider = provider;
     this.slug = slug;
     this.file_id = file_id;
   }
 }
-export const Msg$RunWebview = (slug, file_id) => new RunWebview(slug, file_id);
+export const Msg$RunWebview = (provider, slug, file_id) =>
+  new RunWebview(provider, slug, file_id);
 export const Msg$isRunWebview = (value) => value instanceof RunWebview;
+export const Msg$RunWebview$provider = (value) => value.provider;
+export const Msg$RunWebview$0 = (value) => value.provider;
 export const Msg$RunWebview$slug = (value) => value.slug;
-export const Msg$RunWebview$0 = (value) => value.slug;
+export const Msg$RunWebview$1 = (value) => value.slug;
 export const Msg$RunWebview$file_id = (value) => value.file_id;
-export const Msg$RunWebview$1 = (value) => value.file_id;
+export const Msg$RunWebview$2 = (value) => value.file_id;
 
 export class WebviewStarted extends $CustomType {
   constructor($0) {

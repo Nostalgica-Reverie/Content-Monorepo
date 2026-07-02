@@ -609,20 +609,22 @@ function action_response_decoder() {
 }
 
 /**
- * Opens the native CurseForge webview (lib/curseforge_webview) for the given
- * mod, bridged by the Go server; download/navigation events stream through
- * the returned job's event feed.
+ * Opens the native mod browser webview (lib/mod-browser-webview) for the
+ * given mod on the given provider ("curseforge" or "modrinth"), bridged by
+ * the Go server; download/navigation events stream through the returned
+ * job's event feed.
  */
-export function webview_fetch(slug, file_id, to_msg) {
+export function webview_fetch(provider, slug, file_id, to_msg) {
   let body = $json.object(
     toList([
+      ["provider", $json.string(provider)],
       [
         "files",
         $json.array(
           toList([
             $json.object(
               toList([
-                ["file_id", $json.int(file_id)],
+                ["file_id", $json.string(file_id)],
                 ["slug", $json.string(slug)],
               ]),
             ),

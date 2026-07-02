@@ -43,6 +43,7 @@ packwand [flags]
 * [packwand modlist](packwand_modlist.md)	 - Write a crash-assistant modlist.json from a pack's mods/ directory
 * [packwand modrinth](packwand_modrinth.md)	 - Manage modrinth-based mods
 * [packwand new](packwand_new.md)	 - Scaffold a new pack (manifest.json, changelog.md, packwiz subdirs)
+* [packwand nix](packwand_nix.md)	 - Nix integration (packwiz2nix-compatible outputs)
 * [packwand packs](packwand_packs.md)	 - Look up or edit any pack's manifest fields by id
 * [packwand pages](packwand_pages.md)	 - Regenerate modlist.md files for all packs (or a single pack) and the projects index
 * [packwand pin](packwand_pin.md)	 - Pin a file so it does not get updated automatically

@@ -13,7 +13,7 @@ export default defineConfig({
 
   title: "Packwiz Components",
   head: [['link', { rel: 'icon', href: '/favicon.webp' }]],
-  description: "Documentation for the packwiz-installer, bootstrap, and curseforge_webview components maintained in the Lasting Legacy monorepo",
+  description: "Documentation for the packwiz-installer, bootstrap, and mod_browser_webview components maintained in the Lasting Legacy monorepo",
   themeConfig: {
     siteTitle: 'Packwiz Components',
     logo: '/logo.webp',

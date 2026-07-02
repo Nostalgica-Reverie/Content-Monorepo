@@ -116,13 +116,13 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       watch_job_effect(response.job_id),
     )
     GotAction(_, Error(error)) -> with_error(model, error)
-    RunWebview(slug, file_id) -> {
+    RunWebview(provider, slug, file_id) -> {
       let running =
         model
-        |> append_log("> curseforge_webview " <> slug)
+        |> append_log("> mod_browser_webview --provider " <> provider <> " " <> slug)
       #(
         Model(..running, job_status: "starting", notice: ""),
-        api.webview_fetch(slug, file_id, WebviewStarted),
+        api.webview_fetch(provider, slug, file_id, WebviewStarted),
       )
     }
     WebviewStarted(Ok(response)) -> #(
