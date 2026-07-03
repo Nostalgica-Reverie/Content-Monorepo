@@ -19,6 +19,14 @@ export async function requestJson(method, url, body, onSuccess, onFailure) {
   }
 }
 
+export function prettyJson(raw) {
+  try {
+    return JSON.stringify(JSON.parse(raw), null, 2) + "\n";
+  } catch {
+    return raw;
+  }
+}
+
 export function currentHash() {
   return window.location.hash.replace(/^#/, "");
 }
@@ -51,7 +59,7 @@ export function watchJob(id, onLine, onDone) {
   }
   if (eventSource) eventSource.close();
 
-  const source = new EventSource(`/api/jobs/${encodeURIComponent(id)}/events`);
+  const source = new EventSource(`/api/v1/jobs/${encodeURIComponent(id)}/events`);
   eventSource = source;
   source.onmessage = (event) => {
     try {
@@ -64,7 +72,7 @@ export function watchJob(id, onLine, onDone) {
     source.close();
     if (eventSource === source) eventSource = null;
     try {
-      const response = await fetch(`/api/jobs/${encodeURIComponent(id)}`);
+      const response = await fetch(`/api/v1/jobs/${encodeURIComponent(id)}`);
       if (!response.ok) throw new Error(await response.text());
       const job = await response.json();
       onDone(job.status || "completed", job.error || "");

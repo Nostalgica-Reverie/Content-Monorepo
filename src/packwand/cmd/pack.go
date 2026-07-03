@@ -48,7 +48,7 @@ func init() {
 	rootCmd.AddCommand(llAutomationCmd)
 }
 
-// â€” bump â€”
+// — bump —
 
 var llBumpCmd = &cobra.Command{
 	Use:   "bump <pack-dir> <new-version>",
@@ -64,40 +64,138 @@ var llBumpCmd = &cobra.Command{
 		}
 
 		llChdir()
-
-		mfPath := filepath.Join(packDir, "manifest.json")
-		m, err := manifest.Read(mfPath)
-		if err != nil {
-			llFail(fmt.Sprintf("failed to read %s: %v", mfPath, err))
-		}
-		old := m.Version
-		m.Version = newVer
-		if err := manifest.Write(mfPath, m); err != nil {
-			llFail(fmt.Sprintf("failed to write %s: %v", mfPath, err))
-		}
-		fmt.Printf("bumped %s: %s -> %s\n", mfPath, old, newVer)
-
-		if doConfigs {
-			packName := m.Name
-			if packName == "" {
-				packName = m.ID
-			}
-			if packName == "" {
-				packName = filepath.Base(packDir)
-			}
-			updatePackConfigs(packDir, packName, newVer)
-		}
+		runBump(packDir, newVer, doConfigs)
 	},
 }
 
-func updatePackConfigs(packDir, packName, version string) {
+// — transactional bump: plan / apply / rollback —
+
+// bumpEdit is one planned file write, computed before anything touches disk.
+type bumpEdit struct {
+	path    string
+	newData []byte
+	label   string
+}
+
+// bumpTxn snapshots files before they are modified so a failed apply can
+// restore every touched file, including index/pack files rewritten by refresh.
+type bumpTxn struct {
+	order     []string
+	snapshots map[string][]byte // nil value = file did not exist before apply
+}
+
+func newBumpTxn() *bumpTxn { return &bumpTxn{snapshots: map[string][]byte{}} }
+
+func (t *bumpTxn) snapshot(path string) {
+	if _, ok := t.snapshots[path]; ok {
+		return
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		data = nil
+	}
+	t.snapshots[path] = data
+	t.order = append(t.order, path)
+}
+
+func (t *bumpTxn) rollback() {
+	for i := len(t.order) - 1; i >= 0; i-- {
+		path := t.order[i]
+		data := t.snapshots[path]
+		if data == nil {
+			os.Remove(path)
+			continue
+		}
+		if err := os.WriteFile(path, data, 0o644); err != nil {
+			llWarn("rollback: failed to restore %s: %v", path, err)
+		}
+	}
+}
+
+func runBump(packDir, newVer string, doConfigs bool) {
+	mfPath := filepath.Join(packDir, "manifest.json")
+	m, err := manifest.Read(mfPath)
+	if err != nil {
+		llFail(fmt.Sprintf("failed to read %s: %v", mfPath, err))
+	}
+	old := m.Version
+	m.Version = newVer
+
+	packName := m.Name
+	if packName == "" {
+		packName = m.ID
+	}
+	if packName == "" {
+		packName = filepath.Base(packDir)
+	}
+
+	// Plan phase: compute every edit up front; nothing is written yet.
+	var edits []bumpEdit
+	var refreshDirs []string
+	if doConfigs {
+		edits, refreshDirs = planPackConfigEdits(packDir, packName, newVer)
+	}
+
+	fmt.Printf("plan: %s version %s -> %s\n", mfPath, old, newVer)
+	for _, e := range edits {
+		fmt.Printf("plan: %s\n", e.label)
+	}
+	for _, dir := range refreshDirs {
+		fmt.Printf("plan: refresh %s\n", dir)
+	}
+
+	if len(refreshDirs) > 0 {
+		if _, err := exec.LookPath(workspace.SelfBin()); err != nil {
+			llFail("packwand binary not found (needed for refresh); nothing was modified")
+		}
+	}
+
+	// Apply phase: snapshot everything we will touch, then write. Any
+	// failure — including a refresh failure — restores all snapshots.
+	txn := newBumpTxn()
+	txn.snapshot(mfPath)
+	for _, e := range edits {
+		txn.snapshot(e.path)
+	}
+	for _, dir := range refreshDirs {
+		txn.snapshot(filepath.Join(dir, "index.toml"))
+		txn.snapshot(filepath.Join(dir, "pack.toml"))
+	}
+
+	fail := func(msg string) {
+		txn.rollback()
+		llFail(msg + " — all changes rolled back")
+	}
+
+	if err := manifest.Write(mfPath, m); err != nil {
+		fail(fmt.Sprintf("failed to write %s: %v", mfPath, err))
+	}
+	for _, e := range edits {
+		if err := os.WriteFile(e.path, e.newData, 0o644); err != nil {
+			fail(fmt.Sprintf("failed to write %s: %v", e.path, err))
+		}
+		fmt.Printf("  %s\n", e.label)
+	}
+	for _, dir := range refreshDirs {
+		c := exec.Command(workspace.SelfBin(), "refresh")
+		c.Dir = dir
+		if out, err := c.CombinedOutput(); err != nil {
+			fail(fmt.Sprintf("packwand refresh failed in %s: %v\n%s", dir, err, workspace.Indent(string(out), "    ")))
+		}
+		fmt.Printf("  refreshed %s\n", dir)
+	}
+
+	fmt.Printf("bumped %s: %s -> %s (%d config file(s), %d subdir refresh(es))\n", mfPath, old, newVer, len(edits), len(refreshDirs))
+}
+
+func planPackConfigEdits(packDir, packName, version string) ([]bumpEdit, []string) {
 	entries, err := os.ReadDir(packDir)
 	if err != nil {
 		llFail(fmt.Sprintf("failed to read %s: %v", packDir, err))
 	}
 
-	var touched []string
-	updates := 0
+	var edits []bumpEdit
+	var refreshDirs []string
 	for _, e := range entries {
 		if !e.IsDir() {
 			continue
@@ -108,82 +206,73 @@ func updatePackConfigs(packDir, packName, version string) {
 		}
 		cfgDir := filepath.Join(packDir, name, "config")
 		n := 0
-		if updateMenuCredits(filepath.Join(cfgDir, "isxander-main-menu-credits.json"), packName, version) {
+		if ed, ok := planMenuCredits(filepath.Join(cfgDir, "isxander-main-menu-credits.json"), packName, version); ok {
+			edits = append(edits, ed)
 			n++
 		}
-		if updateLoaderDeps(filepath.Join(cfgDir, "fabric_loader_dependencies.json"), packName, version) {
+		if ed, ok := planLoaderDeps(filepath.Join(cfgDir, "fabric_loader_dependencies.json"), packName, version); ok {
+			edits = append(edits, ed)
 			n++
 		}
 		if n > 0 {
-			touched = append(touched, filepath.Join(packDir, name))
-			updates += n
+			refreshDirs = append(refreshDirs, filepath.Join(packDir, name))
 		}
 	}
 
-	if len(touched) == 0 {
+	if len(edits) == 0 {
 		fmt.Printf("no version-bearing configs found in any subdir of %s.\n", packDir)
-		return
 	}
-	fmt.Printf("updated %d config file(s) across %d subdir(s)\n", updates, len(touched))
-
-	if _, err := exec.LookPath(workspace.SelfBin()); err != nil {
-		fmt.Println("note: packwand not found via SelfBin; run 'packwand refresh' in each updated subdir to fix index hashes.")
-		return
-	}
-	for _, dir := range touched {
-		c := exec.Command(workspace.SelfBin(), "refresh")
-		c.Dir = dir
-		if out, err := c.CombinedOutput(); err != nil {
-			llFail(fmt.Sprintf("packwand refresh failed in %s: %v\n%s", dir, err, workspace.Indent(string(out), "    ")))
-		}
-		fmt.Printf("  refreshed %s\n", dir)
-	}
+	return edits, refreshDirs
 }
 
-func updateMenuCredits(path, packName, version string) bool {
+func planMenuCredits(path, packName, version string) (bumpEdit, bool) {
 	obj, ok := loadJSONMap(path)
 	if !ok {
-		return false
+		return bumpEdit{}, false
 	}
 	mainMenu, ok := obj["main_menu"].(map[string]any)
 	if !ok {
-		return false
+		return bumpEdit{}, false
 	}
 	bottomRight, ok := mainMenu["bottom_right"].([]any)
 	if !ok || len(bottomRight) == 0 {
-		return false
+		return bumpEdit{}, false
 	}
 	first, ok := bottomRight[0].(map[string]any)
 	if !ok {
-		return false
+		return bumpEdit{}, false
 	}
 	first["text"] = packName + " " + version
-	writeCompactJSON(path, obj)
-	fmt.Printf("  %s -> %q\n", path, packName+" "+version)
-	return true
+	return bumpEdit{
+		path:    path,
+		newData: marshalCompactJSON(path, obj),
+		label:   fmt.Sprintf("%s -> %q", path, packName+" "+version),
+	}, true
 }
 
-func updateLoaderDeps(path, packName, version string) bool {
+func planLoaderDeps(path, packName, version string) (bumpEdit, bool) {
 	obj, ok := loadJSONMap(path)
 	if !ok {
-		return false
+		return bumpEdit{}, false
 	}
 	overrides, ok := obj["overrides"].(map[string]any)
 	if !ok {
-		return false
+		return bumpEdit{}, false
 	}
 	minecraft, ok := overrides["minecraft"].(map[string]any)
 	if !ok {
-		return false
+		return bumpEdit{}, false
 	}
 	recommends, ok := minecraft["+recommends"].(map[string]any)
 	if !ok {
-		return false
+		return bumpEdit{}, false
 	}
 	recommends[packName] = ">" + version
-	writeCompactJSON(path, obj)
-	fmt.Printf("  %s -> %s: %q\n", path, packName, ">"+version)
-	return true
+	return bumpEdit{
+		path:    path,
+		newData: marshalCompactJSON(path, obj),
+		label:   fmt.Sprintf("%s -> %s: %q", path, packName, ">"+version),
+	}, true
 }
 
 func loadJSONMap(path string) (map[string]any, bool) {
@@ -199,19 +288,17 @@ func loadJSONMap(path string) (map[string]any, bool) {
 	return obj, true
 }
 
-func writeCompactJSON(path string, v any) {
+func marshalCompactJSON(path string, v any) []byte {
 	var buf strings.Builder
 	enc := json.NewEncoder(&buf)
 	enc.SetEscapeHTML(false)
 	if err := enc.Encode(v); err != nil {
 		llFail(fmt.Sprintf("failed to marshal %s: %v", path, err))
 	}
-	if err := os.WriteFile(path, []byte(buf.String()), 0o644); err != nil {
-		llFail(fmt.Sprintf("failed to write %s: %v", path, err))
-	}
+	return []byte(buf.String())
 }
 
-// â€” freeze / unfreeze â€”
+// — freeze / unfreeze —
 
 var llFreezeCmd = &cobra.Command{
 	Use:   "freeze <pack-subdir> [mod-slugs...]",
@@ -357,7 +444,7 @@ func pinDrift(packDir string, freezeMap map[string][]string) []string {
 	return drift
 }
 
-// â€” side â€”
+// — side —
 
 var validSides = map[string]bool{"client": true, "server": true, "both": true, "either": true}
 
@@ -524,7 +611,7 @@ func rewriteSide(content, newSide string) (updated, old string, changed bool) {
 	return strings.Join(lines, "\n"), old, true
 }
 
-// â€” packs â€”
+// — packs —
 
 type packRef struct {
 	Category string
@@ -634,13 +721,13 @@ func findPack(id string) packRef {
 func packsList(asJSON bool) {
 	packs := loadAllPacks()
 	if len(packs) == 0 {
-		llFail("no packs found â€” run packwand from the repo root")
+		llFail("no packs found — run packwand from the repo root")
 	}
 	if asJSON {
 		type jsonEntry struct {
-			ID       string            `json:"id"`
-			Category string            `json:"category"`
-			Dir      string            `json:"dir"`
+			ID       string             `json:"id"`
+			Category string             `json:"category"`
+			Dir      string             `json:"dir"`
 			Manifest *manifest.Manifest `json:"manifest"`
 		}
 		out := make([]jsonEntry, len(packs))
@@ -649,6 +736,35 @@ func packsList(asJSON bool) {
 		}
 		data, _ := json.MarshalIndent(out, "", "  ")
 		fmt.Println(string(data))
+		return
+	}
+	if Interactive() {
+		rows := make([][]string, 0, len(packs))
+		for _, pack := range packs {
+			m := pack.M
+			lifecycle := m.Lifecycle
+			if lifecycle == "" {
+				lifecycle = "active"
+			}
+			platforms := []string{}
+			if m.ModrinthID != "" {
+				platforms = append(platforms, "mr")
+			}
+			if m.CurseforgeID != "" {
+				platforms = append(platforms, "cf")
+			}
+			if m.GitHubID != "" {
+				platforms = append(platforms, "gh")
+			}
+			if m.GiteaID != "" {
+				platforms = append(platforms, "gitea")
+			}
+			if m.GitLabID != "" {
+				platforms = append(platforms, "gl")
+			}
+			rows = append(rows, []string{pack.ID, m.Type, m.Version, m.Loader, m.Role.Label(), lifecycle, strings.Join(platforms, "+")})
+		}
+		fmt.Fprintln(os.Stderr, Table([]string{"PACK", "TYPE", "VERSION", "LOADER", "ROLE", "LIFECYCLE", "PLATFORMS"}, rows))
 		return
 	}
 	idW, verW := 4, 7
@@ -787,7 +903,7 @@ func packsSet(id, field, value string) {
 	}
 }
 
-// â€” automation â€”
+// — automation —
 
 var llAutomationCmd = &cobra.Command{
 	Use:   "automation",

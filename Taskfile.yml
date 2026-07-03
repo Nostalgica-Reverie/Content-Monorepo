@@ -6,7 +6,7 @@ version: "3"
 # build server exactly.
 
 vars:
-  INSTALLER_DIR: lib/packwiz-installer
+  INSTALLER_DIR: lib/packwand-installer
   WEBVIEW_DIR: lib/mod-browser-webview
   GUI_TAURI_DIR: src/packwand/gui/tauri
 
@@ -29,7 +29,7 @@ tasks:
     desc: Compile-check packwiz-installer (Gradle has no separate lint; compilation surfaces diagnostics)
     dir: "{{.INSTALLER_DIR}}"
     cmds:
-      - cmd: ./gradlew classes bootstrap:classes
+      - cmd: sh ./gradlew classes bootstrap:classes
         platforms: [linux, darwin]
       - cmd: cmd /c '.\gradlew.bat' classes bootstrap:classes
         platforms: [windows]
@@ -62,7 +62,7 @@ tasks:
     desc: Gradle tests (installer + bootstrap)
     dir: "{{.INSTALLER_DIR}}"
     cmds:
-      - cmd: ./gradlew test
+      - cmd: sh ./gradlew test
         platforms: [linux, darwin]
       - cmd: cmd /c '.\gradlew.bat' test
         platforms: [windows]
@@ -89,7 +89,7 @@ tasks:
     desc: Build packwiz-installer (and the legacy Java bootstrap) via Gradle
     dir: "{{.INSTALLER_DIR}}"
     cmds:
-      - cmd: ./gradlew build -x test
+      - cmd: sh ./gradlew build -x test
         platforms: [linux, darwin]
       - cmd: cmd /c '.\gradlew.bat' build -x test
         platforms: [windows]

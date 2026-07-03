@@ -1,6 +1,9 @@
 import * as $list from "../../gleam_stdlib/gleam/list.mjs";
+import * as $option from "../../gleam_stdlib/gleam/option.mjs";
+import { None } from "../../gleam_stdlib/gleam/option.mjs";
 import * as $string from "../../gleam_stdlib/gleam/string.mjs";
 import { toList, prepend as listPrepend, CustomType as $CustomType } from "../gleam.mjs";
+import * as $manifest_form from "../packwand_gui/manifest_form.mjs";
 import * as $domain from "../packwand_gui/model.mjs";
 
 export class Overview extends $CustomType {}
@@ -58,7 +61,7 @@ export const NewPack$NewPack$description = (value) => value.description;
 export const NewPack$NewPack$6 = (value) => value.description;
 
 export class Model extends $CustomType {
-  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) {
+  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) {
     super();
     this.root = root;
     this.version = version;
@@ -72,6 +75,8 @@ export class Model extends $CustomType {
     this.mod_slug = mod_slug;
     this.changelog = changelog;
     this.manifest = manifest;
+    this.manifest_form = manifest_form;
+    this.manifest_structured = manifest_structured;
     this.logs = logs;
     this.job_status = job_status;
     this.refresh_mods_after_job = refresh_mods_after_job;
@@ -80,7 +85,7 @@ export class Model extends $CustomType {
     this.notice = notice;
   }
 }
-export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) =>
+export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) =>
   new Model(root,
   version,
   projects,
@@ -93,6 +98,8 @@ export const Model$Model = (root, version, projects, features, selected_id, sele
   mod_slug,
   changelog,
   manifest,
+  manifest_form,
+  manifest_structured,
   logs,
   job_status,
   refresh_mods_after_job,
@@ -124,19 +131,24 @@ export const Model$Model$changelog = (value) => value.changelog;
 export const Model$Model$10 = (value) => value.changelog;
 export const Model$Model$manifest = (value) => value.manifest;
 export const Model$Model$11 = (value) => value.manifest;
+export const Model$Model$manifest_form = (value) => value.manifest_form;
+export const Model$Model$12 = (value) => value.manifest_form;
+export const Model$Model$manifest_structured = (value) =>
+  value.manifest_structured;
+export const Model$Model$13 = (value) => value.manifest_structured;
 export const Model$Model$logs = (value) => value.logs;
-export const Model$Model$12 = (value) => value.logs;
+export const Model$Model$14 = (value) => value.logs;
 export const Model$Model$job_status = (value) => value.job_status;
-export const Model$Model$13 = (value) => value.job_status;
+export const Model$Model$15 = (value) => value.job_status;
 export const Model$Model$refresh_mods_after_job = (value) =>
   value.refresh_mods_after_job;
-export const Model$Model$14 = (value) => value.refresh_mods_after_job;
+export const Model$Model$16 = (value) => value.refresh_mods_after_job;
 export const Model$Model$icon_failed = (value) => value.icon_failed;
-export const Model$Model$15 = (value) => value.icon_failed;
+export const Model$Model$17 = (value) => value.icon_failed;
 export const Model$Model$new_pack = (value) => value.new_pack;
-export const Model$Model$16 = (value) => value.new_pack;
+export const Model$Model$18 = (value) => value.new_pack;
 export const Model$Model$notice = (value) => value.notice;
-export const Model$Model$17 = (value) => value.notice;
+export const Model$Model$19 = (value) => value.notice;
 
 export class GotHealth extends $CustomType {
   constructor($0) {
@@ -334,6 +346,28 @@ export const Msg$SetManifest = ($0) => new SetManifest($0);
 export const Msg$isSetManifest = (value) => value instanceof SetManifest;
 export const Msg$SetManifest$0 = (value) => value[0];
 
+export class SetManifestField extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetManifestField = ($0) => new SetManifestField($0);
+export const Msg$isSetManifestField = (value) =>
+  value instanceof SetManifestField;
+export const Msg$SetManifestField$0 = (value) => value[0];
+
+export class SetManifestStructured extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetManifestStructured = ($0) => new SetManifestStructured($0);
+export const Msg$isSetManifestStructured = (value) =>
+  value instanceof SetManifestStructured;
+export const Msg$SetManifestStructured$0 = (value) => value[0];
+
 export class ManifestSaved extends $CustomType {
   constructor($0) {
     super();
@@ -454,6 +488,8 @@ export function initial() {
     "",
     "",
     "",
+    new None(),
+    false,
     toList([]),
     "idle",
     false,
@@ -493,6 +529,8 @@ export function append_log(model, line) {
     model.mod_slug,
     model.changelog,
     model.manifest,
+    model.manifest_form,
+    model.manifest_structured,
     listPrepend(line, model.logs),
     model.job_status,
     model.refresh_mods_after_job,

@@ -1,4 +1,4 @@
-﻿package migrate
+package migrate
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ var loaderCommand = &cobra.Command{
 		modpack, err := core.LoadPack()
 		if err != nil {
 			if os.IsNotExist(err) {
-				cmdshared.Fail("no pack.toml found â€” run 'packwand init' to create one")
+				cmdshared.Fail("no pack.toml found — run 'packwand init' to create one")
 			}
 			cmdshared.Failf("loading pack: %v", err)
 		}
@@ -26,7 +26,7 @@ var loaderCommand = &cobra.Command{
 		if len(currentLoaders) == 0 {
 			cmdshared.Fail("no loader set in pack.toml")
 		} else if len(currentLoaders) > 1 {
-			cmdshared.Fail("multiple loaders set in pack.toml â€” this is not supported")
+			cmdshared.Fail("multiple loaders set in pack.toml — this is not supported")
 		}
 		mcVersion, err := modpack.GetMCVersion()
 		if err != nil {

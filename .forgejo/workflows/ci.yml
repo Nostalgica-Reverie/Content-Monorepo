@@ -52,6 +52,10 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: gradle
+      - name: Install Linux webview dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev
       - uses: https://github.com/dtolnay/rust-toolchain@stable
         with:
           components: clippy
@@ -83,6 +87,10 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: gradle
+      - name: Install Linux webview dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev
       - uses: https://github.com/dtolnay/rust-toolchain@stable
       - uses: https://github.com/Swatinem/rust-cache@v2
         with:
@@ -127,6 +135,11 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: gradle
+      - name: Install Linux webview dependencies
+        if: matrix.toolchains == 'rust'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev
       - uses: https://github.com/dtolnay/rust-toolchain@stable
         if: matrix.toolchains == 'rust'
       - uses: https://github.com/Swatinem/rust-cache@v2

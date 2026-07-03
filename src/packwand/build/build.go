@@ -476,8 +476,12 @@ var publishUploadCmd = &cobra.Command{
 			variant = args[1]
 		}
 		live, _ := c.Flags().GetBool("live")
+		changelogFile, _ := c.Flags().GetString("changelog-file")
+		if changelogFile != "" {
+			changelogFile = cmd.Abs(changelogFile)
+		}
 		cmd.Chdir()
-		pubUpload(manifestPath, variant, live)
+		pubUpload(manifestPath, variant, live, changelogFile)
 	},
 }
 
@@ -498,6 +502,7 @@ var publishVerifyCmd = &cobra.Command{
 
 func init() {
 	publishUploadCmd.Flags().Bool("live", false, "Actually upload (default: dry run)")
+	publishUploadCmd.Flags().String("changelog-file", "", "Read release notes from this file instead of the pack's changelog.md")
 }
 
 // — publish types and helpers —
@@ -505,7 +510,7 @@ func init() {
 type pubResolved struct {
 	pName, rawName, pType, loader, releaseType string
 	mrID, cfID, subdirKey, mcVer, pVer         string
-	displayName                                string
+	displayName, packID                        string
 	isExperimental                             bool
 	builtMR, builtCF                           bool
 }
@@ -538,6 +543,7 @@ func pubResolve(manifestPath, variant string) pubResolved {
 		releaseType:    m.ReleaseType,
 		mrID:           m.ModrinthID,
 		cfID:           m.CurseforgeID,
+		packID:         m.ID,
 		isExperimental: isExperimental,
 	}
 	if r.mrID == "" && r.cfID == "" {
@@ -826,16 +832,22 @@ const (
 	curseforgeAPI = "https://minecraft.curseforge.com/api"
 )
 
-func pubUpload(manifestPath, variant string, live bool) {
+func pubUpload(manifestPath, variant string, live bool, changelogFile string) {
 	pDir := filepath.Dir(manifestPath)
 	r := pubResolve(manifestPath, variant)
 
-	if r.pType != "modpack" {
-		cmd.Fail(fmt.Sprintf("upload currently supports modpacks only (got '%s')", r.pType))
+	if r.pType != "modpack" && r.pType != "datapack" {
+		cmd.Fail(fmt.Sprintf("upload supports modpacks and datapacks (got '%s')", r.pType))
 	}
 
 	changelog := fmt.Sprintf("Update for %s", r.rawName)
-	if data, err := os.ReadFile(filepath.Join(pDir, "changelog.md")); err == nil {
+	if changelogFile != "" {
+		data, err := os.ReadFile(changelogFile)
+		if err != nil {
+			cmd.Fail(fmt.Sprintf("reading --changelog-file %s: %v", changelogFile, err))
+		}
+		changelog = string(data)
+	} else if data, err := os.ReadFile(filepath.Join(pDir, "changelog.md")); err == nil {
 		changelog = string(data)
 	}
 
@@ -844,7 +856,6 @@ func pubUpload(manifestPath, variant string, live bool) {
 		ghWorkspace = "."
 	}
 	artifactsDir := filepath.Join(ghWorkspace, pDir, "artifacts")
-	filenameBase := fmt.Sprintf("%s-%s-%s-%s", r.pName, r.mcVer, r.loader, r.pVer)
 
 	if !live {
 		fmt.Println("[DRY RUN] publish upload — nothing will be sent (pass --live to upload)")
@@ -858,7 +869,7 @@ func pubUpload(manifestPath, variant string, live bool) {
 		if pl.id == "" {
 			continue
 		}
-		artifact := filepath.Join(artifactsDir, fmt.Sprintf("%s-%s.%s", filenameBase, pl.plat.short, pl.plat.ext))
+		artifact := filepath.Join(artifactsDir, pubArtifactName(r, pl.plat))
 		if _, err := os.Stat(artifact); err != nil {
 			fmt.Printf("skipping %s: artifact %s not found (run 'publish build' first)\n", pl.plat.short, artifact)
 			continue
@@ -889,6 +900,24 @@ func pubUpload(manifestPath, variant string, live bool) {
 	fmt.Printf("%d artifact(s) %s for %s\n", uploaded, mode, r.displayName)
 }
 
+// pubArtifactName mirrors the naming used by pubBuildModpack / pubBuildDatapack.
+func pubArtifactName(r pubResolved, pl platform) string {
+	if r.pType == "datapack" {
+		return fmt.Sprintf("%s-%s.zip", r.packID, r.pVer)
+	}
+	return fmt.Sprintf("%s-%s-%s-%s-%s.%s", r.pName, r.mcVer, r.loader, r.pVer, pl.short, pl.ext)
+}
+
+// modrinthLoaders resolves the loader tags for the Modrinth version payload.
+// Non-modpack types without an explicit loader publish under the generic
+// "minecraft" tag, matching what the previous mc-publish workflow sent.
+func modrinthLoaders(r pubResolved) []string {
+	if r.loader != "" {
+		return []string{r.loader}
+	}
+	return []string{"minecraft"}
+}
+
 func uploadModrinth(r pubResolved, projectID, changelog, fileName string, data []byte, live bool) {
 	payload := map[string]any{
 		"project_id":     projectID,
@@ -898,14 +927,14 @@ func uploadModrinth(r pubResolved, projectID, changelog, fileName string, data [
 		"dependencies":   []any{},
 		"game_versions":  []string{r.mcVer},
 		"version_type":   r.releaseType,
-		"loaders":        []string{r.loader},
+		"loaders":        modrinthLoaders(r),
 		"featured":       false,
 		"file_parts":     []string{"file"},
 		"primary_file":   "file",
 	}
 
-	fmt.Printf("modrinth: %s -> project %s | version %s | mc %s | loader %s | %d bytes\n",
-		fileName, projectID, r.pVer, r.mcVer, r.loader, len(data))
+	fmt.Printf("modrinth: %s -> project %s | version %s | mc %s | loaders %v | %d bytes\n",
+		fileName, projectID, r.pVer, r.mcVer, modrinthLoaders(r), len(data))
 	if !live {
 		return
 	}
@@ -920,10 +949,14 @@ func uploadModrinth(r pubResolved, projectID, changelog, fileName string, data [
 		{name: "file", fileName: fileName, contentType: "application/octet-stream", data: data},
 	})
 
-	doUpload("modrinth", modrinthAPI+"/version", map[string]string{
+	status, detail := postWithRetry("modrinth", modrinthAPI+"/version", map[string]string{
 		"Authorization": token,
 		"Content-Type":  contentType,
-	}, body, r.pVer, projectID)
+	}, body)
+	if status < 200 || status >= 300 {
+		cmd.Fail(fmt.Sprintf("modrinth upload failed (HTTP %d): %s", status, string(detail)))
+	}
+	fmt.Printf("modrinth: uploaded %s to %s\n", r.pVer, projectID)
 }
 
 func uploadCurseforge(r pubResolved, projectID, changelog, fileName string, data []byte, live bool) {
@@ -937,80 +970,174 @@ func uploadCurseforge(r pubResolved, projectID, changelog, fileName string, data
 		cmd.Fail("CURSEFORGE_TOKEN not set")
 	}
 
-	versionIDs := cfGameVersionIDs(token, r.mcVer, r.loader)
-	meta, _ := json.Marshal(map[string]any{
-		"changelog":     changelog,
-		"changelogType": "markdown",
-		"displayName":   r.displayName,
-		"gameVersions":  versionIDs,
-		"releaseType":   r.releaseType,
-	})
+	gameIDs, loaderIDs := cfResolveVersionIDs(token, r.mcVer, r.loader)
 
-	contentType, body := buildMultipart([]mpart{
-		{name: "metadata", contentType: "application/json", data: meta},
-		{name: "file", fileName: fileName, contentType: "application/octet-stream", data: data},
-	})
+	// CurseForge rejects loader IDs on non-mod project types with errorCode
+	// 1009 (invalid game version), so fall back to game-version IDs alone.
+	variants := [][]int64{append(append([]int64{}, gameIDs...), loaderIDs...)}
+	if len(loaderIDs) > 0 {
+		variants = append(variants, gameIDs)
+	}
 
-	doUpload("curseforge", fmt.Sprintf("%s/projects/%s/upload-file", curseforgeAPI, projectID), map[string]string{
-		"X-Api-Token":  token,
-		"Content-Type": contentType,
-	}, body, r.pVer, projectID)
+	url := fmt.Sprintf("%s/projects/%s/upload-file", curseforgeAPI, projectID)
+	for i, ids := range variants {
+		meta, _ := json.Marshal(map[string]any{
+			"changelog":     changelog,
+			"changelogType": "markdown",
+			"displayName":   r.displayName,
+			"gameVersions":  ids,
+			"releaseType":   r.releaseType,
+		})
+		contentType, body := buildMultipart([]mpart{
+			{name: "metadata", contentType: "application/json", data: meta},
+			{name: "file", fileName: fileName, contentType: "application/octet-stream", data: data},
+		})
+
+		status, detail := postWithRetry("curseforge", url, map[string]string{
+			"X-Api-Token":  token,
+			"Content-Type": contentType,
+		}, body)
+		if status >= 200 && status < 300 {
+			fmt.Printf("curseforge: uploaded %s to %s\n", r.pVer, projectID)
+			return
+		}
+		if cfIsInvalidGameVersionError(detail) && i+1 < len(variants) {
+			fmt.Printf("curseforge: rejected game-version IDs %v (errorCode %d), retrying without loader IDs\n", ids, cfErrorCodeInvalidGameVersion)
+			continue
+		}
+		cmd.Fail(fmt.Sprintf("curseforge upload failed (HTTP %d): %s", status, string(detail)))
+	}
 }
 
-func doUpload(label, url string, headers map[string]string, body []byte, pVer, projectID string) {
+const (
+	uploadMaxAttempts = 3
+	uploadRetryDelay  = 2 * time.Second
+
+	// cfErrorCodeInvalidGameVersion is returned by the CurseForge upload API
+	// when a submitted game-version ID is invalid for the project type.
+	cfErrorCodeInvalidGameVersion = 1009
+)
+
+// cfIsInvalidGameVersionError reports whether a CurseForge error response
+// body carries errorCode 1009 (invalid game version ID).
+func cfIsInvalidGameVersionError(body []byte) bool {
+	var e struct {
+		ErrorCode    int    `json:"errorCode"`
+		ErrorMessage string `json:"errorMessage"`
+	}
+	return json.Unmarshal(body, &e) == nil && e.ErrorCode == cfErrorCodeInvalidGameVersion
+}
+
+// postWithRetry POSTs body to url, retrying transient failures (network
+// errors, HTTP 429, HTTP 5xx) with doubling backoff. Non-transient responses
+// are returned to the caller for interpretation; a network error on the final
+// attempt is fatal.
+func postWithRetry(label, url string, headers map[string]string, body []byte) (int, []byte) {
+	delay := uploadRetryDelay
+	for attempt := 1; ; attempt++ {
+		status, detail, err := postOnce(url, headers, body)
+		transient := err != nil || status == http.StatusTooManyRequests || status >= 500
+		if !transient || attempt >= uploadMaxAttempts {
+			if err != nil {
+				cmd.Fail(fmt.Sprintf("%s upload failed: %v", label, err))
+			}
+			return status, detail
+		}
+		if err != nil {
+			fmt.Printf("%s: attempt %d/%d failed (%v), retrying in %s\n", label, attempt, uploadMaxAttempts, err, delay)
+		} else {
+			fmt.Printf("%s: attempt %d/%d got HTTP %d, retrying in %s\n", label, attempt, uploadMaxAttempts, status, delay)
+		}
+		time.Sleep(delay)
+		delay *= 2
+	}
+}
+
+func postOnce(url string, headers map[string]string, body []byte) (int, []byte, error) {
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(body))
 	if err != nil {
-		cmd.Fail(fmt.Sprintf("%s upload failed: %v", label, err))
+		return 0, nil, err
 	}
 	for k, v := range headers {
 		req.Header.Set(k, v)
 	}
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		cmd.Fail(fmt.Sprintf("%s upload failed: %v", label, err))
+		return 0, nil, err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		detail, _ := io.ReadAll(resp.Body)
-		cmd.Fail(fmt.Sprintf("%s upload failed (HTTP %d): %s", label, resp.StatusCode, string(detail)))
-	}
-	fmt.Printf("%s: uploaded %s to %s\n", label, pVer, projectID)
+	detail, _ := io.ReadAll(resp.Body)
+	return resp.StatusCode, detail, nil
 }
 
-func cfGameVersionIDs(token, mcVer, loader string) []int64 {
-	req, _ := http.NewRequest(http.MethodGet, curseforgeAPI+"/game/versions", nil)
+// cfResolveVersionIDs resolves CurseForge numeric game-version IDs for the
+// given Minecraft version and (optional) loader. Versions are filtered by
+// their game-version *type* (slug prefix "minecraft" for game versions,
+// "modloader" for loaders) so a loader name can never match a game version
+// entry or vice versa.
+func cfResolveVersionIDs(token, mcVer, loader string) (gameIDs, loaderIDs []int64) {
+	var types []struct {
+		ID   int64  `json:"id"`
+		Slug string `json:"slug"`
+	}
+	cfGetJSON(token, "/game/version-types", &types)
+
+	mcTypes := map[int64]bool{}
+	loaderTypes := map[int64]bool{}
+	for _, t := range types {
+		switch {
+		case strings.HasPrefix(t.Slug, "minecraft"):
+			mcTypes[t.ID] = true
+		case strings.HasPrefix(t.Slug, "modloader"):
+			loaderTypes[t.ID] = true
+		}
+	}
+
+	var versions []struct {
+		ID                int64  `json:"id"`
+		GameVersionTypeID int64  `json:"gameVersionTypeID"`
+		Name              string `json:"name"`
+		Slug              string `json:"slug"`
+	}
+	cfGetJSON(token, "/game/versions", &versions)
+
+	for _, v := range versions {
+		if mcTypes[v.GameVersionTypeID] && strings.EqualFold(v.Name, mcVer) {
+			gameIDs = append(gameIDs, v.ID)
+		}
+		if loader != "" && loaderTypes[v.GameVersionTypeID] &&
+			(strings.EqualFold(v.Name, loader) || strings.EqualFold(v.Slug, loader)) {
+			loaderIDs = append(loaderIDs, v.ID)
+		}
+	}
+
+	if len(gameIDs) == 0 {
+		cmd.Fail(fmt.Sprintf("could not resolve a CF game-version ID for mc '%s'", mcVer))
+	}
+	if loader != "" && len(loaderIDs) == 0 {
+		cmd.Fail(fmt.Sprintf("could not resolve a CF game-version ID for loader '%s'", loader))
+	}
+	return gameIDs, loaderIDs
+}
+
+func cfGetJSON(token, path string, target any) {
+	req, err := http.NewRequest(http.MethodGet, curseforgeAPI+path, nil)
+	if err != nil {
+		cmd.Fail(fmt.Sprintf("CF %s lookup failed: %v", path, err))
+	}
 	req.Header.Set("X-Api-Token", token)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		cmd.Fail(fmt.Sprintf("CF game/versions lookup failed: %v", err))
+		cmd.Fail(fmt.Sprintf("CF %s lookup failed: %v", path, err))
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		detail, _ := io.ReadAll(resp.Body)
-		cmd.Fail(fmt.Sprintf("CF game/versions lookup failed (HTTP %d): %s", resp.StatusCode, string(detail)))
+		cmd.Fail(fmt.Sprintf("CF %s lookup failed (HTTP %d): %s", path, resp.StatusCode, string(detail)))
 	}
-	var list []map[string]any
-	if err := json.NewDecoder(resp.Body).Decode(&list); err != nil {
-		cmd.Fail(fmt.Sprintf("parsing CF game versions: %v", err))
+	if err := json.NewDecoder(resp.Body).Decode(target); err != nil {
+		cmd.Fail(fmt.Sprintf("parsing CF %s response: %v", path, err))
 	}
-
-	loaderLC := strings.ToLower(loader)
-	var ids []int64
-	for _, entry := range list {
-		name, _ := entry["name"].(string)
-		slug, _ := entry["slug"].(string)
-		idF, ok := entry["id"].(float64)
-		if !ok {
-			continue
-		}
-		if name == mcVer || slug == loaderLC || strings.ToLower(name) == loaderLC {
-			ids = append(ids, int64(idF))
-		}
-	}
-	if len(ids) < 2 {
-		cmd.Fail(fmt.Sprintf("could not resolve CF game-version IDs for mc '%s' + loader '%s' (matched %d of 2)", mcVer, loader, len(ids)))
-	}
-	return ids
 }
 
 func pubVerify(manifestPath, variant string) {

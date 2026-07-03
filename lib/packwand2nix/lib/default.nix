@@ -48,6 +48,15 @@ let
   # to put into mkPackwizPackages, so make sure you keep it up to
   # date!
   #
+  # NOTE: prefer `packwand nix gen`, which produces the same
+  # checksums.json from packwand's verified download cache without
+  # eval-time fetches. This pure-Nix path remains as a fallback and
+  # understands packwand-format (`packwand:26`, sha512-indexed) packs:
+  # the sha256 used by Nix is always recomputed from the fetched file,
+  # so the pack's own hash-format does not matter. Metadata-mode mods
+  # (CurseForge) have no static URL and are skipped, matching
+  # `packwand nix gen`.
+  #
   # `dir` is a path to the folder containing your .pw.toml files
   # files for mods. make sure they are the only files in the folder
   #
@@ -61,6 +70,15 @@ let
         inherit url;
       });
 
+    fetchable =
+      removeAttrs mods
+      (builtins.filter
+        (mod: let
+          data = fromMod dir mod;
+        in
+          !(data ? download && data.download ? url && data.download.url != ""))
+        (attrNames mods));
+
     toWrite =
       toJSON
       (mapAttrs (mod: _: let
@@ -69,7 +87,7 @@ let
           inherit (data.download) url;
           sha256 = getChecksum mod data.download.url;
         })
-        mods);
+        fetchable);
   in
     toFile "checksums-json" toWrite;
 
@@ -101,19 +119,29 @@ in {
   # included in your zipped modpack
   #
   # `name` is a string containing the name of your modpack
+  #
+  # `bootstrap` optionally overrides the packwiz-installer-bootstrap
+  # jar. packwand-format (`packwand:26`, sha512) packs need the forked
+  # installer from lib/packwiz-installer; pass its bootstrap jar here.
+  # The default remains the upstream jar for plain packwiz packs.
   mkMultiMCPack = {
     pkgs,
     mods,
     filesDir ? "",
     name,
+    bootstrap ? null,
   }: let
     inherit (pkgs) fetchurl lib runCommand zip;
     inherit (lib) forEach;
 
-    packwiz-installer-bootstrap = fetchurl {
-      url = "https://github.com/packwiz/packwiz-installer-bootstrap/releases/download/v0.0.3/packwiz-installer-bootstrap.jar";
-      sha256 = "sha256-qPuyTcYEJ46X9GiOgtPZGjGLmO/AjV2/y8vKtkQ9EWw=";
-    };
+    packwiz-installer-bootstrap =
+      if bootstrap != null
+      then bootstrap
+      else
+        fetchurl {
+          url = "https://github.com/packwiz/packwiz-installer-bootstrap/releases/download/v0.0.3/packwiz-installer-bootstrap.jar";
+          sha256 = "sha256-qPuyTcYEJ46X9GiOgtPZGjGLmO/AjV2/y8vKtkQ9EWw=";
+        };
 
     forNames = attrset: forEach (attrNames attrset);
     commandSep = concatStringsSep "; ";

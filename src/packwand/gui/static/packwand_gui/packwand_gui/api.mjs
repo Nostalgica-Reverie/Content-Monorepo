@@ -53,7 +53,7 @@ function request(method, url, body, decoder, to_msg) {
 }
 
 export function health(to_msg) {
-  return request("GET", "/api/health", "", health_decoder(), to_msg);
+  return request("GET", "/api/v1/version", "", health_decoder(), to_msg);
 }
 
 function subdir_decoder() {
@@ -330,7 +330,7 @@ function project_index_decoder() {
 }
 
 export function projects(to_msg) {
-  return request("GET", "/api/projects", "", project_index_decoder(), to_msg);
+  return request("GET", "/api/v1/packs", "", project_index_decoder(), to_msg);
 }
 
 function feature_decoder() {
@@ -432,7 +432,13 @@ function feature_index_decoder() {
 }
 
 export function features(to_msg) {
-  return request("GET", "/api/features", "", feature_index_decoder(), to_msg);
+  return request(
+    "GET",
+    "/api/v1/capabilities",
+    "",
+    feature_index_decoder(),
+    to_msg,
+  );
 }
 
 function mod_decoder() {
@@ -500,7 +506,7 @@ function mod_decoder() {
 export function mods(path, to_msg) {
   return request(
     "GET",
-    "/api/mods?subdir=" + $uri.percent_encode(path),
+    "/api/v1/mods?subdir=" + $uri.percent_encode(path),
     "",
     $decode.list(mod_decoder()),
     to_msg,
@@ -531,14 +537,14 @@ function content(url, to_msg) {
 
 export function changelog(id, to_msg) {
   return content(
-    ("/api/projects/" + $uri.percent_encode(id)) + "/changelog",
+    ("/api/v1/packs/" + $uri.percent_encode(id)) + "/changelog",
     to_msg,
   );
 }
 
 export function manifest(id, to_msg) {
   return content(
-    ("/api/projects/" + $uri.percent_encode(id)) + "/manifest",
+    ("/api/v1/packs/" + $uri.percent_encode(id)) + "/manifest",
     to_msg,
   );
 }
@@ -546,7 +552,7 @@ export function manifest(id, to_msg) {
 export function save_manifest(id, content, to_msg) {
   return request(
     "PUT",
-    ("/api/projects/" + $uri.percent_encode(id)) + "/manifest",
+    ("/api/v1/packs/" + $uri.percent_encode(id)) + "/manifest",
     (() => {
       let _pipe = $json.object(toList([["content", $json.string(content)]]));
       return $json.to_string(_pipe);
@@ -593,7 +599,7 @@ export function create_project(
   );
   return request(
     "POST",
-    "/api/projects",
+    "/api/v1/packs",
     $json.to_string(body),
     created_project_decoder(),
     to_msg,
@@ -636,7 +642,7 @@ export function webview_fetch(provider, slug, file_id, to_msg) {
   );
   return request(
     "POST",
-    "/api/webview/open",
+    "/api/v1/webview/open",
     $json.to_string(body),
     action_response_decoder(),
     to_msg,
@@ -654,7 +660,7 @@ export function action(action, to_msg) {
   );
   return request(
     "POST",
-    "/api/actions",
+    "/api/v1/actions",
     $json.to_string(body),
     action_response_decoder(),
     to_msg,

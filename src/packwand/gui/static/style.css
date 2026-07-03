@@ -650,3 +650,68 @@ h2 {
     grid-column: 1 / -1;
   }
 }
+
+/* — structured manifest editor — */
+
+.manifest-form h3 {
+  margin: 14px 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.manifest-form label.has-error input,
+.manifest-form label.has-error select {
+  border-color: #e5534b;
+}
+
+.field-error {
+  color: #e5534b;
+  font-size: 11px;
+  font-style: normal;
+}
+
+.validation-list {
+  margin: 4px 0;
+  padding-left: 18px;
+  font-size: 12px;
+}
+
+.validation-list .validation-error {
+  color: #e5534b;
+}
+
+.validation-list .validation-warning {
+  color: #d29922;
+}
+
+.validation-summary {
+  margin-top: 12px;
+  border: 1px solid rgba(229, 83, 75, 0.35);
+  border-radius: 6px;
+  padding: 8px 12px;
+  background: rgba(229, 83, 75, 0.06);
+}
+
+.validation-ok {
+  color: #3fb950;
+}
+
+.variant-row,
+.mapping-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: start;
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 6px;
+  padding: 10px;
+  background: var(--surface-soft);
+  margin-bottom: 8px;
+}

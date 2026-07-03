@@ -17,19 +17,19 @@ fn request_json(
 pub fn health(
   to_msg: fn(Result(domain.Health, domain.ApiError)) -> msg,
 ) -> Effect(msg) {
-  request("GET", "/api/health", "", health_decoder(), to_msg)
+  request("GET", "/api/v1/version", "", health_decoder(), to_msg)
 }
 
 pub fn projects(
   to_msg: fn(Result(domain.ProjectIndex, domain.ApiError)) -> msg,
 ) -> Effect(msg) {
-  request("GET", "/api/projects", "", project_index_decoder(), to_msg)
+  request("GET", "/api/v1/packs", "", project_index_decoder(), to_msg)
 }
 
 pub fn features(
   to_msg: fn(Result(domain.FeatureIndex, domain.ApiError)) -> msg,
 ) -> Effect(msg) {
-  request("GET", "/api/features", "", feature_index_decoder(), to_msg)
+  request("GET", "/api/v1/capabilities", "", feature_index_decoder(), to_msg)
 }
 
 pub fn mods(
@@ -38,7 +38,7 @@ pub fn mods(
 ) -> Effect(msg) {
   request(
     "GET",
-    "/api/mods?subdir=" <> uri.percent_encode(path),
+    "/api/v1/mods?subdir=" <> uri.percent_encode(path),
     "",
     decode.list(mod_decoder()),
     to_msg,
@@ -49,14 +49,14 @@ pub fn changelog(
   id: String,
   to_msg: fn(Result(domain.ContentResponse, domain.ApiError)) -> msg,
 ) -> Effect(msg) {
-  content("/api/projects/" <> uri.percent_encode(id) <> "/changelog", to_msg)
+  content("/api/v1/packs/" <> uri.percent_encode(id) <> "/changelog", to_msg)
 }
 
 pub fn manifest(
   id: String,
   to_msg: fn(Result(domain.ContentResponse, domain.ApiError)) -> msg,
 ) -> Effect(msg) {
-  content("/api/projects/" <> uri.percent_encode(id) <> "/manifest", to_msg)
+  content("/api/v1/packs/" <> uri.percent_encode(id) <> "/manifest", to_msg)
 }
 
 fn content(
@@ -73,7 +73,7 @@ pub fn save_manifest(
 ) -> Effect(msg) {
   request(
     "PUT",
-    "/api/projects/" <> uri.percent_encode(id) <> "/manifest",
+    "/api/v1/packs/" <> uri.percent_encode(id) <> "/manifest",
     json.object([#("content", json.string(content))]) |> json.to_string,
     decode.success(Nil),
     to_msg,
@@ -102,7 +102,7 @@ pub fn create_project(
     ])
   request(
     "POST",
-    "/api/projects",
+    "/api/v1/packs",
     json.to_string(body),
     created_project_decoder(),
     to_msg,
@@ -137,7 +137,7 @@ pub fn webview_fetch(
     ])
   request(
     "POST",
-    "/api/webview/open",
+    "/api/v1/webview/open",
     json.to_string(body),
     action_response_decoder(),
     to_msg,
@@ -157,7 +157,7 @@ pub fn action(
     ])
   request(
     "POST",
-    "/api/actions",
+    "/api/v1/actions",
     json.to_string(body),
     action_response_decoder(),
     to_msg,

@@ -7,12 +7,12 @@
 //! (`backend_url`) is exposed to the bundled boot page, which then navigates
 //! to the local server. The server's own pages get no Tauri IPC access at all.
 
-use std::io::{BufRead, BufReader};
+use std::fs;
 use std::path::PathBuf;
 use std::process::{Child, Command, Stdio};
-use std::sync::mpsc;
 use std::sync::Mutex;
-use std::time::Duration;
+use std::thread;
+use std::time::{Duration, Instant};
 
 use tauri::{Manager, RunEvent, State};
 
@@ -36,7 +36,11 @@ fn find_packwand() -> Result<PathBuf, String> {
             path.display()
         ));
     }
-    let name = if cfg!(windows) { "packwand.exe" } else { "packwand" };
+    let name = if cfg!(windows) {
+        "packwand.exe"
+    } else {
+        "packwand"
+    };
     if let Ok(exe) = std::env::current_exe() {
         if let Some(dir) = exe.parent() {
             let sibling = dir.join(name);
@@ -53,42 +57,35 @@ fn find_packwand() -> Result<PathBuf, String> {
 /// startup banner ("packwand gui running at http://127.0.0.1:PORT/").
 fn spawn_backend() -> Result<BackendProcess, String> {
     let bin = find_packwand()?;
+    let port_file = std::env::temp_dir().join(format!("packwand-gui-{}.url", std::process::id()));
+    let _ = fs::remove_file(&port_file);
     let mut child = Command::new(&bin)
-        .args(["gui", "--no-open", "--port", "0"])
-        .stdout(Stdio::piped())
+        .args(["gui", "--no-open", "--port", "0", "--print-port-file"])
+        .arg(&port_file)
+        .stdout(Stdio::null())
         .stderr(Stdio::null())
         .spawn()
         .map_err(|e| format!("failed to start {} gui: {e}", bin.display()))?;
 
-    let stdout = child.stdout.take().ok_or("failed to capture packwand stdout")?;
-    let (tx, rx) = mpsc::channel();
-    std::thread::spawn(move || {
-        let reader = BufReader::new(stdout);
-        for line in reader.lines() {
-            let Ok(line) = line else { break };
-            if let Some(url) = line
-                .strip_prefix("packwand gui running at ")
-                .map(str::trim)
-            {
-                let _ = tx.send(url.to_string());
+    let deadline = Instant::now() + Duration::from_secs(15);
+    while Instant::now() < deadline {
+        if let Ok(value) = fs::read_to_string(&port_file) {
+            let url = value.trim().to_string();
+            let _ = fs::remove_file(&port_file);
+            if url.starts_with("http://127.0.0.1:") {
+                return Ok(BackendProcess { child, url });
             }
-            // Keep draining stdout so the child never blocks on a full pipe.
-        }
-    });
-
-    match rx.recv_timeout(Duration::from_secs(15)) {
-        Ok(url) if url.starts_with("http://127.0.0.1:") => Ok(BackendProcess { child, url }),
-        Ok(url) => {
             let _ = child.kill();
-            Err(format!("unexpected packwand gui address: {url}"))
+            return Err(format!("unexpected packwand gui address: {url}"));
         }
-        Err(_) => {
-            let _ = child.kill();
-            Err("timed out waiting for packwand gui to start".into())
+        if let Ok(Some(status)) = child.try_wait() {
+            return Err(format!("packwand gui exited before startup: {status}"));
         }
+        thread::sleep(Duration::from_millis(50));
     }
+    let _ = child.kill();
+    Err("timed out waiting for packwand gui to start".into())
 }
-
 /// The only command exposed to the boot page: ensure the local backend is
 /// running and return its URL for navigation.
 #[tauri::command]

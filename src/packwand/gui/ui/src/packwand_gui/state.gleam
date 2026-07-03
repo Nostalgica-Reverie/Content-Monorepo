@@ -1,5 +1,7 @@
 import gleam/list
+import gleam/option.{type Option, None}
 import gleam/string
+import packwand_gui/manifest_form
 import packwand_gui/model as domain
 
 pub type View {
@@ -37,6 +39,11 @@ pub type Model {
     mod_slug: String,
     changelog: String,
     manifest: String,
+    /// Parsed structured editor state; None when the manifest JSON could not
+    /// be parsed (raw mode is the fallback).
+    manifest_form: Option(manifest_form.ManifestForm),
+    /// True renders typed controls, False the raw JSON textarea.
+    manifest_structured: Bool,
     /// Stored newest-first so appending a line is O(1); reverse for display.
     logs: List(String),
     job_status: String,
@@ -67,6 +74,8 @@ pub type Msg {
   JobFinished(String, String)
   SaveManifest
   SetManifest(String)
+  SetManifestField(manifest_form.Field)
+  SetManifestStructured(Bool)
   ManifestSaved(Result(Nil, domain.ApiError))
   CreateProject
   ProjectCreated(Result(domain.CreatedProject, domain.ApiError))
@@ -95,6 +104,8 @@ pub fn initial() -> Model {
     mod_slug: "",
     changelog: "",
     manifest: "",
+    manifest_form: None,
+    manifest_structured: False,
     logs: [],
     job_status: "idle",
     refresh_mods_after_job: False,

@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Command group IDs â€” used by subpackages to slot commands into the right section.
+// Command group IDs — used by subpackages to slot commands into the right section.
 const (
 	GroupPackManagement = "pack"
 	GroupUpdates        = "update"
@@ -28,7 +28,7 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "packwand",
-	Short: "Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management",
+	Short: "Minecraft modpack toolchain — packwiz core with multi-pack workspace management",
 	// The branded status bar is printed once per invocation (to stderr, and
 	// only on interactive terminals) before any subcommand runs.
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {

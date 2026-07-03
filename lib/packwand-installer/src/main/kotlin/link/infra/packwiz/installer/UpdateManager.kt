@@ -9,6 +9,7 @@ import link.infra.packwiz.installer.metadata.DownloadMode
 import link.infra.packwiz.installer.metadata.IndexFile
 import link.infra.packwiz.installer.metadata.ManifestFile
 import link.infra.packwiz.installer.metadata.PackFile
+import link.infra.packwiz.installer.metadata.PackFormat
 import link.infra.packwiz.installer.metadata.curseforge.resolveCfMetadata
 import link.infra.packwiz.installer.metadata.hash.Hash
 import link.infra.packwiz.installer.metadata.hash.HashFormat
@@ -97,6 +98,12 @@ class UpdateManager internal constructor(private val opts: Options, val ui: IUse
 			} catch (e: IllegalStateException) {
 				ui.showErrorAndExit("Failed to parse pack.toml", e)
 			}
+		}
+
+		when (val support = pf.packFormat.support()) {
+			is PackFormat.Support.Ok -> {}
+			is PackFormat.Support.Newer -> Log.warn(support.message)
+			is PackFormat.Support.Unsupported -> ui.showErrorAndExit(support.message)
 		}
 
 		if (ui.cancelButtonPressed) {

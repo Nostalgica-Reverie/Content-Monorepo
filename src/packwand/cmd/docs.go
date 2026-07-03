@@ -30,7 +30,7 @@ func init() {
 	rootCmd.AddCommand(llDiffCmd)
 }
 
-// â€” types shared by modlist and pages â€”
+// — types shared by modlist and pages —
 
 type modlistEntry struct {
 	JarName        string `json:"jarName"`
@@ -52,7 +52,7 @@ type pwMod struct {
 	mrModID    string
 }
 
-// â€” modlist â€”
+// — modlist —
 
 var llModlistCmd = &cobra.Command{
 	Use:   "modlist <subdir>",
@@ -195,7 +195,7 @@ func versionFromFilename(filename string) string {
 	return strings.TrimSuffix(filename, ".jar")
 }
 
-// â€” pages â€”
+// — pages —
 
 var llPagesCmd = &cobra.Command{
 	Use:     "pages [pack-dir]",
@@ -356,7 +356,7 @@ func modPageURL(m *pwMod) string {
 	return ""
 }
 
-// â€” diff â€”
+// — diff —
 
 var llDiffCmd = &cobra.Command{
 	Use:   "diff <old-ref> <new-ref> [path-prefix]",
@@ -504,7 +504,7 @@ func pwVersion(content string) string {
 	return ""
 }
 
-// â€” index types and writers (used by runPages and llPacksIndexCmd) â€”
+// — index types and writers (used by runPages and llPacksIndexCmd) —
 
 type indexVariant struct {
 	ID        string `json:"id,omitempty"`

@@ -3,18 +3,12 @@ package cmd
 import (
 	"fmt"
 	"os"
-)
 
-const (
-	ansiBlue  = "\033[38;5;39m"
-	ansiDim   = "\033[38;5;245m"
-	ansiReset = "\033[0m"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/clistyle"
 )
 
 func mascot() string {
-	b := ansiBlue
-	d := ansiDim
-	r := ansiReset
+	b, d, r := "", "", ""
 	return "" +
 		"                          " + d + "z" + r + "\n" +
 		"      " + b + "▄▄▄▄▄▄▄▄▄▄▄▄" + r + "        " + d + "z z" + r + "\n" +
@@ -25,8 +19,8 @@ func mascot() string {
 }
 
 func printMascot() {
-	if !llIsTTY() {
+	if !clistyle.Interactive() {
 		return
 	}
-	fmt.Fprint(os.Stdout, mascot())
+	fmt.Fprint(os.Stderr, clistyle.SpinnerText.Render(mascot()))
 }

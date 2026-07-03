@@ -1,4 +1,4 @@
-﻿package cmd
+package cmd
 
 import (
 	"encoding/json"
@@ -84,6 +84,23 @@ var listCmd = &cobra.Command{
 			return
 		}
 
+		if Interactive() {
+			rows := make([][]string, 0, len(mods))
+			for _, mod := range mods {
+				platforms := make([]string, 0, len(mod.Update))
+				for platform := range mod.Update {
+					platforms = append(platforms, platform)
+				}
+				sort.Strings(platforms)
+				pinned := ""
+				if mod.Pin {
+					pinned = "yes"
+				}
+				rows = append(rows, []string{mod.Name, mod.FileName, string(mod.Side), pinned, strings.Join(platforms, ", ")})
+			}
+			fmt.Fprintln(os.Stderr, Table([]string{"MOD", "FILE", "SIDE", "PINNED", "UPDATES"}, rows))
+			return
+		}
 		// Print mods
 		if viper.GetBool("list.version") {
 			for _, mod := range mods {
