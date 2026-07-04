@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -64,6 +65,15 @@ func llWriteJSON(path string, v any) {
 	if err := workspace.WriteJSON(path, v); err != nil {
 		llFail(err.Error())
 	}
+}
+
+// printJSON marshals v as indented JSON to stdout, calling llFail on error.
+func printJSON(v any) {
+	data, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		llFail(err.Error())
+	}
+	fmt.Println(string(data))
 }
 
 // llPlatformSuffix returns "mr", "cf", or "" from a subdir name ending in -mr/-cf.

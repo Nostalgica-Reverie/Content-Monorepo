@@ -69,6 +69,20 @@ func writeUpdateReport(path string, rep *UpdateReport) {
 	}
 }
 
+func updateFailureError(rep *UpdateReport) error {
+	if rep == nil || len(rep.Failed) == 0 {
+		return nil
+	}
+	return fmt.Errorf("%d mod update(s) failed", len(rep.Failed))
+}
+
+func finishUpdateReport(path string, rep *UpdateReport) {
+	writeUpdateReport(path, rep)
+	if err := updateFailureError(rep); err != nil {
+		cmdshared.Fail(err.Error())
+	}
+}
+
 // UpdateCmd represents the update command
 var UpdateCmd = &cobra.Command{
 	Use:     "update [name]",
@@ -158,7 +172,6 @@ var UpdateCmd = &cobra.Command{
 			updateStrings := make(map[*core.Mod]string)
 			for r := range ch {
 				if r.err != nil {
-					// TODO: do we return err code 1?
 					fmt.Printf("Failed to check updates for %s: %s\n", r.key, r.err.Error())
 					for _, m := range r.mods {
 						rep.Failed = append(rep.Failed, updateReportEntry{Name: m.Name, Error: r.err.Error()})
@@ -167,7 +180,6 @@ var UpdateCmd = &cobra.Command{
 				}
 				for i, check := range r.checks {
 					if check.Error != nil {
-						// TODO: do we return err code 1?
 						fmt.Printf("Failed to check updates for %s: %s\n", r.mods[i].Name, check.Error.Error())
 						entry := updateReportEntry{Name: r.mods[i].Name, Error: check.Error.Error()}
 						if isIncompatibleError(check.Error.Error()) {
@@ -200,7 +212,7 @@ var UpdateCmd = &cobra.Command{
 
 			if !updatesFound {
 				fmt.Println("All files are up to date!")
-				writeUpdateReport(reportPath, rep)
+				finishUpdateReport(reportPath, rep)
 				return
 			}
 
@@ -213,19 +225,19 @@ var UpdateCmd = &cobra.Command{
 					}
 				}
 				fmt.Printf("dry-run: %d file(s) would be updated — rerun without --dry-run to apply\n", count)
-				writeUpdateReport(reportPath, rep)
+				finishUpdateReport(reportPath, rep)
 				return
 			}
 
 			if !cmdshared.PromptYesNo("Do you want to update? [Y/n]: ") {
 				fmt.Println("Cancelled!")
+				finishUpdateReport(reportPath, rep)
 				return
 			}
 
 			for k, v := range updatableFiles {
 				err := core.Updaters[k].DoUpdate(v, updaterCachedStateMap[k])
 				if err != nil {
-					// TODO: do we return err code 1?
 					fmt.Println(err.Error())
 					for _, m := range v {
 						rep.Failed = append(rep.Failed, updateReportEntry{Name: m.Name, Change: updateStrings[m], Error: err.Error()})
@@ -324,7 +336,7 @@ var UpdateCmd = &cobra.Command{
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		writeUpdateReport(reportPath, allReport)
+		finishUpdateReport(reportPath, allReport)
 		if viper.GetBool("update.all") {
 			fmt.Println("Files updated!")
 		} else {

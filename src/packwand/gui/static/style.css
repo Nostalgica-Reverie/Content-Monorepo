@@ -401,7 +401,7 @@ h2 {
 }
 
 .mod-list .row {
-  grid-template-columns: minmax(0, 1fr) auto auto auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto auto auto auto auto;
 }
 
 [data-current-view="mods"] .mod-list {

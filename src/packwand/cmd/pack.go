@@ -664,7 +664,7 @@ var llPacksIndexCmd = &cobra.Command{
 	Short: "Regenerate derived projects.json index files",
 	Run: func(cmd *cobra.Command, args []string) {
 		llChdir()
-		if _, err := writeProjectsIndex(); err != nil {
+		if _, err := writeProjectsIndex(false); err != nil {
 			llFail(fmt.Sprintf("index generation failed: %v", err))
 		}
 	},

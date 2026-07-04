@@ -59,24 +59,51 @@ jobs:
         run: packwand lint
 
       - name: Validate changed pack manifests
+        id: validate
+        shell: bash
+        run: |
+          set -uo pipefail
+          {
+            CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
+            CHANGED_PACKS=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks|resourcepacks)/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
+            if [ -z "$CHANGED_PACKS" ]; then
+              echo "no pack manifests to validate."
+              exit 0
+            fi
+            STATUS=0
+            while IFS= read -r pack; do
+              [ -n "$pack" ] || continue
+              for mf in "$pack/manifest.json" "$pack/manifest-experimental.json"; do
+                if [ -f "$mf" ]; then
+                  packwand validate "$mf" || STATUS=1
+                fi
+              done
+            done <<< "$CHANGED_PACKS"
+            exit $STATUS
+          } 2>&1 | tee "$RUNNER_TEMP/validate-output.txt"
+          exit "${PIPESTATUS[0]}"
+
+      - name: Comment validation failure on PR
+        # Only meaningful on a pull_request trigger; push/workflow_dispatch have no PR to comment on.
+        if: failure() && steps.validate.outcome == 'failure' && github.event_name == 'pull_request'
+        shell: bash
+        env:
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
         run: |
           set -eu
-          CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
-          CHANGED_PACKS=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks|resourcepacks)/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
-          if [ -z "$CHANGED_PACKS" ]; then
-            echo "no pack manifests to validate."
-            exit 0
-          fi
-          STATUS=0
-          while IFS= read -r pack; do
-            [ -n "$pack" ] || continue
-            for mf in "$pack/manifest.json" "$pack/manifest-experimental.json"; do
-              if [ -f "$mf" ]; then
-                packwand validate "$mf" || STATUS=1
-              fi
-            done
-          done <<< "$CHANGED_PACKS"
-          exit $STATUS
+          {
+            echo "### ❌ Pack manifest validation failed"
+            echo
+            echo '```'
+            tail -c 60000 "$RUNNER_TEMP/validate-output.txt"
+            echo '```'
+          } > "$RUNNER_TEMP/validate-comment.md"
+          jq -Rs '{body: .}' "$RUNNER_TEMP/validate-comment.md" > "$RUNNER_TEMP/validate-comment.json"
+          curl -sf -X POST \
+            -H "Authorization: token ${FORGEJO_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data-binary @"$RUNNER_TEMP/validate-comment.json" \
+            "${{ github.api_url }}/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
 
       - name: Run Build
         run: packwand build "${{ steps.meta.outputs.short_sha }}"

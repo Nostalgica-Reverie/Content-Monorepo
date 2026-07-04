@@ -22,7 +22,7 @@ Manage modrinth-based mods
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand modrinth add](packwand_modrinth_add.md)	 - Add a project from a Modrinth URL, slug/project ID or search
 * [packwand modrinth export](packwand_modrinth_export.md)	 - Export the current modpack into a .mrpack for Modrinth
 

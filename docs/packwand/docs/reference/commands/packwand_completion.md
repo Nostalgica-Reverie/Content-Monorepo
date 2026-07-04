@@ -28,7 +28,7 @@ See each sub-command's help for details on how to use the generated script.
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand completion bash](packwand_completion_bash.md)	 - Generate the autocompletion script for bash
 * [packwand completion fish](packwand_completion_fish.md)	 - Generate the autocompletion script for fish
 * [packwand completion powershell](packwand_completion_powershell.md)	 - Generate the autocompletion script for powershell

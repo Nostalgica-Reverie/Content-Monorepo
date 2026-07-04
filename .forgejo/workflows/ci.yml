@@ -172,8 +172,17 @@ jobs:
           node-version: "22"
       - name: Install Task
         run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Secret scan (gitleaks)
+        run: |
+          go install github.com/gitleaks/gitleaks/v8@latest
+          "$(go env GOPATH)/bin/gitleaks" detect --source . --redact --exit-code 1
       - name: Build docs sites
         run: $(go env GOPATH)/bin/task docs-build
+      - name: Check packwand CLI-reference coverage
+        working-directory: docs/packwand
+        run: npm run docs:check-coverage
+      - name: Check cross-site doc links
+        run: node docs/link-lint.mjs
       - name: GoReleaser snapshot
         uses: https://github.com/goreleaser/goreleaser-action@v6
         with:

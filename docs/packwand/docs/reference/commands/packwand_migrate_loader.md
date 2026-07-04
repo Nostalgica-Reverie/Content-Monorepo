@@ -1,6 +1,6 @@
 ## packwand migrate loader
 
-Migrate your modloader version to a newer version.
+Migrate every configured modloader to a newer version.
 
 ```
 packwand migrate loader [version|latest|recommended] [flags]

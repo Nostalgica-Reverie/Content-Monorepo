@@ -14,15 +14,22 @@ import * as $model from "../packwand_gui/model.mjs";
 import {
   AddMod,
   Build,
+  Bump,
+  DocsModlist,
+  DocsPages,
   Doctor,
   ExportCurseforge,
   ExportModrinth,
+  FreezeMod,
   Lint,
+  NixGen,
   PacksIndex,
   PinMod,
   RefreshSubdir,
   Rehash,
   RemoveMod,
+  SetSide,
+  UnfreezeMod,
   UnpinMod,
   UpdateAll,
   UpdateMod,
@@ -49,6 +56,8 @@ import {
   SaveManifest,
   SelectProject,
   SelectSubdir,
+  SetBumpConfigs,
+  SetBumpVersion,
   SetManifest,
   SetManifestField,
   SetManifestStructured,
@@ -63,6 +72,7 @@ import {
   SetSearch,
   Settings,
   job_running,
+  progress_status_label,
   query_matches,
   selected_project,
 } from "../packwand_gui/state.mjs";
@@ -1256,6 +1266,90 @@ function manifest_panel(model) {
   }
 }
 
+function panel(class$, title, children) {
+  return panel_with_head(class$, title, $html.text(""), children);
+}
+
+function generate_panel(model) {
+  let disabled = (model.selected_subdir === "") || job_running(model);
+  return panel(
+    "span-7",
+    "Generate",
+    toList([
+      $html.div(
+        toList([$attribute.class$("action-row")]),
+        toList([
+          button_disabled(
+            "ghost",
+            "Nix Checksums",
+            new RunAction(new NixGen(model.selected_subdir)),
+            disabled,
+          ),
+          button_disabled(
+            "ghost",
+            "Write Modlist",
+            new RunAction(new DocsModlist(model.selected_subdir)),
+            disabled,
+          ),
+          button_disabled(
+            "ghost",
+            "Regenerate Docs Pages",
+            new RunAction(new DocsPages()),
+            job_running(model),
+          ),
+        ]),
+      ),
+    ]),
+  );
+}
+
+function bump_panel(model, project) {
+  let trimmed = $string.trim(model.bump_version);
+  return panel_with_head(
+    "span-5",
+    "Bump Version",
+    button_disabled(
+      "",
+      "Bump",
+      new RunAction(new Bump(project.dir, trimmed, model.bump_configs)),
+      job_running(model) || (trimmed === ""),
+    ),
+    toList([
+      $html.div(
+        toList([$attribute.class$("form-grid")]),
+        toList([
+          form_input(
+            "New version",
+            model.bump_version,
+            project.version,
+            (var0) => { return new SetBumpVersion(var0); },
+            "",
+          ),
+          $html.label(
+            toList([]),
+            toList([
+              $html.span(
+                toList([]),
+                toList([$html.text("Also update in-pack configs")]),
+              ),
+              $html.input(
+                toList([
+                  $attribute.type_("checkbox"),
+                  $attribute.checked(model.bump_configs),
+                  $event.on_check(
+                    (var0) => { return new SetBumpConfigs(var0); },
+                  ),
+                ]),
+              ),
+            ]),
+          ),
+        ]),
+      ),
+      notice(model.notice),
+    ]),
+  );
+}
+
 function subdir_row(subdir) {
   let _block;
   let $ = subdir.mod_count;
@@ -1384,6 +1478,53 @@ function logs_panel(model) {
   );
 }
 
+function progress_row(item) {
+  let status = progress_status_label(item.status);
+  return $html.div(
+    toList([$attribute.class$("row search-item")]),
+    toList([
+      $html.div(
+        toList([]),
+        toList([
+          $html.strong(toList([]), toList([$html.text(item.name)])),
+          $html.span(toList([]), toList([$html.text(item.detail)])),
+        ]),
+      ),
+      $html.span(
+        toList([
+          $attribute.classes(
+            toList([
+              ["status-badge", true],
+              ["integrated", (status === "pending") || (status === "queued")],
+            ]),
+          ),
+        ]),
+        toList([$html.text(status)]),
+      ),
+    ]),
+  );
+}
+
+function progress_panel(model) {
+  let $ = model.mod_progress;
+  if ($ instanceof $Empty) {
+    return $html.text("");
+  } else {
+    let items = $;
+    return panel_with_head(
+      "span-12",
+      "Batch Progress",
+      pill($int.to_string($list.length(items)) + " mod(s)"),
+      toList([
+        $html.div(
+          toList([$attribute.class$("list mod-progress-list")]),
+          $list.map(items, progress_row),
+        ),
+      ]),
+    );
+  }
+}
+
 function changelog_panel(model) {
   let _block;
   let _pipe = model.changelog;
@@ -1421,7 +1562,7 @@ function non_empty(values) {
   return $list.filter(values, (value) => { return $string.trim(value) !== ""; });
 }
 
-function mod_row(model, mod) {
+function mod_row(model, project, mod) {
   let subdir = model.selected_subdir;
   let _block;
   let $1 = mod.pin;
@@ -1434,30 +1575,56 @@ function mod_row(model, mod) {
   let pin_label = $[0];
   let pin_action = $[1];
   let _block$1;
-  let $2 = mod.platform;
-  let $3 = mod.version_id;
-  if ($3 === "") {
-    _block$1 = $html.text("");
-  } else if ($2 === "curseforge") {
-    let file_id = $3;
-    _block$1 = button_disabled(
+  let $3 = mod.pin;
+  if ($3) {
+    _block$1 = ["Unfreeze", new UnfreezeMod(subdir, mod.slug)];
+  } else {
+    _block$1 = ["Freeze", new FreezeMod(subdir, mod.slug)];
+  }
+  let $2 = _block$1;
+  let freeze_label = $2[0];
+  let freeze_action = $2[1];
+  let side_select = $html.select(
+    toList([
+      $attribute.value(mod.side),
+      $event.on_change(
+        (side) => {
+          return new RunAction(new SetSide(project.dir, mod.slug, side));
+        },
+      ),
+    ]),
+    toList([
+      $html.option(toList([$attribute.value("client")]), "client"),
+      $html.option(toList([$attribute.value("server")]), "server"),
+      $html.option(toList([$attribute.value("both")]), "both"),
+      $html.option(toList([$attribute.value("either")]), "either"),
+    ]),
+  );
+  let _block$2;
+  let $4 = mod.platform;
+  let $5 = mod.version_id;
+  if ($5 === "") {
+    _block$2 = $html.text("");
+  } else if ($4 === "curseforge") {
+    let file_id = $5;
+    _block$2 = button_disabled(
       "icon-btn",
       "CF Fetch",
       new RunWebview("curseforge", mod.slug, file_id),
       job_running(model),
     );
-  } else if ($2 === "modrinth") {
-    let file_id = $3;
-    _block$1 = button_disabled(
+  } else if ($4 === "modrinth") {
+    let file_id = $5;
+    _block$2 = button_disabled(
       "icon-btn",
       "MR Fetch",
       new RunWebview("modrinth", mod.slug, file_id),
       job_running(model),
     );
   } else {
-    _block$1 = $html.text("");
+    _block$2 = $html.text("");
   }
-  let webview_button = _block$1;
+  let webview_button = _block$2;
   return $html.div(
     toList([$attribute.class$("row search-item")]),
     toList([
@@ -1488,6 +1655,7 @@ function mod_row(model, mod) {
         ]),
       ),
       webview_button,
+      side_select,
       button_disabled(
         "icon-btn",
         "Update",
@@ -1501,6 +1669,12 @@ function mod_row(model, mod) {
         job_running(model),
       ),
       button_disabled(
+        "icon-btn",
+        freeze_label,
+        new RunAction(freeze_action),
+        job_running(model),
+      ),
+      button_disabled(
         "icon-btn danger",
         "Remove",
         new RunAction(new RemoveMod(subdir, mod.slug)),
@@ -1510,7 +1684,7 @@ function mod_row(model, mod) {
   );
 }
 
-function mods_panel(model) {
+function mods_panel(model, project) {
   let _block;
   let _pipe = model.mods;
   let _pipe$1 = $list.filter(
@@ -1522,7 +1696,7 @@ function mods_panel(model) {
       );
     },
   );
-  _block = $list.map(_pipe$1, (mod) => { return mod_row(model, mod); });
+  _block = $list.map(_pipe$1, (mod) => { return mod_row(model, project, mod); });
   let rows = _block;
   return panel_with_head(
     "span-12 mods-panel",
@@ -1541,10 +1715,6 @@ function mods_panel(model) {
       ),
     ]),
   );
-}
-
-function panel(class$, title, children) {
-  return panel_with_head(class$, title, $html.text(""), children);
 }
 
 function add_mod_panel(model) {
@@ -1737,15 +1907,17 @@ function sections_for_view(model, project) {
   } else if ($ instanceof Exports) {
     return toList([actions_panel(model, project.subdirs)]);
   } else if ($ instanceof Mods) {
-    return toList([add_mod_panel(model), mods_panel(model)]);
+    return toList([add_mod_panel(model), mods_panel(model, project)]);
   } else if ($ instanceof Changelog) {
     return toList([changelog_panel(model)]);
   } else if ($ instanceof Logs) {
-    return toList([logs_panel(model)]);
+    return toList([progress_panel(model), logs_panel(model)]);
   } else {
     return toList([
       project_panel(model, project),
       subdir_panel(model, project.subdirs),
+      bump_panel(model, project),
+      generate_panel(model),
       manifest_panel(model),
       capabilities_panel(model.features),
       new_pack_panel(model),

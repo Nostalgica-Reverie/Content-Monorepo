@@ -9,11 +9,12 @@ packwand curseforge add [URL|slug|search] [flags]
 ### Options
 
 ```
-      --addon-id uint32   The CurseForge project ID to use
-      --category string   The category to add files from (slug, as stored in URLs); the category in the URL takes precedence
-      --file-id uint32    The CurseForge file ID to use
-      --game string       The game to add files from (slug, as stored in URLs); the game in the URL takes precedence (default "minecraft")
-  -h, --help              help for add
+      --addon-id uint32          The CurseForge project ID to use
+      --category string          The category to add files from (slug, as stored in URLs); the category in the URL takes precedence
+      --file-id uint32           The CurseForge file ID to use
+      --game string              The game to add files from (slug, as stored in URLs); the game in the URL takes precedence (default "minecraft")
+  -h, --help                     help for add
+      --release-channel string   Only consider files at or above this release channel: release, beta, or alpha (default: any). Persisted so future update checks respect it too.
 ```
 
 ### Options inherited from parent commands

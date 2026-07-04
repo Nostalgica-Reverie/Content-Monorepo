@@ -14,11 +14,13 @@ import packwand_gui/state.{
   type Model, type Msg, CopyChangelog, CreateProject, GotAction, GotChangelog,
   GotFeatures, GotHealth, GotManifest, GotMods, GotProjects, IconFailed,
   JobFinished, JobLine, ManifestSaved, Model, Navigate, NewPack, ProjectCreated, RunAction,
-  RunWebview, SaveManifest, SelectProject, SelectSubdir, SetManifest,
+  RunWebview, SaveManifest, SelectProject, SelectSubdir, SetBumpConfigs,
+  SetBumpVersion, SetManifest,
   SetManifestField, SetManifestStructured, SetModSlug,
   SetNewPackDescription, SetNewPackID, SetNewPackLoader, SetNewPackMinecraft,
   SetNewPackName, SetNewPackType, SetNewPackVersion, SetSearch, WebviewStarted,
-  append_log, http_error, initial, selected_project,
+  append_log, http_error, initial, record_progress_line, reset_progress,
+  selected_project,
 }
 import packwand_gui/view
 
@@ -122,6 +124,7 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
     RunAction(action) -> {
       let running =
         model
+        |> reset_progress
         |> append_log("> packwand " <> action_name(action))
       #(
         Model(..running, job_status: "starting", notice: ""),
@@ -151,7 +154,10 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       watch_job_effect(response.job_id),
     )
     WebviewStarted(Error(error)) -> with_error(model, error)
-    JobLine(line) -> #(append_log(model, line), effect.none())
+    JobLine(line) -> #(
+      record_progress_line(append_log(model, line), line),
+      effect.none(),
+    )
     JobFinished(status, error) -> {
       let finished = Model(..model, job_status: status)
       let finished = case error {
@@ -288,6 +294,14 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       copy_effect(model.changelog),
     )
     IconFailed -> #(Model(..model, icon_failed: True), effect.none())
+    SetBumpVersion(value) -> #(
+      Model(..model, bump_version: value),
+      effect.none(),
+    )
+    SetBumpConfigs(value) -> #(
+      Model(..model, bump_configs: value),
+      effect.none(),
+    )
   }
 }
 
@@ -324,6 +338,7 @@ fn select_project(model: Model) -> #(Model, Effect(Msg)) {
           manifest_structured: False,
           search: "",
           icon_failed: False,
+          bump_version: "",
         ),
         effect.batch([
           load_mods(subdir),

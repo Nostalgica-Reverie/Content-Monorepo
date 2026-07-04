@@ -22,6 +22,6 @@ Query effective automation settings for a pack
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand automation get](packwand_automation_get.md)	 - Print the effective automation settings as JSON
 

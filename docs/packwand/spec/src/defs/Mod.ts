@@ -12,7 +12,7 @@ import { Path } from "./shared/Path.ts";
 	$schema: "http://json-schema.org/draft-07/schema",
 	title: "mod.pw.toml",
 	description:
-		'A metadata file which references an external file from a URL. This allows for side-only mods, optional mods and stores metadata to allow finding updates from Modrinth and CurseForge. The "mod" terminology is used a lot here, but this should work for any file.',
+		'A metadata file which references an external file from a URL (or a metadata-based downloader). This allows for side-only mods, optional mods and pinning, and stores metadata to allow finding updates from Modrinth, CurseForge, GitHub, GitLab, and Forgejo. The "mod" terminology is used a lot here, but this should work for any file.',
 	examples: [
 		await Deno.readTextFile(
 			"./example-pack/mods/borderless-mining.pw.toml",
@@ -43,6 +43,12 @@ export class Mod {
 	@property.default("both")
 	side: undefined;
 
+	@property.boolean(
+		"packwand extension: when true, the file is pinned and update commands skip it until it is unpinned (packwand pin / packwand unpin).",
+	)
+	@property.default(false)
+	pin: undefined;
+
 	@property.ref()
 	@property.required
 	download = new Download();
@@ -58,11 +64,17 @@ export interface Mod extends SchemaGenerator {}
 	description: "Information about how to download this mod.",
 })
 class Download {
-	@property.ref(`The URL to download the mod from.`)
-	@property.required
+	@property.ref(
+		`The URL to download the mod from. Required when mode is "url" or omitted; not present in metadata download modes.`,
+	)
 	url = new PackwizURL();
 
-	// TODO(doc): Download mode
+	@property.enum(
+		["url", "metadata:curseforge"],
+		'The download mode. "url" (or omitted/empty) downloads from the url field. "metadata:curseforge" resolves the download URL through the CurseForge API using the [update.curseforge] metadata, as required by CurseForge\'s distribution rules; such files have no url field.',
+	)
+	@property.default("url")
+	mode: undefined;
 
 	@property.ref("The hash of the specified file, as a string.")
 	@property.required
@@ -120,6 +132,12 @@ class Update {
 	curseforge = new CurseForgeUpdate();
 	@property.ref()
 	modrinth = new ModrinthUpdate();
+	@property.ref()
+	github = new GitHubUpdate();
+	@property.ref()
+	gitlab = new GitLabUpdate();
+	@property.ref()
+	forgejo = new ForgejoUpdate();
 }
 // deno-lint-ignore no-empty-interface
 interface Update extends SchemaGenerator {}
@@ -167,5 +185,80 @@ class ModrinthUpdate {
 }
 // deno-lint-ignore no-empty-interface
 interface ModrinthUpdate extends SchemaGenerator {}
+
+@schema({
+	description: `packwand extension: an update source for updating mods downloaded from GitHub release assets.`,
+})
+class GitHubUpdate {
+	@property.string("The repository, as owner/repo.")
+	@property.required
+	@property.examples(["CaffeineMC/sodium"])
+	slug: undefined;
+
+	@property.string("The currently-installed release tag.")
+	tag: undefined;
+
+	@property.string("Restrict updates to releases targeting this branch.")
+	branch: undefined;
+
+	@property.string(
+		"A regular expression an asset filename must match to be selected.",
+	)
+	regex: undefined;
+}
+// deno-lint-ignore no-empty-interface
+interface GitHubUpdate extends SchemaGenerator {}
+
+@schema({
+	description: `packwand extension: an update source for updating mods downloaded from GitLab release assets.`,
+})
+class GitLabUpdate {
+	@property.string("The GitLab instance hostname. Defaults to gitlab.com.")
+	@property.default("gitlab.com")
+	instance: undefined;
+
+	@property.string("The project path, as owner/repo.")
+	@property.required
+	slug: undefined;
+
+	@property.string("The currently-installed release tag.")
+	tag: undefined;
+
+	@property.string(
+		"A regular expression an asset filename must match to be selected.",
+	)
+	regex: undefined;
+}
+// deno-lint-ignore no-empty-interface
+interface GitLabUpdate extends SchemaGenerator {}
+
+@schema({
+	description:
+		`packwand extension: an update source for updating mods downloaded from Forgejo/Gitea release assets (including Codeberg).`,
+})
+class ForgejoUpdate {
+	@property.string(
+		"The Forgejo/Gitea instance hostname. Defaults to codeberg.org.",
+	)
+	@property.default("codeberg.org")
+	instance: undefined;
+
+	@property.string("The repository, as owner/repo.")
+	@property.required
+	slug: undefined;
+
+	@property.string("The currently-installed release tag.")
+	tag: undefined;
+
+	@property.string("Restrict updates to releases targeting this branch.")
+	branch: undefined;
+
+	@property.string(
+		"A regular expression an asset filename must match to be selected.",
+	)
+	regex: undefined;
+}
+// deno-lint-ignore no-empty-interface
+interface ForgejoUpdate extends SchemaGenerator {}
 
 export default Mod;

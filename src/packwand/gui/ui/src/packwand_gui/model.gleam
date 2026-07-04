@@ -117,6 +117,13 @@ pub type Action {
   Rehash(path: String)
   ExportModrinth(path: String)
   ExportCurseforge(path: String)
+  Bump(path: String, version: String, configs: Bool)
+  FreezeMod(path: String, slug: String)
+  UnfreezeMod(path: String, slug: String)
+  SetSide(path: String, slug: String, side: String)
+  NixGen(path: String)
+  DocsModlist(path: String)
+  DocsPages
 }
 
 pub fn action_name(action: Action) -> String {
@@ -142,6 +149,13 @@ pub fn action_name(action: Action) -> String {
     Rehash(_) -> "rehash"
     ExportModrinth(_) -> "export-modrinth"
     ExportCurseforge(_) -> "export-curseforge"
+    Bump(_, _, _) -> "bump"
+    FreezeMod(_, _) -> "freeze-mod"
+    UnfreezeMod(_, _) -> "unfreeze-mod"
+    SetSide(_, _, _) -> "set-side"
+    NixGen(_) -> "nix-gen"
+    DocsModlist(_) -> "docs-modlist"
+    DocsPages -> "docs-pages"
   }
 }
 
@@ -158,7 +172,13 @@ pub fn action_subdir(action: Action) -> String {
     | Build(path)
     | Rehash(path)
     | ExportModrinth(path)
-    | ExportCurseforge(path) -> path
+    | ExportCurseforge(path)
+    | Bump(path, _, _)
+    | FreezeMod(path, _)
+    | UnfreezeMod(path, _)
+    | SetSide(path, _, _)
+    | NixGen(path)
+    | DocsModlist(path) -> path
     _ -> ""
   }
 }
@@ -169,7 +189,10 @@ pub fn action_slug(action: Action) -> String {
     | RemoveMod(_, slug)
     | PinMod(_, slug)
     | UnpinMod(_, slug)
-    | UpdateMod(_, slug) -> slug
+    | UpdateMod(_, slug)
+    | FreezeMod(_, slug)
+    | UnfreezeMod(_, slug)
+    | SetSide(_, slug, _) -> slug
     _ -> ""
   }
 }
@@ -178,6 +201,27 @@ pub fn action_dry_run(action: Action) -> Bool {
   case action {
     WorkspaceSync(dry_run) -> dry_run
     _ -> False
+  }
+}
+
+pub fn action_version(action: Action) -> String {
+  case action {
+    Bump(_, version, _) -> version
+    _ -> ""
+  }
+}
+
+pub fn action_configs(action: Action) -> Bool {
+  case action {
+    Bump(_, _, configs) -> configs
+    _ -> False
+  }
+}
+
+pub fn action_side(action: Action) -> String {
+  case action {
+    SetSide(_, _, side) -> side
+    _ -> ""
   }
 }
 
@@ -191,7 +235,10 @@ pub fn action_refreshes_mods(action: Action) -> Bool {
     | UpdateAll(_)
     | Build(_)
     | Rehash(_)
-    | RefreshSubdir(_) -> True
+    | RefreshSubdir(_)
+    | FreezeMod(_, _)
+    | UnfreezeMod(_, _)
+    | SetSide(_, _, _) -> True
     _ -> False
   }
 }

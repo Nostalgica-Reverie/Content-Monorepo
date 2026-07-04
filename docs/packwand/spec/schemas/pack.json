@@ -132,6 +132,7 @@
 			"additionalProperties": {
 				"type": "string"
 			},
+			"properties": {},
 			"description": "packwand extension: named commands runnable with packwand run <name>. Each value is a shell command executed from the pack directory."
 		}
 	},

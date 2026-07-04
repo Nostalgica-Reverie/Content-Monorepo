@@ -154,6 +154,9 @@ pub fn action(
       #("subdir", json.string(domain.action_subdir(action))),
       #("slug", json.string(domain.action_slug(action))),
       #("dry_run", json.bool(domain.action_dry_run(action))),
+      #("version", json.string(domain.action_version(action))),
+      #("configs", json.bool(domain.action_configs(action))),
+      #("side", json.string(domain.action_side(action))),
     ])
   request(
     "POST",

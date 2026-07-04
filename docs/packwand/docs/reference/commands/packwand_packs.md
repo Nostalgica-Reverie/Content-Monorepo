@@ -23,7 +23,7 @@ Look up or edit any pack's manifest fields by id
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand packs get](packwand_packs_get.md)	 - Print a pack's manifest (or a single field)
 * [packwand packs index](packwand_packs_index.md)	 - Regenerate derived projects.json index files
 * [packwand packs list](packwand_packs_list.md)	 - List all registered packs

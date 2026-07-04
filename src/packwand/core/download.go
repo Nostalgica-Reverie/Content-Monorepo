@@ -761,7 +761,9 @@ func CreateDownloadSession(mods []*Mod, hashesToObtain []string) (DownloadSessio
 		}
 	}
 
-	// TODO: index housekeeping? i.e. remove deleted files, remove old files (LRU?)
+	// Index housekeeping (removing entries no longer referenced by any pack) is
+	// a separate, explicit operation — see LoadCacheIndexReadOnly and
+	// (*CacheIndex).Prune, driven by `packwand cache prune`.
 
 	// Save index after importing and Force index updates
 	err = downloadSession.SaveIndex()
@@ -770,4 +772,128 @@ func CreateDownloadSession(mods []*Mod, hashesToObtain []string) (DownloadSessio
 	}
 
 	return &downloadSession, nil
+}
+
+// LoadCacheIndexReadOnly loads the on-disk cache index without any of the
+// download-session setup (temp/import folder creation, import file moves).
+// Intended for read-only/maintenance operations like cache pruning.
+func LoadCacheIndexReadOnly(cachePath string) (*CacheIndex, error) {
+	cacheIndex := CacheIndex{Version: cacheLatestVersion, Hashes: make(map[string][]string)}
+
+	data, err := os.ReadFile(filepath.Join(cachePath, "index.json"))
+	if err != nil {
+		if !os.IsNotExist(err) {
+			return nil, fmt.Errorf("failed to read cache index file: %w", err)
+		}
+	} else if err := json.Unmarshal(data, &cacheIndex); err != nil {
+		return nil, fmt.Errorf("failed to read cache index file: %w", err)
+	}
+
+	if _, ok := cacheIndex.Hashes[cacheHashFormat]; !ok {
+		cacheIndex.Hashes[cacheHashFormat] = make([]string, 0)
+	}
+	cacheIndex.cachePath = cachePath
+
+	cacheIndex.updateVersion()
+	if cacheIndex.Version > cacheLatestVersion {
+		return nil, fmt.Errorf("cache index is too new (version %v)", cacheIndex.Version)
+	}
+
+	var removedEntries []int
+	cacheIndex.Hashes[cacheHashFormat], removedEntries = removeEmpty(cacheIndex.Hashes[cacheHashFormat])
+	if len(removedEntries) > 0 {
+		for hashFormat, v := range cacheIndex.Hashes {
+			if hashFormat != cacheHashFormat {
+				cacheIndex.Hashes[hashFormat] = removeIndices(v, removedEntries)
+			}
+		}
+	}
+	cacheIndex.nextHashIdx = len(cacheIndex.Hashes[cacheHashFormat])
+
+	return &cacheIndex, nil
+}
+
+// Save writes the cache index back to cachePath/index.json.
+func (c *CacheIndex) Save() error {
+	data, err := json.Marshal(c)
+	if err != nil {
+		return fmt.Errorf("failed to serialise index: %w", err)
+	}
+	if err := os.WriteFile(filepath.Join(c.cachePath, "index.json"), data, 0644); err != nil {
+		return fmt.Errorf("failed to write index: %w", err)
+	}
+	return nil
+}
+
+// PruneEntry describes one cache entry removed (or, in dry-run, that would be
+// removed) by (*CacheIndex).Prune.
+type PruneEntry struct {
+	Hash string `json:"hash"`
+	Size int64  `json:"size_bytes"`
+}
+
+// PruneResult is the machine-readable outcome of a cache prune run.
+type PruneResult struct {
+	ScannedEntries int          `json:"scanned_entries"`
+	RemovedEntries []PruneEntry `json:"removed_entries"`
+	RemovedBytes   int64        `json:"removed_bytes"`
+	DryRun         bool         `json:"dry_run"`
+}
+
+// Prune removes cache entries whose hashes (in any recorded hash format)
+// do not appear in referencedHashes — a set of lowercased hash strings
+// gathered from every pack's currently-tracked mod files. In dry-run mode
+// it reports what would be removed without touching disk or the index.
+func (c *CacheIndex) Prune(referencedHashes map[string]struct{}, dryRun bool) (PruneResult, error) {
+	result := PruneResult{DryRun: dryRun}
+	hashList := c.Hashes[cacheHashFormat]
+	result.ScannedEntries = len(hashList)
+
+	var toRemove []int
+	for i, hash := range hashList {
+		if hash == "" {
+			continue
+		}
+		if isHashReferenced(c.getHashesMap(i), referencedHashes) {
+			continue
+		}
+
+		path := filepath.Join(c.cachePath, hash[:2], hash[2:])
+		var size int64
+		if stat, statErr := os.Stat(path); statErr == nil {
+			size = stat.Size()
+		}
+		result.RemovedEntries = append(result.RemovedEntries, PruneEntry{Hash: hash, Size: size})
+		result.RemovedBytes += size
+
+		if dryRun {
+			continue
+		}
+		if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
+			return result, fmt.Errorf("failed to remove cached file %s: %w", path, err)
+		}
+		toRemove = append(toRemove, i)
+	}
+
+	if dryRun || len(toRemove) == 0 {
+		return result, nil
+	}
+
+	for format, list := range c.Hashes {
+		c.Hashes[format] = removeIndices(list, toRemove)
+	}
+	c.nextHashIdx = len(c.Hashes[cacheHashFormat])
+	return result, c.Save()
+}
+
+func isHashReferenced(entryHashes map[string]string, referencedHashes map[string]struct{}) bool {
+	for _, hash := range entryHashes {
+		if hash == "" {
+			continue
+		}
+		if _, ok := referencedHashes[strings.ToLower(hash)]; ok {
+			return true
+		}
+	}
+	return false
 }

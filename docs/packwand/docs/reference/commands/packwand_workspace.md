@@ -22,11 +22,11 @@ Multi-pack workspace operations across all packs
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand workspace loader-update](packwand_workspace_loader-update.md)	 - Migrate loaders across packs (honors auto_update)
 * [packwand workspace migrate](packwand_workspace_migrate.md)	 - Run packwand migrate across all pack subdirs
 * [packwand workspace refresh](packwand_workspace_refresh.md)	 - Run packwand refresh in every pack subdir
-* [packwand workspace status](packwand_workspace_status.md)	 - Dashboard of all packs â€” version, mc, loader, mod counts, frozen mods
+* [packwand workspace status](packwand_workspace_status.md)	 - Dashboard of all packs — version, mc, loader, mod counts, frozen mods
 * [packwand workspace sync](packwand_workspace_sync.md)	 - Copy performance base content into consumer packs per manifest mappings
 * [packwand workspace update](packwand_workspace_update.md)	 - Run packwand update --all in every pack subdir (honors auto_update)
 

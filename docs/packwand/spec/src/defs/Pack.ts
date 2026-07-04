@@ -7,7 +7,7 @@ import { Path } from "./shared/Path.ts";
 	// TODO(gen): $id?
 	$schema: "http://json-schema.org/draft-07/schema",
 	title: "pack.toml",
-	description: `The main modpack file for a packwiz modpack.
+	description: `The main modpack file for a packwand modpack.
 	This is the first file loaded, to allow the modpack downloader to download all the files in the modpack.`,
 	examples: [
 		await Deno.readTextFile("./example-pack/pack.toml"),
@@ -18,18 +18,22 @@ export class Pack {
 	// TODO(gen): Regular expression to match valid values
 	// TODO(gen): Generate different versions of schemas for different uses?
 	@property.string(
-		`A version string identifying the pack format and version of it. Currently, this pack format uses version 1.1.0.
-If it is not defined, default to \"packwiz:1.0.0\" for backwards-compatibility with packs created before this field was added.
+		`A version string identifying the pack format and version of it. packwand writes \"packwand:26\" for new packs.
+If it is not defined, default to \"packwiz:1.1.0\" for backwards-compatibility with packs created before this field was added.
 
-If it is defined:
-- All consumers should fail to load the modpack if it does not begin with \"packwiz:\"
+For \"packwand:<generation>\" values:
+- All consumers should fail to load the modpack if the generation is not a valid integer
+- All consumers should fail to load the modpack if the generation predates the minimum generation they support (packwand migrate format upgrades old packs)
+- Consumers should warn, but continue, when the generation is newer than the one they implement
+
+For legacy \"packwiz:<semver>\" values:
 - All consumers should fail to load the modpack if the latter section is not valid semver as defined in https://semver.org/spec/v2.0.0.html
 - All consumers should fail to load the modpack if the major version is greater than the version they support
 - Consumers can suggest updating themselves if the minor version is greater than the version they implement
-- Pack tools should suggest and support migration when they support a version newer than this field`,
+- \"packwiz:1.0.0\" is migrated to \"packwiz:1.1.0\" automatically on load`,
 	)
 	@property.required
-	@property.default("packwiz:1.1.0")
+	@property.default("packwand:26")
 	"pack-format": undefined;
 
 	@property.string(
@@ -55,10 +59,15 @@ If it is defined:
 	index = new IndexRef();
 
 	@property.ref(
-		`The versions of components used by this modpack - usually Minecraft and the mod loader this pack uses. The existence of a component implies that it should be installed. These values can also be used by tools to determine which versions of mods should be installed.`,
+		`The versions of components used by this modpack - usually Minecraft and the mod loader this pack uses. The existence of a component implies that it should be installed. These values can also be used by tools to determine which versions of mods should be installed. A pack declaring quilt is also compatible with fabric mods, and a pack declaring neoforge is also compatible with forge mods.`,
 	)
 	@property.required
 	versions = new ComponentVersions();
+
+	@property.ref(
+		`packwand extension: named commands runnable with packwand run <name>. Each value is a shell command executed from the pack directory.`,
+	)
+	scripts = new Scripts();
 
 	// TODO(doc): export, options
 }
@@ -71,8 +80,9 @@ class IndexRef {
 	@property.required
 	file = new Path();
 
-	@property.ref(`The hash of the index file, as a string.`)
-	@property.required
+	@property.ref(
+		`The hash of the index file, as a string. May be omitted when the pack uses no-internal-hashes mode; run packwand refresh --build to generate hashes for distribution.`,
+	)
 	hash = new Hash();
 
 	@property.ref("The hash format for the hash of the index file.")
@@ -107,6 +117,10 @@ class ComponentVersions {
 	@property.examples(["1.12.2-SNAPSHOT"])
 	liteloader: undefined;
 
+	@property.string("The version of NeoForge used by this modpack.")
+	@property.examples(["21.1.77"])
+	neoforge: undefined;
+
 	@property.string("The version of Quilt loader used by this modpack.")
 	@property.examples(["0.12.1"])
 	quilt: undefined;
@@ -114,5 +128,15 @@ class ComponentVersions {
 }
 // deno-lint-ignore no-empty-interface
 interface ComponentVersions extends SchemaGenerator {}
+
+@schema({
+	additionalProperties: {
+		type: "string",
+	},
+})
+class Scripts {
+}
+// deno-lint-ignore no-empty-interface
+interface Scripts extends SchemaGenerator {}
 
 export default Pack;

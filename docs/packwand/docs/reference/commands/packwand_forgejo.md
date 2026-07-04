@@ -22,6 +22,6 @@ Manage projects released on Forgejo, Gitea, or Codeberg
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand forgejo add](packwand_forgejo_add.md)	 - Add a project from a Forgejo/Gitea/Codeberg repository URL or slug
 

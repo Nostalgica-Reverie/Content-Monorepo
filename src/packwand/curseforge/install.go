@@ -51,6 +51,16 @@ var installCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		var minChannel fileType
+		if releaseChannelFlag != "" {
+			var ok bool
+			minChannel, ok = parseReleaseChannel(releaseChannelFlag)
+			if !ok {
+				fmt.Printf("unknown --release-channel %q (expected release, beta, or alpha)\n", releaseChannelFlag)
+				os.Exit(1)
+			}
+		}
+
 		game := gameFlag
 		category := categoryFlag
 		var modID, fileID uint32
@@ -121,7 +131,7 @@ var installCmd = &cobra.Command{
 		}
 
 		var fileInfoData modFileInfo
-		fileInfoData, err = getLatestFile(modInfoData, mcVersions, fileID, pack.GetCompatibleLoaders())
+		fileInfoData, err = getLatestFile(modInfoData, mcVersions, fileID, pack.GetCompatibleLoaders(), minChannel)
 		if err != nil {
 			fmt.Printf("Failed to get file for project: %v\n", err)
 			os.Exit(1)
@@ -192,7 +202,10 @@ var installCmd = &cobra.Command{
 					depIDPendingQueue = depIDPendingQueue[:0]
 
 					for _, currData := range depInfoData {
-						depFileInfo, err := getLatestFile(currData, mcVersions, 0, pack.GetCompatibleLoaders())
+						// Dependencies are not restricted by --release-channel: forcing a
+						// hard requirement's channel to match an unrelated user
+						// preference could make otherwise-installable deps unresolvable.
+						depFileInfo, err := getLatestFile(currData, mcVersions, 0, pack.GetCompatibleLoaders(), 0)
 						if err != nil {
 							fmt.Printf("Error retrieving dependency data: %s\n", err.Error())
 							continue
@@ -224,7 +237,7 @@ var installCmd = &cobra.Command{
 
 					if cmdshared.PromptYesNo("Would you like to add them? [Y/n]: ") {
 						for _, v := range depsInstallable {
-							err = createModFile(v.modInfo, v.fileInfo, &index, false)
+							err = createModFile(v.modInfo, v.fileInfo, &index, false, "")
 							if err != nil {
 								fmt.Println(err)
 								os.Exit(1)
@@ -238,7 +251,7 @@ var installCmd = &cobra.Command{
 			}
 		}
 
-		err = createModFile(modInfoData, fileInfoData, &index, false)
+		err = createModFile(modInfoData, fileInfoData, &index, false, releaseChannelFlag)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -402,14 +415,14 @@ func searchCurseforgeInternal(searchTerm string, isSlug bool, game string, categ
 	}
 }
 
-func getLatestFile(modInfoData modInfo, mcVersions []string, fileID uint32, packLoaders []string) (modFileInfo, error) {
+func getLatestFile(modInfoData modInfo, mcVersions []string, fileID uint32, packLoaders []string, minChannel fileType) (modFileInfo, error) {
 	if fileID == 0 {
 		if len(modInfoData.LatestFiles) == 0 && len(modInfoData.GameVersionLatestFiles) == 0 {
 			return modFileInfo{}, fmt.Errorf("addon %d has no files", modInfoData.ID)
 		}
 
 		var fileInfoData *modFileInfo
-		fileID, fileInfoData, _ = findLatestFile(modInfoData, mcVersions, packLoaders)
+		fileID, fileInfoData, _ = findLatestFile(modInfoData, mcVersions, packLoaders, minChannel)
 		if fileInfoData != nil {
 			return *fileInfoData, nil
 		}
@@ -432,6 +445,7 @@ var fileIDFlag uint32
 
 var gameFlag string
 var categoryFlag string
+var releaseChannelFlag string
 
 func init() {
 	curseforgeCmd.AddCommand(installCmd)
@@ -440,4 +454,5 @@ func init() {
 	installCmd.Flags().Uint32Var(&fileIDFlag, "file-id", 0, "The CurseForge file ID to use")
 	installCmd.Flags().StringVar(&gameFlag, "game", "minecraft", "The game to add files from (slug, as stored in URLs); the game in the URL takes precedence")
 	installCmd.Flags().StringVar(&categoryFlag, "category", "", "The category to add files from (slug, as stored in URLs); the category in the URL takes precedence")
+	installCmd.Flags().StringVar(&releaseChannelFlag, "release-channel", "", "Only consider files at or above this release channel: release, beta, or alpha (default: any). Persisted so future update checks respect it too.")
 }

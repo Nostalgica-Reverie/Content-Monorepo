@@ -22,7 +22,7 @@ Manage curseforge-based mods
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand curseforge add](packwand_curseforge_add.md)	 - Add a project from a CurseForge URL, slug, ID or search
 * [packwand curseforge detect](packwand_curseforge_detect.md)	 - Detect .jar files in the mods folder (experimental)
 * [packwand curseforge export](packwand_curseforge_export.md)	 - Export the current modpack into a .zip for curseforge

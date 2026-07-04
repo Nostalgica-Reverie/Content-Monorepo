@@ -1,0 +1,74 @@
+name: "Auto-Update Drift Report"
+
+# Report-only: packs opted out of auto-update (via manifest.json
+# automation.auto_update or the legacy auto-update-ignore.json) never get
+# checked by auto-update.yml, so there's no visibility into how far behind
+# they've fallen. This never commits anything — it just posts a summary.
+#
+# A docs broken-link check for the VitePress sites (codex.md §4.3, tying into
+# this same report per codex.md §3.6) is intentionally not bundled here: it's
+# Agent 2's docs/** territory and depends on tooling that doesn't exist yet.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  drift-report:
+    runs-on: technocality
+    steps:
+      - name: Checkout
+        uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 1
+          filter: blob:none
+
+      - name: Setup Go
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache: true
+
+      - name: Setup Packwand
+        uses: ./.forgejo/actions/setup-packwand
+
+      - name: Check drift on opted-out packs
+        id: drift
+        shell: bash
+        continue-on-error: true
+        run: packwand workspace update --check --json --ignored-only > "$RUNNER_TEMP/drift.json"
+
+      - name: Write job summary
+        shell: bash
+        run: |
+          {
+            echo "## Auto-update drift report"
+            echo
+            if [ ! -s "$RUNNER_TEMP/drift.json" ]; then
+              echo "_No output was captured — the check step failed to run at all._"
+              exit 0
+            fi
+            SUBDIR_COUNT=$(jq '.subdirs | length' "$RUNNER_TEMP/drift.json")
+            TOTAL_UPDATES=$(jq '.total_updates' "$RUNNER_TEMP/drift.json")
+            FAILED=$(jq '.failed_checks' "$RUNNER_TEMP/drift.json")
+            if [ "$SUBDIR_COUNT" = "0" ]; then
+              echo "No packs are currently opted out of auto-update."
+            else
+              echo "$SUBDIR_COUNT opted-out pack subdir(s) checked, $TOTAL_UPDATES update(s) available, $FAILED check failure(s)."
+              echo
+              echo "| Subdir | Status |"
+              echo "| --- | --- |"
+              jq -r '.subdirs[] | "| " + .dir + " | " + (if .error then "⚠️ " + .error elif (.updates | length) > 0 then (.updates | length | tostring) + " update(s) behind" else "up to date" end) + " |"' "$RUNNER_TEMP/drift.json"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail on check errors
+        # total_updates > 0 is expected (that's the whole point of this report)
+        # and must not fail the job; only genuine check errors do.
+        if: steps.drift.outcome == 'failure'
+        run: exit 1

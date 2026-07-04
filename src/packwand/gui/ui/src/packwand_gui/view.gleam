@@ -10,20 +10,23 @@ import lustre/event
 import packwand_gui/manifest_form.{type ManifestForm}
 import packwand_gui/model.{
   type Feature, type ModEntry, type Project, type Subdir, type Variant, AddMod,
-  Build, Doctor, ExportCurseforge, ExportModrinth, Lint, PacksIndex, PinMod,
-  RefreshSubdir, Rehash, RemoveMod, UnpinMod, UpdateAll, UpdateMod,
+  Build, Bump, DocsModlist, DocsPages, Doctor, ExportCurseforge,
+  ExportModrinth, FreezeMod, Lint, NixGen, PacksIndex, PinMod, RefreshSubdir,
+  Rehash, RemoveMod, SetSide, UnfreezeMod, UnpinMod, UpdateAll, UpdateMod,
   ValidateProject, WorkspaceRefresh, WorkspaceStatus, WorkspaceSync,
   WorkspaceUpdate, project_summary,
 }
 import packwand_gui/state.{
-  type Model, type Msg, type View, Changelog, CopyChangelog, CreateProject,
+  type Model, type ModProgress, type Msg, type View, Changelog, CopyChangelog,
+  CreateProject,
   Exports, IconFailed, Logs, Mods, Navigate, Overview, RunAction, RunWebview,
   SaveManifest,
-  SelectProject, SelectSubdir, SetManifest, SetManifestField,
+  SelectProject, SelectSubdir, SetBumpConfigs, SetBumpVersion, SetManifest,
+  SetManifestField,
   SetManifestStructured, SetModSlug, SetNewPackDescription,
   SetNewPackID, SetNewPackLoader, SetNewPackMinecraft, SetNewPackName,
   SetNewPackType, SetNewPackVersion, SetSearch, Settings, job_running,
-  query_matches, selected_project,
+  progress_status_label, query_matches, selected_project,
 }
 
 @external(javascript, "./ffi.mjs", "currentHash")
@@ -262,12 +265,14 @@ fn sections_for_view(model: Model, project: Project) -> List(Element(Msg)) {
       variant_panel(model, project.variants),
     ]
     Exports -> [actions_panel(model, project.subdirs)]
-    Mods -> [add_mod_panel(model), mods_panel(model)]
+    Mods -> [add_mod_panel(model), mods_panel(model, project)]
     Changelog -> [changelog_panel(model)]
-    Logs -> [logs_panel(model)]
+    Logs -> [progress_panel(model), logs_panel(model)]
     Settings -> [
       project_panel(model, project),
       subdir_panel(model, project.subdirs),
+      bump_panel(model, project),
+      generate_panel(model),
       manifest_panel(model),
       capabilities_panel(model.features),
       new_pack_panel(model),
@@ -430,6 +435,66 @@ fn subdir_panel(model: Model, subdirs: List(Subdir)) {
   )
 }
 
+fn bump_panel(model: Model, project: Project) {
+  let trimmed = string.trim(model.bump_version)
+  panel_with_head(
+    "span-5",
+    "Bump Version",
+    button_disabled(
+      "",
+      "Bump",
+      RunAction(Bump(project.dir, trimmed, model.bump_configs)),
+      job_running(model) || trimmed == "",
+    ),
+    [
+      html.div([attribute.class("form-grid")], [
+        form_input(
+          "New version",
+          model.bump_version,
+          project.version,
+          SetBumpVersion,
+          "",
+        ),
+        html.label([], [
+          html.span([], [html.text("Also update in-pack configs")]),
+          html.input([
+            attribute.type_("checkbox"),
+            attribute.checked(model.bump_configs),
+            event.on_check(SetBumpConfigs),
+          ]),
+        ]),
+      ]),
+      notice(model.notice),
+    ],
+  )
+}
+
+fn generate_panel(model: Model) {
+  let disabled = model.selected_subdir == "" || job_running(model)
+  panel("span-7", "Generate", [
+    html.div([attribute.class("action-row")], [
+      button_disabled(
+        "ghost",
+        "Nix Checksums",
+        RunAction(NixGen(model.selected_subdir)),
+        disabled,
+      ),
+      button_disabled(
+        "ghost",
+        "Write Modlist",
+        RunAction(DocsModlist(model.selected_subdir)),
+        disabled,
+      ),
+      button_disabled(
+        "ghost",
+        "Regenerate Docs Pages",
+        RunAction(DocsPages),
+        job_running(model),
+      ),
+    ]),
+  ])
+}
+
 fn actions_panel(model: Model, subdirs: List(Subdir)) {
   let platform = selected_platform(subdirs, model.selected_subdir)
   let disabled = model.selected_subdir == "" || job_running(model)
@@ -482,7 +547,7 @@ fn add_mod_panel(model: Model) {
   ])
 }
 
-fn mods_panel(model: Model) {
+fn mods_panel(model: Model, project: Project) {
   let rows =
     model.mods
     |> list.filter(fn(mod) {
@@ -497,7 +562,7 @@ fn mods_panel(model: Model) {
           <> mod.platform,
       )
     })
-    |> list.map(fn(mod) { mod_row(model, mod) })
+    |> list.map(fn(mod) { mod_row(model, project, mod) })
   panel_with_head(
     "span-12 mods-panel",
     "Mods",
@@ -1108,6 +1173,43 @@ fn new_pack_panel(model: Model) {
   ])
 }
 
+fn progress_panel(model: Model) {
+  case model.mod_progress {
+    [] -> html.text("")
+    items ->
+      panel_with_head(
+        "span-12",
+        "Batch Progress",
+        pill(int.to_string(list.length(items)) <> " mod(s)"),
+        [
+          html.div(
+            [attribute.class("list mod-progress-list")],
+            list.map(items, progress_row),
+          ),
+        ],
+      )
+  }
+}
+
+fn progress_row(item: ModProgress) {
+  let status = progress_status_label(item.status)
+  html.div([attribute.class("row search-item")], [
+    html.div([], [
+      html.strong([], [html.text(item.name)]),
+      html.span([], [html.text(item.detail)]),
+    ]),
+    html.span(
+      [
+        attribute.classes([
+          #("status-badge", True),
+          #("integrated", status == "pending" || status == "queued"),
+        ]),
+      ],
+      [html.text(status)],
+    ),
+  ])
+}
+
 fn logs_panel(model: Model) {
   panel_with_head("span-12", "Command Logs", pill(model.job_status), [
     html.pre([attribute.id("logPane")], [
@@ -1227,12 +1329,31 @@ fn subdir_row(subdir: Subdir) {
   ])
 }
 
-fn mod_row(model: Model, mod: ModEntry) {
+fn mod_row(model: Model, project: Project, mod: ModEntry) {
   let subdir = model.selected_subdir
   let #(pin_label, pin_action) = case mod.pin {
     True -> #("Unpin", UnpinMod(subdir, mod.slug))
     False -> #("Pin", PinMod(subdir, mod.slug))
   }
+  let #(freeze_label, freeze_action) = case mod.pin {
+    True -> #("Unfreeze", UnfreezeMod(subdir, mod.slug))
+    False -> #("Freeze", FreezeMod(subdir, mod.slug))
+  }
+  let side_select =
+    html.select(
+      [
+        attribute.value(mod.side),
+        event.on_change(fn(side) {
+          RunAction(SetSide(project.dir, mod.slug, side))
+        }),
+      ],
+      [
+        html.option([attribute.value("client")], "client"),
+        html.option([attribute.value("server")], "server"),
+        html.option([attribute.value("both")], "both"),
+        html.option([attribute.value("either")], "either"),
+      ],
+    )
   let webview_button = case mod.platform, mod.version_id {
     _, "" -> html.text("")
     "curseforge", file_id ->
@@ -1263,8 +1384,10 @@ fn mod_row(model: Model, mod: ModEntry) {
       ]),
     ]),
     webview_button,
+    side_select,
     button_disabled("icon-btn", "Update", RunAction(UpdateMod(subdir, mod.slug)), job_running(model)),
     button_disabled("icon-btn", pin_label, RunAction(pin_action), job_running(model)),
+    button_disabled("icon-btn", freeze_label, RunAction(freeze_action), job_running(model)),
     button_disabled("icon-btn danger", "Remove", RunAction(RemoveMod(subdir, mod.slug)), job_running(model)),
   ])
 }

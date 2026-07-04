@@ -2,6 +2,8 @@ package content
 
 import (
 	"archive/zip"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -15,6 +17,7 @@ import (
 	"time"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
 	"github.com/spf13/cobra"
@@ -988,6 +991,69 @@ func slugify(name string) string {
 	return strings.Trim(s, "-")
 }
 
+const defaultInstallerURL = "https://github.com/packwiz/packwiz-installer-bootstrap/releases/latest/download/packwiz-installer-bootstrap.jar"
+
+func resolveInstallerJar() (string, error) {
+	for _, name := range []string{"PACKWAND_INSTALLER_JAR", "PACKWIZ_INSTALLER_JAR"} {
+		if path := os.Getenv(name); path != "" {
+			if _, err := os.Stat(path); err != nil {
+				return "", fmt.Errorf("%s points to %s: %w", name, path, err)
+			}
+			return path, nil
+		}
+	}
+	cache, err := core.GetPackwandCache()
+	if err != nil {
+		return "", err
+	}
+	path := filepath.Join(cache, "installer", "packwiz-installer-bootstrap.jar")
+	if _, err := os.Stat(path); err == nil {
+		return path, nil
+	}
+	url := os.Getenv("PACKWAND_INSTALLER_URL")
+	if url == "" {
+		url = defaultInstallerURL
+	}
+	if err := downloadInstallerJar(path, url, os.Getenv("PACKWAND_INSTALLER_SHA256")); err != nil {
+		return "", err
+	}
+	return path, nil
+}
+
+func downloadInstallerJar(destination, source, expectedSHA256 string) error {
+	response, err := core.GetWithUA(source, "application/java-archive, application/octet-stream")
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		return fmt.Errorf("HTTP %d from %s", response.StatusCode, source)
+	}
+	if err := os.MkdirAll(filepath.Dir(destination), 0o755); err != nil {
+		return err
+	}
+	tmp, err := os.CreateTemp(filepath.Dir(destination), "installer-*.jar.tmp")
+	if err != nil {
+		return err
+	}
+	defer os.Remove(tmp.Name())
+	hasher := sha256.New()
+	if _, err := io.Copy(io.MultiWriter(tmp, hasher), response.Body); err != nil {
+		tmp.Close()
+		return err
+	}
+	if err := tmp.Close(); err != nil {
+		return err
+	}
+	if expectedSHA256 != "" {
+		actual := hex.EncodeToString(hasher.Sum(nil))
+		if !strings.EqualFold(actual, expectedSHA256) {
+			return fmt.Errorf("installer SHA-256 mismatch: expected %s, got %s", expectedSHA256, actual)
+		}
+	}
+	return os.Rename(tmp.Name(), destination)
+}
+
 // — test —
 
 const servePort = "8080"
@@ -1008,17 +1074,10 @@ var testCmd = &cobra.Command{
 		if _, err := exec.LookPath("java"); err != nil {
 			cmd.Fail("java not found in PATH; packwiz-installer requires a JRE/JDK")
 		}
-		installerJar := os.Getenv("PACKWAND_INSTALLER_JAR")
-		if installerJar == "" {
-			installerJar = os.Getenv("PACKWIZ_INSTALLER_JAR")
+		installerJar, err := resolveInstallerJar()
+		if err != nil {
+			cmd.Fail(fmt.Sprintf("could not provision packwiz installer: %v", err))
 		}
-		if installerJar == "" {
-			cmd.Fail("PACKWAND_INSTALLER_JAR is not set; download packwiz-installer-bootstrap.jar and export the path")
-		}
-		if _, err := os.Stat(installerJar); err != nil {
-			cmd.Fail(fmt.Sprintf("packwiz-installer jar not found at %s", installerJar))
-		}
-
 		instanceDir := os.Getenv("PACKWAND_TEST_INSTANCE")
 		if instanceDir == "" {
 			instanceDir = "./.packwand-test-instance"

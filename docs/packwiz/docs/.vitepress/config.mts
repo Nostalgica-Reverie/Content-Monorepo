@@ -22,7 +22,14 @@ export default defineConfig({
       { text: 'Installer', link: '/installer' },
       { text: 'Bootstrap', link: '/bootstrap' },
       { text: 'Webview', link: '/webview' },
-      { text: 'Building', link: '/building' }
+      { text: 'Building', link: '/building' },
+      {
+        text: 'Other Docs',
+        items: [
+          { text: 'Lasting Legacy Docs', link: 'https://docs.nostalgica.net/' },
+          { text: 'Packwand', link: 'https://packwand.nostalgica.net/' },
+        ],
+      },
     ],
     search: {
       provider: "local",

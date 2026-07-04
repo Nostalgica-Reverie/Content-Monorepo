@@ -22,7 +22,14 @@ export default defineConfig({
       { text: 'Installation', link: '/installation' },
       { text: 'Tutorials', link: '/tutorials/creating/getting-started' },
       { text: 'Reference', link: '/reference/additional-options' },
-      { text: 'Pack Format', link: '/reference/pack-format/pack-toml' }
+      { text: 'Pack Format', link: '/reference/pack-format/pack-toml' },
+      {
+        text: 'Other Docs',
+        items: [
+          { text: 'Lasting Legacy Docs', link: 'https://docs.nostalgica.net/' },
+          { text: 'Packwiz Components', link: 'https://packwiz.nostalgica.net/' },
+        ],
+      },
     ],
     search: {
       provider: "local",

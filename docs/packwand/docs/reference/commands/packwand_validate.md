@@ -1,6 +1,6 @@
 ## packwand validate
 
-Validate pack manifests â€” fields, subdirs, changelog, role, automation
+Validate pack manifests — fields, subdirs, changelog, role, automation
 
 ```
 packwand validate [manifest.json...] [flags]
@@ -27,5 +27,5 @@ packwand validate [manifest.json...] [flags]
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 

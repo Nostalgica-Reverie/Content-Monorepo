@@ -8,6 +8,7 @@
   },
   "scripts": {
     "docs:commands": "node build-commands.mjs",
+    "docs:check-coverage": "node check-command-coverage.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "npm run docs:commands && vitepress build docs",
     "docs:preview": "vitepress preview docs"

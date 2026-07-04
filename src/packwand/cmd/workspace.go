@@ -33,11 +33,14 @@ func init() {
 	// update
 	wsUpdateCmd.Flags().Bool("all", false, "Run across all packs even when scoped")
 	wsUpdateCmd.Flags().Bool("check", false, "Show what would update without applying (dry-run)")
+	wsUpdateCmd.Flags().Bool("json", false, "With --check, output a JSON summary instead of plain text")
+	wsUpdateCmd.Flags().Bool("ignored-only", false, "With --check, check packs opted out of auto-update instead of the normal set")
 	wsUpdateCmd.Flags().String("report", "", "Write an aggregated machine-readable JSON update report to this file")
 	workspaceCmd.AddCommand(wsUpdateCmd)
 
 	// refresh
 	wsRefreshCmd.Flags().Bool("all", false, "Run across all packs even when scoped")
+	wsRefreshCmd.Flags().Bool("dry-run", false, "List pack subdirectories without refreshing them")
 	workspaceCmd.AddCommand(wsRefreshCmd)
 
 	// loader-update
@@ -216,7 +219,9 @@ var wsUpdateCmd = &cobra.Command{
 		llChdir()
 		check, _ := cmd.Flags().GetBool("check")
 		if check {
-			wsRunUpdateCheck(args)
+			asJSON, _ := cmd.Flags().GetBool("json")
+			ignoredOnly, _ := cmd.Flags().GetBool("ignored-only")
+			wsRunUpdateCheck(args, asJSON, ignoredOnly)
 			return
 		}
 		reportPath, _ := cmd.Flags().GetString("report")
@@ -320,11 +325,62 @@ func wsWriteAggregateReport(reportPath, reportDir string, runErr error) {
 		reportPath, len(agg.Packs), agg.Totals.Updated, agg.Totals.Failed)
 }
 
-func wsRunUpdateCheck(args []string) {
-	packFilter, _ := workspace.ResolveScope(args, llStartCwd)
+// WorkspaceUpdateCheckSubdir is one pack subdir's outcome within
+// `workspace update --check --json`.
+type WorkspaceUpdateCheckSubdir struct {
+	Dir     string   `json:"dir"`
+	Ignored bool     `json:"ignored,omitempty"`
+	Updates []string `json:"updates,omitempty"`
+	Error   string   `json:"error,omitempty"`
+}
+
+// WorkspaceUpdateCheckResult is the machine-readable outcome of
+// `workspace update --check --json`.
+type WorkspaceUpdateCheckResult struct {
+	Subdirs      []WorkspaceUpdateCheckSubdir `json:"subdirs"`
+	TotalUpdates int                          `json:"total_updates"`
+	FailedChecks int                          `json:"failed_checks"`
+}
+
+// ignoredPackSubdirs returns subdirs of packs opted out of auto-update
+// (via manifest.json automation.auto_update or the legacy
+// auto-update-ignore.json file), excluding archived/EOL packs — those are
+// a separate, unrelated reason to skip a pack.
+func ignoredPackSubdirs(root string) []string {
+	entries, err := os.ReadDir(root)
+	if err != nil {
+		return nil
+	}
+	var subdirs []string
+	for _, e := range entries {
+		if !e.IsDir() {
+			continue
+		}
+		packPath := filepath.Join(root, e.Name())
+		if lc := manifest.LifecycleState(packPath); lc == "archived" || lc == "eol" {
+			continue
+		}
+		if skip, _ := manifest.OptedOutOfAutoUpdate(packPath); skip {
+			subdirs = append(subdirs, manifest.SubDirsOf(packPath)...)
+		}
+	}
+	return subdirs
+}
+
+func wsRunUpdateCheck(args []string, asJSON, ignoredOnly bool) {
 	root := workspace.ModpacksDir()
-	targets, _ := workspace.CollectTargets(root, true, packFilter, false)
+	var targets []string
+	if ignoredOnly {
+		targets = ignoredPackSubdirs(root)
+	} else {
+		packFilter, _ := workspace.ResolveScope(args, llStartCwd)
+		targets, _ = workspace.CollectTargets(root, true, packFilter, false)
+	}
 	if len(targets) == 0 {
+		if asJSON {
+			printJSON(WorkspaceUpdateCheckResult{Subdirs: []WorkspaceUpdateCheckSubdir{}})
+			return
+		}
 		fmt.Println("no pack subdirs to check")
 		return
 	}
@@ -334,7 +390,9 @@ func wsRunUpdateCheck(args []string) {
 		updates []string
 		err     error
 	}
-	fmt.Printf("checking %d subdir(s), running up to %d in parallel\n", len(targets), workspace.MaxConcurrent())
+	if !asJSON {
+		fmt.Printf("checking %d subdir(s), running up to %d in parallel\n", len(targets), workspace.MaxConcurrent())
+	}
 	results := make([]checkOutput, len(targets))
 	sched := workspace.NewScheduler(workspace.MaxConcurrent())
 	dones := make([]<-chan error, len(targets))
@@ -356,25 +414,50 @@ func wsRunUpdateCheck(args []string) {
 	}
 
 	totalUpdates := 0
+	failedChecks := 0
+	jsonResult := WorkspaceUpdateCheckResult{Subdirs: make([]WorkspaceUpdateCheckSubdir, 0, len(results))}
 	for _, result := range results {
 		if result.err != nil {
-			llWarn("%s: check failed: %v", result.dir, result.err)
+			failedChecks++
+			if asJSON {
+				jsonResult.Subdirs = append(jsonResult.Subdirs, WorkspaceUpdateCheckSubdir{Dir: result.dir, Ignored: ignoredOnly, Error: result.err.Error()})
+			} else {
+				llWarn("%s: check failed: %v", result.dir, result.err)
+			}
 			continue
 		}
 		if len(result.updates) > 0 {
+			totalUpdates += len(result.updates)
+			if asJSON {
+				jsonResult.Subdirs = append(jsonResult.Subdirs, WorkspaceUpdateCheckSubdir{Dir: result.dir, Ignored: ignoredOnly, Updates: result.updates})
+				continue
+			}
 			fmt.Printf("%s: %d update(s) available\n", result.dir, len(result.updates))
 			for _, u := range result.updates {
 				fmt.Printf("  ~ %s\n", u)
 			}
-			totalUpdates += len(result.updates)
-		} else {
+		} else if !asJSON {
 			fmt.Printf("%s: up to date\n", result.dir)
 		}
 	}
-	if totalUpdates == 0 {
+
+	if asJSON {
+		jsonResult.TotalUpdates = totalUpdates
+		jsonResult.FailedChecks = failedChecks
+		printJSON(jsonResult)
+		if failedChecks > 0 {
+			os.Exit(1)
+		}
+		return
+	}
+
+	if totalUpdates == 0 && failedChecks == 0 {
 		fmt.Println("\neverything is up to date")
-	} else {
+	} else if totalUpdates > 0 {
 		fmt.Printf("\n%d update(s) available — run 'packwand workspace update' to apply\n", totalUpdates)
+	}
+	if failedChecks > 0 {
+		llFail(fmt.Sprintf("%d update check(s) failed", failedChecks))
 	}
 }
 
@@ -386,6 +469,15 @@ var wsRefreshCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		llChdir()
 		packFilter, explicit := workspace.ResolveScope(args, llStartCwd)
+		dryRun, _ := cmd.Flags().GetBool("dry-run")
+		if dryRun {
+			targets, _ := workspace.CollectTargets(workspace.ModpacksDir(), false, packFilter, explicit)
+			fmt.Printf("dry-run: %d pack subdir(s) would be refreshed\n", len(targets))
+			for _, target := range targets {
+				fmt.Printf("  - %s\n", target)
+			}
+			return
+		}
 		if err := workspace.Run(workspace.OpRefresh, packFilter, explicit); err != nil {
 			llFail(err.Error())
 		}
@@ -456,7 +548,7 @@ var wsSyncCmd = &cobra.Command{
 		if !dryRun {
 			// Regenerate docs after sync
 			fmt.Println()
-			runPages("")
+			runPages("", false)
 		}
 	},
 }

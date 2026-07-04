@@ -9,8 +9,9 @@ packwand workspace refresh [pack-dir] [flags]
 ### Options
 
 ```
-      --all    Run across all packs even when scoped
-  -h, --help   help for refresh
+      --all       Run across all packs even when scoped
+      --dry-run   List pack subdirectories without refreshing them
+  -h, --help      help for refresh
 ```
 
 ### Options inherited from parent commands

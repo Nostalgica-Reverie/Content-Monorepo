@@ -10,6 +10,7 @@ packwand pages [pack-dir] [flags]
 
 ```
   -h, --help          help for pages
+      --json          Output a JSON summary instead of plain text
   -p, --pack string   Pack directory to regenerate (default: all)
 ```
 
@@ -27,5 +28,5 @@ packwand pages [pack-dir] [flags]
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 

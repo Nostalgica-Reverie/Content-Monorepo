@@ -12,7 +12,7 @@ import (
 
 var loaderCommand = &cobra.Command{
 	Use:   "loader [version|latest|recommended]",
-	Short: "Migrate your modloader version to a newer version.",
+	Short: "Migrate every configured modloader to a newer version.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		modpack, err := core.LoadPack()
@@ -22,54 +22,44 @@ var loaderCommand = &cobra.Command{
 			}
 			cmdshared.Failf("loading pack: %v", err)
 		}
-		var currentLoaders = modpack.GetLoaders()
+		currentLoaders := modpack.GetLoaders()
 		if len(currentLoaders) == 0 {
 			cmdshared.Fail("no loader set in pack.toml")
-		} else if len(currentLoaders) > 1 {
-			cmdshared.Fail("multiple loaders set in pack.toml — this is not supported")
 		}
 		mcVersion, err := modpack.GetMCVersion()
 		if err != nil {
 			cmdshared.Failf("getting Minecraft version: %v", err)
 		}
-		if args[0] == "latest" || args[0] == "recommended" {
-			fmt.Printf("Updating to %s loader version\n", args[0])
 
+		target := args[0]
+		if target == "latest" || target == "recommended" {
+			fmt.Printf("Updating all loaders to %s versions\n", target)
 			queryType := core.Latest
-			if args[0] == "recommended" {
+			if target == "recommended" {
 				queryType = core.Recommended
 			}
-
-			for _, loader := range currentLoaders {
-				versionData, gottenLoader := getVersionsForLoader(loader, mcVersion, queryType)
-				if !updatePackToVersion(versionData.Latest, modpack, gottenLoader) {
-					continue
-				}
-				err = modpack.Write()
-				if err != nil {
-					cmdshared.Failf("writing pack.toml: %v", err)
-				}
+			for _, currentLoader := range currentLoaders {
+				versionData, loader := getVersionsForLoader(currentLoader, mcVersion, queryType)
+				_ = updatePackToVersion(versionData.Latest, modpack, loader)
 			}
 		} else {
-			fmt.Println("Updating to explicit loader version")
-			versionData, loader := getVersionsForLoader(currentLoaders[0], mcVersion, core.Latest)
-			if loader.Name == "forge" || loader.Name == "neoforge" {
-				wantedVersion := cmdshared.GetRawForgeVersion(args[0])
+			fmt.Println("Updating all loaders to the explicit version where supported")
+			for _, currentLoader := range currentLoaders {
+				versionData, loader := getVersionsForLoader(currentLoader, mcVersion, core.Latest)
+				wantedVersion := target
+				switch loader.Name {
+				case "forge", "neoforge":
+					wantedVersion = cmdshared.GetRawForgeVersion(wantedVersion)
+				case "liteloader":
+					fmt.Printf("%s only has one version per Minecraft version; skipping explicit migration\n", loader.FriendlyName)
+					continue
+				}
 				validateVersion(versionData.Versions, wantedVersion, loader)
 				_ = updatePackToVersion(wantedVersion, modpack, loader)
-			} else if loader.Name == "liteloader" {
-				fmt.Println("LiteLoader only has 1 version per Minecraft version so we're unable to update!")
-				os.Exit(0)
-			} else {
-				validateVersion(versionData.Versions, args[0], loader)
-				if !updatePackToVersion(args[0], modpack, loader) {
-					return
-				}
 			}
-			err = modpack.Write()
-			if err != nil {
-				cmdshared.Failf("writing pack.toml: %v", err)
-			}
+		}
+		if err = modpack.Write(); err != nil {
+			cmdshared.Failf("writing pack.toml: %v", err)
 		}
 	},
 }

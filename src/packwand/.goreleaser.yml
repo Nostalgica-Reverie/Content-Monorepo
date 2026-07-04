@@ -65,6 +65,16 @@ checksum:
   name_template: "checksums.txt"
   algorithm: sha256
 
+# Generate a CycloneDX SBOM for each shipped archive. GoReleaser uploads these
+# documents as release artifacts beside the archives.
+sboms:
+  - id: archives
+    artifacts: archive
+    documents:
+      - "{{ .ArtifactName }}.cdx.json"
+    cmd: syft
+    args: ["$artifact", "--output", "cyclonedx-json=$document"]
+
 snapshot:
   version_template: "{{ incpatch .Version }}-devel"
 

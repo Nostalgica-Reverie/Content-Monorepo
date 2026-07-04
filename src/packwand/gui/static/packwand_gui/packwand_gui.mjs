@@ -47,6 +47,8 @@ import {
   SaveManifest,
   SelectProject,
   SelectSubdir,
+  SetBumpConfigs,
+  SetBumpVersion,
   SetManifest,
   SetManifestField,
   SetManifestStructured,
@@ -63,6 +65,8 @@ import {
   append_log,
   http_error,
   initial,
+  record_progress_line,
+  reset_progress,
   selected_project,
 } from "./packwand_gui/state.mjs";
 import * as $view from "./packwand_gui/view.mjs";
@@ -98,6 +102,10 @@ function with_error(model, error) {
         model.icon_failed,
         model.new_pack,
         message,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       message,
     ),
@@ -131,6 +139,10 @@ function create_project(model) {
         model.icon_failed,
         model.new_pack,
         "A project ID and name are required.",
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -157,6 +169,10 @@ function create_project(model) {
         model.icon_failed,
         model.new_pack,
         "Creating project...",
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $api.create_project(
         draft.id,
@@ -231,6 +247,10 @@ function select_project(model) {
         false,
         model.new_pack,
         model.notice,
+        "",
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.batch(
         toList([
@@ -288,6 +308,10 @@ function select_after_projects(model, projects) {
       model.icon_failed,
       model.new_pack,
       model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      model.mod_progress_in_block,
     ),
   );
 }
@@ -319,6 +343,10 @@ function update(model, msg) {
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -369,6 +397,10 @@ function update(model, msg) {
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -400,6 +432,10 @@ function update(model, msg) {
         false,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
     );
   } else if (msg instanceof SelectSubdir) {
@@ -426,6 +462,10 @@ function update(model, msg) {
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       load_mods(path),
     ];
@@ -453,6 +493,10 @@ function update(model, msg) {
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       set_hash_effect($view.hash(next)),
     ];
@@ -480,6 +524,10 @@ function update(model, msg) {
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -507,6 +555,10 @@ function update(model, msg) {
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -536,6 +588,10 @@ function update(model, msg) {
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -569,6 +625,10 @@ function update(model, msg) {
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -605,6 +665,10 @@ function update(model, msg) {
             model.icon_failed,
             model.new_pack,
             model.notice,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           $effect.none(),
         ];
@@ -631,6 +695,10 @@ function update(model, msg) {
             model.icon_failed,
             model.new_pack,
             model.notice,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           $effect.none(),
         ];
@@ -643,7 +711,8 @@ function update(model, msg) {
     let action = msg[0];
     let _block;
     let _pipe = model;
-    _block = append_log(_pipe, "> packwand " + action_name(action));
+    let _pipe$1 = reset_progress(_pipe);
+    _block = append_log(_pipe$1, "> packwand " + action_name(action));
     let running = _block;
     return [
       new Model(
@@ -667,6 +736,10 @@ function update(model, msg) {
         running.icon_failed,
         running.new_pack,
         "",
+        running.bump_version,
+        running.bump_configs,
+        running.mod_progress,
+        running.mod_progress_in_block,
       ),
       $api.action(action, (result) => { return new GotAction(action, result); }),
     ];
@@ -697,6 +770,10 @@ function update(model, msg) {
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         watch_job_effect(response.job_id),
       ];
@@ -737,6 +814,10 @@ function update(model, msg) {
         running.icon_failed,
         running.new_pack,
         "",
+        running.bump_version,
+        running.bump_configs,
+        running.mod_progress,
+        running.mod_progress_in_block,
       ),
       $api.webview_fetch(
         provider,
@@ -771,6 +852,10 @@ function update(model, msg) {
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         watch_job_effect(response.job_id),
       ];
@@ -780,7 +865,7 @@ function update(model, msg) {
     }
   } else if (msg instanceof JobLine) {
     let line = msg[0];
-    return [append_log(model, line), $effect.none()];
+    return [record_progress_line(append_log(model, line), line), $effect.none()];
   } else if (msg instanceof JobFinished) {
     let status = msg[0];
     let error = msg[1];
@@ -805,6 +890,10 @@ function update(model, msg) {
       model.icon_failed,
       model.new_pack,
       model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      model.mod_progress_in_block,
     );
     let _block;
     if (error === "") {
@@ -835,6 +924,10 @@ function update(model, msg) {
         finished$1.icon_failed,
         finished$1.new_pack,
         finished$1.notice,
+        finished$1.bump_version,
+        finished$1.bump_configs,
+        finished$1.mod_progress,
+        finished$1.mod_progress_in_block,
       ),
       (() => {
         let $ = model.refresh_mods_after_job;
@@ -881,6 +974,10 @@ function update(model, msg) {
               model.icon_failed,
               model.new_pack,
               "Saving manifest...",
+              model.bump_version,
+              model.bump_configs,
+              model.mod_progress,
+              model.mod_progress_in_block,
             ),
             $api.save_manifest(
               id,
@@ -912,6 +1009,10 @@ function update(model, msg) {
               model.icon_failed,
               model.new_pack,
               ("Fix " + $int.to_string($list.length(errors))) + " validation error(s) before saving.",
+              model.bump_version,
+              model.bump_configs,
+              model.mod_progress,
+              model.mod_progress_in_block,
             ),
             $effect.none(),
           ];
@@ -939,6 +1040,10 @@ function update(model, msg) {
             model.icon_failed,
             model.new_pack,
             "Saving manifest...",
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           $api.save_manifest(
             id,
@@ -972,6 +1077,10 @@ function update(model, msg) {
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1002,6 +1111,10 @@ function update(model, msg) {
           model.icon_failed,
           model.new_pack,
           "",
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -1036,6 +1149,10 @@ function update(model, msg) {
             model.icon_failed,
             model.new_pack,
             "",
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           $effect.none(),
         ];
@@ -1063,6 +1180,10 @@ function update(model, msg) {
             model.icon_failed,
             model.new_pack,
             "Cannot open form editor: " + message,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           $effect.none(),
         ];
@@ -1099,6 +1220,10 @@ function update(model, msg) {
           model.icon_failed,
           model.new_pack,
           "",
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -1129,6 +1254,10 @@ function update(model, msg) {
             model.icon_failed,
             model.new_pack,
             "Manifest saved.",
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           "Manifest saved.",
         ),
@@ -1167,6 +1296,10 @@ function update(model, msg) {
             model.icon_failed,
             model.new_pack,
             "Project created.",
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           ("Created project " + id) + ".",
         ),
@@ -1211,6 +1344,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1249,6 +1386,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1287,6 +1428,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1325,6 +1470,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1363,6 +1512,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1401,6 +1554,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1439,6 +1596,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1465,10 +1626,14 @@ function update(model, msg) {
         model.icon_failed,
         model.new_pack,
         "Changelog copied.",
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       copy_effect(model.changelog),
     ];
-  } else {
+  } else if (msg instanceof IconFailed) {
     return [
       new Model(
         model.root,
@@ -1491,6 +1656,72 @@ function update(model, msg) {
         true,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
+      ),
+      $effect.none(),
+    ];
+  } else if (msg instanceof SetBumpVersion) {
+    let value = msg[0];
+    return [
+      new Model(
+        model.root,
+        model.version,
+        model.projects,
+        model.features,
+        model.selected_id,
+        model.selected_subdir,
+        model.view,
+        model.search,
+        model.mods,
+        model.mod_slug,
+        model.changelog,
+        model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
+        model.logs,
+        model.job_status,
+        model.refresh_mods_after_job,
+        model.icon_failed,
+        model.new_pack,
+        model.notice,
+        value,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
+      ),
+      $effect.none(),
+    ];
+  } else {
+    let value = msg[0];
+    return [
+      new Model(
+        model.root,
+        model.version,
+        model.projects,
+        model.features,
+        model.selected_id,
+        model.selected_subdir,
+        model.view,
+        model.search,
+        model.mods,
+        model.mod_slug,
+        model.changelog,
+        model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
+        model.logs,
+        model.job_status,
+        model.refresh_mods_after_job,
+        model.icon_failed,
+        model.new_pack,
+        model.notice,
+        model.bump_version,
+        value,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1530,15 +1761,15 @@ export function main() {
       "let_assert",
       FILEPATH,
       "packwand_gui",
-      43,
+      45,
       "main",
       "Pattern match failed, no pattern matched the value.",
       {
         value: $,
-        start: 1533,
-        end: 1582,
-        pattern_start: 1544,
-        pattern_end: 1549
+        start: 1651,
+        end: 1700,
+        pattern_start: 1662,
+        pattern_end: 1667
       }
     )
   }

@@ -19,6 +19,19 @@ jobs:
           go-version: "stable"
           cache: true
 
+      - name: Secret scan (gitleaks)
+        # Gate the release on the checked-out history being clean before anything
+        # gets built and published — cheaper and catches leaks earlier than
+        # scanning the built artifacts themselves.
+        run: |
+          go install github.com/gitleaks/gitleaks/v8@latest
+          "$(go env GOPATH)/bin/gitleaks" detect --source . --redact --exit-code 1
+
+      - name: Install Syft for release SBOMs
+        run: |
+          go install github.com/anchore/syft/cmd/syft@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
       - name: Run GoReleaser
         uses: https://github.com/goreleaser/goreleaser-action@v6
         with:

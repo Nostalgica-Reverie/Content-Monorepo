@@ -1,6 +1,6 @@
 ## packwand
 
-Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 
 ```
 packwand [flags]
@@ -22,10 +22,13 @@ packwand [flags]
 ### SEE ALSO
 
 * [packwand add](packwand_add.md)	 - Add a mod to all (or a specific) pack's Modrinth and CurseForge subdirs
+* [packwand api](packwand_api.md)	 - Run and inspect the Packwand HTTP API
 * [packwand automation](packwand_automation.md)	 - Query effective automation settings for a pack
 * [packwand build](packwand_build.md)	 - Build modpack exports and zip packs from git-changed targets (CI mode)
 * [packwand bump](packwand_bump.md)	 - Bump the manifest version (--configs also updates in-pack version files)
+* [packwand cache](packwand_cache.md)	 - Inspect and maintain the shared download cache
 * [packwand completion](packwand_completion.md)	 - Generate the autocompletion script for the specified shell
+* [packwand content-lint](packwand_content-lint.md)	 - Lint pack content — namespaces, texture/model refs, pack.mcmeta, function tags, duplicate and case-colliding files
 * [packwand curseforge](packwand_curseforge.md)	 - Manage curseforge-based mods
 * [packwand diff](packwand_diff.md)	 - Show mod additions, removals, and updates between two git refs
 * [packwand doctor](packwand_doctor.md)	 - Check that tools, repo root, and manifests are all healthy
@@ -62,7 +65,7 @@ packwand [flags]
 * [packwand update](packwand_update.md)	 - Update an external file (or all external files) in the modpack
 * [packwand url](packwand_url.md)	 - Add external files from a direct download link, for sites that are not directly supported by packwiz
 * [packwand utils](packwand_utils.md)	 - Utilities for managing packwiz itself
-* [packwand validate](packwand_validate.md)	 - Validate pack manifests â€” fields, subdirs, changelog, role, automation
+* [packwand validate](packwand_validate.md)	 - Validate pack manifests — fields, subdirs, changelog, role, automation
 * [packwand version](packwand_version.md)	 - Print the packwand version
 * [packwand workspace](packwand_workspace.md)	 - Multi-pack workspace operations across all packs
 

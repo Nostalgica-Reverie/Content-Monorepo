@@ -2,7 +2,7 @@ import * as $list from "../../gleam_stdlib/gleam/list.mjs";
 import * as $option from "../../gleam_stdlib/gleam/option.mjs";
 import { None } from "../../gleam_stdlib/gleam/option.mjs";
 import * as $string from "../../gleam_stdlib/gleam/string.mjs";
-import { toList, prepend as listPrepend, CustomType as $CustomType } from "../gleam.mjs";
+import { Ok, toList, prepend as listPrepend, CustomType as $CustomType } from "../gleam.mjs";
 import * as $manifest_form from "../packwand_gui/manifest_form.mjs";
 import * as $domain from "../packwand_gui/model.mjs";
 
@@ -29,6 +29,45 @@ export const View$isLogs = (value) => value instanceof Logs;
 export class Settings extends $CustomType {}
 export const View$Settings = () => new Settings();
 export const View$isSettings = (value) => value instanceof Settings;
+
+export class ProgressPending extends $CustomType {}
+export const ModProgressStatus$ProgressPending = () => new ProgressPending();
+export const ModProgressStatus$isProgressPending = (value) =>
+  value instanceof ProgressPending;
+
+export class ProgressPinned extends $CustomType {}
+export const ModProgressStatus$ProgressPinned = () => new ProgressPinned();
+export const ModProgressStatus$isProgressPinned = (value) =>
+  value instanceof ProgressPinned;
+
+export class ProgressFailed extends $CustomType {}
+export const ModProgressStatus$ProgressFailed = () => new ProgressFailed();
+export const ModProgressStatus$isProgressFailed = (value) =>
+  value instanceof ProgressFailed;
+
+export class ProgressSkipped extends $CustomType {}
+export const ModProgressStatus$ProgressSkipped = () => new ProgressSkipped();
+export const ModProgressStatus$isProgressSkipped = (value) =>
+  value instanceof ProgressSkipped;
+
+export class ModProgress extends $CustomType {
+  constructor(name, status, detail) {
+    super();
+    this.name = name;
+    this.status = status;
+    this.detail = detail;
+  }
+}
+export const ModProgress$ModProgress = (name, status, detail) =>
+  new ModProgress(name, status, detail);
+export const ModProgress$isModProgress = (value) =>
+  value instanceof ModProgress;
+export const ModProgress$ModProgress$name = (value) => value.name;
+export const ModProgress$ModProgress$0 = (value) => value.name;
+export const ModProgress$ModProgress$status = (value) => value.status;
+export const ModProgress$ModProgress$1 = (value) => value.status;
+export const ModProgress$ModProgress$detail = (value) => value.detail;
+export const ModProgress$ModProgress$2 = (value) => value.detail;
 
 export class NewPack extends $CustomType {
   constructor(id, name, kind, loader, minecraft, version, description) {
@@ -61,7 +100,7 @@ export const NewPack$NewPack$description = (value) => value.description;
 export const NewPack$NewPack$6 = (value) => value.description;
 
 export class Model extends $CustomType {
-  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) {
+  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block) {
     super();
     this.root = root;
     this.version = version;
@@ -83,9 +122,13 @@ export class Model extends $CustomType {
     this.icon_failed = icon_failed;
     this.new_pack = new_pack;
     this.notice = notice;
+    this.bump_version = bump_version;
+    this.bump_configs = bump_configs;
+    this.mod_progress = mod_progress;
+    this.mod_progress_in_block = mod_progress_in_block;
   }
 }
-export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice) =>
+export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block) =>
   new Model(root,
   version,
   projects,
@@ -105,7 +148,11 @@ export const Model$Model = (root, version, projects, features, selected_id, sele
   refresh_mods_after_job,
   icon_failed,
   new_pack,
-  notice);
+  notice,
+  bump_version,
+  bump_configs,
+  mod_progress,
+  mod_progress_in_block);
 export const Model$isModel = (value) => value instanceof Model;
 export const Model$Model$root = (value) => value.root;
 export const Model$Model$0 = (value) => value.root;
@@ -149,6 +196,15 @@ export const Model$Model$new_pack = (value) => value.new_pack;
 export const Model$Model$18 = (value) => value.new_pack;
 export const Model$Model$notice = (value) => value.notice;
 export const Model$Model$19 = (value) => value.notice;
+export const Model$Model$bump_version = (value) => value.bump_version;
+export const Model$Model$20 = (value) => value.bump_version;
+export const Model$Model$bump_configs = (value) => value.bump_configs;
+export const Model$Model$21 = (value) => value.bump_configs;
+export const Model$Model$mod_progress = (value) => value.mod_progress;
+export const Model$Model$22 = (value) => value.mod_progress;
+export const Model$Model$mod_progress_in_block = (value) =>
+  value.mod_progress_in_block;
+export const Model$Model$23 = (value) => value.mod_progress_in_block;
 
 export class GotHealth extends $CustomType {
   constructor($0) {
@@ -474,6 +530,38 @@ export class IconFailed extends $CustomType {}
 export const Msg$IconFailed = () => new IconFailed();
 export const Msg$isIconFailed = (value) => value instanceof IconFailed;
 
+export class SetBumpVersion extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetBumpVersion = ($0) => new SetBumpVersion($0);
+export const Msg$isSetBumpVersion = (value) => value instanceof SetBumpVersion;
+export const Msg$SetBumpVersion$0 = (value) => value[0];
+
+export class SetBumpConfigs extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetBumpConfigs = ($0) => new SetBumpConfigs($0);
+export const Msg$isSetBumpConfigs = (value) => value instanceof SetBumpConfigs;
+export const Msg$SetBumpConfigs$0 = (value) => value[0];
+
+export function progress_status_label(status) {
+  if (status instanceof ProgressPending) {
+    return "queued";
+  } else if (status instanceof ProgressPinned) {
+    return "pinned";
+  } else if (status instanceof ProgressFailed) {
+    return "failed";
+  } else {
+    return "skipped";
+  }
+}
+
 export function initial() {
   return new Model(
     "Loading repo...",
@@ -496,6 +584,10 @@ export function initial() {
     false,
     new NewPack("", "", "modpack", "fabric", "", "0.1.0", ""),
     "",
+    "",
+    false,
+    toList([]),
+    false,
   );
 }
 
@@ -537,7 +629,340 @@ export function append_log(model, line) {
     model.icon_failed,
     model.new_pack,
     model.notice,
+    model.bump_version,
+    model.bump_configs,
+    model.mod_progress,
+    model.mod_progress_in_block,
   );
+}
+
+export function reset_progress(model) {
+  return new Model(
+    model.root,
+    model.version,
+    model.projects,
+    model.features,
+    model.selected_id,
+    model.selected_subdir,
+    model.view,
+    model.search,
+    model.mods,
+    model.mod_slug,
+    model.changelog,
+    model.manifest,
+    model.manifest_form,
+    model.manifest_structured,
+    model.logs,
+    model.job_status,
+    model.refresh_mods_after_job,
+    model.icon_failed,
+    model.new_pack,
+    model.notice,
+    model.bump_version,
+    model.bump_configs,
+    toList([]),
+    false,
+  );
+}
+
+function upsert_progress(model, name, status, detail) {
+  let name$1 = $string.trim(name);
+  let entry = new ModProgress(name$1, status, $string.trim(detail));
+  let exists = $list.any(
+    model.mod_progress,
+    (p) => { return p.name === name$1; },
+  );
+  let _block;
+  if (exists) {
+    _block = $list.map(
+      model.mod_progress,
+      (p) => {
+        let $ = p.name === name$1;
+        if ($) {
+          return entry;
+        } else {
+          return p;
+        }
+      },
+    );
+  } else {
+    _block = $list.append(model.mod_progress, toList([entry]));
+  }
+  let updated = _block;
+  return new Model(
+    model.root,
+    model.version,
+    model.projects,
+    model.features,
+    model.selected_id,
+    model.selected_subdir,
+    model.view,
+    model.search,
+    model.mods,
+    model.mod_slug,
+    model.changelog,
+    model.manifest,
+    model.manifest_form,
+    model.manifest_structured,
+    model.logs,
+    model.job_status,
+    model.refresh_mods_after_job,
+    model.icon_failed,
+    model.new_pack,
+    model.notice,
+    model.bump_version,
+    model.bump_configs,
+    updated,
+    model.mod_progress_in_block,
+  );
+}
+
+function add_pending_pair(model, line) {
+  let $ = $string.split_once(line, ": ");
+  if ($ instanceof Ok) {
+    let name = $[0][0];
+    let detail = $[0][1];
+    return upsert_progress(model, name, new ProgressPending(), detail);
+  } else {
+    return model;
+  }
+}
+
+function record_progress_prefixed(model, line) {
+  let pinned_prefix = "Update skipped for pinned mod ";
+  let failed_prefix = "Failed to check updates for ";
+  let no_updater_prefix = "A supported update system for \"";
+  let $ = $string.starts_with(line, pinned_prefix);
+  if ($) {
+    return upsert_progress(
+      model,
+      $string.drop_start(line, $string.length(pinned_prefix)),
+      new ProgressPinned(),
+      "",
+    );
+  } else {
+    let $1 = $string.starts_with(line, failed_prefix);
+    if ($1) {
+      let rest = $string.drop_start(line, $string.length(failed_prefix));
+      let $2 = $string.split_once(rest, ": ");
+      if ($2 instanceof Ok) {
+        let name = $2[0][0];
+        let detail = $2[0][1];
+        return upsert_progress(model, name, new ProgressFailed(), detail);
+      } else {
+        return upsert_progress(model, rest, new ProgressFailed(), "");
+      }
+    } else {
+      let $2 = $string.starts_with(line, no_updater_prefix);
+      if ($2) {
+        let rest = $string.drop_start(line, $string.length(no_updater_prefix));
+        let $3 = $string.split_once(rest, "\"");
+        if ($3 instanceof Ok) {
+          let name = $3[0][0];
+          return upsert_progress(
+            model,
+            name,
+            new ProgressSkipped(),
+            "no supported update system",
+          );
+        } else {
+          return model;
+        }
+      } else {
+        let $3 = model.mod_progress_in_block;
+        if ($3) {
+          return add_pending_pair(model, line);
+        } else {
+          return model;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Best-effort parse of packwand's `update --all` / `workspace update --all
+ * --check` text output into a per-mod checklist. The CLI has no structured
+ * event payload for this (see codex.md §2.2), so this matches the specific
+ * line shapes cmd/update.go and workspace.go's CheckUpdatesInDir print:
+ * "Updates found:" blocks of "<name>: <change>" lines, workspace check's
+ * "  ~ <name>: <change>" lines, and the pinned/failed/no-updater lines.
+ */
+export function record_progress_line(model, raw_line) {
+  let trimmed = $string.trim(raw_line);
+  if (trimmed === "Updates found:") {
+    return new Model(
+      model.root,
+      model.version,
+      model.projects,
+      model.features,
+      model.selected_id,
+      model.selected_subdir,
+      model.view,
+      model.search,
+      model.mods,
+      model.mod_slug,
+      model.changelog,
+      model.manifest,
+      model.manifest_form,
+      model.manifest_structured,
+      model.logs,
+      model.job_status,
+      model.refresh_mods_after_job,
+      model.icon_failed,
+      model.new_pack,
+      model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      true,
+    );
+  } else if (trimmed === "All files are up to date!") {
+    return new Model(
+      model.root,
+      model.version,
+      model.projects,
+      model.features,
+      model.selected_id,
+      model.selected_subdir,
+      model.view,
+      model.search,
+      model.mods,
+      model.mod_slug,
+      model.changelog,
+      model.manifest,
+      model.manifest_form,
+      model.manifest_structured,
+      model.logs,
+      model.job_status,
+      model.refresh_mods_after_job,
+      model.icon_failed,
+      model.new_pack,
+      model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      false,
+    );
+  } else if (trimmed === "Cancelled!") {
+    return new Model(
+      model.root,
+      model.version,
+      model.projects,
+      model.features,
+      model.selected_id,
+      model.selected_subdir,
+      model.view,
+      model.search,
+      model.mods,
+      model.mod_slug,
+      model.changelog,
+      model.manifest,
+      model.manifest_form,
+      model.manifest_structured,
+      model.logs,
+      model.job_status,
+      model.refresh_mods_after_job,
+      model.icon_failed,
+      model.new_pack,
+      model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      false,
+    );
+  } else if (trimmed === "Files updated!") {
+    return new Model(
+      model.root,
+      model.version,
+      model.projects,
+      model.features,
+      model.selected_id,
+      model.selected_subdir,
+      model.view,
+      model.search,
+      model.mods,
+      model.mod_slug,
+      model.changelog,
+      model.manifest,
+      model.manifest_form,
+      model.manifest_structured,
+      model.logs,
+      model.job_status,
+      model.refresh_mods_after_job,
+      model.icon_failed,
+      model.new_pack,
+      model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      false,
+    );
+  } else if (trimmed === "") {
+    return new Model(
+      model.root,
+      model.version,
+      model.projects,
+      model.features,
+      model.selected_id,
+      model.selected_subdir,
+      model.view,
+      model.search,
+      model.mods,
+      model.mod_slug,
+      model.changelog,
+      model.manifest,
+      model.manifest_form,
+      model.manifest_structured,
+      model.logs,
+      model.job_status,
+      model.refresh_mods_after_job,
+      model.icon_failed,
+      model.new_pack,
+      model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      false,
+    );
+  } else {
+    let $ = $string.starts_with(trimmed, "dry-run:");
+    if ($) {
+      return new Model(
+        model.root,
+        model.version,
+        model.projects,
+        model.features,
+        model.selected_id,
+        model.selected_subdir,
+        model.view,
+        model.search,
+        model.mods,
+        model.mod_slug,
+        model.changelog,
+        model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
+        model.logs,
+        model.job_status,
+        model.refresh_mods_after_job,
+        model.icon_failed,
+        model.new_pack,
+        model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        false,
+      );
+    } else {
+      let $1 = $string.starts_with(trimmed, "~ ");
+      if ($1) {
+        return add_pending_pair(model, $string.drop_start(trimmed, 2));
+      } else {
+        return record_progress_prefixed(model, trimmed);
+      }
+    }
+  }
 }
 
 export function job_running(model) {

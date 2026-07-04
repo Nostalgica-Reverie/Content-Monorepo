@@ -520,6 +520,96 @@ export const Action$isExportCurseforge = (value) =>
 export const Action$ExportCurseforge$path = (value) => value.path;
 export const Action$ExportCurseforge$0 = (value) => value.path;
 
+export class Bump extends $CustomType {
+  constructor(path, version, configs) {
+    super();
+    this.path = path;
+    this.version = version;
+    this.configs = configs;
+  }
+}
+export const Action$Bump = (path, version, configs) =>
+  new Bump(path, version, configs);
+export const Action$isBump = (value) => value instanceof Bump;
+export const Action$Bump$path = (value) => value.path;
+export const Action$Bump$0 = (value) => value.path;
+export const Action$Bump$version = (value) => value.version;
+export const Action$Bump$1 = (value) => value.version;
+export const Action$Bump$configs = (value) => value.configs;
+export const Action$Bump$2 = (value) => value.configs;
+
+export class FreezeMod extends $CustomType {
+  constructor(path, slug) {
+    super();
+    this.path = path;
+    this.slug = slug;
+  }
+}
+export const Action$FreezeMod = (path, slug) => new FreezeMod(path, slug);
+export const Action$isFreezeMod = (value) => value instanceof FreezeMod;
+export const Action$FreezeMod$path = (value) => value.path;
+export const Action$FreezeMod$0 = (value) => value.path;
+export const Action$FreezeMod$slug = (value) => value.slug;
+export const Action$FreezeMod$1 = (value) => value.slug;
+
+export class UnfreezeMod extends $CustomType {
+  constructor(path, slug) {
+    super();
+    this.path = path;
+    this.slug = slug;
+  }
+}
+export const Action$UnfreezeMod = (path, slug) => new UnfreezeMod(path, slug);
+export const Action$isUnfreezeMod = (value) => value instanceof UnfreezeMod;
+export const Action$UnfreezeMod$path = (value) => value.path;
+export const Action$UnfreezeMod$0 = (value) => value.path;
+export const Action$UnfreezeMod$slug = (value) => value.slug;
+export const Action$UnfreezeMod$1 = (value) => value.slug;
+
+export class SetSide extends $CustomType {
+  constructor(path, slug, side) {
+    super();
+    this.path = path;
+    this.slug = slug;
+    this.side = side;
+  }
+}
+export const Action$SetSide = (path, slug, side) =>
+  new SetSide(path, slug, side);
+export const Action$isSetSide = (value) => value instanceof SetSide;
+export const Action$SetSide$path = (value) => value.path;
+export const Action$SetSide$0 = (value) => value.path;
+export const Action$SetSide$slug = (value) => value.slug;
+export const Action$SetSide$1 = (value) => value.slug;
+export const Action$SetSide$side = (value) => value.side;
+export const Action$SetSide$2 = (value) => value.side;
+
+export class NixGen extends $CustomType {
+  constructor(path) {
+    super();
+    this.path = path;
+  }
+}
+export const Action$NixGen = (path) => new NixGen(path);
+export const Action$isNixGen = (value) => value instanceof NixGen;
+export const Action$NixGen$path = (value) => value.path;
+export const Action$NixGen$0 = (value) => value.path;
+
+export class DocsModlist extends $CustomType {
+  constructor(path) {
+    super();
+    this.path = path;
+  }
+}
+export const Action$DocsModlist = (path) => new DocsModlist(path);
+export const Action$isDocsModlist = (value) => value instanceof DocsModlist;
+export const Action$DocsModlist$path = (value) => value.path;
+export const Action$DocsModlist$0 = (value) => value.path;
+
+export class DocsPages extends $CustomType {}
+export const Action$DocsPages = () => new DocsPages();
+export const Action$isDocsPages = (value) => value instanceof DocsPages;
+
 export function action_name(action) {
   if (action instanceof PacksIndex) {
     return "packs-index";
@@ -564,8 +654,22 @@ export function action_name(action) {
     return "rehash";
   } else if (action instanceof ExportModrinth) {
     return "export-modrinth";
-  } else {
+  } else if (action instanceof ExportCurseforge) {
     return "export-curseforge";
+  } else if (action instanceof Bump) {
+    return "bump";
+  } else if (action instanceof FreezeMod) {
+    return "freeze-mod";
+  } else if (action instanceof UnfreezeMod) {
+    return "unfreeze-mod";
+  } else if (action instanceof SetSide) {
+    return "set-side";
+  } else if (action instanceof NixGen) {
+    return "nix-gen";
+  } else if (action instanceof DocsModlist) {
+    return "docs-modlist";
+  } else {
+    return "docs-pages";
   }
 }
 
@@ -606,6 +710,24 @@ export function action_subdir(action) {
   } else if (action instanceof ExportCurseforge) {
     let path = action.path;
     return path;
+  } else if (action instanceof Bump) {
+    let path = action.path;
+    return path;
+  } else if (action instanceof FreezeMod) {
+    let path = action.path;
+    return path;
+  } else if (action instanceof UnfreezeMod) {
+    let path = action.path;
+    return path;
+  } else if (action instanceof SetSide) {
+    let path = action.path;
+    return path;
+  } else if (action instanceof NixGen) {
+    let path = action.path;
+    return path;
+  } else if (action instanceof DocsModlist) {
+    let path = action.path;
+    return path;
   } else {
     return "";
   }
@@ -627,6 +749,15 @@ export function action_slug(action) {
   } else if (action instanceof UpdateMod) {
     let slug = action.slug;
     return slug;
+  } else if (action instanceof FreezeMod) {
+    let slug = action.slug;
+    return slug;
+  } else if (action instanceof UnfreezeMod) {
+    let slug = action.slug;
+    return slug;
+  } else if (action instanceof SetSide) {
+    let slug = action.slug;
+    return slug;
   } else {
     return "";
   }
@@ -638,6 +769,33 @@ export function action_dry_run(action) {
     return dry_run;
   } else {
     return false;
+  }
+}
+
+export function action_version(action) {
+  if (action instanceof Bump) {
+    let version = action.version;
+    return version;
+  } else {
+    return "";
+  }
+}
+
+export function action_configs(action) {
+  if (action instanceof Bump) {
+    let configs = action.configs;
+    return configs;
+  } else {
+    return false;
+  }
+}
+
+export function action_side(action) {
+  if (action instanceof SetSide) {
+    let side = action.side;
+    return side;
+  } else {
+    return "";
   }
 }
 
@@ -659,6 +817,12 @@ export function action_refreshes_mods(action) {
   } else if (action instanceof Build) {
     return true;
   } else if (action instanceof Rehash) {
+    return true;
+  } else if (action instanceof FreezeMod) {
+    return true;
+  } else if (action instanceof UnfreezeMod) {
+    return true;
+  } else if (action instanceof SetSide) {
     return true;
   } else {
     return false;

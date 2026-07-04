@@ -9,9 +9,10 @@ packwand gui [flags]
 ### Options
 
 ```
-  -h, --help       help for gui
-      --no-open    Do not open the browser automatically
-  -p, --port int   Port to bind; 0 chooses a free local port
+  -h, --help                     help for gui
+      --no-open                  Do not open the browser automatically
+  -p, --port int                 Port to bind; 0 chooses a free local port
+      --print-port-file string   Write the selected server URL to this file
 ```
 
 ### Options inherited from parent commands
@@ -28,5 +29,5 @@ packwand gui [flags]
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 

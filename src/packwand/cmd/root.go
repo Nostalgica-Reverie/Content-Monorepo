@@ -82,7 +82,10 @@ func CommandCatalog() []CommandInfo {
 	var visit func(*cobra.Command)
 	visit = func(parent *cobra.Command) {
 		for _, command := range parent.Commands() {
-			if command.Hidden {
+			// Skip hidden commands and cobra's auto-generated root help
+			// command: neither gets a page from doc.GenMarkdownTree, and
+			// neither is a Packwand feature worth surfacing to tools.
+			if command.Hidden || (parent == rootCmd && command.Name() == "help") {
 				continue
 			}
 			path := strings.TrimPrefix(command.CommandPath(), rootCmd.Name()+" ")

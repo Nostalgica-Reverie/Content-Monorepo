@@ -176,7 +176,7 @@ func getPathForFile(gameID uint32, classID uint32, categoryID uint32, slug strin
 	return filepath.Join(viper.GetString("meta-folder-base"), metaFolder, slug+core.MetaExtension)
 }
 
-func createModFile(modInfo modInfo, fileInfo modFileInfo, index *core.Index, optionalDisabled bool) error {
+func createModFile(modInfo modInfo, fileInfo modFileInfo, index *core.Index, optionalDisabled bool, releaseChannel string) error {
 	updateMap := make(map[string]map[string]interface{})
 	var err error
 
@@ -186,6 +186,9 @@ func createModFile(modInfo modInfo, fileInfo modFileInfo, index *core.Index, opt
 	}.ToMap()
 	if err != nil {
 		return err
+	}
+	if releaseChannel != "" {
+		updateMap["curseforge"]["release-channel"] = releaseChannel
 	}
 
 	hash, hashFormat := fileInfo.getBestHash()
@@ -285,8 +288,18 @@ func filterFileInfoLoaderIndex(packLoaders []string, fileInfoData modFileInfo) (
 	}
 }
 
-// findLatestFile looks at mod info, and finds the latest file ID (and potentially the file info for it - may be null)
-func findLatestFile(modInfoData modInfo, mcVersions []string, packLoaders []string) (fileID uint32, fileInfoData *modFileInfo, fileName string) {
+// isChannelAcceptable reports whether a candidate file's release channel
+// satisfies minChannel (0 = no preference, accept any channel). Files with
+// an unrecognised/zero FileType are never excluded, since CurseForge data is
+// not guaranteed to populate it.
+func isChannelAcceptable(candidate fileType, minChannel fileType) bool {
+	return minChannel == 0 || candidate == 0 || candidate <= minChannel
+}
+
+// findLatestFile looks at mod info, and finds the latest file ID (and potentially the file info for it - may be null).
+// minChannel restricts candidates to release <= minChannel (fileTypeRelease is the most
+// restrictive, fileTypeAlpha the least); pass 0 to consider files from any channel.
+func findLatestFile(modInfoData modInfo, mcVersions []string, packLoaders []string, minChannel fileType) (fileID uint32, fileInfoData *modFileInfo, fileName string) {
 	cfMcVersions := getCurseforgeVersions(mcVersions)
 	bestMcVer := -1
 	bestLoaderType := modloaderTypeAny
@@ -296,7 +309,7 @@ func findLatestFile(modInfoData modInfo, mcVersions []string, packLoaders []stri
 		mcVerIdx := core.HighestSliceIndex(mcVersions, v.GameVersions)
 		loaderIdx, loaderValid := filterFileInfoLoaderIndex(packLoaders, v)
 
-		if mcVerIdx < 0 || !loaderValid {
+		if mcVerIdx < 0 || !loaderValid || !isChannelAcceptable(v.FileType, minChannel) {
 			continue
 		}
 		// Compare first by Minecraft version (prefer higher indexes of mcVersions)
@@ -323,12 +336,11 @@ func findLatestFile(modInfoData modInfo, mcVersions []string, packLoaders []stri
 			bestLoaderType = loaderIdx
 		}
 	}
-	// TODO: manage alpha/beta/release correctly, check update channel?
 	for _, v := range modInfoData.GameVersionLatestFiles {
 		mcVerIdx := slices.Index(cfMcVersions, v.GameVersion)
 		loaderIdx, loaderValid := filterLoaderTypeIndex(packLoaders, v.Modloader)
 
-		if mcVerIdx < 0 || !loaderValid {
+		if mcVerIdx < 0 || !loaderValid || !isChannelAcceptable(v.FileType, minChannel) {
 			continue
 		}
 		// Compare first by Minecraft version (prefer higher indexes of mcVersions)
@@ -360,12 +372,33 @@ func findLatestFile(modInfoData modInfo, mcVersions []string, packLoaders []stri
 type cfUpdateData struct {
 	ProjectID uint32 `mapstructure:"project-id"`
 	FileID    uint32 `mapstructure:"file-id"`
+	// ReleaseChannel is an optional per-mod preference ("release", "beta", or
+	// "alpha") restricting update checks to that channel or more stable.
+	// Empty/unset means "no preference" (matches pre-existing behaviour).
+	ReleaseChannel string `mapstructure:"release-channel"`
 }
 
 func (u cfUpdateData) ToMap() (map[string]interface{}, error) {
 	newMap := make(map[string]interface{})
 	err := mapstructure.Decode(u, &newMap)
 	return newMap, err
+}
+
+// parseReleaseChannel maps a channel name to its fileType. It returns
+// (0, false) for an empty or unrecognised string, meaning "no preference" —
+// used when reading an already-persisted mod.pw.toml value, where failing
+// the whole update check over a bad channel string would be too disruptive.
+func parseReleaseChannel(s string) (fileType, bool) {
+	switch strings.ToLower(strings.TrimSpace(s)) {
+	case "release":
+		return fileTypeRelease, true
+	case "beta":
+		return fileTypeBeta, true
+	case "alpha":
+		return fileTypeAlpha, true
+	default:
+		return 0, false
+	}
 }
 
 type cfUpdater struct{}
@@ -425,7 +458,12 @@ func (u cfUpdater) CheckUpdate(mods []*core.Mod, pack core.Pack) ([]core.UpdateC
 		}
 		project := projectRaw.(cfUpdateData)
 
-		fileID, fileInfoData, fileName := findLatestFile(modInfos[i], mcVersions, packLoaders)
+		minChannel, ok := parseReleaseChannel(project.ReleaseChannel)
+		if !ok && project.ReleaseChannel != "" {
+			fmt.Printf("%s: unknown release-channel %q in update.curseforge — ignoring\n", v.Name, project.ReleaseChannel)
+		}
+
+		fileID, fileInfoData, fileName := findLatestFile(modInfos[i], mcVersions, packLoaders, minChannel)
 		if fileID != project.FileID && fileID != 0 {
 			// Update (or downgrade, if changing to an older version) available!
 			results[i] = core.UpdateCheck{
