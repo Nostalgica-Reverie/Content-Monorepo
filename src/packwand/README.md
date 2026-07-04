@@ -23,6 +23,7 @@ packwand comes with:
 - Better erroring
 - Build tools
 - ForgeJo/Codeberg/Gitea support (similar to packwiz gh add!)
+- GUI
 - Higher security via mandatory sha-512
 - Inter-platform porting (from  modrinth to curseforge and vice versa)
 - Linting of config files
