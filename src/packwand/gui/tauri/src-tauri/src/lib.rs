@@ -22,6 +22,9 @@ use std::thread;
 use std::time::{Duration, Instant};
 
 use serde::Deserialize;
+
+#[cfg(feature = "launcher-spike")]
+mod launcher_spike;
 use tauri::menu::{Menu, MenuItem};
 use tauri::tray::TrayIconBuilder;
 use tauri::{AppHandle, Manager, RunEvent, State};
@@ -242,11 +245,20 @@ fn spawn_job_watcher(app: AppHandle) {
 }
 
 pub fn run() {
-    tauri::Builder::default()
+    let builder = tauri::Builder::default()
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_dialog::init())
-        .manage(Backend(Mutex::new(None)))
-        .invoke_handler(tauri::generate_handler![backend_url, select_workspace])
+        .manage(Backend(Mutex::new(None)));
+    #[cfg(not(feature = "launcher-spike"))]
+    let builder = builder.invoke_handler(tauri::generate_handler![backend_url, select_workspace]);
+    #[cfg(feature = "launcher-spike")]
+    let builder = builder.invoke_handler(tauri::generate_handler![
+        backend_url,
+        select_workspace,
+        launcher_spike::core_list_instances,
+        launcher_spike::core_plan_launch
+    ]);
+    builder
         .setup(|app| {
             let handle = app.handle().clone();
             spawn_job_watcher(handle);

@@ -67,8 +67,16 @@ jobs:
           tool: cargo-audit
       - name: Install Task
         run: go install github.com/go-task/task/v3/cmd/task@latest
-      - name: Lint
-        run: $(go env GOPATH)/bin/task lint
+      - name: Vet Go
+        run: $(go env GOPATH)/bin/task lint-go
+      - name: Lint Rust webview
+        run: $(go env GOPATH)/bin/task lint-webview
+      - name: Compile-check installer
+        run: $(go env GOPATH)/bin/task lint-installer
+      - name: Audit Go dependencies
+        run: $(go env GOPATH)/bin/task audit-go
+      - name: Audit Rust dependencies
+        run: $(go env GOPATH)/bin/task audit-rust
 
   test:
     runs-on: technocality

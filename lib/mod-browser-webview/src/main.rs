@@ -552,11 +552,11 @@ where
     #[cfg(target_os = "linux")]
     fn attach_os_ctx(self) -> anyhow::Result<T> {
         // (will probably fail at the point of program loading, since it is linked)
-        self.context("WebKitGTK is required for this application");
+        self.context("WebKitGTK is required for this application")
     }
 
     #[cfg(not(any(target_os = "windows", target_os = "linux")))]
     fn attach_os_ctx(self) -> anyhow::Result<T> {
-        self.context("A webview is required for this application");
+        self.context("A webview is required for this application")
     }
 }

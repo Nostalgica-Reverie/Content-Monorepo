@@ -17,8 +17,20 @@ tauri-plugin-notification = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 ureq = { version = "2", features = ["json"] }
+packwand-instance = { path = "../../../../packwand-rs/crates/packwand-instance", optional = true }
+packwand-launch = { path = "../../../../packwand-rs/crates/packwand-launch", optional = true }
+
+[features]
+# Experimental in-process launcher core adapter (packwandrs.md Phase 1
+# spike). Off by default and never enabled for release builds.
+launcher-spike = ["dep:packwand-instance", "dep:packwand-launch"]
 
 [profile.release]
 opt-level = "s"
 lto = true
 strip = true
+
+# plist 1.9.0 on crates.io pins the vulnerable quick-xml 0.39 line. This
+# upstream revision keeps the same plist API while moving to quick-xml 0.41.
+[patch.crates-io]
+plist = { git = "https://github.com/ebarnard/rust-plist.git", rev = "0a2f9e79fe4b85abcfb8013a9f3c97e490750b50" }
