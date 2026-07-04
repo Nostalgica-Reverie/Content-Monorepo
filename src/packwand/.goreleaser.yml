@@ -1,6 +1,7 @@
 version: 2
 
 project_name: packwand
+force_token: gitea
 
 # Run from src/packwand (goreleaser release --clean, or via CI with
 # working-directory: src/packwand). Tag releases as vX.Y.Z on the monorepo;
@@ -94,7 +95,7 @@ gitea_urls:
 
 release:
   gitea:
-    owner: Lasting-Legacy
-    name: Lasting-Legacy-Monorepo
+    owner: Reverie-Projects
+    name: monorepo
   draft: false
   prerelease: auto

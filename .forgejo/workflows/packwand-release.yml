@@ -9,6 +9,8 @@ on:
 jobs:
   release:
     runs-on: technocality
+    permissions:
+      contents: write
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
@@ -32,4 +34,4 @@ jobs:
           args: release --clean
           workdir: src/packwand
         env:
-          GITEA_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITEA_TOKEN: ${{ secrets.GITHUB_TOKEN }}
