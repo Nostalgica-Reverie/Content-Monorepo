@@ -15,4 +15,4 @@ The human-readable specification lives in the packwand docs site at `docs/packwa
 
 [Deno](https://deno.land/) is used to generate JSON schemas, with a custom DSL using TypeScript decorators. Run `deno task build` to re-generate schemas from the definitions in `src`.
 
-> **Note:** the schemas in `schemas/` were updated by hand for the packwand dialect ahead of the generator sources. If you regenerate with `deno task build`, first port the changes listed above into `src/defs/`, or the hand-made updates will be overwritten.
+The packwand dialect fields are defined in `src/defs/`; `deno task build` is safe to run and regenerates the checked-in schemas.

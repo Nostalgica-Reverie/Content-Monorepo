@@ -16,8 +16,8 @@ jobs:
   detect:
     runs-on: technocality
     outputs:
-      entries: ${{ steps.expand.outputs.entries }}
-      has_entries: ${{ steps.expand.outputs.has_entries }}
+      entries: ${{ steps.plan.outputs.entries }}
+      has_entries: ${{ steps.plan.outputs.has_entries }}
     steps:
       - name: Checkout
         uses: https://code.forgejo.org/actions/checkout@v5
@@ -30,11 +30,6 @@ jobs:
             src/packwand
             .forgejo/actions
 
-      - name: Set up Bun
-        uses: https://github.com/oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
       - name: Setup Go
         uses: https://github.com/actions/setup-go@v5
         with:
@@ -44,55 +39,9 @@ jobs:
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
 
-      - name: Expand changed manifests into matrix entries
-        id: expand
-        run: |
-          set -eu
-
-          CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
-
-          CANDIDATES=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks)/[^/]+/manifest\.json$' || true)
-          PROD=""
-          while IFS= read -r m; do
-            [ -n "$m" ] || continue
-            NEWV=$(bun -e "console.log(JSON.parse(require('fs').readFileSync('$m','utf8')).version ?? '')")
-            OLDV=$(git show "HEAD^:$m" 2>/dev/null | bun -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{console.log(JSON.parse(d).version ?? '')}catch{console.log('')}})" || echo "")
-            if [ "$NEWV" != "$OLDV" ] && [ -n "$NEWV" ]; then
-              echo "version change in $m: '$OLDV' -> '$NEWV'"
-              PROD="${PROD}${m}"$'\n'
-            else
-              echo "skipping $m (version unchanged: '$NEWV')"
-            fi
-          done <<< "$CANDIDATES"
-
-          CHANGED_PACKS=$(echo "$CHANGED" | grep -E '^(modpacks|datapacks)/[^/]+/' | cut -d/ -f1-2 | sort -u || true)
-          EXP=""
-          while IFS= read -r pack; do
-            [ -n "$pack" ] || continue
-            if [ -f "$pack/manifest-experimental.json" ]; then
-              EXP="${EXP}${pack}/manifest-experimental.json"$'\n'
-            fi
-          done <<< "$CHANGED_PACKS"
-
-          MANIFESTS=$(printf '%s\n%s' "$PROD" "$EXP" | grep -v '^$' | awk '!seen[$0]++' || true)
-
-          if [ -z "$MANIFESTS" ]; then
-            echo "has_entries=false" >> "$GITHUB_OUTPUT"
-            echo "entries=[]" >> "$GITHUB_OUTPUT"
-            echo "no manifests to publish."
-            exit 0
-          fi
-
-          ALL="[]"
-          while IFS= read -r m; do
-            [ -n "$m" ] || continue
-            PART=$(packwand publish list "$m")
-            ALL=$(bun -e "const a=$ALL,b=$PART;console.log(JSON.stringify(a.concat(b)))")
-          done <<< "$MANIFESTS"
-
-          echo "has_entries=true" >> "$GITHUB_OUTPUT"
-          echo "entries=$ALL" >> "$GITHUB_OUTPUT"
-          echo "matrix entries: $ALL"
+      - name: Compute publish plan
+        id: plan
+        run: packwand publish plan
 
   publish:
     needs: detect
@@ -134,11 +83,9 @@ jobs:
         run: packwand validate "${{ matrix.entry.manifest }}"
 
       - name: Generate Changelog
-        id: changelog
-        run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}"
+        run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}" "$RUNNER_TEMP/release-notes.md"
 
-      - name: Run Publisher (build this entry)
-        id: meta
+      - name: Build artifacts
         env:
           GITHUB_SHA: ${{ github.sha }}
         run: |
@@ -159,30 +106,31 @@ jobs:
             echo "first entry -> no delay"
           fi
 
-      - name: Upload to Modrinth
-        if: steps.meta.outputs.mr_id != ''
-        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
-        with:
-          modrinth-id: ${{ steps.meta.outputs.mr_id }}
-          modrinth-token: ${{ secrets.MR }}
-          files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*.mrpack"
-          name: "${{ steps.meta.outputs.name }}"
-          version: "${{ steps.meta.outputs.ver }}"
-          version-type: ${{ steps.meta.outputs.release_type }}
-          changelog: "${{ steps.changelog.outputs.notes }}"
-          loaders: ${{ steps.meta.outputs.type == 'modpack' && steps.meta.outputs.loader || 'minecraft' }}
-          game-versions: "${{ steps.meta.outputs.mc }}"
+      - name: Upload
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          MODRINTH_TOKEN: ${{ secrets.MR }}
+          CURSEFORGE_TOKEN: ${{ secrets.CF }}
+        run: |
+          VARIANT='${{ matrix.entry.variant }}'
+          if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
+            packwand publish upload --live --changelog-file "$RUNNER_TEMP/release-notes.md" "${{ matrix.entry.manifest }}"
+          else
+            packwand publish upload --live --changelog-file "$RUNNER_TEMP/release-notes.md" "${{ matrix.entry.manifest }}" "$VARIANT"
+          fi
 
-      - name: Upload to CurseForge
-        if: steps.meta.outputs.cf_id != ''
-        uses: https://github.com/Kir-Antipov/mc-publish@v3.3
-        with:
-          curseforge-id: ${{ steps.meta.outputs.cf_id }}
-          curseforge-token: ${{ secrets.CF }}
-          files: "${{ github.workspace }}/${{ steps.meta.outputs.path }}/artifacts/*.zip"
-          name: "${{ steps.meta.outputs.name }}"
-          version: "${{ steps.meta.outputs.ver }}"
-          version-type: ${{ steps.meta.outputs.release_type }}
-          changelog: "${{ steps.changelog.outputs.notes }}"
-          loaders: ${{ steps.meta.outputs.type == 'modpack' && steps.meta.outputs.loader || 'minecraft' }}
-          game-versions: "${{ steps.meta.outputs.mc }}"
+      - name: Verify (Modrinth)
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          VARIANT='${{ matrix.entry.variant }}'
+          MR_ID=$(bun -e "console.log(JSON.parse(require('fs').readFileSync('${{ matrix.entry.manifest }}','utf8')).modrinth_id ?? '')")
+          if [ -z "$MR_ID" ]; then
+            echo "no modrinth_id -> skipping verify"
+            exit 0
+          fi
+          if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
+            packwand publish verify "${{ matrix.entry.manifest }}"
+          else
+            packwand publish verify "${{ matrix.entry.manifest }}" "$VARIANT"
+          fi

@@ -4,9 +4,19 @@ on:
   workflow_call:
     inputs:
       verb:
-        description: "packwand command (and args) to run"
+        description: "packwand command (and fixed args) to run"
         required: true
         type: string
+      scope:
+        description: "optional repository-relative pack directory"
+        required: false
+        type: string
+        default: ""
+      dry_run:
+        description: "skip committing all resulting changes"
+        required: false
+        type: boolean
+        default: false
       commit-message:
         description: "commit message for resulting changes"
         required: true
@@ -42,9 +52,25 @@ jobs:
         uses: ./.forgejo/actions/setup-packwand
 
       - name: Run packwand ${{ inputs.verb }}
-        run: packwand ${{ inputs.verb }}
+        shell: bash
+        env:
+          PACK_SCOPE: ${{ inputs.scope }}
+        run: |
+          args=()
+          if [ -n "$PACK_SCOPE" ]; then
+            case "$PACK_SCOPE" in
+              /*|*..*|*[!A-Za-z0-9_./-]*) echo "invalid pack scope: $PACK_SCOPE"; exit 2 ;;
+              modpacks/*) args+=("$PACK_SCOPE") ;;
+              *) echo "scope must be under modpacks/: $PACK_SCOPE"; exit 2 ;;
+            esac
+          fi
+          packwand ${{ inputs.verb }} "${args[@]}"
 
       - name: Commit
+        # Run even if the previous step reported partial failures (e.g. one mod
+        # failed to update) so successful changes still get committed; the job
+        # itself still surfaces as failed for visibility.
+        if: ${{ !cancelled() && inputs.dry_run == false }}
         uses: https://github.com/EndBug/add-and-commit@v9
         with:
           author_name: forgejo-actions[bot]

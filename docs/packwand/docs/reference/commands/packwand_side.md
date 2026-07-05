@@ -26,5 +26,5 @@ packwand side <pack-dir> <mod-slug> [client|server|both|either] [flags]
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 

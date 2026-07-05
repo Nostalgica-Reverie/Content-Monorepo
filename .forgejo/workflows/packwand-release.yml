@@ -9,6 +9,8 @@ on:
 jobs:
   release:
     runs-on: technocality
+    permissions:
+      contents: write
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
@@ -19,6 +21,11 @@ jobs:
           go-version: "stable"
           cache: true
 
+      - name: Install Syft for release SBOMs
+        run: |
+          go install github.com/anchore/syft/cmd/syft@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
       - name: Run GoReleaser
         uses: https://github.com/goreleaser/goreleaser-action@v6
         with:
@@ -27,4 +34,4 @@ jobs:
           args: release --clean
           workdir: src/packwand
         env:
-          GITEA_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITEA_TOKEN: ${{ secrets.GITHUB_TOKEN }}

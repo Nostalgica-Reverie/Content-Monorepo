@@ -34,5 +34,5 @@ You can use packwiz-installer to download non-client mods (side either `both` or
 itzg's [docker-minecraft-server](https://github.com/itzg/docker-minecraft-server) has built in support for packwiz-format packs. You can pass the `PACKWIZ_URL` environment variable pointing to your pack's TOML file, and the container will bootstrap packwiz-installer and install/update the provided pack. See [the documentation](https://docker-minecraft-server.readthedocs.io/en/latest/mods-and-plugins/packwiz/) for more information.
 
 ::: tip
-For local validation, `packwand test <pack-subdir>` spins up `packwand serve` and runs packwiz-installer against it automatically (requires Java and `PACKWAND_INSTALLER_JAR` pointing at packwiz-installer-bootstrap.jar).
+For local validation, `packwand test <pack-subdir>` spins up `packwand serve` and runs packwiz-installer against it automatically (requires Java; the bootstrap jar is downloaded into Packwand's cache automatically, with `PACKWAND_INSTALLER_JAR` available as an override).
 :::

@@ -10,6 +10,7 @@ packwand diff <old-ref> <new-ref> [path-prefix] [flags]
 
 ```
   -h, --help   help for diff
+      --json   Output a JSON summary instead of plain text
 ```
 
 ### Options inherited from parent commands
@@ -26,5 +27,5 @@ packwand diff <old-ref> <new-ref> [path-prefix] [flags]
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 

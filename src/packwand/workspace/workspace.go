@@ -17,11 +17,12 @@ import (
 	"sync/atomic"
 	"time"
 
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/clistyle"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
 )
 
-// â€” Environment helpers â€”
+// — Environment helpers —
 
 // SelfBin returns the path to the running packwand binary for sub-invocations.
 // Reads PACKWAND_BIN first; falls back to PACKWIZ_BIN for backward compatibility.
@@ -128,7 +129,7 @@ func Indent(s, prefix string) string {
 	return strings.Join(lines, "\n")
 }
 
-// â€” Progress display â€”
+// — Progress display —
 
 var sleepFrames = []string{"c(-.-)É” z  ", "c(-.-)É” zz ", "c(-.-)É” zzz", "c(-.-)É”  zz", "c(-.-)É”   z", "C(o.o)Æ† !  "}
 
@@ -204,7 +205,7 @@ func (p *Progress) Done() {
 	fmt.Printf("\r%-100s\r", "")
 }
 
-// â€” File copy â€”
+// — File copy —
 
 const copyBufSize = 1 << 20
 
@@ -225,7 +226,7 @@ func CopyFileFast(src, dst string) error {
 	return err
 }
 
-// â€” Pack target collection â€”
+// — Pack target collection —
 
 // Operation describes a packwand sub-command to run across pack subdirectories.
 type Operation struct {
@@ -233,6 +234,9 @@ type Operation struct {
 	Gerund      string
 	PackwizArgs []string
 	HonorIgnore bool
+	// ExtraArgsFor, when set, appends per-target arguments to PackwizArgs
+	// (e.g. a per-subdir --report path).
+	ExtraArgsFor func(dir string) []string
 }
 
 var (
@@ -314,7 +318,11 @@ func WorkPool(targets []string, op Operation, prog *Progress) []string {
 			},
 			Run: func() error {
 				fmt.Printf("%s %s\n", op.Gerund, dir)
-				cmd := exec.Command(SelfBin(), op.PackwizArgs...)
+				args := op.PackwizArgs
+				if op.ExtraArgsFor != nil {
+					args = append(append([]string{}, op.PackwizArgs...), op.ExtraArgsFor(dir)...)
+				}
+				cmd := exec.Command(SelfBin(), args...)
 				cmd.Dir = dir
 				ConfigureSubprocess(cmd)
 				out, err := cmd.CombinedOutput()
@@ -447,10 +455,10 @@ func CheckUpdatesInDir(dir string) ([]string, error) {
 	return updates, nil
 }
 
-// â€” Linting â€”
+// — Linting —
 
 // AutoLintDirs lints all .pw.toml files under mods/ in each given dir.
-// Warnings are printed but the function never exits â€” it is a best-effort post-op check.
+// Warnings are printed but the function never exits — it is a best-effort post-op check.
 func AutoLintDirs(dirs []string) {
 	seen := map[string]bool{}
 	var files []string
@@ -473,9 +481,9 @@ func AutoLintDirs(dirs []string) {
 	fmt.Printf("linting %d mod file(s)...\n", len(files))
 	failed, checked := RunLintFiles(files)
 	if failed > 0 {
-		fmt.Fprintf(os.Stderr, "warning: %d of %d mod file(s) failed lint â€” run 'packwand lint' for details\n", failed, checked)
+		fmt.Fprintf(os.Stderr, "warning: %d of %d mod file(s) failed lint — run 'packwand lint' for details\n", failed, checked)
 	} else {
-		fmt.Printf("âœ“ %d mod file(s) lint clean\n", checked)
+		fmt.Printf(clistyle.IconOK+" %d mod file(s) lint clean\n", checked)
 	}
 }
 
@@ -560,7 +568,7 @@ func GitChangedFiles() []string {
 	return files
 }
 
-// â€” Sync engine â€”
+// — Sync engine —
 
 type syncJob struct {
 	consumerID string
@@ -569,7 +577,7 @@ type syncJob struct {
 	targetDir  string
 }
 
-// RunSync performs the baseâ†’consumer pack sync. dryRun prints what would change.
+// RunSync performs the base→consumer pack sync. dryRun prints what would change.
 func RunSync(dryRun bool) error {
 	if _, err := exec.LookPath(SelfBin()); err != nil {
 		return fmt.Errorf("packwand binary not found: %w", err)
@@ -668,7 +676,7 @@ func RunSync(dryRun bool) error {
 		return fmt.Errorf("%d sync(s) failed", failed)
 	}
 	if dryRun {
-		fmt.Println("[DRY RUN] complete â€” nothing was changed.")
+		fmt.Println("[DRY RUN] complete — nothing was changed.")
 	} else {
 		fmt.Println("all syncs completed.")
 	}

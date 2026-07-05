@@ -2,6 +2,17 @@ name: "Bulk Update"
 
 on:
   workflow_dispatch:
+    inputs:
+      packs:
+        description: "One repository-relative pack directory (empty runs all packs)"
+        required: false
+        type: string
+        default: ""
+      dry_run:
+        description: "Only check for updates; do not change or commit files"
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -11,5 +22,7 @@ jobs:
   bulk-update:
     uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: workspace update
-      commit-message: 'actions: bulk update all'
+      verb: ${{ inputs.dry_run && 'workspace update --check' || 'workspace update' }}
+      scope: ${{ inputs.packs }}
+      dry_run: ${{ inputs.dry_run }}
+      commit-message: 'actions: bulk update'

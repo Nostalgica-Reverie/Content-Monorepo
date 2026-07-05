@@ -2,13 +2,24 @@ name: "PNG Optimization"
 
 on:
   workflow_dispatch:
+    inputs:
+      packs:
+        description: "Comma-separated paths under modpacks/, resourcepacks/, or datapacks/ (empty runs all)"
+        required: false
+        type: string
+        default: ""
+      dry_run:
+        description: "List PNG files that would be processed; do not optimize or commit"
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  bulk-nuke:
+  bulk-png:
     runs-on: technocality
     steps:
       - name: Checkout
@@ -18,14 +29,17 @@ jobs:
           filter: blob:none
 
       - name: Rust Cache
+        if: inputs.dry_run == false
         uses: https://github.com/Swatinem/rust-cache@v2
         with:
           shared-key: "maintenance-tools"
 
       - name: Install Rust
+        if: inputs.dry_run == false
         uses: https://github.com/dtolnay/rust-toolchain@stable
 
       - name: Cache oxipng
+        if: inputs.dry_run == false
         id: cache-oxipng
         uses: https://code.forgejo.org/actions/cache@v4
         with:
@@ -33,14 +47,48 @@ jobs:
           key: ${{ runner.os }}-oxipng-v1
 
       - name: Install oxipng
-        if: steps.cache-oxipng.outputs.cache-hit != 'true'
+        if: inputs.dry_run == false && steps.cache-oxipng.outputs.cache-hit != 'true'
         run: cargo install oxipng
 
-      - name: Run Optimization
+      - name: Select paths
+        id: paths
+        shell: bash
+        env:
+          REQUESTED_PATHS: ${{ inputs.packs }}
         run: |
-          oxipng -r -o 4 -v --strip all "resourcepacks/" "modpacks/" "datapacks/"
+          targets=()
+          if [ -z "$REQUESTED_PATHS" ]; then
+            targets=(resourcepacks modpacks datapacks)
+          else
+            IFS=',' read -ra requested <<< "$REQUESTED_PATHS"
+            for path in "${requested[@]}"; do
+              case "$path" in
+                /*|*..*|*[!A-Za-z0-9_./-]*) echo "invalid path: $path"; exit 2 ;;
+                modpacks/*|resourcepacks/*|datapacks/*) ;;
+                *) echo "path must be under modpacks/, resourcepacks/, or datapacks/: $path"; exit 2 ;;
+              esac
+              [ -e "$path" ] || { echo "path not found: $path"; exit 2; }
+              targets+=("$path")
+            done
+          fi
+          printf '%s\0' "${targets[@]}" > "$RUNNER_TEMP/png-targets"
 
-      - name: Commit Optimized Images
+      - name: Preview PNG optimization
+        if: inputs.dry_run == true
+        shell: bash
+        run: |
+          mapfile -d '' targets < "$RUNNER_TEMP/png-targets"
+          find "${targets[@]}" -type f -iname '*.png' -print
+
+      - name: Run optimization
+        if: inputs.dry_run == false
+        shell: bash
+        run: |
+          mapfile -d '' targets < "$RUNNER_TEMP/png-targets"
+          oxipng -r -o 4 -v --strip all "${targets[@]}"
+
+      - name: Commit optimized images
+        if: inputs.dry_run == false
         uses: https://github.com/EndBug/add-and-commit@v9
         with:
           author_name: forgejo-actions[bot]

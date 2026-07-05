@@ -6,7 +6,7 @@ version: "3"
 # build server exactly.
 
 vars:
-  INSTALLER_DIR: lib/packwiz-installer
+  INSTALLER_DIR: lib/packwand-installer
   WEBVIEW_DIR: lib/mod-browser-webview
   GUI_TAURI_DIR: src/packwand/gui/tauri
 
@@ -29,7 +29,7 @@ tasks:
     desc: Compile-check packwiz-installer (Gradle has no separate lint; compilation surfaces diagnostics)
     dir: "{{.INSTALLER_DIR}}"
     cmds:
-      - cmd: ./gradlew classes bootstrap:classes
+      - cmd: sh ./gradlew classes bootstrap:classes
         platforms: [linux, darwin]
       - cmd: cmd /c '.\gradlew.bat' classes bootstrap:classes
         platforms: [windows]
@@ -62,7 +62,7 @@ tasks:
     desc: Gradle tests (installer + bootstrap)
     dir: "{{.INSTALLER_DIR}}"
     cmds:
-      - cmd: ./gradlew test
+      - cmd: sh ./gradlew test
         platforms: [linux, darwin]
       - cmd: cmd /c '.\gradlew.bat' test
         platforms: [windows]
@@ -89,7 +89,7 @@ tasks:
     desc: Build packwiz-installer (and the legacy Java bootstrap) via Gradle
     dir: "{{.INSTALLER_DIR}}"
     cmds:
-      - cmd: ./gradlew build -x test
+      - cmd: sh ./gradlew build -x test
         platforms: [linux, darwin]
       - cmd: cmd /c '.\gradlew.bat' build -x test
         platforms: [windows]
@@ -120,10 +120,19 @@ tasks:
     cmds:
       - go build -o packwiz-bootstrap{{exeExt}} ./cmd/packwiz-bootstrap
 
+  build-gui-sidecar:
+    desc: Build the packwand CLI and stage it as a Tauri external binary (sidecar), named for the host Rust target triple, so `cargo tauri build` bundles it via bundle.externalBin
+    vars:
+      TRIPLE:
+        sh: rustc -vV | grep '^host:' | cut -d' ' -f2
+    cmds:
+      - cmd: mkdir -p {{.GUI_TAURI_DIR}}/src-tauri/binaries
+      - go build -C src/packwand -o gui/tauri/src-tauri/binaries/packwand-{{.TRIPLE}}{{exeExt}} .
+
   build-gui:
     desc: Build the native Packwand GUI app (Tauri v2) for the host OS. Requires cargo tauri-cli; see docs/packwand/docs/development/gui-build.md
     dir: "{{.GUI_TAURI_DIR}}"
-    deps: [build-packwand]
+    deps: [build-gui-sidecar]
     cmds:
       - cargo tauri build
 
@@ -151,6 +160,11 @@ tasks:
       - cd docs && npm ci && npm run docs:build
       - cd docs/packwand && npm ci && npm run docs:build
       - cd docs/packwiz && npm ci && npm run docs:build
+
+  docs-lint-links:
+    desc: Check cross-site links across all three docs sites against their built dist/ output (run after docs-build)
+    cmds:
+      - node docs/link-lint.mjs
 
   # — Frontend —
 

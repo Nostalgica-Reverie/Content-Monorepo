@@ -22,6 +22,6 @@ Manage projects released on GitLab or self-hosted GitLab instances
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand gitlab add](packwand_gitlab_add.md)	 - Add a project from a GitLab repository URL or owner/repo slug
 

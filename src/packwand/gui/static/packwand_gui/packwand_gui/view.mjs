@@ -1,25 +1,35 @@
 import * as $decode from "../../gleam_stdlib/gleam/dynamic/decode.mjs";
 import * as $int from "../../gleam_stdlib/gleam/int.mjs";
 import * as $list from "../../gleam_stdlib/gleam/list.mjs";
+import * as $option from "../../gleam_stdlib/gleam/option.mjs";
+import { None, Some } from "../../gleam_stdlib/gleam/option.mjs";
 import * as $string from "../../gleam_stdlib/gleam/string.mjs";
 import * as $attribute from "../../lustre/lustre/attribute.mjs";
 import * as $element from "../../lustre/lustre/element.mjs";
 import * as $html from "../../lustre/lustre/element/html.mjs";
 import * as $event from "../../lustre/lustre/event.mjs";
 import { Ok, toList, Empty as $Empty, prepend as listPrepend, isEqual } from "../gleam.mjs";
+import * as $manifest_form from "../packwand_gui/manifest_form.mjs";
 import * as $model from "../packwand_gui/model.mjs";
 import {
   AddMod,
   Build,
+  Bump,
+  DocsModlist,
+  DocsPages,
   Doctor,
   ExportCurseforge,
   ExportModrinth,
+  FreezeMod,
   Lint,
+  NixGen,
   PacksIndex,
   PinMod,
   RefreshSubdir,
   Rehash,
   RemoveMod,
+  SetSide,
+  UnfreezeMod,
   UnpinMod,
   UpdateAll,
   UpdateMod,
@@ -46,7 +56,11 @@ import {
   SaveManifest,
   SelectProject,
   SelectSubdir,
+  SetBumpConfigs,
+  SetBumpVersion,
   SetManifest,
+  SetManifestField,
+  SetManifestStructured,
   SetModSlug,
   SetNewPackDescription,
   SetNewPackID,
@@ -58,6 +72,7 @@ import {
   SetSearch,
   Settings,
   job_running,
+  progress_status_label,
   query_matches,
   selected_project,
 } from "../packwand_gui/state.mjs";
@@ -470,11 +485,17 @@ function capabilities_panel(features) {
   );
 }
 
-function manifest_panel(model) {
+function manifest_raw_panel(model) {
   return panel_with_head(
     "span-12",
-    "Manifest",
-    button("ghost", "Save Manifest", new SaveManifest()),
+    "Manifest (raw JSON)",
+    $html.div(
+      toList([$attribute.class$("panel-actions")]),
+      toList([
+        button("ghost", "Form Editor", new SetManifestStructured(true)),
+        button("ghost", "Save Manifest", new SaveManifest()),
+      ]),
+    ),
     toList([
       $html.textarea(
         toList([
@@ -482,6 +503,847 @@ function manifest_panel(model) {
           $event.on_input((var0) => { return new SetManifest(var0); }),
         ]),
         model.manifest,
+      ),
+      notice(model.notice),
+    ]),
+  );
+}
+
+function issue_list(issues) {
+  if (issues instanceof $Empty) {
+    return $html.text("");
+  } else {
+    return $html.ul(
+      toList([$attribute.class$("validation-list")]),
+      $list.map(
+        issues,
+        (issue) => {
+          return $html.li(
+            toList([
+              $attribute.class$(
+                (() => {
+                  let $ = issue.severity;
+                  if ($ instanceof $manifest_form.IssueError) {
+                    return "validation-error";
+                  } else {
+                    return "validation-warning";
+                  }
+                })(),
+              ),
+            ]),
+            toList([$html.text(issue.message)]),
+          );
+        },
+      ),
+    );
+  }
+}
+
+function validation_summary(issues) {
+  if (issues instanceof $Empty) {
+    return $html.p(
+      toList([$attribute.class$("notice validation-ok")]),
+      toList([$html.text("Manifest is valid.")]),
+    );
+  } else {
+    return $html.div(
+      toList([$attribute.class$("validation-summary")]),
+      toList([
+        $html.h3(toList([]), toList([$html.text("Validation")])),
+        issue_list(issues),
+      ]),
+    );
+  }
+}
+
+function automation_bool(form, get) {
+  let $ = form.automation;
+  if ($ instanceof Some) {
+    let settings = $[0];
+    let $1 = get(settings);
+    if ($1 instanceof Some) {
+      let $2 = $1[0];
+      if ($2) {
+        return "true";
+      } else {
+        return "false";
+      }
+    } else {
+      return "";
+    }
+  } else {
+    return "";
+  }
+}
+
+function tri_state_select(label, value, to_field) {
+  return $html.label(
+    toList([]),
+    toList([
+      $html.span(toList([]), toList([$html.text(label)])),
+      $html.select(
+        toList([
+          $attribute.value(value),
+          $event.on_change((v) => { return new SetManifestField(to_field(v)); }),
+        ]),
+        toList([
+          $html.option(toList([$attribute.value("")]), "default"),
+          $html.option(toList([$attribute.value("true")]), "enabled"),
+          $html.option(toList([$attribute.value("false")]), "disabled"),
+        ]),
+      ),
+    ]),
+  );
+}
+
+function form_input_list(label, value, placeholder, message, list_id) {
+  return $html.label(
+    toList([]),
+    toList([
+      $html.span(toList([]), toList([$html.text(label)])),
+      $html.input(
+        toList([
+          $attribute.value(value),
+          $attribute.placeholder(placeholder),
+          $attribute.attribute("list", list_id),
+          $event.on_input(message),
+        ]),
+      ),
+    ]),
+  );
+}
+
+function labelled_control(issues, field, label, class$, control) {
+  let field_errors = $manifest_form.field_issues(issues, field);
+  let _block;
+  if (field_errors instanceof $Empty) {
+    _block = class$;
+  } else {
+    _block = $string.trim(class$ + " has-error");
+  }
+  let error_class = _block;
+  return $html.label(
+    toList([$attribute.class$(error_class)]),
+    listPrepend(
+      $html.span(toList([]), toList([$html.text(label)])),
+      listPrepend(
+        control,
+        $list.map(
+          field_errors,
+          (issue) => {
+            return $html.em(
+              toList([$attribute.class$("field-error")]),
+              toList([$html.text(issue.message)]),
+            );
+          },
+        ),
+      ),
+    ),
+  );
+}
+
+function manifest_input_list(
+  issues,
+  field,
+  label,
+  value,
+  placeholder,
+  to_field,
+  list_id
+) {
+  return labelled_control(
+    issues,
+    field,
+    label,
+    "",
+    $html.input(
+      toList([
+        $attribute.value(value),
+        $attribute.placeholder(placeholder),
+        $attribute.attribute("list", list_id),
+        $event.on_input((v) => { return new SetManifestField(to_field(v)); }),
+      ]),
+    ),
+  );
+}
+
+function mappings_editor(form, issues) {
+  return $html.div(
+    toList([$attribute.class$("mappings-editor")]),
+    toList([
+      $html.h3(toList([]), toList([$html.text("Base Mappings")])),
+      issue_list($manifest_form.field_issues(issues, "role_mappings")),
+      $html.div(
+        toList([$attribute.class$("list")]),
+        $list.index_map(
+          form.role_mappings,
+          (mapping, index) => {
+            return $html.div(
+              toList([$attribute.class$("row mapping-row")]),
+              toList([
+                $html.div(
+                  toList([$attribute.class$("form-grid")]),
+                  toList([
+                    manifest_input_list(
+                      issues,
+                      ("mapping[" + $int.to_string(index)) + "]",
+                      "Source (in base)",
+                      mapping.source,
+                      "1.21.1-mr",
+                      (v) => {
+                        return new $manifest_form.FMappingSource(index, v);
+                      },
+                      "pw-subdir-keys",
+                    ),
+                    form_input_list(
+                      "Target (this pack)",
+                      mapping.target,
+                      "1.21.1-mr",
+                      (v) => {
+                        return new SetManifestField(
+                          new $manifest_form.FMappingTarget(index, v),
+                        );
+                      },
+                      "pw-subdir-keys",
+                    ),
+                  ]),
+                ),
+                button(
+                  "ghost danger",
+                  "Remove",
+                  new SetManifestField(new $manifest_form.FMappingRemove(index)),
+                ),
+              ]),
+            );
+          },
+        ),
+      ),
+      button(
+        "ghost",
+        "Add Mapping",
+        new SetManifestField(new $manifest_form.FMappingAdd()),
+      ),
+    ]),
+  );
+}
+
+function manifest_input(
+  issues,
+  field,
+  label,
+  value,
+  placeholder,
+  to_field,
+  class$
+) {
+  return labelled_control(
+    issues,
+    field,
+    label,
+    class$,
+    $html.input(
+      toList([
+        $attribute.value(value),
+        $attribute.placeholder(placeholder),
+        $event.on_input((v) => { return new SetManifestField(to_field(v)); }),
+      ]),
+    ),
+  );
+}
+
+function variants_editor(form, issues) {
+  return $html.div(
+    toList([$attribute.class$("variants-editor")]),
+    toList([
+      $html.h3(toList([]), toList([$html.text("Variants")])),
+      issue_list($manifest_form.field_issues(issues, "variants")),
+      $html.div(
+        toList([$attribute.class$("list")]),
+        $list.index_map(
+          form.variants,
+          (variant, index) => {
+            return $html.div(
+              toList([$attribute.class$("row variant-row")]),
+              toList([
+                $html.div(
+                  toList([$attribute.class$("form-grid")]),
+                  toList([
+                    manifest_input(
+                      issues,
+                      ("variants[" + $int.to_string(index)) + "]",
+                      "MC version",
+                      variant.mc_version,
+                      "1.21.1",
+                      (v) => {
+                        return new $manifest_form.FVariant(
+                          index,
+                          new $manifest_form.VMcVersion(v),
+                        );
+                      },
+                      "",
+                    ),
+                    form_input(
+                      "ID",
+                      variant.id,
+                      "optional",
+                      (v) => {
+                        return new SetManifestField(
+                          new $manifest_form.FVariant(
+                            index,
+                            new $manifest_form.VId(v),
+                          ),
+                        );
+                      },
+                      "",
+                    ),
+                    form_input(
+                      "Name",
+                      variant.name,
+                      "optional",
+                      (v) => {
+                        return new SetManifestField(
+                          new $manifest_form.FVariant(
+                            index,
+                            new $manifest_form.VName(v),
+                          ),
+                        );
+                      },
+                      "",
+                    ),
+                    form_input(
+                      "Version",
+                      variant.version,
+                      "optional",
+                      (v) => {
+                        return new SetManifestField(
+                          new $manifest_form.FVariant(
+                            index,
+                            new $manifest_form.VVersion(v),
+                          ),
+                        );
+                      },
+                      "",
+                    ),
+                    form_input(
+                      "Loader",
+                      variant.loader,
+                      "inherits pack",
+                      (v) => {
+                        return new SetManifestField(
+                          new $manifest_form.FVariant(
+                            index,
+                            new $manifest_form.VLoader(v),
+                          ),
+                        );
+                      },
+                      "",
+                    ),
+                  ]),
+                ),
+                button(
+                  "ghost danger",
+                  "Remove",
+                  new SetManifestField(new $manifest_form.FVariantRemove(index)),
+                ),
+              ]),
+            );
+          },
+        ),
+      ),
+      button(
+        "ghost",
+        "Add Variant",
+        new SetManifestField(new $manifest_form.FVariantAdd()),
+      ),
+    ]),
+  );
+}
+
+function manifest_select(issues, field, label, value, options, to_field) {
+  return labelled_control(
+    issues,
+    field,
+    label,
+    "",
+    $html.select(
+      toList([
+        $attribute.value(value),
+        $event.on_change((v) => { return new SetManifestField(to_field(v)); }),
+      ]),
+      $list.map(
+        options,
+        (option_value) => {
+          return $html.option(
+            toList([$attribute.value(option_value)]),
+            (() => {
+              if (option_value === "") {
+                return "(unset)";
+              } else {
+                return option_value;
+              }
+            })(),
+          );
+        },
+      ),
+    ),
+  );
+}
+
+function datalist(id, values) {
+  return $html.datalist(
+    toList([$attribute.id(id)]),
+    $list.map(
+      values,
+      (value) => { return $html.option(toList([$attribute.value(value)]), ""); },
+    ),
+  );
+}
+
+function button_disabled(class$, label, message, is_disabled) {
+  return $html.button(
+    toList([
+      $attribute.class$(class$),
+      $attribute.type_("button"),
+      $attribute.disabled(is_disabled),
+      $attribute.aria_disabled(is_disabled),
+      $event.on_click(message),
+    ]),
+    toList([$html.text(label)]),
+  );
+}
+
+function manifest_form_panel(model, form) {
+  let issues = $manifest_form.validate(form);
+  let pack_ids = $list.map(model.projects, (project) => { return project.id; });
+  let _block;
+  let _pipe = model.projects;
+  let _pipe$1 = $list.flat_map(
+    _pipe,
+    (project) => {
+      return listPrepend(
+        project.minecraft,
+        $list.map(project.variants, (variant) => { return variant.minecraft; }),
+      );
+    },
+  );
+  let _pipe$2 = $list.filter(_pipe$1, (value) => { return value !== ""; });
+  _block = $list.unique(_pipe$2);
+  let mc_versions = _block;
+  let _block$1;
+  let _pipe$3 = model.projects;
+  let _pipe$4 = $list.flat_map(
+    _pipe$3,
+    (project) => {
+      return $list.map(project.subdirs, (subdir) => { return subdir.key; });
+    },
+  );
+  let _pipe$5 = $list.filter(_pipe$4, (value) => { return value !== ""; });
+  _block$1 = $list.unique(_pipe$5);
+  let subdir_keys = _block$1;
+  return panel_with_head(
+    "span-12 manifest-form",
+    "Manifest",
+    $html.div(
+      toList([$attribute.class$("panel-actions")]),
+      toList([
+        button("ghost", "Raw JSON", new SetManifestStructured(false)),
+        button_disabled(
+          "",
+          "Save Manifest",
+          new SaveManifest(),
+          !isEqual($manifest_form.errors(issues), toList([])),
+        ),
+      ]),
+    ),
+    toList([
+      datalist("pw-loaders", toList(["fabric", "forge", "neoforge", "quilt"])),
+      datalist("pw-mc-versions", mc_versions),
+      datalist("pw-pack-ids", pack_ids),
+      datalist("pw-subdir-keys", subdir_keys),
+      $html.h3(toList([]), toList([$html.text("Identity")])),
+      $html.div(
+        toList([$attribute.class$("form-grid")]),
+        toList([
+          manifest_input(
+            issues,
+            "id",
+            "ID",
+            form.id,
+            "my-pack",
+            (v) => { return new $manifest_form.FId(v); },
+            "",
+          ),
+          manifest_input(
+            issues,
+            "name",
+            "Name",
+            form.name,
+            "My Pack",
+            (v) => { return new $manifest_form.FName(v); },
+            "",
+          ),
+          manifest_select(
+            issues,
+            "type",
+            "Type",
+            form.kind,
+            toList(["modpack", "datapack", "resourcepack"]),
+            (v) => { return new $manifest_form.FKind(v); },
+          ),
+          manifest_select(
+            issues,
+            "release_type",
+            "Release type",
+            form.release_type,
+            toList(["release", "beta", "alpha"]),
+            (v) => { return new $manifest_form.FReleaseType(v); },
+          ),
+          manifest_select(
+            issues,
+            "lifecycle",
+            "Lifecycle",
+            form.lifecycle,
+            toList(["", "active", "maintenance", "archived", "eol"]),
+            (v) => { return new $manifest_form.FLifecycle(v); },
+          ),
+          manifest_input(
+            issues,
+            "version",
+            "Version",
+            form.version,
+            "26.07",
+            (v) => { return new $manifest_form.FVersion(v); },
+            "",
+          ),
+          manifest_input_list(
+            issues,
+            "loader",
+            "Loader",
+            form.loader,
+            "fabric",
+            (v) => { return new $manifest_form.FLoader(v); },
+            "pw-loaders",
+          ),
+        ]),
+      ),
+      $html.h3(toList([]), toList([$html.text("Minecraft")])),
+      $html.div(
+        toList([$attribute.class$("form-grid")]),
+        toList([
+          $html.label(
+            toList([]),
+            toList([
+              $html.span(toList([]), toList([$html.text("Shape")])),
+              $html.select(
+                toList([
+                  $attribute.value(
+                    (() => {
+                      let $ = form.use_variants;
+                      if ($) {
+                        return "variants";
+                      } else {
+                        return "single";
+                      }
+                    })(),
+                  ),
+                  $event.on_change(
+                    (v) => {
+                      return new SetManifestField(
+                        new $manifest_form.FUseVariants(v === "variants"),
+                      );
+                    },
+                  ),
+                ]),
+                toList([
+                  $html.option(
+                    toList([$attribute.value("single")]),
+                    "single version (mc_version)",
+                  ),
+                  $html.option(
+                    toList([$attribute.value("variants")]),
+                    "multi-variant (variants)",
+                  ),
+                ]),
+              ),
+            ]),
+          ),
+          (() => {
+            let $ = form.use_variants;
+            if ($) {
+              return $html.text("");
+            } else {
+              return manifest_input_list(
+                issues,
+                "mc_version",
+                "Minecraft version",
+                form.mc_version,
+                "1.21.1",
+                (v) => { return new $manifest_form.FMcVersion(v); },
+                "pw-mc-versions",
+              );
+            }
+          })(),
+        ]),
+      ),
+      (() => {
+        let $ = form.use_variants;
+        if ($) {
+          return variants_editor(form, issues);
+        } else {
+          return $html.text("");
+        }
+      })(),
+      $html.h3(toList([]), toList([$html.text("Distribution")])),
+      issue_list($manifest_form.field_issues(issues, "platforms")),
+      $html.div(
+        toList([$attribute.class$("form-grid")]),
+        toList([
+          manifest_input(
+            issues,
+            "modrinth_id",
+            "Modrinth ID",
+            form.modrinth_id,
+            "",
+            (v) => { return new $manifest_form.FModrinthId(v); },
+            "",
+          ),
+          manifest_input(
+            issues,
+            "curseforge_id",
+            "CurseForge ID",
+            form.curseforge_id,
+            "",
+            (v) => { return new $manifest_form.FCurseforgeId(v); },
+            "",
+          ),
+          manifest_input(
+            issues,
+            "github_id",
+            "GitHub (owner/repo)",
+            form.github_id,
+            "",
+            (v) => { return new $manifest_form.FGithubId(v); },
+            "",
+          ),
+          manifest_input(
+            issues,
+            "gitea_id",
+            "Gitea (owner/repo)",
+            form.gitea_id,
+            "",
+            (v) => { return new $manifest_form.FGiteaId(v); },
+            "",
+          ),
+          manifest_input(
+            issues,
+            "gitlab_id",
+            "GitLab (owner/repo)",
+            form.gitlab_id,
+            "",
+            (v) => { return new $manifest_form.FGitlabId(v); },
+            "",
+          ),
+        ]),
+      ),
+      $html.h3(toList([]), toList([$html.text("Role & Assets")])),
+      $html.div(
+        toList([$attribute.class$("form-grid")]),
+        toList([
+          $html.label(
+            toList([]),
+            toList([
+              $html.span(toList([]), toList([$html.text("Role")])),
+              $html.select(
+                toList([
+                  $attribute.value(
+                    (() => {
+                      let $ = form.role_kind;
+                      if ($ instanceof $manifest_form.RoleNone) {
+                        return "none";
+                      } else if ($ instanceof $manifest_form.RoleBase) {
+                        return "base";
+                      } else {
+                        return "consumer";
+                      }
+                    })(),
+                  ),
+                  $event.on_change(
+                    (v) => {
+                      return new SetManifestField(
+                        new $manifest_form.FRoleKind(v),
+                      );
+                    },
+                  ),
+                ]),
+                toList([
+                  $html.option(
+                    toList([$attribute.value("none")]),
+                    "none (standalone)",
+                  ),
+                  $html.option(
+                    toList([$attribute.value("base")]),
+                    "base (performance base)",
+                  ),
+                  $html.option(
+                    toList([$attribute.value("consumer")]),
+                    "consumer (uses a performance base)",
+                  ),
+                ]),
+              ),
+            ]),
+          ),
+          (() => {
+            let $ = form.role_kind;
+            if ($ instanceof $manifest_form.RoleConsumer) {
+              return manifest_input_list(
+                issues,
+                "role_pack",
+                "Base pack",
+                form.role_pack,
+                "performance-base-id",
+                (v) => { return new $manifest_form.FRolePack(v); },
+                "pw-pack-ids",
+              );
+            } else {
+              return $html.text("");
+            }
+          })(),
+          manifest_input_list(
+            issues,
+            "shared_assets",
+            "Shared assets pack",
+            form.shared_assets,
+            "",
+            (v) => { return new $manifest_form.FSharedAssets(v); },
+            "pw-pack-ids",
+          ),
+        ]),
+      ),
+      (() => {
+        let $ = form.role_kind;
+        if ($ instanceof $manifest_form.RoleConsumer) {
+          return mappings_editor(form, issues);
+        } else {
+          return $html.text("");
+        }
+      })(),
+      $html.h3(toList([]), toList([$html.text("Automation")])),
+      $html.div(
+        toList([$attribute.class$("form-grid")]),
+        toList([
+          tri_state_select(
+            "Auto-update",
+            automation_bool(
+              form,
+              (settings) => { return settings.auto_update; },
+            ),
+            (v) => { return new $manifest_form.FAutoUpdate(v); },
+          ),
+          tri_state_select(
+            "Server promo",
+            automation_bool(
+              form,
+              (settings) => { return settings.server_promo; },
+            ),
+            (v) => { return new $manifest_form.FServerPromo(v); },
+          ),
+        ]),
+      ),
+      validation_summary(issues),
+      notice(model.notice),
+    ]),
+  );
+}
+
+function manifest_panel(model) {
+  let $ = model.manifest_structured;
+  let $1 = model.manifest_form;
+  if ($ && $1 instanceof Some) {
+    let form = $1[0];
+    return manifest_form_panel(model, form);
+  } else {
+    return manifest_raw_panel(model);
+  }
+}
+
+function panel(class$, title, children) {
+  return panel_with_head(class$, title, $html.text(""), children);
+}
+
+function generate_panel(model) {
+  let disabled = (model.selected_subdir === "") || job_running(model);
+  return panel(
+    "span-7",
+    "Generate",
+    toList([
+      $html.div(
+        toList([$attribute.class$("action-row")]),
+        toList([
+          button_disabled(
+            "ghost",
+            "Nix Checksums",
+            new RunAction(new NixGen(model.selected_subdir)),
+            disabled,
+          ),
+          button_disabled(
+            "ghost",
+            "Write Modlist",
+            new RunAction(new DocsModlist(model.selected_subdir)),
+            disabled,
+          ),
+          button_disabled(
+            "ghost",
+            "Regenerate Docs Pages",
+            new RunAction(new DocsPages()),
+            job_running(model),
+          ),
+        ]),
+      ),
+    ]),
+  );
+}
+
+function bump_panel(model, project) {
+  let trimmed = $string.trim(model.bump_version);
+  return panel_with_head(
+    "span-5",
+    "Bump Version",
+    button_disabled(
+      "",
+      "Bump",
+      new RunAction(new Bump(project.dir, trimmed, model.bump_configs)),
+      job_running(model) || (trimmed === ""),
+    ),
+    toList([
+      $html.div(
+        toList([$attribute.class$("form-grid")]),
+        toList([
+          form_input(
+            "New version",
+            model.bump_version,
+            project.version,
+            (var0) => { return new SetBumpVersion(var0); },
+            "",
+          ),
+          $html.label(
+            toList([]),
+            toList([
+              $html.span(
+                toList([]),
+                toList([$html.text("Also update in-pack configs")]),
+              ),
+              $html.input(
+                toList([
+                  $attribute.type_("checkbox"),
+                  $attribute.checked(model.bump_configs),
+                  $event.on_check(
+                    (var0) => { return new SetBumpConfigs(var0); },
+                  ),
+                ]),
+              ),
+            ]),
+          ),
+        ]),
       ),
       notice(model.notice),
     ]),
@@ -616,6 +1478,53 @@ function logs_panel(model) {
   );
 }
 
+function progress_row(item) {
+  let status = progress_status_label(item.status);
+  return $html.div(
+    toList([$attribute.class$("row search-item")]),
+    toList([
+      $html.div(
+        toList([]),
+        toList([
+          $html.strong(toList([]), toList([$html.text(item.name)])),
+          $html.span(toList([]), toList([$html.text(item.detail)])),
+        ]),
+      ),
+      $html.span(
+        toList([
+          $attribute.classes(
+            toList([
+              ["status-badge", true],
+              ["integrated", (status === "pending") || (status === "queued")],
+            ]),
+          ),
+        ]),
+        toList([$html.text(status)]),
+      ),
+    ]),
+  );
+}
+
+function progress_panel(model) {
+  let $ = model.mod_progress;
+  if ($ instanceof $Empty) {
+    return $html.text("");
+  } else {
+    let items = $;
+    return panel_with_head(
+      "span-12",
+      "Batch Progress",
+      pill($int.to_string($list.length(items)) + " mod(s)"),
+      toList([
+        $html.div(
+          toList([$attribute.class$("list mod-progress-list")]),
+          $list.map(items, progress_row),
+        ),
+      ]),
+    );
+  }
+}
+
 function changelog_panel(model) {
   let _block;
   let _pipe = model.changelog;
@@ -649,24 +1558,11 @@ function changelog_panel(model) {
   );
 }
 
-function button_disabled(class$, label, message, is_disabled) {
-  return $html.button(
-    toList([
-      $attribute.class$(class$),
-      $attribute.type_("button"),
-      $attribute.disabled(is_disabled),
-      $attribute.aria_disabled(is_disabled),
-      $event.on_click(message),
-    ]),
-    toList([$html.text(label)]),
-  );
-}
-
 function non_empty(values) {
   return $list.filter(values, (value) => { return $string.trim(value) !== ""; });
 }
 
-function mod_row(model, mod) {
+function mod_row(model, project, mod) {
   let subdir = model.selected_subdir;
   let _block;
   let $1 = mod.pin;
@@ -679,30 +1575,56 @@ function mod_row(model, mod) {
   let pin_label = $[0];
   let pin_action = $[1];
   let _block$1;
-  let $2 = mod.platform;
-  let $3 = mod.version_id;
-  if ($3 === "") {
-    _block$1 = $html.text("");
-  } else if ($2 === "curseforge") {
-    let file_id = $3;
-    _block$1 = button_disabled(
+  let $3 = mod.pin;
+  if ($3) {
+    _block$1 = ["Unfreeze", new UnfreezeMod(subdir, mod.slug)];
+  } else {
+    _block$1 = ["Freeze", new FreezeMod(subdir, mod.slug)];
+  }
+  let $2 = _block$1;
+  let freeze_label = $2[0];
+  let freeze_action = $2[1];
+  let side_select = $html.select(
+    toList([
+      $attribute.value(mod.side),
+      $event.on_change(
+        (side) => {
+          return new RunAction(new SetSide(project.dir, mod.slug, side));
+        },
+      ),
+    ]),
+    toList([
+      $html.option(toList([$attribute.value("client")]), "client"),
+      $html.option(toList([$attribute.value("server")]), "server"),
+      $html.option(toList([$attribute.value("both")]), "both"),
+      $html.option(toList([$attribute.value("either")]), "either"),
+    ]),
+  );
+  let _block$2;
+  let $4 = mod.platform;
+  let $5 = mod.version_id;
+  if ($5 === "") {
+    _block$2 = $html.text("");
+  } else if ($4 === "curseforge") {
+    let file_id = $5;
+    _block$2 = button_disabled(
       "icon-btn",
       "CF Fetch",
       new RunWebview("curseforge", mod.slug, file_id),
       job_running(model),
     );
-  } else if ($2 === "modrinth") {
-    let file_id = $3;
-    _block$1 = button_disabled(
+  } else if ($4 === "modrinth") {
+    let file_id = $5;
+    _block$2 = button_disabled(
       "icon-btn",
       "MR Fetch",
       new RunWebview("modrinth", mod.slug, file_id),
       job_running(model),
     );
   } else {
-    _block$1 = $html.text("");
+    _block$2 = $html.text("");
   }
-  let webview_button = _block$1;
+  let webview_button = _block$2;
   return $html.div(
     toList([$attribute.class$("row search-item")]),
     toList([
@@ -733,6 +1655,7 @@ function mod_row(model, mod) {
         ]),
       ),
       webview_button,
+      side_select,
       button_disabled(
         "icon-btn",
         "Update",
@@ -746,6 +1669,12 @@ function mod_row(model, mod) {
         job_running(model),
       ),
       button_disabled(
+        "icon-btn",
+        freeze_label,
+        new RunAction(freeze_action),
+        job_running(model),
+      ),
+      button_disabled(
         "icon-btn danger",
         "Remove",
         new RunAction(new RemoveMod(subdir, mod.slug)),
@@ -755,7 +1684,7 @@ function mod_row(model, mod) {
   );
 }
 
-function mods_panel(model) {
+function mods_panel(model, project) {
   let _block;
   let _pipe = model.mods;
   let _pipe$1 = $list.filter(
@@ -767,7 +1696,7 @@ function mods_panel(model) {
       );
     },
   );
-  _block = $list.map(_pipe$1, (mod) => { return mod_row(model, mod); });
+  _block = $list.map(_pipe$1, (mod) => { return mod_row(model, project, mod); });
   let rows = _block;
   return panel_with_head(
     "span-12 mods-panel",
@@ -786,10 +1715,6 @@ function mods_panel(model) {
       ),
     ]),
   );
-}
-
-function panel(class$, title, children) {
-  return panel_with_head(class$, title, $html.text(""), children);
 }
 
 function add_mod_panel(model) {
@@ -982,15 +1907,17 @@ function sections_for_view(model, project) {
   } else if ($ instanceof Exports) {
     return toList([actions_panel(model, project.subdirs)]);
   } else if ($ instanceof Mods) {
-    return toList([add_mod_panel(model), mods_panel(model)]);
+    return toList([add_mod_panel(model), mods_panel(model, project)]);
   } else if ($ instanceof Changelog) {
     return toList([changelog_panel(model)]);
   } else if ($ instanceof Logs) {
-    return toList([logs_panel(model)]);
+    return toList([progress_panel(model), logs_panel(model)]);
   } else {
     return toList([
       project_panel(model, project),
       subdir_panel(model, project.subdirs),
+      bump_panel(model, project),
+      generate_panel(model),
       manifest_panel(model),
       capabilities_panel(model.features),
       new_pack_panel(model),
@@ -1119,7 +2046,7 @@ function topbar(model, project) {
                   if ($) {
                     return "/lucy.svg";
                   } else {
-                    return "/api/project-icon/" + project.id;
+                    return ("/api/v1/packs/" + project.id) + "/icon";
                   }
                 })(),
               ),

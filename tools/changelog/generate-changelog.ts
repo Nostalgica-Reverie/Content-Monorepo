@@ -378,7 +378,7 @@ function collectCommitLines(prevHash: string | null, pDir: string): string[] {
 const args = process.argv.slice(2);
 const target = args[0];
 if (!target) {
-    console.error('usage: bun generate-changelog.ts <path/to/manifest.json>');
+    console.error('usage: bun generate-changelog.ts <path/to/manifest.json> [output-file]');
     process.exit(1);
 }
 
@@ -390,12 +390,18 @@ try {
     process.exit(1);
 }
 
+const outFile = args[1];
+if (outFile) {
+    fs.writeFileSync(outFile, finalNotes.trim() + '\n');
+    console.log(`wrote changelog for ${target} to ${outFile}`);
+}
+
 const outPath = process.env.GITHUB_OUTPUT;
 if (outPath) {
     const delimiter = `EOF_${crypto.randomBytes(8).toString('hex')}`;
     fs.appendFileSync(outPath, `notes<<${delimiter}\n${finalNotes.trim()}\n${delimiter}\n`);
     console.log(`wrote changelog for ${target} to GITHUB_OUTPUT`);
-} else {
+} else if (!outFile) {
     console.log('\n--- CHANGELOG PREVIEW ---\n');
     console.log(finalNotes.trim());
     console.log('\n--- END ---\n');

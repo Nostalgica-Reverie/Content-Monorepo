@@ -22,6 +22,6 @@ Manage projects released on GitHub
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand github add](packwand_github_add.md)	 - Add a project from a GitHub repository URL or slug
 

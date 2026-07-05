@@ -22,6 +22,6 @@ Add external files from a direct download link, for sites that are not directly 
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand url add](packwand_url_add.md)	 - Add an external file from a direct download link, for sites that are not directly supported by packwiz
 

@@ -1,0 +1,44 @@
+name: "Update library dependencies"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 7 * * 1"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cargo-lock:
+    runs-on: technocality
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          token: ${{ secrets.FORGEJO_TOKEN }}
+          fetch-depth: 1
+
+      - uses: https://github.com/dtolnay/rust-toolchain@stable
+
+      - name: Update mod-browser-webview lockfile
+        working-directory: lib/mod-browser-webview
+        run: cargo update
+
+      - name: Detect changes
+        id: changes
+        shell: bash
+        run: |
+          if git diff --quiet -- lib/mod-browser-webview/Cargo.lock; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit dependency updates
+        if: steps.changes.outputs.changed == 'true'
+        uses: https://github.com/EndBug/add-and-commit@v9
+        with:
+          author_name: forgejo-actions[bot]
+          author_email: omo50@noreply.nostalgica.net
+          message: 'chore(webview): update Cargo.lock'
+          add: 'lib/mod-browser-webview/Cargo.lock'

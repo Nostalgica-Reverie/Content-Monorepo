@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
+	"time"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
@@ -13,7 +15,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// â€” workspace command group â€”
+// — workspace command group —
 
 var workspaceCmd = &cobra.Command{
 	Use:   "workspace",
@@ -31,10 +33,14 @@ func init() {
 	// update
 	wsUpdateCmd.Flags().Bool("all", false, "Run across all packs even when scoped")
 	wsUpdateCmd.Flags().Bool("check", false, "Show what would update without applying (dry-run)")
+	wsUpdateCmd.Flags().Bool("json", false, "With --check, output a JSON summary instead of plain text")
+	wsUpdateCmd.Flags().Bool("ignored-only", false, "With --check, check packs opted out of auto-update instead of the normal set")
+	wsUpdateCmd.Flags().String("report", "", "Write an aggregated machine-readable JSON update report to this file")
 	workspaceCmd.AddCommand(wsUpdateCmd)
 
 	// refresh
 	wsRefreshCmd.Flags().Bool("all", false, "Run across all packs even when scoped")
+	wsRefreshCmd.Flags().Bool("dry-run", false, "List pack subdirectories without refreshing them")
 	workspaceCmd.AddCommand(wsRefreshCmd)
 
 	// loader-update
@@ -48,22 +54,22 @@ func init() {
 	workspaceCmd.AddCommand(wsSyncCmd)
 }
 
-// â€” status â€”
+// — status —
 
-type packStatus struct {
-	ID         string       `json:"id"`
-	Name       string       `json:"name"`
-	Version    string       `json:"version"`
-	MCVersion  string       `json:"mc_version,omitempty"`
-	Loader     string       `json:"loader,omitempty"`
-	Lifecycle  string       `json:"lifecycle"`
-	AutoUpdate bool         `json:"auto_update"`
-	Subdirs    []subdirStat `json:"subdirs"`
-	TotalMods  int          `json:"total_mods"`
-	FrozenMods int          `json:"frozen_mods"`
+type WorkspaceStatus struct {
+	ID         string                  `json:"id"`
+	Name       string                  `json:"name"`
+	Version    string                  `json:"version"`
+	MCVersion  string                  `json:"mc_version,omitempty"`
+	Loader     string                  `json:"loader,omitempty"`
+	Lifecycle  string                  `json:"lifecycle"`
+	AutoUpdate bool                    `json:"auto_update"`
+	Subdirs    []WorkspaceSubdirStatus `json:"subdirs"`
+	TotalMods  int                     `json:"total_mods"`
+	FrozenMods int                     `json:"frozen_mods"`
 }
 
-type subdirStat struct {
+type WorkspaceSubdirStatus struct {
 	Key      string   `json:"key"`
 	Platform string   `json:"platform"`
 	ModCount int      `json:"mod_count"`
@@ -72,7 +78,7 @@ type subdirStat struct {
 
 var wsStatusCmd = &cobra.Command{
 	Use:     "status",
-	Short:   "Dashboard of all packs â€” version, mc, loader, mod counts, frozen mods",
+	Short:   "Dashboard of all packs — version, mc, loader, mod counts, frozen mods",
 	Aliases: []string{"info"},
 	Run: func(cmd *cobra.Command, args []string) {
 		llChdir()
@@ -84,7 +90,7 @@ var wsStatusCmd = &cobra.Command{
 			llFail(fmt.Sprintf("failed to read %s: %v", root, err))
 		}
 
-		var statuses []packStatus
+		var statuses []WorkspaceStatus
 		for _, e := range entries {
 			if !e.IsDir() {
 				continue
@@ -98,7 +104,7 @@ var wsStatusCmd = &cobra.Command{
 			auto := manifest.ReadAutomation(packPath)
 			autoUpdate := auto.AutoUpdate == nil || *auto.AutoUpdate
 
-			var subdirs []subdirStat
+			var subdirs []WorkspaceSubdirStatus
 			totalMods, totalFrozen := 0, 0
 
 			for _, sub := range manifest.SubDirsOf(packPath) {
@@ -123,7 +129,7 @@ var wsStatusCmd = &cobra.Command{
 				totalMods += modCount
 				totalFrozen += len(frozen)
 
-				subdirs = append(subdirs, subdirStat{
+				subdirs = append(subdirs, WorkspaceSubdirStatus{
 					Key:      key,
 					Platform: plat,
 					ModCount: modCount,
@@ -136,7 +142,7 @@ var wsStatusCmd = &cobra.Command{
 				mcVersion = *m.MCVersion
 			}
 
-			statuses = append(statuses, packStatus{
+			statuses = append(statuses, WorkspaceStatus{
 				ID:         m.ID,
 				Name:       m.Name,
 				Version:    m.Version,
@@ -161,6 +167,22 @@ var wsStatusCmd = &cobra.Command{
 			return
 		}
 
+		if Interactive() {
+			rows := make([][]string, 0, len(statuses))
+			for _, status := range statuses {
+				lifecycle := status.Lifecycle
+				if lifecycle == "" {
+					lifecycle = "active"
+				}
+				auto := "yes"
+				if !status.AutoUpdate {
+					auto = "no"
+				}
+				rows = append(rows, []string{status.ID, status.Version, status.MCVersion, status.Loader, lifecycle, fmt.Sprint(status.TotalMods), fmt.Sprint(status.FrozenMods), auto})
+			}
+			fmt.Fprintln(os.Stderr, Table([]string{"PACK", "VERSION", "MC", "LOADER", "LIFECYCLE", "MODS", "FROZEN", "UPDATE"}, rows))
+			return
+		}
 		for _, s := range statuses {
 			autoStr := "auto-update"
 			if !s.AutoUpdate {
@@ -188,7 +210,7 @@ var wsStatusCmd = &cobra.Command{
 	},
 }
 
-// â€” update â€”
+// — update —
 
 var wsUpdateCmd = &cobra.Command{
 	Use:   "update [pack-dir]",
@@ -197,21 +219,168 @@ var wsUpdateCmd = &cobra.Command{
 		llChdir()
 		check, _ := cmd.Flags().GetBool("check")
 		if check {
-			wsRunUpdateCheck(args)
+			asJSON, _ := cmd.Flags().GetBool("json")
+			ignoredOnly, _ := cmd.Flags().GetBool("ignored-only")
+			wsRunUpdateCheck(args, asJSON, ignoredOnly)
 			return
 		}
+		reportPath, _ := cmd.Flags().GetString("report")
 		packFilter, explicit := workspace.ResolveScope(args, llStartCwd)
-		if err := workspace.Run(workspace.OpUpdate, packFilter, explicit); err != nil {
-			llFail(err.Error())
+
+		op := workspace.OpUpdate
+		var reportDir string
+		if reportPath != "" {
+			var err error
+			reportDir, err = os.MkdirTemp("", "packwand-update-report-")
+			if err != nil {
+				llFail(fmt.Sprintf("failed to create report temp dir: %v", err))
+			}
+			defer os.RemoveAll(reportDir)
+			op.ExtraArgsFor = func(dir string) []string {
+				return []string{"--report", filepath.Join(reportDir, wsReportFileName(dir))}
+			}
+		}
+
+		runErr := workspace.Run(op, packFilter, explicit)
+		if reportPath != "" {
+			wsWriteAggregateReport(reportPath, reportDir, runErr)
+		}
+		if runErr != nil {
+			llFail(runErr.Error())
 		}
 	},
 }
 
-func wsRunUpdateCheck(args []string) {
-	packFilter, _ := workspace.ResolveScope(args, llStartCwd)
+// wsReportFileName maps a pack subdir path to a unique, filesystem-safe name.
+func wsReportFileName(dir string) string {
+	r := strings.NewReplacer("/", "_", "\\", "_", ":", "_", " ", "_")
+	return r.Replace(dir) + ".json"
+}
+
+// workspaceUpdateReport is the aggregate of per-subdir UpdateReports; the GUI
+// and CI both render this shape.
+type workspaceUpdateReport struct {
+	GeneratedAt string         `json:"generated_at"`
+	RunError    string         `json:"run_error,omitempty"`
+	Packs       []UpdateReport `json:"packs"`
+	Totals      struct {
+		Updated      int `json:"updated"`
+		Pinned       int `json:"pinned"`
+		Incompatible int `json:"incompatible"`
+		Failed       int `json:"failed"`
+		Skipped      int `json:"skipped"`
+		UpToDate     int `json:"up_to_date"`
+		Checked      int `json:"checked"`
+	} `json:"totals"`
+}
+
+func wsWriteAggregateReport(reportPath, reportDir string, runErr error) {
+	agg := workspaceUpdateReport{
+		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
+		Packs:       []UpdateReport{},
+	}
+	if runErr != nil {
+		agg.RunError = runErr.Error()
+	}
+
+	entries, err := os.ReadDir(reportDir)
+	if err != nil {
+		llWarn("update report: failed to read %s: %v", reportDir, err)
+	}
+	for _, e := range entries {
+		if e.IsDir() || !strings.HasSuffix(e.Name(), ".json") {
+			continue
+		}
+		data, err := os.ReadFile(filepath.Join(reportDir, e.Name()))
+		if err != nil {
+			llWarn("update report: failed to read %s: %v", e.Name(), err)
+			continue
+		}
+		var rep UpdateReport
+		if err := json.Unmarshal(data, &rep); err != nil {
+			llWarn("update report: invalid JSON in %s: %v", e.Name(), err)
+			continue
+		}
+		agg.Packs = append(agg.Packs, rep)
+		agg.Totals.Updated += len(rep.Updated)
+		agg.Totals.Pinned += len(rep.Pinned)
+		agg.Totals.Incompatible += len(rep.Incompatible)
+		agg.Totals.Failed += len(rep.Failed)
+		agg.Totals.Skipped += len(rep.Skipped)
+		agg.Totals.UpToDate += rep.UpToDate
+		agg.Totals.Checked += rep.Checked
+	}
+	sort.Slice(agg.Packs, func(i, j int) bool { return agg.Packs[i].Dir < agg.Packs[j].Dir })
+
+	data, err := json.MarshalIndent(agg, "", "  ")
+	if err != nil {
+		llWarn("update report: failed to render: %v", err)
+		return
+	}
+	if err := os.WriteFile(reportPath, append(data, '\n'), 0o644); err != nil {
+		llWarn("update report: failed to write %s: %v", reportPath, err)
+		return
+	}
+	fmt.Printf("update report written to %s (%d pack subdir(s), %d updated, %d failed)\n",
+		reportPath, len(agg.Packs), agg.Totals.Updated, agg.Totals.Failed)
+}
+
+// WorkspaceUpdateCheckSubdir is one pack subdir's outcome within
+// `workspace update --check --json`.
+type WorkspaceUpdateCheckSubdir struct {
+	Dir     string   `json:"dir"`
+	Ignored bool     `json:"ignored,omitempty"`
+	Updates []string `json:"updates,omitempty"`
+	Error   string   `json:"error,omitempty"`
+}
+
+// WorkspaceUpdateCheckResult is the machine-readable outcome of
+// `workspace update --check --json`.
+type WorkspaceUpdateCheckResult struct {
+	Subdirs      []WorkspaceUpdateCheckSubdir `json:"subdirs"`
+	TotalUpdates int                          `json:"total_updates"`
+	FailedChecks int                          `json:"failed_checks"`
+}
+
+// ignoredPackSubdirs returns subdirs of packs opted out of auto-update
+// (via manifest.json automation.auto_update or the legacy
+// auto-update-ignore.json file), excluding archived/EOL packs — those are
+// a separate, unrelated reason to skip a pack.
+func ignoredPackSubdirs(root string) []string {
+	entries, err := os.ReadDir(root)
+	if err != nil {
+		return nil
+	}
+	var subdirs []string
+	for _, e := range entries {
+		if !e.IsDir() {
+			continue
+		}
+		packPath := filepath.Join(root, e.Name())
+		if lc := manifest.LifecycleState(packPath); lc == "archived" || lc == "eol" {
+			continue
+		}
+		if skip, _ := manifest.OptedOutOfAutoUpdate(packPath); skip {
+			subdirs = append(subdirs, manifest.SubDirsOf(packPath)...)
+		}
+	}
+	return subdirs
+}
+
+func wsRunUpdateCheck(args []string, asJSON, ignoredOnly bool) {
 	root := workspace.ModpacksDir()
-	targets, _ := workspace.CollectTargets(root, true, packFilter, false)
+	var targets []string
+	if ignoredOnly {
+		targets = ignoredPackSubdirs(root)
+	} else {
+		packFilter, _ := workspace.ResolveScope(args, llStartCwd)
+		targets, _ = workspace.CollectTargets(root, true, packFilter, false)
+	}
 	if len(targets) == 0 {
+		if asJSON {
+			printJSON(WorkspaceUpdateCheckResult{Subdirs: []WorkspaceUpdateCheckSubdir{}})
+			return
+		}
 		fmt.Println("no pack subdirs to check")
 		return
 	}
@@ -221,7 +390,9 @@ func wsRunUpdateCheck(args []string) {
 		updates []string
 		err     error
 	}
-	fmt.Printf("checking %d subdir(s), running up to %d in parallel\n", len(targets), workspace.MaxConcurrent())
+	if !asJSON {
+		fmt.Printf("checking %d subdir(s), running up to %d in parallel\n", len(targets), workspace.MaxConcurrent())
+	}
 	results := make([]checkOutput, len(targets))
 	sched := workspace.NewScheduler(workspace.MaxConcurrent())
 	dones := make([]<-chan error, len(targets))
@@ -243,29 +414,54 @@ func wsRunUpdateCheck(args []string) {
 	}
 
 	totalUpdates := 0
+	failedChecks := 0
+	jsonResult := WorkspaceUpdateCheckResult{Subdirs: make([]WorkspaceUpdateCheckSubdir, 0, len(results))}
 	for _, result := range results {
 		if result.err != nil {
-			llWarn("%s: check failed: %v", result.dir, result.err)
+			failedChecks++
+			if asJSON {
+				jsonResult.Subdirs = append(jsonResult.Subdirs, WorkspaceUpdateCheckSubdir{Dir: result.dir, Ignored: ignoredOnly, Error: result.err.Error()})
+			} else {
+				llWarn("%s: check failed: %v", result.dir, result.err)
+			}
 			continue
 		}
 		if len(result.updates) > 0 {
+			totalUpdates += len(result.updates)
+			if asJSON {
+				jsonResult.Subdirs = append(jsonResult.Subdirs, WorkspaceUpdateCheckSubdir{Dir: result.dir, Ignored: ignoredOnly, Updates: result.updates})
+				continue
+			}
 			fmt.Printf("%s: %d update(s) available\n", result.dir, len(result.updates))
 			for _, u := range result.updates {
 				fmt.Printf("  ~ %s\n", u)
 			}
-			totalUpdates += len(result.updates)
-		} else {
+		} else if !asJSON {
 			fmt.Printf("%s: up to date\n", result.dir)
 		}
 	}
-	if totalUpdates == 0 {
+
+	if asJSON {
+		jsonResult.TotalUpdates = totalUpdates
+		jsonResult.FailedChecks = failedChecks
+		printJSON(jsonResult)
+		if failedChecks > 0 {
+			os.Exit(1)
+		}
+		return
+	}
+
+	if totalUpdates == 0 && failedChecks == 0 {
 		fmt.Println("\neverything is up to date")
-	} else {
-		fmt.Printf("\n%d update(s) available â€” run 'packwand workspace update' to apply\n", totalUpdates)
+	} else if totalUpdates > 0 {
+		fmt.Printf("\n%d update(s) available — run 'packwand workspace update' to apply\n", totalUpdates)
+	}
+	if failedChecks > 0 {
+		llFail(fmt.Sprintf("%d update check(s) failed", failedChecks))
 	}
 }
 
-// â€” refresh â€”
+// — refresh —
 
 var wsRefreshCmd = &cobra.Command{
 	Use:   "refresh [pack-dir]",
@@ -273,13 +469,22 @@ var wsRefreshCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		llChdir()
 		packFilter, explicit := workspace.ResolveScope(args, llStartCwd)
+		dryRun, _ := cmd.Flags().GetBool("dry-run")
+		if dryRun {
+			targets, _ := workspace.CollectTargets(workspace.ModpacksDir(), false, packFilter, explicit)
+			fmt.Printf("dry-run: %d pack subdir(s) would be refreshed\n", len(targets))
+			for _, target := range targets {
+				fmt.Printf("  - %s\n", target)
+			}
+			return
+		}
 		if err := workspace.Run(workspace.OpRefresh, packFilter, explicit); err != nil {
 			llFail(err.Error())
 		}
 	},
 }
 
-// â€” loader-update â€”
+// — loader-update —
 
 var wsLoaderUpdateCmd = &cobra.Command{
 	Use:   "loader-update [latest|recommended] [pack-dir]",
@@ -308,7 +513,7 @@ var wsLoaderUpdateCmd = &cobra.Command{
 	},
 }
 
-// â€” migrate â€”
+// — migrate —
 
 var wsMigrateCmd = &cobra.Command{
 	Use:   "migrate [format|loader [version]|minecraft [version]]",
@@ -329,7 +534,7 @@ var wsMigrateCmd = &cobra.Command{
 	},
 }
 
-// â€” sync â€”
+// — sync —
 
 var wsSyncCmd = &cobra.Command{
 	Use:   "sync",
@@ -343,7 +548,7 @@ var wsSyncCmd = &cobra.Command{
 		if !dryRun {
 			// Regenerate docs after sync
 			fmt.Println()
-			runPages("")
+			runPages("", false)
 		}
 	},
 }

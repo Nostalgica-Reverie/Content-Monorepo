@@ -1,0 +1,13 @@
+name = "packwand Example Pack"
+author = "comp500"
+version = "1.0.0"
+pack-format = "packwand:26"
+
+[index]
+file = "index.toml"
+hash-format = "sha512"
+hash = "..."
+
+[versions]
+minecraft = "1.19"
+quilt = "0.17.0"

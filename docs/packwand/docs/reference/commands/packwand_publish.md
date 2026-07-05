@@ -22,9 +22,10 @@ Build, upload, verify, or list publish targets for a pack
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand publish build](packwand_publish_build.md)	 - Export the pack artifact(s) for publishing
 * [packwand publish list](packwand_publish_list.md)	 - Enumerate all (manifest, variant) publish pairs as JSON (for CI matrix)
+* [packwand publish plan](packwand_publish_plan.md)	 - Compute the publish matrix from git changes, with include/skip reasons (JSON on stdout)
 * [packwand publish upload](packwand_publish_upload.md)	 - Upload pre-built artifacts to Modrinth and/or CurseForge
 * [packwand publish verify](packwand_publish_verify.md)	 - Verify a published version exists live on Modrinth
 

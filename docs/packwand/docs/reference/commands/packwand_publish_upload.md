@@ -9,8 +9,9 @@ packwand publish upload <manifest.json> [variant] [flags]
 ### Options
 
 ```
-  -h, --help   help for upload
-      --live   Actually upload (default: dry run)
+      --changelog-file string   Read release notes from this file instead of the pack's changelog.md
+  -h, --help                    help for upload
+      --live                    Actually upload (default: dry run)
 ```
 
 ### Options inherited from parent commands

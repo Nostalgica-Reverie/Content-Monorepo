@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/curseforge/packinterop"
 	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -17,6 +18,32 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
+
+func downloadCurseForgeImport(source string) (string, error) {
+	response, err := http.Get(source) //nolint:gosec -- importing an explicitly supplied URL is the command's purpose.
+	if err != nil {
+		return "", err
+	}
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("HTTP %d from %s", response.StatusCode, source)
+	}
+	tmp, err := os.CreateTemp("", "packwand-curseforge-import-*.zip")
+	if err != nil {
+		return "", err
+	}
+	path := tmp.Name()
+	if _, err := io.Copy(tmp, response.Body); err != nil {
+		tmp.Close()
+		os.Remove(path)
+		return "", err
+	}
+	if err := tmp.Close(); err != nil {
+		os.Remove(path)
+		return "", err
+	}
+	return path, nil
+}
 
 // importCmd represents the import command
 var importCmd = &cobra.Command{
@@ -28,108 +55,111 @@ var importCmd = &cobra.Command{
 		var packImport packinterop.ImportPackMetadata
 
 		// TODO: refactor/extract file checking?
-		if strings.HasPrefix(inputFile, "http") {
-			// TODO: implement
-			fmt.Println("HTTP not supported (yet)")
-			os.Exit(1)
-		} else {
-			// Attempt to read from file
-			var f *os.File
-			inputFileStat, err := os.Stat(inputFile)
-			if err == nil && inputFileStat.IsDir() {
-				// Apparently os.Open doesn't fail when file given is a directory, only when it gets read
-				err = errors.New("cannot open directory")
-			}
-			if err == nil {
-				f, err = os.Open(inputFile)
-			}
+		if strings.HasPrefix(inputFile, "http://") || strings.HasPrefix(inputFile, "https://") {
+			downloaded, err := downloadCurseForgeImport(inputFile)
 			if err != nil {
-				found := false
-				var errInstance error
-				var errManifest error
-				var errCurse error
+				fmt.Printf("Error downloading pack: %s\n", err)
+				os.Exit(1)
+			}
+			defer os.Remove(downloaded)
+			inputFile = downloaded
+		}
+		// Attempt to read from file
+		var f *os.File
+		inputFileStat, err := os.Stat(inputFile)
+		if err == nil && inputFileStat.IsDir() {
+			// Apparently os.Open doesn't fail when file given is a directory, only when it gets read
+			err = errors.New("cannot open directory")
+		}
+		if err == nil {
+			f, err = os.Open(inputFile)
+		}
+		if err != nil {
+			found := false
+			var errInstance error
+			var errManifest error
+			var errCurse error
 
-				// Look for other files/folders
-				if _, errInstance = os.Stat(filepath.Join(inputFile, "minecraftinstance.json")); errInstance == nil {
-					inputFile = filepath.Join(inputFile, "minecraftinstance.json")
-					found = true
-				} else if _, errManifest = os.Stat(filepath.Join(inputFile, "manifest.json")); errManifest == nil {
-					inputFile = filepath.Join(inputFile, "manifest.json")
-					found = true
-				} else if runtime.GOOS == "windows" {
-					var dir string
-					dir, errCurse = getCurseDir()
-					if errCurse == nil {
-						curseInstanceFile := filepath.Join(dir, "Minecraft", "Instances", inputFile, "minecraftinstance.json")
-						if _, errCurse = os.Stat(curseInstanceFile); errCurse == nil {
-							inputFile = curseInstanceFile
-							found = true
-						}
+			// Look for other files/folders
+			if _, errInstance = os.Stat(filepath.Join(inputFile, "minecraftinstance.json")); errInstance == nil {
+				inputFile = filepath.Join(inputFile, "minecraftinstance.json")
+				found = true
+			} else if _, errManifest = os.Stat(filepath.Join(inputFile, "manifest.json")); errManifest == nil {
+				inputFile = filepath.Join(inputFile, "manifest.json")
+				found = true
+			} else if runtime.GOOS == "windows" {
+				var dir string
+				dir, errCurse = getCurseDir()
+				if errCurse == nil {
+					curseInstanceFile := filepath.Join(dir, "Minecraft", "Instances", inputFile, "minecraftinstance.json")
+					if _, errCurse = os.Stat(curseInstanceFile); errCurse == nil {
+						inputFile = curseInstanceFile
+						found = true
 					}
 				}
+			}
 
-				if found {
-					f, err = os.Open(inputFile)
-					if err != nil {
-						fmt.Printf("Error opening file: %s\n", err)
-						os.Exit(1)
-					}
-				} else {
+			if found {
+				f, err = os.Open(inputFile)
+				if err != nil {
 					fmt.Printf("Error opening file: %s\n", err)
-					fmt.Printf("Also attempted minecraftinstance.json: %s\n", errInstance)
-					fmt.Printf("Also attempted manifest.json: %s\n", errManifest)
-					if errCurse != nil {
-						fmt.Printf("Also attempted to load a Curse/Twitch modpack named \"%s\": %s\n", inputFile, errCurse)
-					}
 					os.Exit(1)
 				}
+			} else {
+				fmt.Printf("Error opening file: %s\n", err)
+				fmt.Printf("Also attempted minecraftinstance.json: %s\n", errInstance)
+				fmt.Printf("Also attempted manifest.json: %s\n", errManifest)
+				if errCurse != nil {
+					fmt.Printf("Also attempted to load a Curse/Twitch modpack named \"%s\": %s\n", inputFile, errCurse)
+				}
+				os.Exit(1)
 			}
-			defer f.Close()
+		}
+		defer f.Close()
 
-			buf := bufio.NewReader(f)
-			header, err := buf.Peek(2)
+		buf := bufio.NewReader(f)
+		header, err := buf.Peek(2)
+		if err != nil {
+			fmt.Printf("Error reading file: %s\n", err)
+			os.Exit(1)
+		}
+
+		// Check if file is a zip
+		if string(header) == "PK" {
+			// Read the whole file (as bufio doesn't work for zips)
+			zipData, err := io.ReadAll(buf)
 			if err != nil {
 				fmt.Printf("Error reading file: %s\n", err)
 				os.Exit(1)
 			}
-
-			// Check if file is a zip
-			if string(header) == "PK" {
-				// Read the whole file (as bufio doesn't work for zips)
-				zipData, err := io.ReadAll(buf)
-				if err != nil {
-					fmt.Printf("Error reading file: %s\n", err)
-					os.Exit(1)
-				}
-				// Get zip size
-				stat, err := f.Stat()
-				if err != nil {
-					fmt.Printf("Error reading file: %s\n", err)
-					os.Exit(1)
-				}
-				zr, err := zip.NewReader(bytes.NewReader(zipData), stat.Size())
-				if err != nil {
-					fmt.Printf("Error parsing zip: %s\n", err)
-					os.Exit(1)
-				}
-
-				// Search the zip for minecraftinstance.json or manifest.json
-				var metaFile *zip.File
-				for _, v := range zr.File {
-					if v.Name == "minecraftinstance.json" || v.Name == "manifest.json" {
-						metaFile = v
-					}
-				}
-
-				if metaFile == nil {
-					fmt.Println("Can't find manifest.json or minecraftinstance.json, is this a valid pack?")
-					os.Exit(1)
-				}
-
-				packImport = packinterop.ReadMetadata(packinterop.GetZipPackSource(metaFile, zr))
-			} else {
-				packImport = packinterop.ReadMetadata(packinterop.GetDiskPackSource(buf, filepath.ToSlash(filepath.Base(inputFile)), filepath.Dir(inputFile)))
+			// Get zip size
+			stat, err := f.Stat()
+			if err != nil {
+				fmt.Printf("Error reading file: %s\n", err)
+				os.Exit(1)
 			}
+			zr, err := zip.NewReader(bytes.NewReader(zipData), stat.Size())
+			if err != nil {
+				fmt.Printf("Error parsing zip: %s\n", err)
+				os.Exit(1)
+			}
+
+			// Search the zip for minecraftinstance.json or manifest.json
+			var metaFile *zip.File
+			for _, v := range zr.File {
+				if v.Name == "minecraftinstance.json" || v.Name == "manifest.json" {
+					metaFile = v
+				}
+			}
+
+			if metaFile == nil {
+				fmt.Println("Can't find manifest.json or minecraftinstance.json, is this a valid pack?")
+				os.Exit(1)
+			}
+
+			packImport = packinterop.ReadMetadata(packinterop.GetZipPackSource(metaFile, zr))
+		} else {
+			packImport = packinterop.ReadMetadata(packinterop.GetDiskPackSource(buf, filepath.ToSlash(filepath.Base(inputFile)), filepath.Dir(inputFile)))
 		}
 
 		pack, err := core.LoadPack()
@@ -259,7 +289,7 @@ var importCmd = &cobra.Command{
 				continue
 			}
 
-			err = createModFile(modInfoValue, modFileInfoValue, &index, v.OptionalDisabled)
+			err = createModFile(modInfoValue, modFileInfoValue, &index, v.OptionalDisabled, "")
 			if err != nil {
 				fmt.Printf("Failed to save project \"%s\": %s\n", modInfoValue.Name, err)
 				os.Exit(1)

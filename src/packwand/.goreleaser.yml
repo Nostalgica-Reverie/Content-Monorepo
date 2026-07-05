@@ -1,6 +1,7 @@
 version: 2
 
 project_name: packwand
+force_token: gitea
 
 # Run from src/packwand (goreleaser release --clean, or via CI with
 # working-directory: src/packwand). Tag releases as vX.Y.Z on the monorepo;
@@ -65,6 +66,16 @@ checksum:
   name_template: "checksums.txt"
   algorithm: sha256
 
+# Generate a CycloneDX SBOM for each shipped archive. GoReleaser uploads these
+# documents as release artifacts beside the archives.
+sboms:
+  - id: archives
+    artifacts: archive
+    documents:
+      - "{{ .ArtifactName }}.cdx.json"
+    cmd: syft
+    args: ["$artifact", "--output", "cyclonedx-json=$document"]
+
 snapshot:
   version_template: "{{ incpatch .Version }}-devel"
 
@@ -84,7 +95,7 @@ gitea_urls:
 
 release:
   gitea:
-    owner: Lasting-Legacy
-    name: Lasting-Legacy-Monorepo
+    owner: Reverie-Projects
+    name: monorepo
   draft: false
   prerelease: auto

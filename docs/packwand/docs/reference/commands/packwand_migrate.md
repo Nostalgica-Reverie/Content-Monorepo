@@ -22,8 +22,8 @@ Migrate Minecraft/loader versions or pack-format to a newer generation.
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand migrate format](packwand_migrate_format.md)	 - Upgrade pack-format from packwiz:1.1.0 to packwand:26
-* [packwand migrate loader](packwand_migrate_loader.md)	 - Migrate your modloader version to a newer version.
+* [packwand migrate loader](packwand_migrate_loader.md)	 - Migrate every configured modloader to a newer version.
 * [packwand migrate minecraft](packwand_migrate_minecraft.md)	 - Migrate your Minecraft version to a newer version.
 

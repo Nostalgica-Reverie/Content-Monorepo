@@ -22,7 +22,14 @@ export default defineConfig({
       { text: 'Mods', link: '/mods' },
       { text: 'Modpacks', link: '/modpacks' },
       { text: 'Data Packs', link: '/datapacks' },
-      { text: 'Resource Packs', link: '/resource-packs' }
+      { text: 'Resource Packs', link: '/resource-packs' },
+      {
+        text: 'Other Docs',
+        items: [
+          { text: 'Packwand', link: 'https://packwand.nostalgica.net/' },
+          { text: 'Packwiz Components', link: 'https://packwiz.nostalgica.net/' },
+        ],
+      },
     ],
     search: {
       provider: "local",

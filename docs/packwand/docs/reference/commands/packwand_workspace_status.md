@@ -1,6 +1,6 @@
 ## packwand workspace status
 
-Dashboard of all packs â€” version, mc, loader, mod counts, frozen mods
+Dashboard of all packs — version, mc, loader, mod counts, frozen mods
 
 ```
 packwand workspace status [flags]

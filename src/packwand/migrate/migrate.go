@@ -1,4 +1,4 @@
-﻿package migrate
+package migrate
 
 import (
 	"fmt"
@@ -35,7 +35,7 @@ var migrateFormatCmd = &cobra.Command{
 		if err := pack.Write(); err != nil {
 			cmdshared.Failf("writing pack.toml: %v", err)
 		}
-		fmt.Printf("pack-format upgraded: %s â†’ %s\n", old, core.CurrentPackFormat)
+		fmt.Printf("pack-format upgraded: %s → %s\n", old, core.CurrentPackFormat)
 	},
 }
 

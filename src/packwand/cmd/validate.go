@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/clistyle"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/manifest"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/workspace"
 	"github.com/spf13/cobra"
@@ -26,11 +27,11 @@ func init() {
 	rootCmd.AddCommand(llLintCmd)
 }
 
-// â€” validate â€”
+// — validate —
 
 var llValidateCmd = &cobra.Command{
 	Use:     "validate [manifest.json...]",
-	Short:   "Validate pack manifests â€” fields, subdirs, changelog, role, automation",
+	Short:   "Validate pack manifests — fields, subdirs, changelog, role, automation",
 	Aliases: []string{"check-manifest"},
 	Run: func(cmd *cobra.Command, args []string) {
 		all, _ := cmd.Flags().GetBool("all")
@@ -54,7 +55,7 @@ var llValidateCmd = &cobra.Command{
 		}
 
 		if all {
-			fmt.Printf("âœ“ all %d manifest(s) OK\n", len(targets))
+			fmt.Printf(clistyle.IconOK+" all %d manifest(s) OK\n", len(targets))
 		}
 	},
 }
@@ -125,7 +126,7 @@ func validateManifestFile(manifestPath string) {
 	hasMcVersion := m.MCVersion != nil
 	hasVariants := len(m.Variants) > 0
 	if hasMcVersion && hasVariants {
-		llFail("manifest declares both 'mc_version' and 'variants' â€” use exactly one")
+		llFail("manifest declares both 'mc_version' and 'variants' — use exactly one")
 	}
 	if !hasMcVersion && !hasVariants {
 		llFail("manifest must declare either 'mc_version' or 'variants'")
@@ -187,10 +188,10 @@ func validateManifestFile(manifestPath string) {
 
 	optOutPath := filepath.Join(packDir, "opt-out.json")
 	if fileExists(optOutPath) {
-		llWarn("%s: opt-out.json is deprecated â€” migrate into manifest.json \"automation\"", optOutPath)
+		llWarn("%s: opt-out.json is deprecated — migrate into manifest.json \"automation\"", optOutPath)
 	}
 	if fileExists(filepath.Join(packDir, "auto-update-ignore.json")) {
-		llWarn("%s: legacy auto-update-ignore.json â€” migrate to manifest.json \"automation\"", packDir)
+		llWarn("%s: legacy auto-update-ignore.json — migrate to manifest.json \"automation\"", packDir)
 	}
 
 	label := "production"
@@ -213,7 +214,7 @@ func validateManifestFile(manifestPath string) {
 	if m.SharedAssets != "" {
 		sharedStr = ", assets from " + m.SharedAssets
 	}
-	fmt.Printf("âœ“ %s %s (%s, %s, %s) [%s%s] â€” manifest OK\n",
+	fmt.Printf(clistyle.IconOK+" %s %s (%s, %s, %s) [%s%s] — manifest OK\n",
 		m.ID, version, m.ReleaseType, label, shape, roleStr, sharedStr)
 }
 
@@ -314,7 +315,7 @@ func validatePerformanceBase(m *manifest.Manifest, pb *manifest.PerformanceBase,
 			llFail(fmt.Sprintf("mapping target '%s' must end in '-mr' or '-cf'", mp.Target))
 		}
 		if sSuffix != tSuffix {
-			llFail(fmt.Sprintf("FORBIDDEN cross-platform mapping: source '%s' (%s) â†’ target '%s' (%s). MR/CF must never cross (license risk).", mp.Source, sSuffix, mp.Target, tSuffix))
+			llFail(fmt.Sprintf("FORBIDDEN cross-platform mapping: source '%s' (%s) → target '%s' (%s). MR/CF must never cross (license risk).", mp.Source, sSuffix, mp.Target, tSuffix))
 		}
 		if !dirExists(filepath.Join(basePackDir, mp.Source)) {
 			llFail(fmt.Sprintf("mapping source '%s' does not exist in base pack '%s'", mp.Source, pb.Pack))
@@ -381,10 +382,10 @@ func validateModpackSubdirs(m *manifest.Manifest, packDir string, variants []man
 			llFail(fmt.Sprintf("variant %s: has neither %s nor %s", key, filepath.Base(mr), filepath.Base(cf)))
 		}
 		if hasMr && !mrPresent {
-			llWarn("variant %s: %s absent â€” this variant will NOT publish to Modrinth", key, mr)
+			llWarn("variant %s: %s absent — this variant will NOT publish to Modrinth", key, mr)
 		}
 		if hasCf && !cfPresent {
-			llWarn("variant %s: %s absent â€” this variant will NOT publish to CurseForge", key, cf)
+			llWarn("variant %s: %s absent — this variant will NOT publish to CurseForge", key, cf)
 		}
 	}
 }
@@ -477,10 +478,9 @@ func checkPackFormat(subDir string, cc *catCheck, warnings *int) {
 	}
 }
 
+// — doctor —
 
-// â€” doctor â€”
-
-type doctorReport struct {
+type DoctorResult struct {
 	Version  string      `json:"version"`
 	Tools    []toolCheck `json:"tools"`
 	Repo     string      `json:"repo,omitempty"`
@@ -511,7 +511,7 @@ var llDoctorCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		asJSON, _ := cmd.Flags().GetBool("json")
 
-		report := doctorReport{Version: "packwand"}
+		report := DoctorResult{Version: "packwand"}
 		problems, warnings := 0, 0
 
 		addTool := func(name, why string, required bool) {
@@ -545,7 +545,7 @@ var llDoctorCmd = &cobra.Command{
 				printToolLine(t)
 			}
 			fmt.Println("  MISS  repo      no .git or modpacks/ found walking up from here")
-			llFail("doctor found problems â€” run packwand from inside the monorepo")
+			llFail("doctor found problems — run packwand from inside the monorepo")
 		}
 		report.Repo = root
 
@@ -663,7 +663,7 @@ func printToolLine(t toolCheck) {
 	}
 }
 
-// â€” lint â€”
+// — lint —
 
 var llLintCmd = &cobra.Command{
 	Use:   "lint [files...]",
@@ -695,6 +695,6 @@ var llLintCmd = &cobra.Command{
 		if failed > 0 {
 			llFail(fmt.Sprintf("%d of %d file(s) failed syntax linting", failed, checked))
 		}
-		fmt.Printf("âœ“ all %d file(s) parsed OK\n", checked)
+		fmt.Printf(clistyle.IconOK+" all %d file(s) parsed OK\n", checked)
 	},
 }

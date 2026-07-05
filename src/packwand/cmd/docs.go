@@ -19,18 +19,21 @@ import (
 
 func init() {
 	llModlistCmd.Flags().StringP("subdir", "s", "", "Pack subdir to read mods from (e.g. nightfall-mr)")
+	llModlistCmd.Flags().Bool("json", false, "Output a JSON summary instead of plain text")
 	llModlistCmd.GroupID = GroupOther
 	rootCmd.AddCommand(llModlistCmd)
 
 	llPagesCmd.Flags().StringP("pack", "p", "", "Pack directory to regenerate (default: all)")
+	llPagesCmd.Flags().Bool("json", false, "Output a JSON summary instead of plain text")
 	llPagesCmd.GroupID = GroupOther
 	rootCmd.AddCommand(llPagesCmd)
 
+	llDiffCmd.Flags().Bool("json", false, "Output a JSON summary instead of plain text")
 	llDiffCmd.GroupID = GroupOther
 	rootCmd.AddCommand(llDiffCmd)
 }
 
-// â€” types shared by modlist and pages â€”
+// — types shared by modlist and pages —
 
 type modlistEntry struct {
 	JarName        string `json:"jarName"`
@@ -52,13 +55,23 @@ type pwMod struct {
 	mrModID    string
 }
 
-// â€” modlist â€”
+// — modlist —
+
+// ModlistResult is the machine-readable outcome of `docs modlist --json`.
+type ModlistResult struct {
+	Subdir             string `json:"subdir"`
+	OutPath            string `json:"out_path"`
+	ModCount           int    `json:"mod_count"`
+	WithCurseForgeHash int    `json:"with_curseforge_hash"`
+	WithModrinthHash   int    `json:"with_modrinth_hash"`
+}
 
 var llModlistCmd = &cobra.Command{
 	Use:   "modlist <subdir>",
 	Short: "Write a crash-assistant modlist.json from a pack's mods/ directory",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		asJSON, _ := cmd.Flags().GetBool("json")
 		subdir := llAbs(args[0])
 		llChdir()
 
@@ -117,6 +130,17 @@ var llModlistCmd = &cobra.Command{
 		data = append(data, '\n')
 		if err := os.WriteFile(outPath, data, 0o644); err != nil {
 			llFail(fmt.Sprintf("failed to write %s: %v", outPath, err))
+		}
+
+		if asJSON {
+			printJSON(ModlistResult{
+				Subdir:             subdir,
+				OutPath:            outPath,
+				ModCount:           parsed,
+				WithCurseForgeHash: withCF,
+				WithModrinthHash:   withMR,
+			})
+			return
 		}
 
 		fmt.Printf("wrote %s\n", outPath)
@@ -195,7 +219,7 @@ func versionFromFilename(filename string) string {
 	return strings.TrimSuffix(filename, ".jar")
 }
 
-// â€” pages â€”
+// — pages —
 
 var llPagesCmd = &cobra.Command{
 	Use:     "pages [pack-dir]",
@@ -208,15 +232,30 @@ var llPagesCmd = &cobra.Command{
 		} else if packArg != "" {
 			packArg = llAbs(packArg)
 		}
+		asJSON, _ := cmd.Flags().GetBool("json")
 		llChdir()
-		runPages(packArg)
+		runPages(packArg, asJSON)
 	},
+}
+
+// PagesSubdirResult is one pack subdir's outcome within `docs pages --json`.
+type PagesSubdirResult struct {
+	Subdir   string `json:"subdir"`
+	ModCount int    `json:"mod_count,omitempty"`
+	Error    string `json:"error,omitempty"`
+}
+
+// PagesResult is the machine-readable outcome of `docs pages --json`.
+type PagesResult struct {
+	Subdirs            []PagesSubdirResult `json:"subdirs"`
+	Written            int                 `json:"written"`
+	ProjectsIndexCount int                 `json:"projects_index_count,omitempty"`
 }
 
 // runPages regenerates modlist.md files and the projects index.
 // packArg is an absolute path to a single pack directory, or "" to regenerate all.
 // Called from wsSyncCmd after a successful sync.
-func runPages(packArg string) {
+func runPages(packArg string, asJSON bool) {
 	var subdirs []string
 	if packArg != "" {
 		subdirs = packModSubdirs(packArg)
@@ -242,11 +281,12 @@ func runPages(packArg string) {
 		}
 	}
 
+	results := make([]PagesSubdirResult, len(subdirs))
 	var written int64
 	sched := workspace.NewScheduler(workspace.MaxConcurrent())
 	dones := make([]<-chan error, len(subdirs))
 	for i, sub := range subdirs {
-		sub := sub
+		i, sub := i, sub
 		dones[i] = sched.Submit(workspace.Task{
 			Name:  sub,
 			Needs: []workspace.Resource{workspace.Resource("pages:" + sub)},
@@ -254,9 +294,13 @@ func runPages(packArg string) {
 				n, err := writeModlistMD(sub)
 				if err != nil {
 					llWarn("%s: %v", sub, err)
+					results[i] = PagesSubdirResult{Subdir: sub, Error: err.Error()}
 					return nil
 				}
-				fmt.Printf("wrote %s/modlist.md (%d mods)\n", sub, n)
+				if !asJSON {
+					fmt.Printf("wrote %s/modlist.md (%d mods)\n", sub, n)
+				}
+				results[i] = PagesSubdirResult{Subdir: sub, ModCount: n}
 				atomic.AddInt64(&written, 1)
 				return nil
 			},
@@ -266,13 +310,26 @@ func runPages(packArg string) {
 	for _, c := range dones {
 		<-c
 	}
-	fmt.Printf("generated %d modlist.md file(s).\n", written)
 
+	projectCount := 0
 	if packArg == "" {
-		if _, err := writeProjectsIndex(); err != nil {
+		n, err := writeProjectsIndex(asJSON)
+		if err != nil {
 			llWarn("projects index not written: %v", err)
 		}
+		projectCount = n
 	}
+
+	if asJSON {
+		printJSON(PagesResult{
+			Subdirs:            results,
+			Written:            int(written),
+			ProjectsIndexCount: projectCount,
+		})
+		return
+	}
+
+	fmt.Printf("generated %d modlist.md file(s).\n", written)
 }
 
 func packModSubdirs(packDir string) []string {
@@ -356,7 +413,36 @@ func modPageURL(m *pwMod) string {
 	return ""
 }
 
-// â€” diff â€”
+// — diff —
+
+// DiffModChange is one mod's change within `docs diff --json`.
+type DiffModChange struct {
+	Slug        string `json:"slug"`
+	Path        string `json:"path"`
+	Change      string `json:"change"` // "added", "removed", or "updated"
+	OldFilename string `json:"old_filename,omitempty"`
+	NewFilename string `json:"new_filename,omitempty"`
+}
+
+// DiffSubdirResult is one pack subdir's changes within `docs diff --json`.
+type DiffSubdirResult struct {
+	Subdir  string          `json:"subdir"`
+	Added   int             `json:"added"`
+	Removed int             `json:"removed"`
+	Updated int             `json:"updated"`
+	Mods    []DiffModChange `json:"mods"`
+}
+
+// DiffResult is the machine-readable outcome of `docs diff --json`.
+type DiffResult struct {
+	OldRef       string             `json:"old_ref"`
+	NewRef       string             `json:"new_ref"`
+	PathPrefix   string             `json:"path_prefix,omitempty"`
+	Subdirs      []DiffSubdirResult `json:"subdirs"`
+	TotalAdded   int                `json:"total_added"`
+	TotalRemoved int                `json:"total_removed"`
+	TotalUpdated int                `json:"total_updated"`
+}
 
 var llDiffCmd = &cobra.Command{
 	Use:   "diff <old-ref> <new-ref> [path-prefix]",
@@ -364,6 +450,7 @@ var llDiffCmd = &cobra.Command{
 	Args:  cobra.RangeArgs(2, 3),
 	Run: func(cmd *cobra.Command, args []string) {
 		llChdir()
+		asJSON, _ := cmd.Flags().GetBool("json")
 		oldRef, newRef := args[0], args[1]
 		var pathPrefix string
 		if len(args) > 2 {
@@ -388,6 +475,10 @@ var llDiffCmd = &cobra.Command{
 		}
 
 		if len(changed) == 0 {
+			if asJSON {
+				printJSON(DiffResult{OldRef: oldRef, NewRef: newRef, PathPrefix: pathPrefix, Subdirs: []DiffSubdirResult{}})
+				return
+			}
 			fmt.Printf("no .pw.toml changes between %s and %s\n", oldRef, newRef)
 			return
 		}
@@ -403,7 +494,7 @@ var llDiffCmd = &cobra.Command{
 		}
 		sort.Strings(subdirs)
 
-		totalAdded, totalRemoved, totalUpdated := 0, 0, 0
+		result := DiffResult{OldRef: oldRef, NewRef: newRef, PathPrefix: pathPrefix}
 
 		for _, sub := range subdirs {
 			files := bySubdir[sub]
@@ -411,6 +502,7 @@ var llDiffCmd = &cobra.Command{
 
 			added, removed, updated := 0, 0, 0
 			var lines []string
+			var mods []DiffModChange
 
 			for _, path := range files {
 				oldContent := gitShowFile(oldRef, path)
@@ -421,10 +513,12 @@ var llDiffCmd = &cobra.Command{
 				case oldContent == "" && newContent != "":
 					ver := pwFilename(newContent)
 					lines = append(lines, fmt.Sprintf("  + %-38s %s", slug, ver))
+					mods = append(mods, DiffModChange{Slug: slug, Path: path, Change: "added", NewFilename: ver})
 					added++
 				case oldContent != "" && newContent == "":
 					ver := pwFilename(oldContent)
 					lines = append(lines, fmt.Sprintf("  - %-38s %s", slug, ver))
+					mods = append(mods, DiffModChange{Slug: slug, Path: path, Change: "removed", OldFilename: ver})
 					removed++
 				default:
 					oldFn := pwFilename(oldContent)
@@ -434,14 +528,21 @@ var llDiffCmd = &cobra.Command{
 					} else {
 						lines = append(lines, fmt.Sprintf("  ~ %s", slug))
 					}
+					mods = append(mods, DiffModChange{Slug: slug, Path: path, Change: "updated", OldFilename: oldFn, NewFilename: newFn})
 					updated++
 				}
 			}
 
-			totalAdded += added
-			totalRemoved += removed
-			totalUpdated += updated
+			result.TotalAdded += added
+			result.TotalRemoved += removed
+			result.TotalUpdated += updated
+			result.Subdirs = append(result.Subdirs, DiffSubdirResult{
+				Subdir: sub, Added: added, Removed: removed, Updated: updated, Mods: mods,
+			})
 
+			if asJSON {
+				continue
+			}
 			fmt.Printf("%s:\n", sub)
 			for _, l := range lines {
 				fmt.Println(l)
@@ -449,8 +550,13 @@ var llDiffCmd = &cobra.Command{
 			fmt.Printf("  +%d -%d ~%d\n\n", added, removed, updated)
 		}
 
+		if asJSON {
+			printJSON(result)
+			return
+		}
+
 		fmt.Printf("%s..%s: +%d added  -%d removed  ~%d updated\n",
-			oldRef, newRef, totalAdded, totalRemoved, totalUpdated)
+			oldRef, newRef, result.TotalAdded, result.TotalRemoved, result.TotalUpdated)
 	},
 }
 
@@ -504,7 +610,7 @@ func pwVersion(content string) string {
 	return ""
 }
 
-// â€” index types and writers (used by runPages and llPacksIndexCmd) â€”
+// — index types and writers (used by runPages and llPacksIndexCmd) —
 
 type indexVariant struct {
 	ID        string `json:"id,omitempty"`
@@ -644,7 +750,7 @@ func indexSubdirs(packDir string) []indexSubdir {
 	return out
 }
 
-func writeCategoryIndexes(entries []indexEntry) {
+func writeCategoryIndexes(entries []indexEntry, quiet bool) {
 	byCat := map[string][]indexEntry{}
 	for _, e := range entries {
 		cat := e.Type + "s"
@@ -660,11 +766,17 @@ func writeCategoryIndexes(entries []indexEntry) {
 			"generated":  time.Now().UTC().Format(time.RFC3339),
 			"projects":   list,
 		})
-		fmt.Printf("wrote %s (%d project(s))\n", out, len(list))
+		if !quiet {
+			fmt.Printf("wrote %s (%d project(s))\n", out, len(list))
+		}
 	}
 }
 
-func writeProjectsIndex() (int, error) {
+// writeProjectsIndex regenerates the cross-pack projects.json/Project.json
+// indexes. When quiet is true (used by `docs pages --json`), it writes files
+// as normal but suppresses stdout output so the caller's own JSON summary is
+// the only thing printed.
+func writeProjectsIndex(quiet bool) (int, error) {
 	var entries []indexEntry
 	seen := map[string]bool{}
 
@@ -773,7 +885,9 @@ func writeProjectsIndex() (int, error) {
 		Generated: time.Now().UTC().Format(time.RFC3339),
 		Projects:  entries,
 	})
-	fmt.Printf("wrote %s (%d project(s))\n", out, len(entries))
-	writeCategoryIndexes(entries)
+	if !quiet {
+		fmt.Printf("wrote %s (%d project(s))\n", out, len(entries))
+	}
+	writeCategoryIndexes(entries, quiet)
 	return len(entries), nil
 }

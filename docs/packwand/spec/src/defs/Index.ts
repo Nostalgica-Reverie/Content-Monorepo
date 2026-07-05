@@ -20,9 +20,11 @@ export class Index {
 	)
 	files = new IndexFile();
 
-	@property.ref("The default hash format for every file in the index.")
+	@property.ref(
+		"The default hash format for every file in the index. If missing, consumers assume sha512; packwand transparently upgrades older indexes to sha512 on refresh.",
+	)
 	@property.required
-	@property.default("sha256")
+	@property.default("sha512")
 	"hash-format" = new HashFormat();
 }
 // deno-lint-ignore no-empty-interface
@@ -38,8 +40,9 @@ class IndexFile {
 	@property.required
 	file = new Path();
 
-	@property.ref("The hash of the specified file, as a string.")
-	@property.required
+	@property.ref(
+		"The hash of the specified file, as a string. May be omitted when the pack uses no-internal-hashes mode.",
+	)
 	hash = new Hash();
 
 	@property.ref(

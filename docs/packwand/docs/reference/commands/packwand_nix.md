@@ -22,6 +22,6 @@ Nix integration (packwiz2nix-compatible outputs)
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand nix gen](packwand_nix_gen.md)	 - Generate a packwiz2nix checksums.json for this pack (or --all packs)
 

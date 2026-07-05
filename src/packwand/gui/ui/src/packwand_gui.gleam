@@ -1,8 +1,11 @@
+import gleam/int
 import gleam/list
+import gleam/option.{None, Some}
 import gleam/string
 import lustre
 import lustre/effect.{type Effect}
 import packwand_gui/api
+import packwand_gui/manifest_form
 import packwand_gui/model.{
   type Project, ContentResponse, CreatedProject, FeatureIndex, ProjectIndex,
   action_name, action_refreshes_mods,
@@ -11,10 +14,13 @@ import packwand_gui/state.{
   type Model, type Msg, CopyChangelog, CreateProject, GotAction, GotChangelog,
   GotFeatures, GotHealth, GotManifest, GotMods, GotProjects, IconFailed,
   JobFinished, JobLine, ManifestSaved, Model, Navigate, NewPack, ProjectCreated, RunAction,
-  RunWebview, SaveManifest, SelectProject, SelectSubdir, SetManifest, SetModSlug,
+  RunWebview, SaveManifest, SelectProject, SelectSubdir, SetBumpConfigs,
+  SetBumpVersion, SetManifest,
+  SetManifestField, SetManifestStructured, SetModSlug,
   SetNewPackDescription, SetNewPackID, SetNewPackLoader, SetNewPackMinecraft,
   SetNewPackName, SetNewPackType, SetNewPackVersion, SetSearch, WebviewStarted,
-  append_log, http_error, initial, selected_project,
+  append_log, http_error, initial, record_progress_line, reset_progress,
+  selected_project,
 }
 import packwand_gui/view
 
@@ -93,14 +99,32 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       effect.none(),
     )
     GotChangelog(Error(error)) -> with_error(model, error)
-    GotManifest(Ok(ContentResponse(_, content))) -> #(
-      Model(..model, manifest: content),
-      effect.none(),
-    )
+    GotManifest(Ok(ContentResponse(_, content))) ->
+      case manifest_form.parse(content) {
+        Ok(form) -> #(
+          Model(
+            ..model,
+            manifest: content,
+            manifest_form: Some(form),
+            manifest_structured: True,
+          ),
+          effect.none(),
+        )
+        Error(_) -> #(
+          Model(
+            ..model,
+            manifest: content,
+            manifest_form: None,
+            manifest_structured: False,
+          ),
+          effect.none(),
+        )
+      }
     GotManifest(Error(error)) -> with_error(model, error)
     RunAction(action) -> {
       let running =
         model
+        |> reset_progress
         |> append_log("> packwand " <> action_name(action))
       #(
         Model(..running, job_status: "starting", notice: ""),
@@ -130,7 +154,10 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       watch_job_effect(response.job_id),
     )
     WebviewStarted(Error(error)) -> with_error(model, error)
-    JobLine(line) -> #(append_log(model, line), effect.none())
+    JobLine(line) -> #(
+      record_progress_line(append_log(model, line), line),
+      effect.none(),
+    )
     JobFinished(status, error) -> {
       let finished = Model(..model, job_status: status)
       let finished = case error {
@@ -146,13 +173,79 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       )
     }
     SetManifest(content) -> #(Model(..model, manifest: content), effect.none())
+    SetManifestField(field) ->
+      case model.manifest_form {
+        Some(form) -> #(
+          Model(
+            ..model,
+            manifest_form: Some(manifest_form.apply(form, field)),
+            notice: "",
+          ),
+          effect.none(),
+        )
+        None -> #(model, effect.none())
+      }
+    SetManifestStructured(True) ->
+      case manifest_form.parse(model.manifest) {
+        Ok(form) -> #(
+          Model(
+            ..model,
+            manifest_form: Some(form),
+            manifest_structured: True,
+            notice: "",
+          ),
+          effect.none(),
+        )
+        Error(message) -> #(
+          Model(..model, notice: "Cannot open form editor: " <> message),
+          effect.none(),
+        )
+      }
+    SetManifestStructured(False) -> {
+      let raw = case model.manifest_form {
+        Some(form) -> manifest_form.serialize(form)
+        None -> model.manifest
+      }
+      #(
+        Model(..model, manifest: raw, manifest_structured: False, notice: ""),
+        effect.none(),
+      )
+    }
     SaveManifest ->
       case model.selected_id {
         "" -> #(model, effect.none())
-        id -> #(
-          Model(..model, notice: "Saving manifest..."),
-          api.save_manifest(id, model.manifest, ManifestSaved),
-        )
+        id ->
+          case model.manifest_structured, model.manifest_form {
+            True, Some(form) -> {
+              let issues = manifest_form.validate(form)
+              case manifest_form.errors(issues) {
+                [] -> {
+                  let raw = manifest_form.serialize(form)
+                  #(
+                    Model(
+                      ..model,
+                      manifest: raw,
+                      notice: "Saving manifest...",
+                    ),
+                    api.save_manifest(id, raw, ManifestSaved),
+                  )
+                }
+                errors -> #(
+                  Model(
+                    ..model,
+                    notice: "Fix "
+                      <> int.to_string(list.length(errors))
+                      <> " validation error(s) before saving.",
+                  ),
+                  effect.none(),
+                )
+              }
+            }
+            _, _ -> #(
+              Model(..model, notice: "Saving manifest..."),
+              api.save_manifest(id, model.manifest, ManifestSaved),
+            )
+          }
       }
     ManifestSaved(Ok(_)) -> #(
       append_log(Model(..model, notice: "Manifest saved."), "Manifest saved."),
@@ -201,6 +294,14 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       copy_effect(model.changelog),
     )
     IconFailed -> #(Model(..model, icon_failed: True), effect.none())
+    SetBumpVersion(value) -> #(
+      Model(..model, bump_version: value),
+      effect.none(),
+    )
+    SetBumpConfigs(value) -> #(
+      Model(..model, bump_configs: value),
+      effect.none(),
+    )
   }
 }
 
@@ -233,8 +334,11 @@ fn select_project(model: Model) -> #(Model, Effect(Msg)) {
           mods: [],
           changelog: "",
           manifest: "",
+          manifest_form: None,
+          manifest_structured: False,
           search: "",
           icon_failed: False,
+          bump_version: "",
         ),
         effect.batch([
           load_mods(subdir),

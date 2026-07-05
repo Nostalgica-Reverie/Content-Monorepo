@@ -1,4 +1,4 @@
-﻿package settings
+package settings
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ var acceptableLoadersCommand = &cobra.Command{
 		modpack, err := core.LoadPack()
 		if err != nil {
 			if os.IsNotExist(err) {
-				cmdshared.Fail("no pack.toml found â€” run 'packwand init' to create one")
+				cmdshared.Fail("no pack.toml found — run 'packwand init' to create one")
 			}
 			cmdshared.Failf("loading pack: %v", err)
 		}

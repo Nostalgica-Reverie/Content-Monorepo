@@ -52,6 +52,10 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: gradle
+      - name: Install Linux webview dependencies
+        run: |
+          apt-get update
+          apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev
       - uses: https://github.com/dtolnay/rust-toolchain@stable
         with:
           components: clippy
@@ -63,8 +67,16 @@ jobs:
           tool: cargo-audit
       - name: Install Task
         run: go install github.com/go-task/task/v3/cmd/task@latest
-      - name: Lint
-        run: $(go env GOPATH)/bin/task lint
+      - name: Vet Go
+        run: $(go env GOPATH)/bin/task lint-go
+      - name: Lint Rust webview
+        run: $(go env GOPATH)/bin/task lint-webview
+      - name: Compile-check installer
+        run: $(go env GOPATH)/bin/task lint-installer
+      - name: Audit Go dependencies
+        run: $(go env GOPATH)/bin/task audit-go
+      - name: Audit Rust dependencies
+        run: $(go env GOPATH)/bin/task audit-rust
 
   test:
     runs-on: technocality
@@ -83,6 +95,10 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: gradle
+      - name: Install Linux webview dependencies
+        run: |
+          apt-get update
+          apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev
       - uses: https://github.com/dtolnay/rust-toolchain@stable
       - uses: https://github.com/Swatinem/rust-cache@v2
         with:
@@ -127,6 +143,11 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: gradle
+      - name: Install Linux webview dependencies
+        if: matrix.toolchains == 'rust'
+        run: |
+          apt-get update
+          apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev
       - uses: https://github.com/dtolnay/rust-toolchain@stable
         if: matrix.toolchains == 'rust'
       - uses: https://github.com/Swatinem/rust-cache@v2
@@ -159,8 +180,17 @@ jobs:
           node-version: "22"
       - name: Install Task
         run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Secret scan (gitleaks)
+        run: |
+          go install github.com/gitleaks/gitleaks/v8@latest
+          "$(go env GOPATH)/bin/gitleaks" detect --source . --redact --exit-code 1
       - name: Build docs sites
         run: $(go env GOPATH)/bin/task docs-build
+      - name: Check packwand CLI-reference coverage
+        working-directory: docs/packwand
+        run: npm run docs:check-coverage
+      - name: Check cross-site doc links
+        run: node docs/link-lint.mjs
       - name: GoReleaser snapshot
         uses: https://github.com/goreleaser/goreleaser-action@v6
         with:

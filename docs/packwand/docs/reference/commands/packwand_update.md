@@ -9,9 +9,10 @@ packwand update [name] [flags]
 ### Options
 
 ```
-  -a, --all       Update all external files
-      --dry-run   Show what would be updated without making any changes
-  -h, --help      help for update
+  -a, --all             Update all external files
+      --dry-run         Show what would be updated without making any changes
+  -h, --help            help for update
+      --report string   Write a machine-readable JSON update report to this file (requires --all)
 ```
 
 ### Options inherited from parent commands
@@ -28,5 +29,5 @@ packwand update [name] [flags]
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 

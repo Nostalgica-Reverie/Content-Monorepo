@@ -2,6 +2,17 @@ name: "Bulk Refresh"
 
 on:
   workflow_dispatch:
+    inputs:
+      packs:
+        description: "One repository-relative pack directory (empty runs all packs)"
+        required: false
+        type: string
+        default: ""
+      dry_run:
+        description: "List affected pack directories; do not refresh or commit"
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -11,5 +22,7 @@ jobs:
   bulk-refresh:
     uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: workspace refresh
+      verb: ${{ inputs.dry_run && 'workspace refresh --dry-run' || 'workspace refresh' }}
+      scope: ${{ inputs.packs }}
+      dry_run: ${{ inputs.dry_run }}
       commit-message: 'actions: bulk refresh'

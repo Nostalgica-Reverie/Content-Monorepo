@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 	"sync/atomic"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
@@ -10,6 +12,76 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
+
+// — update report —
+
+type updateReportEntry struct {
+	Name   string `json:"name"`
+	Change string `json:"change,omitempty"`
+	Error  string `json:"error,omitempty"`
+}
+
+// UpdateReport is the machine-readable outcome of one `update --all` run.
+// The workspace command aggregates these across pack subdirs.
+type UpdateReport struct {
+	Dir          string              `json:"dir"`
+	DryRun       bool                `json:"dry_run,omitempty"`
+	Updated      []updateReportEntry `json:"updated"`
+	Pinned       []updateReportEntry `json:"pinned"`
+	Incompatible []updateReportEntry `json:"incompatible"`
+	Failed       []updateReportEntry `json:"failed"`
+	Skipped      []updateReportEntry `json:"skipped"`
+	UpToDate     int                 `json:"up_to_date"`
+	Checked      int                 `json:"checked"`
+}
+
+func newUpdateReport() *UpdateReport {
+	return &UpdateReport{
+		Updated:      []updateReportEntry{},
+		Pinned:       []updateReportEntry{},
+		Incompatible: []updateReportEntry{},
+		Failed:       []updateReportEntry{},
+		Skipped:      []updateReportEntry{},
+	}
+}
+
+// isIncompatibleError matches updater errors that mean "no release exists for
+// this Minecraft version / loader" rather than a transient failure.
+func isIncompatibleError(msg string) bool {
+	return strings.Contains(msg, "no valid versions") ||
+		strings.Contains(msg, "not available for the configured Minecraft version")
+}
+
+func writeUpdateReport(path string, rep *UpdateReport) {
+	if path == "" || rep == nil {
+		return
+	}
+	if wd, err := os.Getwd(); err == nil {
+		rep.Dir = wd
+	}
+	data, err := json.MarshalIndent(rep, "", "  ")
+	if err != nil {
+		fmt.Printf("failed to render update report: %v\n", err)
+		return
+	}
+	if err := os.WriteFile(path, append(data, '\n'), 0o644); err != nil {
+		fmt.Printf("failed to write update report %s: %v\n", path, err)
+	}
+}
+
+func updateFailureError(rep *UpdateReport) error {
+	if rep == nil || len(rep.Failed) == 0 {
+		return nil
+	}
+	return fmt.Errorf("%d mod update(s) failed", len(rep.Failed))
+}
+
+func finishUpdateReport(path string, rep *UpdateReport) {
+	writeUpdateReport(path, rep)
+	if err := updateFailureError(rep); err != nil {
+		cmdshared.Fail(err.Error())
+	}
+}
 
 // UpdateCmd represents the update command
 var UpdateCmd = &cobra.Command{
@@ -19,6 +91,8 @@ var UpdateCmd = &cobra.Command{
 	Args:    cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// TODO: specify multiple files to update at once?
+
+		reportPath := viper.GetString("update.report")
 
 		fmt.Println("Loading modpack...")
 		pack, err := core.LoadPack()
@@ -33,7 +107,11 @@ var UpdateCmd = &cobra.Command{
 		}
 
 		var singleUpdatedName string
+		var allReport *UpdateReport
 		if viper.GetBool("update.all") {
+			rep := newUpdateReport()
+			rep.DryRun = viper.GetBool("update.dry-run")
+
 			filesWithUpdater := make(map[string][]*core.Mod)
 			fmt.Println("Reading metadata files...")
 			mods, err := index.LoadAllMods()
@@ -41,6 +119,7 @@ var UpdateCmd = &cobra.Command{
 				fmt.Printf("Failed to update all files: %v\n", err)
 				os.Exit(1)
 			}
+			rep.Checked = len(mods)
 			for _, modData := range mods {
 				updaterFound := false
 				for k := range modData.Update {
@@ -57,6 +136,7 @@ var UpdateCmd = &cobra.Command{
 				}
 				if !updaterFound {
 					fmt.Printf("A supported update system for \"%s\" cannot be found.\n", modData.Name)
+					rep.Skipped = append(rep.Skipped, updateReportEntry{Name: modData.Name, Error: "no supported update system"})
 				}
 			}
 
@@ -89,21 +169,30 @@ var UpdateCmd = &cobra.Command{
 				return nil
 			})
 			close(ch)
+			updateStrings := make(map[*core.Mod]string)
 			for r := range ch {
 				if r.err != nil {
-					// TODO: do we return err code 1?
 					fmt.Printf("Failed to check updates for %s: %s\n", r.key, r.err.Error())
+					for _, m := range r.mods {
+						rep.Failed = append(rep.Failed, updateReportEntry{Name: m.Name, Error: r.err.Error()})
+					}
 					continue
 				}
 				for i, check := range r.checks {
 					if check.Error != nil {
-						// TODO: do we return err code 1?
 						fmt.Printf("Failed to check updates for %s: %s\n", r.mods[i].Name, check.Error.Error())
+						entry := updateReportEntry{Name: r.mods[i].Name, Error: check.Error.Error()}
+						if isIncompatibleError(check.Error.Error()) {
+							rep.Incompatible = append(rep.Incompatible, entry)
+						} else {
+							rep.Failed = append(rep.Failed, entry)
+						}
 						continue
 					}
 					if check.UpdateAvailable {
 						if r.mods[i].Pin {
 							fmt.Printf("Update skipped for pinned mod %s\n", r.mods[i].Name)
+							rep.Pinned = append(rep.Pinned, updateReportEntry{Name: r.mods[i].Name, Change: check.UpdateString})
 							continue
 						}
 
@@ -114,12 +203,16 @@ var UpdateCmd = &cobra.Command{
 						fmt.Printf("%s: %s\n", r.mods[i].Name, check.UpdateString)
 						updatableFiles[r.key] = append(updatableFiles[r.key], r.mods[i])
 						updaterCachedStateMap[r.key] = append(updaterCachedStateMap[r.key], check.CachedState)
+						updateStrings[r.mods[i]] = check.UpdateString
+					} else {
+						rep.UpToDate++
 					}
 				}
 			}
 
 			if !updatesFound {
 				fmt.Println("All files are up to date!")
+				finishUpdateReport(reportPath, rep)
 				return
 			}
 
@@ -127,36 +220,47 @@ var UpdateCmd = &cobra.Command{
 				count := 0
 				for _, v := range updatableFiles {
 					count += len(v)
+					for _, m := range v {
+						rep.Updated = append(rep.Updated, updateReportEntry{Name: m.Name, Change: updateStrings[m]})
+					}
 				}
-				fmt.Printf("dry-run: %d file(s) would be updated â€” rerun without --dry-run to apply\n", count)
+				fmt.Printf("dry-run: %d file(s) would be updated — rerun without --dry-run to apply\n", count)
+				finishUpdateReport(reportPath, rep)
 				return
 			}
 
 			if !cmdshared.PromptYesNo("Do you want to update? [Y/n]: ") {
 				fmt.Println("Cancelled!")
+				finishUpdateReport(reportPath, rep)
 				return
 			}
 
 			for k, v := range updatableFiles {
 				err := core.Updaters[k].DoUpdate(v, updaterCachedStateMap[k])
 				if err != nil {
-					// TODO: do we return err code 1?
 					fmt.Println(err.Error())
+					for _, m := range v {
+						rep.Failed = append(rep.Failed, updateReportEntry{Name: m.Name, Change: updateStrings[m], Error: err.Error()})
+					}
 					continue
 				}
 				for _, modData := range v {
 					format, hash, err := modData.Write()
 					if err != nil {
 						fmt.Println(err.Error())
+						rep.Failed = append(rep.Failed, updateReportEntry{Name: modData.Name, Change: updateStrings[modData], Error: err.Error()})
 						continue
 					}
 					err = index.RefreshFileWithHash(modData.GetFilePath(), format, hash, true)
 					if err != nil {
 						fmt.Println(err.Error())
+						rep.Failed = append(rep.Failed, updateReportEntry{Name: modData.Name, Change: updateStrings[modData], Error: err.Error()})
 						continue
 					}
+					rep.Updated = append(rep.Updated, updateReportEntry{Name: modData.Name, Change: updateStrings[modData]})
 				}
 			}
+			allReport = rep
 		} else {
 			if len(args) < 1 || len(args[0]) == 0 {
 				fmt.Println("Must specify a valid file, or use the --all flag!")
@@ -232,6 +336,7 @@ var UpdateCmd = &cobra.Command{
 			fmt.Println(err)
 			os.Exit(1)
 		}
+		finishUpdateReport(reportPath, allReport)
 		if viper.GetBool("update.all") {
 			fmt.Println("Files updated!")
 		} else {
@@ -248,4 +353,6 @@ func init() {
 	_ = viper.BindPFlag("update.all", UpdateCmd.Flags().Lookup("all"))
 	UpdateCmd.Flags().Bool("dry-run", false, "Show what would be updated without making any changes")
 	_ = viper.BindPFlag("update.dry-run", UpdateCmd.Flags().Lookup("dry-run"))
+	UpdateCmd.Flags().String("report", "", "Write a machine-readable JSON update report to this file (requires --all)")
+	_ = viper.BindPFlag("update.report", UpdateCmd.Flags().Lookup("report"))
 }

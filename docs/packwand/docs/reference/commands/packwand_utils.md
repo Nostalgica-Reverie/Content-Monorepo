@@ -22,6 +22,6 @@ Utilities for managing packwiz itself
 
 ### SEE ALSO
 
-* [packwand](packwand.md)	 - Minecraft modpack toolchain â€” packwiz core with multi-pack workspace management
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand utils markdown](packwand_utils_markdown.md)	 - Generate markdown documentation (that you might be reading right now!!)
 

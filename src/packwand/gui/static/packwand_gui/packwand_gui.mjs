@@ -1,4 +1,7 @@
+import * as $int from "../gleam_stdlib/gleam/int.mjs";
 import * as $list from "../gleam_stdlib/gleam/list.mjs";
+import * as $option from "../gleam_stdlib/gleam/option.mjs";
+import { None, Some } from "../gleam_stdlib/gleam/option.mjs";
 import * as $string from "../gleam_stdlib/gleam/string.mjs";
 import * as $lustre from "../lustre/lustre.mjs";
 import * as $effect from "../lustre/lustre/effect.mjs";
@@ -10,6 +13,7 @@ import {
   setViewHash as set_view_hash,
   watchViewHash as watch_view_hash,
 } from "./packwand_gui/ffi.mjs";
+import * as $manifest_form from "./packwand_gui/manifest_form.mjs";
 import * as $model from "./packwand_gui/model.mjs";
 import {
   ContentResponse,
@@ -43,7 +47,11 @@ import {
   SaveManifest,
   SelectProject,
   SelectSubdir,
+  SetBumpConfigs,
+  SetBumpVersion,
   SetManifest,
+  SetManifestField,
+  SetManifestStructured,
   SetModSlug,
   SetNewPackDescription,
   SetNewPackID,
@@ -57,6 +65,8 @@ import {
   append_log,
   http_error,
   initial,
+  record_progress_line,
+  reset_progress,
   selected_project,
 } from "./packwand_gui/state.mjs";
 import * as $view from "./packwand_gui/view.mjs";
@@ -84,12 +94,18 @@ function with_error(model, error) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         "failed",
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         message,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       message,
     ),
@@ -115,12 +131,18 @@ function create_project(model) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         "A project ID and name are required.",
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -139,12 +161,18 @@ function create_project(model) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         "Creating project...",
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $api.create_project(
         draft.id,
@@ -211,12 +239,18 @@ function select_project(model) {
         model.mod_slug,
         "",
         "",
+        new None(),
+        false,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         false,
         model.new_pack,
         model.notice,
+        "",
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.batch(
         toList([
@@ -266,12 +300,18 @@ function select_after_projects(model, projects) {
       model.mod_slug,
       model.changelog,
       model.manifest,
+      model.manifest_form,
+      model.manifest_structured,
       model.logs,
       model.job_status,
       model.refresh_mods_after_job,
       model.icon_failed,
       model.new_pack,
       model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      model.mod_progress_in_block,
     ),
   );
 }
@@ -295,12 +335,18 @@ function update(model, msg) {
           model.mod_slug,
           model.changelog,
           model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
           model.logs,
           model.job_status,
           model.refresh_mods_after_job,
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -343,12 +389,18 @@ function update(model, msg) {
           model.mod_slug,
           model.changelog,
           model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
           model.logs,
           model.job_status,
           model.refresh_mods_after_job,
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -372,12 +424,18 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         false,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
     );
   } else if (msg instanceof SelectSubdir) {
@@ -396,12 +454,18 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       load_mods(path),
     ];
@@ -421,12 +485,18 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       set_hash_effect($view.hash(next)),
     ];
@@ -446,12 +516,18 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -471,12 +547,18 @@ function update(model, msg) {
         value,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -498,12 +580,18 @@ function update(model, msg) {
           model.mod_slug,
           model.changelog,
           model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
           model.logs,
           model.job_status,
           model.refresh_mods_after_job,
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -529,12 +617,18 @@ function update(model, msg) {
           model.mod_slug,
           content,
           model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
           model.logs,
           model.job_status,
           model.refresh_mods_after_job,
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         $effect.none(),
       ];
@@ -546,29 +640,69 @@ function update(model, msg) {
     let $ = msg[0];
     if ($ instanceof Ok) {
       let content = $[0].content;
-      return [
-        new Model(
-          model.root,
-          model.version,
-          model.projects,
-          model.features,
-          model.selected_id,
-          model.selected_subdir,
-          model.view,
-          model.search,
-          model.mods,
-          model.mod_slug,
-          model.changelog,
-          content,
-          model.logs,
-          model.job_status,
-          model.refresh_mods_after_job,
-          model.icon_failed,
-          model.new_pack,
-          model.notice,
-        ),
-        $effect.none(),
-      ];
+      let $1 = $manifest_form.parse(content);
+      if ($1 instanceof Ok) {
+        let form = $1[0];
+        return [
+          new Model(
+            model.root,
+            model.version,
+            model.projects,
+            model.features,
+            model.selected_id,
+            model.selected_subdir,
+            model.view,
+            model.search,
+            model.mods,
+            model.mod_slug,
+            model.changelog,
+            content,
+            new Some(form),
+            true,
+            model.logs,
+            model.job_status,
+            model.refresh_mods_after_job,
+            model.icon_failed,
+            model.new_pack,
+            model.notice,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
+          ),
+          $effect.none(),
+        ];
+      } else {
+        return [
+          new Model(
+            model.root,
+            model.version,
+            model.projects,
+            model.features,
+            model.selected_id,
+            model.selected_subdir,
+            model.view,
+            model.search,
+            model.mods,
+            model.mod_slug,
+            model.changelog,
+            content,
+            new None(),
+            false,
+            model.logs,
+            model.job_status,
+            model.refresh_mods_after_job,
+            model.icon_failed,
+            model.new_pack,
+            model.notice,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
+          ),
+          $effect.none(),
+        ];
+      }
     } else {
       let error = $[0];
       return with_error(model, error);
@@ -577,7 +711,8 @@ function update(model, msg) {
     let action = msg[0];
     let _block;
     let _pipe = model;
-    _block = append_log(_pipe, "> packwand " + action_name(action));
+    let _pipe$1 = reset_progress(_pipe);
+    _block = append_log(_pipe$1, "> packwand " + action_name(action));
     let running = _block;
     return [
       new Model(
@@ -593,12 +728,18 @@ function update(model, msg) {
         running.mod_slug,
         running.changelog,
         running.manifest,
+        running.manifest_form,
+        running.manifest_structured,
         running.logs,
         "starting",
         running.refresh_mods_after_job,
         running.icon_failed,
         running.new_pack,
         "",
+        running.bump_version,
+        running.bump_configs,
+        running.mod_progress,
+        running.mod_progress_in_block,
       ),
       $api.action(action, (result) => { return new GotAction(action, result); }),
     ];
@@ -621,12 +762,18 @@ function update(model, msg) {
           model.mod_slug,
           model.changelog,
           model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
           model.logs,
           "running",
           action_refreshes_mods(action),
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         watch_job_effect(response.job_id),
       ];
@@ -659,12 +806,18 @@ function update(model, msg) {
         running.mod_slug,
         running.changelog,
         running.manifest,
+        running.manifest_form,
+        running.manifest_structured,
         running.logs,
         "starting",
         running.refresh_mods_after_job,
         running.icon_failed,
         running.new_pack,
         "",
+        running.bump_version,
+        running.bump_configs,
+        running.mod_progress,
+        running.mod_progress_in_block,
       ),
       $api.webview_fetch(
         provider,
@@ -691,12 +844,18 @@ function update(model, msg) {
           model.mod_slug,
           model.changelog,
           model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
           model.logs,
           "running",
           false,
           model.icon_failed,
           model.new_pack,
           model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
         ),
         watch_job_effect(response.job_id),
       ];
@@ -706,7 +865,7 @@ function update(model, msg) {
     }
   } else if (msg instanceof JobLine) {
     let line = msg[0];
-    return [append_log(model, line), $effect.none()];
+    return [record_progress_line(append_log(model, line), line), $effect.none()];
   } else if (msg instanceof JobFinished) {
     let status = msg[0];
     let error = msg[1];
@@ -723,12 +882,18 @@ function update(model, msg) {
       model.mod_slug,
       model.changelog,
       model.manifest,
+      model.manifest_form,
+      model.manifest_structured,
       model.logs,
       status,
       model.refresh_mods_after_job,
       model.icon_failed,
       model.new_pack,
       model.notice,
+      model.bump_version,
+      model.bump_configs,
+      model.mod_progress,
+      model.mod_progress_in_block,
     );
     let _block;
     if (error === "") {
@@ -751,12 +916,18 @@ function update(model, msg) {
         finished$1.mod_slug,
         finished$1.changelog,
         finished$1.manifest,
+        finished$1.manifest_form,
+        finished$1.manifest_structured,
         finished$1.logs,
         finished$1.job_status,
         false,
         finished$1.icon_failed,
         finished$1.new_pack,
         finished$1.notice,
+        finished$1.bump_version,
+        finished$1.bump_configs,
+        finished$1.mod_progress,
+        finished$1.mod_progress_in_block,
       ),
       (() => {
         let $ = model.refresh_mods_after_job;
@@ -773,33 +944,114 @@ function update(model, msg) {
       return [model, $effect.none()];
     } else {
       let id = $;
-      return [
-        new Model(
-          model.root,
-          model.version,
-          model.projects,
-          model.features,
-          model.selected_id,
-          model.selected_subdir,
-          model.view,
-          model.search,
-          model.mods,
-          model.mod_slug,
-          model.changelog,
-          model.manifest,
-          model.logs,
-          model.job_status,
-          model.refresh_mods_after_job,
-          model.icon_failed,
-          model.new_pack,
-          "Saving manifest...",
-        ),
-        $api.save_manifest(
-          id,
-          model.manifest,
-          (var0) => { return new ManifestSaved(var0); },
-        ),
-      ];
+      let $1 = model.manifest_structured;
+      let $2 = model.manifest_form;
+      if ($1 && $2 instanceof Some) {
+        let form = $2[0];
+        let issues = $manifest_form.validate(form);
+        let $3 = $manifest_form.errors(issues);
+        if ($3 instanceof $Empty) {
+          let raw = $manifest_form.serialize(form);
+          return [
+            new Model(
+              model.root,
+              model.version,
+              model.projects,
+              model.features,
+              model.selected_id,
+              model.selected_subdir,
+              model.view,
+              model.search,
+              model.mods,
+              model.mod_slug,
+              model.changelog,
+              raw,
+              model.manifest_form,
+              model.manifest_structured,
+              model.logs,
+              model.job_status,
+              model.refresh_mods_after_job,
+              model.icon_failed,
+              model.new_pack,
+              "Saving manifest...",
+              model.bump_version,
+              model.bump_configs,
+              model.mod_progress,
+              model.mod_progress_in_block,
+            ),
+            $api.save_manifest(
+              id,
+              raw,
+              (var0) => { return new ManifestSaved(var0); },
+            ),
+          ];
+        } else {
+          let errors = $3;
+          return [
+            new Model(
+              model.root,
+              model.version,
+              model.projects,
+              model.features,
+              model.selected_id,
+              model.selected_subdir,
+              model.view,
+              model.search,
+              model.mods,
+              model.mod_slug,
+              model.changelog,
+              model.manifest,
+              model.manifest_form,
+              model.manifest_structured,
+              model.logs,
+              model.job_status,
+              model.refresh_mods_after_job,
+              model.icon_failed,
+              model.new_pack,
+              ("Fix " + $int.to_string($list.length(errors))) + " validation error(s) before saving.",
+              model.bump_version,
+              model.bump_configs,
+              model.mod_progress,
+              model.mod_progress_in_block,
+            ),
+            $effect.none(),
+          ];
+        }
+      } else {
+        return [
+          new Model(
+            model.root,
+            model.version,
+            model.projects,
+            model.features,
+            model.selected_id,
+            model.selected_subdir,
+            model.view,
+            model.search,
+            model.mods,
+            model.mod_slug,
+            model.changelog,
+            model.manifest,
+            model.manifest_form,
+            model.manifest_structured,
+            model.logs,
+            model.job_status,
+            model.refresh_mods_after_job,
+            model.icon_failed,
+            model.new_pack,
+            "Saving manifest...",
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
+          ),
+          $api.save_manifest(
+            id,
+            model.manifest,
+            (var0) => { return new ManifestSaved(var0); },
+          ),
+        ];
+      }
     }
   } else if (msg instanceof SetManifest) {
     let content = msg[0];
@@ -817,15 +1069,165 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         content,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
+  } else if (msg instanceof SetManifestField) {
+    let field = msg[0];
+    let $ = model.manifest_form;
+    if ($ instanceof Some) {
+      let form = $[0];
+      return [
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          new Some($manifest_form.apply(form, field)),
+          model.manifest_structured,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          "",
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
+        ),
+        $effect.none(),
+      ];
+    } else {
+      return [model, $effect.none()];
+    }
+  } else if (msg instanceof SetManifestStructured) {
+    let $ = msg[0];
+    if ($) {
+      let $1 = $manifest_form.parse(model.manifest);
+      if ($1 instanceof Ok) {
+        let form = $1[0];
+        return [
+          new Model(
+            model.root,
+            model.version,
+            model.projects,
+            model.features,
+            model.selected_id,
+            model.selected_subdir,
+            model.view,
+            model.search,
+            model.mods,
+            model.mod_slug,
+            model.changelog,
+            model.manifest,
+            new Some(form),
+            true,
+            model.logs,
+            model.job_status,
+            model.refresh_mods_after_job,
+            model.icon_failed,
+            model.new_pack,
+            "",
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
+          ),
+          $effect.none(),
+        ];
+      } else {
+        let message = $1[0];
+        return [
+          new Model(
+            model.root,
+            model.version,
+            model.projects,
+            model.features,
+            model.selected_id,
+            model.selected_subdir,
+            model.view,
+            model.search,
+            model.mods,
+            model.mod_slug,
+            model.changelog,
+            model.manifest,
+            model.manifest_form,
+            model.manifest_structured,
+            model.logs,
+            model.job_status,
+            model.refresh_mods_after_job,
+            model.icon_failed,
+            model.new_pack,
+            "Cannot open form editor: " + message,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
+          ),
+          $effect.none(),
+        ];
+      }
+    } else {
+      let _block;
+      let $1 = model.manifest_form;
+      if ($1 instanceof Some) {
+        let form = $1[0];
+        _block = $manifest_form.serialize(form);
+      } else {
+        _block = model.manifest;
+      }
+      let raw = _block;
+      return [
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          raw,
+          model.manifest_form,
+          false,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          "",
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
+        ),
+        $effect.none(),
+      ];
+    }
   } else if (msg instanceof ManifestSaved) {
     let $ = msg[0];
     if ($ instanceof Ok) {
@@ -844,12 +1246,18 @@ function update(model, msg) {
             model.mod_slug,
             model.changelog,
             model.manifest,
+            model.manifest_form,
+            model.manifest_structured,
             model.logs,
             model.job_status,
             model.refresh_mods_after_job,
             model.icon_failed,
             model.new_pack,
             "Manifest saved.",
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           "Manifest saved.",
         ),
@@ -880,12 +1288,18 @@ function update(model, msg) {
             model.mod_slug,
             model.changelog,
             model.manifest,
+            model.manifest_form,
+            model.manifest_structured,
             model.logs,
             model.job_status,
             model.refresh_mods_after_job,
             model.icon_failed,
             model.new_pack,
             "Project created.",
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
           ),
           ("Created project " + id) + ".",
         ),
@@ -911,6 +1325,8 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
@@ -928,6 +1344,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -947,6 +1367,8 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
@@ -964,6 +1386,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -983,6 +1409,8 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
@@ -1000,6 +1428,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1019,6 +1451,8 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
@@ -1036,6 +1470,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1055,6 +1493,8 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
@@ -1072,6 +1512,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1091,6 +1535,8 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
@@ -1108,6 +1554,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1127,6 +1577,8 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
@@ -1144,6 +1596,10 @@ function update(model, msg) {
           );
         })(),
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1162,16 +1618,22 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         model.icon_failed,
         model.new_pack,
         "Changelog copied.",
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       copy_effect(model.changelog),
     ];
-  } else {
+  } else if (msg instanceof IconFailed) {
     return [
       new Model(
         model.root,
@@ -1186,12 +1648,80 @@ function update(model, msg) {
         model.mod_slug,
         model.changelog,
         model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
         model.logs,
         model.job_status,
         model.refresh_mods_after_job,
         true,
         model.new_pack,
         model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
+      ),
+      $effect.none(),
+    ];
+  } else if (msg instanceof SetBumpVersion) {
+    let value = msg[0];
+    return [
+      new Model(
+        model.root,
+        model.version,
+        model.projects,
+        model.features,
+        model.selected_id,
+        model.selected_subdir,
+        model.view,
+        model.search,
+        model.mods,
+        model.mod_slug,
+        model.changelog,
+        model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
+        model.logs,
+        model.job_status,
+        model.refresh_mods_after_job,
+        model.icon_failed,
+        model.new_pack,
+        model.notice,
+        value,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
+      ),
+      $effect.none(),
+    ];
+  } else {
+    let value = msg[0];
+    return [
+      new Model(
+        model.root,
+        model.version,
+        model.projects,
+        model.features,
+        model.selected_id,
+        model.selected_subdir,
+        model.view,
+        model.search,
+        model.mods,
+        model.mod_slug,
+        model.changelog,
+        model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
+        model.logs,
+        model.job_status,
+        model.refresh_mods_after_job,
+        model.icon_failed,
+        model.new_pack,
+        model.notice,
+        model.bump_version,
+        value,
+        model.mod_progress,
+        model.mod_progress_in_block,
       ),
       $effect.none(),
     ];
@@ -1231,15 +1761,15 @@ export function main() {
       "let_assert",
       FILEPATH,
       "packwand_gui",
-      39,
+      45,
       "main",
       "Pattern match failed, no pattern matched the value.",
       {
         value: $,
-        start: 1406,
-        end: 1455,
-        pattern_start: 1417,
-        pattern_end: 1422
+        start: 1651,
+        end: 1700,
+        pattern_start: 1662,
+        pattern_end: 1667
       }
     )
   }

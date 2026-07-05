@@ -1,4 +1,4 @@
-﻿package cmd
+package cmd
 
 import (
 	"bufio"
@@ -9,10 +9,10 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/fatih/camelcase"
-	"github.com/igorsobreira/titlecase"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/cmdshared"
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
+	"github.com/fatih/camelcase"
+	"github.com/igorsobreira/titlecase"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

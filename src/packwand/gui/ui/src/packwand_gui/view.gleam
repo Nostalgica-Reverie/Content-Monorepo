@@ -1,26 +1,32 @@
 import gleam/dynamic/decode
 import gleam/int
 import gleam/list
+import gleam/option.{None, Some}
 import gleam/string
 import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
 import lustre/event
+import packwand_gui/manifest_form.{type ManifestForm}
 import packwand_gui/model.{
   type Feature, type ModEntry, type Project, type Subdir, type Variant, AddMod,
-  Build, Doctor, ExportCurseforge, ExportModrinth, Lint, PacksIndex, PinMod,
-  RefreshSubdir, Rehash, RemoveMod, UnpinMod, UpdateAll, UpdateMod,
+  Build, Bump, DocsModlist, DocsPages, Doctor, ExportCurseforge,
+  ExportModrinth, FreezeMod, Lint, NixGen, PacksIndex, PinMod, RefreshSubdir,
+  Rehash, RemoveMod, SetSide, UnfreezeMod, UnpinMod, UpdateAll, UpdateMod,
   ValidateProject, WorkspaceRefresh, WorkspaceStatus, WorkspaceSync,
   WorkspaceUpdate, project_summary,
 }
 import packwand_gui/state.{
-  type Model, type Msg, type View, Changelog, CopyChangelog, CreateProject,
+  type Model, type ModProgress, type Msg, type View, Changelog, CopyChangelog,
+  CreateProject,
   Exports, IconFailed, Logs, Mods, Navigate, Overview, RunAction, RunWebview,
   SaveManifest,
-  SelectProject, SelectSubdir, SetManifest, SetModSlug, SetNewPackDescription,
+  SelectProject, SelectSubdir, SetBumpConfigs, SetBumpVersion, SetManifest,
+  SetManifestField,
+  SetManifestStructured, SetModSlug, SetNewPackDescription,
   SetNewPackID, SetNewPackLoader, SetNewPackMinecraft, SetNewPackName,
   SetNewPackType, SetNewPackVersion, SetSearch, Settings, job_running,
-  query_matches, selected_project,
+  progress_status_label, query_matches, selected_project,
 }
 
 @external(javascript, "./ffi.mjs", "currentHash")
@@ -184,7 +190,7 @@ fn topbar(model: Model, project: Project) {
         attribute.class("project-icon"),
         attribute.src(case model.icon_failed {
           True -> "/lucy.svg"
-          False -> "/api/project-icon/" <> project.id
+          False -> "/api/v1/packs/" <> project.id <> "/icon"
         }),
         attribute.alt(""),
         event.on("error", decode.success(IconFailed)),
@@ -259,12 +265,14 @@ fn sections_for_view(model: Model, project: Project) -> List(Element(Msg)) {
       variant_panel(model, project.variants),
     ]
     Exports -> [actions_panel(model, project.subdirs)]
-    Mods -> [add_mod_panel(model), mods_panel(model)]
+    Mods -> [add_mod_panel(model), mods_panel(model, project)]
     Changelog -> [changelog_panel(model)]
-    Logs -> [logs_panel(model)]
+    Logs -> [progress_panel(model), logs_panel(model)]
     Settings -> [
       project_panel(model, project),
       subdir_panel(model, project.subdirs),
+      bump_panel(model, project),
+      generate_panel(model),
       manifest_panel(model),
       capabilities_panel(model.features),
       new_pack_panel(model),
@@ -427,6 +435,66 @@ fn subdir_panel(model: Model, subdirs: List(Subdir)) {
   )
 }
 
+fn bump_panel(model: Model, project: Project) {
+  let trimmed = string.trim(model.bump_version)
+  panel_with_head(
+    "span-5",
+    "Bump Version",
+    button_disabled(
+      "",
+      "Bump",
+      RunAction(Bump(project.dir, trimmed, model.bump_configs)),
+      job_running(model) || trimmed == "",
+    ),
+    [
+      html.div([attribute.class("form-grid")], [
+        form_input(
+          "New version",
+          model.bump_version,
+          project.version,
+          SetBumpVersion,
+          "",
+        ),
+        html.label([], [
+          html.span([], [html.text("Also update in-pack configs")]),
+          html.input([
+            attribute.type_("checkbox"),
+            attribute.checked(model.bump_configs),
+            event.on_check(SetBumpConfigs),
+          ]),
+        ]),
+      ]),
+      notice(model.notice),
+    ],
+  )
+}
+
+fn generate_panel(model: Model) {
+  let disabled = model.selected_subdir == "" || job_running(model)
+  panel("span-7", "Generate", [
+    html.div([attribute.class("action-row")], [
+      button_disabled(
+        "ghost",
+        "Nix Checksums",
+        RunAction(NixGen(model.selected_subdir)),
+        disabled,
+      ),
+      button_disabled(
+        "ghost",
+        "Write Modlist",
+        RunAction(DocsModlist(model.selected_subdir)),
+        disabled,
+      ),
+      button_disabled(
+        "ghost",
+        "Regenerate Docs Pages",
+        RunAction(DocsPages),
+        job_running(model),
+      ),
+    ]),
+  ])
+}
+
 fn actions_panel(model: Model, subdirs: List(Subdir)) {
   let platform = selected_platform(subdirs, model.selected_subdir)
   let disabled = model.selected_subdir == "" || job_running(model)
@@ -479,7 +547,7 @@ fn add_mod_panel(model: Model) {
   ])
 }
 
-fn mods_panel(model: Model) {
+fn mods_panel(model: Model, project: Project) {
   let rows =
     model.mods
     |> list.filter(fn(mod) {
@@ -494,7 +562,7 @@ fn mods_panel(model: Model) {
           <> mod.platform,
       )
     })
-    |> list.map(fn(mod) { mod_row(model, mod) })
+    |> list.map(fn(mod) { mod_row(model, project, mod) })
   panel_with_head(
     "span-12 mods-panel",
     "Mods",
@@ -530,10 +598,20 @@ fn changelog_panel(model: Model) {
 }
 
 fn manifest_panel(model: Model) {
+  case model.manifest_structured, model.manifest_form {
+    True, Some(form) -> manifest_form_panel(model, form)
+    _, _ -> manifest_raw_panel(model)
+  }
+}
+
+fn manifest_raw_panel(model: Model) {
   panel_with_head(
     "span-12",
-    "Manifest",
-    button("ghost", "Save Manifest", SaveManifest),
+    "Manifest (raw JSON)",
+    html.div([attribute.class("panel-actions")], [
+      button("ghost", "Form Editor", SetManifestStructured(True)),
+      button("ghost", "Save Manifest", SaveManifest),
+    ]),
     [
       html.textarea(
         [
@@ -545,6 +623,516 @@ fn manifest_panel(model: Model) {
       notice(model.notice),
     ],
   )
+}
+
+fn manifest_form_panel(model: Model, form: ManifestForm) {
+  let issues = manifest_form.validate(form)
+  let pack_ids = list.map(model.projects, fn(project) { project.id })
+  let mc_versions =
+    model.projects
+    |> list.flat_map(fn(project) {
+      [
+        project.minecraft,
+        ..list.map(project.variants, fn(variant) { variant.minecraft })
+      ]
+    })
+    |> list.filter(fn(value) { value != "" })
+    |> list.unique
+  let subdir_keys =
+    model.projects
+    |> list.flat_map(fn(project) {
+      list.map(project.subdirs, fn(subdir) { subdir.key })
+    })
+    |> list.filter(fn(value) { value != "" })
+    |> list.unique
+
+  panel_with_head(
+    "span-12 manifest-form",
+    "Manifest",
+    html.div([attribute.class("panel-actions")], [
+      button("ghost", "Raw JSON", SetManifestStructured(False)),
+      button_disabled(
+        "",
+        "Save Manifest",
+        SaveManifest,
+        manifest_form.errors(issues) != [],
+      ),
+    ]),
+    [
+      datalist("pw-loaders", ["fabric", "forge", "neoforge", "quilt"]),
+      datalist("pw-mc-versions", mc_versions),
+      datalist("pw-pack-ids", pack_ids),
+      datalist("pw-subdir-keys", subdir_keys),
+      html.h3([], [html.text("Identity")]),
+      html.div([attribute.class("form-grid")], [
+        manifest_input(issues, "id", "ID", form.id, "my-pack", fn(v) {
+          manifest_form.FId(v)
+        }, ""),
+        manifest_input(issues, "name", "Name", form.name, "My Pack", fn(v) {
+          manifest_form.FName(v)
+        }, ""),
+        manifest_select(issues, "type", "Type", form.kind, [
+          "modpack", "datapack", "resourcepack",
+        ], fn(v) { manifest_form.FKind(v) }),
+        manifest_select(
+          issues,
+          "release_type",
+          "Release type",
+          form.release_type,
+          ["release", "beta", "alpha"],
+          fn(v) { manifest_form.FReleaseType(v) },
+        ),
+        manifest_select(issues, "lifecycle", "Lifecycle", form.lifecycle, [
+          "", "active", "maintenance", "archived", "eol",
+        ], fn(v) { manifest_form.FLifecycle(v) }),
+        manifest_input(
+          issues,
+          "version",
+          "Version",
+          form.version,
+          "26.07",
+          fn(v) { manifest_form.FVersion(v) },
+          "",
+        ),
+        manifest_input_list(
+          issues,
+          "loader",
+          "Loader",
+          form.loader,
+          "fabric",
+          fn(v) { manifest_form.FLoader(v) },
+          "pw-loaders",
+        ),
+      ]),
+      html.h3([], [html.text("Minecraft")]),
+      html.div([attribute.class("form-grid")], [
+        html.label([], [
+          html.span([], [html.text("Shape")]),
+          html.select(
+            [
+              attribute.value(case form.use_variants {
+                True -> "variants"
+                False -> "single"
+              }),
+              event.on_change(fn(v) {
+                SetManifestField(manifest_form.FUseVariants(v == "variants"))
+              }),
+            ],
+            [
+              html.option(
+                [attribute.value("single")],
+                "single version (mc_version)",
+              ),
+              html.option(
+                [attribute.value("variants")],
+                "multi-variant (variants)",
+              ),
+            ],
+          ),
+        ]),
+        case form.use_variants {
+          False ->
+            manifest_input_list(
+              issues,
+              "mc_version",
+              "Minecraft version",
+              form.mc_version,
+              "1.21.1",
+              fn(v) { manifest_form.FMcVersion(v) },
+              "pw-mc-versions",
+            )
+          True -> html.text("")
+        },
+      ]),
+      case form.use_variants {
+        True -> variants_editor(form, issues)
+        False -> html.text("")
+      },
+      html.h3([], [html.text("Distribution")]),
+      issue_list(manifest_form.field_issues(issues, "platforms")),
+      html.div([attribute.class("form-grid")], [
+        manifest_input(issues, "modrinth_id", "Modrinth ID", form.modrinth_id, "", fn(v) {
+          manifest_form.FModrinthId(v)
+        }, ""),
+        manifest_input(
+          issues,
+          "curseforge_id",
+          "CurseForge ID",
+          form.curseforge_id,
+          "",
+          fn(v) { manifest_form.FCurseforgeId(v) },
+          "",
+        ),
+        manifest_input(issues, "github_id", "GitHub (owner/repo)", form.github_id, "", fn(v) {
+          manifest_form.FGithubId(v)
+        }, ""),
+        manifest_input(issues, "gitea_id", "Gitea (owner/repo)", form.gitea_id, "", fn(v) {
+          manifest_form.FGiteaId(v)
+        }, ""),
+        manifest_input(issues, "gitlab_id", "GitLab (owner/repo)", form.gitlab_id, "", fn(v) {
+          manifest_form.FGitlabId(v)
+        }, ""),
+      ]),
+      html.h3([], [html.text("Role & Assets")]),
+      html.div([attribute.class("form-grid")], [
+        html.label([], [
+          html.span([], [html.text("Role")]),
+          html.select(
+            [
+              attribute.value(case form.role_kind {
+                manifest_form.RoleNone -> "none"
+                manifest_form.RoleBase -> "base"
+                manifest_form.RoleConsumer -> "consumer"
+              }),
+              event.on_change(fn(v) {
+                SetManifestField(manifest_form.FRoleKind(v))
+              }),
+            ],
+            [
+              html.option([attribute.value("none")], "none (standalone)"),
+              html.option([attribute.value("base")], "base (performance base)"),
+              html.option(
+                [attribute.value("consumer")],
+                "consumer (uses a performance base)",
+              ),
+            ],
+          ),
+        ]),
+        case form.role_kind {
+          manifest_form.RoleConsumer ->
+            manifest_input_list(
+              issues,
+              "role_pack",
+              "Base pack",
+              form.role_pack,
+              "performance-base-id",
+              fn(v) { manifest_form.FRolePack(v) },
+              "pw-pack-ids",
+            )
+          _ -> html.text("")
+        },
+        manifest_input_list(
+          issues,
+          "shared_assets",
+          "Shared assets pack",
+          form.shared_assets,
+          "",
+          fn(v) { manifest_form.FSharedAssets(v) },
+          "pw-pack-ids",
+        ),
+      ]),
+      case form.role_kind {
+        manifest_form.RoleConsumer -> mappings_editor(form, issues)
+        _ -> html.text("")
+      },
+      html.h3([], [html.text("Automation")]),
+      html.div([attribute.class("form-grid")], [
+        tri_state_select(
+          "Auto-update",
+          automation_bool(form, fn(settings) { settings.auto_update }),
+          fn(v) { manifest_form.FAutoUpdate(v) },
+        ),
+        tri_state_select(
+          "Server promo",
+          automation_bool(form, fn(settings) { settings.server_promo }),
+          fn(v) { manifest_form.FServerPromo(v) },
+        ),
+      ]),
+      validation_summary(issues),
+      notice(model.notice),
+    ],
+  )
+}
+
+fn automation_bool(
+  form: ManifestForm,
+  get: fn(manifest_form.Automation) -> option.Option(Bool),
+) -> String {
+  case form.automation {
+    Some(settings) ->
+      case get(settings) {
+        Some(True) -> "true"
+        Some(False) -> "false"
+        None -> ""
+      }
+    None -> ""
+  }
+}
+
+fn variants_editor(form: ManifestForm, issues) {
+  html.div([attribute.class("variants-editor")], [
+    html.h3([], [html.text("Variants")]),
+    issue_list(manifest_form.field_issues(issues, "variants")),
+    html.div(
+      [attribute.class("list")],
+      list.index_map(form.variants, fn(variant, index) {
+        html.div([attribute.class("row variant-row")], [
+          html.div([attribute.class("form-grid")], [
+            manifest_input(
+              issues,
+              "variants[" <> int.to_string(index) <> "]",
+              "MC version",
+              variant.mc_version,
+              "1.21.1",
+              fn(v) {
+                manifest_form.FVariant(index, manifest_form.VMcVersion(v))
+              },
+              "",
+            ),
+            form_input("ID", variant.id, "optional", fn(v) {
+              SetManifestField(
+                manifest_form.FVariant(index, manifest_form.VId(v)),
+              )
+            }, ""),
+            form_input("Name", variant.name, "optional", fn(v) {
+              SetManifestField(
+                manifest_form.FVariant(index, manifest_form.VName(v)),
+              )
+            }, ""),
+            form_input("Version", variant.version, "optional", fn(v) {
+              SetManifestField(
+                manifest_form.FVariant(index, manifest_form.VVersion(v)),
+              )
+            }, ""),
+            form_input("Loader", variant.loader, "inherits pack", fn(v) {
+              SetManifestField(
+                manifest_form.FVariant(index, manifest_form.VLoader(v)),
+              )
+            }, ""),
+          ]),
+          button(
+            "ghost danger",
+            "Remove",
+            SetManifestField(manifest_form.FVariantRemove(index)),
+          ),
+        ])
+      }),
+    ),
+    button(
+      "ghost",
+      "Add Variant",
+      SetManifestField(manifest_form.FVariantAdd),
+    ),
+  ])
+}
+
+fn mappings_editor(form: ManifestForm, issues) {
+  html.div([attribute.class("mappings-editor")], [
+    html.h3([], [html.text("Base Mappings")]),
+    issue_list(manifest_form.field_issues(issues, "role_mappings")),
+    html.div(
+      [attribute.class("list")],
+      list.index_map(form.role_mappings, fn(mapping, index) {
+        html.div([attribute.class("row mapping-row")], [
+          html.div([attribute.class("form-grid")], [
+            manifest_input_list(
+              issues,
+              "mapping[" <> int.to_string(index) <> "]",
+              "Source (in base)",
+              mapping.source,
+              "1.21.1-mr",
+              fn(v) { manifest_form.FMappingSource(index, v) },
+              "pw-subdir-keys",
+            ),
+            form_input_list(
+              "Target (this pack)",
+              mapping.target,
+              "1.21.1-mr",
+              fn(v) {
+                SetManifestField(manifest_form.FMappingTarget(index, v))
+              },
+              "pw-subdir-keys",
+            ),
+          ]),
+          button(
+            "ghost danger",
+            "Remove",
+            SetManifestField(manifest_form.FMappingRemove(index)),
+          ),
+        ])
+      }),
+    ),
+    button(
+      "ghost",
+      "Add Mapping",
+      SetManifestField(manifest_form.FMappingAdd),
+    ),
+  ])
+}
+
+fn manifest_input(
+  issues: List(manifest_form.Issue),
+  field: String,
+  label: String,
+  value: String,
+  placeholder: String,
+  to_field: fn(String) -> manifest_form.Field,
+  class: String,
+) {
+  labelled_control(
+    issues,
+    field,
+    label,
+    class,
+    html.input([
+      attribute.value(value),
+      attribute.placeholder(placeholder),
+      event.on_input(fn(v) { SetManifestField(to_field(v)) }),
+    ]),
+  )
+}
+
+fn manifest_input_list(
+  issues: List(manifest_form.Issue),
+  field: String,
+  label: String,
+  value: String,
+  placeholder: String,
+  to_field: fn(String) -> manifest_form.Field,
+  list_id: String,
+) {
+  labelled_control(
+    issues,
+    field,
+    label,
+    "",
+    html.input([
+      attribute.value(value),
+      attribute.placeholder(placeholder),
+      attribute.attribute("list", list_id),
+      event.on_input(fn(v) { SetManifestField(to_field(v)) }),
+    ]),
+  )
+}
+
+fn manifest_select(
+  issues: List(manifest_form.Issue),
+  field: String,
+  label: String,
+  value: String,
+  options: List(String),
+  to_field: fn(String) -> manifest_form.Field,
+) {
+  labelled_control(
+    issues,
+    field,
+    label,
+    "",
+    html.select(
+      [
+        attribute.value(value),
+        event.on_change(fn(v) { SetManifestField(to_field(v)) }),
+      ],
+      list.map(options, fn(option_value) {
+        html.option([attribute.value(option_value)], case option_value {
+          "" -> "(unset)"
+          _ -> option_value
+        })
+      }),
+    ),
+  )
+}
+
+fn tri_state_select(
+  label: String,
+  value: String,
+  to_field: fn(String) -> manifest_form.Field,
+) {
+  html.label([], [
+    html.span([], [html.text(label)]),
+    html.select(
+      [
+        attribute.value(value),
+        event.on_change(fn(v) { SetManifestField(to_field(v)) }),
+      ],
+      [
+        html.option([attribute.value("")], "default"),
+        html.option([attribute.value("true")], "enabled"),
+        html.option([attribute.value("false")], "disabled"),
+      ],
+    ),
+  ])
+}
+
+fn labelled_control(
+  issues: List(manifest_form.Issue),
+  field: String,
+  label: String,
+  class: String,
+  control: Element(Msg),
+) {
+  let field_errors = manifest_form.field_issues(issues, field)
+  let error_class = case field_errors {
+    [] -> class
+    _ -> string.trim(class <> " has-error")
+  }
+  html.label([attribute.class(error_class)], [
+    html.span([], [html.text(label)]),
+    control,
+    ..list.map(field_errors, fn(issue) {
+      html.em([attribute.class("field-error")], [html.text(issue.message)])
+    })
+  ])
+}
+
+fn form_input_list(
+  label: String,
+  value: String,
+  placeholder: String,
+  message: fn(String) -> Msg,
+  list_id: String,
+) {
+  html.label([], [
+    html.span([], [html.text(label)]),
+    html.input([
+      attribute.value(value),
+      attribute.placeholder(placeholder),
+      attribute.attribute("list", list_id),
+      event.on_input(message),
+    ]),
+  ])
+}
+
+fn datalist(id: String, values: List(String)) {
+  html.datalist(
+    [attribute.id(id)],
+    list.map(values, fn(value) { html.option([attribute.value(value)], "") }),
+  )
+}
+
+fn issue_list(issues: List(manifest_form.Issue)) {
+  case issues {
+    [] -> html.text("")
+    _ ->
+      html.ul(
+        [attribute.class("validation-list")],
+        list.map(issues, fn(issue) {
+          html.li(
+            [
+              attribute.class(case issue.severity {
+                manifest_form.IssueError -> "validation-error"
+                manifest_form.IssueWarning -> "validation-warning"
+              }),
+            ],
+            [html.text(issue.message)],
+          )
+        }),
+      )
+  }
+}
+
+fn validation_summary(issues: List(manifest_form.Issue)) {
+  case issues {
+    [] ->
+      html.p([attribute.class("notice validation-ok")], [
+        html.text("Manifest is valid."),
+      ])
+    _ ->
+      html.div([attribute.class("validation-summary")], [
+        html.h3([], [html.text("Validation")]),
+        issue_list(issues),
+      ])
+  }
 }
 
 fn new_pack_panel(model: Model) {
@@ -582,6 +1170,43 @@ fn new_pack_panel(model: Model) {
       ),
     ]),
     notice(model.notice),
+  ])
+}
+
+fn progress_panel(model: Model) {
+  case model.mod_progress {
+    [] -> html.text("")
+    items ->
+      panel_with_head(
+        "span-12",
+        "Batch Progress",
+        pill(int.to_string(list.length(items)) <> " mod(s)"),
+        [
+          html.div(
+            [attribute.class("list mod-progress-list")],
+            list.map(items, progress_row),
+          ),
+        ],
+      )
+  }
+}
+
+fn progress_row(item: ModProgress) {
+  let status = progress_status_label(item.status)
+  html.div([attribute.class("row search-item")], [
+    html.div([], [
+      html.strong([], [html.text(item.name)]),
+      html.span([], [html.text(item.detail)]),
+    ]),
+    html.span(
+      [
+        attribute.classes([
+          #("status-badge", True),
+          #("integrated", status == "pending" || status == "queued"),
+        ]),
+      ],
+      [html.text(status)],
+    ),
   ])
 }
 
@@ -704,12 +1329,31 @@ fn subdir_row(subdir: Subdir) {
   ])
 }
 
-fn mod_row(model: Model, mod: ModEntry) {
+fn mod_row(model: Model, project: Project, mod: ModEntry) {
   let subdir = model.selected_subdir
   let #(pin_label, pin_action) = case mod.pin {
     True -> #("Unpin", UnpinMod(subdir, mod.slug))
     False -> #("Pin", PinMod(subdir, mod.slug))
   }
+  let #(freeze_label, freeze_action) = case mod.pin {
+    True -> #("Unfreeze", UnfreezeMod(subdir, mod.slug))
+    False -> #("Freeze", FreezeMod(subdir, mod.slug))
+  }
+  let side_select =
+    html.select(
+      [
+        attribute.value(mod.side),
+        event.on_change(fn(side) {
+          RunAction(SetSide(project.dir, mod.slug, side))
+        }),
+      ],
+      [
+        html.option([attribute.value("client")], "client"),
+        html.option([attribute.value("server")], "server"),
+        html.option([attribute.value("both")], "both"),
+        html.option([attribute.value("either")], "either"),
+      ],
+    )
   let webview_button = case mod.platform, mod.version_id {
     _, "" -> html.text("")
     "curseforge", file_id ->
@@ -740,8 +1384,10 @@ fn mod_row(model: Model, mod: ModEntry) {
       ]),
     ]),
     webview_button,
+    side_select,
     button_disabled("icon-btn", "Update", RunAction(UpdateMod(subdir, mod.slug)), job_running(model)),
     button_disabled("icon-btn", pin_label, RunAction(pin_action), job_running(model)),
+    button_disabled("icon-btn", freeze_label, RunAction(freeze_action), job_running(model)),
     button_disabled("icon-btn danger", "Remove", RunAction(RemoveMod(subdir, mod.slug)), job_running(model)),
   ])
 }
