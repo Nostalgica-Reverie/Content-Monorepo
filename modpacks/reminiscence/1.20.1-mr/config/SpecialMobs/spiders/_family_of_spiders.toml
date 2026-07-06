@@ -1,0 +1,128 @@
+# specialmobs:spiders/_family_of_spiders.toml
+# This config contains options that apply to the family of spiders as a whole; that is, the vanilla replacement and
+#   all special variants.
+
+
+# Category: general
+# Options standard to all mob families (that is, not specific to any particular mob family).
+
+  # Whether this mob family replaces vanilla spiders with its vanilla replacement species.
+  # The "master_vanilla_replacement" setting in the mod's main config must also be true for this to work.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.vanilla_replacement = true
+
+  # When greater than 0, spiders will have a random render scale applied. This is a visual effect only. If this is set
+  #   to a non-negative value, it overrides the value set for "master_random_scaling", though species configs can
+  #   override this value.
+  # <Number> Range: -1.0 ~ 1.0, Default: -1.0
+  general.family_random_scaling = -1.0
+
+  # The chance for spiders to spawn as special variants.
+  # NOTE: Some environment check types can cause deadlocks on servers currently, so be careful!
+  # <Number> Range: 0.0 ~ 1.0, Default: 0.33
+  general.special_variant_chance.base = 0.33
+  # The chance for spiders to spawn as special variants when specific environmental conditions are met.
+  # <Environment List> Format: [ "value condition1 state1 & condition2 state2 & ...", ... ], Default: [ "0.17
+  #   world_time < 120000", "0.66 moon_phase full", "0.5 moon_phase full" ]
+  #    Range for Values: 0.0 ~ 1.0
+  general.special_variant_chance.exceptions = [
+    "0.17 world_time < 120000",
+    "0.66 moon_phase full",
+    "0.5 moon_phase full"
+  ]
+
+  # The weight of each spider species to be chosen as the replacement when spiders spawn as special variants. Higher
+  #   weight is more common.
+  # <Number> Range: ≥ 0.0
+  general.weight.baby.base = 0.0
+  general.weight.desert.base = 60.0
+  general.weight.fire.base = 15.0
+  general.weight.flying.base = 60.0
+  general.weight.giant.base = 60.0
+  general.weight.hungry.base = 60.0
+  general.weight.mother.base = 60.0
+  general.weight.pale.base = 60.0
+  general.weight.poison.base = 60.0
+  general.weight.water.base = 60.0
+  general.weight.web.base = 15.0
+  general.weight.witch.base = 15.0
+
+  # The weight of each spider species to be chosen as the replacement when spiders spawn as special variants when
+  #   specific environmental conditions are met. Higher weight is more common.
+  # <Number> Range: ≥ 0.0
+  general.weight.baby.exceptions = []
+  general.weight.desert.exceptions = [
+    "300.0 dimension_property ultrawarm",
+    "300.0 dimension_property natural & rainfall = 0.0",
+    "7.5",
+    "7.5 rainfall > 0.85",
+    "7.5 weather rain & position can_see_sky",
+    "150.0 moon_brightness < 0.5"
+  ]
+  general.weight.fire.exceptions = [
+    "300.0 dimension_property ultrawarm",
+    "300.0 temp > 1.0",
+    "150.0 temp >= 0.8",
+    "7.5 temp freezing",
+    "300.0 biome minecraft:warm_ocean",
+    "150.0 biome minecraft:lukewarm_ocean",
+    "150.0 biome minecraft:deep_lukewarm_ocean",
+    "15.0 biome minecraft:cold_ocean",
+    "15.0 biome minecraft:deep_cold_ocean",
+    "7.5 biome minecraft:deep_frozen_ocean"
+  ]
+  general.weight.flying.exceptions = [
+    "300.0",
+    "300.0 y_from_sea >= 25",
+    "150.0 moon_phase new",
+    "15.0 y_from_sea < 0"
+  ]
+  general.weight.giant.exceptions = []
+  general.weight.hungry.exceptions = [
+    "300.0",
+    "300.0 y_from_sea >= 25",
+    "150.0 moon_phase new",
+    "15.0 y_from_sea < 0"
+  ]
+  general.weight.mother.exceptions = []
+  general.weight.pale.exceptions = [
+    "7.5 dimension_property ultrawarm",
+    "300.0 temp freezing",
+    "15.0 temp >= 0.8",
+    "7.5 temp > 1.0",
+    "300.0 biome minecraft:deep_frozen_ocean",
+    "150.0 biome minecraft:cold_ocean",
+    "150.0 biome minecraft:deep_cold_ocean",
+    "15.0 biome minecraft:lukewarm_ocean",
+    "15.0 biome minecraft:deep_lukewarm_ocean",
+    "7.5 biome minecraft:warm_ocean"
+  ]
+  general.weight.poison.exceptions = [
+    "300.0 biome_category taiga",
+    "300.0 biome_category jungle",
+    "300.0 biome_category forest",
+    "300.0 biome minecraft:crimson_forest",
+    "150.0 moon_phase full"
+  ]
+  general.weight.water.exceptions = [
+    "7.5 dimension_property ultrawarm",
+    "7.5 dimension_property natural & rainfall = 0.0",
+    "300.0",
+    "300.0 rainfall > 0.85",
+    "300.0 weather rain & position can_see_sky",
+    "150.0 moon_brightness > 0.5"
+  ]
+  general.weight.web.exceptions = [
+    "300.0 biome_category taiga",
+    "300.0 biome_category jungle",
+    "300.0 biome_category forest",
+    "300.0 biome minecraft:crimson_forest",
+    "150.0 moon_phase full"
+  ]
+  general.weight.witch.exceptions = [
+    "300.0 biome_category taiga",
+    "300.0 biome_category jungle",
+    "300.0 biome_category forest",
+    "300.0 biome minecraft:crimson_forest",
+    "150.0 moon_phase full"
+  ]

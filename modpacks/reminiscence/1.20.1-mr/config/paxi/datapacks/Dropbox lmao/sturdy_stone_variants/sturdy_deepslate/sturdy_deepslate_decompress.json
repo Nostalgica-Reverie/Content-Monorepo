@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "kubejs:sturdy_deepslate"
+    }
+  ],
+  "result": {
+    "item": "minecraft:cobbled_deepslate",
+    "count": 9
+  },
+  "conditions": [
+    {
+      "type": "forge:and",
+      "values": [
+        {
+          "type": "forge:not",
+          "value": {
+            "type": "forge:mod_loaded",
+            "modid": "cyclic"  
+          }
+        },
+        {
+          "type": "quark:flag",
+          "flag": "sturdy_stone"
+        }
+      ]
+    }
+  ]
+}

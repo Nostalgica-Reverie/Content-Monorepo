@@ -1,0 +1,71 @@
+
+[particle_toggles]
+	fireflies = true
+	sandmote = true
+	redsandmote = true
+	tumblebush = true
+	snow = true
+	blizzardwind = true
+	blizzardsnow = true
+	rain = false
+	heavyrain = true
+	rainsplash = true
+	weepingrain = true
+	sporestorm = true
+	updrafts = true
+	soulstorms = true
+	endlessnweather = false
+	sandstorms = true
+	redsandstorms = true
+	blizzards = true
+	wind = true
+
+[particle_amounts]
+	#Range: 0.0 ~ 1.7976931348623157E308
+	particleamount = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	particleDensity = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	sandmotemodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	snowmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	blizzardsnowmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	blizzardwindmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	updraftmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	windmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	sporemodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	soulmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	tearmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	rainmodifier = 3.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	heavyrainmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	tumblebushmodifier = 1.0
+	#Range: 0.0 ~ 1.7976931348623157E308
+	fireflymodifier = 1.0
+
+[misc]
+	#Range: > 0
+	nweatherbasedelay = 120
+	#Range: > 0
+	nweatherrandomdelay = 240
+	renderedweather = false
+	#Range: 0.0 ~ 1.7976931348623157E308
+	snowspeedmodifier = 1.0
+
+	[misc.block_search_distance]
+		#Range: > 0
+		x = 32
+		#Range: > 0
+		y = 32
+		#Range: > 0
+		z = 32
+

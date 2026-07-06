@@ -1,0 +1,43 @@
+# crust:client_config_editor.toml
+# In-game config editor client preferences.
+
+
+# Category: main_menu_button
+# Options to modify the in-game config editor button on the main menu.
+
+  # Set this to false to hide the config editor button on the main menu.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  main_menu_button.enabled = true
+
+  # The anchor position for the config editor button. That is, where it should be positioned relative to the screen or
+  #   vanilla menu buttons.
+  # <Enum> Valid Values: { "screen_top", "top", "center", "bottom", "screen_bottom" }, Default: "bottom"
+  main_menu_button.anchor.vertical = "bottom"
+  main_menu_button.anchor.horizontal = "right"
+
+  # The position offset for the config editor button from the anchor position, in GUI pixels. Negative values move the
+  #   button toward the top/left, positive move it toward the bottom/right.
+  # <Integer> Range: Any Value, Default: -56
+  main_menu_button.offset.vertical = -56
+  main_menu_button.offset.horizontal = 4
+
+
+# Category: pause_menu_button
+# Options to modify the in-game config editor button on the pause menu.
+
+  # Set this to false to hide the in-game config editor button.
+  # You may assign a hotkey to the editor in your options, whether or not you choose to display a button.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  pause_menu_button.enabled = true
+
+  # The anchor position for the config editor button. That is, where it should be positioned relative to the screen or
+  #   vanilla menu buttons.
+  # <Enum> Valid Values: { "screen_top", "top", "center", "bottom", "screen_bottom" }, Default: "bottom"
+  pause_menu_button.anchor.vertical = "bottom"
+  pause_menu_button.anchor.horizontal = "right"
+
+  # The position offset for the config editor button from the anchor position, in GUI pixels. Negative values move the
+  #   button toward the top/left, positive move it toward the bottom/right.
+  # <Integer> Range: Any Value, Default: -51
+  pause_menu_button.offset.vertical = -51
+  pause_menu_button.offset.horizontal = 4

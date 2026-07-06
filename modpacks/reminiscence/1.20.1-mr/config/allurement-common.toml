@@ -1,0 +1,158 @@
+
+[enchantments]
+
+	[enchantments.alleviating]
+		#Armor enchantment that heals the user when collecting experience
+		"Enable Alleviating" = true
+		#How much the experience value is multiplied by into health
+		#Range: 0.0 ~ 1.7976931348623157E308
+		"Healing factor" = 0.25
+
+	[enchantments.launch]
+		#Weapon enchantment that launches enemies upwards rather than away
+		"Enable Launch" = true
+		#How much the target is affected on the vertical axis
+		#Range: 0.0 ~ 1.7976931348623157E308
+		"Vertical factor" = 0.35
+
+	[enchantments.obedience]
+		#Horse armor enchantment tha prevents the horse from roaming around
+		"Enable Obedience" = true
+
+	[enchantments.reeling]
+		#Crossbow enchantment that pulls targets towards the user
+		"Enable Reeling" = true
+		#How much the target is affected on the horizontal axis
+		#Range: 0.0 ~ 1.7976931348623157E308
+		"Horizontal factor" = 0.5
+		#How much the target is affected on the vertical axis
+		#Range: 0.0 ~ 1.7976931348623157E308
+		"Vertical factor" = 0.25
+
+	[enchantments.reforming]
+		#Gear enchantment that very slowly repairs items over time
+		"Enable Reforming" = true
+		#How many ticks it takes a reforming item to repair
+		#Range: > 0
+		"Reforming tick rate" = 400
+
+	[enchantments.shockwave]
+		#Boots enchantment that creates a shockwave when taking fall damage
+		"Enable Shockwave" = true
+		#If Shockwave tramples farmland within the wave radius
+		"Shockwave tramples farmland" = true
+
+	[enchantments.vengeance]
+		#Armor enchantment that stores incoming damage and applies it to user's next attack
+		"Enable Vengeance" = true
+		#How much the damage taken with vengeance is multiplied for attacks
+		#Range: 0.0 ~ 1.7976931348623157E308
+		"Damage factor" = 0.025
+
+	[enchantments.spread_of_ailments]
+		#Crossbow enchantment that applies the user's active effects to their arrows
+		"Enable Spread of Ailments" = true
+
+[curses]
+
+	[curses.ascension_curse]
+		#Curse that causes the cursed item to float upwards when dropped
+		"Enable Curse of Ascension" = true
+
+	[curses.fleeting_curse]
+		#Curse that causes nearby entities to repel the cursed item
+		"Enable Curse of Fleeting" = true
+
+[tweaks]
+
+	[tweaks.enchanting]
+		#Allow enchanting power from bookshelves to transmit through any non-solid block, not just replaceable ones
+		"Non-solid blocks transmit enchanting power" = true
+		#Allow Chiseled Bookshelves to be usable to boost enchanting table power
+		"Chiseled Bookshelf enchanting" = true
+		#How many regular books are needed to increase the enchantment power by 1
+		#Range: 1 ~ 6
+		"Books needed" = 3
+		#How many enchanted are needed to increase the enchantment power by 1
+		#Range: 1 ~ 6
+		"Enchanted Books needed" = 2
+
+	[tweaks.horse_armor]
+		#Allow horse armor to be enchanted
+		"Enchantable horse armor" = true
+		#If horse armor can appear enchanted when found in loot tables
+		"Generates in loot tables" = true
+		#Which loot tables horse armor can't appear enchanted in
+		"Unenchanted loot tables" = ["minecraft:chests/village/village_weaponsmith", "minecraft:chests/stronghold_corridor", "minecraft:chests/nether_bridge"]
+
+	[tweaks.bane_of_arthropods]
+		#If Bane of Arthropods increases the mining speed of Cobwebs
+		"Bane of Arthropods mines cobwebs faster" = true
+
+	[tweaks.feather_falling]
+		#If having Feather Falling prevents farmland from being trampled
+		"Feather Falling prevents trampling" = true
+
+	[tweaks.infinity]
+		#If Infinity requires an arrow in the player's inventory in order to shoot
+		"Infinity requires arrows" = false
+
+	[tweaks.protection]
+		#Remove the base Protection enchantment, requiring players to choose between the other types
+		"Disable Protection" = false
+
+	[tweaks.riptide]
+		#Allow Riptide to function when in cauldrons
+		"Riptide works in cauldrons" = true
+
+	[tweaks.soul_speed]
+		#Instead of losing durability as you run, Soul Speed makes incoming damage increase when on Soul Speed blocks
+		"Soul Speed change" = true
+		#How much damage is multiplied when hurt on Soul Speed blocks
+		#Range: 0.0 ~ 1.7976931348623157E308
+		"Damage factor" = 1.5
+
+	[tweaks.experience]
+
+		[tweaks.experience.dropped_xp]
+			#If the player drops a flat percentage of their experience rather than capping at level 7
+			"Drop experience percentage" = false
+			#What percentage of the player's total experience is dropped
+			#Range: 0.0 ~ 1.0
+			"Experience percentage" = 0.75
+
+		[tweaks.experience.level_scaling]
+			#Remove the amount of experience per level increasing (experimental)
+			"Remove level scaling" = false
+			#The amount of experience per level, if level scaling is removed (experimental)
+			#Range: > 0
+			"Experience per level" = 50
+			#If the level scaling should only be modified after it reaches the 'Experience per level' value (experimental)
+			"Remove level scaling after cap" = true
+
+		[tweaks.experience.ender_dragon]
+			#If Ender Dragon experience dropping should be adjusted (to account for level scaling)
+			"Adjust Ender Dragon experience drop" = false
+			#The amount of experience (in points) that should be dropped by the Ender Dragon
+			#Range: > 0
+			"Ender Dragon experience drop" = 3000
+			#The amount of experience (in points) that should be dropped by a respawned Ender Dragon
+			#Range: > 0
+			"Respawned Ender Dragon experience drop" = 750
+
+		[tweaks.experience.anvil]
+			#If renaming items should always cost 1 experience
+			"Cheap item renaming" = true
+			#Remove the cap of 40 on anvil repairing prices
+			"Remove too expensive" = true
+			#If anvils can be repaired by right clicking with an iron ingot or using a dispenser
+			"Anvil ingot repairing" = true
+			#The amount of tries it should take on average to repair an anvil with an ingot (1 in x chance)
+			#Range: > 0
+			"Ingot repair chance" = 5
+			#If anvil transaction costs should be capped at a certain level
+			"Cap anvil costs" = false
+			#The max amount of levels an anvil transaction should be able to cost
+			#Range: > 1
+			"Anvil cost cap" = 30
+

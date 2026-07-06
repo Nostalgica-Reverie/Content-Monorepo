@@ -1,0 +1,13 @@
+name = "Reminiscence Modrinth"
+author = "CHANGEME"
+version = "2.0.0-Modrinth"
+pack-format = "packwand:26"
+
+[index]
+file = "index.toml"
+hash-format = "sha512"
+hash = "38bb262411f1191f4fb50bb3b06c426a6a5737a0dc5b22baa55f2ed2a6302305db20b893441c1b0db9e8a61704bb2e06ddb9a01f82581c709287b3f0ad0a0c3d"
+
+[versions]
+forge = "47.4.0"
+minecraft = "1.20.1"

@@ -1,0 +1,14 @@
+* Example PsuedoMob file.  Add mobs with the pattern below and rename file to MassAdditionMobs.csv
+* Mobs in this file will generate in any specified biome despite their own spawning rules.
+* For now, Psuedo Mobs of one type, won't respawn until the prior one dies or despawns.
+* SBU will read this file ONLY if it is renamed PsuedoMobs.csv.
+*
+* NOTICE: This file has a unique format differs from BiomeMobWeight file
+* Line starting with '*' are comments and ignored. 
+*
+* Line, biome, mod:mob, psuedoWeight, mingroup , maxgroup
+* 1, minecraft:plains, minecraft:husk, 80, 4, 4
+* 2, minecraft:plains, minecraft:blaze, 80, 1, 1
+* 4, minecraft:desert, minecraft:iron_golem, 80, 1, 1
+* 5, minecraft:snowyplains, minecraft:snow_golem, 80, 1, 1
+

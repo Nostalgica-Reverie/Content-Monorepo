@@ -1,0 +1,82 @@
+{
+  "schema_version": "2",
+
+  "default_packs": [
+    "file/Enhanced Menus.zip",
+    "Lost Tracks Resources.zip",
+    "file/Creative Menu Rework.zip",
+    "file/Mob Variety.zip",
+    "Reminiscence Fixes.zip",
+    "Reminiscent Art.zip",
+    "file/golden-days-base-1.21.x-1.12.3"
+  ],
+
+
+  "pack_overrides": {
+    "supplementaries:darker_ropes": {
+      "hidden": true
+  },
+    "immersive_weathering:visual_waxed_iron_items": {
+      "hidden": true
+  },
+    "builtin/client/deep_aether_additional_assets": {
+      "hidden": true
+  },
+    "builtin/aether_tooltips": {
+      "hidden": true
+  },
+    "builtin/aether_colorblind": {
+      "hidden": true
+  },
+    "builtin/aether_125_art": {
+      "hidden": true
+  },
+    "builtin/aether_b173_art": {
+      "hidden": true
+  },
+    "builtin/aether_ctm_fix": {
+      "hidden": true
+  },
+    "builtin/client/deep_aether_tooltips": {
+      "hidden": true
+  },
+    "high_contrast": {
+      "hidden": true
+  },
+    "programmer_art": {
+      "hidden": true
+  },
+    "fabric": {
+      "hidden": true
+  },
+    "Moonlight Mods Dynamic Assets": {
+      "hidden": true
+  },
+    "Forgery grayscale": {
+      "hidden": true
+  },
+    "Forgery": {
+      "hidden": true
+  },
+    "mod_resources": {
+      "hidden": true
+  },
+    "vanilla": {
+      "hidden": true
+  },
+
+  "file/golden-days-base-1.21.x-1.12.3": {
+      "required": true
+  },
+    "Reminiscent Art.zip": {
+      "required": true
+  },
+    "Reminiscence Fixes.zip": {
+      "required": true
+  },
+    "Lost Tracks Resources.zip": {
+      "required": true
+  }
+
+}
+}

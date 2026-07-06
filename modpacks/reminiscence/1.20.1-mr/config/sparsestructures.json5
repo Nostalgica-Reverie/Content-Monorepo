@@ -1,0 +1,94 @@
+// ### THE MOD REQUIRES A RESTART OF THE GAME TO APPLY CHANGES ###
+{
+  // this is the main spread factor (default is 2)
+  //
+  // tips : a spread factor can be a decimal number (such as 1.5)
+  //        a spread factor of 1 means all structure's placement are not modified (useful if you want to use only custom spread factors)
+  //        a spread factor above 1 means all structures are rarer
+  //        a spread factor below 1 means all structure are more common
+  "spreadFactor": 2,
+
+  // this is a list of custom spread factors
+  "customSpreadFactors": [
+    // example of the mansion being doubled in rarity (the mod's default)
+    {
+      "structure": "minecraft:trail_ruins",
+      "factor": 1
+    },
+    {
+      "structure": "minecraft:stronghold",
+      "factor": 1
+    },
+    {
+      "structure": "minecraft:fortress",
+      "factor": 1
+    },
+    {
+      "structure": "minecraft:bastion_remnant",
+      "factor": 1.5
+    },
+    {
+      "structure": "minecraft:mineshaft",
+      "factor": 1.5
+    },
+    {
+      "structure": "minecraft:monument",
+      "factor": 1.5
+    },
+    {
+      "structure": "minecraft:trail_ruins",
+      "factor": 1
+    },
+    {
+      "structure": "minecraft:shipwreck",
+      "factor": 1.5
+    },
+    {
+      "structure": "minecraft:buried_treasure",
+      "factor": 1
+    },
+    {
+      "structure": "minecraft:igloo",
+      "factor": 1.25
+    },
+    {
+      "structure": "#minecraft:ruined_portal",
+      "factor": 4
+    },
+    {
+      "structure": "#betterdungeons:better_dungeons",
+      "factor": 1.25
+    },
+    {
+      "structure": "aether:bronze_dungeon",
+      "factor": 1
+    },
+    {
+      "structure": "deep_aether:brass_dungeon",
+      "factor": 1
+    },
+    {
+      "structure": "aether:silver_dungeon",
+      "factor": 1
+    },
+    {
+      "structure": "aether:gold_dungeon",
+      "factor": 1
+    },
+    {
+      "structure": "moderner_beta:ocean_shrine",
+      "factor": 1
+    }
+    // add the structures you want to modify in the format:
+    // {
+    //     "structure": "namespace:structure_name",
+    //     "factor": number
+    // },
+    // where "structure" is a structure_set or the name of a structure
+    // /!\ if you put the name of a structure, all structures in its set will be modified
+    // (example : "minecraft:village_plains" will modify all structures in the "villages" set)
+    // see https://minecraft.wiki/w/Tutorials/Custom_structures#Structure_Set for more info
+    //
+    // tip : the same spread factors rules apply here
+  ]
+}

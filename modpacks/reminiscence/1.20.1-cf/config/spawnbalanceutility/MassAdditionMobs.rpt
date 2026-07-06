@@ -1,0 +1,16 @@
+* This is an example Mass Addition File that lets you add mobs to every biome.
+* Lines that start with a '*' are comments and are not used.
+* If you rename this file to MassAdditionMobs.csv, Spawn Balance Utility will use it.
+*
+* Parameter explainations and values.
+* Parm Dimension  : A, O, N, E for All, Overworld, Nether, The End
+* Parm Class      : MONSTER, CREATURE, AMBIENT, UNDERWATER, etc.
+* Parm Resource   : modname:mobname
+* Parm Weight     : a number 1 or higher.  1 is superrare, 5 is rare, 20 is uncommon, 80 is common.
+* Parm MinGroup   : a number 1 and less than MaxGroup
+* Parm MaxGroup   : a number higher than MinGroup and usually 5 or less.
+* Format is. Line, Dim,   Class, mod:mob,           spawnWeight, Mingroup, MaxGroup
+*
+* 1,   A, MONSTER, minecraft:phantom, 10           ,1         ,4
+* will add phantoms too all biomes with a spawnweight of 10 and 1-4 group size.
+*

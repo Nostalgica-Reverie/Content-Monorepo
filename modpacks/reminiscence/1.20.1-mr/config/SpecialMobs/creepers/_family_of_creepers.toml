@@ -1,0 +1,142 @@
+# specialmobs:creepers/_family_of_creepers.toml
+# This config contains options that apply to the family of creepers as a whole; that is, the vanilla replacement and
+#   all special variants.
+
+
+# Category: general
+# Options standard to all mob families (that is, not specific to any particular mob family).
+
+  # Whether this mob family replaces vanilla creepers with its vanilla replacement species.
+  # The "master_vanilla_replacement" setting in the mod's main config must also be true for this to work.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.vanilla_replacement = true
+
+  # When greater than 0, creepers will have a random render scale applied. This is a visual effect only. If this is
+  #   set to a non-negative value, it overrides the value set for "master_random_scaling", though species configs can
+  #   override this value.
+  # <Number> Range: -1.0 ~ 1.0, Default: -1.0
+  general.family_random_scaling = -1.0
+
+  # The chance for creepers to spawn as special variants.
+  # NOTE: Some environment check types can cause deadlocks on servers currently, so be careful!
+  # <Number> Range: 0.0 ~ 1.0, Default: 0.33
+  general.special_variant_chance.base = 0.33
+  # The chance for creepers to spawn as special variants when specific environmental conditions are met.
+  # <Environment List> Format: [ "value condition1 state1 & condition2 state2 & ...", ... ], Default: [ "0.17
+  #   world_time < 120000", "0.66 moon_phase full", "0.5 moon_phase full" ]
+  #    Range for Values: 0.0 ~ 1.0
+  general.special_variant_chance.exceptions = [
+    "0.17 world_time < 120000",
+    "0.66 moon_phase full",
+    "0.5 moon_phase full"
+  ]
+
+  # The weight of each creeper species to be chosen as the replacement when creepers spawn as special variants. Higher
+  #   weight is more common.
+  # <Number> Range: ≥ 0.0
+  general.weight.dark.base = 60.0
+  general.weight.death.base = 60.0
+  general.weight.dirt.base = 60.0
+  general.weight.doom.base = 60.0
+  general.weight.drowning.base = 15.0
+  general.weight.ender.base = 15.0
+  general.weight.fire.base = 60.0
+  general.weight.gravel.base = 60.0
+  general.weight.jumping.base = 60.0
+  general.weight.lightning.base = 60.0
+  general.weight.mini.base = 15.0
+  general.weight.sand.base = 60.0
+  general.weight.scope.base = 60.0
+  general.weight.snow.base = 15.0
+  general.weight.skeleton.base = 60.0
+  general.weight.splitting.base = 15.0
+
+  # The weight of each creeper species to be chosen as the replacement when creepers spawn as special variants when
+  #   specific environmental conditions are met. Higher weight is more common.
+  # <Number> Range: ≥ 0.0
+  general.weight.dark.exceptions = []
+  general.weight.death.exceptions = []
+  general.weight.dirt.exceptions = []
+  general.weight.doom.exceptions = [
+    "300.0 biome_category taiga",
+    "300.0 biome_category jungle",
+    "300.0 biome_category forest",
+    "300.0 biome minecraft:crimson_forest",
+    "150.0 moon_phase full"
+  ]
+  general.weight.drowning.exceptions = [
+    "7.5 dimension_property ultrawarm",
+    "7.5 dimension_property natural & rainfall = 0.0",
+    "300.0",
+    "300.0 rainfall > 0.85",
+    "300.0 weather rain & position can_see_sky",
+    "150.0 moon_brightness > 0.5"
+  ]
+  general.weight.ender.exceptions = []
+  general.weight.fire.exceptions = [
+    "300.0 dimension_property ultrawarm",
+    "300.0 temp > 1.0",
+    "150.0 temp >= 0.8",
+    "7.5 temp freezing",
+    "300.0 biome minecraft:warm_ocean",
+    "150.0 biome minecraft:lukewarm_ocean",
+    "150.0 biome minecraft:deep_lukewarm_ocean",
+    "15.0 biome minecraft:cold_ocean",
+    "15.0 biome minecraft:deep_cold_ocean",
+    "7.5 biome minecraft:deep_frozen_ocean"
+  ]
+  general.weight.gravel.exceptions = []
+  general.weight.jumping.exceptions = [
+    "300.0",
+    "300.0 y_from_sea >= 25",
+    "150.0 moon_phase new",
+    "15.0 y_from_sea < 0"
+  ]
+  general.weight.lightning.exceptions = [
+    "300.0 weather thunder",
+    "150.0 weather rain",
+    "15.0 position !can_see_sky"
+  ]
+  general.weight.mini.exceptions = []
+  general.weight.sand.exceptions = [
+    "300.0 dimension_property ultrawarm",
+    "300.0 dimension_property natural & rainfall = 0.0",
+    "7.5",
+    "7.5 rainfall > 0.85",
+    "7.5 weather rain & position can_see_sky",
+    "150.0 moon_brightness < 0.5"
+  ]
+  general.weight.scope.exceptions = []
+  general.weight.snow.exceptions = [
+    "7.5 dimension_property ultrawarm",
+    "300.0 temp freezing",
+    "15.0 temp >= 0.8",
+    "7.5 temp > 1.0",
+    "300.0 biome minecraft:deep_frozen_ocean",
+    "150.0 biome minecraft:cold_ocean",
+    "150.0 biome minecraft:deep_cold_ocean",
+    "15.0 biome minecraft:lukewarm_ocean",
+    "15.0 biome minecraft:deep_lukewarm_ocean",
+    "7.5 biome minecraft:warm_ocean"
+  ]
+  general.weight.skeleton.exceptions = [
+    "300.0 biome_category taiga",
+    "300.0 biome_category jungle",
+    "300.0 biome_category forest",
+    "300.0 biome minecraft:crimson_forest",
+    "150.0 moon_phase full"
+  ]
+  general.weight.splitting.exceptions = []
+
+
+# Category: creepers
+# Options specific to the family of creepers.
+
+  # Chance for creepers to spawn charged during thunderstorms. By default, this applies to all creepers; but species
+  #   configs can override it.
+  # <Number> Range: 0.0 ~ 1.0, Default: 0.01
+  creepers.family_storm_charge_chance = 0.01
+
+  # Chance for creepers to become supercharged when charged in any way.
+  # <Number> Range: 0.0 ~ 1.0, Default: 0.1
+  creepers.supercharge_chance = 0.1

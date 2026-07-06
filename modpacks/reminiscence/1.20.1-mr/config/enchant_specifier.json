@@ -1,0 +1,253 @@
+{
+
+    "default_enchants":{},
+    "enchants":{
+        "chainmail_helmet":
+        {
+            "projectile_protection":4
+        },
+        "chainmail_chestplate":
+        {
+            "projectile_protection":4
+        },
+        "chainmail_leggings":
+        {
+            "projectile_protection":4
+        }, 
+        "chainmail_boots":
+        {
+            "projectile_protection":4
+        },
+
+
+
+        "diamond_helmet":
+        {
+            "blast_protection":4
+        },
+        "diamond_chestplate":
+        {
+            "blast_protection":4
+        },
+        "diamond_leggings":
+        {
+            "blast_protection":4
+        }, 
+        "diamond_boots":
+        {
+            "blast_protection":4
+        },
+        "diamond_sword":
+        {
+            "efficiency":5
+        },
+        "diamond_pickaxe":
+        {
+            "efficiency":5
+        },
+        "diamond_axe":
+        {
+            "efficiency":5
+        }, 
+        "diamond_shovel":
+        {
+            "efficiency":5
+        },
+        "diamond_hoe":
+        {
+            "efficiency":5
+        },
+        "farmersdelight:diamond_knife":
+        {
+            "efficiency":5,
+            "backstabbing":3
+        },
+
+
+
+
+        "betterend:thallasium_helmet":
+        {
+            "mending":1
+        },
+        "betterend:thallasium_chestplate":
+        {
+            "mending":1
+        },
+        "betterend:thallasium_leggings":
+        {
+            "mending":1
+        }, 
+        "betterend:thallasium_boots":
+        {
+            "mending":1
+        },
+        "betterend:thallasium_sword":
+        {
+            "mending":1,
+            "veinmining:vein_mining":1
+        },
+        "betterend:thallasium_pickaxe":
+        {
+            "mending":1,
+            "veinmining:vein_mining":1
+        },
+        "betterend:thallasium_axe":
+        {
+            "mending":1,
+            "veinmining:vein_mining":1
+        }, 
+        "betterend:thallasium_shovel":
+        {
+            "mending":1,
+            "veinmining:vein_mining":1
+        },
+        "betterend:thallasium_hoe":
+        {
+            "mending":1,
+            "veinmining:vein_mining":1
+        },
+
+
+        
+        "netherite_helmet":
+        {
+            "fire_protection":4,
+            "unbreaking":5
+        },
+        "netherite_chestplate":
+        {
+            "fire_protection":4,
+            "unbreaking":5
+        },
+        "netherite_leggings":
+        {
+            "fire_protection":4,
+            "unbreaking":5
+        }, 
+        "netherite_boots":
+        {
+            "fire_protection":4,
+            "unbreaking":5
+        },
+        "netherite_sword":
+        {
+            "unbreaking":5
+        },
+        "netherite_pickaxe":
+        {
+            "unbreaking":5
+        },
+        "netherite_axe":
+        {
+            "unbreaking":5
+        }, 
+        "netherite_shovel":
+        {
+            "unbreaking":5
+        },
+        "netherite_hoe":
+        {
+            "unbreaking":5
+        },
+        "farmersdelight:netherite_knife":
+        {
+            "unbreaking":5,
+            "backstabbing":3
+        },
+
+
+
+        "bettercopper:copper_sword":
+        {
+            "fortune":1,
+            "looting":3
+        },
+        "bettercopper:copper_pickaxe":
+        {
+            "fortune":1
+        },
+        "bettercopper:copper_axe":
+        {
+            "fortune":1
+        }, 
+        "bettercopper:copper_shovel":
+        {
+            "fortune":1
+        },
+        "bettercopper:copper_hoe":
+        {
+            "fortune":1
+        },
+        "kubejs:copper_knife":
+        {
+            "fortune":1,
+            "looting":3,
+            "backstabbing":3
+        },
+
+
+
+        "golden_sword":
+        {
+            "silk_touch":1
+        },
+        "golden_pickaxe":
+        {
+            "silk_touch":1
+        },
+        "golden_axe":
+        {
+            "silk_touch":1
+        }, 
+        "golden_shovel":
+        {
+            "silk_touch":1
+        },
+        "golden_hoe":
+        {
+            "silk_touch":1
+        },
+        "farmersdelight:golden_knife":
+        {
+            "silk_touch":1,
+            "backstabbing":3
+        },
+
+
+
+        "trident":
+        {
+            "loyalty":3,
+            "impaling":5
+        },
+
+        "farmersdelight:flint_knife":
+        {
+            "backstabbing":3
+        },
+        "farmersdelight:iron_knife":
+        {
+            "backstabbing":3
+        },
+
+        "turtle_helmet":
+        {
+            "aqua_affinity":1
+        },
+
+        "leather_leggings":
+        {
+            "swift_sneak":3
+        },
+        "leather_boots":
+        {
+            "feather_falling":4
+        }
+    },
+    
+    "remove_enchanted_books_from_villager_trades":true,
+    "remove_enchanted_books_from_loot_tables":true,
+    "disable_enchanted_visuals":true
+
+}

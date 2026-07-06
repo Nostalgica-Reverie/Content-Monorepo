@@ -1,0 +1,12 @@
+* Example mob mass addition file.  Add mobs with the pattern below and rename file to MassAdditionMobs.csv
+* Line, Dimension , Class**, Namespace:Mob, Weight, Mingroup , Maxgroup
+*
+* Example... 1, A, MONSTER, minecraft:phantom, 10, 1, 4
+*
+* Parm Dimension  : A, O, N, E for All, Overworld, Nether, The End
+* Parm Class      : MONSTER, CREATURE, AMBIENT, UNDERWATER, etc.
+* Parm Resource   : modname:mobname
+* Parm Weight     : a number 1 or higher.  1 is superrare, 5 is rare, 20 is uncommon, 80 is common.
+* Parm MinGroup   : a number 1 and less than MaxGroup
+* Parm MaxGroup   : a number higher than MinGroup and usually 5 or less.
+*

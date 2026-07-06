@@ -1,0 +1,148 @@
+# specialmobs:README.toml
+# This file contains helpful information about how to use the config files in this mod.
+
+
+  # Terminology used in Special Mobs configs:
+  #  * Mob                 - An entity that is 'alive', short for "Mobile" or MobEntity.
+  #  * Family              - The group of mobs based on (but not including) a particular vanilla mob; e.g., Creepers.
+  #  * Species             - A specific type of mob within a family; e.g., Fire Creepers or vanilla-replacement
+  #    Creepers.
+  #  * Vanilla Replacement - The one species within a family that is intended to be a replica of the base vanilla mob.
+  #  * Special Variant     - Any species that is not the family's vanilla replacement. Includes species that are
+  #    replicas of 'vanilla special variants'; i.e. Husks and Strays.
+  #  * Mob Replacer        - The tool that watches vanilla mob spawns and cancels them to spawn this mod's entities.
+
+
+  # Attribute List fields: General format = [ "namespace:attribute_name operation value", ... ]
+  #   Attribute lists are arrays of base attribute changes. Attributes are defined by their key in the attribute
+  #     registry, usually following the pattern 'namespace:attribute_name'.
+  #   The operations that can be performed are +, -, and *. The + and - operators change the attribute by adding the
+  #     value to it (or subtracting the value from it). The * operator changes the attribute by multiplying it by the
+  #     value.
+  #   Each entry in the attribute list is applied in the exact order listed.
+  #   As an example, the entry "minecraft:generic.max_health + 10.0" will increase a mob's max health by 10. By
+  #     convention, never use the + or - operators for movement speed (minecraft:generic.movement_speed).
+
+
+  # Registry Entry List fields: General format = [ "namespace:entry_name", ... ]
+  #   Registry entry lists are arrays of registry keys. Many things in the game, such as blocks or potions, are
+  #     defined by their registry key within a registry. For example, all items are registered in the "minecraft:item"
+  #     registry.
+  #   An asterisk '*' can be used to match all registry entries/keys belonging to X namespace. For example,
+  #     'minecraft:*' will match all vanilla entries.
+  #   Tags can also be used here. To declare a tag, start with a '#' followed by the rest of the tag path.
+  #   Tag example: '#minecraft:oak_logs'
+
+
+  # Environment List fields: General format =
+  #     [ "value environment1 condition1 & environment2 condition2 & ...", ... ]
+  #   Environment lists are arrays of environment entries. Each entry is a value followed by the environment
+  #     conditions that must be satisfied for the value to be chosen. The environments are tested in the order listed,
+  #     and the first matching entry is chosen.
+  #   See the bottom of this file for an explanation on each environment condition available.
+
+  # Environment conditions (for Environment List entries):
+  #   Many environment conditions can be inverted by using "!"; these are shown with (!) in the appropriate location.
+  #   Other environment conditions are numerical comparisons; these use the operators (shown as op) <, >, =, <=, >=,
+  #     or != to compare value.
+  # 
+  # Valid environment conditions are:
+  # 
+  #   "dimension_property (!)property":
+  #     Valid property values: "ultrawarm", "natural", "has_skylight", "has_ceiling", "fixed_time", "piglin_safe",
+  #       "bed_works", "respawn_anchor_works", "has_raids"
+  #     Dimension properties are the true/false values available to dimension types in data packs. See the wiki for
+  #       more info: [https://minecraft.fandom.com/wiki/Custom_dimension#Syntax].
+  # 
+  #   "dimension_type (!)namespace:dimension_type_name":
+  #     The world's dimension type. In vanilla, these are only "minecraft:overworld", "minecraft:the_nether", or
+  #       "minecraft:the_end".
+  # 
+  #   "rainfall op value":
+  #     Biome's rainfall parameter. If this is "= 0", it checks that rain is disabled. For reference, rainfall > 0.85
+  #       suppresses fire.
+  # 
+  #   "biome_temp op value OR (!)freezing":
+  #     Biome's temperature parameter. For reference, freezing is < 0.15 and hot is generally considered > 0.95.
+  # 
+  #   "temp op value OR (!)freezing":
+  #     Height-adjusted temperature. For reference, freezing is < 0.15 and hot is generally considered > 0.95.
+  # 
+  #   "biome_category (!)category":
+  #     Valid category values: "none", "taiga", "hills", "jungle", "badlands", "plains", "savanna", "icy", "the_end",
+  #       "beach", "forest", "ocean", "desert", "river", "swamp", "mushroom", "nether"
+  # 
+  #   "biome (!)namespace:biome_name":
+  #     The biome. See the wiki for vanilla biome names (resource locations)
+  #       [https://minecraft.fandom.com/wiki/Biome#Biome_IDs].
+  # 
+  #   "structure (!)namespace:structure_name":
+  #     The structure. See the wiki for vanilla structure names [https://minecraft.fandom.com/wiki/Structure#ID].
+  # 
+  #   "y op value":
+  #     The y-value. For reference, sea level is normally 63 and lava level is normally -54.
+  # 
+  #   "y_from_sea op value":
+  #     The y-value from sea level. Expect the only air < 0 to be in caves/ravines (which may still have direct view
+  #       of the sky).
+  # 
+  #   "position (!)state":
+  #     Valid state values: "can_see_sky", "is_in_village", "is_near_village", "is_near_raid", "is_in_water",
+  #       "is_in_lava", "is_in_fluid", "has_redstone_power"
+  #     Miscellaneous conditions that generally do what you expect. For reference, 'near' a village is ~3 chunks, and
+  #       redstone checks weak power.
+  # 
+  #   "difficulty op value":
+  #     The regional difficulty (0 to 6.75). This is based on many factors such as difficulty setting, moon
+  #       brightness, chunk inhabited time, and world time.
+  #     For reference, this scales up to the max after 63 days in the world and 150 days in a particular chunk, and
+  #       peaks during full moons. On Peaceful this is always 0, on Easy this is 0.75 to 1.5, on Normal this is 1.5 to
+  #       4.0, and on Hard this is 2.25 to 6.75.
+  # 
+  #   "special_difficulty op value":
+  #     The 'special multiplier' for regional difficulty (0 to 1). For reference, this is 0 when difficulty <= 2 and 1
+  #       when difficulty >= 4.
+  #     This is always 0 in Easy and below. In Normal, it maxes at absolute peak regional difficulty. In Hard, it
+  #       starts at 0.125 and maxes out in ~50 days.
+  # 
+  #   "weather (!)type":
+  #     Valid type values: "clear", "rain", "thunder"
+  # 
+  #   "moon_brightness op value":
+  #     The moon brightness (0 to 1). New moon has 0 brightness, full moon has 1 brightness. Intermediate phases are
+  #       0.25, 0.5, or 0.75.
+  # 
+  #   "moon_phase (!)phase":
+  #     Valid phase values: "full", "waning_gibbous", "last_quarter", "waning_crescent", "new", "waxing_crescent",
+  #       "first_quarter", "waxing_gibbous"
+  #     For reference, the first day in a new world is always a full moon.
+  # 
+  #   "day_time (!)time":
+  #     Valid time values: "day", "sunset", "night", "sunrise"
+  #     Note that the transition periods, sunset & sunrise, are considered as part of day & night, respectively.
+  # 
+  #   "time_from_midnight op value":
+  #     The absolute time in ticks away from midnight. Value must be 0 to 12000.
+  # 
+  #   "world_time op value":
+  #     The total time the world has existed, in ticks. For reference, each day cycle is 24000 ticks and each lunar
+  #       cycle is 192000 ticks.
+  # 
+  #   "chunk_time op value":
+  #     The total time the chunk has been loaded, in ticks. For reference, each day cycle is 24000 ticks and each
+  #       lunar cycle is 192000 ticks.
+  # 
+  #   "apocalypse_difficulty op value":
+  #     The Apocalypse Rebooted mod's difficulty (scale depends on your config). This is based on the nearest player's
+  #       current difficulty level. If no player exists, or the mod is not installed, it will never match any condition.
+  # 
+  #   "apocalypse_difficulty_or_time op value":
+  #     The Apocalypse Rebooted mod's difficulty (scale depends on your config). If the mod is not installed, this is
+  #       instead treated like a "world_time" condition.
+
+
+
+
+
+
+  secret_mode = false

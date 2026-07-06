@@ -1,0 +1,52 @@
+
+#Startup settings
+[startup]
+	#Blocklist for controlling which blocks can generate variants of a their type (if one exists).
+	#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+	enabled = ["+*"]
+
+	#Options for registered block types for additional placement generation.
+	[startup.types]
+
+		[startup.types.additionalplacements]
+
+			#Slabs
+			[startup.types.additionalplacements.slab]
+				#Blocklist for controlling which blocks (that are valid for this type) will generate variants of this type
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				enabled = ["+*"]
+
+			#Stairs
+			[startup.types.additionalplacements.stairs]
+				#Blocklist for controlling which blocks (that are valid for this type) will generate variants of this type
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				enabled = ["+*"]
+				#Blocklist to control which blocks will allow for vertical stair connections.
+				#Keep in mind vertical is RELATIVE to the placement of the stair - "vertical" for a vertically placed stair will be one of the two horizontal directions.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				allow_vertical_connections = ["+*"]
+				#Blocklist to control which blocks will allow for mixed stair connections.
+				#These are any valid combination of horizontal and vertical connection - as such, a stair that cannot connect vertically cannot connect complexly.
+				#This also controls connections between stairs who's facings don't necessarily match up - I.E. a stair facing UP_EAST and one facing EAST_UP.
+				#Keep in mind horizontal and vertical are RELATIVE to the placement of the stair - "vertical" and "horizontal" for a vertically placed stair are both horizontal directions.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				allow_mixed_connections = ["+*"]
+
+			#Carpets
+			[startup.types.additionalplacements.carpet]
+				#Blocklist for controlling which blocks (that are valid for this type) will generate variants of this type
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				enabled = ["+*"]
+
+			#Regular pressure plates
+			[startup.types.additionalplacements.pressure_plate]
+				#Blocklist for controlling which blocks (that are valid for this type) will generate variants of this type
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				enabled = ["+*"]
+
+			#Weighted pressure plates
+			[startup.types.additionalplacements.weighted_pressure_plate]
+				#Blocklist for controlling which blocks (that are valid for this type) will generate variants of this type
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				enabled = ["+*"]
+

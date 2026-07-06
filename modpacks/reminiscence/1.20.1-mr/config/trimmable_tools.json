@@ -1,0 +1,41 @@
+{
+  "tool_types": {
+    "trimmable_tools:hoe": "#minecraft:hoes",
+    "trimmable_tools:shovel": "#minecraft:shovels",
+    "trimmable_tools:axe": "#minecraft:axes",
+    "trimmable_tools:sword": "#minecraft:swords",
+    "trimmable_tools:pickaxe": "#minecraft:pickaxes"
+  },
+  "darker_materials": {
+    "iron": [
+      "minecraft:iron_axe",
+      "minecraft:iron_hoe",
+      "minecraft:iron_pickaxe",
+      "minecraft:iron_shovel",
+      "minecraft:iron_sword"
+    ],
+    "gold": [
+      "minecraft:golden_axe",
+      "minecraft:golden_hoe",
+      "minecraft:golden_pickaxe",
+      "minecraft:golden_shovel",
+      "minecraft:golden_sword"
+    ],
+    "netherite": [
+      "minecraft:netherite_axe",
+      "minecraft:netherite_hoe",
+      "minecraft:netherite_pickaxe",
+      "minecraft:netherite_shovel",
+      "minecraft:netherite_sword"
+    ],
+    "diamond": [
+      "minecraft:diamond_axe",
+      "minecraft:diamond_hoe",
+      "minecraft:diamond_pickaxe",
+      "minecraft:diamond_shovel",
+      "minecraft:diamond_sword"
+    ]
+  },
+  "extra_patterns": [],
+  "extra_materials": []
+}

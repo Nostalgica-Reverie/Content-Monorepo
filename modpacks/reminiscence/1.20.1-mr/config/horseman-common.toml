@@ -1,0 +1,59 @@
+
+[movement]
+	#When mounting a horse, rotate it to match player looking direction, instead of rotating the player. Default: true
+	rotate_horse_instead_of_player = true
+	#Fix horse jitter and reset back when riding up blocks (especially stairs) Mojang bug: MC-100830. Default: true
+	fix_horse_moved_wrongly = true
+	#Make horse step down one block faster by adding downwards velocity.
+	#Reduces slowdown when riding off a block, making riding much smoother. Default: true
+	horse_fast_step_down = true
+	#Makes 'horse_fast_step_down' work when stepping down two blocks.
+	#Makes fast step down work better for steep staircases, but may introduce some unwanted behavior elsewhere. Default: false
+	horse_fast_step_down_two_blocks = false
+	#Make horse airborne speed faster. Improves jumping distance (horizontal) and speed walking off heights. Default: true
+	increase_horse_airborne_speed = true
+	#Controls how much 'increase_horse_airborne_speed' increases over vanilla.
+	#0 - vanilla speed
+	#1 - full speed (same as running on the ground)
+	#Note: there is still small initial slowdown when running off a block (start falling), after which speed increases to proper value.
+	#Default: 0.5
+	#Range: 0.0 ~ 1.0
+	increase_horse_airborne_speed_amount = 0.5
+	#Additional step height added to horses. If set to 1 - horse will be able to step up two blocks. Set to 0 for vanilla behavior. Default 0.1.
+	#Range: -1.0 ~ 10.0
+	horse_step_height_modifier = 0.1
+	#Horse-type mobs are able to swim when ridden by holding a jump key. Exact types that cannot swim can be controlled by '#horseman:cannot_swim' entity tag. Default: true.
+	horse_swim_when_ridden = true
+	#Max distance (in blocks) from last dismount position that saddled horse can wander to. Set to -1 for vanilla behavior. Default: 16
+	#Range: -1 ~ 64
+	saddled_horse_wander_radius = 16
+	#Prevents rearing (horse stopping and standing up) when it's being ridden. Default: true.
+	ridden_horse_prevent_rearing = true
+
+[hitching]
+	#Right-clicking a fence while riding will leash the horse to it. Default: true
+	enabled = true
+	#Hitching requires Lead item to be present on a horse. If disabled, 'horse_hitch_lead_slot' will be disabled as well. Default: true
+	requires_lead = true
+	#Slot for a lead will be added to horse inventory menu. Default: true
+	#If disabled, Lead should be added by Sneak+Right-Clicking a Horse with an item. Default: true
+	lead_slot = true
+
+[misc]
+	#Right-clicking a Mule, Donkey or Llama that has chest with shears will remove the chest and drop its items. Default: true
+	shears_remove_chest = true
+	#Additional block breaking speed added when mounted. Set to 0 for vanilla behavior. Default 5 (regular breaking speed (same as without a mount)).
+	#Range: 0.0 ~ 5.0
+	mounted_block_break_speed_modifier = 5.0
+	#Horse-type mobs are able to fit in boats. Default: true.
+	horse_fits_in_boat = true
+	#Using Saddle on untamed horse-type mob while in creative mode tames it instantly. Default: true.
+	horse_creative_taming = true
+
+[free_camera]
+	#While horse is stationary - allow moving camera freely, without rotating the horse. Default: true
+	enabled = true
+	#Threshold in degrees after which horse will follow player rotation. Default: 100
+	#Range: 0.0 ~ 180.0
+	angle_threshold = 100.0
+
