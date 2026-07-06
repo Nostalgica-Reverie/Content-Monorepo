@@ -41,8 +41,8 @@ const SITES = [
 
 const LINK_PATTERN = /\[[^\]]*\]\(([^)\s]+)\)/g;
 
-async function markdownFiles(dir) {
-  const files = [];
+async function markdownFiles(dir: string): Promise<string[]> {
+  const files: string[] = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     if (entry.name.startsWith(".vitepress") || entry.name === "node_modules") continue;
     const full = join(dir, entry.name);
@@ -55,7 +55,7 @@ async function markdownFiles(dir) {
   return files;
 }
 
-async function exists(path) {
+async function exists(path: string): Promise<boolean> {
   try {
     await stat(path);
     return true;
@@ -66,7 +66,7 @@ async function exists(path) {
 
 // Resolves a link path against a site's built dist/ (cleanUrls: true in all
 // three configs, so /foo/bar serves foo/bar.html or foo/bar/index.html).
-async function resolvesInDist(distDir, path) {
+async function resolvesInDist(distDir: string, path: string): Promise<boolean> {
   const clean = path.replace(/^\/+/, "").replace(/\/+$/, "");
   const candidates = clean === ""
     ? [join(distDir, "index.html")]
@@ -81,12 +81,12 @@ async function resolvesInDist(distDir, path) {
   return false;
 }
 
-function siteForHostname(url) {
+function siteForHostname(url: string) {
   return SITES.find((site) => url.startsWith(site.hostname));
 }
 
 async function main() {
-  const distMissing = [];
+  const distMissing: string[] = [];
   for (const site of SITES) {
     if (!(await exists(site.distDir))) distMissing.push(site.name);
   }
@@ -98,7 +98,8 @@ async function main() {
     process.exit(0);
   }
 
-  const broken = [];
+  type BrokenLink = { from: string; url: string; targetSite: string; path: string; fragment: string | undefined };
+  const broken: BrokenLink[] = [];
   let checked = 0;
 
   for (const site of SITES) {
@@ -106,10 +107,11 @@ async function main() {
       const text = await readFile(file, "utf-8");
       for (const match of text.matchAll(LINK_PATTERN)) {
         const url = match[1];
+        if (url === undefined) continue;
         const target = siteForHostname(url);
         if (!target) continue;
         checked++;
-        const [path, fragment] = url.slice(target.hostname.length - 1).split("#");
+        const [path = "", fragment] = url.slice(target.hostname.length - 1).split("#");
         if (!(await resolvesInDist(target.distDir, path))) {
           broken.push({
             from: relative(repoRoot, file),

@@ -6,9 +6,27 @@ Prebuilt binaries for Linux, Windows, and macOS (amd64 and arm64) are published 
 
 Verify the download against `checksums.txt` (SHA-256) attached to the release.
 
+## go install
+
+With Go 1.26 or newer installed, a single command builds and installs the latest packwand from the monorepo:
+
+```sh
+go install git.nostalgica.net/Reverie-Projects/monorepo/src/packwand@latest
+```
+
+The binary is placed in `$(go env GOPATH)/bin` — make sure that directory is on your `PATH`.
+
+::: tip
+`@latest` resolves through the public Go module proxy, which can lag the tip of `main` by up to ~30 minutes. To fetch the newest commit straight from the repository, bypass the proxy:
+
+```sh
+GOPRIVATE=git.nostalgica.net go install git.nostalgica.net/Reverie-Projects/monorepo/src/packwand@latest
+```
+:::
+
 ## Building from source
 
-1. Install Go (1.25 or newer) from https://golang.org/dl/
+1. Install Go (1.26 or newer) from https://golang.org/dl/
 2. Clone the monorepo and build:
 
 ```sh

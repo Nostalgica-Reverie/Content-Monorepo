@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -673,7 +674,13 @@ func importMrpack(archivePath string, zr *zip.Reader, idx *mrIndex, customID str
 		}
 	}
 
-	overrides := extractOverrides(zr, subdir)
+	// Files already written as .pw.toml metadata must not also be extracted
+	// from overrides, or refresh would index the raw jar a second time.
+	indexedPaths := make(map[string]bool, len(idx.Files))
+	for _, f := range idx.Files {
+		indexedPaths[strings.ToLower(path.Clean(f.Path))] = true
+	}
+	overrides := extractOverrides(zr, subdir, indexedPaths)
 
 	if err := os.WriteFile(filepath.Join(subdir, ".packwizignore"), []byte(packwizIgnore), 0o644); err != nil {
 		cmd.Fail(fmt.Sprintf("failed to write .packwizignore: %v", err))
@@ -738,7 +745,9 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 	ex.Dir = subdir
 	ex.Stdout = os.Stdout
 	ex.Stderr = os.Stderr
+	cfImported := true
 	if err := ex.Run(); err != nil {
+		cfImported = false
 		fmt.Printf("packwand curseforge import not available (%v); scaffolding pack structure only\n", err)
 		initFlag, _ := loaderLatestFlag(loader)
 		init2 := exec.Command(workspace.SelfBin(), "init",
@@ -764,11 +773,17 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 		_ = os.WriteFile(filepath.Join(subdir, "cf-pending.txt"), []byte(pending.String()), 0o644)
 	}
 
-	overrideDir := cfm.Overrides
-	if overrideDir == "" {
-		overrideDir = "overrides"
+	// When curseforge import succeeded it has already copied the override
+	// files, skipping those referenced by mod metadata — extracting them
+	// again here would reintroduce the skipped jars as stray files.
+	overrides := 0
+	if !cfImported {
+		overrideDir := cfm.Overrides
+		if overrideDir == "" {
+			overrideDir = "overrides"
+		}
+		overrides = extractOverridesPrefix(zr, subdir, overrideDir+"/", nil)
 	}
-	overrides := extractOverridesPrefix(zr, subdir, overrideDir+"/")
 
 	if err := os.WriteFile(filepath.Join(subdir, ".packwizignore"), []byte(packwizIgnore), 0o644); err != nil {
 		cmd.Fail(fmt.Sprintf("failed to write .packwizignore: %v", err))
@@ -790,7 +805,11 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 	_ = os.WriteFile(filepath.Join(packDir, "changelog.md"), []byte(changelog), 0o644)
 
 	fmt.Printf("\nimported %s:\n", packID)
-	fmt.Printf("  %d override file(s) copied\n", overrides)
+	if cfImported {
+		fmt.Printf("  override files handled by curseforge import\n")
+	} else {
+		fmt.Printf("  %d override file(s) copied\n", overrides)
+	}
 	fmt.Printf("  manifest.json scaffolded — fill curseforge_id/modrinth_id before publishing\n")
 }
 
@@ -806,13 +825,20 @@ func detectCFLoader(loaders []cfModLoader) (loader, version string) {
 	return "", ""
 }
 
-func extractOverridesPrefix(zr *zip.Reader, subdir, prefix string) int {
+func extractOverridesPrefix(zr *zip.Reader, subdir, prefix string, indexedPaths map[string]bool) int {
 	count := 0
 	for _, f := range zr.File {
-		if !strings.HasPrefix(f.Name, prefix) || strings.HasSuffix(f.Name, "/") {
+		// Normalize the backslash separators written by some Windows zip
+		// tools (e.g. Compress-Archive) so prefix matching works.
+		name := strings.ReplaceAll(f.Name, "\\", "/")
+		if !strings.HasPrefix(name, prefix) || strings.HasSuffix(name, "/") || f.FileInfo().IsDir() {
 			continue
 		}
-		rel := strings.TrimPrefix(f.Name, prefix)
+		rel := strings.TrimPrefix(name, prefix)
+		if indexedPaths[strings.ToLower(path.Clean(rel))] {
+			cmd.Warn("skipping override %s (already referenced by the index)", f.Name)
+			continue
+		}
 		dest := filepath.Join(subdir, filepath.FromSlash(rel))
 		if !strings.HasPrefix(filepath.Clean(dest), filepath.Clean(subdir)+string(os.PathSeparator)) {
 			cmd.Warn("skipping suspicious archive path %s", f.Name)
@@ -975,10 +1001,10 @@ func sideFromEnv(env map[string]string) string {
 	}
 }
 
-func extractOverrides(zr *zip.Reader, subdir string) int {
+func extractOverrides(zr *zip.Reader, subdir string, indexedPaths map[string]bool) int {
 	count := 0
 	for _, prefix := range []string{"overrides/", "client-overrides/"} {
-		count += extractOverridesPrefix(zr, subdir, prefix)
+		count += extractOverridesPrefix(zr, subdir, prefix, indexedPaths)
 	}
 	return count
 }

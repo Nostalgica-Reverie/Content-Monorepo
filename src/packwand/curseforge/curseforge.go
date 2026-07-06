@@ -154,10 +154,12 @@ func parseSlugOrUrl(url string) (game string, category string, slug string, file
 
 var defaultFolders = map[uint32]map[uint32]string{
 	432: { // Minecraft
-		5:  "plugins", // Bukkit Plugins
-		12: "resourcepacks",
-		6:  "mods",
-		17: "saves",
+		5:    "plugins", // Bukkit Plugins
+		12:   "resourcepacks",
+		6:    "mods",
+		17:   "saves",
+		6552: "shaderpacks",
+		6945: "datapacks",
 	},
 }
 

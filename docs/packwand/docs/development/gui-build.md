@@ -17,7 +17,7 @@ Follow the [Tauri v2 prerequisites guide](https://v2.tauri.app/start/prerequisit
 
 - **Rust** (stable, via [rustup](https://rustup.rs/))
 - **Go 1.25+** (builds the `packwand` backend the app spawns)
-- **Node.js 20+** (only needed when rebuilding the Gleam frontend via `gui/ui/build.mjs`)
+- **Node.js 22.18+** (only needed when rebuilding the Gleam frontend via `gui/ui/build.mts`; the build script is TypeScript run via Node’s native type stripping)
 - The Tauri CLI: `cargo install tauri-cli --version "^2" --locked`
 
 Platform-specific webview dependencies:

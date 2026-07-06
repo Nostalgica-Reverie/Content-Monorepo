@@ -3,6 +3,7 @@ package packinterop
 import (
 	"archive/zip"
 	"errors"
+	"strings"
 )
 
 type zipReaderFile struct {
@@ -26,7 +27,10 @@ func (s *zipPackSource) updateFileList() {
 	for _, v := range s.Reader.File {
 		// Ignore directories
 		if !v.Mode().IsDir() {
-			s.cachedFileList[i] = zipReaderFile{v.Name, v}
+			// Some Windows tools (e.g. Compress-Archive) write zip entries
+			// with backslash separators, against the zip spec; normalize so
+			// the overrides/ prefix matching works on those packs too.
+			s.cachedFileList[i] = zipReaderFile{strings.ReplaceAll(v.Name, "\\", "/"), v}
 			i++
 		}
 	}

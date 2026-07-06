@@ -18,7 +18,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const commandsDir = join(here, "docs", "reference", "commands");
 const packwandSrc = join(here, "..", "..", "src", "packwand");
 
-function findPackwand() {
+function findPackwand(): [string, ...string[]] {
   if (process.env.PACKWAND_BIN && existsSync(process.env.PACKWAND_BIN)) {
     return [process.env.PACKWAND_BIN];
   }
@@ -26,7 +26,7 @@ function findPackwand() {
   return ["go", "run", "-C", packwandSrc, "."];
 }
 
-function pathToFilename(path) {
+function pathToFilename(path: string): string {
   return `packwand_${path.replace(/ /g, "_")}.md`;
 }
 
@@ -44,7 +44,7 @@ try {
     "Skipping CLI-reference coverage check: `packwand utils commands --json` is not available yet " +
       "(codex.md §4.2 depends on a flag from the CLI/core group - see agent-split.md's cross-group " +
       "dependency note). Once that flag lands this script will start enforcing coverage.\n" +
-      `Underlying error: ${error.message}`,
+      `Underlying error: ${error instanceof Error ? error.message : error}`,
   );
   process.exit(0);
 }

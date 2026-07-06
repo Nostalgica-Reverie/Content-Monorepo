@@ -48,16 +48,31 @@ Plus everything in packwiz:
 - Creation of remote file metadata from JAR files for CurseForge mods
 
 ## Installation
-Prebuilt binaries are not currently available.
 
-To install manually;
+### go install (recommended)
 
-1. Install Go (1.24 or newer) from https://golang.org/dl/
-2. run `cd src\packwand`
-3. Run `go install`. This may take a while.
+With Go 1.26 or newer installed:
+
+```sh
+go install git.nostalgica.net/Reverie-Projects/monorepo/src/packwand@latest
+```
+
+The binary is placed in `$(go env GOPATH)/bin` (make sure that directory is on your `PATH`). `@latest` resolves through the public Go module proxy, which can lag the tip of `main` by up to ~30 minutes; to build the newest commit straight from the repository instead:
+
+```sh
+GOPRIVATE=git.nostalgica.net go install git.nostalgica.net/Reverie-Projects/monorepo/src/packwand@latest
+```
+
+### From a clone
+
+1. Install Go (1.26 or newer) from https://golang.org/dl/
+2. Run `cd src/packwand`
+3. Run `go install .`. This may take a while.
+
+Prebuilt binaries are also published on the [Forgejo releases page](https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo/releases).
 
 ## Documentation
-Packwand lacks any current documentation, please check back later.
+See the Packwand documentation site: https://packwand.nostalgica.net
 
 ## License
 All packwand new features are under AGPL-3.0 or later. All original packwiz code remains under MIT license.

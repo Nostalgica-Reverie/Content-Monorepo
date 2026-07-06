@@ -38,7 +38,7 @@ if (process.platform === "win32") {
   }
 }
 
-let result;
+let result: ReturnType<typeof spawnSync>;
 try {
   result = spawnSync(gleam, ["build"], {
     cwd: here,
@@ -89,7 +89,7 @@ await writeFile(
 
 console.log("Copied Gleam frontend into gui/static.");
 
-function browserArtifact(source) {
+function browserArtifact(source: string): boolean {
   const name = basename(source);
   if (name.startsWith("_") || name === "fingerprint") return false;
   const extension = extname(name);

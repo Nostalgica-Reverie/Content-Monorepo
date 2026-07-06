@@ -11,7 +11,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const commandsDir = join(here, "docs", "reference", "commands");
 const packwandSrc = join(here, "..", "..", "src", "packwand");
 
-function findPackwand() {
+function findPackwand(): [string, ...string[]] {
   if (process.env.PACKWAND_BIN && existsSync(process.env.PACKWAND_BIN)) {
     return [process.env.PACKWAND_BIN];
   }
@@ -27,7 +27,7 @@ execFileSync(bin, [...binArgs, "utils", "markdown", "--dir", commandsDir], {
 });
 
 // Cobra prints the generating machine's user directories as flag defaults.
-const sanitizers = [
+const sanitizers: [RegExp, string][] = [
   [/\(default "[^"]*[\\/]+packwand[\\/]+cache"\)/g, '(default: your platform cache directory)'],
   [/\(default "[^"]*\.packwand\.toml"\)/g, '(default: .packwand.toml in your platform config directory)'],
 ];
