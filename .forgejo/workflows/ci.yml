@@ -1,10 +1,5 @@
 name: "CI"
 
-# Unified monorepo pipeline: changes → lint → test → build (parallel per language) → deploy.
-# Every step goes through the root Taskfile so CI and local development run the
-# exact same commands. Replaces packwand-ci.yml and docs-build.yml.
-# Tag releases are handled separately by packwand-release.yml.
-
 on:
   push:
     branches: ["main"]
@@ -36,11 +31,6 @@ concurrency:
 
 jobs:
   changes:
-    # Figures out which components actually changed so lint/test/build/deploy
-    # can skip toolchains that weren't touched, instead of always running
-    # everything. Falls back to "everything changed" whenever there's no safe
-    # base commit to diff against (tags, workflow_dispatch, first push to a
-    # branch) so we never silently skip work we should have done.
     runs-on: technocality
     timeout-minutes: 5
     outputs:
@@ -211,58 +201,114 @@ jobs:
         if: needs.changes.outputs.rust == 'true'
         run: $(go env GOPATH)/bin/task test-webview
 
-  build:
+  build-packwand:
+    name: "build: packwand (Go)"
     needs: [changes, lint, test]
     runs-on: technocality
     timeout-minutes: 25
-    strategy:
-      matrix:
-        include:
-          - name: packwand (Go)
-            task: build-packwand
-            toolchains: go
-          - name: packwiz-bootstrap (Go)
-            task: build-bootstrap
-            toolchains: go
-          - name: packwiz-installer (Kotlin)
-            task: build-installer
-            toolchains: java
-          - name: mod-browser-webview (Rust)
-            task: build-webview
-            toolchains: rust
-    name: "build: ${{ matrix.name }}"
-    if: (matrix.toolchains == 'go' && needs.changes.outputs.go == 'true') || (matrix.toolchains == 'java' && needs.changes.outputs.installer == 'true') || (matrix.toolchains == 'rust' && needs.changes.outputs.rust == 'true')
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
           fetch-depth: 0
           filter: blob:none
       - uses: https://github.com/actions/setup-go@v5
+        if: needs.changes.outputs.go == 'true'
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
+      - name: Install Task
+        if: needs.changes.outputs.go == 'true'
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Build
+        if: needs.changes.outputs.go == 'true'
+        run: $(go env GOPATH)/bin/task build-packwand
+
+  build-bootstrap:
+    name: "build: packwiz-bootstrap (Go)"
+    needs: [changes, lint, test]
+    runs-on: technocality
+    timeout-minutes: 25
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - uses: https://github.com/actions/setup-go@v5
+        if: needs.changes.outputs.go == 'true'
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
+      - name: Install Task
+        if: needs.changes.outputs.go == 'true'
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Build
+        if: needs.changes.outputs.go == 'true'
+        run: $(go env GOPATH)/bin/task build-bootstrap
+
+  build-installer:
+    name: "build: packwiz-installer (Kotlin)"
+    needs: [changes, lint, test]
+    runs-on: technocality
+    timeout-minutes: 25
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - uses: https://github.com/actions/setup-go@v5
+        if: needs.changes.outputs.installer == 'true'
         with:
           go-version: "stable"
           cache: true
           cache-dependency-path: src/packwand/go.sum
       - uses: https://github.com/actions/setup-java@v4
-        if: matrix.toolchains == 'java'
+        if: needs.changes.outputs.installer == 'true'
         with:
           distribution: temurin
           java-version: "21"
           cache: gradle
+      - name: Install Task
+        if: needs.changes.outputs.installer == 'true'
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Build
+        if: needs.changes.outputs.installer == 'true'
+        run: $(go env GOPATH)/bin/task build-installer
+
+  build-webview:
+    name: "build: mod-browser-webview (Rust)"
+    needs: [changes, lint, test]
+    runs-on: technocality
+    timeout-minutes: 25
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - uses: https://github.com/actions/setup-go@v5
+        if: needs.changes.outputs.rust == 'true'
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
       - name: Install Linux webview dependencies
-        if: matrix.toolchains == 'rust'
+        if: needs.changes.outputs.rust == 'true'
         run: |
           apt-get update
           apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev
       - uses: https://github.com/dtolnay/rust-toolchain@stable
-        if: matrix.toolchains == 'rust'
+        if: needs.changes.outputs.rust == 'true'
       - uses: https://github.com/Swatinem/rust-cache@v2
-        if: matrix.toolchains == 'rust'
+        if: needs.changes.outputs.rust == 'true'
         with:
           workspaces: lib/mod-browser-webview
       - name: Install Task
+        if: needs.changes.outputs.rust == 'true'
         run: go install github.com/go-task/task/v3/cmd/task@latest
       - name: Build
-        run: $(go env GOPATH)/bin/task ${{ matrix.task }}
+        if: needs.changes.outputs.rust == 'true'
+        run: $(go env GOPATH)/bin/task build-webview
 
   deploy:
     # Artifact preparation on main: docs sites + GoReleaser snapshot archives +
@@ -271,7 +317,7 @@ jobs:
     # installer or vice versa. Tagged releases publish through
     # packwand-release.yml and release-notes below.
     if: github.ref == 'refs/heads/main'
-    needs: [changes, build]
+    needs: [changes, build-packwand, build-bootstrap, build-installer, build-webview]
     runs-on: technocality
     timeout-minutes: 20
     steps:
@@ -366,7 +412,7 @@ jobs:
     # (.chglog/<component>/config.yml) and attach it to the Forgejo release.
     # packwand binaries themselves are attached by packwand-release.yml.
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [build]
+    needs: [build-packwand, build-bootstrap, build-installer, build-webview]
     runs-on: technocality
     timeout-minutes: 10
     steps:
