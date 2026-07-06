@@ -1,0 +1,452 @@
+# crust:client_extra_inv_buttons.toml
+# Options to modify the extra inventory buttons displayed. Extra inventory buttons are essentially macros that send
+#   commands for you. You still need adequate permission to run the commands.
+# In general, you must close and reopen your inventory to see changes made to this config.
+
+
+# Category: general
+# Options to modify the extra inventory buttons displayed. Extra inventory buttons are essentially macros that send
+#   commands for you.
+# You still need permission to run the commands.
+
+  # Whether extra inventory buttons are enabled. Each may still be hidden/disabled individually.
+  # Does not affect hotkeys (key bindings) assigned to buttons.
+  # <Boolean> Valid Values: { true, false }, Default: false
+  general.enabled = false
+
+  # If true, built-in buttons that are invalid due to temporary conditions will be grayed-out.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.disable_invalid = true
+  # If true, buttons that are unusable due to permissions will not be displayed.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.hide_unusable = true
+  # If true, extra inventory buttons will be hidden while the recipe book is open.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.hide_for_recipe_book = true
+
+  # The number of buttons that can be displayed per row. The number of rows is automatically calculated.
+  # <Integer> Range: ≥ 0, Default: 4
+  general.buttons_per_row = 4
+  # The buttons displayed in the inventory, in the order you want them displayed. These are ordered left-to-right,
+  #   then wrapped into rows. See below for all valid button names.
+  # You may assign a hotkey to any button in your options, whether or not you choose to display it.
+  # <Button List> Format: [ "button1", "button2", ... ], Default: [ "magnetMode", "destroyOnPointer", "toggleRain",
+  #   "weatherStorm", "superVisionMode", "superSpeedMode", "day", "night", "noPickupMode", "godMode", "gameMode",
+  #   "killAll", "netherPortal", "endPortal", "clearEffects", "fullHeal" ]
+  general.displayed_buttons = [
+    "magnetMode",
+    "destroyOnPointer",
+    "toggleRain",
+    "weatherStorm",
+    "superVisionMode",
+    "superSpeedMode",
+    "day",
+    "night",
+    "noPickupMode",
+    "godMode",
+    "gameMode",
+    "killAll",
+    "netherPortal",
+    "endPortal",
+    "clearEffects",
+    "fullHeal"
+  ]
+  # Built-in buttons:
+  # "fullHeal", "clearEffects", "destroyOnPointer", "killAll", "netherPortal", "endPortal", "day", "night",
+  #   "toggleDay", "weatherClear", "weatherRain", "weatherStorm", "toggleRain", "gameMode", "magnetMode", "godMode",
+  #   "superVisionMode", "superSpeedMode", "noPickupMode"
+  # Custom buttons:
+  # "custom1", "custom2", ..., "custom16".  (same as the category name).
+
+  # The anchor position for the extra inventory buttons. That is, where they should be positioned relative to the
+  #   screen or inventory GUI.
+  # <Enum> Valid Values: { "screen_top", "top", "center", "bottom", "screen_bottom" }, Default: "screen_top"
+  general.anchor.vertical = "screen_top"
+  general.anchor.horizontal = "screen_left"
+
+  # The position offset for the extra inventory buttons from the anchor position, in GUI pixels. Negative values move
+  #   the buttons toward the top/left, positive move them toward the bottom/right.
+  # <Integer> Range: Any Value, Default: 16
+  general.offset.vertical = 16
+  general.offset.horizontal = 16
+
+
+# Category: built_in_buttons
+# Options for built-in buttons.
+
+  # The duration (seconds) to set the weather for when using the various built-in weather buttons. If 0, the duration
+  #   is decided 'naturally' by the world.
+  # <Integer> Range: 0 ~ 1000000, Default: 6000
+  built_in_buttons.weather.duration = 6000
+
+  # The max range (blocks) to request for magnet mode when using the "magnetMode" button. Leaving this at a very high
+  #   value effectively just sets your range to the max allowed by the server.
+  # <Number> Range: ≥ 0.0, Default: 3.4E38
+  built_in_buttons.magnet_mode.max_range = 3.4E38
+
+  # Whether undying mode (prevents death) should be toggled when using the "godMode" button.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  built_in_buttons.god_mode.undying = true
+  # Whether unbreaking mode (prevents item break) should be toggled when using the "godMode" button.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  built_in_buttons.god_mode.unbreaking = true
+  # The level for uneating mode (minimum food level in half-drumsticks) to request when using the "godMode" button.
+  #   Set this to 0 if you don't want to toggle uneating mode.
+  # <Integer> Range: 0 ~ 20, Default: 7
+  built_in_buttons.god_mode.uneating = 7
+
+  # The speed multiplier to request for super-speed mode when using the "superSpeedMode" button. Setting this at a
+  #   very high value effectively just sets your speed to the max allowed by the server.
+  # Warning: Very large speed multipliers may break the game's physics.
+  # <Number> Range: ≥ 1.0, Default: 8.0
+  built_in_buttons.super_speed.multiplier = 8.0
+
+
+# Category: custom1
+# Options defining the look and function of custom button #1.
+
+  # A short description of the custom button's function.
+  # <String> Default: "+5 levels"
+  custom1.tooltip = "+5 levels"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "xp_plus.png"
+  custom1.icon = "xp_plus.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom1.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "experience add @s 5 levels" ]
+  custom1.commands = [
+    "experience add @s 5 levels"
+  ]
+
+
+# Category: custom2
+# Options defining the look and function of custom button #2.
+
+  # A short description of the custom button's function.
+  # <String> Default: "-5 levels"
+  custom2.tooltip = "-5 levels"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "xp_minus.png"
+  custom2.icon = "xp_minus.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom2.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "experience add @s -5 levels" ]
+  custom2.commands = [
+    "experience add @s -5 levels"
+  ]
+
+
+# Category: custom3
+# Options defining the look and function of custom button #3.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Locate woodland mansion"
+  custom3.tooltip = "Locate woodland mansion"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "map_mansion.png"
+  custom3.icon = "map_mansion.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom3.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "locate mansion" ]
+  custom3.commands = [
+    "locate mansion"
+  ]
+
+
+# Category: custom4
+# Options defining the look and function of custom button #4.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Locate ocean monument"
+  custom4.tooltip = "Locate ocean monument"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "map_monument.png"
+  custom4.icon = "map_monument.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom4.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "locate monument" ]
+  custom4.commands = [
+    "locate monument"
+  ]
+
+
+# Category: custom5
+# Options defining the look and function of custom button #5.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Locate stronghold"
+  custom5.tooltip = "Locate stronghold"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "ender_eye.png"
+  custom5.icon = "ender_eye.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom5.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "locate stronghold" ]
+  custom5.commands = [
+    "locate stronghold"
+  ]
+
+
+# Category: custom6
+# Options defining the look and function of custom button #6.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Locate jungle biome"
+  custom6.tooltip = "Locate jungle biome"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "world.png"
+  custom6.icon = "world.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom6.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "locatebiome minecraft:jungle" ]
+  custom6.commands = [
+    "locatebiome minecraft:jungle"
+  ]
+
+
+# Category: custom7
+# Options defining the look and function of custom button #7.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Reload data packs"
+  custom7.tooltip = "Reload data packs"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "crafting_table_side.png"
+  custom7.icon = "crafting_table_side.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom7.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "reload" ]
+  custom7.commands = [
+    "reload"
+  ]
+
+
+# Category: custom8
+# Options defining the look and function of custom button #8.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Grant all advancements"
+  custom8.tooltip = "Grant all advancements"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "cake.png"
+  custom8.icon = "cake.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom8.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "advancement grant @s everything" ]
+  custom8.commands = [
+    "advancement grant @s everything"
+  ]
+
+
+# Category: custom9
+# Options defining the look and function of custom button #9.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Revoke all advancements"
+  custom9.tooltip = "Revoke all advancements"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "cake_is_a_lie.png"
+  custom9.icon = "cake_is_a_lie.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom9.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "advancement revoke @s everything" ]
+  custom9.commands = [
+    "advancement revoke @s everything"
+  ]
+
+
+# Category: custom10
+# Options defining the look and function of custom button #10.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Set spawn point"
+  custom10.tooltip = "Set spawn point"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "compass.png"
+  custom10.icon = "compass.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom10.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "spawnpoint" ]
+  custom10.commands = [
+    "spawnpoint"
+  ]
+
+
+# Category: custom11
+# Options defining the look and function of custom button #11.
+
+  # A short description of the custom button's function.
+  # <String> Default: "\"Respawn\""
+  custom11.tooltip = "\"Respawn\""
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "soul.png"
+  custom11.icon = "soul.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom11.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "kill" ]
+  custom11.commands = [
+    "kill"
+  ]
+
+
+# Category: custom12
+# Options defining the look and function of custom button #12.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Clear inventory"
+  custom12.tooltip = "Clear inventory"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "fire.png"
+  custom12.icon = "fire.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom12.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "clear" ]
+  custom12.commands = [
+    "clear"
+  ]
+
+
+# Category: custom13
+# Options defining the look and function of custom button #13.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Simulate chest loot"
+  custom13.tooltip = "Simulate chest loot"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "chest_open.png"
+  custom13.icon = "chest_open.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom13.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "clear", "loot give @s loot
+  #   minecraft:chests/simple_dungeon" ]
+  custom13.commands = [
+    "clear",
+    "loot give @s loot minecraft:chests/simple_dungeon"
+  ]
+
+
+# Category: custom14
+# Options defining the look and function of custom button #14.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Simulate loot of nearest mob"
+  custom14.tooltip = "Simulate loot of nearest mob"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "kill.png"
+  custom14.icon = "kill.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom14.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "loot give @s kill
+  #   @e[limit=1,sort=nearest,type=!player]" ]
+  custom14.commands = [
+    "loot give @s kill @e[limit=1,sort=nearest,type=!player]"
+  ]
+
+
+# Category: custom15
+# Options defining the look and function of custom button #15.
+
+  # A short description of the custom button's function.
+  # <String> Default: "Check attributes of nearest mob"
+  custom15.tooltip = "Check attributes of nearest mob"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "magnifying_glass.png"
+  custom15.icon = "magnifying_glass.png"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom15.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "attribute
+  #   @e[limit=1,sort=nearest,type=!player] minecraft:generic.max_health get", "attribute
+  #   @e[limit=1,sort=nearest,type=!player] minecraft:generic.armor get", "attribute
+  #   @e[limit=1,sort=nearest,type=!player] minecraft:generic.armor_toughness get", "attribute
+  #   @e[limit=1,sort=nearest,type=!player] minecraft:generic.follow_range get", "attribute
+  #   @e[limit=1,sort=nearest,type=!player] minecraft:generic.movement_speed get", "attribute
+  #   @e[limit=1,sort=nearest,type=!player] minecraft:generic.attack_damage get" ]
+  custom15.commands = [
+    "attribute @e[limit=1,sort=nearest,type=!player] minecraft:generic.max_health get",
+    "attribute @e[limit=1,sort=nearest,type=!player] minecraft:generic.armor get",
+    "attribute @e[limit=1,sort=nearest,type=!player] minecraft:generic.armor_toughness get",
+    "attribute @e[limit=1,sort=nearest,type=!player] minecraft:generic.follow_range get",
+    "attribute @e[limit=1,sort=nearest,type=!player] minecraft:generic.movement_speed get",
+    "attribute @e[limit=1,sort=nearest,type=!player] minecraft:generic.attack_damage get"
+  ]
+
+
+# Category: custom16
+# Options defining the look and function of custom button #16.
+
+  # A short description of the custom button's function.
+  # <String> Default: "custom16"
+  custom16.tooltip = "custom16"
+  # The button icon. This is a relative path from "crust:textures/icon/". If this does not end in ".png", this string
+  #   will be rendered instead of a texture.
+  # <String> Default: "16"
+  custom16.icon = "16"
+  # The button icon (or text) color. Pure white (the default) is effectively no tint.
+  # <Integer> Range: 0x000000 ~ 0xFFFFFF, Default: 0xFFFFFF
+  custom16.icon_color = 0xFFFFFF
+  # A list of commands to execute when the custom button is pressed. These are sent to the server in the order listed,
+  #   as if you typed them into chat.
+  # <Command List> Format: [ "command1", "command2", ... ], Default: [ "kill" ]
+  custom16.commands = [
+    "kill"
+  ]

@@ -1,0 +1,19 @@
+
+[Functionality]
+	"Enable Airstriking" = true
+	"Airstriking doesn't work whilst on the ground" = true
+	"Touching the ground resets your Airstrike combo" = true
+	"Airstrikes only work on critical strikes" = true
+	"Airstrikes only work when holding items defined in valid_airstriking_items tag" = true
+	"Airstrikes won't work if in water" = false
+	"Airdashing Airstrikes - Propels you and the enemy forwards" = true
+	"Airdashes only work when holding items defined in valid_airdashing_items tag - Must be items that can also Airstrike" = true
+
+[Numbers]
+	"1 - Base Airstrike strength on Player" = 0.5
+	"2 - Additional Airstrike strength on Player" = 0.1
+	"3 - Base Airstrike strength on Enemy" = 0.5
+	"4 - Additional Airstrike Strength on Enemy" = 0.24
+	"5 - The extra amount of knockback applied to enemies if Airdashing Airstrikes are enabled" = 2.0
+	"6 - The strength of your airdash if Airdashing Airstrikes are enabled" = 0.8
+

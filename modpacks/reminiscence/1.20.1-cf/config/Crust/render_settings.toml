@@ -1,0 +1,17 @@
+# crust:render_settings.toml
+# Misc. settings for in-world rendering related features.
+
+
+# Category: block_entity_BB_rendering
+# Options for Crust's block entity bounding box renderer.
+
+  # If true, block entities close to the player that support Crust's bounding box outline rendering will draw their
+  #   boxes if 'show entity hitboxes' is active. This is primarily a debug feature.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  block_entity_BB_rendering.enabled = true
+
+  # If block entity bounding box rendering is enabled, this value determines the 'radius' in chunks around the player
+  #   in which Crust will look for block entities to render bounding boxes for. A value of 1 means only the chunk the
+  #   player is standing in. This value is also capped by the effective render distance.
+  # <Integer> Range: ≥ 1, Default: 3
+  block_entity_BB_rendering.distance = 3

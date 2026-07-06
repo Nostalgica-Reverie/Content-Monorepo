@@ -1,0 +1,47 @@
+
+[items]
+	#Turtle Shells now give unlimited Water Breathing as long as they are on, but run out of durability as they do so
+	"Turtle Shell rework" = true
+
+	[items.trades]
+		"Clerics buy thrasher teeth" = true
+		"Leatherworkers sell bedrolls" = true
+
+[generation]
+
+	[generation.structures]
+		#If Mossy Cobblestone and Stone Bricks are replaced with Kelpy Cobblestone and Stone Bricks in Ocean Ruins
+		"Kelpy Ocean Ruins" = true
+
+[mobs]
+	#The max height that Nautilus can spawn at
+	#Range: -64 ~ 320
+	"Nautilus max spawn height" = 60
+
+	[mobs.thrasher]
+		#The max height that Thrashers can spawn at
+		#Range: -64 ~ 320
+		"Thrasher max spawn height" = 58
+		#The chance of a Thrasher spawning during the daytime
+		#Range: 0.0 ~ 1.0
+		"Thrasher daytime spawn chance" = 0.0
+		#The chance a Thrasher has of spawning as a Great Thrasher in Deep Frozen Oceans
+		#Range: 0.0 ~ 1.0
+		"Great Thrasher spawn chance" = 0.11
+
+	[mobs.squid]
+		#If Squids give nearby entities Blindness when releasing ink
+		"Squids give Blindness" = true
+		#If Glow Squids give nearby entities Night Vision when releasing ink
+		"Glow Squids give Night Vision" = true
+
+[misc]
+
+	[misc.renewable_sand]
+		#If Sand variants should be renewable by placing their respective Sandstone above a Bubble Column
+		"Renewable Sand" = true
+		#If 'drag' Bubble Columns from Magma Blocks should be required to renew Sand and Gravel
+		"Renewable Sand requires Magma Blocks" = true
+		#If Gravel should be renewable by placing Cobblestone above a Bubble Column
+		"Renewable Gravel" = true
+

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "X": {
+      "item": "kubejs:cobbled_granite"
+    } 
+  },
+  "pattern": [
+    "XX",
+    "XX"
+  ],
+  "result": {
+     "count": 4,
+    "item": "kubejs:cobbled_granite_bricks"
+  },
+  "show_notification": true
+}

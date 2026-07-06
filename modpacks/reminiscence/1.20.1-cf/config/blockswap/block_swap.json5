@@ -1,0 +1,140 @@
+/*
+This file uses the ".json5" file extension which allows for comments like this in a json file!
+Your text editor may show this file with invalid/no syntax, if so, we recommend you download:
+
+VSCode: https://code.visualstudio.com/
+JSON5 plugin(for VSCode): https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-json5
+
+to make editing this file much easier.
+*/
+{
+	// Generates all block states for all blocks in the registry.
+	"generate_all_known_states": false,
+	// Whether blocks are replaced in existing chunks.
+	"retro_gen": true,
+	/* A map of states that specifies what the "old" block state is and what its "new" block state is.
+	   See "known_states" folder("generate_all_known_states" must be set to true in this config) to see all known block states available for all blocks available in the registry.
+	   Example:
+	    "state_swapper": [
+	    	{
+	    		"new": {
+	    			"Name": "minecraft:birch_log",
+	    			// Properties define the state of this block/fluid.
+	    			"Properties": {
+	    				"axis": "x"
+	    			}
+	    		},
+	    		"old": {
+	    			"Name": "minecraft:oak_log",
+	    			// Properties define the state of this block/fluid.
+	    			"Properties": {
+	    				"axis": "z"
+	    			}
+	    		}
+	    	},
+	    	{
+	    		"new": {
+	    			"Name": "minecraft:birch_leaves",
+	    			// Properties define the state of this block/fluid.
+	    			"Properties": {
+	    				"distance": "7",
+	    				"persistent": "true"
+	    			}
+	    		},
+	    		"old": {
+	    			"Name": "minecraft:acacia_log",
+	    			// Properties define the state of this block/fluid.
+	    			"Properties": {
+	    				"axis": "z"
+	    			}
+	    		}
+	    	},
+	    	{
+	    		"new": {
+	    			"Name": "minecraft:jungle_log",
+	    			// Properties define the state of this block/fluid.
+	    			"Properties": {
+	    				"axis": "x"
+	    			}
+	    		},
+	    		"old": {
+	    			"Name": "minecraft:birch_log",
+	    			// Properties define the state of this block/fluid.
+	    			"Properties": {
+	    				"axis": "z"
+	    			}
+	    		}
+	    	},
+	    	{
+	    		"new": {
+	    			"Name": "minecraft:jungle_planks",
+	    		},
+	    		"old": {
+	    			"Name": "minecraft:acacia_planks",
+	    			}
+	    		}
+	    	}
+	    ]
+	*/
+	"state_swapper": [],
+	/* A map of blocks that specifies what the "old" block is and what its "new" block is.
+	   Example:
+	   	"swapper": {
+	   		"minecraft:coarse_dirt": "minecraft:dirt",
+	   		"minecraft:diamond_block": "minecraft:emerald_block"
+	   	}
+	*/
+	"swapper": 
+	{ 
+		"betterend:tenanea_outer_leaves": "minecraft:air",
+		"betterend:lucernia_outer_leaves": "minecraft:air",
+		"betterend:mossy_glowshroom_fur": "minecraft:air",
+		"betterend:amaranita_fur": "minecraft:air",
+		"betterend:blue_vine_fur": "minecraft:air",
+		"betterend:cyan_moss": "minecraft:air",
+		"betterend:bulb_moss": "minecraft:air",
+		"betterend:twisted_moss": "minecraft:air",
+		"betterend:ruscus": "minecraft:air",
+		"betterend:glowing_pillar_leaves": "minecraft:air",
+		"betterend:tail_moss": "minecraft:air",
+		"betterend:filalux_wings": "minecraft:air",
+		"deep_aether:mini_golden_grass": "minecraft:air",
+		"deep_aether:short_golden_grass": "minecraft:air",
+		"deep_aether:conberry_wall": "deep_aether:holystone_tile_wall",
+		"deep_aether:sunroot_wall": "deep_aether:holystone_tile_wall",
+		"deep_aether:yagroot_wall": "deep_aether:holystone_tile_wall",
+		"deep_aether:roseroot_wall": "deep_aether:holystone_tile_wall",
+		"deep_aether:cruderoot_wall": "deep_aether:holystone_tile_wall",
+		"deep_aether:combiner": "minecraft:air",
+		"deep_aether:rotten_roseroot_log": "minecraft:air",
+		"deep_aether:skyjade_lantern": "minecraft:lantern",
+		"deep_aether:skyjade_chain": "minecraft:chain",
+		"upgrade_aquatic:beachgrass": "minecraft:air",
+		"upgrade_aquatic:tall_beachgrass": "minecraft:air",
+		"betterend:amber_ore": "minecraft:end_stone",
+		"betterend:ender_ore": "minecraft:end_stone",
+		"betterend:amber_root_seed": "minecraft:air",
+		"betterend:chorus_mushroom_seed": "minecraft:air",
+		"betterend:bubble_coral": "minecraft:air",
+		"betterend:salteago": "minecraft:air",
+		"betterend:orango": "minecraft:air",
+		"betterend:magnula": "minecraft:air",
+		"betterend:jungle_fern": "minecraft:air",
+		"betterend:aurant_polypore": "minecraft:air",
+		"betterend:purple_polypore": "minecraft:air",
+		"betterend:small_jellyshroom": "minecraft:air",
+		"betterend:charnia_cyan": "upgrade_aquatic:acan_coral",
+		"betterend:charnia_green": "upgrade_aquatic:acan_coral",
+		"betterend:charnia_orange": "upgrade_aquatic:finger_coral",
+		"betterend:charnia_light_blue": "upgrade_aquatic:finger_coral",
+		"betterend:charnia_red": "upgrade_aquatic:petal_coral",
+		"betterend:charnia_purple": "upgrade_aquatic:petal_coral",
+		"betterend:crystal_moss_cover": "minecraft:air",
+		"aether:skyroot_bookshelf": "minecraft:bookshelf",
+		"betterend:sandy_jadestone": "minecraft:end_stone",
+		"betterend:azure_jadestone": "minecraft:end_stone",
+		"betterend:virid_jadestone": "minecraft:end_stone",
+		"deep_aether:raw_clorite": "aether:holystone"
+
+	}
+}

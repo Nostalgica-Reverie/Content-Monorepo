@@ -1,0 +1,451 @@
+[
+    {
+        "mob": "minecraft:turtle",
+        "dimension": "minecraft:overworld",
+        "biome": ["minecraft:ocean", "minecraft:warm_ocean", "minecraft:deep_ocean", "minecraft:lukewarm_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:river"],
+        "result": "allow"
+    },
+
+    {
+        "mob": "minecraft:guardian",
+        "dimension": "minecraft:overworld",
+        "biome": ["minecraft:ocean", "minecraft:warm_ocean", "minecraft:deep_ocean", "minecraft:lukewarm_ocean", "minecraft:deep_lukewarm_ocean"],
+        "mintime": 13000,
+        "maxtime": 24000,
+        "result": "allow"
+    },
+
+    {
+        "mob": "minecraft:elder_guardian",
+        "dimension": "minecraft:overworld",
+        "biome": ["minecraft:ocean", "minecraft:warm_ocean", "minecraft:deep_ocean", "minecraft:lukewarm_ocean", "minecraft:deep_lukewarm_ocean"],
+        "mintime": 13000,
+        "maxtime": 24000,
+        "result": "allow"
+    },
+
+    {
+        "mob": "quark:crab",
+        "dimension": "minecraft:overworld",
+        "biome": ["minecraft:swamp", "minecraft:mangrove_swamp", "minecraft:river"],
+        "result": "allow"
+    },
+
+    {
+        "mob": "caverns_and_chasms:peeper",
+        "dimension": "minecraft:overworld",
+        "result": "deny"
+    },
+    {
+        "mob": "caverns_and_chasms:peeper",
+        "dimension": "minecraft:overworld",
+        "biome": "#minecraft:is_overworld",
+        "minspawndist" : 100,
+        "maxspawndist" : 200,
+        "minlight_full": 7,
+        "result": "allow"
+    },
+
+    {
+        "mob": "naturalist:giraffe",
+        "dimension": "minecraft:overworld",
+        "biome": "#naturalist:has_giraffe",
+        "result": "allow"
+    },
+
+    {
+        "mob": "naturalist:boar",
+        "when": "onjoin",
+        "dimension": "minecraft:overworld",
+        "biome": "#naturalist:has_boar",
+        "result": "allow"
+    },
+
+    {
+        "mob": "aether:evil_whirlwind",
+        "when": "onjoin",
+        "dimension": "minecraft:the_nether",
+        "biome": ["minecraft:nether_wastes"],
+        "result": "allow"
+    },
+
+    {
+        "mob": "minecraft:cave_spider",
+        "when": "onjoin",
+        "dimension": "minecraft:overworld",
+        "biome": ["#minecraft:is_desert", "minecraft:dripstone_caves"],
+        "minlight_full": 7,
+        "result": "allow"
+    },
+
+
+
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "random": 0.005,
+        "helditem": [
+        "90=bettercopper:copper_pickaxe",
+        "60=bettercopper:copper_shovel",
+        "10=bettercopper:copper_sword",
+        "10=bettercopper:copper_axe"
+        ],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "random": 0.0015,
+        "armorlegs": ["bettercopper:copper_leggings"],
+        "armorboots": ["bettercopper:copper_boots"],
+        "armorhelmet": ["bettercopper:copper_helmet"],
+        "armorchest": ["bettercopper:copper_chestplate"],
+        "result": "allow"
+    },
+
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.02,
+        "helditem": [
+            "100=minecraft:wooden_pickaxe",
+            "100=minecraft:stone_pickaxe",
+            "80=bettercopper:copper_pickaxe",
+            "50=minecraft:iron_pickaxe",
+            "40=caverns_and_chasms:silver_pickaxe",
+            "60=minecraft:stone_shovel",
+            "60=bettercopper:copper_shovel",
+            "40=minecraft:iron_shovel",
+            "30=minecraft:stone_axe",
+            "30=bettercopper:copper_axe",
+            "20=minecraft:iron_axe",
+            "25=minecraft:stone_sword",
+            "25=bettercopper:copper_sword",
+            "15=minecraft:iron_sword"
+        ],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.055,
+        "armorlegs": ["bettercopper:copper_leggings"],
+        "armorboots": ["bettercopper:copper_boots"],
+        "armorhelmet": ["bettercopper:copper_helmet"],
+        "armorchest": ["bettercopper:copper_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.025,
+        "armorlegs": ["minecraft:iron_leggings"],
+        "armorboots": ["minecraft:iron_boots"],
+        "armorhelmet": ["minecraft:iron_helmet"],
+        "armorchest": ["minecraft:iron_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.02,
+        "armorlegs": ["minecraft:chainmail_leggings"],
+        "armorboots": ["minecraft:chainmail_boots"],
+        "armorhelmet": ["minecraft:chainmail_helmet"],
+        "armorchest": ["minecraft:chainmail_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.03,
+        "armorlegs": ["minecraft:leather_leggings"],
+        "armorboots": ["minecraft:leather_boots"],
+        "armorhelmet": ["minecraft:leather_helmet"],
+        "armorchest": ["minecraft:leather_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.012,
+        "armorlegs": ["caverns_and_chasms:silver_leggings"],
+        "armorboots": ["caverns_and_chasms:silver_boots"],
+        "armorhelmet": ["caverns_and_chasms:silver_helmet"],
+        "armorchest": ["caverns_and_chasms:silver_chestplate"],
+        "result": "allow"
+    },
+
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.045,
+        "helditem": [
+            "100=minecraft:stone_pickaxe",
+            "90=bettercopper:copper_pickaxe",
+            "80=minecraft:iron_pickaxe",
+            "70=caverns_and_chasms:silver_pickaxe",
+            "50=minecraft:golden_pickaxe",
+            "80=minecraft:stone_shovel",
+            "70=bettercopper:copper_shovel",
+            "60=minecraft:iron_shovel",
+            "60=minecraft:stone_axe",
+            "50=bettercopper:copper_axe",
+            "40=minecraft:iron_axe",
+            "60=minecraft:stone_sword",
+            "50=bettercopper:copper_sword",
+            "35=minecraft:iron_sword",
+            "20=caverns_and_chasms:silver_sword",
+            "10=minecraft:golden_sword"
+        ],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.095,
+        "armorlegs": ["bettercopper:copper_leggings"],
+        "armorboots": ["bettercopper:copper_boots"],
+        "armorhelmet": ["bettercopper:copper_helmet"],
+        "armorchest": ["bettercopper:copper_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.055,
+        "armorlegs": ["minecraft:iron_leggings"],
+        "armorboots": ["minecraft:iron_boots"],
+        "armorhelmet": ["minecraft:iron_helmet"],
+        "armorchest": ["minecraft:iron_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.04,
+        "armorlegs": ["minecraft:chainmail_leggings"],
+        "armorboots": ["minecraft:chainmail_boots"],
+        "armorhelmet": ["minecraft:chainmail_helmet"],
+        "armorchest": ["minecraft:chainmail_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.035,
+        "armorlegs": ["minecraft:leather_leggings"],
+        "armorboots": ["minecraft:leather_boots"],
+        "armorhelmet": ["minecraft:leather_helmet"],
+        "armorchest": ["minecraft:leather_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.025,
+        "armorlegs": ["caverns_and_chasms:silver_leggings"],
+        "armorboots": ["caverns_and_chasms:silver_boots"],
+        "armorhelmet": ["caverns_and_chasms:silver_helmet"],
+        "armorchest": ["caverns_and_chasms:silver_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:zombie",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.015,
+        "armorlegs": ["minecraft:golden_leggings"],
+        "armorboots": ["minecraft:golden_boots"],
+        "armorhelmet": ["minecraft:golden_helmet"],
+        "armorchest": ["minecraft:golden_chestplate"],
+        "result": "allow"
+    },
+
+
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "random": 0.0015,
+        "armorlegs": ["bettercopper:copper_leggings"],
+        "armorboots": ["bettercopper:copper_boots"],
+        "armorhelmet": ["bettercopper:copper_helmet"],
+        "armorchest": ["bettercopper:copper_chestplate"],
+        "result": "allow"
+    },
+
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.055,
+        "armorlegs": ["bettercopper:copper_leggings"],
+        "armorboots": ["bettercopper:copper_boots"],
+        "armorhelmet": ["bettercopper:copper_helmet"],
+        "armorchest": ["bettercopper:copper_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.025,
+        "armorlegs": ["minecraft:iron_leggings"],
+        "armorboots": ["minecraft:iron_boots"],
+        "armorhelmet": ["minecraft:iron_helmet"],
+        "armorchest": ["minecraft:iron_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.02,
+        "armorlegs": ["minecraft:chainmail_leggings"],
+        "armorboots": ["minecraft:chainmail_boots"],
+        "armorhelmet": ["minecraft:chainmail_helmet"],
+        "armorchest": ["minecraft:chainmail_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.03,
+        "armorlegs": ["minecraft:leather_leggings"],
+        "armorboots": ["minecraft:leather_boots"],
+        "armorhelmet": ["minecraft:leather_helmet"],
+        "armorchest": ["minecraft:leather_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": 25,
+        "random": 0.012,
+        "armorlegs": ["caverns_and_chasms:silver_leggings"],
+        "armorboots": ["caverns_and_chasms:silver_boots"],
+        "armorhelmet": ["caverns_and_chasms:silver_helmet"],
+        "armorchest": ["caverns_and_chasms:silver_chestplate"],
+        "result": "allow"
+    },
+
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.095,
+        "armorlegs": ["bettercopper:copper_leggings"],
+        "armorboots": ["bettercopper:copper_boots"],
+        "armorhelmet": ["bettercopper:copper_helmet"],
+        "armorchest": ["bettercopper:copper_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.055,
+        "armorlegs": ["minecraft:iron_leggings"],
+        "armorboots": ["minecraft:iron_boots"],
+        "armorhelmet": ["minecraft:iron_helmet"],
+        "armorchest": ["minecraft:iron_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.04,
+        "armorlegs": ["minecraft:chainmail_leggings"],
+        "armorboots": ["minecraft:chainmail_boots"],
+        "armorhelmet": ["minecraft:chainmail_helmet"],
+        "armorchest": ["minecraft:chainmail_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.035,
+        "armorlegs": ["minecraft:leather_leggings"],
+        "armorboots": ["minecraft:leather_boots"],
+        "armorhelmet": ["minecraft:leather_helmet"],
+        "armorchest": ["minecraft:leather_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.025,
+        "armorlegs": ["caverns_and_chasms:silver_leggings"],
+        "armorboots": ["caverns_and_chasms:silver_boots"],
+        "armorhelmet": ["caverns_and_chasms:silver_helmet"],
+        "armorchest": ["caverns_and_chasms:silver_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.015,
+        "armorlegs": ["minecraft:golden_leggings"],
+        "armorboots": ["minecraft:golden_boots"],
+        "armorhelmet": ["minecraft:golden_helmet"],
+        "armorchest": ["minecraft:golden_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.0055,
+        "armorhelmet": ["caverns_and_chasms:necromium_helmet"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.0035,
+        "armorhelmet": ["caverns_and_chasms:necromium_helmet"],
+        "armorchest": ["caverns_and_chasms:necromium_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.0025,
+        "armorlegs": ["caverns_and_chasms:necromium_leggings"],
+        "armorhelmet": ["caverns_and_chasms:necromium_helmet"],
+        "armorchest": ["caverns_and_chasms:necromium_chestplate"],
+        "result": "allow"
+    },
+    {
+        "mob": "minecraft:skeleton",
+        "when": "onjoin",
+        "maxheight": -15,
+        "random": 0.0015,
+        "armorlegs": ["caverns_and_chasms:necromium_leggings"],
+        "armorboots": ["caverns_and_chasms:necromium_boots"],
+        "armorhelmet": ["caverns_and_chasms:necromium_helmet"],
+        "armorchest": ["caverns_and_chasms:necromium_chestplate"],
+        "result": "allow"
+    }
+
+
+]
