@@ -14,6 +14,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 	"time"
 
@@ -680,7 +681,7 @@ func importMrpack(archivePath string, zr *zip.Reader, idx *mrIndex, customID str
 	for _, f := range idx.Files {
 		indexedPaths[strings.ToLower(path.Clean(f.Path))] = true
 	}
-	overrides := extractOverrides(zr, subdir, indexedPaths)
+	overrides, jarOverrides := extractOverrides(zr, subdir, indexedPaths)
 
 	if err := os.WriteFile(filepath.Join(subdir, ".packwizignore"), []byte(packwizIgnore), 0o644); err != nil {
 		cmd.Fail(fmt.Sprintf("failed to write .packwizignore: %v", err))
@@ -710,6 +711,7 @@ func importMrpack(archivePath string, zr *zip.Reader, idx *mrIndex, customID str
 	fmt.Printf("\nimported %s:\n", packID)
 	fmt.Printf("  %d file(s) written (%d with update metadata, %d pinned-by-URL only)\n", wrote, updatable, wrote-updatable)
 	fmt.Printf("  %d override file(s) copied\n", overrides)
+	warnJarOverrides(jarOverrides)
 	fmt.Printf("  manifest.json scaffolded — fill modrinth_id/curseforge_id before publishing\n")
 	if wrote > updatable {
 		fmt.Printf("  note: files without cdn.modrinth.com URLs lack [update.modrinth]; 'packwand workspace update' will leave them as-is\n")
@@ -777,12 +779,13 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 	// files, skipping those referenced by mod metadata — extracting them
 	// again here would reintroduce the skipped jars as stray files.
 	overrides := 0
+	var jarOverrides []string
 	if !cfImported {
 		overrideDir := cfm.Overrides
 		if overrideDir == "" {
 			overrideDir = "overrides"
 		}
-		overrides = extractOverridesPrefix(zr, subdir, overrideDir+"/", nil)
+		overrides, jarOverrides = extractOverridesPrefix(zr, subdir, overrideDir+"/", nil)
 	}
 
 	if err := os.WriteFile(filepath.Join(subdir, ".packwizignore"), []byte(packwizIgnore), 0o644); err != nil {
@@ -809,6 +812,7 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 		fmt.Printf("  override files handled by curseforge import\n")
 	} else {
 		fmt.Printf("  %d override file(s) copied\n", overrides)
+		warnJarOverrides(jarOverrides)
 	}
 	fmt.Printf("  manifest.json scaffolded — fill curseforge_id/modrinth_id before publishing\n")
 }
@@ -825,8 +829,14 @@ func detectCFLoader(loaders []cfModLoader) (loader, version string) {
 	return "", ""
 }
 
-func extractOverridesPrefix(zr *zip.Reader, subdir, prefix string, indexedPaths map[string]bool) int {
+// extractOverridesPrefix copies every archive entry under prefix (excluding
+// ones already tracked via indexedPaths) into subdir, and returns both the
+// count copied and the relative paths of any that look like mod jars — an
+// override that's actually a .jar means the source pack's export couldn't
+// resolve that mod to a hosted file, so it will never be update-tracked.
+func extractOverridesPrefix(zr *zip.Reader, subdir, prefix string, indexedPaths map[string]bool) (int, []string) {
 	count := 0
+	var jarOverrides []string
 	for _, f := range zr.File {
 		// Normalize the backslash separators written by some Windows zip
 		// tools (e.g. Compress-Archive) so prefix matching works.
@@ -861,9 +871,28 @@ func extractOverridesPrefix(zr *zip.Reader, subdir, prefix string, indexedPaths 
 		rc.Close()
 		if err == nil {
 			count++
+			if strings.HasSuffix(strings.ToLower(rel), ".jar") {
+				jarOverrides = append(jarOverrides, rel)
+			}
 		}
 	}
-	return count
+	return count, jarOverrides
+}
+
+// warnJarOverrides prints a distinct summary for override files that look
+// like mod jars rather than configs/resourcepacks — these came from the
+// source pack's export failing to resolve them to a hosted file, so they'll
+// sit as static, un-update-tracked binaries unless re-added properly.
+func warnJarOverrides(jarOverrides []string) {
+	if len(jarOverrides) == 0 {
+		return
+	}
+	sort.Strings(jarOverrides)
+	fmt.Printf("  warning: %d override file(s) look like mod jars, not configs — they will NOT be update-tracked:\n", len(jarOverrides))
+	for _, j := range jarOverrides {
+		fmt.Printf("    %s\n", j)
+	}
+	fmt.Printf("  note: re-add these via 'packwand add' (if hosted on Modrinth/CurseForge) or accept they'll stay static\n")
 }
 
 func downloadToTemp(url string) (string, error) {
@@ -1001,12 +1030,15 @@ func sideFromEnv(env map[string]string) string {
 	}
 }
 
-func extractOverrides(zr *zip.Reader, subdir string, indexedPaths map[string]bool) int {
+func extractOverrides(zr *zip.Reader, subdir string, indexedPaths map[string]bool) (int, []string) {
 	count := 0
+	var jarOverrides []string
 	for _, prefix := range []string{"overrides/", "client-overrides/"} {
-		count += extractOverridesPrefix(zr, subdir, prefix, indexedPaths)
+		n, jars := extractOverridesPrefix(zr, subdir, prefix, indexedPaths)
+		count += n
+		jarOverrides = append(jarOverrides, jars...)
 	}
-	return count
+	return count, jarOverrides
 }
 
 var slugifyRe = regexp.MustCompile(`[^a-z0-9]+`)

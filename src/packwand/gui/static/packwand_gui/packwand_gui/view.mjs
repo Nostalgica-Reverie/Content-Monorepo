@@ -42,6 +42,8 @@ import {
 } from "../packwand_gui/model.mjs";
 import * as $state from "../packwand_gui/state.mjs";
 import {
+  BootPack,
+  CancelBoot,
   Changelog,
   CopyChangelog,
   CreateProject,
@@ -51,6 +53,8 @@ import {
   Mods,
   Navigate,
   Overview,
+  RequestAuthLogin,
+  RequestAuthLogout,
   RunAction,
   RunWebview,
   SaveManifest,
@@ -58,6 +62,7 @@ import {
   SelectSubdir,
   SetBumpConfigs,
   SetBumpVersion,
+  SetDockGameWindow,
   SetManifest,
   SetManifestField,
   SetManifestStructured,
@@ -72,6 +77,7 @@ import {
   SetSearch,
   Settings,
   job_running,
+  launcher_running,
   progress_status_label,
   query_matches,
   selected_project,
@@ -299,6 +305,53 @@ function notice(value) {
   }
 }
 
+function panel(class$, title, children) {
+  return panel_with_head(class$, title, $html.text(""), children);
+}
+
+function button(class$, label, message) {
+  return $html.button(
+    toList([
+      $attribute.class$(class$),
+      $attribute.type_("button"),
+      $event.on_click(message),
+    ]),
+    toList([$html.text(label)]),
+  );
+}
+
+function account_panel(model) {
+  let _block;
+  let $ = model.auth_signed_in;
+  if ($) {
+    _block = toList([
+      $html.p(
+        toList([$attribute.class$("panel-copy")]),
+        toList([$html.text(("Signed in as " + model.auth_username) + ".")]),
+      ),
+      button("ghost", "Sign out", new RequestAuthLogout()),
+    ]);
+  } else {
+    _block = toList([
+      $html.p(
+        toList([$attribute.class$("panel-copy")]),
+        toList([
+          $html.text(
+            "Sign in with a real Microsoft account to boot as yourself instead of an offline dev-testing session. Optional — offline boots work either way.",
+          ),
+        ]),
+      ),
+      button("", "Sign in with Microsoft", new RequestAuthLogin()),
+    ]);
+  }
+  let body = _block;
+  return panel(
+    "span-12",
+    "Account",
+    $list.append(body, toList([notice(model.auth_status_text)])),
+  );
+}
+
 function form_input(label, value, placeholder, message, class$) {
   return $html.label(
     toList([$attribute.class$(class$)]),
@@ -312,17 +365,6 @@ function form_input(label, value, placeholder, message, class$) {
         ]),
       ),
     ]),
-  );
-}
-
-function button(class$, label, message) {
-  return $html.button(
-    toList([
-      $attribute.class$(class$),
-      $attribute.type_("button"),
-      $event.on_click(message),
-    ]),
-    toList([$html.text(label)]),
   );
 }
 
@@ -1266,10 +1308,6 @@ function manifest_panel(model) {
   }
 }
 
-function panel(class$, title, children) {
-  return panel_with_head(class$, title, $html.text(""), children);
-}
-
 function generate_panel(model) {
   let disabled = (model.selected_subdir === "") || job_running(model);
   return panel(
@@ -1462,6 +1500,60 @@ function project_panel(model, project) {
     pill(fallback(project.role, "none")),
     toList([$html.div(toList([$attribute.class$("details")]), details)]),
   );
+}
+
+function launcher_progress_line(model) {
+  let $ = model.launcher_progress;
+  if ($ instanceof Some) {
+    let progress = $[0];
+    return $html.p(
+      toList([$attribute.class$("panel-copy")]),
+      toList([
+        $html.text(
+          ((((($int.to_string(progress.finished_downloads) + "/") + $int.to_string(
+            progress.total_downloads,
+          )) + " downloads, ") + $int.to_string(
+            globalThis.Math.trunc(progress.downloaded_bytes / 1_048_576),
+          )) + " MiB") + (() => {
+            let $1 = progress.total_bytes;
+            if ($1 === 0) {
+              return "";
+            } else {
+              let total = $1;
+              return ("/" + $int.to_string(
+                globalThis.Math.trunc(total / 1_048_576),
+              )) + " MiB";
+            }
+          })(),
+        ),
+      ]),
+    );
+  } else {
+    return $html.text("");
+  }
+}
+
+function launcher_panel(model) {
+  let $ = model.launcher_status;
+  let $1 = model.launcher_log;
+  if ($1 instanceof $Empty && $ === "idle") {
+    return $html.text("");
+  } else {
+    let status = $;
+    let log = $1;
+    return panel_with_head(
+      "span-12",
+      "Launcher (dev test boot)",
+      pill(status),
+      toList([
+        launcher_progress_line(model),
+        $html.pre(
+          toList([]),
+          toList([$html.text($string.join($list.reverse(log), "\n"))]),
+        ),
+      ]),
+    );
+  }
 }
 
 function logs_panel(model) {
@@ -1824,6 +1916,37 @@ function actions_panel(model, subdirs) {
             new RunAction(new ExportCurseforge(model.selected_subdir)),
             disabled || !platform_matches(platform, "curseforge"),
           ),
+          (() => {
+            let $ = launcher_running(model);
+            if ($) {
+              return button("ghost", "Stop", new CancelBoot());
+            } else {
+              return button_disabled(
+                "",
+                "Boot (dev test)",
+                new BootPack(model.selected_subdir),
+                model.selected_subdir === "",
+              );
+            }
+          })(),
+          $html.label(
+            toList([$attribute.class$("dock-toggle")]),
+            toList([
+              $html.span(
+                toList([]),
+                toList([$html.text("Dock game window (Windows)")]),
+              ),
+              $html.input(
+                toList([
+                  $attribute.type_("checkbox"),
+                  $attribute.checked(model.dock_game_window),
+                  $event.on_check(
+                    (var0) => { return new SetDockGameWindow(var0); },
+                  ),
+                ]),
+              ),
+            ]),
+          ),
         ]),
       ),
     ]),
@@ -1911,7 +2034,11 @@ function sections_for_view(model, project) {
   } else if ($ instanceof Changelog) {
     return toList([changelog_panel(model)]);
   } else if ($ instanceof Logs) {
-    return toList([progress_panel(model), logs_panel(model)]);
+    return toList([
+      progress_panel(model),
+      logs_panel(model),
+      launcher_panel(model),
+    ]);
   } else {
     return toList([
       project_panel(model, project),
@@ -1921,6 +2048,7 @@ function sections_for_view(model, project) {
       manifest_panel(model),
       capabilities_panel(model.features),
       new_pack_panel(model),
+      account_panel(model),
     ]);
   }
 }

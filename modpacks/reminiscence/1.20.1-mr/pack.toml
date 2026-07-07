@@ -1,12 +1,12 @@
-name = "Reminiscence Modrinth"
-author = "CHANGEME"
-version = "2.0.0-Modrinth"
+name = "Reminiscence"
+author = "bbali, omo50"
+version = "2.0.0-hotfix"
 pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
 hash-format = "sha512"
-hash = "582559c1042e000cbb3a05b0f6ba41c47b9031cc44a175b2b9480155da9cc0753d131aa99ca8e1cb1a47aefd0e4298956dd1fb5749a1eaa6fd9f8762feaadef7"
+hash = "e465ca33c07df35c1e5d63c7a1b456db130c78610f4ec85003f57ad859aa539ab094f05e18ca15c54f6f1c49e11cbcf8c6f60b30f13de9129d0d656eb409e628"
 
 [versions]
 forge = "47.4.0"

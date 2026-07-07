@@ -1,4 +1,6 @@
+import gleam/dynamic/decode
 import gleam/list
+import gleam/option
 import gleam/string
 
 pub type Health {
@@ -241,6 +243,101 @@ pub fn action_refreshes_mods(action: Action) -> Bool {
     | SetSide(_, _, _) -> True
     _ -> False
   }
+}
+
+/// One `launcher://event` payload from the Tauri launcher adapter. `kind` is
+/// the Rust `LaunchEvent` tag (starting/started/stdout/stderr/exited/failed/
+/// cancelled); unused fields for a given kind decode to their zero value.
+pub type LauncherEvent {
+  LauncherEvent(
+    session_id: String,
+    kind: String,
+    pid: Int,
+    line: String,
+    code: Int,
+    error: String,
+  )
+}
+
+pub fn launcher_event_decoder() -> decode.Decoder(LauncherEvent) {
+  use session_id <- decode.optional_field("session_id", "", decode.string)
+  use kind <- decode.optional_field("event", "", decode.string)
+  use pid <- decode.optional_field("pid", 0, decode.int)
+  use line <- decode.optional_field("line", "", decode.string)
+  // `code` is `Option<i32>` on the Rust side (a killed-by-signal exit has no
+  // code), so it may be present as JSON `null` rather than simply absent —
+  // `decode.optional` handles both null and absent, unlike `decode.int`.
+  use code <- decode.optional_field(
+    "code",
+    0,
+    decode.optional(decode.int) |> decode.map(option.unwrap(_, 0)),
+  )
+  use error <- decode.optional_field("error", "", decode.string)
+  decode.success(LauncherEvent(session_id:, kind:, pid:, line:, code:, error:))
+}
+
+/// One `launcher://progress` payload: byte-level install progress reported
+/// while a shared Minecraft+loader install is being bootstrapped.
+pub type LauncherProgress {
+  LauncherProgress(
+    session_id: String,
+    finished_downloads: Int,
+    total_downloads: Int,
+    downloaded_bytes: Int,
+    total_bytes: Int,
+  )
+}
+
+pub fn launcher_progress_decoder() -> decode.Decoder(LauncherProgress) {
+  use session_id <- decode.optional_field("session_id", "", decode.string)
+  use finished_downloads <- decode.optional_field(
+    "finished_downloads",
+    0,
+    decode.int,
+  )
+  use total_downloads <- decode.optional_field(
+    "total_downloads",
+    0,
+    decode.int,
+  )
+  use downloaded_bytes <- decode.optional_field(
+    "downloaded_bytes",
+    0,
+    decode.int,
+  )
+  use total_bytes <- decode.optional_field("total_bytes", 0, decode.int)
+  decode.success(LauncherProgress(
+    session_id:,
+    finished_downloads:,
+    total_downloads:,
+    downloaded_bytes:,
+    total_bytes:,
+  ))
+}
+
+/// The result of `auth_status` — whether a real Microsoft account is
+/// currently signed in, and as whom.
+pub type AuthStatus {
+  AuthStatus(signed_in: Bool, username: String)
+}
+
+pub fn auth_status_decoder() -> decode.Decoder(AuthStatus) {
+  use signed_in <- decode.optional_field("signed_in", False, decode.bool)
+  use username <- decode.optional_field("username", "", decode.string)
+  decode.success(AuthStatus(signed_in:, username:))
+}
+
+/// One `auth://event` payload: either `{"status": "signed_in", "username": "..."}`
+/// or `{"status": "failed", "error": "..."}` (see `AuthEvent` in `launcher.rs`).
+pub type AuthEvent {
+  AuthEvent(status: String, username: String, error: String)
+}
+
+pub fn auth_event_decoder() -> decode.Decoder(AuthEvent) {
+  use status <- decode.optional_field("status", "", decode.string)
+  use username <- decode.optional_field("username", "", decode.string)
+  use error <- decode.optional_field("error", "", decode.string)
+  decode.success(AuthEvent(status:, username:, error:))
 }
 
 pub fn project_summary(project: Project) -> String {

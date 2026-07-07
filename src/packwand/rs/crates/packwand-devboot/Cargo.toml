@@ -1,0 +1,21 @@
+[package]
+name = "packwand-devboot"
+description = "Dev-testing boot orchestration: resolve a packwiz pack's target, ensure a shared Minecraft+loader install, and build a launch plan pointed at the pack's own directory"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+packwand-auth.workspace = true
+packwand-instance.workspace = true
+packwand-launch.workspace = true
+packwand-minecraft.workspace = true
+packwand-runtime.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+toml = "0.8"
+
+[dev-dependencies]
+tempfile.workspace = true

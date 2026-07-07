@@ -1,3 +1,4 @@
+import gleam/int
 import gleam/list
 import gleam/option.{type Option, None}
 import gleam/string
@@ -75,6 +76,27 @@ pub type Model {
     bump_configs: Bool,
     mod_progress: List(ModProgress),
     mod_progress_in_block: Bool,
+    /// The active "boot a pack for dev testing" session id, if any (see
+    /// packwandrs.md — in-process launcher, no Go sidecar involved).
+    launcher_session: Option(String),
+    /// idle | installing | starting | started | exited | failed | cancelled
+    /// ("started" persists through stdout/stderr until a terminal event)
+    launcher_status: String,
+    /// Newest-first, like `logs`.
+    launcher_log: List(String),
+    launcher_progress: Option(domain.LauncherProgress),
+    /// When true, once the booted game's window appears it's repositioned
+    /// (never resized) flush beside the Packwand window — "docked" rather
+    /// than a separate, unrelated window. Windows-only for now; a no-op
+    /// elsewhere (see `window_dock.rs`).
+    dock_game_window: Bool,
+    /// Real Microsoft account sign-in state (see `packwand-msa`). Signing
+    /// in is optional — offline dev-testing boots work either way.
+    auth_signed_in: Bool,
+    auth_username: String,
+    /// Transient status/error text: "Opening Microsoft sign-in...", a
+    /// specific failure (not whitelisted yet, no Xbox account, etc.), or "".
+    auth_status_text: String,
   )
 }
 
@@ -114,6 +136,19 @@ pub type Msg {
   IconFailed
   SetBumpVersion(String)
   SetBumpConfigs(Bool)
+  BootPack(path: String)
+  SetDockGameWindow(Bool)
+  PackBooted(Result(String, domain.ApiError))
+  GotLauncherEvent(String)
+  GotLauncherProgress(String)
+  CancelBoot
+  BootCancelled(Result(Nil, domain.ApiError))
+  RequestAuthLogin
+  AuthLoginStarted(Result(Nil, domain.ApiError))
+  GotAuthEvent(String)
+  RequestAuthLogout
+  AuthLogoutDone(Result(Nil, domain.ApiError))
+  GotAuthStatus(Result(domain.AuthStatus, domain.ApiError))
 }
 
 pub fn initial() -> Model {
@@ -142,6 +177,14 @@ pub fn initial() -> Model {
     bump_configs: False,
     mod_progress: [],
     mod_progress_in_block: False,
+    launcher_session: None,
+    launcher_status: "idle",
+    launcher_log: [],
+    launcher_progress: None,
+    dock_game_window: True,
+    auth_signed_in: False,
+    auth_username: "",
+    auth_status_text: "",
   )
 }
 
@@ -265,6 +308,42 @@ fn upsert_progress(
 
 pub fn job_running(model: Model) -> Bool {
   model.job_status == "starting" || model.job_status == "running"
+}
+
+pub fn launcher_running(model: Model) -> Bool {
+  model.launcher_status == "installing"
+  || model.launcher_status == "starting"
+  || model.launcher_status == "started"
+}
+
+pub fn append_launcher_log(model: Model, line: String) -> Model {
+  Model(..model, launcher_log: [line, ..model.launcher_log])
+}
+
+/// Folds one decoded `LauncherEvent` into the model: updates status and
+/// appends a human-readable log line. `kind` mirrors the Rust `LaunchEvent`
+/// serde tag (`packwand-launch`'s `supervisor.rs`).
+pub fn apply_launcher_event(model: Model, event: domain.LauncherEvent) -> Model {
+  let #(status, line) = case event.kind {
+    "starting" -> #("starting", "Starting...")
+    "started" -> #(
+      "started",
+      "Started (pid " <> int.to_string(event.pid) <> ")",
+    )
+    "stdout" | "stderr" -> #(model.launcher_status, event.line)
+    "exited" -> #(
+      "exited",
+      "Exited (code " <> int.to_string(event.code) <> ")",
+    )
+    "failed" -> #("failed", "Failed: " <> event.error)
+    "cancelled" -> #("cancelled", "Cancelled")
+    _ -> #(model.launcher_status, "")
+  }
+  let with_status = Model(..model, launcher_status: status)
+  case line {
+    "" -> with_status
+    _ -> append_launcher_log(with_status, line)
+  }
 }
 
 pub fn http_error(error: domain.ApiError) -> String {

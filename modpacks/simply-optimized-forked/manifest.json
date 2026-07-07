@@ -10,7 +10,10 @@
   "modrinth_id": "simply-optimized-forked",
   "curseforge_id": "simply-optimized-forked",
   "automation": {
-    "server_promo": true
+    "server_promo": true,
+    "full_auto": {
+      "enabled": true
+    }
   },
   "variants": [
     { "mc_version": "26.1.2" },

@@ -17,13 +17,11 @@ tauri-plugin-notification = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 ureq = { version = "2", features = ["json"] }
-packwand-instance = { path = "../../../../packwand-rs/crates/packwand-instance", optional = true }
-packwand-launch = { path = "../../../../packwand-rs/crates/packwand-launch", optional = true }
-
-[features]
-# Experimental in-process launcher core adapter (packwandrs.md Phase 1
-# spike). Off by default and never enabled for release builds.
-launcher-spike = ["dep:packwand-instance", "dep:packwand-launch"]
+packwand-auth = { path = "../../../rs/crates/packwand-auth" }
+packwand-instance = { path = "../../../rs/crates/packwand-instance" }
+packwand-launch = { path = "../../../rs/crates/packwand-launch" }
+packwand-devboot = { path = "../../../rs/crates/packwand-devboot" }
+packwand-msa = { path = "../../../rs/crates/packwand-msa" }
 
 [profile.release]
 opt-level = "s"
@@ -34,3 +32,6 @@ strip = true
 # upstream revision keeps the same plist API while moving to quick-xml 0.41.
 [patch.crates-io]
 plist = { git = "https://github.com/ebarnard/rust-plist.git", rev = "0a2f9e79fe4b85abcfb8013a9f3c97e490750b50" }
+
+[target."cfg(windows)".dependencies]
+windows = { version = "0.62.2", features = ["Win32_Foundation", "Win32_UI_WindowsAndMessaging"] }

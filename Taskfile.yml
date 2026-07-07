@@ -9,6 +9,7 @@ vars:
   INSTALLER_DIR: lib/packwand-installer
   WEBVIEW_DIR: lib/mod-browser-webview
   GUI_TAURI_DIR: src/packwand/gui/tauri
+  RS_DIR: src/packwand/rs
 
 tasks:
   # — Lint —
@@ -40,15 +41,23 @@ tasks:
     cmds:
       - go run golang.org/x/vuln/cmd/govulncheck@latest ./...
 
+  lint-rust-core:
+    desc: fmt + clippy on the packwand-rs launcher core (packwand-devboot and friends)
+    dir: "{{.RS_DIR}}"
+    cmds:
+      - cargo fmt --check
+      - cargo clippy --all-targets -- -D warnings
+
   audit-rust:
     desc: Scan Rust lockfiles for RUSTSEC advisories (requires cargo-audit)
     cmds:
       - cargo audit --file {{.WEBVIEW_DIR}}/Cargo.lock
       - cargo audit --file {{.GUI_TAURI_DIR}}/src-tauri/Cargo.lock
+      - cargo audit --file {{.RS_DIR}}/Cargo.lock
 
   lint:
     desc: All linters/vetters and vulnerability scans
-    deps: [lint-go, lint-webview, lint-installer, audit-go, audit-rust, docs-typecheck]
+    deps: [lint-go, lint-webview, lint-installer, lint-rust-core, audit-go, audit-rust, docs-typecheck]
 
   # — Test —
 
@@ -73,9 +82,15 @@ tasks:
     cmds:
       - cargo test
 
+  test-rust-core:
+    desc: Cargo tests for the packwand-rs launcher core (excludes #[ignore]'d real-boot tests needing Java/network)
+    dir: "{{.RS_DIR}}"
+    cmds:
+      - cargo test
+
   test:
     desc: All tests
-    deps: [test-go, test-installer, test-webview]
+    deps: [test-go, test-installer, test-webview, test-rust-core]
 
   # — Build —
 
@@ -123,8 +138,17 @@ tasks:
   build-gui-sidecar:
     desc: Build the packwand CLI and stage it as a Tauri external binary (sidecar), named for the host Rust target triple, so `cargo tauri build` bundles it via bundle.externalBin
     vars:
+      # Avoids grep/cut: Task's embedded shell (mvdan/sh) parses this fine on
+      # native Windows without either binary on PATH, unlike the previous
+      # `grep '^host:' | cut -d' ' -f2` (which needs Git for Windows's
+      # usr/bin on PATH — not there by default outside a Git Bash shell).
       TRIPLE:
-        sh: rustc -vV | grep '^host:' | cut -d' ' -f2
+        sh: |
+          rustc -vV | while IFS= read -r line; do
+            case "$line" in
+              host:*) printf '%s' "${line#host: }" ;;
+            esac
+          done
     cmds:
       - cmd: mkdir -p {{.GUI_TAURI_DIR}}/src-tauri/binaries
       - go build -C src/packwand -o gui/tauri/src-tauri/binaries/packwand-{{.TRIPLE}}{{exeExt}} .

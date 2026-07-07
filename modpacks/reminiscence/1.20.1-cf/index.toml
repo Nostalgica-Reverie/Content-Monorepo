@@ -1909,6 +1909,10 @@ file = "config/openloader/advanced_options.json"
 hash = "b29b747b4ec1bfdb75cb56d6962eb4a72258c897efac56cc6af171727de5701c54b457a9869584a2bbecaa1b5d305364653ce76371e91be0060830b934a0898d"
 
 [[files]]
+file = "config/particle_core_config.toml"
+hash = "809b4ddeb72320355e85e5c4402e62d288f9da923daf79f2d176cc0b07822fb32cbc8cb6e44d3c54882535b69555b05d5fdba418b5727f4637cbc96fa9281b38"
+
+[[files]]
 file = "config/particular-common.toml"
 hash = "f973e53a262a2a4a89a1825dcc62792220692a6a2362a1f127d4d1980b59dd2be97127ed6095f56c8e1f31615c351b71f3abd27bd36c46aff3a0054d925f4dfe"
 
@@ -5006,7 +5010,7 @@ metafile = true
 
 [[files]]
 file = "mods/cupboard.pw.toml"
-hash = "27dac0432e4089b96e3d9a61e4124ea97cb7feebfbe5f0bc82e25047d982e72fc361400552c9b36d369f09104e9b61ffe30c3a5daf9e5bf4f6358506c9fd8a1e"
+hash = "30e1bdd3cafc3b79042d483a92d8ad3cee15ca3cced1de3ec642d1e6cee9cb934eed6a2649c38dd69e725d450343f64257b30f7ecfe1eae7251b70389002891a"
 metafile = true
 
 [[files]]
@@ -5110,13 +5114,14 @@ hash = "ef123487c0304bf5206ed336e533b201450be6533f8d943def8b816fde125d27ba8dced9
 metafile = true
 
 [[files]]
-file = "mods/fastload.pw.toml"
-hash = "0576ec4720505559a7518f065c50de5542555c3a14bd57fb27ab55b98f3f7b800e2b0a41b9621233984594e23cfd7df14316e14e465729768f8ce4f6c6418490"
+file = "mods/faster-minecarts-for-forge-1-20-1.pw.toml"
+hash = "93c39a344bd17f618897b516b3df3e3a8ed8dffc9be10bee27da73fbbf1a2373b7be292d4c723cee4d62b5089ef8307961d250626b93142a062d58425d6644e9"
 metafile = true
 
 [[files]]
-file = "mods/fastminecart-1.0.0.jar"
-hash = "cdbe1feaaa330136105b3365181eb93c55da27984a64956db866f455445d130f2e6e7f2d1a1b34ca6d945848269659aed1f043f60a3f4eea2deab87315e8b060"
+file = "mods/fastload.pw.toml"
+hash = "0576ec4720505559a7518f065c50de5542555c3a14bd57fb27ab55b98f3f7b800e2b0a41b9621233984594e23cfd7df14316e14e465729768f8ce4f6c6418490"
+metafile = true
 
 [[files]]
 file = "mods/fastsuite.pw.toml"
@@ -5389,6 +5394,11 @@ hash = "1cf5b45d4ad2c4ad07a308977e6763af8fda5746847da34c30d6fc815528872fc075f959
 metafile = true
 
 [[files]]
+file = "mods/particle-core.pw.toml"
+hash = "8530587c9aa378b981ecc432456e1590f30ff2adfc1ed2df5ff8f531cbd98fab830a46497d0bd4f4c55fe92dd929fb3328bde3082e6972477b51e1ef54179f75"
+metafile = true
+
+[[files]]
 file = "mods/paxi.pw.toml"
 hash = "82bf38a8cc0ce2ba6bcd7dacb382317c7182a110d93500da7649114755c1a9da31769ee96e70911e1fe0e8f9aa754ae3be07bfa36cc4e96103b597b4ff4c4b86"
 metafile = true
@@ -5425,7 +5435,7 @@ metafile = true
 
 [[files]]
 file = "mods/quick-pack.pw.toml"
-hash = "0b0362773071b029e531eaab69a4d8f4bab051a9da6ef96b61f0bffb244b3a1dc8009c3f2b7d55dedbda961f0038b581f20d820d188da5e680ea5f06af4377f5"
+hash = "630d7fe0af50f94c49a97c3a35ecf01d6dd1cb40ed3a014c1c8dd8c73a13535f65276d0bb1ce80c9927a3fb2257539a56c9f75ccec416939f7e404f02a9d25a5"
 metafile = true
 
 [[files]]
@@ -5601,6 +5611,11 @@ metafile = true
 [[files]]
 file = "mods/zeta.pw.toml"
 hash = "6ea39a0b8adf9bfcedf31ef5b295e26628e7a658277e4d2c840c97128b256532c96669b995251a4ef8d3702789402eed8384edcb19115eafac4819b95291b921"
+metafile = true
+
+[[files]]
+file = "mods/zfastnoise.pw.toml"
+hash = "f152401d4f652bf8ec6f0bade46ff7441a7a41cce342dffd77bf97fea615aa55e4b6b773a04ea82243ff05ff2cec931eae5b42d7590b92d86458c0261f30d18a"
 metafile = true
 
 [[files]]

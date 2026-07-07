@@ -1,4 +1,6 @@
+import * as $decode from "../../gleam_stdlib/gleam/dynamic/decode.mjs";
 import * as $list from "../../gleam_stdlib/gleam/list.mjs";
+import * as $option from "../../gleam_stdlib/gleam/option.mjs";
 import * as $string from "../../gleam_stdlib/gleam/string.mjs";
 import { toList, CustomType as $CustomType } from "../gleam.mjs";
 
@@ -610,6 +612,105 @@ export class DocsPages extends $CustomType {}
 export const Action$DocsPages = () => new DocsPages();
 export const Action$isDocsPages = (value) => value instanceof DocsPages;
 
+export class LauncherEvent extends $CustomType {
+  constructor(session_id, kind, pid, line, code, error) {
+    super();
+    this.session_id = session_id;
+    this.kind = kind;
+    this.pid = pid;
+    this.line = line;
+    this.code = code;
+    this.error = error;
+  }
+}
+export const LauncherEvent$LauncherEvent = (session_id, kind, pid, line, code, error) =>
+  new LauncherEvent(session_id, kind, pid, line, code, error);
+export const LauncherEvent$isLauncherEvent = (value) =>
+  value instanceof LauncherEvent;
+export const LauncherEvent$LauncherEvent$session_id = (value) =>
+  value.session_id;
+export const LauncherEvent$LauncherEvent$0 = (value) => value.session_id;
+export const LauncherEvent$LauncherEvent$kind = (value) => value.kind;
+export const LauncherEvent$LauncherEvent$1 = (value) => value.kind;
+export const LauncherEvent$LauncherEvent$pid = (value) => value.pid;
+export const LauncherEvent$LauncherEvent$2 = (value) => value.pid;
+export const LauncherEvent$LauncherEvent$line = (value) => value.line;
+export const LauncherEvent$LauncherEvent$3 = (value) => value.line;
+export const LauncherEvent$LauncherEvent$code = (value) => value.code;
+export const LauncherEvent$LauncherEvent$4 = (value) => value.code;
+export const LauncherEvent$LauncherEvent$error = (value) => value.error;
+export const LauncherEvent$LauncherEvent$5 = (value) => value.error;
+
+export class LauncherProgress extends $CustomType {
+  constructor(session_id, finished_downloads, total_downloads, downloaded_bytes, total_bytes) {
+    super();
+    this.session_id = session_id;
+    this.finished_downloads = finished_downloads;
+    this.total_downloads = total_downloads;
+    this.downloaded_bytes = downloaded_bytes;
+    this.total_bytes = total_bytes;
+  }
+}
+export const LauncherProgress$LauncherProgress = (session_id, finished_downloads, total_downloads, downloaded_bytes, total_bytes) =>
+  new LauncherProgress(session_id,
+  finished_downloads,
+  total_downloads,
+  downloaded_bytes,
+  total_bytes);
+export const LauncherProgress$isLauncherProgress = (value) =>
+  value instanceof LauncherProgress;
+export const LauncherProgress$LauncherProgress$session_id = (value) =>
+  value.session_id;
+export const LauncherProgress$LauncherProgress$0 = (value) => value.session_id;
+export const LauncherProgress$LauncherProgress$finished_downloads = (value) =>
+  value.finished_downloads;
+export const LauncherProgress$LauncherProgress$1 = (value) =>
+  value.finished_downloads;
+export const LauncherProgress$LauncherProgress$total_downloads = (value) =>
+  value.total_downloads;
+export const LauncherProgress$LauncherProgress$2 = (value) =>
+  value.total_downloads;
+export const LauncherProgress$LauncherProgress$downloaded_bytes = (value) =>
+  value.downloaded_bytes;
+export const LauncherProgress$LauncherProgress$3 = (value) =>
+  value.downloaded_bytes;
+export const LauncherProgress$LauncherProgress$total_bytes = (value) =>
+  value.total_bytes;
+export const LauncherProgress$LauncherProgress$4 = (value) => value.total_bytes;
+
+export class AuthStatus extends $CustomType {
+  constructor(signed_in, username) {
+    super();
+    this.signed_in = signed_in;
+    this.username = username;
+  }
+}
+export const AuthStatus$AuthStatus = (signed_in, username) =>
+  new AuthStatus(signed_in, username);
+export const AuthStatus$isAuthStatus = (value) => value instanceof AuthStatus;
+export const AuthStatus$AuthStatus$signed_in = (value) => value.signed_in;
+export const AuthStatus$AuthStatus$0 = (value) => value.signed_in;
+export const AuthStatus$AuthStatus$username = (value) => value.username;
+export const AuthStatus$AuthStatus$1 = (value) => value.username;
+
+export class AuthEvent extends $CustomType {
+  constructor(status, username, error) {
+    super();
+    this.status = status;
+    this.username = username;
+    this.error = error;
+  }
+}
+export const AuthEvent$AuthEvent = (status, username, error) =>
+  new AuthEvent(status, username, error);
+export const AuthEvent$isAuthEvent = (value) => value instanceof AuthEvent;
+export const AuthEvent$AuthEvent$status = (value) => value.status;
+export const AuthEvent$AuthEvent$0 = (value) => value.status;
+export const AuthEvent$AuthEvent$username = (value) => value.username;
+export const AuthEvent$AuthEvent$1 = (value) => value.username;
+export const AuthEvent$AuthEvent$error = (value) => value.error;
+export const AuthEvent$AuthEvent$2 = (value) => value.error;
+
 export function action_name(action) {
   if (action instanceof PacksIndex) {
     return "packs-index";
@@ -827,6 +928,157 @@ export function action_refreshes_mods(action) {
   } else {
     return false;
   }
+}
+
+export function launcher_event_decoder() {
+  return $decode.optional_field(
+    "session_id",
+    "",
+    $decode.string,
+    (session_id) => {
+      return $decode.optional_field(
+        "event",
+        "",
+        $decode.string,
+        (kind) => {
+          return $decode.optional_field(
+            "pid",
+            0,
+            $decode.int,
+            (pid) => {
+              return $decode.optional_field(
+                "line",
+                "",
+                $decode.string,
+                (line) => {
+                  return $decode.optional_field(
+                    "code",
+                    0,
+                    (() => {
+                      let _pipe = $decode.optional($decode.int);
+                      return $decode.map(
+                        _pipe,
+                        (_capture) => { return $option.unwrap(_capture, 0); },
+                      );
+                    })(),
+                    (code) => {
+                      return $decode.optional_field(
+                        "error",
+                        "",
+                        $decode.string,
+                        (error) => {
+                          return $decode.success(
+                            new LauncherEvent(
+                              session_id,
+                              kind,
+                              pid,
+                              line,
+                              code,
+                              error,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+export function launcher_progress_decoder() {
+  return $decode.optional_field(
+    "session_id",
+    "",
+    $decode.string,
+    (session_id) => {
+      return $decode.optional_field(
+        "finished_downloads",
+        0,
+        $decode.int,
+        (finished_downloads) => {
+          return $decode.optional_field(
+            "total_downloads",
+            0,
+            $decode.int,
+            (total_downloads) => {
+              return $decode.optional_field(
+                "downloaded_bytes",
+                0,
+                $decode.int,
+                (downloaded_bytes) => {
+                  return $decode.optional_field(
+                    "total_bytes",
+                    0,
+                    $decode.int,
+                    (total_bytes) => {
+                      return $decode.success(
+                        new LauncherProgress(
+                          session_id,
+                          finished_downloads,
+                          total_downloads,
+                          downloaded_bytes,
+                          total_bytes,
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+export function auth_status_decoder() {
+  return $decode.optional_field(
+    "signed_in",
+    false,
+    $decode.bool,
+    (signed_in) => {
+      return $decode.optional_field(
+        "username",
+        "",
+        $decode.string,
+        (username) => {
+          return $decode.success(new AuthStatus(signed_in, username));
+        },
+      );
+    },
+  );
+}
+
+export function auth_event_decoder() {
+  return $decode.optional_field(
+    "status",
+    "",
+    $decode.string,
+    (status) => {
+      return $decode.optional_field(
+        "username",
+        "",
+        $decode.string,
+        (username) => {
+          return $decode.optional_field(
+            "error",
+            "",
+            $decode.string,
+            (error) => {
+              return $decode.success(new AuthEvent(status, username, error));
+            },
+          );
+        },
+      );
+    },
+  );
 }
 
 function prefix(prefix, value) {

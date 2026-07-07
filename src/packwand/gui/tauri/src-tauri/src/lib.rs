@@ -23,8 +23,8 @@ use std::time::{Duration, Instant};
 
 use serde::Deserialize;
 
-#[cfg(feature = "launcher-spike")]
-mod launcher_spike;
+mod launcher;
+mod window_dock;
 use tauri::menu::{Menu, MenuItem};
 use tauri::tray::TrayIconBuilder;
 use tauri::{AppHandle, Manager, RunEvent, State};
@@ -154,16 +154,21 @@ fn backend_url(workspace: Option<String>, state: State<'_, Backend>) -> Result<S
 }
 
 /// Opens `path` in the OS's file manager.
-fn open_in_file_manager(path: &str) {
+/// Hands `target` (a folder path or a URL) to the OS's default handler:
+/// the file manager for a path, the default browser for a URL. Used both
+/// for "open workspace folder" and (from `launcher.rs`) opening the
+/// Microsoft sign-in page — deliberately the *system* browser, not an
+/// embedded webview, matching Microsoft's own guidance for credential entry.
+pub(crate) fn open_with_os_handler(target: &str) {
     let result = if cfg!(target_os = "windows") {
-        Command::new("explorer").arg(path).spawn()
+        Command::new("explorer").arg(target).spawn()
     } else if cfg!(target_os = "macos") {
-        Command::new("open").arg(path).spawn()
+        Command::new("open").arg(target).spawn()
     } else {
-        Command::new("xdg-open").arg(path).spawn()
+        Command::new("xdg-open").arg(target).spawn()
     };
     if let Err(e) = result {
-        eprintln!("failed to open {path} in the file manager: {e}");
+        eprintln!("failed to open {target}: {e}");
     }
 }
 
@@ -184,7 +189,7 @@ fn open_workspace_folder(app: &AppHandle) {
     }
     match ureq::get(&format!("{url}/api/v1/version")).call() {
         Ok(response) => match response.into_json::<VersionResponse>() {
-            Ok(v) if !v.root.is_empty() => open_in_file_manager(&v.root),
+            Ok(v) if !v.root.is_empty() => open_with_os_handler(&v.root),
             Ok(_) => eprintln!("open workspace folder: empty root in /api/v1/version"),
             Err(e) => eprintln!("open workspace folder: failed to parse /api/v1/version: {e}"),
         },
@@ -248,16 +253,20 @@ pub fn run() {
     let builder = tauri::Builder::default()
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_dialog::init())
-        .manage(Backend(Mutex::new(None)));
-    #[cfg(not(feature = "launcher-spike"))]
-    let builder = builder.invoke_handler(tauri::generate_handler![backend_url, select_workspace]);
-    #[cfg(feature = "launcher-spike")]
-    let builder = builder.invoke_handler(tauri::generate_handler![
-        backend_url,
-        select_workspace,
-        launcher_spike::core_list_instances,
-        launcher_spike::core_plan_launch
-    ]);
+        .manage(Backend(Mutex::new(None)))
+        .manage(launcher::LauncherState::new())
+        .manage(launcher::AuthState::new())
+        .invoke_handler(tauri::generate_handler![
+            backend_url,
+            select_workspace,
+            launcher::core_list_instances,
+            launcher::core_plan_launch,
+            launcher::launcher_boot,
+            launcher::launcher_cancel,
+            launcher::auth_login,
+            launcher::auth_logout,
+            launcher::auth_status,
+        ]);
     builder
         .setup(|app| {
             let handle = app.handle().clone();

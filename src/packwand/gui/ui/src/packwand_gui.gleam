@@ -1,4 +1,5 @@
 import gleam/int
+import gleam/json
 import gleam/list
 import gleam/option.{None, Some}
 import gleam/string
@@ -8,19 +9,23 @@ import packwand_gui/api
 import packwand_gui/manifest_form
 import packwand_gui/model.{
   type Project, ContentResponse, CreatedProject, FeatureIndex, ProjectIndex,
-  action_name, action_refreshes_mods,
+  action_name, action_refreshes_mods, auth_event_decoder,
+  auth_status_decoder, launcher_event_decoder, launcher_progress_decoder,
 }
 import packwand_gui/state.{
-  type Model, type Msg, CopyChangelog, CreateProject, GotAction, GotChangelog,
-  GotFeatures, GotHealth, GotManifest, GotMods, GotProjects, IconFailed,
-  JobFinished, JobLine, ManifestSaved, Model, Navigate, NewPack, ProjectCreated, RunAction,
+  type Model, type Msg, AuthLoginStarted, AuthLogoutDone, BootCancelled,
+  BootPack, CancelBoot, CopyChangelog, CreateProject, GotAction,
+  GotAuthEvent, GotAuthStatus, GotChangelog, GotFeatures, GotHealth,
+  GotLauncherEvent, GotLauncherProgress, GotManifest, GotMods, GotProjects,
+  IconFailed, JobFinished, JobLine, ManifestSaved, Model, Navigate, NewPack,
+  PackBooted, ProjectCreated, RequestAuthLogin, RequestAuthLogout, RunAction,
   RunWebview, SaveManifest, SelectProject, SelectSubdir, SetBumpConfigs,
-  SetBumpVersion, SetManifest,
-  SetManifestField, SetManifestStructured, SetModSlug,
-  SetNewPackDescription, SetNewPackID, SetNewPackLoader, SetNewPackMinecraft,
-  SetNewPackName, SetNewPackType, SetNewPackVersion, SetSearch, WebviewStarted,
-  append_log, http_error, initial, record_progress_line, reset_progress,
-  selected_project,
+  SetBumpVersion, SetDockGameWindow, SetManifest, SetManifestField,
+  SetManifestStructured, SetModSlug, SetNewPackDescription, SetNewPackID,
+  SetNewPackLoader, SetNewPackMinecraft, SetNewPackName, SetNewPackType,
+  SetNewPackVersion, SetSearch, WebviewStarted, append_launcher_log, append_log,
+  apply_launcher_event, http_error, initial, record_progress_line,
+  reset_progress, selected_project,
 }
 import packwand_gui/view
 
@@ -40,6 +45,42 @@ fn set_view_hash(value: String) -> Nil
 @external(javascript, "./packwand_gui/ffi.mjs", "watchViewHash")
 fn watch_view_hash(on_change: fn(String) -> Nil) -> Nil
 
+@external(javascript, "./packwand_gui/ffi.mjs", "bootPack")
+fn boot_pack_ffi(
+  pack_dir: String,
+  dock: Bool,
+  on_session: fn(String) -> Nil,
+  on_error: fn(String) -> Nil,
+) -> Nil
+
+@external(javascript, "./packwand_gui/ffi.mjs", "cancelBoot")
+fn cancel_boot_ffi(
+  session_id: String,
+  on_done: fn() -> Nil,
+  on_error: fn(String) -> Nil,
+) -> Nil
+
+@external(javascript, "./packwand_gui/ffi.mjs", "watchLauncher")
+fn watch_launcher_ffi(
+  on_event: fn(String) -> Nil,
+  on_progress: fn(String) -> Nil,
+) -> Nil
+
+@external(javascript, "./packwand_gui/ffi.mjs", "authLogin")
+fn auth_login_ffi(on_done: fn() -> Nil, on_error: fn(String) -> Nil) -> Nil
+
+@external(javascript, "./packwand_gui/ffi.mjs", "authLogout")
+fn auth_logout_ffi(on_done: fn() -> Nil, on_error: fn(String) -> Nil) -> Nil
+
+@external(javascript, "./packwand_gui/ffi.mjs", "authStatus")
+fn auth_status_ffi(
+  on_status: fn(String) -> Nil,
+  on_error: fn(String) -> Nil,
+) -> Nil
+
+@external(javascript, "./packwand_gui/ffi.mjs", "watchAuthEvents")
+fn watch_auth_events_ffi(on_event: fn(String) -> Nil) -> Nil
+
 pub fn main() {
   let app = lustre.application(init, update, view.render)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
@@ -54,6 +95,9 @@ fn init(_) -> #(Model, Effect(Msg)) {
       api.projects(GotProjects),
       api.features(GotFeatures),
       browser_view_effect(),
+      watch_launcher_effect(),
+      watch_auth_effect(),
+      auth_status_effect(),
     ]),
   )
 }
@@ -302,6 +346,120 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       Model(..model, bump_configs: value),
       effect.none(),
     )
+    BootPack(path) -> #(
+      append_launcher_log(
+        Model(
+          ..model,
+          launcher_session: None,
+          launcher_status: "installing",
+          launcher_log: [],
+          launcher_progress: None,
+        ),
+        "> boot " <> path,
+      ),
+      boot_pack_effect(path, model.dock_game_window),
+    )
+    SetDockGameWindow(value) -> #(
+      Model(..model, dock_game_window: value),
+      effect.none(),
+    )
+    PackBooted(Ok(session_id)) -> #(
+      Model(..model, launcher_session: Some(session_id)),
+      effect.none(),
+    )
+    PackBooted(Error(error)) -> #(
+      append_launcher_log(
+        Model(..model, launcher_status: "failed"),
+        http_error(error),
+      ),
+      effect.none(),
+    )
+    GotLauncherEvent(raw) ->
+      case json.parse(raw, launcher_event_decoder()) {
+        Ok(event) ->
+          case model.launcher_session {
+            Some(session_id) if session_id == event.session_id -> #(
+              apply_launcher_event(model, event),
+              effect.none(),
+            )
+            _ -> #(model, effect.none())
+          }
+        Error(_) -> #(model, effect.none())
+      }
+    GotLauncherProgress(raw) ->
+      case json.parse(raw, launcher_progress_decoder()) {
+        Ok(progress) ->
+          case model.launcher_session {
+            Some(session_id) if session_id == progress.session_id -> #(
+              Model(..model, launcher_progress: Some(progress)),
+              effect.none(),
+            )
+            _ -> #(model, effect.none())
+          }
+        Error(_) -> #(model, effect.none())
+      }
+    CancelBoot ->
+      case model.launcher_session {
+        Some(session_id) -> #(model, cancel_boot_effect(session_id))
+        None -> #(model, effect.none())
+      }
+    BootCancelled(Ok(_)) -> #(model, effect.none())
+    BootCancelled(Error(error)) -> #(
+      append_launcher_log(model, http_error(error)),
+      effect.none(),
+    )
+    RequestAuthLogin -> #(
+      Model(
+        ..model,
+        auth_status_text: "Opening Microsoft sign-in in your browser...",
+      ),
+      auth_login_effect(),
+    )
+    AuthLoginStarted(Ok(_)) -> #(model, effect.none())
+    AuthLoginStarted(Error(error)) -> #(
+      Model(..model, auth_status_text: http_error(error)),
+      effect.none(),
+    )
+    GotAuthEvent(raw) ->
+      case json.parse(raw, auth_event_decoder()) {
+        Ok(event) ->
+          case event.status {
+            "signed_in" -> #(
+              Model(
+                ..model,
+                auth_signed_in: True,
+                auth_username: event.username,
+                auth_status_text: "",
+              ),
+              effect.none(),
+            )
+            _ -> #(Model(..model, auth_status_text: event.error), effect.none())
+          }
+        Error(_) -> #(model, effect.none())
+      }
+    RequestAuthLogout -> #(model, auth_logout_effect())
+    AuthLogoutDone(Ok(_)) -> #(
+      Model(
+        ..model,
+        auth_signed_in: False,
+        auth_username: "",
+        auth_status_text: "",
+      ),
+      effect.none(),
+    )
+    AuthLogoutDone(Error(error)) -> #(
+      Model(..model, auth_status_text: http_error(error)),
+      effect.none(),
+    )
+    GotAuthStatus(Ok(status)) -> #(
+      Model(
+        ..model,
+        auth_signed_in: status.signed_in,
+        auth_username: status.username,
+      ),
+      effect.none(),
+    )
+    GotAuthStatus(Error(_)) -> #(model, effect.none())
   }
 }
 
@@ -404,9 +562,80 @@ fn set_hash_effect(value: String) -> Effect(Msg) {
   effect.from(fn(_) { set_view_hash(value) })
 }
 
+fn boot_pack_effect(path: String, dock: Bool) -> Effect(Msg) {
+  effect.from(fn(dispatch) {
+    boot_pack_ffi(
+      path,
+      dock,
+      fn(session_id) { dispatch(PackBooted(Ok(session_id))) },
+      fn(error) { dispatch(PackBooted(Error(model.ApiError(error)))) },
+    )
+  })
+}
+
+fn cancel_boot_effect(session_id: String) -> Effect(Msg) {
+  effect.from(fn(dispatch) {
+    cancel_boot_ffi(
+      session_id,
+      fn() { dispatch(BootCancelled(Ok(Nil))) },
+      fn(error) { dispatch(BootCancelled(Error(model.ApiError(error)))) },
+    )
+  })
+}
+
+fn watch_launcher_effect() -> Effect(Msg) {
+  effect.from(fn(dispatch) {
+    watch_launcher_ffi(
+      fn(raw) { dispatch(GotLauncherEvent(raw)) },
+      fn(raw) { dispatch(GotLauncherProgress(raw)) },
+    )
+  })
+}
+
 fn browser_view_effect() -> Effect(Msg) {
   effect.from(fn(dispatch) {
     watch_view_hash(fn(value) { dispatch(Navigate(view.from_name(value))) })
     dispatch(Navigate(view.from_hash()))
+  })
+}
+
+fn auth_login_effect() -> Effect(Msg) {
+  effect.from(fn(dispatch) {
+    auth_login_ffi(
+      fn() { dispatch(AuthLoginStarted(Ok(Nil))) },
+      fn(error) { dispatch(AuthLoginStarted(Error(model.ApiError(error)))) },
+    )
+  })
+}
+
+fn auth_logout_effect() -> Effect(Msg) {
+  effect.from(fn(dispatch) {
+    auth_logout_ffi(
+      fn() { dispatch(AuthLogoutDone(Ok(Nil))) },
+      fn(error) { dispatch(AuthLogoutDone(Error(model.ApiError(error)))) },
+    )
+  })
+}
+
+fn auth_status_effect() -> Effect(Msg) {
+  effect.from(fn(dispatch) {
+    auth_status_ffi(
+      fn(raw) {
+        case json.parse(raw, auth_status_decoder()) {
+          Ok(status) -> dispatch(GotAuthStatus(Ok(status)))
+          Error(_) ->
+            dispatch(GotAuthStatus(Error(model.DecodeError(
+              "invalid auth status",
+            ))))
+        }
+      },
+      fn(error) { dispatch(GotAuthStatus(Error(model.ApiError(error)))) },
+    )
+  })
+}
+
+fn watch_auth_effect() -> Effect(Msg) {
+  effect.from(fn(dispatch) {
+    watch_auth_events_ffi(fn(raw) { dispatch(GotAuthEvent(raw)) })
   })
 }
