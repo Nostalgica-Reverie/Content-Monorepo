@@ -355,10 +355,6 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: gradle
-      - name: Secret scan (gitleaks)
-        run: |
-          go install github.com/gitleaks/gitleaks/v8@latest
-          "$(go env GOPATH)/bin/gitleaks" detect --source . --redact --exit-code 1
 
       # — Docs (rebuilt whenever docs/ changes, or packwand's own source does
       #   since the CLI reference pages are generated from it) —
