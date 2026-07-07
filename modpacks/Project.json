@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-03T00:46:52Z",
+  "generated": "2026-07-07T06:14:04Z",
   "projects": [
     {
       "id": "gold-not-old",
@@ -490,6 +490,46 @@
           "path": "modpacks/rekindled-common/global_packs",
           "has_index": false,
           "has_pack": false
+        }
+      ]
+    },
+    {
+      "id": "reminiscence",
+      "name": "Reminiscence",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/reminiscence",
+      "manifest_path": "modpacks/reminiscence/manifest.json",
+      "loader": "forge",
+      "mc_version": "1.20.1",
+      "version": "2.0.0-hotfix",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "reminiscence",
+      "curseforge_id": "reminiscence",
+      "platforms": {
+        "modrinth": "reminiscence",
+        "curseforge": "reminiscence"
+      },
+      "docs_path": "/modpacks/reminiscence/",
+      "subdirs": [
+        {
+          "key": "1.20.1-cf",
+          "path": "modpacks/reminiscence/1.20.1-cf",
+          "platform": "curseforge",
+          "mod_count": 170,
+          "has_index": true,
+          "has_pack": true
+        },
+        {
+          "key": "1.20.1-mr",
+          "path": "modpacks/reminiscence/1.20.1-mr",
+          "platform": "modrinth",
+          "mod_count": 149,
+          "has_index": true,
+          "has_pack": true
         }
       ]
     },
