@@ -2300,9 +2300,12 @@ function sidebar(model) {
       $html.div(
         toList([$attribute.class$("brand")]),
         toList([
-          $html.div(
-            toList([$attribute.class$("mark")]),
-            toList([$html.text("P")]),
+          $html.img(
+            toList([
+              $attribute.class$("mark"),
+              $attribute.src("/logo.png"),
+              $attribute.alt("Packwand"),
+            ]),
           ),
           $html.div(
             toList([]),

@@ -383,6 +383,11 @@ jobs:
 
       # — packwand: continuous "latest" binaries, downloadable from this run
       #   without needing a tagged release —
+      - name: Install Syft for snapshot SBOMs
+        if: needs.changes.outputs.go == 'true'
+        run: |
+          go install github.com/anchore/syft/cmd/syft@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
       - name: GoReleaser snapshot
         if: needs.changes.outputs.go == 'true'
         uses: https://github.com/goreleaser/goreleaser-action@v6

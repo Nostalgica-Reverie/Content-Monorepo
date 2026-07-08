@@ -5,6 +5,14 @@
 	"windows": ["main"],
 	"permissions": [
 		"core:default",
-		"dialog:allow-open"
+		"dialog:allow-open",
+		"allow-select-workspace",
+		"allow-core-list-instances",
+		"allow-core-plan-launch",
+		"allow-launcher-boot",
+		"allow-launcher-cancel",
+		"allow-auth-login",
+		"allow-auth-logout",
+		"allow-auth-status"
 	]
 }

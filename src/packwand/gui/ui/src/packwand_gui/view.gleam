@@ -70,7 +70,11 @@ pub fn render(model: Model) -> Element(Msg) {
 fn sidebar(model: Model) {
   html.aside([attribute.class("sidebar")], [
     html.div([attribute.class("brand")], [
-      html.div([attribute.class("mark")], [html.text("P")]),
+      html.img([
+        attribute.class("mark"),
+        attribute.src("/logo.png"),
+        attribute.alt("Packwand"),
+      ]),
       html.div([], [
         html.strong([], [html.text("Packwand")]),
         html.span([attribute.title(model.root)], [html.text(model.root)]),

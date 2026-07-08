@@ -9,10 +9,10 @@
   --line: #2d323b;
   --text: #e6e8eb;
   --muted: #9aa3ad;
-  --accent: #1bd96a;
-  --accent-2: #2fe57c;
-  --accent-dim: #16ae55;
-  --accent-soft: rgba(27, 217, 106, 0.14);
+  --accent: #da7756;
+  --accent-2: #e8926f;
+  --accent-dim: #b85d3f;
+  --accent-soft: rgba(218, 119, 86, 0.14);
   --danger: #b63d4d;
   --danger-bg: #321a22;
 }
@@ -54,6 +54,11 @@ input {
   color: var(--text);
 }
 
+select option {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
 button {
   min-height: 34px;
   padding: 0 14px;
@@ -69,12 +74,12 @@ select:hover {
 button:not(.ghost):not(.danger):not(.nav-btn) {
   background: var(--accent);
   border-color: var(--accent);
-  color: #082012;
+  color: #2a0f06;
 }
 
 button.ghost {
   background: #20272a;
-  color: #8df4b8;
+  color: #f0b79a;
 }
 
 button.danger {
@@ -161,14 +166,11 @@ textarea {
 }
 
 .mark {
-  display: grid;
-  place-items: center;
   width: 34px;
   height: 34px;
   border-radius: 6px;
-  background: var(--accent);
-  color: #082012;
-  font-weight: 900;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
 
 .sidebar-footer {
@@ -217,7 +219,7 @@ nav {
 .nav-btn.active {
   background: var(--accent) !important;
   border-color: var(--accent);
-  color: #082012;
+  color: #2a0f06;
 }
 
 main {
@@ -261,6 +263,21 @@ h2 {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.action-row {
+  flex-wrap: wrap;
+}
+
+.dock-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .top-actions {
@@ -345,7 +362,7 @@ h2 {
   border: 1px solid rgba(27, 217, 106, 0.36);
   border-radius: 999px;
   padding: 3px 9px;
-  color: #8df4b8;
+  color: #f0b79a;
   background: var(--accent-soft);
   font-size: 12px;
   font-weight: 800;
@@ -406,6 +423,11 @@ h2 {
 
 [data-current-view="mods"] .mod-list {
   max-height: calc(100vh - 270px);
+}
+
+.variants-editor .list {
+  max-height: none;
+  overflow: visible;
 }
 
 [data-current-view="mods"] .mods-panel {
@@ -475,7 +497,7 @@ h2 {
 .status-badge.integrated {
   border-color: rgba(27, 217, 106, 0.36);
   background: var(--accent-soft);
-  color: #8df4b8;
+  color: #f0b79a;
 }
 
 .changelog-preview {
