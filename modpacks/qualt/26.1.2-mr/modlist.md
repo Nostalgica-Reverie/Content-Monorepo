@@ -58,7 +58,6 @@
 ## Shared Mods
 
 - [Affogato Core](https://modrinth.com/mod/Q8yzjHI3)
-- [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Backpacks!](https://modrinth.com/mod/MGcd6kTf)
 - [Balm](https://modrinth.com/mod/MBAkmtvl)
 - [Bannerpoint](https://modrinth.com/mod/IfTBNyjQ)
