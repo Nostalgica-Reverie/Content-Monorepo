@@ -1,0 +1,14 @@
+<script lang="ts">
+  import { page } from "$app/state";
+  import { Discord} from '$lib/reusables';
+
+  let messages = new Map([
+    [404, "This page does not exist. It might have been removed, or never existed in the first place. Try searching for the page you need, or if this page should exist, let us know in our discord (use the link below)"],
+    [500, "Something went wrong internally! This isn't your fault. If this issue persists, please let us know in our discord (use the link below)"],
+  ]);
+</script>
+
+# Error {page.status}: {page.error?.message}
+
+{messages.get(page.status)} <Discord />
+

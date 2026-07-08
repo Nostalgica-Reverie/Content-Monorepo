@@ -2,6 +2,10 @@
 
 Manage projects released on GitLab or self-hosted GitLab instances
 
+```
+packwand gitlab [flags]
+```
+
 ### Options
 
 ```

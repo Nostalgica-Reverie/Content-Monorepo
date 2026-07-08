@@ -1,0 +1,51 @@
+---
+title: Adding new items
+tags: todo, items, KubeJs
+description: Adding new items
+---
+
+<script lang="ts">
+import { Discord } from '$lib/reusables';
+</script>
+
+# Adding new items
+
+## Resources
+
+Each item must have two assets, the item texture itself, and the model that tells which texture to use.
+
+In your resourcepack's asset folder: 
+- `assets/packid/textures/item/` - Item textures (`.png` files) should be placed here
+- `assets/packid/models/item/` - Model files (`.json` files) should be placed here
+
+Items can have any kind of models if you're familiar with a program like blockbench, but in most cases the default item model for flat icons looks like this:
+```json
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "packid:item/test_item"
+  }
+}
+```
+
+## KubeJs
+
+KubeJs handles some parts of the item creation process easier than other programs. For starters, you have access to the `kubejs/assets` folder, which is a dynamic resource pack. It also automatically generates basic models unless you specify a different one using the builder.
+All item registration scripts need to be added in KubeJs' `startup_scripts` directory. 
+```js
+StartupEvents.registry('item', (event) => {
+  // Automatically uses `kubejs/assets/kubejs/textures/item/test_item.png`
+  event.create('test_item')
+
+  // If you want to specify a different texture location you can do that too, like this:
+  event.create('test_item_1').texture('mobbo:item/lava') // This texture would be located at kubejs/assets/mobbo/textures/item/lava.png
+
+  // You can chain builder methods as much as you like
+  event.create('test_item_2').maxStackSize(16).glow(true)
+
+  // You can specify item type as 2nd argument in create(), some types have different available methods
+  event.create('custom_sword', 'sword').tier('diamond').attackDamageBaseline(10)
+})
+```
+
+The full KubeJs wiki page can be found [here](https://kubejs.com/wiki/tutorials/item-registry)

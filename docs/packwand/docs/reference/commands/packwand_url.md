@@ -2,6 +2,10 @@
 
 Add external files from a direct download link, for sites that are not directly supported by packwiz
 
+```
+packwand url [flags]
+```
+
 ### Options
 
 ```

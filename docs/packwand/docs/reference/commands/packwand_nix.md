@@ -2,6 +2,10 @@
 
 Nix integration (packwiz2nix-compatible outputs)
 
+```
+packwand nix [flags]
+```
+
 ### Options
 
 ```

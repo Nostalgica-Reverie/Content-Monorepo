@@ -1,0 +1,36 @@
+---
+title: Home
+description: Unified handbook documentation for modpack development, pack publishing, and pack management tooling.
+---
+
+<script lang="ts">
+import { Discord } from '$lib/reusables';
+import SearchBox from '$lib/sidebar/SearchBox.svelte';
+import GleamTools from '$lib/gleam/GleamTools.svelte';
+</script>
+
+# Modpack Dev Handbook
+
+This handbook is the single documentation site for modpack-development guidance and pack-management tooling for Minecraft Modding.
+
+- **Handbook** pages cover planning, design, debugging, and evergreen reference material.
+- **Pack management** pages cover packwand, packwiz, publishing targets, and installer/runtime components.
+- **Generated command docs** for packwand now live directly inside the handbook route tree instead of being imported from a separate site.
+
+<SearchBox />
+
+## Pack Management
+
+Start with [Pack Management](/wiki/modpack-management) for the practical toolchain: publishing platforms, pack formats, packwand, packwiz, and related components.
+
+## Gleam Utilities
+
+We also use Gleam where it is a good fit for small deterministic helpers. The example below uses Gleam-compiled functions to compare Minecraft versions and slugify pack names.
+
+<GleamTools />
+
+## Contribute
+
+All content in this handbook is source-controlled in this monorepo. Use the **Source** button in the top bar to jump directly to the backing file for the current page.
+
+<Discord />

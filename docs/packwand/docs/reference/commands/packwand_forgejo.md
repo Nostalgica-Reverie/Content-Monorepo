@@ -2,6 +2,10 @@
 
 Manage projects released on Forgejo, Gitea, or Codeberg
 
+```
+packwand forgejo [flags]
+```
+
 ### Options
 
 ```

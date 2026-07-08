@@ -2,6 +2,10 @@
 
 Manage pack settings
 
+```
+packwand settings [flags]
+```
+
 ### Options
 
 ```

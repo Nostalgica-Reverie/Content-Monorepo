@@ -1,0 +1,55 @@
+---
+title: Minecraft Concepts
+tags: intro, minecraft, technical
+description: How is Minecraft relevant to Minecraft Modpacks?
+---
+
+<script lang="ts">
+import { Discord } from '$lib/reusables';
+</script>
+
+# Minecraft Concepts
+No matter what type of pack you are creating, you will be building upon the game that is Minecraft. Your ability to design your gameplay and make your modpack will directly correspond to how well you know the game itself inside and out.
+
+## General Concepts
+
+The Minecraft Wiki is the best resource for the base general concepts of Minecraft, so to avoid repeating information here is a shortlist of pages to be aware of:
+- [Ticks](https://minecraft.wiki/w/Tick) - A cycle of the game loop. This is important for optimizing performance of your pack.
+- [JSON](https://minecraft.wiki/w/JSON) - The file format used in data and resource packs. Very important to learn and fairly human-readable.
+- [NBT](https://minecraft.wiki/w/NBT_format) - How arbitrary data is stored in blocks/items/saves. This is partially replaced by Data Components in newer versions.
+- [Data Components (1.21.1+)](https://minecraft.wiki/w/Data_component_format) - Arbitrary data for items and partially entities.
+- [Tags](https://minecraft.wiki/w/Tag_(Java_Edition)) - Groupings of items, blocks, entities, biomes, and more.
+- [Block Entity](https://minecraft.wiki/w/Block_entity) - Blocks that do things such as a furnace.
+- [Block States](https://minecraft.wiki/w/Block_states) - Data that primarily controls block appearance such as rotation.
+
+:::tip 
+   
+These links are best used as references! There's no need to dig into every detail before you mack modpacks, but these concepts will come up at some point.
+
+:::
+
+
+## Mod Loader concepts
+
+The Mod Loader of your pack is a larger piece of software that allows Minecraft mods to run on Minecraft. The most commonly used ones are [NeoForge](https://neoforged.net/) (Forge on 1.20.1 and below) and [Fabric](https://fabricmc.net/).  
+
+Since they add their own code that "hooks" into Minecraft, it's important to have an awareness of them in your modpack. Similar to versions of Minecraft, you can only run mods that are built with a mod loader in mind.
+
+
+### Events
+
+Events are pieces of code triggered when something happens in the game. These systems are loader specific, and very useful for pack developers to add custom content to. 
+
+For example:
+- **Event: Player right clicks with item** -> Give them a random item and delete the item
+- **Event: Player loads into the world** -> Send a message to the player about your latest updated
+
+These are most easily used by [KubeJs](https://kubejs.com/) to create custom behaviors in your modpack.
+
+[NeoForge documentation](https://docs.neoforged.net/docs/concepts/events) | [Fabric Documentation](https://docs.fabricmc.net/develop/events)
+
+### Version Mixing
+
+As mentioned above, you generally can't run mods that run on one loader on a different one. There is a recent exception to this rule with the mod [Sinytra Connector](https://www.curseforge.com/minecraft/mc-mods/sinytra-connector) that allows Fabric mods to run on Forge and NeoForge.
+
+**It is generally not recommended to use Sinytra Connector in modpacks.** It is still in active development, and has many incompatibilities that will make your modpack less stable and harder to debug.

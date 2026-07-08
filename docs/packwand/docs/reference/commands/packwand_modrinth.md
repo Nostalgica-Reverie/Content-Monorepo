@@ -2,6 +2,10 @@
 
 Manage modrinth-based mods
 
+```
+packwand modrinth [flags]
+```
+
 ### Options
 
 ```

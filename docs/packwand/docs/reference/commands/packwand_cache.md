@@ -2,6 +2,10 @@
 
 Inspect and maintain the shared download cache
 
+```
+packwand cache [flags]
+```
+
 ### Options
 
 ```

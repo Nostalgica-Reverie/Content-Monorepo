@@ -1,0 +1,49 @@
+---
+title: Improving and Profiling Modpack Performance
+tags: profiling
+description: How to improve performance in your modpack
+---
+
+<script lang="ts">
+import { Discord } from '$lib/reusables';
+</script>
+
+# Improving Modpack Performance
+
+Performance is one of the most important aspects of modpack development! You don't want people to be unable to play something you've made due to issues with optimization. Below is a guide on how to optimize and profile your modpack to keep performance stable.
+
+## 1. Before you profile a laggy pack
+
+Before you bother taking profilers of your pack, you should check the following:
+- How much RAM is being assigned to the modpack - Most packs should take between 4-10GB RAM to run, depending on how much content you have. Additionally, you shouldn't assign more than half your machine's total RAM to a modpack, as over-assigning memory can lead to issues.
+- Your machine specs - 
+- Make sure your graphics drivers are up to date and being used by your instance - If you're unsure on how to do this, ask your preferred search engine "How to update graphics drivers for \<your machine (windows 10, mac, ect.)>".
+- Make sure you have relevant performance mods installed - if you're unsure on what to install, read the guide below.
+## 2. Install performance mods
+
+Installing performance mods is the easiest way to improve performance! Our Our [Useful Mods List](/wiki/useful-mods/) provides a competent selection of performance mods for versions/loaders you're likely to make a modpack in, and we recommend to check it out for mods to add to your modpacks, especially ones marked with an `*`. 
+
+:::warning
+
+It is your responsibility as a modpack developer to ensure all mods in your pack work together. We recommend against adding every mod listed on the page at once if you lack the skills to debug issues that may arise from it, even if these mods are curated for compatibility and performance. We cannot guarantee that no issues or crashes may arise from using any of these mods.
+
+:::
+
+When adding performance mods to your pack, you should watch out for mods that have these red flags:
+- Don't have source listed - **Never** use closed source performance mods
+- Don't provide benchmarks - If a mod doesn't tell you how much the mod affects performance with a defined setup, it probably isn't worth using
+- High amount of open issues on issue tracker compared to closed ones - If a developer isn't on top of issues that the mod has, it may be buggy or unperformant
+- Small number of downloads - If a mod has a small download count, it may be unstable since issues or incompatibilities have not been discovered and reported yet
+
+## 3. Taking a Profiler
+
+There are many issues in modpacks that can be diagnosed via **profilers**. A profiler is a collection of information of your game instance that can be used to pinpoint sources of issues. Depending on the issue at hand, you'll need to take different profilers to find the root cause. For this guide, we recommend installing [Spark](https://www.curseforge.com/minecraft/mc-mods/spark) and [Modernfix](https://www.curseforge.com/minecraft/mc-mods/modernfix) for the majority of profiling usages.
+
+| Issue Type      | Server                                                 | Client                | Startup                            | Memory / GC |
+| --------------- | ------------------------------------------------------ | --------------------- | ---------------------------------- | ----------- |
+| Common Symptoms | Ghost blocks, lag spikes, Mobs moving irregularly      | FPS drops             | Long startup time                  | WIP         |
+| Profiler Method | Spark Server Profiler, Modernfix MCfunctions profiler. | Spark Client Profiler | Spark + Modernfix Startup Profiler | WIP         |
+
+### Server Profiler
+
+One of the most common areas of lag in modpacks is server lag. 

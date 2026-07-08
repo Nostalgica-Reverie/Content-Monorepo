@@ -1,0 +1,28 @@
+---
+title: Version Control Tools
+tags: tags
+description: Git and pack-specific tooling choices for versioning a modpack project.
+---
+
+# Version Control Tools
+
+Version control lets you track changes, recover mistakes, and collaborate on a pack over time instead of relying on ad-hoc backups.
+
+## Git
+
+Git is the standard version control system used across software projects and works well for modpacks when paired with a clean .gitignore and a metadata-driven pack format.
+
+A beginner-friendly starting point is [GitHub Desktop](https://desktop.github.com/download/), but the main concepts apply equally well on Forgejo, GitLab, and other Git hosting.
+
+At minimum, keep generated runtime content such as /saves and downloaded /mods out of source control unless you explicitly intend to redistribute them.
+
+## Pack-specific tooling
+
+The modpack ecosystem also has tools that treat the pack manifest itself as the source of truth rather than a loose folder of JARs.
+
+- [packwand](/wiki/modpack-management/packwand)
+- [packwiz](/wiki/modpack-management/packwiz)
+- [Pakku](https://juraj-hrivnak.github.io/Pakku/home.html)
+
+These tools are best when you want reproducible exports, clean reviewable changes, and automation for publishing or updating packs.
+

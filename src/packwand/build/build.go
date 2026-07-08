@@ -829,7 +829,13 @@ func pubWriteOutputs(r pubResolved, pDir string) {
 
 const (
 	modrinthAPI   = "https://api.modrinth.com/v2"
-	curseforgeAPI = "https://minecraft.curseforge.com/api"
+	curseforgeAPI = "https://api.curseforge.com/v1"
+
+	// Both APIs sit behind Cloudflare; requests with Go's default
+	// "Go-http-client" User-Agent get met with a JS challenge page (HTTP
+	// 403) instead of a real response, so every outbound request identifies
+	// itself explicitly.
+	httpUserAgent = "packwand/1.0 (+https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo)"
 )
 
 func pubUpload(manifestPath, variant string, live bool, changelogFile string) {
@@ -964,10 +970,22 @@ func uploadModrinth(r pubResolved, projectID, changelog, fileName string, data [
 	fmt.Printf("modrinth: uploaded %s to %s\n", r.pVer, projectID)
 }
 
+// httpGetUA issues a GET request carrying httpUserAgent, since both
+// Modrinth and CurseForge sit behind Cloudflare and Go's default User-Agent
+// gets met with a JS-challenge 403 instead of a real response.
+func httpGetUA(url string) (*http.Response, error) {
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("User-Agent", httpUserAgent)
+	return http.DefaultClient.Do(req)
+}
+
 // modrinthResolveProjectID resolves a Modrinth project slug or ID to its
 // canonical base62 ID via the (slug-tolerant) project lookup endpoint.
 func modrinthResolveProjectID(idOrSlug string) string {
-	resp, err := http.Get(modrinthAPI + "/project/" + idOrSlug) //nolint:gosec
+	resp, err := httpGetUA(modrinthAPI + "/project/" + idOrSlug)
 	if err != nil {
 		cmd.Fail(fmt.Sprintf("Modrinth project lookup failed for '%s': %v", idOrSlug, err))
 	}
@@ -1087,6 +1105,7 @@ func postOnce(url string, headers map[string]string, body []byte) (int, []byte, 
 	if err != nil {
 		return 0, nil, err
 	}
+	req.Header.Set("User-Agent", httpUserAgent)
 	for k, v := range headers {
 		req.Header.Set(k, v)
 	}
@@ -1155,6 +1174,7 @@ func cfGetJSON(token, path string, target any) {
 		cmd.Fail(fmt.Sprintf("CF %s lookup failed: %v", path, err))
 	}
 	req.Header.Set("X-Api-Token", token)
+	req.Header.Set("User-Agent", httpUserAgent)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		cmd.Fail(fmt.Sprintf("CF %s lookup failed: %v", path, err))
@@ -1175,7 +1195,7 @@ func pubVerify(manifestPath, variant string) {
 		cmd.Fail("verify currently checks Modrinth only, and this manifest has no modrinth_id")
 	}
 	url := fmt.Sprintf("%s/project/%s/version", modrinthAPI, r.mrID)
-	resp, err := http.Get(url) //nolint:gosec
+	resp, err := httpGetUA(url)
 	if err != nil {
 		cmd.Fail(fmt.Sprintf("Modrinth version lookup failed: %v", err))
 	}

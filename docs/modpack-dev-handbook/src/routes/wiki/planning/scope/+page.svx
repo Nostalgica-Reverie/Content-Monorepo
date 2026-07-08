@@ -1,0 +1,35 @@
+---
+title: Scope
+tags: planning 
+description: Modpack scope and how to limit it 
+---
+
+# Scope
+
+The **scope** of a project is its defined set of features, planned or implemented. In modpack development this can be quantified in a few ways:
+
+* How many major content mods a pack has
+* How much custom content is planned
+* How many mechanics are in a pack
+
+It may be tempting to start off planning the largest and most interesting pack you can dream of. An easy example of this could be: "A fully fledged RPG modpack with dialog, custom loot system, player leveling, and interesting boss fights." This project seems interesting enough, and there are enough RPG games out there to draw inspiration from and come up with a lot of good ideas. 
+
+The problems will arrive when you start to implement all these systems. Going through the list of features, you can break down each of them into a series of sub-tasks.
+
+Dialog system:
+* Find a mod that can support dialogs, custom NPCs, or both
+* Make or source skins for each of the NPCs
+* Figure out how to put them in the world 
+* Write hundreds of lines of high effort dialog 
+* Come up and implement reasons to engage with the dialog system, such as quests
+* Find suitable items to put as quest rewards. Maybe money?
+* Add shops the player can purchase items from
+* But what about selling items? Should you come up with an economy system?
+
+This is a ton of work just for one of the 4 core features of a modpack. Even this one alone might take a month or so of development time, assuming you're working for several hours a day. Instead of trying to make a pack that does all of these things, try focusing on doing one or two things really well. It allows you to flesh out systems in your modpack while also leaving room to add the other two later on after the pack is released.
+
+You'll also notice in the above example something called **scope creep**. This term refers to the act of adding small features here and there that both directly and indirectly increase the scope of your project. In this example, something that starts off as a simple dialog system has turned into a full questing and economy system just in the planning phase!
+
+It's important to be your own biggest hater! Always assume things will be much more difficult to do than you think they are, and if you have good ideas, write them down and save them for future updates.
+
+The [Project Management](/wiki/organization/project-management/) page has more information on preventing scope creep and following through on plans you create.

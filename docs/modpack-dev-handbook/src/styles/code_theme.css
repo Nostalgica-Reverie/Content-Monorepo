@@ -1,0 +1,79 @@
+/*
+ * Hopscotch
+ * by Jan T. Sott
+ * https://github.com/idleberg/Hopscotch
+ *
+ * This work is licensed under the Creative Commons CC0 1.0 Universal License
+ */
+
+pre.shiki,
+pre.shiki > code {
+  font-family: "Fira Mono", Menlo, Monaco, "Lucida Console", "Courier New", Courier, monospace;
+  line-height: 1.375;
+  direction: ltr;
+  text-align: left;
+  word-spacing: normal;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+pre.shiki > code {
+  background: unset;
+  color: unset;
+}
+
+pre.shiki > code {
+  font-size: 1em;
+}
+
+/* Code blocks */
+pre.shiki {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+}
+
+/* Inline code */
+:not(pre.shiki) > code {
+  padding: 0.1em;
+  border-radius: 0.3em;
+}
+
+pre > code.highlight {
+  outline: 0.4em solid red;
+  outline-offset: 0.4em;
+}
+
+table code { 
+  white-space: nowrap;
+}
+.code-wrapper {
+  position: relative;
+}
+.copy-button {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 2px 8px;
+  border-bottom-left-radius: 8px;
+  cursor: pointer;
+  border-left: 1px solid white;
+  border-bottom: 1px solid white;
+}
+.copy-button:hover {
+  border-left: 1px solid #be9851;
+  border-bottom: 1px solid #be9851;
+  color: #be9851;
+  transition: border 0.1s ease, color 0.1s ease;
+}

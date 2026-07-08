@@ -2,6 +2,10 @@
 
 Manage curseforge-based mods
 
+```
+packwand curseforge [flags]
+```
+
 ### Options
 
 ```

@@ -2,6 +2,10 @@
 
 Manage projects released on GitHub
 
+```
+packwand github [flags]
+```
+
 ### Options
 
 ```

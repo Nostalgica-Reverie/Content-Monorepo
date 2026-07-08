@@ -2,6 +2,10 @@
 
 Run and inspect the Packwand HTTP API
 
+```
+packwand api [flags]
+```
+
 ### Options
 
 ```

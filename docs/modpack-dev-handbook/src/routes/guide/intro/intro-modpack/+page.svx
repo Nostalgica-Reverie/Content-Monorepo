@@ -1,0 +1,95 @@
+---
+title: Intro to Mopdpacks
+tags: intro
+description: Introduction and tutorial for modpacks
+---
+
+<script lang="ts">
+import { Discord } from '$lib/reusables';
+
+</script>
+
+# Intro to Modpacks
+
+Loosely defined, a modpack is a collection of Minecraft mods that players can download and play. Anyone can put one together, and upload it to  [CurseForge](/wiki/modpack-management/curseforge/) and [Modrinth](/wiki/modpack-management/modrinth/) with little resistance. 
+
+While this wiki focuses on doing a bit more than just throwing your favorite mods into a pack and calling it a day, you have to learn the basics somewhere! This guide is best for those not 100% familiar with the process, and will get you started.
+
+You should aim to follow this guide with a basic pack idea if it's your first time making a modpack. If you want to do something more ambitious, treat it as a trial run and then afterwards go over the more in-depth [planning](/wiki/planning/ideation/) section of the wiki.
+
+## Making a modpack
+
+### 1. Create an instance in your launcher
+
+To start, you'll want to create a fresh instance to develop on. There are a few different launchers to pick from, which you can find [here](/wiki/info/launchers/), but this tutorial will work on the assumption that you're using [Prism](https://prismlauncher.org/). 
+
+Pressing the "Add Instance" button in the top left will bring you to the version and loader selection screen. This is likely the most important choice you will make in the pack dev process as it will determine some extremely important aspects of development:
+- What mods are available to you 
+- How supported those mods are by devs - some mods support multiple versions, some only the newest
+- Technical support from others - popular and evergreen versions will have more people able to help
+- What audience your pack will bring - Some types of players will prefer older packs, while vanilla players might prefer the latest versions of Minecraft
+
+If you're dedicated enough to modded Minecraft you'll likely know what to pick, but if not just start off with whatever version is supported by your most important mod.
+
+### 2. Select mods
+
+With your fresh new instance, you can start adding mods to your pack. It's best to start off with the standard [performance and utility](/wiki/useful-mods/) mods for your version.
+
+From there, add your core and complimentary mods, occasionally launching the issue to see if there are any crashes or easily apparent issues.
+
+The [Mod Selection](/wiki/planning/mod-selection/) page contains detailed information on the mod selection process. It's another incredibly important part of the pack dev process, so be sure to take time here to really consider what mods you are adding to the pack. Less can be more!
+
+### 3. Configuring mods
+
+This step can be done while adding mods or after your mod list is stable, whatever works best for your workflow. It involves digging through the `config` directory of your instance, as well as the `serverconfigs` folder of new worlds.
+
+:::tip 
+   
+The `defaultconfigs` directory can contain any configuration files in the `serverconfig` folder that are made when you create a world (or join a world with the mod freshly installed/updated). Copy and paste files from `serverconfigs` to `defaultconfigs` to allow your changes to be added to the world whenever a new world is created
+
+:::
+
+Every config file of every mod should be scanned and tweaked according to your pack's goals. [Quark](https://www.curseforge.com/minecraft/mc-mods/quark) as an example, has an extensive configuration (with an in-game ui) that allows you to completely remove many of its additions.
+
+In some cases, this will directly tie to the balance of your pack. If you're making a technical pack for example, some tech mods may include power consumption and speed configs.
+
+Be aware that updating mods may change config files! New ones can be added and existing ones can be taken away, so be very careful when updating mods!
+
+### 4. Making additional changes
+
+#### Datapacks
+
+In modern versions, mod devs have gradually adopted Mojang's data-driven approach to configuring mods. If you don't know what that means, it basically boils down to modpack developers having more control over things like worldgen, recipes, and other features!
+
+Making datapack changes is a bit involved, but once you learn the basics it will give you a ton of power when making changes to your pack. 
+
+For example:
+- Have two identical ores generating in the world? Datapack the one you don't like away
+- Want to add custom recipes for a mod's strange machine? Create a bunch of recipes using datapacks
+- Need to prevent a mob from dropping an item? Override its loot table using datapacks
+
+You can find the full tutorial on [Intro to Datapacks](/guide/intro/intro-datapack/).
+
+#### Custom recipes
+
+No matter what kind of modpack you are making, you will have to change some recipes. Sometimes this is for balance (get rid of a mod's coal to diamond recipe), or for unification (two different recipes craft the same thing).
+
+The [Polymorph](https://www.curseforge.com/minecraft/mc-mods/polymorph) mod can be used to easily find recipe conflicts using `/polymorph conflicts`, outputting them to the `logs` folder. You should avoid having the mod in your final release for performance if you have the time to fix them all.
+
+The primary way you modify recipes is datapacks, though [KubeJS](https://kubejs.com/) has some useful utilities to make this faster.
+
+### 5. Sharing your pack
+
+With the modpack created and playtesting done, you can now share the pack with friends and strangers! This can be done using any launcher's export feature.
+
+In Prism, you can right click the instance, then click export, selecting which platform to export to. Make sure to include any folders that you've made changes to. Usually this means: `config`, `defaultconfigs`, `kubejs`, `mods`, and `resourcepacks`.
+
+Before uploading, import your pack into your launcher and run the pack to see if everything has exported properly and the experience is exactly how you want players to have. From there, you can safely upload your pack to your platform and show it off to the world once its approved!
+
+:::warning
+
+Read up on a platform's posting rules before uploading your modpack! Your pack can be rejected or taken down if it includes mods, resourcepacks, or datapacks not on the platform. Double check the export file for any override mods to correct them so mod devs get credit for their work.
+
+:::
+
+You can find more information on this on the [CurseForge](/wiki/modpack-management/curseforge/) and [Modrinth](/wiki/modpack-management/modrinth/) pages.

@@ -2,6 +2,10 @@
 
 Look up or edit any pack's manifest fields by id
 
+```
+packwand packs [flags]
+```
+
 ### Options
 
 ```
