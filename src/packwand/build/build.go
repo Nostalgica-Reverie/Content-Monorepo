@@ -943,6 +943,11 @@ func uploadModrinth(r pubResolved, projectID, changelog, fileName string, data [
 		cmd.Fail("MODRINTH_TOKEN not set")
 	}
 
+	// The version-creation endpoint requires the project's base62 ID and,
+	// unlike Modrinth's lookup endpoints, rejects a slug outright (manifests
+	// configure modrinth_id as the human-readable slug, e.g. "re-console").
+	payload["project_id"] = modrinthResolveProjectID(projectID)
+
 	meta, _ := json.Marshal(payload)
 	contentType, body := buildMultipart([]mpart{
 		{name: "data", contentType: "application/json", data: meta},
@@ -957,6 +962,30 @@ func uploadModrinth(r pubResolved, projectID, changelog, fileName string, data [
 		cmd.Fail(fmt.Sprintf("modrinth upload failed (HTTP %d): %s", status, string(detail)))
 	}
 	fmt.Printf("modrinth: uploaded %s to %s\n", r.pVer, projectID)
+}
+
+// modrinthResolveProjectID resolves a Modrinth project slug or ID to its
+// canonical base62 ID via the (slug-tolerant) project lookup endpoint.
+func modrinthResolveProjectID(idOrSlug string) string {
+	resp, err := http.Get(modrinthAPI + "/project/" + idOrSlug) //nolint:gosec
+	if err != nil {
+		cmd.Fail(fmt.Sprintf("Modrinth project lookup failed for '%s': %v", idOrSlug, err))
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		detail, _ := io.ReadAll(resp.Body)
+		cmd.Fail(fmt.Sprintf("Modrinth project lookup failed for '%s' (HTTP %d): %s", idOrSlug, resp.StatusCode, string(detail)))
+	}
+	var proj struct {
+		ID string `json:"id"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&proj); err != nil {
+		cmd.Fail(fmt.Sprintf("parsing Modrinth project response for '%s': %v", idOrSlug, err))
+	}
+	if proj.ID == "" {
+		cmd.Fail(fmt.Sprintf("Modrinth project lookup for '%s' returned no id", idOrSlug))
+	}
+	return proj.ID
 }
 
 func uploadCurseforge(r pubResolved, projectID, changelog, fileName string, data []byte, live bool) {

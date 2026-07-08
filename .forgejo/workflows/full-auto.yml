@@ -99,3 +99,19 @@ jobs:
           author_email: omo50@noreply.nostalgica.net
           message: "release(${{ steps.automate.outputs.pack_id }}): automated -> ${{ steps.automate.outputs.new_version }}"
           add: "${{ matrix.entry }}"
+
+      # Forgejo (like GitHub) doesn't let a workflow's own push cascade into
+      # other `on: push` workflows unless the pushing token is a real PAT and
+      # not the restricted default actions token — that's finicky enough in
+      # practice that we don't rely on it. Dispatch publish.yml explicitly
+      # instead; this is what actually guarantees the release gets published.
+      - name: Trigger publish.yml
+        if: ${{ !cancelled() && steps.automate.outputs.changed == 'true' }}
+        env:
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+        run: |
+          curl -fsS -X POST \
+            "https://git.nostalgica.net/api/v1/repos/Lasting-Legacy/Lasting-Legacy-Monorepo/actions/workflows/publish.yml/dispatches" \
+            -H "Authorization: token ${FORGEJO_TOKEN}" \
+            -H "Accept: application/json" \
+            --json '{"ref":"main"}'
