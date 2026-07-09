@@ -88,7 +88,7 @@ other sites. The front matter for this page looks like this:
 ```md
 title: "Site Development" description: "This page is meant to be an introduction
 to formatting a page for the wiki. In it is multiple examples which you can
-examine raw in the [site source code](https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo)."
+examine raw in the site source tree under `docs/modpack-dev-handbook/`."
 version: 1.21.5
 ```
 
@@ -145,5 +145,6 @@ Highlighting is a way to highlight specific text. It isn't commonly used, but
 exists.
 
 > <Highlight color="#DC2626">Highlighted Text</Highlight> like this.
+
 
 

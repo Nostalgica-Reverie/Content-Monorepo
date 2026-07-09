@@ -3,6 +3,7 @@
   import "../styles/fonts.css";
 
   import Sidebar from "$lib/sidebar/Sidebar.svelte";
+  import { siteConfig } from "$lib/site";
   import Navbar from "../lib/Topbar.svelte";
 
   import { onMount } from "svelte";
@@ -26,8 +27,8 @@
   });
 
   $effect(() => {
-    console.log("%c?? Modpack Dev Handbook", "color: oklch(69.27% 0.2042 40.82); font-size: 24pt; font-weight: 600;");
-    console.log("Docs are sourced from the handbook plus the packwand and packwiz trees in this monorepo.");
+    console.log(`%c${siteConfig.handbook.title}`, "color: oklch(69.27% 0.2042 40.82); font-size: 24pt; font-weight: 600;");
+    console.log("Docs are sourced from the handbook plus the packwand and packwiz trees in this repository.");
   });
 
   onMount(() => {
@@ -62,3 +63,4 @@
     </div>
   </div>
 </div>
+

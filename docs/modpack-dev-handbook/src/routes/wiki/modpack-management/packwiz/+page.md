@@ -1,26 +1,62 @@
+<script>
+  import { siteConfig } from '$lib/site';
+</script>
+
 # packwiz
 
-packwiz is a command line tool for creating Minecraft modpacks. Instead of managing JAR files directly, packwiz creates TOML metadata files which can be easily version-controlled and shared with git (see an example pack [here](https://github.com/packwiz/packwiz-example-pack)). You can then [export it to a CurseForge or Modrinth modpack](/wiki/modpack-management/packwiz/tutorials/hosting/curseforge), or [use packwiz-installer](/wiki/modpack-management/packwiz/tutorials/installing/packwiz-installer) for an auto-updating MultiMC instance.
+packwiz is a command line tool for authoring Minecraft modpacks as TOML metadata rather than as a checked-in folder of downloaded JARs.
 
-packwiz is great for...
+It is the core manifest format that packwand builds on. If you want a smaller, established CLI for a single pack, packwiz is often the simplest place to start.
 
-- Distributing private modpacks for servers
-- Creating modpacks for CurseForge and Modrinth
+## Where packwiz fits best
 
-packwiz is not so great for...
+packwiz is well suited to:
 
-- Managing downloaded mod files (use [Curse/GDLauncher or another CLI](https://gist.github.com/comp500/13ae6f058221196077fb19953ac608c7))
-- People who want a GUI (though there are some [third-party efforts](https://github.com/ExoPlant/packwiz-gui))
+- Single-pack repositories
+- Private packs for friends, servers, or internal testing
+- Creator workflows where the manifest format matters more than repository automation
+- Teams that want a stable, Git-friendly format without the packwand-specific surfaces
 
-Join my Discord server if you need help [here](https://discord.gg/Csh8zbbhCt)!
+## Where packwiz is intentionally smaller
+
+packwiz is not trying to be a repository orchestration tool. It is lighter on:
+
+- multi-pack workspace management
+- release planning and verification workflows
+- repository diffing and diagnostics
+- local GUI or API surfaces
+
+If you want those higher-level workflows, move up to [packwand](/wiki/modpack-management/packwand).
+
+## How packwiz relates to the rest of this section
+
+- `packwiz` is the authoring CLI and metadata format.
+- `packwiz-installer` is the runtime updater players and servers execute.
+- The [bootstrap](/wiki/modpack-management/packwiz/components/bootstrap) is the tiny launcher-facing shim that updates and starts the installer.
+- [packwand](/wiki/modpack-management/packwand) uses the same general pack format but adds more repository-aware tooling on top.
+
+## Recommended author workflow
+
+1. Create a clean repository for the pack.
+2. Initialize the manifest with packwiz.
+3. Add mods through metadata commands rather than copying JARs into source control.
+4. Commit the resulting manifest and config changes to Git.
+5. Test distribution through a local server, export, or installer flow before publishing.
 
 ## Features
 
 - Git-friendly TOML-based metadata format
-- Java-based pack installer/updater (works with MultiMC and ATLauncher), with support for optional mods and fast automatic updates - perfect for servers!
-- Pack distribution with HTTP servers, with a built in local server for testing
+- Java-based pack installer/updater (works with MultiMC and ATLauncher), with support for optional mods and fast automatic updates
+- Pack distribution with HTTP servers, with a built-in local server for testing
 - Easy installation and updating of multiple mods at once from CurseForge and Modrinth
 - Exporting to CurseForge and Modrinth packs
 - Importing from CurseForge packs
-- Server-only and Client-only mod handling
+- Server-only and client-only mod handling
 - Creation of remote file metadata from JAR files for CurseForge mods
+
+## Useful links
+
+- <a href={siteConfig.packwiz.repoUrl}>packwiz repository</a>
+- <a href={siteConfig.packwiz.examplePackUrl}>example pack</a>
+- <a href={siteConfig.packwiz.guiUrl}>third-party GUI project</a>
+- <a href={siteConfig.packwiz.discordUrl}>upstream Discord</a>

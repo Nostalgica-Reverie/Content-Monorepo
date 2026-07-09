@@ -1,6 +1,6 @@
 # Modpack Dev Handbook
 
-Single-app handbook for modpack-development guidance plus pack-management documentation in the Lasting Legacy monorepo.
+Single-app handbook for modpack-development guidance plus pack-management documentation.
 
 ## Local development
 

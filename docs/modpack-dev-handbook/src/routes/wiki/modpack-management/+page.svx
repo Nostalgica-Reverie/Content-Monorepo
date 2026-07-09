@@ -5,7 +5,7 @@ description: Tools, publishing targets, and workflows for managing Minecraft pac
 
 # Pack Management
 
-This section covers the practical toolchain around building, versioning, exporting, and publishing packs.
+This section covers the practical toolchain around building, versioning, exporting, testing, and publishing packs.
 
 ## Platforms
 
@@ -19,3 +19,27 @@ This section covers the practical toolchain around building, versioning, exporti
 - [packwiz](/wiki/modpack-management/packwiz)
 - [packwiz components](/wiki/modpack-management/packwiz/components)
 - [Pakku](https://juraj-hrivnak.github.io/Pakku/home.html)
+
+## Choosing a tool
+
+| Need | Best fit | Why |
+| --- | --- | --- |
+| Maintain one or more packs as metadata in Git | [packwand](/wiki/modpack-management/packwand) | Adds higher-level workflows on top of packwiz, including workspace operations, publishing, diffing, validation, and a local GUI/API |
+| Maintain a single pack with a smaller CLI surface | [packwiz](/wiki/modpack-management/packwiz) | Mature TOML-based pack format with straightforward install/export workflows |
+| Distribute updates to players or servers | [packwiz components](/wiki/modpack-management/packwiz/components) | The bootstrap and installer handle launch-time updates and optional mods |
+| Produce a hosted `.mrpack` from an existing manifest | [Pakku](https://juraj-hrivnak.github.io/Pakku/home.html) | Useful when you want an external exporter around the packwiz-style ecosystem |
+
+## Recommended workflows
+
+1. Author the pack as metadata, not as a folder of downloaded JARs.
+2. Keep the pack in Git so recipe, config, and dependency changes are reviewable.
+3. Use `packwand` when you need repository-aware workflows such as workspace sync, bulk updates, publishing plans, or diagnostics.
+4. Use `packwiz` directly when you want the smaller original toolchain and you do not need the packwand-specific repository automation.
+5. Test the player install path with the bootstrap and installer before you publish a release.
+
+## Mental model
+
+- `packwiz` defines the core manifest format and the classic CLI workflow.
+- `packwand` builds on that format and adds repository automation, publishing, diagnostics, and multi-pack support.
+- `packwiz-installer` and the [bootstrap](/wiki/modpack-management/packwiz/components/bootstrap) are runtime delivery tools for players and servers.
+- Hosting targets such as CurseForge and Modrinth are output formats and distribution channels, not your source of truth.

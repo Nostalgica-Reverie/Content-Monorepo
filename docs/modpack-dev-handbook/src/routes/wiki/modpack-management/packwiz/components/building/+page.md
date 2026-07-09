@@ -1,10 +1,10 @@
-# Building
+﻿# Building
 
-All components build from the monorepo root with [Task](https://taskfile.dev) (`Taskfile.yml`), or directly with their native toolchains.
+All components build from the repository root with [Task](https://taskfile.dev) (`Taskfile.yml`), or directly with their native toolchains.
 
 ## Prerequisites
 
-- **JDK 17+** (JDK 25 verified) for packwiz-installer — Gradle 9 is fetched by the wrapper
+- **JDK 17+** (JDK 25 verified) for packwiz-installer â€” Gradle 9 is fetched by the wrapper
 - **Rust** (cargo) for mod_browser_webview
 - **Go 1.25+** for the Go bootstrap and packwand
 
@@ -37,3 +37,4 @@ cd src/packwand && go build ./cmd/packwiz-bootstrap
 ::: info
 The installer's R8-shrunk distribution jar is opt-in: `./gradlew build -PshrinkDist=true`. The default `build` ships the shadow jar, because R8 8.5 cannot read the class files of very new JDKs (e.g. Java 25) when they are passed as its library.
 :::
+

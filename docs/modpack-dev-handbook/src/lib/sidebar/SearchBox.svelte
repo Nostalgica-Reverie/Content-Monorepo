@@ -1,11 +1,12 @@
 <script lang="ts">
   import IconSearch from "~icons/tabler/search";
   import type { SvelteComponent } from "svelte";
+  import type { SearchResult } from "$lib/search";
   import SidebarSearchDialog from "./SidebarSearchDialog.svelte";
 
   let dialog: SvelteComponent;
 
-  let results: SearchPage[] = $state([]);
+  let results: SearchResult[] = $state([]);
 
   let { keyActivated }: { keyActivated?: boolean } = $props();
 </script>
