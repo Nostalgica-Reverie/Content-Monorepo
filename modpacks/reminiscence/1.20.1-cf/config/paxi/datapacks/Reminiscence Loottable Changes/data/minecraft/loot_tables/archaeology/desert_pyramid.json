@@ -1,0 +1,89 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:archer_pottery_sherd"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "minecraft:archaeology/structure_map"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "endrem:corrupted_eye",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:miner_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:prize_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:antique_ink"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:skull_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gold_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:tnt"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:torchflower_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pitcher_pod"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:ancient_sapling"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gunpowder"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:forgotten_hat"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "caverns_and_chasms:necromium_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "caverns_and_chasms:necromium_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "caverns_and_chasms:necromium_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "caverns_and_chasms:necromium_boots"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "minecraft:archaeology/desert_pyramid"
+}

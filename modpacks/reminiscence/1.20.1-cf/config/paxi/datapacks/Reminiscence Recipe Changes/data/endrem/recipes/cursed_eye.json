@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGr",
+    "GSG",
+    "TGt"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:blackstone"
+    },
+    "R": {
+      "item": "minecraft:gold_ingot"
+    },
+    "r": {
+      "item": "minecraft:fire_charge"
+    },
+    "T": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "t": {
+      "item": "minecraft:quartz"
+    },
+    "S": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "endrem:cursed_eye"
+  }
+}

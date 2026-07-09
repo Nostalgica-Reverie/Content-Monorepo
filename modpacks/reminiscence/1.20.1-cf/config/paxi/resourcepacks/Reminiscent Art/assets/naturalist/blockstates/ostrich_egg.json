@@ -1,0 +1,19 @@
+{
+  "variants": {
+      "eggs=1,hatch=0": [
+        {
+          "model": "naturalist:block/ostrich_egg"
+        }
+      ],
+      "eggs=1,hatch=1": [
+        {
+          "model": "naturalist:block/ostrich_egg_slightly_cracked"
+        }
+      ],
+      "eggs=1,hatch=2": [
+        {
+          "model": "naturalist:block/ostrich_egg_very_cracked"
+        }
+      ]
+  }
+}

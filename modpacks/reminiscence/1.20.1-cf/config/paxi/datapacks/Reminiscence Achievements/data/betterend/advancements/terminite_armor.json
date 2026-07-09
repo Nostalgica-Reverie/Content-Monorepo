@@ -1,0 +1,78 @@
+{
+  "parent": "minecraft:end/mine_opal",
+  "criteria": {
+    "got_terminite_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_terminite_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_terminite_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_helmet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_terminite_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_leggings"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.betterend.terminite_armor.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "betterend:terminite_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.betterend.terminite_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_terminite_helmet",
+      "got_terminite_chestplate",
+      "got_terminite_leggings",
+      "got_terminite_boots"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

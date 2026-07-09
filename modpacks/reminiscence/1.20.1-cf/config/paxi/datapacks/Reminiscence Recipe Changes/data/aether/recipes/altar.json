@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "aether:holystone"
+    },
+    "Z": {
+      "tag": "aether:gems/zanite"
+    },
+    "z": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "pattern": [
+    "zHz",
+    "HZH",
+    "zHz"
+  ],
+  "result": {
+    "item": "aether:altar"
+  },
+  "show_notification": true
+}

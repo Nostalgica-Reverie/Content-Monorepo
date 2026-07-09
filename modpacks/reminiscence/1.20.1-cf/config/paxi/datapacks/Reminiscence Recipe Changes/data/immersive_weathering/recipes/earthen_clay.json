@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S",
+    "S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:terracotta"
+    },
+    "S": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "item": "immersive_weathering:earthen_clay",
+    "count": 4
+  }
+}

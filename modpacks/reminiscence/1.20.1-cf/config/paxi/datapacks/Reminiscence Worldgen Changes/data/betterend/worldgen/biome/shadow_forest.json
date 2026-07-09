@@ -1,0 +1,97 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "effects": {
+    "mood_sound": {
+      "sound": "betterend:betterend.ambient.dust_wastelands",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "particle": {
+      "options": {
+        "type": "minecraft:mycelium"
+      },
+      "probability": 0.01
+    },
+    "ambient_sound": "betterend:betterend.ambient.chorus_forest",
+    "sky_color": 0,
+    "foliage_color": -13816531,
+    "grass_color": -13816531,
+    "fog_color": -16777216,
+    "water_color": -14013104,
+    "water_fog_color": -14013104
+  },
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": [
+    [
+      "betterend:round_cave",
+      "betterend:tunel_cave"
+    ],
+    [
+      "betterend:end_lake_rare"
+    ],
+    [],
+    [],
+    [
+      "minecraft:end_gateway_return"
+    ],
+    [],
+    [
+      "betterend:violecite_layer",
+      "betterend:thallasium_ore",
+      "kubejs:opal_ore",
+      "kubejs:titanium_ore"
+    ],
+    [],
+    [],
+    [
+      "ohthetreesyoullgrow:dragon_tree",
+      "betterend:dragon_tree_bush",
+      "betterend:shadow_plant",
+      "betterend:murkweed",
+      "betterend:needlegrass",
+      "betterend:shadow_berry",
+      "betterend:twisted_vine",
+      "betterend:purple_polypore",
+      "betterend:tail_moss",
+      "betterend:tail_moss_wood",
+      "betterend:charnia_purple",
+      "betterend:charnia_red_rare"
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "betterend:shadow_walker",
+        "weight": 40,
+        "minCount": 2,
+        "maxCount": 2
+      },
+      {
+        "type": "minecraft:enderman",
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 2
+      },
+      {
+        "type": "minecraft:phantom",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "creature": [],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {}
+}

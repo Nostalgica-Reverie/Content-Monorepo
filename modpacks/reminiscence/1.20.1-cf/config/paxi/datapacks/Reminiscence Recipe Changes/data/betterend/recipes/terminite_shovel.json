@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+      "#": {
+        "item": "minecraft:stick"
+      },
+      "X": {
+        "item": "betterend:terminite_ingot"
+      }
+    },
+    "pattern": [
+      "X",
+      "#",
+      "#"
+    ],
+    "result": {
+      "item": "betterend:terminite_shovel"
+    },
+    "show_notification": true
+  }

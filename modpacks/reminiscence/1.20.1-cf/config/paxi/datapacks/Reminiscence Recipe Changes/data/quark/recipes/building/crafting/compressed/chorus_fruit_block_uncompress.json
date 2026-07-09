@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:chorus_fruit_block"
+    }
+  ],
+  "result": {
+    "item": "minecraft:chorus_fruit",
+    "count": 9
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+        "flag": "chorus_fruit_block"
+    }
+  ]
+} 

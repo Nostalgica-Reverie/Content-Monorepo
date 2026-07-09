@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#caverns_and_chasms:has_monster/lost_goat",
+  "spawners": {
+    "type": "caverns_and_chasms:lost_goat",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 1
+  }
+}

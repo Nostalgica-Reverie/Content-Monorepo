@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "hookshot:item/hookshot"
+    },
+    "overrides": [
+    {
+      "predicate": {
+        "hookshot:shot_hook": 1
+      },
+      "model": "hookshot:item/hookshot_hookless"
+    }
+  ]
+}

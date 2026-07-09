@@ -1,0 +1,34 @@
+{
+  "parent": "aether:valkyrie_feather",
+  "criteria": {
+    "medal_of_honor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "deep_aether:medal_of_honor"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Craft a Medal of Honor using a feather from the Valkyrie Queen.",
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "deep_aether:medal_of_honor"
+    },
+    "show_toast": true,
+    "title": "Knee-Deep in the Dead"
+  },
+  "requirements": [
+    [
+      "medal_of_honor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

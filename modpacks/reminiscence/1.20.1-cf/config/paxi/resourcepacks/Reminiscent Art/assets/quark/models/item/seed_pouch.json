@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "quark:item/seed_pouch"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "pouch_items": 0.00000001
+            },
+            "model": "quark:item/seed_pouch_items"
+        }
+    ]
+}

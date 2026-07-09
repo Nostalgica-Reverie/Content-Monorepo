@@ -1,0 +1,16 @@
+{
+  "config": {
+    "features": [
+      {
+        "feature": "hybrid_beta:fancy_oak_seasonal",
+        "chance": 0.2
+      },
+      {
+        "feature": "hybrid_beta:fancy_oak_bees_002_seasonal",
+        "chance": 0.05
+      }
+    ],
+    "default": "hybrid_beta:oak_seasonal"
+  },
+  "type": "minecraft:random_selector"
+}

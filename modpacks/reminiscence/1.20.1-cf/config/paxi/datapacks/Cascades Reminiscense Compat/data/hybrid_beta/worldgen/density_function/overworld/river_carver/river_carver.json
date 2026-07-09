@@ -1,0 +1,207 @@
+{
+  "type": "range_choice",
+  "min_inclusive": 0.95,
+  "max_exclusive": 1.05,
+  "input": "hybrid_beta:overworld/river_carver/noise_selector",
+  "when_in_range": {
+    "type": "add",
+    "argument1": -0.0625,
+    "argument2": {
+      "type": "minecraft:add",
+      "argument1": {
+        "type": "minecraft:mul",
+        "argument1": {
+          "type": "minecraft:spline",
+          "spline": {
+            "coordinate": "minecraft:overworld/continents",
+            "points": [
+              {
+                "location": -0.18,
+                "value": 1,
+                "derivative": 0
+              },
+              {
+                "location": 0.05,
+                "value": 1,
+                "derivative": 0
+              },
+              {
+                "location": 0.1,
+                "value": 0.5,
+                "derivative": 0
+              },
+              {
+                "location": 0.15,
+                "value": 0,
+                "derivative": 0
+              },
+              {
+                "location": 0.2,
+                "value": 0,
+                "derivative": 0
+              }
+            ]
+          }
+        },
+        "argument2": {
+          "type": "add",
+          "argument1": {
+            "type": "minecraft:abs",
+            "argument": {
+              "type": "interpolated",
+              "argument": {
+                "type": "minecraft:mul",
+                "argument1": 0.4,
+                "argument2": {
+                  "type": "y_clamped_gradient",
+                  "from_y": 24,
+                  "to_y": 64,
+                  "from_value": -1,
+                  "to_value": 0
+                }
+              }
+            }
+          },
+          "argument2": {
+            "type": "minecraft:abs",
+            "argument": {
+              "type": "interpolated",
+              "argument": {
+                "type": "minecraft:mul",
+                "argument1": "minecraft:overworld/ridges",
+                "argument2": {
+                  "type": "y_clamped_gradient",
+                  "from_y": 50,
+                  "to_y": 96,
+                  "from_value": 2.25,
+                  "to_value": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "argument2": {
+        "type": "minecraft:mul",
+        "argument1": {
+          "type": "minecraft:spline",
+          "spline": {
+            "coordinate": "minecraft:overworld/continents",
+            "points": [
+              {
+                "location": 0,
+                "value": 0,
+                "derivative": 0
+              },
+              {
+                "location": 0.05,
+                "value": 0,
+                "derivative": 0
+              },
+              {
+                "location": 0.1,
+                "value": 0.5,
+                "derivative": 0
+              },
+              {
+                "location": 0.15,
+                "value": 1,
+                "derivative": 0
+              },
+              {
+                "location": 1,
+                "value": 1,
+                "derivative": 0
+              }
+            ]
+          }
+        },
+        "argument2": {
+          "type": "minecraft:interpolated",
+          "argument": {
+            "type": "minecraft:range_choice",
+            "input": "minecraft:overworld/erosion",
+            "min_inclusive": -1000,
+            "max_exclusive": -0.275,
+            "when_in_range": {
+              "type": "add",
+              "argument1": {
+                "type": "minecraft:abs",
+                "argument": {
+                  "type": "minecraft:mul",
+                  "argument1": 0.4,
+                  "argument2": {
+                    "type": "minecraft:range_choice",
+                    "input": "minecraft:overworld/erosion",
+                    "min_inclusive": -1000,
+                    "max_exclusive": -0.375,
+                    "when_in_range": {
+                      "type": "y_clamped_gradient",
+                      "from_y": -16,
+                      "to_y": 152,
+                      "from_value": -1,
+                      "to_value": 1
+                    },
+                    "when_out_of_range": {
+                      "type": "y_clamped_gradient",
+                      "from_y": 24,
+                      "to_y": 64,
+                      "from_value": -1,
+                      "to_value": 0
+                    }
+                  }
+                }
+              },
+              "argument2": {
+                "type": "minecraft:abs",
+                "argument": {
+                  "type": "minecraft:mul",
+                  "argument1": "minecraft:overworld/ridges",
+                  "argument2": {
+                    "type": "y_clamped_gradient",
+                    "from_y": 64,
+                    "to_y": 112,
+                    "from_value": 1.5,
+                    "to_value": 4
+                  }
+                }
+              }
+            },
+            "when_out_of_range": {
+              "type": "add",
+              "argument1": {
+                "type": "minecraft:abs",
+                "argument": {
+                  "type": "minecraft:mul",
+                  "argument1": 0.4,
+                  "argument2": {
+                    "type": "y_clamped_gradient",
+                    "from_y": 24,
+                    "to_y": 64,
+                    "from_value": -1,
+                    "to_value": 0
+                  }
+                }
+              },
+              "argument2": {
+                "type": "minecraft:abs",
+                "argument": {
+                  "type": "minecraft:mul",
+                  "argument1": "minecraft:overworld/ridges",
+                  "argument2": {
+                    "type": "y_clamped_gradient",
+                    "from_y": 50,
+                    "to_y": 96,
+                    "from_value": 2.25,
+                    "to_value": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "when_out_of_range": 1000000
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGr",
+    "gSg",
+    "rGR"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:bone_block"
+    },
+    "g": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "R": {
+      "item": "minecraft:gunpowder"
+    },
+    "r": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "S": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "endrem:black_eye"
+  }
+}

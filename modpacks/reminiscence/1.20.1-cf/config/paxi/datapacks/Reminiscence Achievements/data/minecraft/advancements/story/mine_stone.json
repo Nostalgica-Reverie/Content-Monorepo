@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:story/build_pickaxe",
+  "criteria": {
+    "stone": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "quark:stone_tool_materials"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Mine stone",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:cobblestone"
+    },
+    "show_toast": true,
+    "title": "Stone Age"
+  },
+  "requirements": [
+    [
+      "stone"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

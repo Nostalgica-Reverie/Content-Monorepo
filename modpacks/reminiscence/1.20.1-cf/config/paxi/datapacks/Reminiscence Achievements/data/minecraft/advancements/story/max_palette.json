@@ -1,0 +1,26 @@
+{
+  "display": {
+   "announce_to_chat": false,
+    "icon": {
+      "item": "xercapaint:item_palette",
+      "nbt": "{basic:[B;1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B]}"
+    },
+    "title": "The World is Your Canvas",
+    "description": "Obtain all dye colors on a Palette",
+    "frame": "challenge"
+  },
+  "parent": "minecraft:story/build_palette",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "xercapaint:item_palette",
+            "nbt": "{basic:[B;1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B,1B]}"
+          }
+        ]
+      }
+    }
+  }
+}

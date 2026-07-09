@@ -1,0 +1,61 @@
+{
+  "__comment": "Designed by Wire Segal with Cubik Studio - https://cubik.studio",
+  "textures": {
+    "particle": "block/glass",
+    "texture": "block/glass"
+  },
+  "elements": [
+    {
+      "from": [ 3, 3, 15.5 ],
+      "to": [ 13, 13, 16 ],
+      "faces": {
+        "north": { "uv": [ 1, 1, 11, 11 ], "texture": "#texture" },
+        "south": { "uv": [ 11, 1, 1, 11 ], "texture": "#texture" }
+      }
+    },
+    {
+      "from": [ 2, 2, 15 ],
+      "to": [ 14, 3, 16 ],
+      "faces": {
+        "down": { "uv": [ 2, 15, 14, 16 ], "texture": "#texture" },
+        "up": { "uv": [ 2, 15, 14, 16 ], "texture": "#texture" },
+        "north": { "uv": [ 14, 15, 2, 16 ], "texture": "#texture" },
+        "south": { "uv": [ 2, 15, 14, 16 ], "texture": "#texture" },
+        "west": { "uv": [ 1, 15, 2, 16 ], "texture": "#texture" },
+        "east": { "uv": [ 14, 15, 15, 16 ], "texture": "#texture" }
+      }
+    },
+    {
+      "from": [ 2, 13, 15 ],
+      "to": [ 14, 14, 16 ],
+      "faces": {
+        "down": { "uv": [ 2, 0, 14, 1 ], "texture": "#texture" },
+        "up": { "uv": [ 2, 0, 14, 1 ], "texture": "#texture" },
+        "north": { "uv": [ 14, 0, 2, 1 ], "texture": "#texture" },
+        "south": { "uv": [ 2, 0, 14, 1 ], "texture": "#texture" },
+        "west": { "uv": [ 14, 0, 15, 1 ], "texture": "#texture" },
+        "east": { "uv": [ 1, 0, 2, 1 ], "texture": "#texture" }
+      }
+    },
+    {
+      "from": [ 13, 3, 15 ],
+      "to": [ 14, 13, 16 ],
+      "faces": {
+        "north": { "uv": [ 1, 3, 0, 13 ], "texture": "#texture" },
+        "south": { "uv": [ 0, 3, 1, 13 ], "texture": "#texture" },
+        "west": { "uv": [ 0, 3, 1, 13 ], "texture": "#texture" },
+        "east": { "uv": [ 0, 3, 1, 13 ], "texture": "#texture" }
+      }
+    },
+    {
+      "from": [ 2, 3, 15 ],
+      "to": [ 3, 13, 16 ],
+      "faces": {
+        "north": { "uv": [ 16, 3, 15, 13 ], "texture": "#texture" },
+        "south": { "uv": [ 15, 3, 16, 13 ], "texture": "#texture" },
+        "west": { "uv": [ 15, 3, 16, 13 ], "texture": "#texture" },
+        "east": { "uv": [ 15, 3, 16, 13 ], "texture": "#texture" }
+      }
+    }
+  ]
+}

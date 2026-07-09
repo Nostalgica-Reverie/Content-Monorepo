@@ -1,0 +1,25 @@
+{
+    "display": {
+     "announce_to_chat": false,
+      "icon": {
+        "item": "minecraft:oak_boat"
+      },
+      "title": "Bring Me That Horizon",
+      "description": "Make a boat.",
+      "frame": "task"
+    },
+    "parent": "minecraft:story/build_pickaxe",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "tag": "minecraft:boats"
+            }
+          ]
+        }
+      }
+    }
+  }
+  

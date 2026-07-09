@@ -1,0 +1,78 @@
+{
+  "parent": "minecraft:end/smelt_bismuth",
+  "criteria": {
+    "got_thallasium_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_thallasium_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_thallasium_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_helmet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_thallasium_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_leggings"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.betterend.thallasium_armor.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "betterend:thallasium_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.betterend.thallasium_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_thallasium_helmet",
+      "got_thallasium_chestplate",
+      "got_thallasium_leggings",
+      "got_thallasium_boots"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

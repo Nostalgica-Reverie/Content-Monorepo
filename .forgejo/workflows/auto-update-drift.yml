@@ -29,10 +29,7 @@ jobs:
           filter: blob:none
 
       - name: Setup Go
-        uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: "stable"
-          cache: true
+        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
@@ -67,8 +64,31 @@ jobs:
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Check variant parity (mr vs cf)
+        id: parity
+        shell: bash
+        continue-on-error: true
+        run: packwand parity --json > "$RUNNER_TEMP/parity.json"
+
+      - name: Write parity summary
+        shell: bash
+        run: |
+          {
+            echo
+            echo "## Variant parity report (mr vs cf)"
+            echo
+            if [ ! -s "$RUNNER_TEMP/parity.json" ]; then
+              echo "_No output was captured — the parity step failed to run at all._"
+              exit 0
+            fi
+            echo "| Pack / variant | Status |"
+            echo "| --- | --- |"
+            jq -r '.[] | "| " + .pack + "/" + .variant + " | " + (if .missing_side then "single-platform (no -" + .missing_side + ")" elif ((.only_mr // [] | length) + (.only_cf // [] | length) + (.file_drift // [] | length)) > 0 then "⚠️ " + ((.only_mr // [] | length | tostring)) + " mr-only, " + ((.only_cf // [] | length | tostring)) + " cf-only, " + ((.file_drift // [] | length | tostring)) + " file drift" else "in parity" end) + " |"' "$RUNNER_TEMP/parity.json"
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Fail on check errors
-        # total_updates > 0 is expected (that's the whole point of this report)
-        # and must not fail the job; only genuine check errors do.
-        if: steps.drift.outcome == 'failure'
+        # total_updates > 0 and parity drift are expected findings (that's the
+        # whole point of this report) and must not fail the job; only genuine
+        # check errors do.
+        if: steps.drift.outcome == 'failure' || steps.parity.outcome == 'failure'
         run: exit 1

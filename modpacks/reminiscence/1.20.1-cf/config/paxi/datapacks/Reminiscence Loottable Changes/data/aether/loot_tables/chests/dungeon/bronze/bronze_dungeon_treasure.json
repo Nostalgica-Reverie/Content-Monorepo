@@ -1,0 +1,48 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        { 
+          "type": "minecraft:item",
+          "name": "deep_aether:aercloud_necklace",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:swet_cape",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:hammer_of_kingbdogz",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:sentry_boots",
+          "weight": 3
+        },
+        {
+          "name": "eye_pool",
+          "rolls": 1,
+          "entries": [
+              {
+                  "type": "item",
+                  "name": "endrem:witch_eye",
+                  "weight": 80,
+                  "functions": [{ "function": "set_count", "count": 1 }]
+              }
+          ]
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    }
+  ],
+  "random_sequence": "aether:chests/dungeon/bronze/bronze_dungeon_treasure"
+}

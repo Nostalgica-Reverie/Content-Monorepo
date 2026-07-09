@@ -1,0 +1,369 @@
+{
+  "block.sculk_sensor.break": {
+    "replace": "true",
+    "sounds": [{"name": "_common.stone.break", "type": "event"}]
+  },
+  "block.sculk_sensor.fall": {
+    "replace": "true",
+    "sounds": [{"name": "_common.stone.step", "type": "event"}]
+  },
+  "block.sculk_sensor.hit": {
+    "replace": "true",
+    "sounds": [{"name": "_common.stone.step", "type": "event"}]
+  },
+  "block.sculk_sensor.place": {
+    "replace": "true",
+    "sounds": [{"name": "_common.stone.step", "type": "event"}]
+  },
+  "block.sculk_sensor.step": {
+    "replace": "true",
+    "sounds": [{"name": "_common.stone.step", "type": "event"}]
+  },
+
+
+
+  "block.anvil.break": {
+    "replace": "true",
+    "sounds": [
+      "dig/stone1",
+      "dig/stone2",
+      "dig/stone3",
+      "dig/stone4"
+    ]
+  },
+  "block.anvil.destroy": {
+    "replace": "true",
+    "sounds": [
+      "random/anvil_break"
+    ]
+  },
+  "block.anvil.fall": {
+    "replace": "true",
+    "sounds": [
+      "step/stone1",
+      "step/stone2",
+      "step/stone3",
+      "step/stone4",
+      "step/stone5",
+      "step/stone6"
+    ]
+  },
+  "block.anvil.hit": {
+    "replace": "true",
+    "sounds": [
+      "step/stone1",
+      "step/stone2",
+      "step/stone3",
+      "step/stone4",
+      "step/stone5",
+      "step/stone6"
+    ]
+  },
+  "block.anvil.land": {
+    "replace": "true",
+    "sounds": [
+      "random/anvil_land"
+    ]
+  },
+  "block.anvil.place": {
+    "replace": "true",
+    "sounds": [
+      "random/anvil_land"
+    ]
+  },
+  "block.anvil.step": {
+    "replace": "true",
+    "sounds": [
+      "step/stone1",
+      "step/stone2",
+      "step/stone3",
+      "step/stone4",
+      "step/stone5",
+      "step/stone6"
+    ]
+  },
+  "block.anvil.use": {
+    "replace": "true",
+    "sounds": [
+      "random/anvil_use"
+    ]
+  },
+
+
+
+  "entity.enderman.ambient": {
+    "replace": "true",
+    "sounds": [
+      "mob/endermen/idle1",
+      "mob/endermen/idle2",
+      "mob/endermen/idle3",
+      "mob/endermen/idle4",
+      "mob/endermen/idle5"
+    ]
+  },
+  "entity.enderman.death": {
+    "replace": "true",
+    "sounds": [
+      "mob/endermen/death"
+    ]
+  },
+  "entity.enderman.hurt": {
+    "replace": "true",
+    "sounds": [
+      "mob/endermen/hit1",
+      "mob/endermen/hit2",
+      "mob/endermen/hit3",
+      "mob/endermen/hit4"
+    ]
+  },
+  "entity.enderman.scream": {
+    "replace": "true",
+    "sounds": [
+      "mob/endermen/scream1",
+      "mob/endermen/scream2",
+      "mob/endermen/scream3",
+      "mob/endermen/scream4"
+    ]
+  },
+  "entity.enderman.stare": {
+    "replace": "true",
+    "sounds": [
+      "mob/endermen/stare"
+    ]
+  },
+  "entity.enderman.teleport": {
+    "replace": "true",
+    "sounds": [
+      "mob/endermen/portal",
+      "mob/endermen/portal2"
+    ]
+  },
+
+  "block.amethyst_block.resonate": {
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "goldendays/blank"
+      }
+    ]
+  },
+
+  "block.amethyst_block.chime": {
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "goldendays/blank",
+        "volume": 0.2
+      }
+    ]
+  },
+  "block.amethyst_block.fall": {
+    "replace": "true",
+    "sounds": [
+      "block/amethyst/step1",
+      "block/amethyst/step2",
+      "block/amethyst/step3",
+      "block/amethyst/step4",
+      "block/amethyst/step5",
+      "block/amethyst/step6",
+      "block/amethyst/step7",
+      "block/amethyst/step8",
+      "block/amethyst/step9",
+      "block/amethyst/step10",
+      "block/amethyst/step11",
+      "block/amethyst/step12",
+      "block/amethyst/step14"
+    ]
+  },
+  "block.amethyst_block.hit": {
+    "replace": "true",
+    "sounds": [
+      "block/amethyst/step1",
+      "block/amethyst/step2",
+      "block/amethyst/step3",
+      "block/amethyst/step4",
+      "block/amethyst/step5",
+      "block/amethyst/step6",
+      "block/amethyst/step7",
+      "block/amethyst/step8",
+      "block/amethyst/step9",
+      "block/amethyst/step10",
+      "block/amethyst/step11",
+      "block/amethyst/step12"
+    ]
+  },
+  "block.amethyst_block.place": {
+    "replace": "true",
+    "sounds": [
+      "block/amethyst/place1",
+      "block/amethyst/place2",
+      "block/amethyst/place3",
+      "block/amethyst/place4"
+    ]
+  },
+  "block.amethyst_block.step": {
+    "replace": "true",
+    "sounds": [
+      "block/amethyst/step1",
+      "block/amethyst/step2",
+      "block/amethyst/step3",
+      "block/amethyst/step4",
+      "block/amethyst/step5",
+      "block/amethyst/step6",
+      "block/amethyst/step7",
+      "block/amethyst/step8",
+      "block/amethyst/step9",
+      "block/amethyst/step10",
+      "block/amethyst/step11",
+      "block/amethyst/step12",
+      "block/amethyst/step13",
+      "block/amethyst/step14"
+    ]
+  },
+  "block.amethyst_cluster.fall": {
+    "replace": "true",
+    "sounds": [
+      "block/amethyst/step1",
+      "block/amethyst/step2",
+      "block/amethyst/step3",
+      "block/amethyst/step4",
+      "block/amethyst/step5",
+      "block/amethyst/step6",
+      "block/amethyst/step7",
+      "block/amethyst/step8",
+      "block/amethyst/step9",
+      "block/amethyst/step10",
+      "block/amethyst/step11",
+      "block/amethyst/step12",
+      "block/amethyst/step14"
+    ]
+  },
+  "block.amethyst_cluster.hit": {
+    "replace": "true",
+    "sounds": [
+      "block/amethyst/step1",
+      "block/amethyst/step2",
+      "block/amethyst/step3",
+      "block/amethyst/step4",
+      "block/amethyst/step5",
+      "block/amethyst/step6",
+      "block/amethyst/step7",
+      "block/amethyst/step8",
+      "block/amethyst/step9",
+      "block/amethyst/step10",
+      "block/amethyst/step11",
+      "block/amethyst/step12"
+    ]
+  },
+  "block.amethyst_cluster.place": {
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "block/amethyst_cluster/place1",
+        "volume": 0.9
+      },
+      {
+        "name": "block/amethyst_cluster/place2",
+        "volume": 0.9
+      },
+      {
+        "name": "block/amethyst_cluster/place3",
+        "volume": 0.9
+      },
+      {
+        "name": "block/amethyst_cluster/place4",
+        "volume": 0.9
+      }
+    ]
+  },
+  "block.amethyst_cluster.step": {
+    "replace": "true",
+    "sounds": [
+      "block/amethyst/step1",
+      "block/amethyst/step2",
+      "block/amethyst/step3",
+      "block/amethyst/step4",
+      "block/amethyst/step5",
+      "block/amethyst/step6",
+      "block/amethyst/step7",
+      "block/amethyst/step8",
+      "block/amethyst/step9",
+      "block/amethyst/step10",
+      "block/amethyst/step11",
+      "block/amethyst/step12",
+      "block/amethyst/step13",
+      "block/amethyst/step14"
+    ]
+  },
+  "block.large_amethyst_bud.place": {
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "block/amethyst_cluster/place1",
+        "volume": 0.75
+      },
+      {
+        "name": "block/amethyst_cluster/place2",
+        "volume": 0.75
+      },
+      {
+        "name": "block/amethyst_cluster/place3",
+        "volume": 0.75
+      },
+      {
+        "name": "block/amethyst_cluster/place4",
+        "volume": 0.75
+      }
+    ]
+  },
+  "block.medium_amethyst_bud.place": {
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "block/amethyst_cluster/place1",
+        "pitch": 1.1,
+        "volume": 0.5
+      },
+      {
+        "name": "block/amethyst_cluster/place2",
+        "pitch": 1.1,
+        "volume": 0.5
+      },
+      {
+        "name": "block/amethyst_cluster/place3",
+        "pitch": 1.1,
+        "volume": 0.5
+      },
+      {
+        "name": "block/amethyst_cluster/place4",
+        "pitch": 1.1,
+        "volume": 0.5
+      }
+    ]
+  },
+  "block.small_amethyst_bud.place": {
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "block/amethyst_cluster/place1",
+        "pitch": 1.2,
+        "volume": 0.4
+      },
+      {
+        "name": "block/amethyst_cluster/place2",
+        "pitch": 1.2,
+        "volume": 0.4
+      },
+      {
+        "name": "block/amethyst_cluster/place3",
+        "pitch": 1.2,
+        "volume": 0.4
+      },
+      {
+        "name": "block/amethyst_cluster/place4",
+        "pitch": 1.2,
+        "volume": 0.4
+      }
+    ]
+  }
+}

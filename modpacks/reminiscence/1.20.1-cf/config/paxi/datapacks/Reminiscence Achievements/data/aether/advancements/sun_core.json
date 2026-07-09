@@ -1,0 +1,34 @@
+{
+  "parent": "aether:gold_dungeon",
+  "criteria": {
+    "sun_core": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "deep_aether:sun_core"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Obtain a Sun Core by beating the Sun Spirit... without getting hit!",
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "deep_aether:sun_core"
+    },
+    "show_toast": true,
+    "title": "In The Palm Of My Hand..."
+  },
+  "requirements": [
+    [
+      "sun_core"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

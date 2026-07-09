@@ -176,12 +176,12 @@
     },
     "automation": {
       "type": "object",
-      "description": "Per-pack automation settings consumed by somnus and the changelog generator. Replaces the old opt-out.json.",
+      "description": "Per-pack automation settings consumed by packwand and the changelog generator. Replaces the old opt-out.json.",
       "additionalProperties": false,
       "properties": {
         "auto_update": {
           "type": "boolean",
-          "description": "false: somnus update / loader-update skip this pack."
+          "description": "false: packwand update / loader-update skip this pack."
         },
         "server_promo": {
           "type": "boolean",
@@ -196,7 +196,7 @@
         },
         "freeze": {
           "type": "object",
-          "description": "Frozen (pinned) mods per subdir key, maintained by 'somnus freeze'.",
+          "description": "Frozen (pinned) mods per subdir key, maintained by 'packwand freeze'.",
           "additionalProperties": {
             "type": "array",
             "items": {

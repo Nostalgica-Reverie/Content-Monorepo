@@ -1,0 +1,16 @@
+{
+  "modifiers": [
+    {
+      "type": "effects_changed",
+      "config": {
+        "criteria": "all_effects",
+        "effects": {
+          "caverns_and_chasms:rewind": {}
+        },
+        "removes": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": "minecraft:nether/all_potions"
+}

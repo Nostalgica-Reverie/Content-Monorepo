@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:gunpowder_sack"
+    }
+  ],
+  "result": {
+    "item": "minecraft:gunpowder",
+    "count": 9
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+        "flag": "gunpowder_sack"
+    }
+  ]
+} 

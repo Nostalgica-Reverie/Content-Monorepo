@@ -20,7 +20,11 @@ function setFood(event, id, nutrition, meat, fast, effects) {
   if (typeof fast === "undefined") fast = false
   if (typeof effects === "undefined") effects = []
   event.modify(id, function(item) {
-    item.foodProperties = function(food) {
+    if (nutrition === null && !meat && !fast && effects.length === 0) {
+      item.setFoodProperties(null)
+      return
+    }
+    item.setFoodProperties(function(food) {
       if (nutrition !== null) food.hunger(nutrition)
       if (meat) food.meat()
       if (fast) food.fastToEat()
@@ -28,7 +32,7 @@ function setFood(event, id, nutrition, meat, fast, effects) {
         // eff = [effectId, duration, amplifier, chance]
         food.effect(eff[0], eff[1], eff[2], eff[3])
       })
-    }
+    })
   })
 }
 

@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:stone_brick"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:deepslate_brick"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:plate_iron"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:cut_iron"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:vitrified_sand"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:honeycomb"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGr",
+    "gSg",
+    "rGR"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:mossy_cobblestone"
+    },
+    "g": {
+      "item": "minecraft:dripstone_block"
+    },
+    "R": {
+      "item": "minecraft:bamboo_block"
+    },
+    "r": {
+      "item": "minecraft:emerald"
+    },
+    "S": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "endrem:rogue_eye"
+  }
+}

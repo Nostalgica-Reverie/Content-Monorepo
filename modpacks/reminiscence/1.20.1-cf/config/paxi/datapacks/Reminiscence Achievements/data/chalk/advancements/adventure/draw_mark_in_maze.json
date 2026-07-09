@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:story/upgrade_tools",
+  "criteria": {
+    "draw": {
+      "trigger": "chalk:mark_drawn"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Draw on the ground using Chalk",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "chalk:yellow_chalk",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.chalk.draw_mark_in_maze"
+    }
+  },
+  "requirements": [
+    [
+      "draw"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -8,7 +8,7 @@ runs:
       uses: https://code.forgejo.org/actions/cache@v4
       with:
         path: ./packwand-bin
-        key: packwand-go-v1-${{ runner.os }}-${{ hashFiles('src/packwand/**/*.go', 'src/packwand/go.mod', 'src/packwand/go.sum') }}
+        key: packwand-go-v1-${{ runner.os }}-${{ hashFiles('apps/packwand/**/*.go', 'apps/packwand/go.mod', 'apps/packwand/go.sum') }}
 
     - name: Build Packwand
       shell: bash
@@ -18,7 +18,7 @@ runs:
           exit 0
         fi
         mkdir -p ./packwand-bin
-        go build -C src/packwand -o "$GITHUB_WORKSPACE/packwand-bin/packwand" .
+        go build -C apps/packwand -o "$GITHUB_WORKSPACE/packwand-bin/packwand" .
         chmod +x ./packwand-bin/packwand
 
     - name: Export Paths

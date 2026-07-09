@@ -1,0 +1,9 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#caverns_and_chasms:has_feature/fragile_stone",
+  "features": [
+    "caverns_and_chasms:ore_fragile_stone",
+    "caverns_and_chasms:ore_fragile_stone_buried"
+  ],
+  "step": "underground_ores"
+}

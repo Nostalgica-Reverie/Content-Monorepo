@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fd_rope",
+  "key": {
+    "s": {
+      "item": "deep_aether:cloudbloom_bouquet"
+    }
+  },
+  "pattern": [
+    "s",
+    "s"
+  ],
+  "result": {
+    "count": 6,
+    "item": "farmersdelight:rope"
+  },
+  "show_notification": true
+}

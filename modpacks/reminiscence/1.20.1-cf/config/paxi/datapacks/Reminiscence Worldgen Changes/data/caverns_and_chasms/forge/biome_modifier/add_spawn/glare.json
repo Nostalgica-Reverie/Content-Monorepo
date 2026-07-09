@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#caverns_and_chasms:has_animal/glare",
+  "spawners": {
+    "type": "caverns_and_chasms:glare",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 20
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:golden_shovel",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.immersive_weathering.sand_off.title"
+    },
+    "description": {
+      "translate": "advancements.immersive_weathering.sand_off.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "immersive_weathering:immersive_weathering/sand_on",
+  "criteria": {
+    "stone_brick_repair": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "tag": "immersive_weathering:sandy"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "tag": "minecraft:shovels"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "stone_brick_repair"
+    ]
+  ]
+}

@@ -1,0 +1,20 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "quark:item/crab_bucket"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "quark:variant": 1
+            },
+            "model": "quark:item/crab_bucket_blue"
+        },
+        {
+            "predicate": {
+                "quark:variant": 2
+            },
+            "model": "quark:item/crab_bucket_green"
+        }
+    ]
+}

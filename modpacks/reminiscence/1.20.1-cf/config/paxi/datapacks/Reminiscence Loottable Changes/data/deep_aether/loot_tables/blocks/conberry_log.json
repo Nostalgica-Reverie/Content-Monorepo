@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:block",
+  "functions": [
+    {
+      "function": "aether:double_drops"
+    }
+  ],
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:conberry_log"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "deep_aether:blocks/conberry_log"
+}

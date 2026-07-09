@@ -1,0 +1,15 @@
+name: "Setup Node (docs sites)"
+description: "Node 22 with the npm cache keyed on all three docs-site lockfiles."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node
+      uses: https://github.com/actions/setup-node@v4
+      with:
+        node-version: "22"
+        cache: npm
+        cache-dependency-path: |
+          docs/package-lock.json
+          docs/packwand/package-lock.json
+          docs/packwiz/package-lock.json

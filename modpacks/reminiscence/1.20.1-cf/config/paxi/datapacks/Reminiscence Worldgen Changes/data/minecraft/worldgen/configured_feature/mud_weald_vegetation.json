@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "quark:glow_shrooms"
+          },
+          "weight": 5
+        },
+        {
+          "data": {
+            "Name": "quark:glow_shrooms_extra"
+          },
+          "weight": 10
+        },
+        {
+          "data": {
+            "Name": "minecraft:glow_lichen"
+          },
+          "weight": 10
+        }
+      ]
+    }
+  }
+}

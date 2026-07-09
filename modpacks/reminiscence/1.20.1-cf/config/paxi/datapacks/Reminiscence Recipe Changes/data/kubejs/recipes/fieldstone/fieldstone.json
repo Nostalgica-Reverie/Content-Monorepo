@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "tag": "minecraft:diorite"
+    },
+    {
+      "tag": "minecraft:andesite"
+    },
+    {
+      "tag": "minecraft:granite"
+    }
+  ],
+  "result": {
+    "item": "kubejs:fieldstone",
+    "count": 2
+  }
+}

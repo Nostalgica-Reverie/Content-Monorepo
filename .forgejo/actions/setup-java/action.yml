@@ -1,0 +1,12 @@
+name: "Setup Java"
+description: "JDK with the org defaults: Temurin 21 + Gradle cache. Bump Java here — never in a workflow."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Java
+      uses: https://github.com/actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: "21"
+        cache: gradle

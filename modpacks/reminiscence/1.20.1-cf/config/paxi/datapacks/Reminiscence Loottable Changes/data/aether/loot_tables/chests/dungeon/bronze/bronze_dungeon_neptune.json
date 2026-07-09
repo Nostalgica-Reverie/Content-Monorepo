@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_boots"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "aether:chests/dungeon/bronze/bronze_dungeon_neptune"
+}

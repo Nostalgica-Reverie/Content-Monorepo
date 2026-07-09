@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "trust_score" integer DEFAULT 50 NOT NULL;

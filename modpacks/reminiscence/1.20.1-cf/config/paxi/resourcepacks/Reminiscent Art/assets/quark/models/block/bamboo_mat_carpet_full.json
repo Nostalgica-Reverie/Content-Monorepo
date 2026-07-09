@@ -1,0 +1,20 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"particle": "quark:block/bamboo_mat",
+		"all": "quark:block/bamboo_mat_full"
+	},
+	"elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 1, 16 ],
+            "faces": {
+                "down":  { "texture": "#all", "cullface": "down" },
+                "up":    { "texture": "#all" },
+                "north": { "texture": "#all", "cullface": "north" },
+                "south": { "texture": "#all", "cullface": "south" },
+                "west":  { "texture": "#all", "cullface": "west" },
+                "east":  { "texture": "#all", "cullface": "east" }
+            }
+        }
+    ]
+}

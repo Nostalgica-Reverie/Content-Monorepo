@@ -1,0 +1,15 @@
+{
+  "name": "NAMESPACE:NAME OF YOUR STRUCTURE",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 9,
+      "element": {
+        "location": "NAMESPACE:FOLDER NAME OF THE FOLDER WITH YOUR STRUCTURE FILES/STRUCTURE FILE NAME",
+        "processors": "minecraft:empty",
+		"projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:terracotta"
+  },
+  "result": "quark:shingles",
+  "count": 1,
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "shingles"
+    }
+  ]
+}

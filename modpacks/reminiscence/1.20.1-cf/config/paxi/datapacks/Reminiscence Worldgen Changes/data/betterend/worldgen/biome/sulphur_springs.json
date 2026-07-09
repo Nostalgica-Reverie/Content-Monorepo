@@ -1,0 +1,88 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "effects": {
+    "mood_sound": {
+      "sound": "betterend:betterend.ambient.dust_wastelands",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "particle": {
+      "options": {
+        "type": "betterend:sulphur_particle"
+      },
+      "probability": 0.001
+    },
+    "ambient_sound": "betterend:betterend.ambient.sulphur_springs",
+    "sky_color": 0,
+    "fog_color": -3161538,
+    "water_color": -15115619,
+    "water_fog_color": -14794435
+  },
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": [
+    [
+      "betterend:geyser",
+      "betterend:sulphuric_cave"
+    ],
+    [
+      "betterend:sulphuric_lake"
+    ],
+    [],
+    [],
+    [
+      "betterend:surface_vent",
+      "minecraft:end_gateway_return"
+    ],
+    [],
+    [
+      "betterend:thallasium_ore",
+      "kubejs:opal_ore",
+      "kubejs:titanium_ore"
+    ],
+    [],
+    [],
+    [
+      "betterend:hydralux",
+      "betterend:charnia_green",
+      "betterend:charnia_orange",
+      "betterend:charnia_red_rare"
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:enderman",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "creature": [],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [
+      {
+        "type": "betterend:end_fish",
+        "weight": 50,
+        "minCount": 3,
+        "maxCount": 8
+      },
+      {
+        "type": "betterend:cubozoa",
+        "weight": 50,
+        "minCount": 3,
+        "maxCount": 8
+      }
+    ],
+    "misc": []
+  },
+  "spawn_costs": {}
+}

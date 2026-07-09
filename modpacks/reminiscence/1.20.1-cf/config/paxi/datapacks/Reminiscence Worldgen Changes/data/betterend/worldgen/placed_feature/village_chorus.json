@@ -1,0 +1,22 @@
+{
+  "feature": "minecraft:chorus_plant",
+  "placement": [
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:would_survive",
+        "state": {
+          "Name": "minecraft:chorus_plant",
+          "Properties": {
+            "down": "false",
+            "east": "false",
+            "north": "false",
+            "south": "false",
+            "up": "false",
+            "west": "false"
+          }
+        }
+      }
+    }
+  ]
+}

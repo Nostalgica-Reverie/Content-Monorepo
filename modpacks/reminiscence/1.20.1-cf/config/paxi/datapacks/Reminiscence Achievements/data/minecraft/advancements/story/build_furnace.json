@@ -1,0 +1,27 @@
+{
+    "display": {
+     "announce_to_chat": false,
+      "icon": {
+        "item": "minecraft:furnace"
+      },
+      "title": "Hot Topic",
+      "description": "Construct a furnace out of eight cobblestone blocks",
+      "frame": "task"
+    },
+    "parent": "minecraft:story/coal",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": [
+                "minecraft:furnace"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+  

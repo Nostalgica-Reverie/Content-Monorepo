@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGr",
+    "gSg",
+    "TGt"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:nether_bricks"
+    },
+    "g": {
+      "item": "minecraft:red_nether_bricks"
+    },
+    "R": {
+      "item": "minecraft:nether_wart"
+    },
+    "r": {
+      "item": "minecraft:magma_cream"
+    },
+    "T": {
+      "item": "minecraft:blaze_rod"
+    },
+    "t": {
+      "item": "minecraft:ghast_tear"
+    },
+    "S": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "endrem:nether_eye"
+  }
+}

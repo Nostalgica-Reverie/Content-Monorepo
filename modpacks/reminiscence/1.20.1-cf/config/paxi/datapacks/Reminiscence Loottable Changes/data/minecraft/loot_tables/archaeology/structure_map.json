@@ -1,0 +1,212 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:snowy_plains\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 8381695}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:dark_forest\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 22794}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:desert\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 13416782}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:savanna\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 10200418}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:swamp\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 2242319}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:mangrove_swamp\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 2242319}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:old_growth_pine_taiga\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 5980703}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:flower_forest\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 13518562}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:bamboo_jungle\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 4055575}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:jungle\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 2274816}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:mushroom_fields\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 5063283}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:badlands\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 13008674}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:ice_spikes\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 2015433}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "quark:pathfinders_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiome:\"minecraft:cherry_grove\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetBiomeColor: 15313384}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hookshot:hookshot"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "minecraft:archaeology/structure_map"
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "betterend:terminite_tool",
+  "criteria": {
+    "titanium": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:aeternium_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Smelt a Titanium Ingot",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "betterend:aeternium_ingot"
+    },
+    "show_toast": true,
+    "title": "Tougher Than Nails"
+  },
+  "requirements": [
+    [
+      "titanium"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

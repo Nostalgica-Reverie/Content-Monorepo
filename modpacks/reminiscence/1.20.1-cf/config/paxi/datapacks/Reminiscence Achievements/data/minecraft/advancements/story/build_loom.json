@@ -1,0 +1,26 @@
+{
+  "display": {
+   "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:loom"
+    },
+    "title": "Thread the Needle",
+    "description": "Craft a loom with four blocks of Wooden Planks and two String",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/kill_spider",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:loom"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

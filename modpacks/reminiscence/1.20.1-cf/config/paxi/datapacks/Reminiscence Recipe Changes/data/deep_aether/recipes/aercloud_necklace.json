@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "a": {
+      "item": "aether:blue_aercloud"
+    }
+  },
+  "pattern": [
+    "###",
+    "# #",
+    " a "
+  ],
+  "result": {
+    "item": "deep_aether:aercloud_necklace"
+  },
+  "show_notification": true
+}

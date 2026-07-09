@@ -1,0 +1,42 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "quark:block/chute_side",
+        "side": "quark:block/chute_side",
+        "top": "quark:block/chute_top",
+        "bottom": "quark:block/chute_bottom"
+    },
+    "elements": [
+        {   "from": [ 0, 10, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#bottom" },
+                "up":    { "texture": "#top", "cullface": "up" },
+                "north": { "texture": "#side", "cullface": "north" },
+                "south": { "texture": "#side", "cullface": "south" },
+                "west":  { "texture": "#side", "cullface": "west" },
+                "east":  { "texture": "#side", "cullface": "east" }
+            }
+        },
+        {   "from": [ 4, 4, 4 ],
+            "to": [ 12, 10, 12 ],
+            "faces": {
+                "down":  { "texture": "#bottom" },
+                "north": { "texture": "#side" },
+                "south": { "texture": "#side" },
+                "west":  { "texture": "#side" },
+                "east":  { "texture": "#side" }
+            }
+        },
+        {   "from": [ 6, 0, 6 ],
+            "to": [ 10, 4, 10 ],
+            "faces": {
+                "down":  { "texture": "#bottom", "cullface": "down" },
+                "north": { "texture": "#side" },
+                "south": { "texture": "#side" },
+                "west":  { "texture": "#side" },
+                "east":  { "texture": "#side" }
+            }
+        }
+    ]
+}

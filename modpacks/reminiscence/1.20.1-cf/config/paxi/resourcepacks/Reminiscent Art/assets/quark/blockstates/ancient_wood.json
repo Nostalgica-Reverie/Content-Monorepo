@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "quark:block/ancient_wood" },
+        "axis=z":   { "model": "quark:block/ancient_wood", "x": 90 },
+        "axis=x":   { "model": "quark:block/ancient_wood", "x": 90, "y": 90 }
+    }
+}

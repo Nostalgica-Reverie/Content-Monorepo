@@ -7,7 +7,7 @@ on:
       - "docs/modpack-dev-handbook/**"
       - "docs/packwand/build-commands.mts"
       - "docs/packwand/check-command-coverage.mts"
-      - "src/packwand/**"
+      - "apps/packwand/**"
       - ".forgejo/workflows/docs-handbook.yml"
   pull_request:
     branches: ["main"]
@@ -15,7 +15,7 @@ on:
       - "docs/modpack-dev-handbook/**"
       - "docs/packwand/build-commands.mts"
       - "docs/packwand/check-command-coverage.mts"
-      - "src/packwand/**"
+      - "apps/packwand/**"
       - ".forgejo/workflows/docs-handbook.yml"
   workflow_dispatch:
 
@@ -32,11 +32,7 @@ jobs:
         with:
           fetch-depth: 0
           filter: blob:none
-      - uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: "stable"
-          cache: true
-          cache-dependency-path: src/packwand/go.sum
+      - uses: ./.forgejo/actions/setup-go
       - uses: https://github.com/oven-sh/setup-bun@v2
         with:
           bun-version: "1.3.14"

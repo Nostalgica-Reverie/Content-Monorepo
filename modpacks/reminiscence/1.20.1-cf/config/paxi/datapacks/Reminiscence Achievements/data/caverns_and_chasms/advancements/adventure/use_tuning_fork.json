@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:story/copper_tools",
+  "criteria": {
+    "use_tuning_fork": {
+      "trigger": "caverns_and_chasms:use_tuning_fork"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.caverns_and_chasms.adventure.use_tuning_fork.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "caverns_and_chasms:tuning_fork"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.caverns_and_chasms.adventure.use_tuning_fork.title"
+    }
+  },
+  "requirements": [
+    [
+      "use_tuning_fork"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

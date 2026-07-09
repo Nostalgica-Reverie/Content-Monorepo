@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "minecraft:lapis_block"
+    },
+    "S": {
+      "item": "minecraft:gold_nugget"
+    },
+    "B": {
+      "item": "minecraft:gold_ingot"
+    },
+    "G": {
+      "item": "minecraft:green_dye"
+    }
+  },
+  "pattern": [
+    "SS ",
+    "SsG",
+    " B "
+  ],
+  "result": {
+    "item": "supplementaries:globe"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "D": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "pattern": [
+    "DC",
+    "CD"
+  ],
+  "result": {
+    "count": 4,
+    "item": "caverns_and_chasms:rocky_dirt"
+  },
+  "show_notification": true
+}

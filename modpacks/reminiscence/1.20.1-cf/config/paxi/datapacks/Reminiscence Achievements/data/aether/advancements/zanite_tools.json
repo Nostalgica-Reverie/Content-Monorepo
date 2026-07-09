@@ -1,0 +1,35 @@
+{
+  "parent": "aether:zanite",
+  "criteria": {
+    "zanite_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:zanite_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Make a Zanite Pickaxe",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:zanite_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "What Doesn't Kill You..."
+  },
+  "requirements": [
+    [
+      "zanite_pickaxe"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

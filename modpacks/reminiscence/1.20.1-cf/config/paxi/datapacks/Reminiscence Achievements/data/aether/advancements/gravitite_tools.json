@@ -1,0 +1,35 @@
+{
+  "parent": "aether:enchanted_gravitite",
+  "criteria": {
+    "gravitite_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:gravitite_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Make a Meteorite Sword",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:gravitite_sword",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "I don't think boomerang's coming back!"
+  },
+  "requirements": [
+    [
+      "gravitite_sword"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

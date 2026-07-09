@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "quark:block/stick_block" },
+        "axis=z":   { "model": "quark:block/stick_block", "x": 90 },
+        "axis=x":   { "model": "quark:block/stick_block", "x": 90, "y": 90 }
+    }
+}

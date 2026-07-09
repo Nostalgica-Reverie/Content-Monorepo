@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "naturalist:azure_froglass",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Variant:0}"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "naturalist:verdant_froglass",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Variant:1}"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "naturalist:crimson_froglass",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Variant:2}"
+              }
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:damage_source_properties",
+          "predicate": {
+            "source_entity": {
+              "type": "minecraft:frog"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

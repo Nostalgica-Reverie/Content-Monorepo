@@ -1,0 +1,92 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "supplementaries:item/music_disc_heave_ho"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "custom_model_data": 1
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightcertitudes"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 2
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightdeath"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 3
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightdog"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 4
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightdroopylikesyourface"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 5
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeighteleven"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 6
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightfifflas"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 7
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightiglovethyflob"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 8
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightintro"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 9
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightone"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 10
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightsociallego"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 11
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightsurfacepension"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 12
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightthisdoesntwork"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 13
+            },
+            "model": "supplementaries:item/music_disc_cfouroneeightandlaurashigiharatsukinokoibumi"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 14
+            },
+            "model": "supplementaries:item/music_disc_notchmagneticcircuit"
+        }
+    ]
+}

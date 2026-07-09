@@ -1,0 +1,15 @@
+{
+  "type": "betterend:wall_plant_feature",
+  "config": {
+    "radius": 3,
+    "state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:cyan_moss",
+        "Properties": {
+          "facing": "north"
+        }
+      }
+    }
+  }
+}

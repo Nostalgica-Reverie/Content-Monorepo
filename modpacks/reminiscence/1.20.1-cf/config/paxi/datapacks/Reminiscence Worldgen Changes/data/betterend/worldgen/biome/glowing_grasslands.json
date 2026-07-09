@@ -1,0 +1,84 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "effects": {
+    "mood_sound": {
+      "sound": "betterend:betterend.ambient.dust_wastelands",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "particle": {
+      "options": {
+        "type": "betterend:firefly"
+      },
+      "probability": 0.001
+    },
+    "ambient_sound": "betterend:betterend.ambient.glowing_grasslands",
+    "sky_color": 0,
+    "foliage_color": -11939119,
+    "grass_color": -11939119,
+    "fog_color": -10230537,
+    "water_color": -10683674,
+    "water_fog_color": -10683674
+  },
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": [
+    [
+      "betterend:round_cave",
+      "betterend:tunel_cave"
+    ],
+    [
+      "betterend:end_lake_rare"
+    ],
+    [],
+    [],
+    [
+      "minecraft:end_gateway_return"
+    ],
+    [],
+    [
+      "betterend:thallasium_ore",
+      "kubejs:opal_ore",
+      "kubejs:titanium_ore"
+    ],
+    [],
+    [],
+    [
+      "betterend:lumecorn",
+      "betterend:blooming_cooksonia",
+      "betterend:salteago",
+      "betterend:vaiolush_fern",
+      "betterend:fracturn",
+      "betterend:umbrella_moss_rare",
+      "betterend:creeping_moss_rare",
+      "betterend:twisted_umbrella_moss_rare",
+      "betterend:charnia_cyan",
+      "betterend:charnia_green",
+      "betterend:charnia_light_blue",
+      "betterend:charnia_red_rare"
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:enderman",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "creature": [],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {}
+}

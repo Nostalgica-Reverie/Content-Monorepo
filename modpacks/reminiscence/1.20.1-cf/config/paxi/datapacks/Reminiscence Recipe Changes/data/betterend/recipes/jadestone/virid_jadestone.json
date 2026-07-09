@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "XO",
+    "OX"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:end_stone"
+    },
+    "X": {
+      "item": "minecraft:raw_copper"
+    }
+  },
+  "result": {
+    "item": "betterend:virid_jadestone",
+    "count": 2
+  }
+}

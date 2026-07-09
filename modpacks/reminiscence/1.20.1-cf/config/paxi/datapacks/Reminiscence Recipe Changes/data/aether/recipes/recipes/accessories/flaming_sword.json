@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "minecraft:blaze_powder"
+    },
+    "#": {
+      "item": "kubejs:slider_rubble"
+    },
+    "h": {
+      "item": "minecraft:quartz"
+    },
+    "i": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " H ",
+    "h#h",
+    " i "
+  ],
+  "result": {
+    "item": "aether:flaming_sword"
+  },
+  "show_notification": true
+}

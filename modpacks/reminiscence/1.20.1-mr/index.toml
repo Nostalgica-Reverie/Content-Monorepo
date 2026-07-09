@@ -1821,6 +1821,10 @@ file = "config/midnightlib.json"
 hash = "11eec015078f0f924bfa00bd5ae40f7007c4b8ee022510fd1a3f6b490e5390a63ddd7e0adfc8c3e7d29a9f1ce611b2cfb11e209d8a7455464c245f9f6967d425"
 
 [[files]]
+file = "config/missing_mods_checker.json"
+hash = "881dbd089f7295d5761f94d57139e0558f36f34aa81272f37a48c9fcf02303c108a30bbd6dd6de9334654f38948faca828cda826d445f40890b86334cac2089d"
+
+[[files]]
 file = "config/mob-ai-tweaks/blacklists/allay_weapons.txt"
 hash = "00a0b3feb8de200287963cd3a9cc325e96faff17b930467c3eceee0b7f9a5ce2423f941c787dbbaed93f1e2d7b9c178c07eb858720f8d4cc8efc5c6ba7333fb6"
 
@@ -4821,10 +4825,6 @@ hash = "286f454d4a854385071541fd74792bbbbfa2a76f65c17168edb4a13e9847d9465b9d7630
 metafile = true
 
 [[files]]
-file = "mods/CTM-1.20.1-1.1.10.jar"
-hash = "0404c49305b8ded5c9a27e9b631dcdad83269a4d321501a0d28b36b0857df8524c11ab78c5566d076993993cb737a46f44f077ca17e5b6bf9a1cbb43b58a7839"
-
-[[files]]
 file = "mods/Cloudflared-19.2.1-forge.jar.pw.toml"
 hash = "7c59f881803d367eccb7d82bdcf55f46871162bbdcdf395665fff303ce538cb47e9539fa9508928aa63d70c46bcb83b0e3bd3e81c1418dfca231104d1e6bcc63"
 metafile = true
@@ -4925,10 +4925,6 @@ hash = "86d97a6f85af24b0519fdd9d4bc598164a2125aa6aeb2cc2cb75f4699fcab168cc032aae
 metafile = true
 
 [[files]]
-file = "mods/TonsOfEnchants-1.20.1-1.0.jar"
-hash = "6fbdb198c33e5f6e563f379095897605f2870cde4b327bfb05538ebbc684a0bc564378bfc42b139c4dcb1292e92f9abf373f53a54933b3bd94659de7def0fec6"
-
-[[files]]
 file = "mods/YungsApi-1.20-Forge-4.0.6.pw.toml"
 hash = "081885e11d675b964f285fcb09f199431fb7a611f9916a21d2b7e9502cd8b8d4dc379d5bcb91a9c8a6e656e2b1ee37c3dce78b4bddffa45472fad7e125691a72"
 metafile = true
@@ -4996,6 +4992,11 @@ metafile = true
 [[files]]
 file = "mods/ascended_quark-1.20.1-1.1.6.pw.toml"
 hash = "180f6f91a93d32c51f3ce1949acac3b914860be368ab67335bfd9c3a75bc163a14665e69a0489c33c8dd261e5263e57acfe95ce872188b756af2f0d22b5cc5d8"
+metafile = true
+
+[[files]]
+file = "mods/asynclogger.pw.toml"
+hash = "59a81956a6455f9fa427137d863ad7f494273e56bbcb541d3081f7a68adb1fb4086dc8e928af2a4a8b2aa1d381fa75ba99aa41abefad8561e56c1e1342c2b01c"
 metafile = true
 
 [[files]]
@@ -5124,10 +5125,6 @@ hash = "10f1d02e296d6078453af038e7f096b4b305346d8b0dbb8e73874f16ef022f843df26cea
 metafile = true
 
 [[files]]
-file = "mods/creditsbegone-1.0.0.jar"
-hash = "f64b4ecd524cef6ff6e2c4684b0bd2e9602de65105e7dcdffd42bfb965dd6d3aa9a31d008512da2644a1e063a4b2aced6a12e1bc4a057d064b2124b7a8a339f4"
-
-[[files]]
 file = "mods/curios-forge-5.14.1+1.20.1.pw.toml"
 hash = "64dab42658217b178dafb2c2fa6351638daed6f8fbcce26e69f3f1a2c9bcd2de7ec3c56d92500c6ed433c6f875a76ecae559953c10ad5c39f38e3a1d54b85417"
 metafile = true
@@ -5166,10 +5163,6 @@ metafile = true
 file = "mods/emi-1.1.22+1.20.1+forge.pw.toml"
 hash = "4450e38f5453cdc1d1b03bdd54e531444d1520b87b905561b060fd0840f11d13490ab24080391de47b737fa7fc0345600133905c2f68129118d80409130734a6"
 metafile = true
-
-[[files]]
-file = "mods/enchant_specifier-1.1.0.jar"
-hash = "e28c7473b970a8d347f52cf055184fd23e957f2810569942596f26011f3a8db3852b51ee4e9aa058930c138dc0d06f113630c8e10f6ee894d645e77a6049a403"
 
 [[files]]
 file = "mods/enchantedcharms-forge-1.20.1-0.1.1.0.pw.toml"
@@ -5237,14 +5230,6 @@ hash = "33413b682305534bb52a4783336affd98946b96ee8221bc56b7cdaf185d66857e5901ee9
 metafile = true
 
 [[files]]
-file = "mods/forgery-3.6.5+1.20.jar"
-hash = "26a6a3db99480361c926f2fdf2711ff5f90fe35eb4f7b790ad73bfb3d86bb755b4f96d1cb0615dfe08dc335ef58dd57b3ce9df6eb6d76f2ee36fa0270e90d1fd"
-
-[[files]]
-file = "mods/framework-forge-1.20.1-0.7.15.jar"
-hash = "0e1210609917c6dc161df2bc42df85ee5004f4b7722f121db75f0ea20f768dceef67a9591e488b5f01a87c51a3b4c4674cee3ccc2bf94502267356f797a4e074"
-
-[[files]]
 file = "mods/fzzy_config-0.7.5+1.20.1+forge.pw.toml"
 hash = "c53a2a0f234bc90a81f9c70a102fd275ee05716ee97c7296d75421d7bf62886eeb2585dfef8bd42762e48200bc3c5b21278444ebed4852727791d120dda88a41"
 metafile = true
@@ -5260,6 +5245,11 @@ hash = "3b2dbaf06e2907ff9808c7f4f3393f4035949b1ba678e39affae1b2580632c7eaf6cc19d
 metafile = true
 
 [[files]]
+file = "mods/gnetum.pw.toml"
+hash = "287da2276fc7eff3c326c41b07aad18c5e16be99f1c9211dab58a62e2b71b824d2b10065161fd2874de58383d737189b6acafff5ec8fbc0e376f7cdbc904e515"
+metafile = true
+
+[[files]]
 file = "mods/hookshot-1.20.1-1.1.1.pw.toml"
 hash = "514428a6ebefba3734490e3c7f633d96001bb575c0d0257ec9a8aec4c17383111f746366a1a8058167db7b4216807bf7c5aba0e0f44058fe661ced1692606250"
 metafile = true
@@ -5267,6 +5257,11 @@ metafile = true
 [[files]]
 file = "mods/horseman-1.20.1-1.3.14-forge.pw.toml"
 hash = "a132d32998db9abec94b1944d8ae7be08d06e802623d55ffec271d27f95e4d962244446fd534d8f83e31e6a5fc8c91100077e8cb23664914cffd03f7c8dbcbc6"
+metafile = true
+
+[[files]]
+file = "mods/immersive-optimization.pw.toml"
+hash = "58c79c619cef17a1a2f8a71536c09bef2c2daa40d6861acccb300b241126c6363abf8173e3ce97e1ef3ff36a4fa8434c9ba93bd627b6f9792e7c37357fadb23f"
 metafile = true
 
 [[files]]
@@ -5295,6 +5290,11 @@ hash = "7da40c1dae3302b94572b3ee964ff0cb6d90592fb641030b6b04b1d93b67482dbad0b8bd
 metafile = true
 
 [[files]]
+file = "mods/ixeris.pw.toml"
+hash = "7a416dad00e16cf0899a77ab49c45d0828f37ab1999895adfc9a16bd847858f9de17c7ab719c6b5acdb44ec56cd222ec175dec9c48371e962f039a785db8dbe1"
+metafile = true
+
+[[files]]
 file = "mods/jei-1.20.1-forge-15.20.0.129.pw.toml"
 hash = "830e6ddb427b2397209b44a38aaa9ae4c5a6be18b8368d47d3e8f7753904d49186520482760cb6327ecd3887e662f964b9db7f6f5eb63c09cfe2c2d252d561c6"
 metafile = true
@@ -5302,6 +5302,11 @@ metafile = true
 [[files]]
 file = "mods/jeitweaker.pw.toml"
 hash = "040258f7e1dcd7929064a391a0a9e0d15225bb8b782012bca1b954506090aa7ee5b1ef7964f520e249120da659cd9a2aeac18677129b23f84764b3cf519b8977"
+metafile = true
+
+[[files]]
+file = "mods/kerria-opt.pw.toml"
+hash = "628a81e133feaff3c640fcf2839f0dba8b2b15091659a426a94d2f89d92bf710788b7117adf2b030000104138c2c29b9ae0ff560729d0776c3620a4a47199093"
 metafile = true
 
 [[files]]
@@ -5328,10 +5333,6 @@ metafile = true
 file = "mods/kubejs-forge-2001.6.5-build.16.pw.toml"
 hash = "68f19429592ebca2cf4d17a3b066ceb19d555d2b65d5853546681ab58b0d17c4b548b0c945fe593083dda2ea2e129514fd2d048d24da89ceb12e16aad05cac00"
 metafile = true
-
-[[files]]
-file = "mods/kubejs_curios_forge_1.20.1-1.0.4.jar"
-hash = "cb0ca7e30c45c970f3b150a1704d968f638918fb808a256660592011a295b9a16405d3c73504d852a3feb54568843f2f709f69ae69f631f027c74bc5dfddab3e"
 
 [[files]]
 file = "mods/kubejsdelight-1.1.2.pw.toml"
@@ -5397,10 +5398,6 @@ metafile = true
 file = "mods/modernfix-forge-5.25.2+mc1.20.1.pw.toml"
 hash = "a7622ca1ca21b4b905fe108cc0ffabdab852431043a29030d640de842495a3895e478c204fd562426ac23eb5c55f56bada9cc0384abb3995089353ed58744498"
 metafile = true
-
-[[files]]
-file = "mods/modernminecarts-1.1.0-1.20.1.jar"
-hash = "2d6ad41df2c8e9b5f8e406d85bf99e268c3cedea6d863b29f0cc7f21af17b566ce4acf22c43842e43d236ef8107775ec20d899505cc5664b80f900258732d633"
 
 [[files]]
 file = "mods/moonlight-1.20-2.16.23-forge.pw.toml"
@@ -5481,10 +5478,6 @@ metafile = true
 file = "mods/searchables.pw.toml"
 hash = "f92c768c1ca732b40dcb12ef6474aaf87cead217c39398f56097baee25bef319d14df9c5f157e40d63c87cbaf4df73c2b8d57a1c6a3c50cccb91aaae00ce279e"
 metafile = true
-
-[[files]]
-file = "mods/serverconfigupdater-4.0.2.jar"
-hash = "7896f5cda9ad66e782cd3d32ad081138f7f10268d5b8b0237bbc11f0c6ec7416875281e8d56369e360d1193d439dcba0a57e01bd8282e4b08a87979846b82cc6"
 
 [[files]]
 file = "mods/servercore-forge-1.5.2+1.20.1.pw.toml"
@@ -5579,6 +5572,11 @@ metafile = true
 [[files]]
 file = "mods/xercapaint-1.20.1-1.0.1.pw.toml"
 hash = "24131f6c29a2a613079fc993b2c895a763b0e67fb8f020c50579783dbd6fc8680119fa73c76defa208d7a8f359f61dcad0660d07f009f5e8140be1436b15cb7a"
+metafile = true
+
+[[files]]
+file = "resourcepacks/golden-days-alpha.pw.toml"
+hash = "a5afed50b0a695c1f2fee41b19900d78d6971e996fbefa62db41a8249a4eede6ae54ac4730b2b9b4e99b43f833ca049b9d8f77a9ee52ecde0b55080e575a1132"
 metafile = true
 
 [[files]]

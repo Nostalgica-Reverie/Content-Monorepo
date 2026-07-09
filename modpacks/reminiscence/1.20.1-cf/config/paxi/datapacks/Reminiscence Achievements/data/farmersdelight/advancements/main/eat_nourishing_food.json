@@ -1,0 +1,32 @@
+{
+  "parent": "farmersdelight:main/place_cooking_pot",
+  "criteria": {
+    "meal": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:meal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Make a Meal. Stacks less but heals more",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "farmersdelight:steak_and_potatoes"
+    },
+    "show_toast": true,
+    "title": "Yummers"
+  },
+  "requirements": [
+    [
+      "meal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

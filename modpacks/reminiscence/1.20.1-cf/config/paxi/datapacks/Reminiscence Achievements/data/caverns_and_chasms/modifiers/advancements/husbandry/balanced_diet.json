@@ -1,0 +1,29 @@
+{
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "caverns_and_chasms:bejeweled_apple": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "caverns_and_chasms:bejeweled_apple"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          }
+        },
+        "requirements": [
+          [
+            "caverns_and_chasms:bejeweled_apple"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": "minecraft:story/balanced_diet"
+}

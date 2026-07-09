@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:story/iron_tools",
+  "criteria": {
+    "summoned_golem": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:iron_golem"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:summoned_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.adventure.summon_iron_golem.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "immersive_weathering:plate_iron"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.adventure.summon_iron_golem.title"
+    }
+  },
+  "requirements": [
+    [
+      "summoned_golem"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

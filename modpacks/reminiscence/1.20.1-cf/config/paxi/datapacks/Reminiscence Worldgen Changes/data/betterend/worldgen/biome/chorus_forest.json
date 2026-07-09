@@ -1,0 +1,90 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "effects": {
+    "mood_sound": {
+      "sound": "betterend:betterend.ambient.dust_wastelands",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "particle": {
+      "options": {
+        "type": "minecraft:portal"
+      },
+      "probability": 0.01
+    },
+    "ambient_sound": "betterend:betterend.ambient.chorus_forest",
+    "sky_color": 0,
+    "foliage_color": -8770182,
+    "grass_color": -8770182,
+    "fog_color": -11068841,
+    "water_color": -11985335,
+    "water_fog_color": -11985335
+  },
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": [
+    [
+      "betterend:round_cave",
+      "betterend:tunel_cave"
+    ],
+    [
+      "betterend:end_lake_rare"
+    ],
+    [],
+    [],
+    [
+      "minecraft:end_gateway_return"
+    ],
+    [],
+    [
+      "betterend:violecite_layer",
+      "betterend:thallasium_ore",
+      "kubejs:opal_ore",
+      "kubejs:titanium_ore"
+    ],
+    [],
+    [],
+    [
+      "betterend:pythadendron_tree",
+      "ohthetreesyoullgrow:shiftgrove_tree_2",
+      "betterend:pythadendron_bush",
+      "minecraft:chorus_plant",
+      "betterend:purple_polypore",
+      "betterend:chorus_grass",
+      "betterend:chorus_mushroom",
+      "betterend:tail_moss",
+      "betterend:tail_moss_wood",
+      "betterend:charnia_purple",
+      "betterend:charnia_red_rare"
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "betterend:end_slime",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 2
+      },
+      {
+        "type": "minecraft:enderman",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "creature": [],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {}
+}

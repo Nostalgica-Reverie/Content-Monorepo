@@ -1,0 +1,24 @@
+{
+  "display": {
+     "announce_to_chat": false,
+    "icon": {
+      "item": "supplementaries:altimeter"
+    },
+    "title": "We Need To Go Deep",
+    "description": "Make an Altimeter",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/mine_redstone",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["supplementaries:altimeter"]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:story/plant_seed",
+  "criteria": {
+    "bred": {
+      "conditions": {},
+      "trigger": "minecraft:bred_animals"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.husbandry.breed_an_animal.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:carrot"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.husbandry.breed_an_animal.title"
+    }
+  },
+  "requirements": [
+    [
+      "bred"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

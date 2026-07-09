@@ -1,0 +1,21 @@
+{
+  "type": "betterend:stalactite_feature",
+  "config": {
+    "allowed_ground": {
+      "type": "minecraft:matching_blocks",
+      "blocks": "minecraft:end_stone"
+    },
+    "ceiling": false,
+    "states": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:end_stone_stalactite",
+        "Properties": {
+          "is_floor": "true",
+          "size": "0",
+          "waterlogged": "false"
+        }
+      }
+    }
+  }
+}

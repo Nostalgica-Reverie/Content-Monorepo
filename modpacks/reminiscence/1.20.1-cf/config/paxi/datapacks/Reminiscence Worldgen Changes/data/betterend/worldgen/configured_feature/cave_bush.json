@@ -1,0 +1,17 @@
+{
+  "type": "betterend:bush_feature",
+  "config": {
+    "leaves": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:cave_bush"
+      }
+    },
+    "stem": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:cave_bush"
+      }
+    }
+  }
+}

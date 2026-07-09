@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "naturalist:bass"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "naturalist:cooked_bass"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_bass",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "naturalist:cooked_bass",
+      "naturalist:cooked_bass_from_smoking",
+      "naturalist:cooked_bass_from_campfire_cooking"
+    ]
+  }
+}

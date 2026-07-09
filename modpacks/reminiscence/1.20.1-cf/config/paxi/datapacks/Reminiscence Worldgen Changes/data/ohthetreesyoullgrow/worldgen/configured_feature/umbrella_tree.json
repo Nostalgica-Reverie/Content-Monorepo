@@ -1,0 +1,58 @@
+{
+  "type": "ohthetreesyoullgrow:tree_from_nbt_v1",
+  "config": {
+
+
+    "base_location": "ohthetreesyoullgrow:features/trees/umbrella_tree/umbrella_tree_trunk1",
+    "canopy_location": "ohthetreesyoullgrow:features/trees/umbrella_tree/umbrella_tree_canopy1",
+
+
+    "can_grow_on_filter": {
+        "type": "minecraft:matching_block_tag",
+        "tag": "c:end_stones"
+        },
+     "can_leaves_place_filter": {
+        "type": "minecraft:replaceable"
+        },
+
+    "decorators": [],
+
+
+    "height": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 6,
+        "min_inclusive": 2
+      }
+    },
+
+
+    "leaves_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:umbrella_tree_membrane",
+        "Properties": {}
+      }
+    },
+    "leaves_target": [
+      "betterend:umbrella_tree_membrane"
+    ],
+
+
+    "log_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:umbrella_tree_log",
+        "Properties": {}
+      }
+    },
+    "log_target": [
+      "betterend:umbrella_tree_log"
+    ],
+
+    "place_from_nbt": [
+      "betterend:umbrella_tree_cluster"
+    ]
+
+    }
+}

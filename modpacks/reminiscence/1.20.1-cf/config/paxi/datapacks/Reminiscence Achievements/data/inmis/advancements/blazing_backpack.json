@@ -1,0 +1,32 @@
+{
+    "display": {
+        "title": {
+            "translate": "inmis.advancement.blazing_backpack.title"
+        },
+        "description": {
+            "translate": "inmis.advancement.blazing_backpack.description"
+        },
+        "icon": {
+            "item": "inmis:withered_backpack"
+        },
+        "frame": "goal",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "backpack": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "inmis:withered_backpack"
+                         ]
+                    }
+                ]
+            }
+        }
+    },
+    "parent": "aether:enchanted_gravitite"
+}

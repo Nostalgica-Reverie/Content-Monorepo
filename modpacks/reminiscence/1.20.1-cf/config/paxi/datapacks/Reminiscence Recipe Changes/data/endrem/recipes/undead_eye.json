@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " M ",
+    "BSR",
+    " G "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:ghast_tear"
+    },
+    "R": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "M": {
+      "item": "endrem:undead_soul"
+    },
+    "S": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "endrem:undead_eye"
+  }
+}

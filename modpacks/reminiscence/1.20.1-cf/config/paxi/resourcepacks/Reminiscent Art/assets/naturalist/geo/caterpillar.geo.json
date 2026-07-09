@@ -1,0 +1,63 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 1.5, -3]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 1.5, -4],
+					"cubes": [
+						{"origin": [-1.5, 0, -6], "size": [3, 3, 2], "inflate": 0.03, "uv": [20, 2]}
+					]
+				},
+				{
+					"name": "antennae",
+					"parent": "head",
+					"pivot": [0, 3, -6],
+					"cubes": [
+						{"origin": [-1.5, 3, -9], "size": [3, 2, 3], "inflate": 0.03, "uv": [0, 24]}
+					]
+				},
+				{
+					"name": "extended",
+					"parent": "body",
+					"pivot": [0, 1.5, -0.5]
+				},
+				{
+					"name": "chest",
+					"parent": "extended",
+					"pivot": [0, 1.5, 1],
+					"cubes": [
+						{"origin": [-1.5, 0, -4], "size": [3, 3, 5], "inflate": 0.02, "uv": [7, 7]}
+					]
+				},
+				{
+					"name": "butt",
+					"parent": "extended",
+					"pivot": [0, 1.5, 1],
+					"cubes": [
+						{"origin": [-1.5, 0, 1], "size": [3, 3, 5], "uv": [41, 23]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,165 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:potato"
+    },
+    "title": {
+      "translate": "advancements.mob-ai-tweaks.orphan_obliterator.title"
+    },
+    "description": {
+      "translate": "advancements.mob-ai-tweaks.orphan_obliterator.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "parent": "minecraft:adventure/kill_all_mobs",
+  "criteria": {
+    "baby_bogged": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:bogged",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_drowned": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:drowned",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_husk": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:husk",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_piglin": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:piglin",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_skeleton": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:skeleton",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_stray": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:stray",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_wither_skeleton": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:wither_skeleton",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_zombie": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:zombie",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_zombified_piglin": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:zombified_piglin",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    },
+    "baby_zoglin": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:zoglin",
+          "flags": {
+            "is_baby": true
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "baby_bogged"
+    ],
+    [
+      "baby_drowned"
+    ],
+    [
+      "baby_husk"
+    ],
+    [
+      "baby_piglin"
+    ],
+    [
+      "baby_skeleton"
+    ],
+    [
+      "baby_stray"
+    ],
+    [
+      "baby_wither_skeleton"
+    ],
+    [
+      "baby_zombie"
+    ],
+    [
+      "baby_zombified_piglin"
+    ],
+    [
+      "baby_zoglin"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

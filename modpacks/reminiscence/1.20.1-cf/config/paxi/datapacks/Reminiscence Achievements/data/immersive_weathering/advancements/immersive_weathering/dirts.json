@@ -1,0 +1,157 @@
+{
+  "display": {
+    "icon": {
+      "item": "immersive_weathering:loam"
+    },
+    "title": {
+      "translate": "advancements.immersive_weathering.dirts.title"
+    },
+    "description": {
+      "translate": "advancements.immersive_weathering.dirts.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "dirt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:dirt"
+            ]
+          }
+        ]
+      }
+    },
+    "grass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:grass_block"
+            ]
+          }
+        ]
+      }
+    },
+    "mycelium": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:mycelium"
+            ]
+          }
+        ]
+      }
+    },
+    "podzol": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:podzol"
+            ]
+          }
+        ]
+      }
+    },
+    "soul_soil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:soul_soil"
+            ]
+          }
+        ]
+      }
+    },
+    "loam": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersive_weathering:loam"
+            ]
+          }
+        ]
+      }
+    },
+    "earthen_clay": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersive_weathering:earthen_clay"
+            ]
+          }
+        ]
+      }
+    },
+    "silt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersive_weathering:silt"
+            ]
+          }
+        ]
+      }
+    },
+    "sandy_dirt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersive_weathering:sandy_dirt"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dirt"
+    ],
+    [
+      "grass"
+    ],
+    [
+      "mycelium"
+    ],
+    [
+      "podzol"
+    ],
+    [
+      "soul_soil"
+    ],
+    [
+      "loam"
+    ],
+    [
+      "silt"
+    ],
+    [
+      "earthen_clay"
+    ],
+    [
+      "sandy_dirt"
+    ]
+  ]
+}

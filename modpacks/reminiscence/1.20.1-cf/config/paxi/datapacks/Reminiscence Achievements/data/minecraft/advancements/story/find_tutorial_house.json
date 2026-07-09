@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:story/build_pickaxe",
+  "criteria": {
+    "tutorialhouse": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "reminiscence:tutorial_house"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Find a Tutorial House",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:oak_planks"
+    },
+    "show_toast": true,
+    "title": "This seems familiar..."
+  },
+  "requirements": [
+    [
+      "tutorialhouse"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

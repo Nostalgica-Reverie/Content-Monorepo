@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "aether:holystone"
+    },
+    "Z": {
+      "tag": "aether:processed/gravitite"
+    },
+    "z": {
+      "item": "betterend:terminite_ingot"
+    }
+  },
+  "pattern": [
+    "zHz",
+    "HZH",
+    "zHz"
+  ],
+  "result": {
+    "item": "aether:incubator"
+  },
+  "show_notification": true
+}

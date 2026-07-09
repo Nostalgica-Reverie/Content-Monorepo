@@ -1,6 +1,6 @@
 ## packwand settings acceptable-versions
 
-Manage your pack's acceptable Minecraft versions. This must be a comma seperated list of Minecraft versions, e.g. 1.16.3,1.16.4,1.16.5
+Manage your pack's acceptable Minecraft versions. This must be a comma separated list of Minecraft versions, e.g. 1.16.3,1.16.4,1.16.5
 
 ```
 packwand settings acceptable-versions [flags]

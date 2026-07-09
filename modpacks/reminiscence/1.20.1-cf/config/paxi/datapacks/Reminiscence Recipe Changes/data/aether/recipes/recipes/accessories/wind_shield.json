@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "minecraft:emerald"
+    },
+    "#": {
+      "item": "kubejs:valkyrie_feather"
+    },
+    "h": {
+      "item": "aether:blue_aercloud"
+    },
+    "i": {
+      "item": "aether:golden_aercloud"
+    }
+  },
+  "pattern": [
+    "hHi",
+    "H#H",
+    "iHh"
+  ],
+  "result": {
+    "item": "deep_aether:wind_shield"
+  },
+  "show_notification": true
+}

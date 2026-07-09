@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "II",
+    "II"
+  ],
+  "key": {
+    "I": {
+      "item": "caverns_and_chasms:raw_silver_block"
+    }
+  },
+  "result": {
+    "item": "kubejs:raw_silver_bricks",
+    "count": 4
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "raw_metal_bricks"
+    }
+  ]
+} 

@@ -1,0 +1,27 @@
+{
+    "display": {
+     "announce_to_chat": false,
+      "icon": {
+        "item": "minecraft:smoker"
+      },
+      "title": "Smokin' Hot Topic",
+      "description": "Construct a Smoker out of four logs and a regular furnace to cook food faster",
+      "frame": "task"
+    },
+    "parent": "minecraft:story/build_furnace",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": [
+                "minecraft:smoker"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+  

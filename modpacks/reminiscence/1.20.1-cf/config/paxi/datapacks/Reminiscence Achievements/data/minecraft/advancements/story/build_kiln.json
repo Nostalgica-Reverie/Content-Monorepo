@@ -1,0 +1,27 @@
+{
+    "display": {
+     "announce_to_chat": false,
+      "icon": {
+        "item": "clayworks:kiln"
+      },
+      "title": "Pane in the Glass",
+      "description": "Construct a Kiln out of five cobblestone, three fieldstone, and a regular furnace to cook ceramic and masonry items faster",
+      "frame": "task"
+    },
+    "parent": "minecraft:story/build_furnace",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": [
+                "clayworks:kiln"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+  

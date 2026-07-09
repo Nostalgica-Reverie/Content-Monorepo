@@ -1,0 +1,84 @@
+{
+  "parent": "quark:tiny_potato/base",
+  "textures": {
+    "particle": "quark:block/tiny_potato/bob",
+    "all": "quark:block/tiny_potato/bob"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [ -39, 148, 4 ],
+      "translation": [ 0.5, 3.8, 0 ],
+      "scale": [ 0.40, 0.40, 0.40 ]
+    }
+  },
+  "elements": [
+    {
+      "from": [
+        6,
+        0,
+        6
+      ],
+      "to": [
+        10,
+        4,
+        10
+      ],
+      "faces": {
+        "down": {
+          "texture": "#all",
+          "uv": [
+            12.0,
+            4.0,
+            8.0,
+            0.0
+          ]
+        },
+        "up": {
+          "texture": "#all",
+          "uv": [
+            8.0,
+            4.0,
+            4.0,
+            0.0
+          ]
+        },
+        "north": {
+          "texture": "#all",
+          "uv": [
+            4.0,
+            4.0,
+            8.0,
+            8.0
+          ]
+        },
+        "south": {
+          "texture": "#all",
+          "uv": [
+            12.0,
+            4.0,
+            16.0,
+            8.0
+          ]
+        },
+        "west": {
+          "texture": "#all",
+          "uv": [
+            8.0,
+            4.0,
+            12.0,
+            8.0
+          ]
+        },
+        "east": {
+          "texture": "#all",
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ]
+        }
+      }
+    }
+  ]
+}

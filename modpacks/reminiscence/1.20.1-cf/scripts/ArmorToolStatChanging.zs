@@ -170,10 +170,6 @@ import crafttweaker.api.tag.manager.ITagManager;
 <item:caverns_and_chasms:necromium_leggings>.anyDamage().removeGlobalAttribute(<attribute:minecraft:generic.armor_toughness>, [<constant:equipmentslot:legs>]);
 <item:caverns_and_chasms:necromium_boots>.anyDamage().removeGlobalAttribute(<attribute:minecraft:generic.armor_toughness>, [<constant:equipmentslot:feet>]);
 
-<item:caverns_and_chasms:necromium_helmet>.anyDamage().removeGlobalAttribute(<attribute:caverns_and_chasms:weakness_aura>, [<constant:equipmentslot:head>]);
-<item:caverns_and_chasms:necromium_chestplate>.anyDamage().removeGlobalAttribute(<attribute:caverns_and_chasms:weakness_aura>, [<constant:equipmentslot:chest>]);
-<item:caverns_and_chasms:necromium_leggings>.anyDamage().removeGlobalAttribute(<attribute:caverns_and_chasms:weakness_aura>, [<constant:equipmentslot:legs>]);
-<item:caverns_and_chasms:necromium_boots>.anyDamage().removeGlobalAttribute(<attribute:caverns_and_chasms:weakness_aura>, [<constant:equipmentslot:feet>]);
 
 <item:caverns_and_chasms:necromium_helmet>.anyDamage().addGlobalAttributeModifier(<attribute:minecraft:generic.armor>, "aff43d16-27ab-43f9-b06d-86115e8556b0", "bone1", 1, AttributeOperation.ADDITION, [<constant:equipmentslot:head>]);
 <item:caverns_and_chasms:necromium_chestplate>.anyDamage().addGlobalAttributeModifier(<attribute:minecraft:generic.armor>, "641000a6-424a-4b6e-881b-f80c2ee67829", "bone2", 3, AttributeOperation.ADDITION, [<constant:equipmentslot:chest>]);

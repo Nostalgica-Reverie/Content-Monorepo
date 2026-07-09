@@ -1,0 +1,27 @@
+{
+  "feature": "caverns_and_chasms:ore_soul_silver",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 45
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "below_top": 10
+        },
+        "min_inclusive": {
+          "above_bottom": 10
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

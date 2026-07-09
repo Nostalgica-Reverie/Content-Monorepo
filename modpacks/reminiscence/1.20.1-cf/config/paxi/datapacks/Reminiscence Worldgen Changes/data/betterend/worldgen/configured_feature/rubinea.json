@@ -1,0 +1,16 @@
+{
+  "type": "betterend:vine_feature",
+  "config": {
+    "max_length": 8,
+    "radius": 6,
+    "state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:rubinea",
+        "Properties": {
+          "shape": "bottom"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "item.music_disc.a_morning_wish": {
+    "sounds": [
+      {
+        "name": "deep_aether:emile-van-krieken-a-morning-wish",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.nabooru": {
+    "sounds": [
+      {
+        "name": "deep_aether:emile-van-krieken-nabooru",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.cyclone": {
+    "sounds": [
+      {
+        "name": "deep_aether:quizzly-cyclone",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.above_the_rain": {
+    "sounds": [
+      {
+        "name": "deep_aether:quizzly-above-the-rain",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.atta": {
+    "sounds": [
+      {
+        "name": "deep_aether:atta_mono",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.faent": {
+    "sounds": [
+      {
+        "name": "deep_aether:faent_mono",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.himininn": {
+    "sounds": [
+      {
+        "name": "deep_aether:himininn_mono",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.locus_for_winds": {
+    "sounds": [
+      {
+        "name": "deep_aether:aethyus-locus-for-winds",
+        "stream": true
+      }
+    ]
+  },
+
+  "entity.quail.ambient": {
+    "sounds": [
+      "deep_aether:entity/quail/say1",
+      "deep_aether:entity/quail/say2",
+      "deep_aether:entity/quail/say3"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.quail.ambient"
+  },
+  "entity.quail.death": {
+    "sounds": [
+      "deep_aether:entity/quail/death"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.quail.death"
+  },
+  "entity.quail.hurt": {
+    "sounds": [
+      "deep_aether:entity/quail/hurt1",
+      "deep_aether:entity/quail/hurt2"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.quail.hurt"
+  },
+  "entity.venomite.ambient": {
+    "sounds": [
+      "deep_aether:entity/venomite/ambient"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.venomite.ambient"
+  },
+  "entity.venomite.hurt": {
+    "sounds": [
+      "deep_aether:entity/venomite/hurt"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.venomite.hurt"
+  },
+  "entity.venomite.death": {
+    "sounds": [
+      "deep_aether:entity/venomite/death"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.venomite.death"
+  },
+  "entity.windfly.ambient": {
+    "sounds": [
+      "deep_aether:entity/windfly/ambient"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.windfly.ambient"
+  },
+  "entity.windfly.hurt": {
+    "sounds": [
+      "deep_aether:entity/windfly/hurt"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.windfly.hurt"
+  },
+  "entity.eots.blowing": {
+    "sounds": [
+      "deep_aether:entity/eots/blowing"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.eots.blowing"
+  },
+  "entity.eots.shoot": {
+    "sounds": [
+      "aether:entity/zephyr/shoot"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.eots.shoot"
+  },
+  "entity.eots.hurt": {
+    "sounds": [
+      "aether:entity/zephyr/shoot"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.eots.hurt"
+  },
+  "music.boss.eots": {
+    "sounds": [
+      {
+        "name": "deep_aether:aethyus-locus-for-winds",
+        "stream": true
+      }
+    ]
+  },
+  "item.armor.equip_skyjade": {
+    "sounds": [
+      "item/armor/equip_diamond1",
+      "item/armor/equip_diamond2",
+      "item/armor/equip_diamond3",
+      "item/armor/equip_diamond4",
+      "item/armor/equip_diamond5",
+      "item/armor/equip_diamond6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.armor.equip_skyjade"
+  },
+  "item.armor.equip_stratus": {
+    "sounds": [
+      "item/armor/equip_gold1",
+      "item/armor/equip_gold2",
+      "item/armor/equip_gold3",
+      "item/armor/equip_gold4",
+      "item/armor/equip_gold5",
+      "item/armor/equip_gold6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.armor.equip_stratus"
+  },
+  "item.armor.equip_stormforged": {
+    "sounds": [
+      "item/armor/equip_gold1",
+      "item/armor/equip_gold2",
+      "item/armor/equip_gold3",
+      "item/armor/equip_gold4",
+      "item/armor/equip_gold5",
+      "item/armor/equip_gold6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.armor.equip_stormforged"
+  },
+  "item.accessory.equip_skyjade_ring": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_skyjade_ring"
+  },
+  "item.accessory.equip_gravitite_ring": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_gravitite_ring"
+  },
+  "item.accessory.equip_stratus_ring": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_stratus_ring"
+  },
+  "item.accessory.equip_spooky_ring": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_spooky_ring"
+  },
+  "item.accessory.equip_slider_eye": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_slider_eye"
+  },
+  "item.accessory.ability_slider_eye": {
+    "sounds": [
+      "aether:entity/slider/move"
+    ],
+    "subtitle": "subtitles.deep_aether.item.accessory.ability_slider_eye"
+  },
+  "item.tool.afterburner_fires" : {
+    "sounds": [
+      "mob/ghast/fireball4"
+    ],
+    "subtitle": "subtitles.deep_aether.item.tool.afterburner_fires"
+  },
+  "item.accessory.equip_medal_of_honor" : {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_medal_of_honor"
+  },
+  "music.aether": {
+    "category": "music",
+    "replace": false,
+    "sounds": [
+      {
+        "name": "aether:music/modulo",
+        "stream": true
+      },
+	{
+        "name": "aether:music/atx",
+        "stream": true
+      },
+	{
+        "name": "aether:music/txl",
+        "stream": true
+      },
+	{
+        "name": "aether:music/hope",
+        "stream": true
+      },
+	{
+        "name": "aether:music/ams",
+        "stream": true
+      },
+	{
+        "name": "aether:music/excursions",
+        "stream": true
+      },
+	  {
+	    "name": "aether:music/cilffside_harrison",
+        "stream": true
+      },
+      {
+        "name": "minecraft:music/far_lands",
+        "stream": true
+      },
+			{
+			  "name": "music/game/creative/creative1",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/creative/creative2",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/creative/creative3",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/creative/creative4",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/creative/creative5",
+			  "stream": true
+			},
+			{
+			  "name": "music/game/creative/creative6",
+			  "stream": true
+			}
+    ]
+  }
+}

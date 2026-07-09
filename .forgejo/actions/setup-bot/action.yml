@@ -1,0 +1,17 @@
+name: "Setup Bot toolchain"
+description: "Bun runtime + install cache for the Discord bot (apps/bot)."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Bun
+      uses: https://github.com/oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+
+    - name: Cache Bun installs
+      uses: https://code.forgejo.org/actions/cache@v4
+      with:
+        path: ~/.bun/install/cache
+        key: bun-${{ runner.os }}-${{ hashFiles('apps/bot/bun.lock') }}
+        restore-keys: bun-${{ runner.os }}-

@@ -1,0 +1,38 @@
+{
+  "parent": "aether:gravitite_armor",
+  "criteria": {
+    "silver_dungeon": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "aether:silver_dungeon"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Enter a Silver Dungeon",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:light_angelic_stone"
+    },
+    "show_toast": true,
+    "title": "Usurper"
+  },
+  "requirements": [
+    [
+      "silver_dungeon"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

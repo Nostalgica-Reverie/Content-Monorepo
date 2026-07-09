@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "m": {
+      "item": "minecraft:gold_ingot"
+    },
+    "s": {
+      "item": "kubejs:frog_leg"
+    }
+  },
+  "pattern": [
+    "mmm",
+    "msm",
+    "mmm"
+  ],
+  "result": {
+    "item": "kubejs:golden_frog_leg"
+  },
+  "show_notification": true
+}

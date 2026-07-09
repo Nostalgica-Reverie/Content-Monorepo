@@ -1,0 +1,47 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:iron_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.immersive_weathering.crack_on.title"
+    },
+    "description": {
+      "translate": "advancements.immersive_weathering.crack_on.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "minecraft:husbandry/safely_harvest_honey",
+  "criteria": {
+    "wax_off": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "tag": "immersive_weathering:crackable"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "tag": "immersive_weathering:pickaxes"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "wax_off"
+    ]
+  ]
+}

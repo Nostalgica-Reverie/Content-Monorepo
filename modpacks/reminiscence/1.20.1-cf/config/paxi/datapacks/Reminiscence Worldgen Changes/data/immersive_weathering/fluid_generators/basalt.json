@@ -1,0 +1,22 @@
+{
+  "type": "target_self",
+  "fluid": "minecraft:lava",
+  "fluid_type": "flowing",
+  "generate": {
+    "Name": "minecraft:basalt",
+    "Properties": {
+      "axis": "y"
+    }
+  },
+  "adjacent_blocks": {
+    "down": {
+      "block_state": {
+        "Name": "minecraft:basalt",
+        "Properties": {
+          "axis": "y"
+        }
+      },
+      "predicate_type": "minecraft:blockstate_match"
+    }
+  }
+}

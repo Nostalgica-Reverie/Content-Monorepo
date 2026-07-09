@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aether:holystone"
+    },
+    "B": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "pattern": [
+    "AB",
+    "BA"
+  ],
+  "result": {
+    "count": 4,
+    "item": "deep_aether:aseterite"
+  },
+  "show_notification": true
+}

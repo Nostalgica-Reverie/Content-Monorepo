@@ -1,0 +1,16 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "#flowerbed"
+  },
+  "elements": [
+    {
+      "from": [8, 0, 8],
+      "to": [16, 0, 16],
+      "faces": {
+        "up": {"uv": [8, 8, 16, 16], "texture": "#flowerbed"},
+        "down": {"uv": [8, 16, 16, 8], "texture": "#flowerbed"}
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:shingles_vertical_slab"
+    }
+  ],
+  "result": {
+    "item": "quark:shingles_slab",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+        "flag": "vertical_slabs"
+    }
+  ]
+} 

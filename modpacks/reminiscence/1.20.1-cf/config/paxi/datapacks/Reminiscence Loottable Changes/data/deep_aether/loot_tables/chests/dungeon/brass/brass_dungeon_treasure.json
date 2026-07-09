@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:cloud_cape",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:aercloud_necklace",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:swet_cape",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:cloud_staff",
+          "weight": 3
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    }
+  ],
+  "random_sequence": "deep_aether:chests/dungeon/brass/brass_dungeon_treasure"
+}

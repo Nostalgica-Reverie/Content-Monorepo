@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "tag": "aether:processed/gravitite"
+    },
+    "#": {
+      "item": "kubejs:slider_rubble"
+    },
+    "h": {
+      "item": "minecraft:emerald"
+    },
+    "i": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "H#H",
+    " h ",
+    " i "
+  ],
+  "result": {
+    "item": "aether:hammer_of_kingbdogz"
+  },
+  "show_notification": true
+}

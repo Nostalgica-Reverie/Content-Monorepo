@@ -1,0 +1,24 @@
+{
+  "type": "forge:mod_loaded",
+  "modid": "alexsmobs",
+  "pattern": [
+    "HHH",
+    "HCH",
+    "  T"
+  ],
+  "key": {
+    "H": {
+      "tag": "naturalist:bear_furs"
+    },
+    "T": {
+      "item": "alexsmobs:raccoon_tail"
+    },
+    "C": {
+      "item": "minecraft:leather_helmet"
+    }
+  },
+  "result": {
+    "item": "alexsmobs:frontier_cap",
+    "count": 1
+  }
+}

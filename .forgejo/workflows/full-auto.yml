@@ -24,14 +24,11 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            src/packwand
+            apps/packwand
             .forgejo/actions
 
       - name: Setup Go
-        uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
+        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
@@ -62,14 +59,11 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            src/packwand
+            apps/packwand
             .forgejo/actions
 
       - name: Setup Go
-        uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
+        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand

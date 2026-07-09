@@ -1,0 +1,37 @@
+{
+  "parent": "aether:bronze_dungeon",
+  "display": {
+    "icon": {
+      "item": "endrem:witch_eye"
+    },
+    "title": {
+      "translate": "advancements.main.witch_eye.title"
+    },
+    "description": {
+      "translate": "advancements.main.witch_eye.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "witch_eye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "endrem:witch_eye"
+              ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "witch_eye"
+    ]
+  ]
+}

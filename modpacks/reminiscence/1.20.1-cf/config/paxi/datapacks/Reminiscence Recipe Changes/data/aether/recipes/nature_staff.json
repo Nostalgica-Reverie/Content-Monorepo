@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "/": {
+      "item": "minecraft:stick"
+    },
+    "Z": {
+      "tag": "aether:gems/zanite"
+    }
+  },
+  "pattern": [
+    "Z",
+    "/"
+  ],
+  "result": {
+    "item": "aether:nature_staff"
+  },
+  "show_notification": true
+}

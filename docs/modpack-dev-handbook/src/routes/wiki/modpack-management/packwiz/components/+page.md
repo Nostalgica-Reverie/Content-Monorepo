@@ -9,8 +9,8 @@ This site documents the packwiz ecosystem components shipped alongside <a href={
 | Component | Language | Location | Purpose |
 | --- | --- | --- | --- |
 | [packwiz-installer](/wiki/modpack-management/packwiz/components/installer) | Kotlin | `lib/packwiz-installer` | Downloads and updates pack contents on launch, with optional-mod UI and side-only filtering |
-| [bootstrap](/wiki/modpack-management/packwiz/components/bootstrap) | Go (new) / Java (legacy) | `src/packwand/cmd/packwiz-bootstrap`, `lib/packwiz-installer/bootstrap` | Verifies a JDK, keeps packwiz-installer up to date, and launches it |
-| [mod_browser_webview](/wiki/modpack-management/packwiz/components/webview) | Rust (wry) | `lib/mod-browser-webview` | Native webview for downloading CurseForge files that disallow API distribution; bridged into the packwand GUI |
+| [bootstrap](/wiki/modpack-management/packwiz/components/bootstrap) | Go (new) / Java (legacy) | `apps/packwand/cmd/packwiz-bootstrap`, `lib/packwiz-installer/bootstrap` | Verifies a JDK, keeps packwiz-installer up to date, and launches it |
+| [mod_browser_webview](/wiki/modpack-management/packwiz/components/webview) | Rust (wry) | `apps/mod-browser-webview` | Native webview for downloading CurseForge files that disallow API distribution; bridged into the packwand GUI |
 
 All three are built from this repository - see [Building](/wiki/modpack-management/packwiz/components/building).
 

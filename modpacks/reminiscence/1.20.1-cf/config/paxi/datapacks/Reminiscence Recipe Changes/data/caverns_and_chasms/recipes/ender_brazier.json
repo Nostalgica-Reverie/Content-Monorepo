@@ -1,0 +1,33 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "endergetic"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "key": {
+          "#": {
+            "tag": "endergetic:ender_fire_base_blocks"
+          },
+          "S": {
+            "tag": "forge:ingots/silver"
+          }
+        },
+        "pattern": [
+          "S#S",
+          " S "
+        ],
+        "result": {
+          "item": "caverns_and_chasms:ender_brazier"
+        },
+        "show_notification": true
+      }
+    }
+  ]
+}

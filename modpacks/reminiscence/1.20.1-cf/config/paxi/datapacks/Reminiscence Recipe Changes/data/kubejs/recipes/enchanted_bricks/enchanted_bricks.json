@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "X": {
+      "item": "minecraft:bricks"
+    },
+    "Y": {
+      "item": "aether:ambrosium_shard"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
+  "result": {
+    "count": 8,
+    "item": "kubejs:enchanted_bricks"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGR",
+    "GSG",
+    "RGR"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:packed_ice"
+    },
+    "R": {
+      "item": "aether:icestone"
+    },
+    "S": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "endrem:cold_eye"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+   "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:cake"
+    },
+    "title": "The Lie",
+    "description": "Wheat, sugar, milk, and eggs!",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/make_bread",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:cake"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

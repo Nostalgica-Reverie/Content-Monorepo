@@ -1,0 +1,26 @@
+name: "Setup Task"
+description: "Install the Task binary (taskfile.dev) and add it to PATH. Downloads the release binary directly — no Go toolchain required."
+
+inputs:
+  version:
+    description: "Task version to install (e.g. v3.44.0), or 'latest'"
+    required: false
+    default: "latest"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Task
+      shell: bash
+      run: |
+        set -eu
+        DEST="$GITHUB_WORKSPACE/task-bin"
+        mkdir -p "$DEST"
+        VERSION='${{ inputs.version }}'
+        if [ "$VERSION" = "latest" ]; then
+          sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b "$DEST"
+        else
+          sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b "$DEST" "$VERSION"
+        fi
+        "$DEST/task" --version
+        echo "$DEST" >> "$GITHUB_PATH"

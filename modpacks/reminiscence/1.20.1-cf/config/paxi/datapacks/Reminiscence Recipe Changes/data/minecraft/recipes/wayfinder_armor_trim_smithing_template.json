@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:emerald"
+    },
+    "C": {
+      "item": "minecraft:terracotta"
+    },
+    "S": {
+      "item": "minecraft:wayfinder_armor_trim_smithing_template"
+    }
+  },
+  "pattern": [
+    "C#C",
+    "CSC",
+    "C#C"
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:wayfinder_armor_trim_smithing_template"
+  },
+  "show_notification": true
+}

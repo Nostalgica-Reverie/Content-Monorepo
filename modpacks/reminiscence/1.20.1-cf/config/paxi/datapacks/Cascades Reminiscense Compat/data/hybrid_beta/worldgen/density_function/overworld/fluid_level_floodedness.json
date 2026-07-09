@@ -1,0 +1,13 @@
+{
+  "type": "cache_2d",
+  "argument": {
+    "type": "minecraft:add",
+    "argument1": {
+      "type": "noise",
+      "noise": "minecraft:aquifer_fluid_level_floodedness",
+      "xz_scale": 1,
+      "y_scale": 0.67
+    },
+    "argument2": -0.3
+  }
+}

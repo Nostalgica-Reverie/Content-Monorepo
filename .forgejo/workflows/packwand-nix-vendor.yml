@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main"]
     paths:
-      - 'src/packwand/go.sum'
+      - 'apps/packwand/go.sum'
   workflow_dispatch:
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
             experimental-features = nix-command flakes
 
       - name: Update vendor hash
-        working-directory: src/packwand
+        working-directory: apps/packwand
         run: nix run nixpkgs#nix-prefetch ./nix/prefetcher.nix | tee ./nix/vendor-hash
 
       - name: Commit
@@ -32,4 +32,4 @@ jobs:
           author_name: forgejo-actions[bot]
           author_email: omo50@noreply.nostalgica.net
           message: 'chore(packwand): update nix vendor hash'
-          add: 'src/packwand/nix/vendor-hash'
+          add: 'apps/packwand/nix/vendor-hash'

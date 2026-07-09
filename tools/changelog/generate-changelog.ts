@@ -186,26 +186,19 @@ interface ManifestFile {
     automation?: { server_promo?: boolean };
 }
 
-function findSomnus(): string | null {
-    const env = process.env.SOMNUS_BIN;
-    if (env && fs.existsSync(env)) return env;
-    if (fs.existsSync('./somnus-bin/somnus')) return './somnus-bin/somnus';
-    return null;
-}
-
 function serverPromoEnabled(pDir: string, manifest: ManifestFile): boolean {
-    const somnus = findSomnus();
-    if (somnus) {
-        const proc = Bun.spawnSync([somnus, 'automation', 'get', pDir], { stdout: 'pipe', stderr: 'pipe' });
-        if (proc.success) {
-            try {
-                const auto = JSON.parse(proc.stdout.toString()) as { server_promo?: boolean };
-                if (typeof auto.server_promo === 'boolean') return auto.server_promo;
-                return true;
-            } catch { /* fall through */ }
-        }
+    // packwand merges manifest.json automation with the legacy opt-out.json;
+    // CI puts it on PATH via .forgejo/actions/setup-packwand.
+    const packwand = process.env.PACKWAND_BIN ?? process.env.PACKWIZ_BIN ?? 'packwand';
+    const proc = Bun.spawnSync([packwand, 'automation', 'get', pDir], { stdout: 'pipe', stderr: 'pipe' });
+    if (proc.success) {
+        try {
+            const auto = JSON.parse(proc.stdout.toString()) as { server_promo?: boolean };
+            if (typeof auto.server_promo === 'boolean') return auto.server_promo;
+            return true;
+        } catch { /* fall through */ }
     }
-    // Fallback when somnus is unavailable: read from manifest directly
+    // Fallback when packwand is unavailable: read from manifest directly
     const fromManifest = manifest.automation?.server_promo;
     if (typeof fromManifest === 'boolean') return fromManifest;
     return true;

@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:story/enter_the_nether",
+  "criteria": {
+    "enter_aether": {
+      "conditions": {
+        "to": "aether:the_aether"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.aether.enter_aether.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:water_bucket"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.enter_aether"
+    }
+  },
+  "requirements": [
+    [
+      "enter_aether"
+    ]
+  ],
+  "rewards": {
+    "loot": [
+      "aether:advancements/enter_aether"
+    ]
+  },
+  "sends_telemetry_event": true
+}

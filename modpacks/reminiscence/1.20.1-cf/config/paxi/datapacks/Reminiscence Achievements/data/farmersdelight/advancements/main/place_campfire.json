@@ -1,0 +1,49 @@
+{
+  "parent": "minecraft:story/smelt_iron",
+  "criteria": {
+    "campfire": {
+      "conditions": {
+        "location": [
+          {
+            "block": "minecraft:campfire",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    },
+    "soul_campfire": {
+      "conditions": {
+        "location": [
+          {
+            "block": "minecraft:soul_campfire",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "farmersdelight.advancement.place_campfire.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:campfire"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "farmersdelight.advancement.place_campfire"
+    }
+  },
+  "requirements": [
+    [
+      "campfire",
+      "soul_campfire"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

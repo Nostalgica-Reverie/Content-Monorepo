@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "betterend:terminite_ingot"
+    },
+    "B": {
+      "item": "minecraft:chain"
+    },
+    "C": {
+    "item": "betterend:aeternium_ingot"
+    },
+    "D": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " BA",
+    "CCB",
+    "DC "
+  ],
+  "result": {
+    "item": "hookshot:longshot"
+  },
+  "show_notification": true
+}

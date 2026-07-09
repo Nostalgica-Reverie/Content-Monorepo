@@ -1,0 +1,14 @@
+execute if score @s imd_disc_id matches 1 run function lost_tracks_dp:cfouroneeightcertitudes/stop
+execute if score @s imd_disc_id matches 2 run function lost_tracks_dp:cfouroneeightdeath/stop
+execute if score @s imd_disc_id matches 3 run function lost_tracks_dp:cfouroneeightdog/stop
+execute if score @s imd_disc_id matches 4 run function lost_tracks_dp:cfouroneeightdroopylikesyourface/stop
+execute if score @s imd_disc_id matches 5 run function lost_tracks_dp:cfouroneeighteleven/stop
+execute if score @s imd_disc_id matches 6 run function lost_tracks_dp:cfouroneeightfifflas/stop
+execute if score @s imd_disc_id matches 7 run function lost_tracks_dp:cfouroneeightiglovethyflob/stop
+execute if score @s imd_disc_id matches 8 run function lost_tracks_dp:cfouroneeightintro/stop
+execute if score @s imd_disc_id matches 9 run function lost_tracks_dp:cfouroneeightone/stop
+execute if score @s imd_disc_id matches 10 run function lost_tracks_dp:cfouroneeightsociallego/stop
+execute if score @s imd_disc_id matches 11 run function lost_tracks_dp:cfouroneeightsurfacepension/stop
+execute if score @s imd_disc_id matches 12 run function lost_tracks_dp:cfouroneeightthisdoesntwork/stop
+execute if score @s imd_disc_id matches 13 run function lost_tracks_dp:cfouroneeightandlaurashigiharatsukinokoibumi/stop
+execute if score @s imd_disc_id matches 14 run function lost_tracks_dp:notchmagneticcircuit/stop

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "x": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "pattern": [
+    " x ",
+    "# #",
+    " # "
+  ],
+  "result": {
+    "item": "aether:iron_ring"
+  },
+  "show_notification": true
+}

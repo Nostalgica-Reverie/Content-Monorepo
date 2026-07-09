@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "kubejs:meteorite_ingot"
+    },
+      "%": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "pattern": [
+    " # ",
+    "% %",
+    " % "
+  ],
+  "result": {
+    "item": "deep_aether:gravitite_ring"
+  },
+  "show_notification": true
+}

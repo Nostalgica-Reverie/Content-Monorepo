@@ -1,0 +1,26 @@
+{
+  "display": {
+ "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:white_wool"
+    },
+    "title": "Lost Count",
+    "description": "Attack and destroy a sheep for its wool",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/build_sword",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:white_wool"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

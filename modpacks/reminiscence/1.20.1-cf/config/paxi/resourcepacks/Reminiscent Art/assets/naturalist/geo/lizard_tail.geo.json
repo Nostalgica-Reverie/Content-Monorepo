@@ -1,0 +1,25 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.lizard_tail",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 1.5, 0],
+					"cubes": [
+						{"origin": [-1.5, 0, -5], "size": [3, 3, 10], "uv": [0, 0]},
+						{"origin": [0, 3, -5], "size": [0, 4, 10], "uv": [0, 3]}
+					]
+				}
+			]
+		}
+	]
+}

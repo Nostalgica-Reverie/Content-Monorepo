@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:melon"
+    },
+    "title": {
+      "translate": "advancements.husbandry.feed_hippo_melon.title"
+    },
+    "description": {
+      "translate": "advancements.husbandry.feed_hippo_melon.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+    "feed_hippo": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {
+          "items": [
+            "minecraft:melon"
+          ]
+        },
+        "entity": {
+          "type": "naturalist:hippo"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "feed_hippo"
+    ]
+  ]
+}

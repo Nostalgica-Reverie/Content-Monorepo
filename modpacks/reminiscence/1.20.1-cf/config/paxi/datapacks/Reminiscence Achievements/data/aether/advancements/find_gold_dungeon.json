@@ -1,0 +1,38 @@
+{
+  "parent": "aether:gravitite_armor",
+  "criteria": {
+    "gold_dungeon": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "aether:gold_dungeon"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Enter a Gold Dungeon",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:light_hellfire_stone"
+    },
+    "show_toast": true,
+    "title": "Fighting Fire With..."
+  },
+  "requirements": [
+    [
+      "gold_dungeon"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

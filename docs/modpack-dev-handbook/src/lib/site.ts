@@ -12,8 +12,8 @@
   packwand: {
     repoUrl: "https://git.nostalgica.net/Reverie-Projects/monorepo",
     releasesUrl: "https://git.nostalgica.net/Reverie-Projects/monorepo/releases",
-    sourceBrowseRoot: "https://git.nostalgica.net/Reverie-Projects/monorepo/src/branch/main/src/packwand/",
-    goModule: "git.nostalgica.net/Reverie-Projects/monorepo/src/packwand",
+    sourceBrowseRoot: "https://git.nostalgica.net/Reverie-Projects/monorepo/src/branch/main/apps/packwand/",
+    goModule: "git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand",
   },
   packwiz: {
     repoUrl: "https://github.com/packwiz/packwiz",

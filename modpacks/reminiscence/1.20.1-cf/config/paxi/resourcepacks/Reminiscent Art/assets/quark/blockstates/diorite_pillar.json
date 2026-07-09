@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "quark:block/diorite_pillar" },
+        "axis=z":   { "model": "quark:block/diorite_pillar", "x": 90 },
+        "axis=x":   { "model": "quark:block/diorite_pillar", "x": 90, "y": 90 }
+    }
+}

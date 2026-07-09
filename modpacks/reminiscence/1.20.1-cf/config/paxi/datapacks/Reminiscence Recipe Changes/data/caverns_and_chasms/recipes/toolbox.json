@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_block"
+    },
+    "I": {
+      "tag": "forge:ingots/copper"
+    }
+  },
+  "pattern": [
+    " I ",
+    "I I",
+    "CCC"
+  ],
+  "result": {
+    "item": "caverns_and_chasms:toolbox"
+  },
+  "show_notification": true
+}

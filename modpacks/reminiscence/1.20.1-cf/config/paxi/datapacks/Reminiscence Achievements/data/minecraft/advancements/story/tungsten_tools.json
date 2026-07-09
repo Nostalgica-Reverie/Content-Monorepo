@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:nether/obtain_ancient_debris",
+  "criteria": {
+    "tungsten_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherite_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Upgrade your Pickaxe to make it nigh-indestructable",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:netherite_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "And Hell Followed"
+  },
+  "requirements": [
+    [
+      "tungsten_pickaxe"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

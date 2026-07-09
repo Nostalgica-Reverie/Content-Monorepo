@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "quark:yellow_shingles"
+  },
+  "result": "quark:yellow_shingles_stairs",
+  "count": 1,
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "shingles"
+    }
+  ]
+}

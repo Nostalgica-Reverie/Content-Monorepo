@@ -1,0 +1,49 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"butterfly.fly": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"main": {
+					"rotation": {
+						"vector": ["Math.cos((query.anim_time - 0.4) * 720) * 4", 0, 0]
+					},
+					"position": {
+						"vector": [0, "Math.cos((query.anim_time - 0.5) * 720) * -1", 0]
+					}
+				},
+				"right_wing": {
+					"rotation": {
+						"vector": ["Math.cos((query.anim_time - 0.1) * 720) * 15", 0, "Math.cos((query.anim_time - 0.2) * 720) * -60"]
+					}
+				},
+				"left_wing": {
+					"rotation": {
+						"vector": ["Math.cos((query.anim_time - 0.1) * 720) * 15", 0, "Math.cos((query.anim_time - 0.2) * 720) * 60"]
+					}
+				},
+				"front_legs": {
+					"rotation": {
+						"vector": ["Math.cos((query.anim_time - 0.5) * 720) * -8", 0, 0]
+					}
+				},
+				"middle_legs": {
+					"rotation": {
+						"vector": ["Math.cos((query.anim_time - 0.3) * 720) * -8", 0, 0]
+					}
+				},
+				"back_legs": {
+					"rotation": {
+						"vector": ["Math.cos((query.anim_time - 0.1) * 720) * -8", 0, 0]
+					}
+				},
+				"antennae": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time - 0.0) * 720) * 8", 0, 0]
+					}
+				}
+			}
+		}
+	}
+}

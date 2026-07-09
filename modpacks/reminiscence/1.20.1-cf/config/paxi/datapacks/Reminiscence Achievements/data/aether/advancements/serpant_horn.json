@@ -1,0 +1,34 @@
+{
+  "parent": "deep_aether:brass_dungeon",
+  "criteria": {
+    "horn": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kubejs:serpant_horn"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Obtain a Serpent Horn by beating the Eye of the Storm... without getting hit!",
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "kubejs:serpant_horn"
+    },
+    "show_toast": true,
+    "title": "Messed With The Bull"
+  },
+  "requirements": [
+    [
+      "horn"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

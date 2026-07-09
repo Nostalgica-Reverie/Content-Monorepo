@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "quark:block/chorus_fruit_block" },
+        "axis=z":   { "model": "quark:block/chorus_fruit_block", "x": 90 },
+        "axis=x":   { "model": "quark:block/chorus_fruit_block", "x": 90, "y": 90 }
+    }
+}

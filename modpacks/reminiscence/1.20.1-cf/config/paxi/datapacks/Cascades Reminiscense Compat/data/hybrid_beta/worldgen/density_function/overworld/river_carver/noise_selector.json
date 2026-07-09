@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:range_choice",
+  "input": "minecraft:y",
+  "min_inclusive": 48,
+  "max_exclusive": 128,
+  "when_in_range": {
+    "type": "minecraft:flat_cache",
+    "argument": {
+      "type": "minecraft:cache_2d",
+      "argument": {
+        "type": "minecraft:range_choice",
+        "input": "minecraft:overworld/ridges",
+        "min_inclusive": -0.1,
+        "max_exclusive": 0.1,
+        "when_in_range": {
+          "type": "minecraft:range_choice",
+          "input": "minecraft:overworld/continents",
+          "min_inclusive": -0.225,
+          "max_exclusive": 0.03,
+          "when_in_range": {
+            "type": "minecraft:range_choice",
+            "input": "minecraft:overworld/erosion",
+            "min_inclusive": -1000,
+            "max_exclusive": 0.45,
+            "when_in_range": 1,
+            "when_out_of_range": 0
+          },
+          "when_out_of_range": {
+            "type": "minecraft:range_choice",
+            "input": "minecraft:overworld/continents",
+            "min_inclusive": 0.03,
+            "max_exclusive": 1000,
+            "when_in_range": 1,
+            "when_out_of_range": 0
+          }
+        },
+        "when_out_of_range": 0
+      }
+    }
+  },
+  "when_out_of_range": 0
+}

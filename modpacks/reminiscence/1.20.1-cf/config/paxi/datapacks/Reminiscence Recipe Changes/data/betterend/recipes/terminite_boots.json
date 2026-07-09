@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "end_metal_boots",
+  "key": {
+    "#": {
+      "item": "betterend:terminite_ingot"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #"
+  ],
+  "result": {
+    "item": "betterend:terminite_boots"
+  },
+  "show_notification": true
+}

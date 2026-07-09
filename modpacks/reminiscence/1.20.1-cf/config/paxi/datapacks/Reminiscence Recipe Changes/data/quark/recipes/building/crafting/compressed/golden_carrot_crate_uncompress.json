@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:golden_carrot_crate"
+    }
+  ],
+  "result": {
+    "item": "minecraft:golden_carrot",
+    "count": 9
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+        "flag": "golden_carrot_crate"
+    }
+  ]
+} 

@@ -1,0 +1,21 @@
+# Optional local git hooks — opt in with `lefthook install`
+# (https://lefthook.dev; single binary: `go install github.com/evilmartians/lefthook@latest`).
+# CI stays the source of truth; these only catch the cheap stuff before a
+# commit ever leaves your machine.
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: gofmt
+      glob: "*.go"
+      run: |
+        out=$(gofmt -l {staged_files})
+        if [ -n "$out" ]; then
+          echo "needs gofmt:"
+          echo "$out"
+          exit 1
+        fi
+    - name: typos
+      run: typos {staged_files}
+      skip:
+        - run: '! command -v typos >/dev/null'

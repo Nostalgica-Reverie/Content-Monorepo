@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "010",
+    "1 1",
+    "010"
+  ],
+  "key": {
+    "0": {
+      "item": "caverns_and_chasms:silver_ingot"
+    },
+    "1": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "item": "supplementaries:safe",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "safe"
+    }
+  ]
+}

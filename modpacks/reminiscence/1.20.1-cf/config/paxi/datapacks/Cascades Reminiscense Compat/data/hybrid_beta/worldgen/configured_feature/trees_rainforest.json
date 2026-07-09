@@ -1,0 +1,20 @@
+{
+  "config": {
+    "features": [
+      {
+        "feature": "hybrid_beta:fancy_oak_seasonal",
+        "chance": 0.15
+      },
+      {
+        "feature": "minecraft:jungle_bush",
+        "chance": 0.2
+      },
+      {
+        "feature": "minecraft:jungle_tree",
+        "chance": 0.5
+      }
+    ],
+    "default": "minecraft:fancy_oak_checked"
+  },
+  "type": "minecraft:random_selector"
+}

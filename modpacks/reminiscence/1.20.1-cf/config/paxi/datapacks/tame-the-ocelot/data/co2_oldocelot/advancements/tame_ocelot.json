@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:ocelot"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "co2_oldocelot:advancement_output"
+  }
+}

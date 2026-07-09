@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "aether:cold_aercloud"
+    },
+    "#": {
+      "item": "kubejs:valkyrie_feather"
+    },
+    "i": {
+      "item": "aether:golden_amber"
+    }
+  },
+  "pattern": [
+    " H ",
+    " # ",
+    " i "
+  ],
+  "result": {
+    "item": "aether:cloud_staff"
+  },
+  "show_notification": true
+}

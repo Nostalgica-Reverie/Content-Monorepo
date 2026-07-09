@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "quark:block/bamboo_mat",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "quark:block/bamboo_mat"
+    },
+    "facing=south": {
+      "model": "quark:block/bamboo_mat",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "quark:block/bamboo_mat",
+      "y": 270
+    },
+    "facing=down": {
+      "model": "quark:block/bamboo_mat_full"
+    }
+  }
+}

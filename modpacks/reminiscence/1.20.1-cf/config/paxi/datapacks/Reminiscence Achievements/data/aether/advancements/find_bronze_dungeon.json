@@ -1,0 +1,38 @@
+{
+  "parent": "aether:gravitite_armor",
+  "criteria": {
+    "bronze_dungeon": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "aether:bronze_dungeon"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Enter a Bronze Dungeon",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:sentry_stone"
+    },
+    "show_toast": true,
+    "title": "Mazerunner"
+  },
+  "requirements": [
+    [
+      "bronze_dungeon"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

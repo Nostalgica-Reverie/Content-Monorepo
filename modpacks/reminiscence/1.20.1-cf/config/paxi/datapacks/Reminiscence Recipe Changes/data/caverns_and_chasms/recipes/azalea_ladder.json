@@ -1,0 +1,45 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "blueprint:and",
+          "values": [
+            {
+              "type": "forge:mod_loaded",
+              "modid": "woodworks"
+            },
+            {
+              "type": "woodworks:config",
+              "value": "wooden_ladders"
+            }
+          ]
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "group": "wooden_ladder",
+        "key": {
+          "#": {
+            "item": "caverns_and_chasms:azalea_planks"
+          },
+          "S": {
+            "item": "minecraft:stick"
+          }
+        },
+        "pattern": [
+          "S S",
+          "S#S",
+          "S S"
+        ],
+        "result": {
+          "count": 4,
+          "item": "caverns_and_chasms:azalea_ladder"
+        },
+        "show_notification": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "parent": "aether:zanite",
+  "criteria": {
+    "zanite_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:zanite_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "zanite_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:zanite_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "zanite_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:zanite_helmet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "zanite_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:zanite_leggings"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Obtain a piece of Zanite gear",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:zanite_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "... Makes You Stronger"
+  },
+  "requirements": [
+    [
+      "zanite_helmet",
+      "zanite_chestplate",
+      "zanite_leggings",
+      "zanite_boots"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

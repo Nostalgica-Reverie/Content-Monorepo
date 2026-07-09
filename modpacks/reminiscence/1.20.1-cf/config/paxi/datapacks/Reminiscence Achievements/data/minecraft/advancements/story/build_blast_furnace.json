@@ -1,0 +1,27 @@
+{
+    "display": {
+     "announce_to_chat": false,
+      "icon": {
+        "item": "minecraft:blast_furnace"
+      },
+      "title": "What a Blast!",
+      "description": "Construct a Blast Furnace out of five iron, three smooth stone, and a regular furnace to cook ores faster",
+      "frame": "task"
+    },
+    "parent": "minecraft:story/smelt_iron",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": [
+                "minecraft:blast_furnace"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+  

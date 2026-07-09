@@ -1,0 +1,15 @@
+{
+  "type": "betterend:wall_plant_feature",
+  "config": {
+    "radius": 0,
+    "state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:small_jellyshroom",
+        "Properties": {
+          "facing": "up"
+        }
+      }
+    }
+  }
+}

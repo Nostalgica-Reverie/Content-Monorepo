@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:calcite"
+    },
+    "S": {
+      "item": "naturalist:snail_shell"
+    }
+  },
+  "pattern": [
+    "CS",
+    "SC"
+  ],
+  "result": {
+    "count": 8,
+    "item": "naturalist:shellstone"
+  }
+}

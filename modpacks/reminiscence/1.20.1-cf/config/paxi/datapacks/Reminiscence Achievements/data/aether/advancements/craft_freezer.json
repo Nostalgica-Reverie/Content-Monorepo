@@ -1,0 +1,34 @@
+{
+  "parent": "aether:icestone",
+  "criteria": {
+    "craft_freezer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:freezer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Craft a Freezer",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:freezer"
+    },
+    "show_toast": true,
+    "title": "Subzero"
+  },
+  "requirements": [
+    [
+      "craft_freezer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

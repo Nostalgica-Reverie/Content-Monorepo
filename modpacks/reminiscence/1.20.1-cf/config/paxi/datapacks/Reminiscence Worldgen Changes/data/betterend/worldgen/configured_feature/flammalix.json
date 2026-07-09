@@ -1,0 +1,14 @@
+{
+  "type": "betterend:single_plant_feature",
+  "config": {
+    "chance": 7,
+    "radius": 3,
+    "raw_heightmap": false,
+    "state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:flammalix"
+      }
+    }
+  }
+}

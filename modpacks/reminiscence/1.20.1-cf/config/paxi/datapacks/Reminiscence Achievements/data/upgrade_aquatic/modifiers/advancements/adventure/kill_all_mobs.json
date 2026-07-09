@@ -1,0 +1,67 @@
+{
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "upgrade_aquatic:flare": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "upgrade_aquatic:flare"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:player_killed_entity"
+          },
+          "upgrade_aquatic:great_thrasher": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "upgrade_aquatic:great_thrasher"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:player_killed_entity"
+          },
+          "upgrade_aquatic:thrasher": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "upgrade_aquatic:thrasher"
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:player_killed_entity"
+          }
+        },
+        "requirements": [
+          [
+            "upgrade_aquatic:thrasher"
+          ],
+          [
+            "upgrade_aquatic:great_thrasher"
+          ],
+          [
+            "upgrade_aquatic:flare"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": "minecraft:adventure/kill_all_mobs"
+}

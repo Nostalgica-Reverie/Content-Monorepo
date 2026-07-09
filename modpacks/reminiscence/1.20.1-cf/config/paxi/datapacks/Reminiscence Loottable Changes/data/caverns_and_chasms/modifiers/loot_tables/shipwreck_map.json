@@ -1,0 +1,23 @@
+{
+  "modifiers": [
+    {
+      "type": "entries",
+      "config": {
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "caverns_and_chasms:barometer"
+          },
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:clock"
+          }
+        ],
+        "index": 1,
+        "replace": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": "minecraft:chests/shipwreck_map"
+}

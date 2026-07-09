@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "deep_aether:sun_core"
+    },
+    "h": {
+      "item": "minecraft:echo_shard"
+    }
+  },
+  "pattern": [
+    " h ",
+    "hHh",
+    " h "
+  ],
+  "result": {
+    "item": "aether:life_shard"
+  },
+  "show_notification": true
+}

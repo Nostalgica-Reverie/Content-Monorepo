@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:story/smelt_silver",
+  "criteria": {
+    "shot_large_arrow": {
+      "conditions": {
+        "damage": {
+          "type": {
+            "direct_entity": {
+              "type": "#caverns_and_chasms:large_arrows"
+            },
+            "tags": [
+              {
+                "expected": true,
+                "id": "minecraft:is_projectile"
+              }
+            ]
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Shoot something with a large arrow. Less velocity, but HURTS!",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "caverns_and_chasms:large_arrow"
+    },
+    "show_toast": true,
+    "title": "Overcompensating"
+  },
+  "requirements": [
+    [
+      "shot_large_arrow"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

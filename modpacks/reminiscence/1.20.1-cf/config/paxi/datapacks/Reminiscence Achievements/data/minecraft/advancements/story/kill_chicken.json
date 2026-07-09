@@ -1,0 +1,26 @@
+{
+  "display": {
+ "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:feather"
+    },
+    "title": "Fowl Play",
+    "description": "Attack and destroy a chicken for its feathers",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/build_sword",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:feather"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

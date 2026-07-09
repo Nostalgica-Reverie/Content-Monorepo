@@ -1,0 +1,34 @@
+{
+  "parent": "aether:bronze_dungeon",
+  "criteria": {
+    "rubble": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kubejs:slider_rubble"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Obtain Slider Rubble by beating the Slider... without getting hit!",
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "kubejs:slider_rubble"
+    },
+    "show_toast": true,
+    "title": "From Rubble To New"
+  },
+  "requirements": [
+    [
+      "rubble"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

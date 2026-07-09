@@ -1,0 +1,32 @@
+{
+    "display": {
+        "title": {
+            "translate": "inmis.advancement.endless_backpack.title"
+        },
+        "description": {
+            "translate": "inmis.advancement.endless_backpack.description"
+        },
+        "icon": {
+            "item": "inmis:endless_backpack"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "backpack": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "inmis:endless_backpack"
+                            ]
+                    }
+                ]
+            }
+        }
+    },
+    "parent": "minecraft:end/ender_end_gateway"
+}

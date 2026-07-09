@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const commandsDir = join(here, "..", "modpack-dev-handbook", "src", "routes", "wiki", "modpack-management", "packwand", "reference", "commands");
-const packwandSrc = join(here, "..", "..", "src", "packwand");
+const packwandSrc = join(here, "..", "..", "apps", "packwand");
 
 function findPackwand(): [string, ...string[]] {
   if (process.env.PACKWAND_BIN && existsSync(process.env.PACKWAND_BIN)) {

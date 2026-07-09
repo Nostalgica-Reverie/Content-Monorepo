@@ -1,0 +1,27 @@
+{
+  "feature": "caverns_and_chasms:ore_spinel_buried",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 0
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "max_inclusive": {
+          "absolute": 48
+        },
+        "min_inclusive": {
+          "absolute": -16
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

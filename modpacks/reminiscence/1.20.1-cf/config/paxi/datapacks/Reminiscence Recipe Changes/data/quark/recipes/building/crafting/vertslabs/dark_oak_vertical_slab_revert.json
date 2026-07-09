@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:dark_oak_vertical_slab"
+    }
+  ],
+  "result": {
+    "item": "minecraft:dark_oak_slab",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+        "flag": "vertical_slabs"
+    }
+  ]
+} 

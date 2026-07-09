@@ -1,0 +1,24 @@
+{
+  "display": {
+   "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:wooden_sword"
+    },
+    "title": "Time to Strike!",
+    "description": "Make a sword",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/build_work_bench",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:swords"
+          }
+        ]
+      }
+    }
+  }
+}

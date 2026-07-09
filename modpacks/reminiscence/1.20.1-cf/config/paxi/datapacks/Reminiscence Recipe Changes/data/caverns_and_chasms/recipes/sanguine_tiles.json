@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "minecraft:netherrack"
+    },
+    "X": {
+      "item": "caverns_and_chasms:living_flesh"
+    }
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "caverns_and_chasms:sanguine_tiles"
+  },
+  "show_notification": true
+}

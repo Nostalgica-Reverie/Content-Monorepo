@@ -1,0 +1,471 @@
+{
+	"id": "86a926b6-52f1-44c7-9fd5-e966ead0a38c",
+	"prevId": "684c2158-5952-4155-974a-db6c081903a1",
+	"version": "7",
+	"dialect": "postgresql",
+	"tables": {
+		"public.applications": {
+			"name": "applications",
+			"schema": "",
+			"columns": {
+				"application_id": {
+					"name": "application_id",
+					"type": "uuid",
+					"primaryKey": true,
+					"notNull": true,
+					"default": "gen_random_uuid()"
+				},
+				"user_id": {
+					"name": "user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"status": {
+					"name": "status",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'pending'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp with time zone",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"reviewed_at": {
+					"name": "reviewed_at",
+					"type": "timestamp with time zone",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"reviewed_by": {
+					"name": "reviewed_by",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"rejection_reason": {
+					"name": "rejection_reason",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"cooldown_until": {
+					"name": "cooldown_until",
+					"type": "timestamp with time zone",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {
+				"applications_user_idx": {
+					"name": "applications_user_idx",
+					"columns": [
+						{
+							"expression": "user_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"applications_status_idx": {
+					"name": "applications_status_idx",
+					"columns": [
+						{
+							"expression": "status",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"applications_created_idx": {
+					"name": "applications_created_idx",
+					"columns": [
+						{
+							"expression": "created_at",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.crowdin_accounts": {
+			"name": "crowdin_accounts",
+			"schema": "",
+			"columns": {
+				"discord_user_id": {
+					"name": "discord_user_id",
+					"type": "text",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"crowdin_user_id": {
+					"name": "crowdin_user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"access_token": {
+					"name": "access_token",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"refresh_token": {
+					"name": "refresh_token",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"expires_at": {
+					"name": "expires_at",
+					"type": "timestamp with time zone",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"organization_domain": {
+					"name": "organization_domain",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {
+				"crowdin_accounts_user_idx": {
+					"name": "crowdin_accounts_user_idx",
+					"columns": [
+						{
+							"expression": "crowdin_user_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.oauth_verifications": {
+			"name": "oauth_verifications",
+			"schema": "",
+			"columns": {
+				"token": {
+					"name": "token",
+					"type": "text",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"provider": {
+					"name": "provider",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"discord_user_id": {
+					"name": "discord_user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"expires_at": {
+					"name": "expires_at",
+					"type": "timestamp with time zone",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"redirect_to": {
+					"name": "redirect_to",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {
+				"oauth_verifications_provider_idx": {
+					"name": "oauth_verifications_provider_idx",
+					"columns": [
+						{
+							"expression": "provider",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.reports": {
+			"name": "reports",
+			"schema": "",
+			"columns": {
+				"report_id": {
+					"name": "report_id",
+					"type": "uuid",
+					"primaryKey": true,
+					"notNull": true,
+					"default": "gen_random_uuid()"
+				},
+				"reported_user_id": {
+					"name": "reported_user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"reporter_user_id": {
+					"name": "reporter_user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"message_id": {
+					"name": "message_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"channel_id": {
+					"name": "channel_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"reason": {
+					"name": "reason",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"source": {
+					"name": "source",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"automod_rule": {
+					"name": "automod_rule",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"confidence_score": {
+					"name": "confidence_score",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"report_weight": {
+					"name": "report_weight",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"reporter_trust_snapshot": {
+					"name": "reporter_trust_snapshot",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"status": {
+					"name": "status",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'pending'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp with time zone",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"resolved_at": {
+					"name": "resolved_at",
+					"type": "timestamp with time zone",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"resolved_by": {
+					"name": "resolved_by",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"evidence": {
+					"name": "evidence",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {
+				"reports_reported_user_idx": {
+					"name": "reports_reported_user_idx",
+					"columns": [
+						{
+							"expression": "reported_user_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"reports_reporter_user_idx": {
+					"name": "reports_reporter_user_idx",
+					"columns": [
+						{
+							"expression": "reporter_user_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"reports_status_idx": {
+					"name": "reports_status_idx",
+					"columns": [
+						{
+							"expression": "status",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"reports_created_idx": {
+					"name": "reports_created_idx",
+					"columns": [
+						{
+							"expression": "created_at",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.users": {
+			"name": "users",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "text",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"messages_sent": {
+					"name": "messages_sent",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true,
+					"default": 0
+				},
+				"trust_score": {
+					"name": "trust_score",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true,
+					"default": 50
+				},
+				"crowdin_user_id": {
+					"name": "crowdin_user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"modrinth_user_id": {
+					"name": "modrinth_user_id",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		}
+	},
+	"enums": {},
+	"schemas": {},
+	"sequences": {},
+	"roles": {},
+	"policies": {},
+	"views": {},
+	"_meta": {
+		"columns": {},
+		"schemas": {},
+		"tables": {}
+	}
+}

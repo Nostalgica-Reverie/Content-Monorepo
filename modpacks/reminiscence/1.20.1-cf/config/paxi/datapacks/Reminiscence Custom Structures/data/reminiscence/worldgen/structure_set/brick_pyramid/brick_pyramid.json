@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 25,
+    "separation": 10,
+    "salt": 123456789,
+    "spread_type": "triangular"
+  },
+  "structures": [
+    {
+      "structure": "reminiscence:brick_pyramid",
+      "weight": 1
+    }
+  ]
+}

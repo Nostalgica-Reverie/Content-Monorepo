@@ -2,7 +2,7 @@
 
 A native webview (Rust, using [wry](https://github.com/tauri-apps/wry)) that displays real CurseForge or Modrinth project pages so users can download files that may not be distributed through the CurseForge API. Host applications drive it over a simple stdin/stdout line protocol and receive the resolved CDN download URLs.
 
-Source: `lib/mod-browser-webview`. Build output: `lib/mod-browser-webview/target/release/mod_browser_webview`.
+Source: `apps/mod-browser-webview`. Build output: `apps/mod-browser-webview/target/release/mod_browser_webview`.
 
 ## Platform requirements
 
@@ -45,7 +45,7 @@ The packwand GUI (`packwand gui`) bridges this protocol over HTTP + Server-Sent 
 
 - `POST /api/webview/open` with `{"provider": "curseforge", "files": [{"file_id": "3643025", "slug": "jei"}]}` (or an explicit `"url"`; provider may be `"modrinth"`) spawns the webview and returns a job ID.
 - The job's event stream (`GET /api/jobs/{id}/events`) then carries a `DOWNLOAD <fileID> <url>` line for every captured file, live, followed by a summary line.
-- The binary is located via `MOD_BROWSER_WEBVIEW_BIN`, the in-repo cargo output (`lib/mod-browser-webview/target/{release,debug}`), or `PATH`.
+- The binary is located via `MOD_BROWSER_WEBVIEW_BIN`, the in-repo cargo output (`apps/mod-browser-webview/target/{release,debug}`), or `PATH`.
 
 In the GUI's Mods view, CurseForge and Modrinth mods with a known file/version ID show a **CF Fetch** / **MR Fetch** button that opens the webview for that mod and streams the captured URL into the Logs view.
 

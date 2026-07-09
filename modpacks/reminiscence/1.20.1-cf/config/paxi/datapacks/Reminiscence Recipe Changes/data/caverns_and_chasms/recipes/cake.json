@@ -1,0 +1,43 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:not",
+          "value": {
+            "type": "forge:mod_loaded",
+            "modid": "environmental"
+          }
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "key": {
+          "A": {
+            "item": "caverns_and_chasms:golden_milk_bucket"
+          },
+          "B": {
+            "item": "minecraft:sugar"
+          },
+          "C": {
+            "item": "minecraft:wheat"
+          },
+          "E": {
+            "item": "minecraft:egg"
+          }
+        },
+        "pattern": [
+          "AAA",
+          "BEB",
+          "CCC"
+        ],
+        "result": {
+          "item": "minecraft:cake"
+        },
+        "show_notification": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#minecraft:has_crab_spawn",
+  "spawners": {
+    "type": "quark:crab",
+      "maxCount": 3,
+      "minCount": 1,
+      "weight": 10
+  }
+}

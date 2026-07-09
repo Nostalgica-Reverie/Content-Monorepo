@@ -1,0 +1,17 @@
+{
+  "type": "betterend:single_plant_feature",
+  "config": {
+    "chance": 0,
+    "radius": 0,
+    "raw_heightmap": true,
+    "state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:chorus_mushroom_seed",
+        "Properties": {
+          "age": "0"
+        }
+      }
+    }
+  }
+}

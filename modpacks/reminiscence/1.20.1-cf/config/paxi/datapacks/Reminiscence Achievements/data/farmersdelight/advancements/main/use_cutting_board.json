@@ -1,0 +1,33 @@
+{
+  "parent": "farmersdelight:main/craft_knife",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "farmersdelight:cutting_board"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "farmersdelight.advancement.use_cutting_board.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "farmersdelight:cutting_board"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "farmersdelight.advancement.use_cutting_board"
+    }
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [{
+      "item": "kubejs:raw_silver_bricks"
+    }
+  ],
+  "result": {
+    "item": "caverns_and_chasms:raw_silver",
+    "count": 9
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "raw_metal_bricks"
+    }
+  ]
+} 

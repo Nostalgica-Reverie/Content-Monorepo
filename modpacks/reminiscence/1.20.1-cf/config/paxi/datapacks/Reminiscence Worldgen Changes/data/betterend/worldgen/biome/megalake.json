@@ -1,0 +1,100 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "effects": {
+    "mood_sound": {
+      "sound": "betterend:betterend.ambient.dust_wastelands",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "ambient_sound": "betterend:betterend.ambient.megalake",
+    "sky_color": 0,
+    "foliage_color": -11939119,
+    "grass_color": -11939119,
+    "fog_color": -5058056,
+    "water_color": -10443777,
+    "water_fog_color": -10443777
+  },
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": [
+    [
+      "betterend:round_cave",
+      "betterend:tunel_cave"
+    ],
+    [],
+    [],
+    [],
+    [
+      "minecraft:end_gateway_return"
+    ],
+    [],
+    [
+      "betterend:thallasium_ore",
+      "kubejs:opal_ore",
+      "kubejs:titanium_ore"
+    ],
+    [],
+    [],
+    [
+      "betterend:end_lotus",
+      "betterend:end_lotus_leaf",
+      "betterend:bubble_coral_rare",
+      "betterend:end_lily_rare",
+      "betterend:umbrella_moss",
+      "betterend:creeping_moss",
+      "betterend:charnia_cyan",
+      "betterend:charnia_light_blue",
+      "betterend:charnia_red_rare",
+      "betterend:menger_sponge"
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "betterend:end_slime",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 2
+      },
+      {
+        "type": "minecraft:enderman",
+        "weight": 10,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "creature": [],
+    "ambient": [
+      {
+        "type": "betterend:dragonfly",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [
+      {
+        "type": "betterend:end_fish",
+        "weight": 50,
+        "minCount": 3,
+        "maxCount": 8
+      },
+      {
+        "type": "betterend:cubozoa",
+        "weight": 50,
+        "minCount": 3,
+        "maxCount": 8
+      }
+    ],
+    "misc": []
+  },
+  "spawn_costs": {}
+}

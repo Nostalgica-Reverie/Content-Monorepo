@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "quark:myalite"
+  },
+  "result": "quark:polished_myalite",
+  "count": 1,
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "myalite"
+    }
+  ]
+}

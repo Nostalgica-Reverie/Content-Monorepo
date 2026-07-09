@@ -1,0 +1,14 @@
+{
+  "minecraft:ender_dragon":[
+    {
+      "attribute": "minecraft:generic.max_health",
+      "modify": 200,
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "minecraft:generic.armor",
+      "modify": 0,
+      "operation": "SET_BASE"
+    }
+  ]
+}

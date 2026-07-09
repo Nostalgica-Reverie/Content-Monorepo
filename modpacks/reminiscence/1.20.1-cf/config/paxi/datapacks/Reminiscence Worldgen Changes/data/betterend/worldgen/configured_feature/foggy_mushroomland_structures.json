@@ -1,0 +1,55 @@
+{
+  "type": "betterend:building_list_feature",
+  "config": {
+    "default": {
+      "Name": "minecraft:end_stone"
+    },
+    "structures": [
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/fallen_tree_1.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/fallen_tree_2.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/stump_1.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/stump_2.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/library.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/ruins_1.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/ruins_2.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/ruins_3.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/foggy_mushroomland/tree_house.nbt",
+        "terrain_merger": "SURFACE"
+      }
+    ]
+  }
+}

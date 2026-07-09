@@ -1,0 +1,30 @@
+{
+    "criteria": {
+        "placed_music_disc": {
+            "trigger": "minecraft:item_used_on_block",
+            "conditions": {
+                "location": [
+                    {
+                        "condition": "minecraft:location_check",
+                        "predicate": {
+                            "block": {
+                                "blocks": [
+                                    "minecraft:jukebox"
+                                ],
+                                "state": {
+                                    "has_record": "true"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "item": {
+                    "tag": "minecraft:music_discs"
+                }
+            }
+        }
+    },
+    "rewards": {
+        "function": "lost_tracks_dp:on_placed_disc"
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "quark:duskbound_block"
+  },
+  "result": "quark:duskbound_block_stairs",
+  "count": 1,
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "duskbound_blocks"
+    }
+  ]
+}

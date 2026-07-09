@@ -1,0 +1,67 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "effects": {
+    "mood_sound": {
+      "sound": "betterend:betterend.ambient.dust_wastelands",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "particle": {
+      "options": {
+        "type": "betterend:amber_sphere"
+      },
+      "probability": 1.0E-4
+    },
+    "ambient_sound": "betterend:betterend.ambient.umbra_valley",
+    "sky_color": 0,
+    "foliage_color": -5456450,
+    "grass_color": -5456450,
+    "fog_color": -10197916,
+    "water_color": -12228474,
+    "water_fog_color": -12228474
+  },
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": [
+    [
+      "betterend:round_cave",
+      "betterend:tunel_cave"
+    ],
+    [],
+    [],
+    [],
+    [
+      "betterend:umbralith_arch",
+      "betterend:thin_umbralith_arch",
+      "minecraft:end_gateway_return"
+    ],
+    [],
+    [
+      "betterend:thallasium_ore",
+      "kubejs:opal_ore",
+      "kubejs:titanium_ore"
+    ],
+    [],
+    [],
+    [
+      "betterend:inflexia",
+      "betterend:flammalix"
+    ]
+  ],
+  "spawners": {
+    "monster": [],
+    "creature": [],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {}
+}

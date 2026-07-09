@@ -1,0 +1,11 @@
+{
+  "type": "betterend:single_block_feature",
+  "config": {
+    "to_place": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:cave_grass"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "clayworks:config",
+          "value": "kiln"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "key": {
+          "#": {
+            "tag": "minecraft:stone_crafting_materials"
+          },
+          "B": {
+            "item": "kubejs:fieldstone"
+          },
+          "X": {
+            "item": "minecraft:furnace"
+          }
+        },
+        "pattern": [
+          "###",
+          "#X#",
+          "BBB"
+        ],
+        "result": {
+          "item": "clayworks:kiln"
+        },
+        "show_notification": true
+      }
+    }
+  ]
+}
