@@ -1,0 +1,33 @@
+## packwand automation
+
+Query effective automation settings for a pack
+
+```
+packwand automation [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for automation
+```
+
+### Options inherited from parent commands
+
+```
+      --cache string              The directory where packwiz will cache downloaded mods (default "C:\\Users\\jmtmm\\AppData\\Local\\packwand\\cache")
+      --config string             The config file to use (default: .packwand.toml in your platform config directory)
+      --meta-folder string        The folder in which new metadata files will be added, defaulting to a folder based on the category (mods, resourcepacks, etc; if the category is unknown the current directory is used)
+      --meta-folder-base string   The base folder from which meta-folder will be resolved, defaulting to the current directory (so you can put all mods/etc in a subfolder while still using the default behaviour) (default ".")
+      --no-refresh                Skip index and pack.toml refresh after modifications (use 'packwand refresh' to finalize batch operations)
+      --pack-file string          The modpack metadata file to use (default "pack.toml")
+  -y, --yes                       Accept all prompts with the default or "yes" option (non-interactive mode) - may pick unwanted options in search results
+```
+
+### SEE ALSO
+
+* [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
+* [packwand automation get](packwand_automation_get.md)	 - Print the effective automation settings as JSON
+* [packwand automation list-full-auto](packwand_automation_list-full-auto.md)	 - List pack directories opted into automation.full_auto (JSON on stdout)
+* [packwand automation run](packwand_automation_run.md)	 - Run the unattended release pipeline for a full_auto-enabled pack (update, refresh, validate, tests, docs, bump)
+

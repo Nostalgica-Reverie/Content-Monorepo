@@ -1,0 +1,53 @@
+
+[itemDrops]
+	#Inventory drop settings
+	#
+	#Should players keep their inventory on death?
+	keepInventory = false
+	#Should players keep their armor on death?
+	keepArmor = true
+	#Should players keep their non-mainhand hotbar items on death?
+	keepHotbar = true
+	#Should players keep their mainhand item on death?
+	keepMainhand = true
+	#Should players keep their offhand item on death?
+	keepOffhand = true
+	#Set to true to keep main inventory (non-equipped non-hotbar) items on death
+	keepMainInventoryOnDeath = false
+
+[durability]
+	#Durability loss settings
+	#
+	#Percent of durability lost on death for kept items
+	#Range: 0.0 ~ 1.0
+	durabilityLossOnKeptItems = 0.25
+	#Percent of durability lost on death for drops
+	#Range: 0.0 ~ 1.0
+	durabilityLossOnDrops = 0.25
+
+[experience]
+	#Experience settings
+	#
+	#Enable experience settings
+	enableExperienceModule = false
+	#Percent of experience dropped on death
+	#Range: 0.0 ~ 1.0
+	droppedXPPercent = 0.5
+	#Percent of dropped experience that can be recovered
+	#Range: 0.0 ~ 1.0
+	recoverableXPPercent = 0.25
+
+[hunger]
+	#Hunger settings
+	#
+	#Set to true to retain food level on death
+	keepFoodLevel = true
+	#Highest amount of food level you can respawn with
+	#Range: 0 ~ 20
+	maxFoodLevel = 20
+	#Lowest amount of food level you can respawn with
+	#Range: 0 ~ 20
+	minFoodLevel = 14
+	#Set to true to retain saturation on death
+	keepSaturation = false
+

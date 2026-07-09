@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "kubejs:mossy_fired_cobbled_diorite"
+    }
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "item": "kubejs:mossy_fired_cobbled_diorite_stairs"
+  },
+  "show_notification": true
+}

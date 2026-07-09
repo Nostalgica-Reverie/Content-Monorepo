@@ -1,0 +1,58 @@
+---
+title: Adding new blocks
+tags: items, KubeJs
+description: Adding new blocks
+---
+
+<script lang="ts">
+import { Discord } from '$lib/reusables';
+</script>
+
+# Adding new Blocks
+
+## Resources
+
+Each block must have four assets, the block texture itself, models for both the item and block, and blockstate definitions.
+
+In your resourcepack's asset folder: 
+- `assets/packid/textures/block/` - Block textures (`.png` files) should be placed here
+- `assets/packid/models/block/` - Model file (`.json`) should be placed here
+- `assets/packid/models/item/` - The item form of your block's file (`.json`) should be placed here
+- `assets/packid/models/blockstates/` - Blockstate Json files (`.json`) should be placed here
+
+Models can be made using [Blockbench](https://www.blockbench.net/), a free program that allows you to model, texture, and animate any kind of element in Minecraft.
+
+Since every block (should) also be an item, your item model json can have the block model as a parent.
+```json
+{
+  "parent": "yourmod:block/blockmodel"
+}
+```
+
+Blockstates can be slightly more complex. If you're using something like KubeJs, the BlockState json might be generated automatically for you. If you block has more complex states (think a furnace being rotatable and also having an on and off state), you will need a custom blockstate json. You can find more information in this in the [Minecraft Wiki](https://minecraft.wiki/w/Blockstates_definition).
+
+:::info
+
+If your model is not rendering in the world properly but the model file looks perfect, it likely is an issue with your blockstate json!
+
+::::
+
+## KubeJs
+
+KubeJs handles some parts of the block creation process easier than other programs. For starters, you have access to the `kubejs/assets` folder, which is a dynamic resource pack. It also automatically generates basic BlockState json unless you specify a different one using the builder.
+All block registration scripts need to be added in KubeJs' `startup_scripts` directory. 
+
+```js
+StartupEvents.registry('block', (event) => {
+  event.create('example_block')
+    .soundType('wool') // Set a material (affects the sounds and some properties)
+    .hardness(1) // Set hardness (affects mining time)
+    .resistance(1) // Set resistance (to explosions, etc)
+    .requiresTool(true) // Requires a tool or it won't drop (see tags below)
+    .tagBlock('minecraft:mineable/axe') //can be mined faster with an axe
+    .tagBlock('minecraft:mineable/pickaxe') // or a pickaxe
+    .tagBlock('minecraft:needs_iron_tool') // the tool tier must be at least iron
+})
+```
+
+The full KubeJs wiki page can be found [here](https://kubejs.com/wiki/tutorials/block-registry)

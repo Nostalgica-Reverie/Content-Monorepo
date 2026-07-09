@@ -1,3 +1,4 @@
+import * as $json from "../gleam_json/gleam/json.mjs";
 import * as $int from "../gleam_stdlib/gleam/int.mjs";
 import * as $list from "../gleam_stdlib/gleam/list.mjs";
 import * as $option from "../gleam_stdlib/gleam/option.mjs";
@@ -5,13 +6,20 @@ import { None, Some } from "../gleam_stdlib/gleam/option.mjs";
 import * as $string from "../gleam_stdlib/gleam/string.mjs";
 import * as $lustre from "../lustre/lustre.mjs";
 import * as $effect from "../lustre/lustre/effect.mjs";
-import { Ok, toList, Empty as $Empty, makeError } from "./gleam.mjs";
+import { Ok, Error, toList, Empty as $Empty, makeError } from "./gleam.mjs";
 import * as $api from "./packwand_gui/api.mjs";
 import {
   watchJob as watch_job,
   copyText as copy_text,
   setViewHash as set_view_hash,
   watchViewHash as watch_view_hash,
+  bootPack as boot_pack_ffi,
+  cancelBoot as cancel_boot_ffi,
+  watchLauncher as watch_launcher_ffi,
+  authLogin as auth_login_ffi,
+  authLogout as auth_logout_ffi,
+  authStatus as auth_status_ffi,
+  watchAuthEvents as watch_auth_events_ffi,
 } from "./packwand_gui/ffi.mjs";
 import * as $manifest_form from "./packwand_gui/manifest_form.mjs";
 import * as $model from "./packwand_gui/model.mjs";
@@ -22,15 +30,28 @@ import {
   ProjectIndex,
   action_name,
   action_refreshes_mods,
+  auth_event_decoder,
+  auth_status_decoder,
+  launcher_event_decoder,
+  launcher_progress_decoder,
 } from "./packwand_gui/model.mjs";
 import * as $state from "./packwand_gui/state.mjs";
 import {
+  AuthLoginStarted,
+  AuthLogoutDone,
+  BootCancelled,
+  BootPack,
+  CancelBoot,
   CopyChangelog,
   CreateProject,
   GotAction,
+  GotAuthEvent,
+  GotAuthStatus,
   GotChangelog,
   GotFeatures,
   GotHealth,
+  GotLauncherEvent,
+  GotLauncherProgress,
   GotManifest,
   GotMods,
   GotProjects,
@@ -41,7 +62,10 @@ import {
   Model,
   Navigate,
   NewPack,
+  PackBooted,
   ProjectCreated,
+  RequestAuthLogin,
+  RequestAuthLogout,
   RunAction,
   RunWebview,
   SaveManifest,
@@ -49,6 +73,7 @@ import {
   SelectSubdir,
   SetBumpConfigs,
   SetBumpVersion,
+  SetDockGameWindow,
   SetManifest,
   SetManifestField,
   SetManifestStructured,
@@ -62,7 +87,9 @@ import {
   SetNewPackVersion,
   SetSearch,
   WebviewStarted,
+  append_launcher_log,
   append_log,
+  apply_launcher_event,
   http_error,
   initial,
   record_progress_line,
@@ -72,6 +99,67 @@ import {
 import * as $view from "./packwand_gui/view.mjs";
 
 const FILEPATH = "src\\packwand_gui.gleam";
+
+function auth_logout_effect() {
+  return $effect.from(
+    (dispatch) => {
+      return auth_logout_ffi(
+        () => { return dispatch(new AuthLogoutDone(new Ok(undefined))); },
+        (error) => {
+          return dispatch(
+            new AuthLogoutDone(new Error(new $model.ApiError(error))),
+          );
+        },
+      );
+    },
+  );
+}
+
+function auth_login_effect() {
+  return $effect.from(
+    (dispatch) => {
+      return auth_login_ffi(
+        () => { return dispatch(new AuthLoginStarted(new Ok(undefined))); },
+        (error) => {
+          return dispatch(
+            new AuthLoginStarted(new Error(new $model.ApiError(error))),
+          );
+        },
+      );
+    },
+  );
+}
+
+function cancel_boot_effect(session_id) {
+  return $effect.from(
+    (dispatch) => {
+      return cancel_boot_ffi(
+        session_id,
+        () => { return dispatch(new BootCancelled(new Ok(undefined))); },
+        (error) => {
+          return dispatch(
+            new BootCancelled(new Error(new $model.ApiError(error))),
+          );
+        },
+      );
+    },
+  );
+}
+
+function boot_pack_effect(path, dock) {
+  return $effect.from(
+    (dispatch) => {
+      return boot_pack_ffi(
+        path,
+        dock,
+        (session_id) => { return dispatch(new PackBooted(new Ok(session_id))); },
+        (error) => {
+          return dispatch(new PackBooted(new Error(new $model.ApiError(error))));
+        },
+      );
+    },
+  );
+}
 
 function copy_effect(value) {
   return $effect.from((_) => { return copy_text(value); });
@@ -106,6 +194,14 @@ function with_error(model, error) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       message,
     ),
@@ -143,6 +239,14 @@ function create_project(model) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -173,6 +277,14 @@ function create_project(model) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $api.create_project(
         draft.id,
@@ -251,6 +363,14 @@ function select_project(model) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.batch(
         toList([
@@ -312,6 +432,14 @@ function select_after_projects(model, projects) {
       model.bump_configs,
       model.mod_progress,
       model.mod_progress_in_block,
+      model.launcher_session,
+      model.launcher_status,
+      model.launcher_log,
+      model.launcher_progress,
+      model.dock_game_window,
+      model.auth_signed_in,
+      model.auth_username,
+      model.auth_status_text,
     ),
   );
 }
@@ -347,6 +475,14 @@ function update(model, msg) {
           model.bump_configs,
           model.mod_progress,
           model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
         ),
         $effect.none(),
       ];
@@ -401,6 +537,14 @@ function update(model, msg) {
           model.bump_configs,
           model.mod_progress,
           model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
         ),
         $effect.none(),
       ];
@@ -436,6 +580,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
     );
   } else if (msg instanceof SelectSubdir) {
@@ -466,6 +618,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       load_mods(path),
     ];
@@ -497,6 +657,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       set_hash_effect($view.hash(next)),
     ];
@@ -528,6 +696,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -559,6 +735,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -592,6 +776,14 @@ function update(model, msg) {
           model.bump_configs,
           model.mod_progress,
           model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
         ),
         $effect.none(),
       ];
@@ -629,6 +821,14 @@ function update(model, msg) {
           model.bump_configs,
           model.mod_progress,
           model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
         ),
         $effect.none(),
       ];
@@ -669,6 +869,14 @@ function update(model, msg) {
             model.bump_configs,
             model.mod_progress,
             model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            model.auth_status_text,
           ),
           $effect.none(),
         ];
@@ -699,6 +907,14 @@ function update(model, msg) {
             model.bump_configs,
             model.mod_progress,
             model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            model.auth_status_text,
           ),
           $effect.none(),
         ];
@@ -740,6 +956,14 @@ function update(model, msg) {
         running.bump_configs,
         running.mod_progress,
         running.mod_progress_in_block,
+        running.launcher_session,
+        running.launcher_status,
+        running.launcher_log,
+        running.launcher_progress,
+        running.dock_game_window,
+        running.auth_signed_in,
+        running.auth_username,
+        running.auth_status_text,
       ),
       $api.action(action, (result) => { return new GotAction(action, result); }),
     ];
@@ -774,6 +998,14 @@ function update(model, msg) {
           model.bump_configs,
           model.mod_progress,
           model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
         ),
         watch_job_effect(response.job_id),
       ];
@@ -818,6 +1050,14 @@ function update(model, msg) {
         running.bump_configs,
         running.mod_progress,
         running.mod_progress_in_block,
+        running.launcher_session,
+        running.launcher_status,
+        running.launcher_log,
+        running.launcher_progress,
+        running.dock_game_window,
+        running.auth_signed_in,
+        running.auth_username,
+        running.auth_status_text,
       ),
       $api.webview_fetch(
         provider,
@@ -856,6 +1096,14 @@ function update(model, msg) {
           model.bump_configs,
           model.mod_progress,
           model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
         ),
         watch_job_effect(response.job_id),
       ];
@@ -894,6 +1142,14 @@ function update(model, msg) {
       model.bump_configs,
       model.mod_progress,
       model.mod_progress_in_block,
+      model.launcher_session,
+      model.launcher_status,
+      model.launcher_log,
+      model.launcher_progress,
+      model.dock_game_window,
+      model.auth_signed_in,
+      model.auth_username,
+      model.auth_status_text,
     );
     let _block;
     if (error === "") {
@@ -928,6 +1184,14 @@ function update(model, msg) {
         finished$1.bump_configs,
         finished$1.mod_progress,
         finished$1.mod_progress_in_block,
+        finished$1.launcher_session,
+        finished$1.launcher_status,
+        finished$1.launcher_log,
+        finished$1.launcher_progress,
+        finished$1.dock_game_window,
+        finished$1.auth_signed_in,
+        finished$1.auth_username,
+        finished$1.auth_status_text,
       ),
       (() => {
         let $ = model.refresh_mods_after_job;
@@ -978,6 +1242,14 @@ function update(model, msg) {
               model.bump_configs,
               model.mod_progress,
               model.mod_progress_in_block,
+              model.launcher_session,
+              model.launcher_status,
+              model.launcher_log,
+              model.launcher_progress,
+              model.dock_game_window,
+              model.auth_signed_in,
+              model.auth_username,
+              model.auth_status_text,
             ),
             $api.save_manifest(
               id,
@@ -1013,6 +1285,14 @@ function update(model, msg) {
               model.bump_configs,
               model.mod_progress,
               model.mod_progress_in_block,
+              model.launcher_session,
+              model.launcher_status,
+              model.launcher_log,
+              model.launcher_progress,
+              model.dock_game_window,
+              model.auth_signed_in,
+              model.auth_username,
+              model.auth_status_text,
             ),
             $effect.none(),
           ];
@@ -1044,6 +1324,14 @@ function update(model, msg) {
             model.bump_configs,
             model.mod_progress,
             model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            model.auth_status_text,
           ),
           $api.save_manifest(
             id,
@@ -1081,6 +1369,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1115,6 +1411,14 @@ function update(model, msg) {
           model.bump_configs,
           model.mod_progress,
           model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
         ),
         $effect.none(),
       ];
@@ -1153,6 +1457,14 @@ function update(model, msg) {
             model.bump_configs,
             model.mod_progress,
             model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            model.auth_status_text,
           ),
           $effect.none(),
         ];
@@ -1184,6 +1496,14 @@ function update(model, msg) {
             model.bump_configs,
             model.mod_progress,
             model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            model.auth_status_text,
           ),
           $effect.none(),
         ];
@@ -1224,6 +1544,14 @@ function update(model, msg) {
           model.bump_configs,
           model.mod_progress,
           model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
         ),
         $effect.none(),
       ];
@@ -1258,6 +1586,14 @@ function update(model, msg) {
             model.bump_configs,
             model.mod_progress,
             model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            model.auth_status_text,
           ),
           "Manifest saved.",
         ),
@@ -1300,6 +1636,14 @@ function update(model, msg) {
             model.bump_configs,
             model.mod_progress,
             model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            model.auth_status_text,
           ),
           ("Created project " + id) + ".",
         ),
@@ -1348,6 +1692,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1390,6 +1742,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1432,6 +1792,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1474,6 +1842,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1516,6 +1892,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1558,6 +1942,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1600,6 +1992,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1630,6 +2030,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       copy_effect(model.changelog),
     ];
@@ -1660,6 +2068,14 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
@@ -1691,10 +2107,18 @@ function update(model, msg) {
         model.bump_configs,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
-  } else {
+  } else if (msg instanceof SetBumpConfigs) {
     let value = msg[0];
     return [
       new Model(
@@ -1722,10 +2146,615 @@ function update(model, msg) {
         value,
         model.mod_progress,
         model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       ),
       $effect.none(),
     ];
+  } else if (msg instanceof BootPack) {
+    let path = msg.path;
+    return [
+      append_launcher_log(
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
+          new None(),
+          "installing",
+          toList([]),
+          new None(),
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
+        ),
+        "> boot " + path,
+      ),
+      boot_pack_effect(path, model.dock_game_window),
+    ];
+  } else if (msg instanceof SetDockGameWindow) {
+    let value = msg[0];
+    return [
+      new Model(
+        model.root,
+        model.version,
+        model.projects,
+        model.features,
+        model.selected_id,
+        model.selected_subdir,
+        model.view,
+        model.search,
+        model.mods,
+        model.mod_slug,
+        model.changelog,
+        model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
+        model.logs,
+        model.job_status,
+        model.refresh_mods_after_job,
+        model.icon_failed,
+        model.new_pack,
+        model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        value,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
+      ),
+      $effect.none(),
+    ];
+  } else if (msg instanceof PackBooted) {
+    let $ = msg[0];
+    if ($ instanceof Ok) {
+      let session_id = $[0];
+      return [
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
+          new Some(session_id),
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          model.auth_status_text,
+        ),
+        $effect.none(),
+      ];
+    } else {
+      let error = $[0];
+      return [
+        append_launcher_log(
+          new Model(
+            model.root,
+            model.version,
+            model.projects,
+            model.features,
+            model.selected_id,
+            model.selected_subdir,
+            model.view,
+            model.search,
+            model.mods,
+            model.mod_slug,
+            model.changelog,
+            model.manifest,
+            model.manifest_form,
+            model.manifest_structured,
+            model.logs,
+            model.job_status,
+            model.refresh_mods_after_job,
+            model.icon_failed,
+            model.new_pack,
+            model.notice,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
+            model.launcher_session,
+            "failed",
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            model.auth_status_text,
+          ),
+          http_error(error),
+        ),
+        $effect.none(),
+      ];
+    }
+  } else if (msg instanceof GotLauncherEvent) {
+    let raw = msg[0];
+    let $ = $json.parse(raw, launcher_event_decoder());
+    if ($ instanceof Ok) {
+      let event = $[0];
+      let $1 = model.launcher_session;
+      if ($1 instanceof Some) {
+        let session_id = $1[0];
+        if (session_id === event.session_id) {
+          return [apply_launcher_event(model, event), $effect.none()];
+        } else {
+          return [model, $effect.none()];
+        }
+      } else {
+        return [model, $effect.none()];
+      }
+    } else {
+      return [model, $effect.none()];
+    }
+  } else if (msg instanceof GotLauncherProgress) {
+    let raw = msg[0];
+    let $ = $json.parse(raw, launcher_progress_decoder());
+    if ($ instanceof Ok) {
+      let progress = $[0];
+      let $1 = model.launcher_session;
+      if ($1 instanceof Some) {
+        let session_id = $1[0];
+        if (session_id === progress.session_id) {
+          return [
+            new Model(
+              model.root,
+              model.version,
+              model.projects,
+              model.features,
+              model.selected_id,
+              model.selected_subdir,
+              model.view,
+              model.search,
+              model.mods,
+              model.mod_slug,
+              model.changelog,
+              model.manifest,
+              model.manifest_form,
+              model.manifest_structured,
+              model.logs,
+              model.job_status,
+              model.refresh_mods_after_job,
+              model.icon_failed,
+              model.new_pack,
+              model.notice,
+              model.bump_version,
+              model.bump_configs,
+              model.mod_progress,
+              model.mod_progress_in_block,
+              model.launcher_session,
+              model.launcher_status,
+              model.launcher_log,
+              new Some(progress),
+              model.dock_game_window,
+              model.auth_signed_in,
+              model.auth_username,
+              model.auth_status_text,
+            ),
+            $effect.none(),
+          ];
+        } else {
+          return [model, $effect.none()];
+        }
+      } else {
+        return [model, $effect.none()];
+      }
+    } else {
+      return [model, $effect.none()];
+    }
+  } else if (msg instanceof CancelBoot) {
+    let $ = model.launcher_session;
+    if ($ instanceof Some) {
+      let session_id = $[0];
+      return [model, cancel_boot_effect(session_id)];
+    } else {
+      return [model, $effect.none()];
+    }
+  } else if (msg instanceof BootCancelled) {
+    let $ = msg[0];
+    if ($ instanceof Ok) {
+      return [model, $effect.none()];
+    } else {
+      let error = $[0];
+      return [append_launcher_log(model, http_error(error)), $effect.none()];
+    }
+  } else if (msg instanceof RequestAuthLogin) {
+    return [
+      new Model(
+        model.root,
+        model.version,
+        model.projects,
+        model.features,
+        model.selected_id,
+        model.selected_subdir,
+        model.view,
+        model.search,
+        model.mods,
+        model.mod_slug,
+        model.changelog,
+        model.manifest,
+        model.manifest_form,
+        model.manifest_structured,
+        model.logs,
+        model.job_status,
+        model.refresh_mods_after_job,
+        model.icon_failed,
+        model.new_pack,
+        model.notice,
+        model.bump_version,
+        model.bump_configs,
+        model.mod_progress,
+        model.mod_progress_in_block,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        "Opening Microsoft sign-in in your browser...",
+      ),
+      auth_login_effect(),
+    ];
+  } else if (msg instanceof AuthLoginStarted) {
+    let $ = msg[0];
+    if ($ instanceof Ok) {
+      return [model, $effect.none()];
+    } else {
+      let error = $[0];
+      return [
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          http_error(error),
+        ),
+        $effect.none(),
+      ];
+    }
+  } else if (msg instanceof GotAuthEvent) {
+    let raw = msg[0];
+    let $ = $json.parse(raw, auth_event_decoder());
+    if ($ instanceof Ok) {
+      let event = $[0];
+      let $1 = event.status;
+      if ($1 === "signed_in") {
+        return [
+          new Model(
+            model.root,
+            model.version,
+            model.projects,
+            model.features,
+            model.selected_id,
+            model.selected_subdir,
+            model.view,
+            model.search,
+            model.mods,
+            model.mod_slug,
+            model.changelog,
+            model.manifest,
+            model.manifest_form,
+            model.manifest_structured,
+            model.logs,
+            model.job_status,
+            model.refresh_mods_after_job,
+            model.icon_failed,
+            model.new_pack,
+            model.notice,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            true,
+            event.username,
+            "",
+          ),
+          $effect.none(),
+        ];
+      } else {
+        return [
+          new Model(
+            model.root,
+            model.version,
+            model.projects,
+            model.features,
+            model.selected_id,
+            model.selected_subdir,
+            model.view,
+            model.search,
+            model.mods,
+            model.mod_slug,
+            model.changelog,
+            model.manifest,
+            model.manifest_form,
+            model.manifest_structured,
+            model.logs,
+            model.job_status,
+            model.refresh_mods_after_job,
+            model.icon_failed,
+            model.new_pack,
+            model.notice,
+            model.bump_version,
+            model.bump_configs,
+            model.mod_progress,
+            model.mod_progress_in_block,
+            model.launcher_session,
+            model.launcher_status,
+            model.launcher_log,
+            model.launcher_progress,
+            model.dock_game_window,
+            model.auth_signed_in,
+            model.auth_username,
+            event.error,
+          ),
+          $effect.none(),
+        ];
+      }
+    } else {
+      return [model, $effect.none()];
+    }
+  } else if (msg instanceof RequestAuthLogout) {
+    return [model, auth_logout_effect()];
+  } else if (msg instanceof AuthLogoutDone) {
+    let $ = msg[0];
+    if ($ instanceof Ok) {
+      return [
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          false,
+          "",
+          "",
+        ),
+        $effect.none(),
+      ];
+    } else {
+      let error = $[0];
+      return [
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          model.auth_signed_in,
+          model.auth_username,
+          http_error(error),
+        ),
+        $effect.none(),
+      ];
+    }
+  } else {
+    let $ = msg[0];
+    if ($ instanceof Ok) {
+      let status = $[0];
+      return [
+        new Model(
+          model.root,
+          model.version,
+          model.projects,
+          model.features,
+          model.selected_id,
+          model.selected_subdir,
+          model.view,
+          model.search,
+          model.mods,
+          model.mod_slug,
+          model.changelog,
+          model.manifest,
+          model.manifest_form,
+          model.manifest_structured,
+          model.logs,
+          model.job_status,
+          model.refresh_mods_after_job,
+          model.icon_failed,
+          model.new_pack,
+          model.notice,
+          model.bump_version,
+          model.bump_configs,
+          model.mod_progress,
+          model.mod_progress_in_block,
+          model.launcher_session,
+          model.launcher_status,
+          model.launcher_log,
+          model.launcher_progress,
+          model.dock_game_window,
+          status.signed_in,
+          status.username,
+          model.auth_status_text,
+        ),
+        $effect.none(),
+      ];
+    } else {
+      return [model, $effect.none()];
+    }
   }
+}
+
+function auth_status_effect() {
+  return $effect.from(
+    (dispatch) => {
+      return auth_status_ffi(
+        (raw) => {
+          let $ = $json.parse(raw, auth_status_decoder());
+          if ($ instanceof Ok) {
+            let status = $[0];
+            return dispatch(new GotAuthStatus(new Ok(status)));
+          } else {
+            return dispatch(
+              new GotAuthStatus(
+                new Error(new $model.DecodeError("invalid auth status")),
+              ),
+            );
+          }
+        },
+        (error) => {
+          return dispatch(
+            new GotAuthStatus(new Error(new $model.ApiError(error))),
+          );
+        },
+      );
+    },
+  );
+}
+
+function watch_auth_effect() {
+  return $effect.from(
+    (dispatch) => {
+      return watch_auth_events_ffi(
+        (raw) => { return dispatch(new GotAuthEvent(raw)); },
+      );
+    },
+  );
+}
+
+function watch_launcher_effect() {
+  return $effect.from(
+    (dispatch) => {
+      return watch_launcher_ffi(
+        (raw) => { return dispatch(new GotLauncherEvent(raw)); },
+        (raw) => { return dispatch(new GotLauncherProgress(raw)); },
+      );
+    },
+  );
 }
 
 function browser_view_effect() {
@@ -1748,6 +2777,9 @@ function init(_) {
         $api.projects((var0) => { return new GotProjects(var0); }),
         $api.features((var0) => { return new GotFeatures(var0); }),
         browser_view_effect(),
+        watch_launcher_effect(),
+        watch_auth_effect(),
+        auth_status_effect(),
       ]),
     ),
   ];
@@ -1761,15 +2793,15 @@ export function main() {
       "let_assert",
       FILEPATH,
       "packwand_gui",
-      45,
+      86,
       "main",
       "Pattern match failed, no pattern matched the value.",
       {
         value: $,
-        start: 1651,
-        end: 1700,
-        pattern_start: 1662,
-        pattern_end: 1667
+        start: 3140,
+        end: 3189,
+        pattern_start: 3151,
+        pattern_end: 3156
       }
     )
   }

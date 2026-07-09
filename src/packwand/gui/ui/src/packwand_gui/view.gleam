@@ -17,16 +17,18 @@ import packwand_gui/model.{
   WorkspaceUpdate, project_summary,
 }
 import packwand_gui/state.{
-  type Model, type ModProgress, type Msg, type View, Changelog, CopyChangelog,
+  type Model, type ModProgress, type Msg, type View, BootPack, CancelBoot,
+  Changelog, CopyChangelog,
   CreateProject,
-  Exports, IconFailed, Logs, Mods, Navigate, Overview, RunAction, RunWebview,
+  Exports, IconFailed, Logs, Mods, Navigate, Overview, RequestAuthLogin,
+  RequestAuthLogout, RunAction, RunWebview,
   SaveManifest,
-  SelectProject, SelectSubdir, SetBumpConfigs, SetBumpVersion, SetManifest,
-  SetManifestField,
+  SelectProject, SelectSubdir, SetBumpConfigs, SetBumpVersion,
+  SetDockGameWindow, SetManifest, SetManifestField,
   SetManifestStructured, SetModSlug, SetNewPackDescription,
   SetNewPackID, SetNewPackLoader, SetNewPackMinecraft, SetNewPackName,
   SetNewPackType, SetNewPackVersion, SetSearch, Settings, job_running,
-  progress_status_label, query_matches, selected_project,
+  launcher_running, progress_status_label, query_matches, selected_project,
 }
 
 @external(javascript, "./ffi.mjs", "currentHash")
@@ -68,7 +70,11 @@ pub fn render(model: Model) -> Element(Msg) {
 fn sidebar(model: Model) {
   html.aside([attribute.class("sidebar")], [
     html.div([attribute.class("brand")], [
-      html.div([attribute.class("mark")], [html.text("P")]),
+      html.img([
+        attribute.class("mark"),
+        attribute.src("/logo.png"),
+        attribute.alt("Packwand"),
+      ]),
       html.div([], [
         html.strong([], [html.text("Packwand")]),
         html.span([attribute.title(model.root)], [html.text(model.root)]),
@@ -267,7 +273,7 @@ fn sections_for_view(model: Model, project: Project) -> List(Element(Msg)) {
     Exports -> [actions_panel(model, project.subdirs)]
     Mods -> [add_mod_panel(model), mods_panel(model, project)]
     Changelog -> [changelog_panel(model)]
-    Logs -> [progress_panel(model), logs_panel(model)]
+    Logs -> [progress_panel(model), logs_panel(model), launcher_panel(model)]
     Settings -> [
       project_panel(model, project),
       subdir_panel(model, project.subdirs),
@@ -276,6 +282,7 @@ fn sections_for_view(model: Model, project: Project) -> List(Element(Msg)) {
       manifest_panel(model),
       capabilities_panel(model.features),
       new_pack_panel(model),
+      account_panel(model),
     ]
   }
 }
@@ -523,6 +530,24 @@ fn actions_panel(model: Model, subdirs: List(Subdir)) {
         RunAction(ExportCurseforge(model.selected_subdir)),
         disabled || !platform_matches(platform, "curseforge"),
       ),
+      case launcher_running(model) {
+        True -> button("ghost", "Stop", CancelBoot)
+        False ->
+          button_disabled(
+            "",
+            "Boot (dev test)",
+            BootPack(model.selected_subdir),
+            model.selected_subdir == "",
+          )
+      },
+      html.label([attribute.class("dock-toggle")], [
+        html.span([], [html.text("Dock game window (Windows)")]),
+        html.input([
+          attribute.type_("checkbox"),
+          attribute.checked(model.dock_game_window),
+          event.on_check(SetDockGameWindow),
+        ]),
+      ]),
     ]),
   ])
 }
@@ -1216,6 +1241,62 @@ fn logs_panel(model: Model) {
       html.text(string.join(list.reverse(model.logs), "\n")),
     ]),
   ])
+}
+
+fn launcher_panel(model: Model) {
+  case model.launcher_status, model.launcher_log {
+    "idle", [] -> html.text("")
+    status, log ->
+      panel_with_head(
+        "span-12",
+        "Launcher (dev test boot)",
+        pill(status),
+        [launcher_progress_line(model), html.pre([], [
+          html.text(string.join(list.reverse(log), "\n")),
+        ])],
+      )
+  }
+}
+
+fn launcher_progress_line(model: Model) {
+  case model.launcher_progress {
+    None -> html.text("")
+    Some(progress) ->
+      html.p([attribute.class("panel-copy")], [
+        html.text(
+          int.to_string(progress.finished_downloads)
+          <> "/"
+          <> int.to_string(progress.total_downloads)
+          <> " downloads, "
+          <> int.to_string(progress.downloaded_bytes / 1_048_576)
+          <> " MiB"
+          <> case progress.total_bytes {
+            0 -> ""
+            total -> "/" <> int.to_string(total / 1_048_576) <> " MiB"
+          },
+        ),
+      ])
+  }
+}
+
+fn account_panel(model: Model) {
+  let body = case model.auth_signed_in {
+    True -> [
+      html.p([attribute.class("panel-copy")], [
+        html.text("Signed in as " <> model.auth_username <> "."),
+      ]),
+      button("ghost", "Sign out", RequestAuthLogout),
+    ]
+    False -> [
+      html.p([attribute.class("panel-copy")], [
+        html.text(
+          "Sign in with a real Microsoft account to boot as yourself instead of an offline dev-testing session. Optional — offline boots work either way.",
+        ),
+      ]),
+      button("", "Sign in with Microsoft", RequestAuthLogin),
+    ]
+  }
+  panel("span-12", "Account", list.append(body, [notice(model.auth_status_text)]))
 }
 
 fn capabilities_panel(features: List(Feature)) {

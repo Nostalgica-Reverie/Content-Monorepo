@@ -2,6 +2,10 @@
 
 Multi-pack workspace operations across all packs
 
+```
+packwand workspace [flags]
+```
+
 ### Options
 
 ```

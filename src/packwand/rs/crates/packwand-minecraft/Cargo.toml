@@ -1,0 +1,19 @@
+[package]
+name = "packwand-minecraft"
+description = "Minecraft version metadata, install planning, and transactional installation for the packwand-rs shared core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+sha1 = { workspace = true }
+regex-lite = { workspace = true }
+ureq = { workspace = true }
+zip = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

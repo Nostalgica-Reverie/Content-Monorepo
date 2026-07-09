@@ -1,0 +1,9 @@
+
+#Configuration regarding to the Trowel
+[trowel]
+	#If the trowel should use durability when placing a block.
+	use_durability = false
+	#The durability the trowel has, if 'use_durability' is enabled.
+	#Range: > 1
+	durability = 256
+

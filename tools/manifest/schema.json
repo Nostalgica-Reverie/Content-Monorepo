@@ -203,6 +203,25 @@
               "type": "string"
             }
           }
+        },
+        "full_auto": {
+          "type": "object",
+          "description": "Opts this pack into the unattended release pipeline ('packwand automation run'): update -> refresh -> validate -> tests -> docs -> bump. Requires 'version' to already follow the CalVer 'YY.MM' or 'YY.MM.patch' pattern. Ignored (treated as disabled) when 'lifecycle' is 'archived' or 'eol'.",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "true: a scheduled workflow may update, validate, test, and version-bump this pack unattended."
+            },
+            "tests": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Shell commands run from the pack dir before bump; a nonzero exit aborts the run and discards update/refresh changes."
+            }
+          },
+          "required": ["enabled"]
         }
       }
     }

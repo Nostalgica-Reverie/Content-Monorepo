@@ -94,7 +94,7 @@ func CommandCatalog() []CommandInfo {
 				Use:      command.Use,
 				Summary:  command.Short,
 				Group:    command.GroupID,
-				Runnable: command.Runnable(),
+				Runnable: command.Runnable() && command.Annotations[groupOnlyAnnotation] != "true",
 			})
 			visit(command)
 		}
@@ -103,8 +103,35 @@ func CommandCatalog() []CommandInfo {
 	return commands
 }
 
+// enforceGroupArgs makes group commands (parents with subcommands but no Run
+// of their own) reject unknown subcommands with a non-zero exit, instead of
+// cobra's legacy behavior of printing help and exiting 0. Cobra returns help
+// for non-runnable commands before validating args, so this must be a RunE.
+func enforceGroupArgs(c *cobra.Command) {
+	if c.HasSubCommands() && c.Run == nil && c.RunE == nil {
+		if c.Annotations == nil {
+			c.Annotations = map[string]string{}
+		}
+		c.Annotations[groupOnlyAnnotation] = "true"
+		c.RunE = func(cmd *cobra.Command, args []string) error {
+			if len(args) == 0 {
+				return cmd.Help()
+			}
+			return fmt.Errorf("unknown command %q for %q", args[0], cmd.CommandPath())
+		}
+	}
+	for _, sub := range c.Commands() {
+		enforceGroupArgs(sub)
+	}
+}
+
+// groupOnlyAnnotation marks commands whose RunE was injected by
+// enforceGroupArgs, so CommandCatalog can still report them as non-runnable.
+const groupOnlyAnnotation = "packwand.groupOnly"
+
 // Execute starts the root command for packwand
 func Execute() {
+	enforceGroupArgs(rootCmd)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}

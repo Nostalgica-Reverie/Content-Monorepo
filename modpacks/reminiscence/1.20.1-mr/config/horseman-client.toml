@@ -1,0 +1,46 @@
+#If Lead slot is disabled, but lead is still required for hitching, indication of whether the Lead is equipped will be rendered in Horse inventory screen. Default: true
+render_lead_indication_without_slot = true
+#Adjusts gui to render hunger bar, xp bar and xp level. Makes horse jump bar render only when jumping. Default: true
+improved_mount_gui = false
+#Prevents horse jump meter from filling up when mount is in the water. Default: true
+prevent_jumping_in_water = true
+#Offset to horse model head pitch while riding. Lowers the head so it's not blocking the view. Default: 20
+#Range: 0 ~ 45
+horse_model_head_offset = 20
+#Offset to horse model head y position while riding. Lowers the head so it's not blocking the view. Default: true
+#Range: 0 ~ 4
+horse_model_y_offset = 2
+#Makes horse-type mobs that named 'jeb_' render with rainbow effect, like sheep. Default: true.
+jeb_horse = true
+#Fixes small delay when moving camera horizontally while mounted - MC-259512. Default: true
+fix_mounted_camera_lag = false
+
+[switch_inventory]
+	#Adds button and hotkey to switch between player and horse inventory. Default: true
+	enabled = true
+	#X position of the button in player's inventory. Default: -14.
+	#Range: > -2147483648
+	player_button_position_x = -14
+	#Y position of the button in player's inventory. Default: 9.
+	#Range: > -2147483648
+	player_button_position_y = 9
+	#X position of the button in mount's inventory. Default: -14.
+	#Range: > -2147483648
+	horse_button_position_x = -14
+	#Y position of the button in mount's inventory. Default: 9.
+	#Range: > -2147483648
+	horse_button_position_y = 9
+
+[transparent_horse]
+	#Makes horse translucent depending on player's look angle. Default: true
+	enabled = true
+	#Maximum opacity (at the end angle). 0 - fully transparent. 1 - fully opaque. Default: 0.08.
+	#Range: 0.0 ~ 1.0
+	max_opacity = 0.08
+	#Angle at which the horse will start to become transparent. Default: 30.
+	#Range: -90 ~ 90
+	start_angle = 30
+	#Angle at which the horse will reach maximum transparency. Default: 65.
+	#Range: -90 ~ 90
+	end_angle = 65
+

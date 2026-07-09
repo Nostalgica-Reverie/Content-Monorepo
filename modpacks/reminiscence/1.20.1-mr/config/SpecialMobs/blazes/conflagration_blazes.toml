@@ -1,0 +1,99 @@
+# specialmobs:blazes/conflagration_blazes.toml
+# This config contains options that apply only to the conflagration blaze species.
+
+
+# Category: general
+# Options standard to all mob species (that is, not specific to any particular mob species).
+
+  # The chance for conflagration blazes to succeed at natural spawn attempts. Does not affect Mob Replacement.
+  # Note: Most species do NOT naturally spawn - they must be added by a mod or data pack for this option to do anything.
+  # <Number> Range: 0.0 ~ 1.0, Default: 1.0
+  general.natural_spawn_chance.base = 1.0
+  # The chance for conflagration blazes to succeed at natural spawn attempts when specific environmental conditions
+  #   are met.
+  # <Environment List> Format: [ "value condition1 state1 & condition2 state2 & ...", ... ], Default: []
+  #    Range for Values: 0.0 ~ 1.0
+  general.natural_spawn_chance.exceptions = []
+
+  # When greater than 0, conflagration blazes will have a random render scale applied. This is a visual effect only.
+  #   If this is set to a non-negative value, it overrides the value set for both "master_random_scaling" and
+  #   "family_random_scaling". The priority is species value > family value > master value.
+  # <Number> Range: -1.0 ~ 1.0, Default: -1.0
+  general.random_scaling = -1.0
+
+  # Attribute modifiers for conflagration blazes. If no attribute changes are defined here, conflagration blazes will
+  #   have the exact same attributes as their parent vanilla mob.
+  # <Attribute List> Format: [ "namespace:attribute_name operation value", ... ], Default: []
+  #    Range for Values: Any Value
+  general.attributes = []
+
+  # Subcategory: special_data
+  # Special Mob Data. These are the values set to each conflagration blaze on spawn (in their NBT).
+
+    # The amount of experience conflagration blazes drop when killed by a player. Multiplied by 2.5 for babies. Extra
+    #   experience may drop based on equipment. Slime-style mobs also drop experience equal to slime size.
+    # <Integer> Range: ≥ 0, Default: 14
+    general.special_data.experience = 14
+    # If greater than 0, conflagration blazes will heal 1 half-heart of health every "heal_time" ticks. (20 ticks = 1
+    #   second)
+    # <Integer> Range: ≥ 0, Default: 20
+    general.special_data.heal_time = 20
+    # Fall damage taken by conflagration blazes is multiplied by this value. 0 is fall damage immunity.
+    # <Number> Range: ≥ 0.0, Default: 0.0
+    general.special_data.fall_damage_multiplier = 0.0
+    # If true, conflagration blazes will take no fire damage. Does not affect spawn restrictions.
+    # <Boolean> Valid Values: { true, false }, Default: true
+    general.special_data.immune_to_fire = true
+    # If true, conflagration blazes cannot be set on fire (this setting only matters if not immune to fire).
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.immune_to_burning = false
+    # If true, conflagration blazes can breathe in water.
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.immune_to_drowning = false
+    # If true, conflagration blazes will ignore forces applied by flowing fluids.
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.immune_to_fluid_push = false
+    # If true, conflagration blazes will be continuously damaged while wet.
+    # <Boolean> Valid Values: { true, false }, Default: true
+    general.special_data.sensitive_to_water = true
+    # If true, conflagration blazes can be leashed. (Note: Leashed mobs can still attack you.)
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.allow_leashing = false
+    # If true, conflagration blazes will not trigger pressure plates.
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.immune_to_pressure_plates = false
+    # Conflagration blazes will not be 'trapped' in any blocks specified here (e.g. "cobweb" or "sweet_berry_bush").
+    # <"minecraft:block" Registry List> Format: [ "namespace:entry_name", ... ], Default: []
+    general.special_data.immune_to_sticky_blocks = []
+    # Conflagration blazes cannot be inflicted with any effects specified here (e.g. "instant_damage" or
+    #   "regeneration").
+    # <"minecraft:mob_effect" Registry List> Format: [ "namespace:entry_name", ... ], Default: []
+    general.special_data.immune_to_effects = []
+
+  # Subcategory: ranged_stats
+  # Like Special Mob Data, these are set to NBT on spawn. Unlike SMD, ranged stats are not all applicable to all mobs.
+
+    # The ranged attack spread (inaccuracy) for conflagration blazes. 0 is perfect accuracy.
+    # <Number> Range: ≥ 0.0, Default: 1.0
+    general.special_data.ranged_attack.spread = 1.0
+    # The delay (in ticks) for conflagration blazes to perform a ranged attack from rest. (20 ticks = 1 second)
+    # <Integer> Range: ≥ 0, Default: 60
+    general.special_data.ranged_attack.charge_time = 60
+    # The total delay (in ticks) conflagration blazes wait between each ranged attack. (20 ticks = 1 second)
+    # <Integer> Range: ≥ 0, Default: 160
+    general.special_data.ranged_attack.refire_time = 160
+    # The maximum distance (in blocks) at which conflagration blazes can use their ranged attacks. 0 disables ranged
+    #   attacks.
+    # <Number> Range: ≥ 0.0, Default: 48.0
+    general.special_data.ranged_attack.max_range = 48.0
+
+
+# Category: blazes
+# Options standard to all blazes.
+
+  # The number of fireballs conflagration blazes launch with each burst.
+  # <Integer> Range: ≥ 0, Default: 3
+  blazes.fireball_attack.burst_count = 3
+  # The time (in ticks) conflagration blazes wait between each fireball in a burst. (20 ticks = 1 second)
+  # <Integer> Range: ≥ 0, Default: 6
+  blazes.fireball_attack.burst_delay = 6

@@ -7,10 +7,14 @@ update_log_*.txt
 modpacks/**/packitup.schema.json
 modpacks/**/Logs
 artifacts/
+*.jar
+.task/
 
 # Packwand
 .packwand-test-instance
 packwand-bin/
+# Per-pack launcher artifacts (logs/natives) from "boot a pack" dev testing.
+**/.packwand-launcher/
 src/packwand/gui/ui/build/
 src/packwand/packwand
 /packwand

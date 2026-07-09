@@ -1,3 +1,4 @@
+import * as $int from "../../gleam_stdlib/gleam/int.mjs";
 import * as $list from "../../gleam_stdlib/gleam/list.mjs";
 import * as $option from "../../gleam_stdlib/gleam/option.mjs";
 import { None } from "../../gleam_stdlib/gleam/option.mjs";
@@ -100,7 +101,7 @@ export const NewPack$NewPack$description = (value) => value.description;
 export const NewPack$NewPack$6 = (value) => value.description;
 
 export class Model extends $CustomType {
-  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block) {
+  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block, launcher_session, launcher_status, launcher_log, launcher_progress, dock_game_window, auth_signed_in, auth_username, auth_status_text) {
     super();
     this.root = root;
     this.version = version;
@@ -126,9 +127,17 @@ export class Model extends $CustomType {
     this.bump_configs = bump_configs;
     this.mod_progress = mod_progress;
     this.mod_progress_in_block = mod_progress_in_block;
+    this.launcher_session = launcher_session;
+    this.launcher_status = launcher_status;
+    this.launcher_log = launcher_log;
+    this.launcher_progress = launcher_progress;
+    this.dock_game_window = dock_game_window;
+    this.auth_signed_in = auth_signed_in;
+    this.auth_username = auth_username;
+    this.auth_status_text = auth_status_text;
   }
 }
-export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block) =>
+export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block, launcher_session, launcher_status, launcher_log, launcher_progress, dock_game_window, auth_signed_in, auth_username, auth_status_text) =>
   new Model(root,
   version,
   projects,
@@ -152,7 +161,15 @@ export const Model$Model = (root, version, projects, features, selected_id, sele
   bump_version,
   bump_configs,
   mod_progress,
-  mod_progress_in_block);
+  mod_progress_in_block,
+  launcher_session,
+  launcher_status,
+  launcher_log,
+  launcher_progress,
+  dock_game_window,
+  auth_signed_in,
+  auth_username,
+  auth_status_text);
 export const Model$isModel = (value) => value instanceof Model;
 export const Model$Model$root = (value) => value.root;
 export const Model$Model$0 = (value) => value.root;
@@ -205,6 +222,22 @@ export const Model$Model$22 = (value) => value.mod_progress;
 export const Model$Model$mod_progress_in_block = (value) =>
   value.mod_progress_in_block;
 export const Model$Model$23 = (value) => value.mod_progress_in_block;
+export const Model$Model$launcher_session = (value) => value.launcher_session;
+export const Model$Model$24 = (value) => value.launcher_session;
+export const Model$Model$launcher_status = (value) => value.launcher_status;
+export const Model$Model$25 = (value) => value.launcher_status;
+export const Model$Model$launcher_log = (value) => value.launcher_log;
+export const Model$Model$26 = (value) => value.launcher_log;
+export const Model$Model$launcher_progress = (value) => value.launcher_progress;
+export const Model$Model$27 = (value) => value.launcher_progress;
+export const Model$Model$dock_game_window = (value) => value.dock_game_window;
+export const Model$Model$28 = (value) => value.dock_game_window;
+export const Model$Model$auth_signed_in = (value) => value.auth_signed_in;
+export const Model$Model$29 = (value) => value.auth_signed_in;
+export const Model$Model$auth_username = (value) => value.auth_username;
+export const Model$Model$30 = (value) => value.auth_username;
+export const Model$Model$auth_status_text = (value) => value.auth_status_text;
+export const Model$Model$31 = (value) => value.auth_status_text;
 
 export class GotHealth extends $CustomType {
   constructor($0) {
@@ -550,6 +583,125 @@ export const Msg$SetBumpConfigs = ($0) => new SetBumpConfigs($0);
 export const Msg$isSetBumpConfigs = (value) => value instanceof SetBumpConfigs;
 export const Msg$SetBumpConfigs$0 = (value) => value[0];
 
+export class BootPack extends $CustomType {
+  constructor(path) {
+    super();
+    this.path = path;
+  }
+}
+export const Msg$BootPack = (path) => new BootPack(path);
+export const Msg$isBootPack = (value) => value instanceof BootPack;
+export const Msg$BootPack$path = (value) => value.path;
+export const Msg$BootPack$0 = (value) => value.path;
+
+export class SetDockGameWindow extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetDockGameWindow = ($0) => new SetDockGameWindow($0);
+export const Msg$isSetDockGameWindow = (value) =>
+  value instanceof SetDockGameWindow;
+export const Msg$SetDockGameWindow$0 = (value) => value[0];
+
+export class PackBooted extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$PackBooted = ($0) => new PackBooted($0);
+export const Msg$isPackBooted = (value) => value instanceof PackBooted;
+export const Msg$PackBooted$0 = (value) => value[0];
+
+export class GotLauncherEvent extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotLauncherEvent = ($0) => new GotLauncherEvent($0);
+export const Msg$isGotLauncherEvent = (value) =>
+  value instanceof GotLauncherEvent;
+export const Msg$GotLauncherEvent$0 = (value) => value[0];
+
+export class GotLauncherProgress extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotLauncherProgress = ($0) => new GotLauncherProgress($0);
+export const Msg$isGotLauncherProgress = (value) =>
+  value instanceof GotLauncherProgress;
+export const Msg$GotLauncherProgress$0 = (value) => value[0];
+
+export class CancelBoot extends $CustomType {}
+export const Msg$CancelBoot = () => new CancelBoot();
+export const Msg$isCancelBoot = (value) => value instanceof CancelBoot;
+
+export class BootCancelled extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$BootCancelled = ($0) => new BootCancelled($0);
+export const Msg$isBootCancelled = (value) => value instanceof BootCancelled;
+export const Msg$BootCancelled$0 = (value) => value[0];
+
+export class RequestAuthLogin extends $CustomType {}
+export const Msg$RequestAuthLogin = () => new RequestAuthLogin();
+export const Msg$isRequestAuthLogin = (value) =>
+  value instanceof RequestAuthLogin;
+
+export class AuthLoginStarted extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$AuthLoginStarted = ($0) => new AuthLoginStarted($0);
+export const Msg$isAuthLoginStarted = (value) =>
+  value instanceof AuthLoginStarted;
+export const Msg$AuthLoginStarted$0 = (value) => value[0];
+
+export class GotAuthEvent extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotAuthEvent = ($0) => new GotAuthEvent($0);
+export const Msg$isGotAuthEvent = (value) => value instanceof GotAuthEvent;
+export const Msg$GotAuthEvent$0 = (value) => value[0];
+
+export class RequestAuthLogout extends $CustomType {}
+export const Msg$RequestAuthLogout = () => new RequestAuthLogout();
+export const Msg$isRequestAuthLogout = (value) =>
+  value instanceof RequestAuthLogout;
+
+export class AuthLogoutDone extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$AuthLogoutDone = ($0) => new AuthLogoutDone($0);
+export const Msg$isAuthLogoutDone = (value) => value instanceof AuthLogoutDone;
+export const Msg$AuthLogoutDone$0 = (value) => value[0];
+
+export class GotAuthStatus extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotAuthStatus = ($0) => new GotAuthStatus($0);
+export const Msg$isGotAuthStatus = (value) => value instanceof GotAuthStatus;
+export const Msg$GotAuthStatus$0 = (value) => value[0];
+
 export function progress_status_label(status) {
   if (status instanceof ProgressPending) {
     return "queued";
@@ -588,6 +740,14 @@ export function initial() {
     false,
     toList([]),
     false,
+    new None(),
+    "idle",
+    toList([]),
+    new None(),
+    true,
+    false,
+    "",
+    "",
   );
 }
 
@@ -633,6 +793,14 @@ export function append_log(model, line) {
     model.bump_configs,
     model.mod_progress,
     model.mod_progress_in_block,
+    model.launcher_session,
+    model.launcher_status,
+    model.launcher_log,
+    model.launcher_progress,
+    model.dock_game_window,
+    model.auth_signed_in,
+    model.auth_username,
+    model.auth_status_text,
   );
 }
 
@@ -662,6 +830,14 @@ export function reset_progress(model) {
     model.bump_configs,
     toList([]),
     false,
+    model.launcher_session,
+    model.launcher_status,
+    model.launcher_log,
+    model.launcher_progress,
+    model.dock_game_window,
+    model.auth_signed_in,
+    model.auth_username,
+    model.auth_status_text,
   );
 }
 
@@ -714,6 +890,14 @@ function upsert_progress(model, name, status, detail) {
     model.bump_configs,
     updated,
     model.mod_progress_in_block,
+    model.launcher_session,
+    model.launcher_status,
+    model.launcher_log,
+    model.launcher_progress,
+    model.dock_game_window,
+    model.auth_signed_in,
+    model.auth_username,
+    model.auth_status_text,
   );
 }
 
@@ -816,6 +1000,14 @@ export function record_progress_line(model, raw_line) {
       model.bump_configs,
       model.mod_progress,
       true,
+      model.launcher_session,
+      model.launcher_status,
+      model.launcher_log,
+      model.launcher_progress,
+      model.dock_game_window,
+      model.auth_signed_in,
+      model.auth_username,
+      model.auth_status_text,
     );
   } else if (trimmed === "All files are up to date!") {
     return new Model(
@@ -843,6 +1035,14 @@ export function record_progress_line(model, raw_line) {
       model.bump_configs,
       model.mod_progress,
       false,
+      model.launcher_session,
+      model.launcher_status,
+      model.launcher_log,
+      model.launcher_progress,
+      model.dock_game_window,
+      model.auth_signed_in,
+      model.auth_username,
+      model.auth_status_text,
     );
   } else if (trimmed === "Cancelled!") {
     return new Model(
@@ -870,6 +1070,14 @@ export function record_progress_line(model, raw_line) {
       model.bump_configs,
       model.mod_progress,
       false,
+      model.launcher_session,
+      model.launcher_status,
+      model.launcher_log,
+      model.launcher_progress,
+      model.dock_game_window,
+      model.auth_signed_in,
+      model.auth_username,
+      model.auth_status_text,
     );
   } else if (trimmed === "Files updated!") {
     return new Model(
@@ -897,6 +1105,14 @@ export function record_progress_line(model, raw_line) {
       model.bump_configs,
       model.mod_progress,
       false,
+      model.launcher_session,
+      model.launcher_status,
+      model.launcher_log,
+      model.launcher_progress,
+      model.dock_game_window,
+      model.auth_signed_in,
+      model.auth_username,
+      model.auth_status_text,
     );
   } else if (trimmed === "") {
     return new Model(
@@ -924,6 +1140,14 @@ export function record_progress_line(model, raw_line) {
       model.bump_configs,
       model.mod_progress,
       false,
+      model.launcher_session,
+      model.launcher_status,
+      model.launcher_log,
+      model.launcher_progress,
+      model.dock_game_window,
+      model.auth_signed_in,
+      model.auth_username,
+      model.auth_status_text,
     );
   } else {
     let $ = $string.starts_with(trimmed, "dry-run:");
@@ -953,6 +1177,14 @@ export function record_progress_line(model, raw_line) {
         model.bump_configs,
         model.mod_progress,
         false,
+        model.launcher_session,
+        model.launcher_status,
+        model.launcher_log,
+        model.launcher_progress,
+        model.dock_game_window,
+        model.auth_signed_in,
+        model.auth_username,
+        model.auth_status_text,
       );
     } else {
       let $1 = $string.starts_with(trimmed, "~ ");
@@ -967,6 +1199,116 @@ export function record_progress_line(model, raw_line) {
 
 export function job_running(model) {
   return (model.job_status === "starting") || (model.job_status === "running");
+}
+
+export function launcher_running(model) {
+  return ((model.launcher_status === "installing") || (model.launcher_status === "starting")) || (model.launcher_status === "started");
+}
+
+export function append_launcher_log(model, line) {
+  return new Model(
+    model.root,
+    model.version,
+    model.projects,
+    model.features,
+    model.selected_id,
+    model.selected_subdir,
+    model.view,
+    model.search,
+    model.mods,
+    model.mod_slug,
+    model.changelog,
+    model.manifest,
+    model.manifest_form,
+    model.manifest_structured,
+    model.logs,
+    model.job_status,
+    model.refresh_mods_after_job,
+    model.icon_failed,
+    model.new_pack,
+    model.notice,
+    model.bump_version,
+    model.bump_configs,
+    model.mod_progress,
+    model.mod_progress_in_block,
+    model.launcher_session,
+    model.launcher_status,
+    listPrepend(line, model.launcher_log),
+    model.launcher_progress,
+    model.dock_game_window,
+    model.auth_signed_in,
+    model.auth_username,
+    model.auth_status_text,
+  );
+}
+
+/**
+ * Folds one decoded `LauncherEvent` into the model: updates status and
+ * appends a human-readable log line. `kind` mirrors the Rust `LaunchEvent`
+ * serde tag (`packwand-launch`'s `supervisor.rs`).
+ */
+export function apply_launcher_event(model, event) {
+  let _block;
+  let $1 = event.kind;
+  if ($1 === "starting") {
+    _block = ["starting", "Starting..."];
+  } else if ($1 === "started") {
+    _block = ["started", ("Started (pid " + $int.to_string(event.pid)) + ")"];
+  } else if ($1 === "stdout") {
+    _block = [model.launcher_status, event.line];
+  } else if ($1 === "stderr") {
+    _block = [model.launcher_status, event.line];
+  } else if ($1 === "exited") {
+    _block = ["exited", ("Exited (code " + $int.to_string(event.code)) + ")"];
+  } else if ($1 === "failed") {
+    _block = ["failed", "Failed: " + event.error];
+  } else if ($1 === "cancelled") {
+    _block = ["cancelled", "Cancelled"];
+  } else {
+    _block = [model.launcher_status, ""];
+  }
+  let $ = _block;
+  let status = $[0];
+  let line = $[1];
+  let with_status = new Model(
+    model.root,
+    model.version,
+    model.projects,
+    model.features,
+    model.selected_id,
+    model.selected_subdir,
+    model.view,
+    model.search,
+    model.mods,
+    model.mod_slug,
+    model.changelog,
+    model.manifest,
+    model.manifest_form,
+    model.manifest_structured,
+    model.logs,
+    model.job_status,
+    model.refresh_mods_after_job,
+    model.icon_failed,
+    model.new_pack,
+    model.notice,
+    model.bump_version,
+    model.bump_configs,
+    model.mod_progress,
+    model.mod_progress_in_block,
+    model.launcher_session,
+    status,
+    model.launcher_log,
+    model.launcher_progress,
+    model.dock_game_window,
+    model.auth_signed_in,
+    model.auth_username,
+    model.auth_status_text,
+  );
+  if (line === "") {
+    return with_status;
+  } else {
+    return append_launcher_log(with_status, line);
+  }
 }
 
 export function http_error(error) {

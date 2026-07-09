@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/clistyle"
@@ -184,7 +185,7 @@ func validateManifestFile(manifestPath string) {
 		validateZipPackStructure(packDir, m.Type)
 	}
 
-	validateManifestAutomation(manifestPath, m.Automation, packDir)
+	validateManifestAutomation(manifestPath, m, packDir)
 
 	optOutPath := filepath.Join(packDir, "opt-out.json")
 	if fileExists(optOutPath) {
@@ -414,13 +415,24 @@ func validateZipPackStructure(packDir, packType string) {
 	}
 }
 
-func validateManifestAutomation(manifestPath string, auto *manifest.Automation, packDir string) {
+var calVerRe = regexp.MustCompile(`^\d{2}\.\d{2}(\.\d+)?$`)
+
+func validateManifestAutomation(manifestPath string, m *manifest.Manifest, packDir string) {
+	auto := m.Automation
 	if auto == nil {
 		return
 	}
 	for sub := range auto.Freeze {
 		if !dirExists(filepath.Join(packDir, sub)) {
 			llWarn("%s: automation.freeze references subdir '%s' which does not exist", manifestPath, sub)
+		}
+	}
+	if auto.FullAuto != nil && auto.FullAuto.Enabled {
+		if m.Lifecycle == "archived" || m.Lifecycle == "eol" {
+			llFail(fmt.Sprintf("%s: automation.full_auto.enabled is true but lifecycle is %q — full automation cannot run on an archived/eol pack", manifestPath, m.Lifecycle))
+		}
+		if !calVerRe.MatchString(m.Version) {
+			llFail(fmt.Sprintf("%s: automation.full_auto.enabled requires a CalVer 'version' (e.g. '26.06' or '26.06.1'), got %q", manifestPath, m.Version))
 		}
 	}
 }

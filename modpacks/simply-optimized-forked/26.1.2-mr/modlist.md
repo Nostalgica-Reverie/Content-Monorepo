@@ -17,7 +17,6 @@
 
 ## Shared Mods
 
-- [Async](https://modrinth.com/mod/vEC2jm6I)
 - [C2ME OpenCL Acceleration Module](https://modrinth.com/mod/qtPMklut)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)

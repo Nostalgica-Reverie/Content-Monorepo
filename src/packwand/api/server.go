@@ -122,21 +122,31 @@ func legacyFeatures(items []capability) []map[string]any {
 }
 
 type Pack struct {
-	ID          string   `json:"id"`
-	Name        string   `json:"name"`
-	Type        string   `json:"type"`
-	Category    string   `json:"category"`
-	Dir         string   `json:"dir"`
-	Loader      string   `json:"loader,omitempty"`
-	MCVersion   string   `json:"mc_version,omitempty"`
-	Version     string   `json:"version,omitempty"`
-	ReleaseType string   `json:"release_type,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Lifecycle   string   `json:"lifecycle,omitempty"`
-	Role        string   `json:"role,omitempty"`
-	Subdirs     []Subdir `json:"subdirs,omitempty"`
+	ID          string    `json:"id"`
+	Name        string    `json:"name"`
+	Type        string    `json:"type"`
+	Category    string    `json:"category"`
+	Dir         string    `json:"dir"`
+	Loader      string    `json:"loader,omitempty"`
+	MCVersion   string    `json:"mc_version,omitempty"`
+	Version     string    `json:"version,omitempty"`
+	ReleaseType string    `json:"release_type,omitempty"`
+	Description string    `json:"description,omitempty"`
+	Lifecycle   string    `json:"lifecycle,omitempty"`
+	Role        string    `json:"role,omitempty"`
+	Variants    []Variant `json:"variants,omitempty"`
+	Subdirs     []Subdir  `json:"subdirs,omitempty"`
 }
+
+type Variant struct {
+	ID        string `json:"id,omitempty"`
+	MCVersion string `json:"mc_version,omitempty"`
+	Loader    string `json:"loader,omitempty"`
+	Version   string `json:"version,omitempty"`
+}
+
 type Subdir struct {
+	Key      string `json:"key,omitempty"`
 	Path     string `json:"path"`
 	Platform string `json:"platform,omitempty"`
 }
@@ -161,6 +171,14 @@ func (s *Server) discoverPacks() ([]Pack, error) {
 			if m.MCVersion != nil {
 				pack.MCVersion = *m.MCVersion
 			}
+			for _, variant := range m.Variants {
+				pack.Variants = append(pack.Variants, Variant{
+					ID:        variant.ID,
+					MCVersion: variant.MCVersion,
+					Loader:    first(variant.Loader, m.Loader),
+					Version:   variant.Version,
+				})
+			}
 			for _, subdir := range manifest.SubDirsOf(dir) {
 				platform := ""
 				if strings.HasSuffix(subdir, "-mr") {
@@ -168,7 +186,11 @@ func (s *Server) discoverPacks() ([]Pack, error) {
 				} else if strings.HasSuffix(subdir, "-cf") {
 					platform = "curseforge"
 				}
-				pack.Subdirs = append(pack.Subdirs, Subdir{filepath.ToSlash(mustRel(s.root, subdir)), platform})
+				pack.Subdirs = append(pack.Subdirs, Subdir{
+					Key:      subdirKey(filepath.Base(subdir)),
+					Path:     filepath.ToSlash(mustRel(s.root, subdir)),
+					Platform: platform,
+				})
 			}
 			packs = append(packs, pack)
 		}
@@ -178,6 +200,15 @@ func (s *Server) discoverPacks() ([]Pack, error) {
 }
 
 func mustRel(root, path string) string { rel, _ := filepath.Rel(root, path); return rel }
+
+func subdirKey(name string) string {
+	switch {
+	case strings.HasSuffix(name, "-mr"), strings.HasSuffix(name, "-cf"):
+		return name[:len(name)-3]
+	default:
+		return name
+	}
+}
 
 func (s *Server) handlePacks(w http.ResponseWriter, _ *http.Request) {
 	packs, err := s.discoverPacks()

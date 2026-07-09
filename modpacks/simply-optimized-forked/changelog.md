@@ -1,2 +1,2 @@
-# Simply Optimized Forked 26.06.8
-fix mr
+# Simply Optimized Forked 26.07
+updates

@@ -9,23 +9,23 @@ import (
 )
 
 type Manifest struct {
-	Schema       string      `json:"$schema,omitempty"`
-	ID           string      `json:"id"`
-	Name         string      `json:"name"`
-	Type         string      `json:"type"`
-	Loader       string      `json:"loader,omitempty"`
-	MCVersion    *string     `json:"mc_version,omitempty"`
-	Variants     []Variant   `json:"variants,omitempty"`
-	Version      string      `json:"version,omitempty"`
-	ReleaseType  string      `json:"release_type,omitempty"`
-	Description  string      `json:"description,omitempty"`
-	ModrinthID   string      `json:"modrinth_id,omitempty"`
-	CurseforgeID string      `json:"curseforge_id,omitempty"`
-	GitHubID     string      `json:"github_id,omitempty"`
-	GiteaID      string      `json:"gitea_id,omitempty"`
-	GitLabID     string      `json:"gitlab_id,omitempty"`
-	Role         Role        `json:"role"`
-	SharedAssets string      `json:"shared_assets,omitempty"`
+	Schema       string    `json:"$schema,omitempty"`
+	ID           string    `json:"id"`
+	Name         string    `json:"name"`
+	Type         string    `json:"type"`
+	Loader       string    `json:"loader,omitempty"`
+	MCVersion    *string   `json:"mc_version,omitempty"`
+	Variants     []Variant `json:"variants,omitempty"`
+	Version      string    `json:"version,omitempty"`
+	ReleaseType  string    `json:"release_type,omitempty"`
+	Description  string    `json:"description,omitempty"`
+	ModrinthID   string    `json:"modrinth_id,omitempty"`
+	CurseforgeID string    `json:"curseforge_id,omitempty"`
+	GitHubID     string    `json:"github_id,omitempty"`
+	GiteaID      string    `json:"gitea_id,omitempty"`
+	GitLabID     string    `json:"gitlab_id,omitempty"`
+	Role         Role      `json:"role"`
+	SharedAssets string    `json:"shared_assets,omitempty"`
 	// Lifecycle declares the pack's maintenance state: active, maintenance, archived, eol.
 	// archived and eol packs are excluded from workspace auto-update operations.
 	Lifecycle  string      `json:"lifecycle,omitempty"`
@@ -114,6 +114,18 @@ type Automation struct {
 	ServerPromo *bool               `json:"server_promo,omitempty"`
 	SyncExclude []string            `json:"sync_exclude,omitempty"`
 	Freeze      map[string][]string `json:"freeze,omitempty"`
+	FullAuto    *FullAuto           `json:"full_auto,omitempty"`
+}
+
+// FullAuto configures the end-to-end unattended release pipeline
+// (see 'packwand automation run'): update -> refresh -> validate -> tests ->
+// docs -> bump. A commit landing on main from that pipeline is picked up by
+// the existing publish.yml exactly like a human-triggered bump.
+type FullAuto struct {
+	Enabled bool `json:"enabled"`
+	// Tests are shell commands run from the pack dir before bump; a nonzero
+	// exit aborts the run and discards the update/refresh changes.
+	Tests []string `json:"tests,omitempty"`
 }
 
 // Read parses a manifest.json file.
@@ -226,6 +238,17 @@ func OptedOutOfAutoUpdate(packDir string) (skip bool, legacy bool) {
 		return true, HasLegacyOptOut(packDir)
 	}
 	return false, false
+}
+
+// FullAutoEnabled reports whether packDir has opted into the full automation
+// pipeline. Packs with lifecycle "archived" or "eol" are always excluded,
+// regardless of the manifest's full_auto.enabled value.
+func FullAutoEnabled(packDir string) bool {
+	if lc := LifecycleState(packDir); lc == "archived" || lc == "eol" {
+		return false
+	}
+	a := ReadAutomation(packDir)
+	return a.FullAuto != nil && a.FullAuto.Enabled
 }
 
 // SetAutomationFreeze updates the freeze list for a single sub-directory key

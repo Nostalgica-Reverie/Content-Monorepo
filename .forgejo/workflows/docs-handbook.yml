@@ -1,0 +1,56 @@
+name: "Docs Handbook"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "docs/modpack-dev-handbook/**"
+      - "docs/packwand/build-commands.mts"
+      - "docs/packwand/check-command-coverage.mts"
+      - "src/packwand/**"
+      - ".forgejo/workflows/docs-handbook.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "docs/modpack-dev-handbook/**"
+      - "docs/packwand/build-commands.mts"
+      - "docs/packwand/check-command-coverage.mts"
+      - "src/packwand/**"
+      - ".forgejo/workflows/docs-handbook.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  handbook:
+    runs-on: technocality
+    timeout-minutes: 20
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache: true
+          cache-dependency-path: src/packwand/go.sum
+      - uses: https://github.com/oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+      - name: Install handbook dependencies
+        working-directory: docs/modpack-dev-handbook
+        run: bun install --frozen-lockfile
+      - name: Type-check handbook
+        working-directory: docs/modpack-dev-handbook
+        run: bun run check
+      - name: Build handbook
+        working-directory: docs/modpack-dev-handbook
+        run: bun run build
+      - name: Upload handbook build
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: docs-handbook-${{ github.sha }}
+          path: docs/modpack-dev-handbook/build

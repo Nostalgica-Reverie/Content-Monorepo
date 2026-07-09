@@ -1,0 +1,183 @@
+[
+    {
+        "mob": "minecraft:turtle",
+        "persecond": 0.5,
+        "attempts": 10,
+        "amount": 
+        {
+            "minimum": 1,
+            "maximum": 3
+        },
+        "conditions": 
+        {
+            "inwater": true,
+            "dimension": "minecraft:overworld",
+            "minheight": 55,
+            "maxheight": 100,
+            "maxthis": 8
+        }
+    },
+
+    {
+        "mob": ["minecraft:guardian"],
+        "persecond": 0.15,
+        "attempts": 1,
+        "amount": 
+        {
+            "minimum": 0,
+            "maximum": 1
+        },
+        "conditions": 
+        {
+            "dimension": "minecraft:overworld",
+            "inwater": true,
+            "mindist": 24,
+            "maxdist": 36,
+            "minheight": 55,
+            "maxheight": 60,
+            "maxthis": 2,
+            "and": 
+            {
+                "minlight": 0,
+                "mintime": 13000,
+                "maxtime": 24000
+            }
+        }
+    },
+
+    {
+        "mob": ["minecraft:elder_guardian"],
+        "persecond": 0.0005,
+        "attempts": 1,
+        "amount": 
+        {
+            "minimum": 0,
+            "maximum": 1
+        },
+        "conditions": 
+        {
+            "dimension": "minecraft:overworld",
+            "inwater": true,
+            "mindist": 40,
+            "maxdist": 65,
+            "minheight": 55,
+            "maxheight": 60,
+            "maxthis": 1,
+            "and": 
+            {
+                "minlight": 0,
+                "mintime": 13000,
+                "maxtime": 24000
+            }
+        }
+    },
+
+    {
+        "mob": "quark:crab",
+        "persecond": 0.5,
+        "attempts": 1,
+        "amount": 
+        {
+            "minimum": 1,
+            "maximum": 2
+        },
+        "conditions": 
+        {
+            "inwater": true,
+            "dimension": "minecraft:overworld",
+            "minheight": 55,
+            "maxheight": 100,
+            "maxthis": 5
+        }
+    },
+
+    {
+        "mob": "naturalist:giraffe",
+        "persecond": 10,
+        "attempts": 1,
+        "amount": 
+        {
+            "minimum": 1,
+            "maximum": 4
+        },
+        "conditions": 
+        {
+            "inwater": true,
+            "dimension": "minecraft:overworld",
+            "minheight": 55,
+            "maxheight": 100,
+            "maxthis": 3
+        }
+    },
+
+    {
+        "mob": "naturalist:boar",
+        "persecond": 10,
+        "attempts": 10,
+        "amount": 
+        {
+            "minimum": 2,
+            "maximum": 4
+        },
+        "conditions": 
+        {
+            "inwater": true,
+            "dimension": "minecraft:overworld",
+            "minheight": 55,
+            "maxheight": 100,
+            "maxthis": 10
+        }
+    },
+
+    {
+        "mob": "aether:evil_whirlwind",
+        "persecond": 0.5,
+        "attempts": 2,
+        "amount": 
+        {
+            "minimum": 1,
+            "maximum": 1
+        },
+        "conditions": 
+        {
+            "dimension": "minecraft:the_nether",
+            "minheight": 1,
+            "maxheight": 200,
+            "maxthis": 5
+        }
+    },
+
+    {
+        "mob": "minecraft:cave_spider",
+        "persecond": 0.1,
+        "attempts": 1,
+        "amount": {
+            "minimum": 1,
+            "maximum": 2
+        },
+        "conditions": {
+            "dimension": "minecraft:overworld",
+            "maxthis": 3,
+            "minheight": -64,
+            "maxheight": 40
+        }
+    },
+
+    {
+        "mob": "minecraft:cave_spider",
+        "persecond": 0.1,
+        "attempts": 1,
+        "amount": {
+            "minimum": 1,
+            "maximum": 2
+        },
+        "conditions": {
+            "dimension": "minecraft:overworld",
+            "maxthis": 1,
+            "minheight": 0,
+            "maxheight": 256
+        }
+    }
+
+
+]

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "kubejs:mossy_fired_cobbled_andesite"
+    }
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "item": "kubejs:mossy_fired_cobbled_andesite_stairs"
+  },
+  "show_notification": true
+}

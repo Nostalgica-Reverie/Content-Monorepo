@@ -1,0 +1,117 @@
+name: "Full Automation"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  discover:
+    runs-on: technocality
+    outputs:
+      entries: ${{ steps.list.outputs.entries }}
+      has_entries: ${{ steps.list.outputs.has_entries }}
+    steps:
+      - name: Checkout
+        uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            modpacks
+            datapacks
+            src/packwand
+            .forgejo/actions
+
+      - name: Setup Go
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Setup Packwand
+        uses: ./.forgejo/actions/setup-packwand
+
+      - name: List full_auto-enabled packs
+        id: list
+        run: packwand automation list-full-auto
+
+  automate:
+    needs: discover
+    if: needs.discover.outputs.has_entries == 'true'
+    runs-on: technocality
+    strategy:
+      fail-fast: false
+      # Serialized: each iteration may commit + push a version bump to main,
+      # and that's exactly what triggers the existing publish.yml — running
+      # more than one at a time risks racing pushes to the same branch.
+      max-parallel: 1
+      matrix:
+        entry: ${{ fromJson(needs.discover.outputs.entries) }}
+    steps:
+      - name: Checkout
+        uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          token: ${{ secrets.FORGEJO_TOKEN }}
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            modpacks
+            datapacks
+            src/packwand
+            .forgejo/actions
+
+      - name: Setup Go
+        uses: https://github.com/actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Setup Packwand
+        uses: ./.forgejo/actions/setup-packwand
+
+      - name: Run automation pipeline
+        id: automate
+        run: packwand automation run "${{ matrix.entry }}" --report "$RUNNER_TEMP/automate-report.json"
+
+      - name: Report
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            echo "### Full automation: ${{ matrix.entry }}"
+            echo '```json'
+            cat "$RUNNER_TEMP/automate-report.json" 2>/dev/null || echo "(no report written)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Commits only when automate actually bumped the version; pushing this
+      # to main is what the existing publish.yml reacts to (build, changelog,
+      # upload, verify) — this workflow never builds or publishes itself.
+      - name: Commit version bump
+        if: ${{ !cancelled() && steps.automate.outputs.changed == 'true' }}
+        uses: https://github.com/EndBug/add-and-commit@v9
+        with:
+          author_name: forgejo-actions[bot]
+          author_email: omo50@noreply.nostalgica.net
+          message: "release(${{ steps.automate.outputs.pack_id }}): automated -> ${{ steps.automate.outputs.new_version }}"
+          add: "${{ matrix.entry }}"
+
+      # Forgejo (like GitHub) doesn't let a workflow's own push cascade into
+      # other `on: push` workflows unless the pushing token is a real PAT and
+      # not the restricted default actions token — that's finicky enough in
+      # practice that we don't rely on it. Dispatch publish.yml explicitly
+      # instead; this is what actually guarantees the release gets published.
+      - name: Trigger publish.yml
+        if: ${{ !cancelled() && steps.automate.outputs.changed == 'true' }}
+        env:
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+        run: |
+          curl -fsS -X POST \
+            "https://git.nostalgica.net/api/v1/repos/Lasting-Legacy/Lasting-Legacy-Monorepo/actions/workflows/publish.yml/dispatches" \
+            -H "Authorization: token ${FORGEJO_TOKEN}" \
+            -H "Accept: application/json" \
+            --json '{"ref":"main"}'

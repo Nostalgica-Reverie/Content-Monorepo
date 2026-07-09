@@ -1,0 +1,11 @@
+
+#List of overridden settings based on conditions
+[[overrides]]
+	priority = 100
+	conditions = ["fireDamage"]
+
+#List of possible conditions for overrides
+[[conditions]]
+	identifier = "fireDamage"
+	damageType = "fire"
+

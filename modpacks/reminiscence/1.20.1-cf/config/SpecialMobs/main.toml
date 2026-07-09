@@ -1,0 +1,148 @@
+# specialmobs:main.toml
+# This config contains options that apply to the mod as a whole, including some master settings toggles for convenience.
+
+
+# Category: general
+# Options that apply to the Special Mobs mod as a whole. Also includes several 'master toggles' for convenience.
+
+  # Whether the Mob Replacer is enabled. This 'hijacks' vanilla mob spawns to use as its own.
+  # The Mob Replacer is the traditional spawn method for Special Mobs which allows everything that spawns valid
+  #   vanilla mobs (e.g. dungeon spawners) to spawn this mod's mobs based on your configs instead.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.enable_mob_replacer = true
+  # Whether the natural spawning category (see below) is enabled.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.enable_added_natural_spawning = true
+
+  # If enabled, mobs spawned from spawner blocks/dungeon spawners will not be subject to mob replacement.
+  # <Boolean> Valid Values: { true, false }, Default: false
+  general.skip_spawner_spawns = false
+
+  # Whether the mod uses Special Mobs entities in place of vanilla entities for non-special species. This allows your
+  #   config options to apply to non-special species and allows them to benefit from Special Mob Data and any
+  #   improvements made to the entity (for example, zombies can use bows & shields).
+  # If false, vanilla replacements are disabled for all families; if true, it is determined by the family's config.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.master_vanilla_replacement = true
+  # When greater than 0, mobs will have a random render scale applied. This is a visual effect only. For example, with
+  #   a value of 0.07, mob scale will vary ±7% of normal size.
+  # By default, this applies to all mobs in the mod; but family and species configs can override it.
+  # <Number> Range: 0.0 ~ 1.0, Default: 0.07
+  general.master_random_scaling = 0.07
+
+  # Set to false to prevent any of this mod's mobs from applying nausea (aka confusion). Use this if the screen
+  #   warping from nausea hurts your face or makes you sick.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.enable_nausea_effects = true
+  # Overrides the default fishing rod item animation so that it is compatible with fishing mobs from this mod. Set to
+  #   false if it causes problems with another mod. Fishing mobs will instead render a stick while casting.
+  #  * Requires a GAME restart to take effect *
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.fancy_fishing_mobs = true
+
+
+# Category: natural_spawning
+# Options to customize the additional natural monster spawning from this mod. Most changes to options in this category
+#   require the game to be restarted to take effect.
+
+
+  # Subcategory: general_spawns
+  # Added natural spawns derived from existing spawns.
+
+    # Option to add vanilla cave spiders as natural spawns. These spawns will be added to all biomes that can spawn
+    #   regular spiders. Cave spider spawn weight is the same as the spider spawn weight, multiplied by this value. When
+    #   set to 0, the added cave spider spawn feature is completely disabled. Finer tuning can be done with the spawn
+    #   chances below.
+    #  * Requires a GAME restart to take full effect *
+    # <Number> Range: ≥ 0.0, Default: 0.5
+    natural_spawning.cave_spider_spawn_multiplier = 0.5
+    # The chance for added cave spider natural spawn attempts to succeed. Does not affect Mob Replacement.
+    # <Number> Range: 0.0 ~ 1.0, Default: 0.0
+    natural_spawning.cave_spider_chance.base = 0.0
+    # The chance for added cave spider natural spawn attempts to succeed when specific environmental conditions are met.
+    # <Environment List> Format: [ "value condition1 state1 & condition2 state2 & ...", ... ], Default: [ "1.0 y <
+    #   17", "1.0 structure minecraft:mineshaft", "0.33 y_from_sea < -27" ]
+    #    Range for Values: 0.0 ~ 1.0
+    natural_spawning.cave_spider_chance.exceptions = [
+      "1.0 y < 17",
+      "1.0 structure minecraft:mineshaft",
+      "0.33 y_from_sea < -27"
+    ]
+
+    # Option to add ender creepers as natural spawns. These spawns will be added to all biomes that can spawn
+    #   endermen. Ender creeper spawn weight is the same as the enderman weight, multiplied by this value. When set to
+    #   0, the added ender creeper spawn feature is completely disabled. Finer tuning can be done with the natural spawn
+    #   chances in the species config file.
+    #  * Requires a WORLD restart to take effect *
+    # <Number> Range: ≥ 0.0, Default: 0.1
+    natural_spawning.ender_creeper_spawn_multiplier = 0.1
+
+  # Subcategory: water_spawns
+
+    # Option to add drowning creepers as natural spawns to oceans.
+    # When set to 0, this added spawn feature is completely disabled.
+    # Finer tuning can be done with the natural spawn chances in the species config file.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 1
+    natural_spawning.drowning_creeper_weight.ocean = 1
+    # Option to add drowning creepers as natural spawns to rivers. When set to 0, this added spawn feature is
+    #   completely disabled. Finer tuning can be done with the natural spawn chances in the species config file.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 1
+    natural_spawning.drowning_creeper_weight.river = 1
+
+    # Option to add pirate skeletons as natural spawns to oceans.
+    # When set to 0, this added spawn feature is completely disabled.
+    # Finer tuning can be done with the natural spawn chances in the species config file.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 1
+    natural_spawning.pirate_skeleton_weight.ocean = 1
+    # Option to add pirate skeletons as natural spawns to rivers. When set to 0, this added spawn feature is
+    #   completely disabled. Finer tuning can be done with the natural spawn chances in the species config file.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 1
+    natural_spawning.pirate_skeleton_weight.river = 1
+
+    # Option to add blueberry slimes as natural spawns to oceans. When set to 0, this added spawn feature is
+    #   completely disabled. Finer tuning can be done with the natural spawn chances in the species config file.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 2
+    natural_spawning.blueberry_slime_weight.ocean = 2
+    # Option to add blueberry slimes as natural spawns to rivers. When set to 0, this added spawn feature is
+    #   completely disabled. Finer tuning can be done with the natural spawn chances in the species config file.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 1
+    natural_spawning.blueberry_slime_weight.river = 1
+
+  # Subcategory: nether_spawns
+
+    # Option to add vanilla wither skeletons as natural spawns to the Nether (except for soul sand valley and warped
+    #   forest biomes). When set to 0, this added spawn feature is completely disabled.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 2
+    natural_spawning.wither_skeleton_weight.nether = 2
+    # Option to add vanilla wither skeletons as natural spawns to the soul sand valley biome. When set to 0, this
+    #   added spawn feature is completely disabled.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 5
+    natural_spawning.wither_skeleton_weight.soul_sand_valley = 5
+
+    # Option to add vanilla blazes as natural spawns to the Nether (except for soul sand valley, warped forest, and
+    #   basalt deltas biomes). When set to 0, the added blaze spawn feature is completely disabled.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 1
+    natural_spawning.blaze_weight.nether = 1
+    # Option to add vanilla blazes as natural spawns to the basalt deltas biome. When set to 0, the added blaze spawn
+    #   feature is completely disabled.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 20
+    natural_spawning.blaze_weight.basalt_deltas = 20
+
+    # Option to add fire creepers, zombies, and spiders as natural spawns to the Nether (except for soul sand valley
+    #   and warped forest biomes). When set to 0, that added spawn feature is completely disabled. Finer tuning can be
+    #   done with the natural spawn chances in the species config files.
+    #  * Requires a WORLD restart to take effect *
+    # <Integer> Range: ≥ 0, Default: 1
+    natural_spawning.fire_creeper_weight.nether = 1
+    natural_spawning.fire_zombie_weight.nether = 1
+    natural_spawning.fire_spider_weight.nether = 1

@@ -1,26 +1,37 @@
 {
   "$schema": "../../tools/manifest/schema.json",
   "id": "simply-modernized",
-  "loader": "fabric",
-  "curseforge_id": "1571429",
   "name": "simply-modernized",
+  "type": "modpack",
+  "loader": "fabric",
+  "variants": [
+    {
+      "mc_version": "26.1.2"
+    },
+    {
+      "mc_version": "26.2"
+    }
+  ],
+  "version": "26.07",
   "release_type": "release",
+  "curseforge_id": "1571429",
   "role": {
     "performance_base": {
+      "pack": "simply-optimized-forked",
       "mappings": [
-        { "source": "26.1.2-cf", "target": "26.1.2-cf" },
-        { "source": "26.2-cf", "target": "26.2-cf" }
-      ],
-      "pack": "simply-optimized-forked"
+        {
+          "source": "26.1.2-cf",
+          "target": "26.1.2-cf"
+        },
+        {
+          "source": "26.2-cf",
+          "target": "26.2-cf"
+        }
+      ]
     }
   },
-  "type": "modpack",
-  "version": "26.06.2",
   "automation": {
-    "server_promo": false
-  },
-  "variants": [
-    { "mc_version": "26.1.2" },
-    { "mc_version": "26.2" }
-  ]
+    "auto_update": true,
+    "server_promo": true
+  }
 }

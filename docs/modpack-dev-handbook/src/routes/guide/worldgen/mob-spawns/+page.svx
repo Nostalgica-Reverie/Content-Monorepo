@@ -1,0 +1,78 @@
+---
+title: Modifying mob spawns
+tags: mobs, lithostitched, guide, incontrol, kubejs
+description: Guide on modifying mob spawns with various methods
+---
+
+<script lang="ts">
+import { Discord } from '$lib/reusables';
+</script>
+
+# Editing mob spawns
+
+There are several methods to edit mob spawns, each with varying levels of complexity and control, with the main ones being:
+
+- [Lithostitched](https://www.curseforge.com/minecraft/mc-mods/lithostitched) - Simplest of the three, allows for basic worldgen modifiers to edit spawns
+- [In Control!](https://www.curseforge.com/minecraft/mc-mods/in-control) - Spawn control with extremely verbose JSON
+- [KubeJS](https://www.curseforge.com/minecraft/mc-mods/kubejs) - skript dat shit bay bee!
+
+# With Lithostitched
+
+Lithostitched can edit mob spawns a datapack adding a worldgen modifier. You have the option of either adding or removing spawns from biomes. Some examples pulled directly from the [Lithostitched wiki](https://github.com/Apollounknowndev/lithostitched/wiki/Worldgen-Modifier-Types) are found below.
+
+Adding spawns:
+Adds witch spawns to swamps
+```json:data/edit_spawns/lithostitched/worldgen_modifier/add_witches.json
+{
+  "type": "lithostitched:add_biome_spawns",
+  "biomes": "#c:is_swamp",
+  "spawners": {
+    "type": "minecraft:witch",
+    "weight": 450,
+    "minCount": 3,
+    "maxCount": 3
+  }
+}
+```
+
+Removing spawns:
+Removes zombie spawns from the overworld
+```json:data/edit_spawns/lithostitched/worldgen_modifier/remove_zombies.json
+{
+  "type": "lithostitched:remove_biome_spawns",
+  "biomes": "#minecraft:is_overworld",
+  "mobs": "minecraft:zombie"
+}
+```
+
+These modifiers can be generated through the [Lithostitched generator site](https://lithostitched.vercel.app/lithostitched/worldgen-modifier/).
+
+:::info
+
+Biome modifiers are also possible through [Neo/Forge biome modifiers](https://docs.neoforged.net/docs/worldgen/biomemodifier/), but was not included in this page due to brevity and redundancy. Lithostitched covers most biome modifiers Neo/Forge has, but is more versatile and not loader specific. 
+
+:::
+
+# In Control!
+
+In Control! uses extremely verbose JSON syntax to edit spawns, and is very useful if you'd like more control over spawns than simply adding mobs to the spawn pool. Additional features over Lithostitched includes, but is not limited to:
+
+- [Game Stages](https://www.curseforge.com/minecraft/mc-mods/game-stages) integration
+- Adding gear/NBT to mobs
+- Y-level control
+- Day counter control
+- Weather control
+
+While it does have a [wiki](https://www.mcjty.eu/docs/mods/control-mods/control-mods-20), it is hard to follow at times, and does not include many tangible examples. 
+
+:::warning
+
+In Control is not available on Fabric.
+
+:::
+
+(page needs useful IC examples)
+
+# KubeJS
+
+literally noone knows how tf this works at all bruuu

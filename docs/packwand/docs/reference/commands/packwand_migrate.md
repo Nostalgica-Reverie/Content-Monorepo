@@ -2,6 +2,10 @@
 
 Migrate Minecraft/loader versions or pack-format to a newer generation.
 
+```
+packwand migrate [minecraft|loader|format] [flags]
+```
+
 ### Options
 
 ```

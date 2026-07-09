@@ -1,0 +1,33 @@
+
+[mobs]
+
+	[mobs.creeper]
+		"Creeper explosions drop all blocks" = true
+		#Creeper explosions have a weaker power
+		"Creeper explosion nerf" = true
+		#How much weaker Creeper explosions are
+		#Range: 0.0 ~ 1.7976931348623157E308
+		"Creeper explosion nerf factor" = 0.75
+
+	[mobs.deeper]
+		"Deeper explosions drop all blocks" = true
+		#Range: -64 ~ 320
+		"Deeper max spawn height" = 30
+
+	[mobs.peeper]
+		#Range: -64 ~ 320
+		"Peeper max spawn height" = -4
+
+[tweaks]
+	#Chainmail armor increases the user's attack damage
+	"Chainmail armor increases damage" = false
+	#Golden armor increases the user's movement speed
+	"Golden armor increases speed" = false
+
+	[tweaks.rails]
+		#Rails can be placed in the direction you're looking at by clicking on another rail, similar to scaffolding
+		"Better rail placement" = true
+		#The range in blocks that better rail placement can reach
+		#Range: > 0
+		"Placement range" = 7
+

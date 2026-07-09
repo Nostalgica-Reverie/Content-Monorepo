@@ -2,6 +2,10 @@
 
 Utilities for managing packwiz itself
 
+```
+packwand utils [flags]
+```
+
 ### Options
 
 ```

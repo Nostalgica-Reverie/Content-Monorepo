@@ -1,0 +1,40 @@
+@import "./code_theme.css";
+
+@import "tailwindcss";
+
+@import "./md.css";
+@import "./admonitions.css";
+
+:root {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  image-rendering: optimizeQuality;
+}
+
+@theme {
+  --font-lexend: "Lexend", sans-serif;
+  --color-mdw-yellow: oklch(92.4% 0.12 95.746);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  @apply rounded-full bg-stone-700;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-stone-500;
+}
+
+mark {
+  background-color: var(--color-mdw-yellow);
+}
+
+
+table {
+  max-width: 100%; 
+  overflow: auto;    
+  display: inline-block;
+}

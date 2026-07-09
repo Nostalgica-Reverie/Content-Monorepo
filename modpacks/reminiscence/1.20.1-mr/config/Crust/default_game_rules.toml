@@ -1,0 +1,95 @@
+# crust:default_game_rules.toml
+# This config allows the default game rules for world creation to be altered. Many game rules make testing easier, so
+#   this is handy when you need to repeatedly generate new worlds.
+# 
+# For more information on game rules, see the in-game descriptions in the 'Create New World' menu or the Minecraft
+#   Wiki article (https://minecraft.fandom.com/wiki/Game_rule).
+
+
+# Whether this config file is enabled.
+#  * Requires a GAME restart to take full effect *
+# <Boolean> Valid Values: { true, false }, Default: false
+config_enabled = false
+
+
+# Category: player
+# Default game rule settings for the 'player' category.
+
+  player.disable_elytra_movement_check = false
+  player.do_immediate_respawn = false
+  player.do_limited_crafting = false
+  player.drowning_damage = true
+  player.fall_damage = true
+  player.fire_damage = true
+  player.freeze_damage = true
+  player.keep_inventory = false
+  player.natural_regeneration = true
+  player.players_sleeping_percentage = 100
+  player.spawn_radius = 10
+  player.spectators_generate_chunks = true
+
+
+# Category: mobs
+# Default game rule settings for the 'mobs' category.
+
+  mobs.crazy_mobs = false
+  mobs.disable_raids = false
+  mobs.forgive_dead_players = true
+  mobs.max_entity_cramming = 24
+  mobs.mob_griefing = true
+  mobs.universal_anger = false
+
+
+# Category: spawning
+# Default game rule settings for the 'spawning' category.
+
+  spawning.animal_mob_cap = 15
+  spawning.do_insomnia = true
+  spawning.do_mob_spawning = true
+  spawning.do_patrol_spawning = true
+  spawning.do_trader_spawning = true
+  spawning.do_warden_spawning = true
+  spawning.persistent_animals = false
+
+
+# Category: drops
+# Default game rule settings for the 'drops' category.
+
+  drops.block_explosion_drop_decay = true
+  drops.do_entity_drops = true
+  drops.do_mob_loot = true
+  drops.do_tile_drops = true
+  drops.mob_explosion_drop_decay = true
+  drops.tnt_explosion_drop_decay = false
+
+
+# Category: updates
+# Default game rule settings for the 'updates' category.
+
+  updates.do_daylight_cycle = true
+  updates.do_fire_tick = true
+  updates.do_vines_spread = true
+  updates.do_weather_cycle = true
+  updates.lava_source_conversion = false
+  updates.random_tick_speed = 3
+  updates.snow_accumulation_height = 1
+  updates.water_source_conversion = true
+
+
+# Category: chat
+# Default game rule settings for the 'chat' category.
+
+  chat.announce_advancements = true
+  chat.command_block_output = true
+  chat.log_admin_commands = true
+  chat.send_command_feedback = true
+  chat.show_death_messages = true
+
+
+# Category: misc
+# Default game rule settings for the 'misc' category.
+
+  misc.command_modification_block_limit = 32768
+  misc.global_sound_events = true
+  misc.max_command_chain_length = 65536
+  misc.reduced_debug_info = false

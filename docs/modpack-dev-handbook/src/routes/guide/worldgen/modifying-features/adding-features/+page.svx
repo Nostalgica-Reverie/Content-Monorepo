@@ -1,0 +1,102 @@
+---
+title: Adding worldgen features to your modpack
+tags: guide, worldgen, features, datapack, tutorial, lithostitched
+description: Adding worldgen features to your game with datapacks and Lithostitched
+---
+
+<script lang="ts">
+import { Discord } from '$lib/reusables';
+</script>
+
+# Adding worldgen features
+
+Features need three things to generate in your world:
+- Configured Feature: Determines the type and parameters of the feature you want to generate.
+- Placed Feature: Determines where a Configured Feature should be attempted to be placed using placement modifiers.
+- Worldgen modifier: Determines what biomes the Placed Feature can generate in. Implemented through [Lithostitched](https://www.curseforge.com/minecraft/mc-mods/lithostitched).
+
+Configured features consist of a `type` and a `config` field, where `type` is the kind of feature generated, and `config` is any customization for the feature. Available `config` values depend on what the feature `type` is. For vanilla feature types, you can use Misode's [Configured Feature Generator](https://misode.github.io/worldgen/feature/) to easily create feature files. For more information on feature types and configs, see the Minecraft [Configured Feature Wiki](https://minecraft.wiki/w/Configured_feature).
+
+Example Configured Feature:
+Defines a feature that replaces `minecraft:stone` with an ore feature using `minecraft:amethyst`, with a size of `8`
+```json:data/amethyst_ore/worldgen/configured_feature/amethyst_configured.json
+{
+  "type": "minecraft:ore",
+  "config": {
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:block_match",
+          "block": "minecraft:stone"
+        },
+        "state": {
+          "Name": "minecraft:amethyst_block"
+        }
+      }
+    ],
+    "size": 8,
+    "discard_chance_on_air_exposure": 0
+  }
+}
+```
+
+Placed features consist of `feature` and `placement` parameters. The `feature` parameter references a Configured Feature ID, while the `placement` parameters define where in a biome the feature can spawn. Again, you can use Misode's [Placed Feature Generator](https://misode.github.io/worldgen/placed-feature/) to assist in making feature files, and see the Minecraft [Placed Feature Wiki](https://minecraft.wiki/w/Placed_feature) for more information on placement parameters.
+
+Example Placed Feature:
+Places the `amethyst_ore:amethyst_configured` feature between y=-20 and y=60, with a `count` multiplier of 32
+```json:data/amethyst_ore/worldgen/placed_feature/amethyst_placed.json
+{
+  "feature": "amethyst_ore:amethyst_configured",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 32
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": -20
+        },
+        "max_inclusive": {
+          "absolute": 60
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
+```
+
+Lithostitched Worldgen Modifiers  consist of `type`, `biomes`, `features`, and `step` parameters. `type` defines what action the modifier will do, `biomes` consist of a string or array of biome or biome tag IDs, `features` consist of a string or array of feature or feature tag IDs, and the `step` parameter defines what phase of worldgen the feature will generate in. More details on worldgen modifiers from [Lithostitched](https://github.com/Apollounknowndev/lithostitched/wiki/Intro-to-Worldgen-Modifiers) can be found on their wiki. Additionally, Lithostitched has a [generator site](https://lithostitched.vercel.app/lithostitched/worldgen-modifier/) similar to Misode to aid in production of files.
+
+Example Biome Modifier using Lithostitched:
+Adds the `amethyst_ore:amethyst_placed` placed feature into all biomes with the `#minecraft:is_overworld` tag
+```json:data/amethyst_ore/lithostitched/worldgen_modifier/add_amethyst.json
+{
+  "type": "lithostitched:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "amethyst_ore:amethyst_placed",
+  "step": "underground_ores"
+}
+```
+
+:::tip
+
+- Biome and Biome Tag IDs can be found by going through `/locate biome` in-game, and using the arrow keys to navigate
+- Commonly used biome tags can be found [here](https://gist.github.com/TelepathicGrunt/b768ce904baa4598b21c3ca42f137f23#what-tag-entries-exist-that-i-can-use)
+- If KubeJS is installed, you have a variety of options of dumping registries into your `latest.log`. Run `/kubejs dump_registry minecraft:worldgen/...` in-game to see the available options.
+
+:::
+
+:::info
+
+Biome modifiers are also possible through [Neo/Forge biome modifiers](https://docs.neoforged.net/docs/worldgen/biomemodifier/), but was not included in this page due to brevity and redundancy. Lithostitched covers most biome modifiers Neo/Forge has, but is more versatile and not loader specific. 
+
+:::

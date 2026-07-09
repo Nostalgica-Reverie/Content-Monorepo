@@ -2,6 +2,10 @@
 
 Build, upload, verify, or list publish targets for a pack
 
+```
+packwand publish [flags]
+```
+
 ### Options
 
 ```

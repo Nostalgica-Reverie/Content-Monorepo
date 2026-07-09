@@ -1,0 +1,289 @@
+
+[inventory]
+	#Default percent chance to keep item
+	#Range: 0.0 ~ 1.0
+	keepChance = 0.0
+	#Default percent chance to destroy dropped item
+	#Range: 0.0 ~ 1.0
+	destroyChance = 0.0
+	#Default percent durability loss on kept item
+	#Range: 0.0 ~ 1.0
+	keepDurabilityLoss = 0.1
+	#Default percent durability loss on dropped item
+	#Range: 0.0 ~ 1.0
+	dropDurabilityLoss = 0.1
+	#List of items to always keep, drop, or destroy, regardless of other settings
+	#Format: modid:item;[keep/drop/destroy]
+	itemSettings = []
+	#Set to true to limit durability loss so that items do not break from death penalties
+	limitDurabilityLoss = true
+	#Time (in seconds) that dropped items will take to despawn, -1 to disable despawning
+	#Range: > -1
+	dropDespawnTime = 1800
+
+	[inventory.mainhand]
+		#Percent chance to keep mainhand item
+		#Range: -1.0 ~ 1.0
+		mainhandKeepChance = 1.0
+		#Percent chance to destroy dropped mainhand item
+		#Range: -1.0 ~ 1.0
+		mainhandDestroyChance = -1.0
+		#Percent durability loss on kept mainhand item
+		#Range: -1.0 ~ 1.0
+		mainhandKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped mainhand item
+		#Range: -1.0 ~ 1.0
+		mainhandDropDurabilityLoss = 0.1
+
+	[inventory.hotbar]
+		#Percent chance to keep hotbar items
+		#Range: -1.0 ~ 1.0
+		hotbarKeepChance = 0.0
+		#Percent chance to destroy dropped hotbar items
+		#Range: -1.0 ~ 1.0
+		hotbarDestroyChance = -1.0
+		#Percent durability loss on kept hotbar items
+		#Range: -1.0 ~ 1.0
+		hotbarKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped hotbar items
+		#Range: -1.0 ~ 1.0
+		hotbarDropDurabilityLoss = 0.1
+
+	[inventory.offhand]
+		#Percent chance to keep offhand item
+		#Range: -1.0 ~ 1.0
+		offhandKeepChance = 1.0
+		#Percent chance to destroy dropped offhand item
+		#Range: -1.0 ~ 1.0
+		offhandDestroyChance = -1.0
+		#Percent durability loss on kept offhand item
+		#Range: -1.0 ~ 1.0
+		offhandKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped offhand item
+		#Range: -1.0 ~ 1.0
+		offhandDropDurabilityLoss = 0.1
+
+	[inventory.main]
+		#Percent chance to keep main inventory items
+		#Range: -1.0 ~ 1.0
+		mainKeepChance = 0.0
+		#Percent chance to destroy dropped main inventory items
+		#Range: -1.0 ~ 1.0
+		mainDestroyChance = -1.0
+		#Percent durability loss on kept main inventory items
+		#Range: -1.0 ~ 1.0
+		mainKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped main inventory items
+		#Range: -1.0 ~ 1.0
+		mainDropDurabilityLoss = 0.1
+
+	[inventory.head]
+		#Percent chance to keep head item
+		#Range: -1.0 ~ 1.0
+		headKeepChance = 1.0
+		#Percent chance to destroy dropped head item
+		#Range: -1.0 ~ 1.0
+		headDestroyChance = -1.0
+		#Percent durability loss on kept head item
+		#Range: -1.0 ~ 1.0
+		headKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped head item
+		#Range: -1.0 ~ 1.0
+		headDropDurabilityLoss = 0.1
+
+	[inventory.chest]
+		#Percent chance to keep chest item
+		#Range: -1.0 ~ 1.0
+		chestKeepChance = 1.0
+		#Percent chance to destroy dropped chest item
+		#Range: -1.0 ~ 1.0
+		chestDestroyChance = -1.0
+		#Percent durability loss on kept chest item
+		#Range: -1.0 ~ 1.0
+		chestKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped chest item
+		#Range: -1.0 ~ 1.0
+		chestDropDurabilityLoss = 0.1
+
+	[inventory.legs]
+		#Percent chance to keep legs item
+		#Range: -1.0 ~ 1.0
+		legsKeepChance = 1.0
+		#Percent chance to destroy dropped legs item
+		#Range: -1.0 ~ 1.0
+		legsDestroyChance = -1.0
+		#Percent durability loss on kept legs item
+		#Range: -1.0 ~ 1.0
+		legsKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped legs item
+		#Range: -1.0 ~ 1.0
+		legsDropDurabilityLoss = 0.1
+
+	[inventory.feet]
+		#Percent chance to keep feet item
+		#Range: -1.0 ~ 1.0
+		feetKeepChance = 1.0
+		#Percent chance to destroy dropped feet item
+		#Range: -1.0 ~ 1.0
+		feetDestroyChance = -1.0
+		#Percent durability loss on kept feet item
+		#Range: -1.0 ~ 1.0
+		feetKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped head item
+		#Range: -1.0 ~ 1.0
+		feetDropDurabilityLoss = 0.1
+
+	[inventory.curios]
+		#Percent chance to keep curio item
+		#Range: -1.0 ~ 1.0
+		curioKeepChance = 1.0
+		#Percent chance to destroy dropped curio item
+		#Range: -1.0 ~ 1.0
+		curioDestroyChance = -1.0
+		#Percent durability loss on kept curio item
+		#Range: -1.0 ~ 1.0
+		curioKeepDurabilityLoss = 0.1
+		#Percent durability loss on dropped curio item
+		#Range: -1.0 ~ 1.0
+		curioDropDurabilityLoss = 0.1
+
+	[inventory.cosmetic_armor]
+		#Percent chance to keep cosmetic armor item
+		#Range: -1.0 ~ 1.0
+		cosmeticArmorKeepChance = -1.0
+		#Percent chance to destroy dropped cosmetic armor item
+		#Range: -1.0 ~ 1.0
+		cosmeticArmorDestroyChance = -1.0
+		#Percent durability loss on kept cosmetic armor item
+		#Range: -1.0 ~ 1.0
+		cosmeticArmorKeepDurabilityLoss = -1.0
+		#Percent durability loss on dropped cosmetic armor item
+		#Range: -1.0 ~ 1.0
+		cosmeticArmorDropDurabilityLoss = -1.0
+
+	[inventory.toolbelt]
+		#Percent chance to keep tool belt item
+		#Range: -1.0 ~ 1.0
+		toolBeltKeepChance = -1.0
+		#Percent chance to destroy dropped tool belt item
+		#Range: -1.0 ~ 1.0
+		toolBeltDestroyChance = -1.0
+
+[soulbinding]
+	#The rarity of the enchantment
+	#Allowed Values: COMMON, UNCOMMON, RARE, VERY_RARE
+	rarity = "VERY_RARE"
+	#Percent chance that the item will drop a level in the enchantment on death when kept
+	#Range: 0.0 ~ 1.0
+	levelDropChance = 0.0
+	#Base percent chance that the enchantment will save an item on death
+	#Range: 0.0 ~ 1.0
+	baseSave = 1.0
+	#Percent chance increase with each level in the enchantment that the item will be saved on death
+	#Range: 0.0 ~ 1.0
+	extraSavePerLevel = 0.0
+	#Set to true to allow enchanting Soulbinding on books
+	allowedOnBooks = true
+	#Set to true to allow enchanting Soulbinding at the enchantment table
+	canApplyEnchantingTable = true
+	#Maximum level of the enchantment
+	#Range: 1 ~ 5
+	maxSoulbindingLevel = 1
+	#Set to true to consider as a treasure enchantment
+	isTreasure = true
+	#Set to true to allow this enchantment to be found in villager trades
+	isVillagerTrade = true
+	#Set to true to allow this enchantment to be found in loot chests
+	isLootable = true
+
+[effects]
+	#List of valid items to cure curable effects
+	cures = ["minecraft:milk_bucket"]
+	#List of effects to apply on respawn
+	#Format: modid:effect;duration(seconds);amplifier
+	#Append ';incurable' if applicable
+	effects = []
+	#Sets whether kept effects list is a blacklist or whitelist
+	#Allowed Values: BLACKLIST, WHITELIST
+	keepEffectsMode = "WHITELIST"
+	#List of effects to retain on death
+	keepEffects = []
+
+[hunger]
+	#Set to true to retain food level on death
+	keepFood = false
+	#Set to true to retain saturation on death
+	keepSaturation = false
+	#Set to true to retain exhaustion on death
+	keepExhaustion = false
+	#Lowest amount of food level on respawn
+	#Range: 0 ~ 20
+	minFood = 0
+	#Highest amount of food level on respawn
+	#Range: 0 ~ 20
+	maxFood = 20
+
+[experience]
+	#Percentage of experience lost on death
+	#Range: 0.0 ~ 1.0
+	lostXp = 1.0
+	#Sets whether dropped XP is based on a percentage of the lost total or per lost level
+	#Allowed Values: PERCENT, PER_LEVEL
+	xpDropMode = "PER_LEVEL"
+	#Percentage of lost experience that is dropped when PERCENT is active
+	#Range: 0.0 ~ 1.0
+	droppedXpPercent = 0.2
+	#Amount of experience that is dropped per lost level when PER_LEVEL is active
+	#Range: 0 ~ 100000
+	droppedXpPerLevel = 7
+	#Maximum amount of dropped experience
+	#Range: 0 ~ 100000
+	maxDroppedXp = 100
+
+[mementomori]
+	#Amount modifier for maximum health
+	#Range: -1024 ~ 1024
+	healthMod = 0
+	#Amount modifier for armor
+	#Range: -30 ~ 30
+	armorMod = 0
+	#Amount modifier for armor toughness
+	#Range: -20 ~ 20
+	toughnessMod = 0
+	#Percent modifier for movement speed
+	#Range: -1.0 ~ 10.0
+	movementMod = 0.0
+	#Amount modifier for attack damage
+	#Range: -2048.0 ~ 2048.0
+	damageMod = 0.0
+	#Percent modifier for attack speed
+	#Range: -1.0 ~ 10.0
+	attackSpeedMod = 0.0
+	#Set to true to enable gradual recovery (modifiers will gradually diminish)
+	gradualRecovery = false
+	#Duration in seconds of the effect
+	#Range: 1 ~ 1600
+	duration = 30
+	#List of items that can cure the effect
+	mementoCures = ["minecraft:milk_bucket"]
+	#Set to true to disable eating while the effect is active
+	noFood = false
+	#Percent modifier for XP gain while the effect is active
+	#Range: -1.0 ~ 10.0
+	percentXp = 0.0
+	#Set to true to set the effect as beneficial instead of harmful
+	beneficial = false
+
+[miscellaneous]
+	#The amount of health that players have on respawn, 0.0 to default to the maximum health
+	#Range: 0.0 ~ 1024.0
+	respawnHealth = 0.0
+	#Set to true to restrict respawning to the world spawn, players cannot set new spawn points
+	restrictRespawning = false
+	#List of items to give players on respawn
+	#Format: modid:item;stacksize
+	respawnItems = []
+	#List of mobs to spawn on player death
+	#Format: modid:name
+	mobSpawnsOnDeath = []
+

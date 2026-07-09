@@ -1,0 +1,10 @@
+
+#The Farlanders Common Configuration
+[common]
+	#Disables the Looter's ability to take the player's weapon (This makes them spawn with a random weapon, good and bad)
+	disableLooterStealing = false
+	#Minimum apples required to tame an Enderminion
+	enderminionMinApple = 5
+	#Chance for an apple to successfully tame an Enderminion (1 in X)
+	enderminionTameChance = 7
+

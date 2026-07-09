@@ -1,0 +1,84 @@
+{
+  "backpacks": [
+    {
+      "name": "baby",
+      "rowWidth": 3,
+      "numberOfRows": 1,
+      "isFireImmune": false,
+      "dyeable": false,
+      "openSound": "minecraft:item.armor.equip_leather"
+    },
+    {
+      "name": "frayed",
+      "rowWidth": 5,
+      "numberOfRows": 1,
+      "isFireImmune": false,
+      "dyeable": true,
+      "openSound": "minecraft:item.armor.equip_leather"
+    },
+    {
+      "name": "plated",
+      "rowWidth": 7,
+      "numberOfRows": 1,
+      "isFireImmune": false,
+      "dyeable": false,
+      "openSound": "minecraft:item.armor.equip_iron"
+    },
+    {
+      "name": "gilded",
+      "rowWidth": 3,
+      "numberOfRows": 3,
+      "isFireImmune": false,
+      "dyeable": false,
+      "openSound": "minecraft:item.armor.equip_gold"
+    },
+    {
+      "name": "bejeweled",
+      "rowWidth": 4,
+      "numberOfRows": 3,
+      "isFireImmune": false,
+      "dyeable": false,
+      "openSound": "minecraft:item.armor.equip_diamond"
+    },
+    {
+      "name": "blazing",
+      "rowWidth": 6,
+      "numberOfRows": 3,
+      "isFireImmune": true,
+      "dyeable": false,
+      "openSound": "minecraft:item.armor.equip_leather"
+    },
+    {
+      "name": "withered",
+      "rowWidth": 9,
+      "numberOfRows": 3,
+      "isFireImmune": true,
+      "dyeable": false,
+      "openSound": "minecraft:item.armor.equip_leather"
+    },
+    {
+      "name": "endless",
+      "rowWidth": 9,
+      "numberOfRows": 4,
+      "isFireImmune": true,
+      "dyeable": false,
+      "openSound": "minecraft:item.armor.equip_leather"
+    }
+  ],
+  "unstackablesOnly": false,
+  "disableShulkers": true,
+  "playSound": false,
+  "requireArmorTrinketToOpen": false,
+  "allowBackpacksInChestplate": false,
+  "enableTrinketCompatibility": true,
+  "requireEmptyForUnequip": false,
+  "spillArmorBackpacksOnDeath": false,
+  "spillMainBackpacksOnDeath": false,
+  "importBackpackedItems": false,
+  "autoBackpackedTier": "blazing",
+  "autoBackpackedColumns": 9,
+  "autoBackpackedRows": 6,
+  "autoBackpackedAllowSmaller": true,
+  "trinketRendering": true,
+  "guiTitleColor": "0x404040"
+}

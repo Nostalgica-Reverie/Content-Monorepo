@@ -1,0 +1,57 @@
+{
+  "evaporatePotionWhenMixed": false,
+  "allowMergingPotions": true,
+  "applyPotionEffectsToEntitiesInside": true,
+  "allowFillingWithWaterDrips": true,
+  "allowCreatingTippedArrows": true,
+  "maxTippedArrowsPerLevel": {
+    "level1": 16,
+    "level2": 32,
+    "level3": 64
+  },
+  "generateInSwampHuts": true,
+  "potionTypeChances": {
+    "normal": 0.75,
+    "splash": 0.25,
+    "lingering": 0.0
+  },
+  "potionLevelChances": {
+    "level1": 0.5,
+    "level2": 0.3,
+    "level3": 0.2
+  },
+  "potionChances": [
+    {
+      "name": "minecraft:weakness",
+      "chance": 0.1
+    },
+    {
+      "name": "minecraft:fire_resistance",
+      "chance": 0.05
+    },
+    {
+      "name": "minecraft:slowness",
+      "chance": 0.1
+    },
+    {
+      "name": "minecraft:swiftness",
+      "chance": 0.15
+    },
+    {
+      "name": "minecraft:strength",
+      "chance": 0.1
+    },
+    {
+      "name": "minecraft:poison",
+      "chance": 0.2
+    },
+    {
+      "name": "minecraft:water_breathing",
+      "chance": 0.1
+    },
+    {
+      "name": "minecraft:healing",
+      "chance": 0.2
+    }
+  ]
+}

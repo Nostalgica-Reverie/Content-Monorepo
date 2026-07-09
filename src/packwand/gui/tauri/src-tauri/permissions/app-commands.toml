@@ -1,0 +1,39 @@
+[[permission]]
+identifier = "allow-select-workspace"
+description = "Allows opening the workspace-selection dialog on the bundled boot page."
+commands.allow = ["select_workspace"]
+
+[[permission]]
+identifier = "allow-core-list-instances"
+description = "Allows listing launcher instances for a workspace."
+commands.allow = ["core_list_instances"]
+
+[[permission]]
+identifier = "allow-core-plan-launch"
+description = "Allows planning a pack launch."
+commands.allow = ["core_plan_launch"]
+
+[[permission]]
+identifier = "allow-launcher-boot"
+description = "Allows booting the Minecraft launcher for dev testing."
+commands.allow = ["launcher_boot"]
+
+[[permission]]
+identifier = "allow-launcher-cancel"
+description = "Allows cancelling an in-progress launcher boot."
+commands.allow = ["launcher_cancel"]
+
+[[permission]]
+identifier = "allow-auth-login"
+description = "Allows starting the account login flow."
+commands.allow = ["auth_login"]
+
+[[permission]]
+identifier = "allow-auth-logout"
+description = "Allows logging out of the current account."
+commands.allow = ["auth_logout"]
+
+[[permission]]
+identifier = "allow-auth-status"
+description = "Allows checking the current auth status."
+commands.allow = ["auth_status"]

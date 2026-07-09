@@ -1,0 +1,14 @@
+
+###############################
+# Logging properties
+###############################
+[logging]
+	# The logging level. Set to 'off' to disable logging.
+	# Values = [trace|debug|info|warn|error|off]
+	level = "info"
+	# The size a log file can be before rolling over to a new file.
+	size = "1000K"
+	# The directory where the logs should be stored.
+	# This is relative to the Minecraft install path.
+	folder = "logs"
+

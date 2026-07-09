@@ -1,0 +1,77 @@
+* This is the StructMobWeight report file that is output every time the server starts.
+* 
+* Spawn Balance Utility (SBU) will use this file ONLY if it is renamed to StructMobWeight.csv.
+* Lines starting with '*' are comments and ignored
+* It allows you to add and remove mobs and adjust their spawnweights for Structures
+* like shipwrecks, nether fortresses, water monuments, etc.
+* 
+1, minecraft:ancient_city, HEADING, header:ignore, 0, 0, 0
+2, minecraft:bastion_remnant, HEADING, header:ignore, 0, 0, 0
+3, deep_aether:brass_dungeon, HEADING, header:ignore, 0, 0, 0
+4, reminiscence:brick_pyramid, HEADING, header:ignore, 0, 0, 0
+5, aether:bronze_dungeon, HEADING, header:ignore, 0, 0, 0
+6, minecraft:buried_treasure, HEADING, header:ignore, 0, 0, 0
+7, minecraft:desert_pyramid, HEADING, header:ignore, 0, 0, 0
+8, reminiscence:disco_dungeon, HEADING, header:ignore, 0, 0, 0
+9, nullscape:dragon_skeleton, HEADING, header:ignore, 0, 0, 0
+10, minecraft:end_city, HEADING, header:ignore, 0, 0, 0
+11, betterend:end_village, HEADING, header:ignore, 0, 0, 0
+12, betterend:eternal_portal, HEADING, header:ignore, 0, 0, 0
+13, minecraft:fortress, HEADING, header:ignore, 0, 0, 0
+14, minecraft:fortress, MONSTER, minecraft:blaze, 10, 2, 3
+15, minecraft:fortress, MONSTER, minecraft:zombified_piglin, 10, 4, 4
+16, minecraft:fortress, MONSTER, minecraft:wither_skeleton, 10, 5, 5
+17, minecraft:fortress, MONSTER, minecraft:skeleton, 10, 5, 5
+18, minecraft:fortress, MONSTER, minecraft:magma_cube, 10, 4, 4
+19, betterend:giant_ice_star, HEADING, header:ignore, 0, 0, 0
+20, betterend:giant_mossy_glowshroom, HEADING, header:ignore, 0, 0, 0
+21, aether:gold_dungeon, HEADING, header:ignore, 0, 0, 0
+22, minecraft:igloo, HEADING, header:ignore, 0, 0, 0
+23, modern_beta:indev_stronghold, HEADING, header:ignore, 0, 0, 0
+24, minecraft:jungle_pyramid, HEADING, header:ignore, 0, 0, 0
+25, aether:large_aercloud, HEADING, header:ignore, 0, 0, 0
+26, minecraft:mansion, HEADING, header:ignore, 0, 0, 0
+27, betterend:megalake, HEADING, header:ignore, 0, 0, 0
+28, betterend:megalake_small, HEADING, header:ignore, 0, 0, 0
+29, minecraft:mineshaft, HEADING, header:ignore, 0, 0, 0
+30, minecraft:mineshaft_mesa, HEADING, header:ignore, 0, 0, 0
+31, minecraft:monument, HEADING, header:ignore, 0, 0, 0
+32, minecraft:monument, MONSTER, minecraft:guardian, 10, 2, 4
+33, betterend:mountain, HEADING, header:ignore, 0, 0, 0
+34, minecraft:nether_fossil, HEADING, header:ignore, 0, 0, 0
+35, minecraft:ocean_ruin_cold, HEADING, header:ignore, 0, 0, 0
+36, minecraft:ocean_ruin_warm, HEADING, header:ignore, 0, 0, 0
+37, betterend:painted_mountain, HEADING, header:ignore, 0, 0, 0
+38, minecraft:pillager_outpost, HEADING, header:ignore, 0, 0, 0
+39, minecraft:pillager_outpost, MONSTER, minecraft:pillager, 10, 1, 1
+40, minecraft:ruined_portal, HEADING, header:ignore, 0, 0, 0
+41, minecraft:ruined_portal_desert, HEADING, header:ignore, 0, 0, 0
+42, minecraft:ruined_portal_jungle, HEADING, header:ignore, 0, 0, 0
+43, minecraft:ruined_portal_mountain, HEADING, header:ignore, 0, 0, 0
+44, minecraft:ruined_portal_nether, HEADING, header:ignore, 0, 0, 0
+45, minecraft:ruined_portal_ocean, HEADING, header:ignore, 0, 0, 0
+46, minecraft:ruined_portal_swamp, HEADING, header:ignore, 0, 0, 0
+47, minecraft:shipwreck, HEADING, header:ignore, 0, 0, 0
+48, minecraft:shipwreck_beached, HEADING, header:ignore, 0, 0, 0
+49, aether:silver_dungeon, HEADING, header:ignore, 0, 0, 0
+50, betterdungeons:skeleton_dungeon, HEADING, header:ignore, 0, 0, 0
+51, betterdungeons:skeleton_dungeon, MONSTER, minecraft:skeleton, 80, 4, 15
+52, betterdungeons:small_dungeon, HEADING, header:ignore, 0, 0, 0
+53, betterdungeons:small_nether_dungeon, HEADING, header:ignore, 0, 0, 0
+54, betterdungeons:spider_dungeon, HEADING, header:ignore, 0, 0, 0
+55, betterdungeons:spider_dungeon, MONSTER, minecraft:spider, 80, 4, 15
+56, betterdungeons:spider_dungeon, MONSTER, minecraft:cave_spider, 50, 4, 8
+57, minecraft:stronghold, HEADING, header:ignore, 0, 0, 0
+58, minecraft:swamp_hut, HEADING, header:ignore, 0, 0, 0
+59, minecraft:swamp_hut, MONSTER, minecraft:witch, 10, 1, 1
+60, minecraft:swamp_hut, CREATURE, minecraft:cat, 10, 1, 1
+61, minecraft:trail_ruins, HEADING, header:ignore, 0, 0, 0
+62, reminiscence:tutorial_house, HEADING, header:ignore, 0, 0, 0
+63, minecraft:village_desert, HEADING, header:ignore, 0, 0, 0
+64, minecraft:village_plains, HEADING, header:ignore, 0, 0, 0
+65, minecraft:village_savanna, HEADING, header:ignore, 0, 0, 0
+66, minecraft:village_snowy, HEADING, header:ignore, 0, 0, 0
+67, minecraft:village_taiga, HEADING, header:ignore, 0, 0, 0
+68, supplementaries:way_sign, HEADING, header:ignore, 0, 0, 0
+69, betterdungeons:zombie_dungeon, HEADING, header:ignore, 0, 0, 0
+70, betterdungeons:zombie_dungeon, MONSTER, minecraft:zombie, 80, 4, 15

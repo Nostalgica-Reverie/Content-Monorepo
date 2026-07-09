@@ -1,0 +1,224 @@
+remove_enchanted_books_in_villager_trades = true
+#Allowed Values: PRESERVE, REPLACE, REMOVE
+enchanted_books_in_loot_tables_handler = "REMOVE"
+#Default enchants for items
+default_enchants = {}
+
+#Specific enchants for specific items
+[enchants]
+
+	[enchants."minecraft:iron_helmet"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:iron_chestplate"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:iron_leggings"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:iron_boots"]
+		"allurement:reforming" = 1
+
+	[enchants."aether:iron_gloves"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:iron_sword"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:iron_pickaxe"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:iron_axe"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:iron_shovel"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:iron_hoe"]
+		"allurement:reforming" = 1
+
+	[enchants."minecraft:chainmail_helmet"]
+		"minecraft:projectile_protection" = 4
+
+	[enchants."minecraft:chainmail_chestplate"]
+		"minecraft:projectile_protection" = 4
+
+	[enchants."minecraft:chainmail_leggings"]
+		"minecraft:projectile_protection" = 4
+
+	[enchants."minecraft:chainmail_boots"]
+		"minecraft:projectile_protection" = 4
+
+	[enchants."minecraft:diamond_helmet"]
+		"minecraft:blast_protection" = 4
+
+	[enchants."minecraft:diamond_chestplate"]
+		"minecraft:blast_protection" = 4
+
+	[enchants."minecraft:diamond_leggings"]
+		"minecraft:blast_protection" = 4
+
+	[enchants."minecraft:diamond_boots"]
+		"minecraft:blast_protection" = 4
+
+	[enchants."minecraft:diamond_sword"]
+		"minecraft:efficiency" = 5
+
+	[enchants."minecraft:diamond_pickaxe"]
+		"minecraft:efficiency" = 5
+
+	[enchants."minecraft:diamond_axe"]
+		"minecraft:efficiency" = 5
+
+	[enchants."minecraft:diamond_shovel"]
+		"minecraft:efficiency" = 5
+
+	[enchants."minecraft:diamond_hoe"]
+		"minecraft:efficiency" = 5
+
+	[enchants."aether:gravitite_sword"]
+		"tonsofenchants:smelting" = 1
+
+	[enchants."aether:gravitite_pickaxe"]
+		"tonsofenchants:smelting" = 1
+
+	[enchants."aether:gravitite_axe"]
+		"tonsofenchants:smelting" = 1
+
+	[enchants."aether:gravitite_shovel"]
+		"tonsofenchants:smelting" = 1
+
+	[enchants."aether:gravitite_hoe"]
+		"tonsofenchants:smelting" = 1
+
+	[enchants."deep_aether:skyjade_sword"]
+		"minecraft:efficiency" = 5
+
+	[enchants."deep_aether:skyjade_pickaxe"]
+		"minecraft:efficiency" = 5
+
+	[enchants."deep_aether:skyjade_axe"]
+		"minecraft:efficiency" = 5
+
+	[enchants."deep_aether:skyjade_shovel"]
+		"minecraft:efficiency" = 5
+
+	[enchants."deep_aether:skyjade_hoe"]
+		"minecraft:efficiency" = 5
+
+	[enchants."betterend:thallasium_sword"]
+		"veinmining:vein_mining" = 1
+
+	[enchants."betterend:thallasium_pickaxe"]
+		"veinmining:vein_mining" = 1
+
+	[enchants."betterend:thallasium_axe"]
+		"veinmining:vein_mining" = 1
+
+	[enchants."betterend:thallasium_shovel"]
+		"veinmining:vein_mining" = 1
+
+	[enchants."betterend:thallasium_hoe"]
+		"veinmining:vein_mining" = 1
+
+	[enchants."minecraft:netherite_helmet"]
+		"minecraft:fire_protection" = 4
+		"minecraft:unbreaking" = 5
+
+	[enchants."minecraft:netherite_chestplate"]
+		"minecraft:fire_protection" = 4
+		"minecraft:unbreaking" = 5
+
+	[enchants."minecraft:netherite_leggings"]
+		"minecraft:fire_protection" = 4
+		"minecraft:unbreaking" = 5
+
+	[enchants."minecraft:netherite_boots"]
+		"minecraft:fire_protection" = 4
+		"minecraft:unbreaking" = 5
+
+	[enchants."minecraft:netherite_sword"]
+		"minecraft:unbreaking" = 5
+
+	[enchants."minecraft:netherite_pickaxe"]
+		"minecraft:unbreaking" = 5
+
+	[enchants."minecraft:netherite_axe"]
+		"minecraft:unbreaking" = 5
+
+	[enchants."minecraft:netherite_shovel"]
+		"minecraft:unbreaking" = 5
+
+	[enchants."minecraft:netherite_hoe"]
+		"minecraft:unbreaking" = 5
+
+	[enchants."bettercopper:copper_sword"]
+		"minecraft:fortune" = 1
+		"minecraft:looting" = 3
+
+	[enchants."bettercopper:copper_pickaxe"]
+		"minecraft:fortune" = 1
+
+	[enchants."bettercopper:copper_axe"]
+		"minecraft:fortune" = 1
+
+	[enchants."bettercopper:copper_shovel"]
+		"minecraft:fortune" = 1
+
+	[enchants."bettercopper:copper_hoe"]
+		"minecraft:fortune" = 1
+
+	[enchants."kubejs:copper_knife"]
+		"minecraft:fortune" = 1
+		"minecraft:looting" = 3
+		"farmersdelight:backstabbing" = 3
+
+	[enchants."minecraft:trident"]
+		"minecraft:loyalty" = 3
+		"minecraft:impaling" = 5
+
+	[enchants."minecraft:crossbow"]
+		"minecraft:piercing" = 5
+		"minecraft:quick_charge" = 1
+
+	[enchants."farmersdelight:flint_knife"]
+		"farmersdelight:backstabbing" = 3
+
+	[enchants."farmersdelight:iron_knife"]
+		"farmersdelight:backstabbing" = 3
+
+	[enchants."minecraft:turtle_helmet"]
+		"minecraft:aqua_affinity" = 1
+
+	[enchants."minecraft:leather_leggings"]
+		"minecraft:swift_sneak" = 3
+
+	[enchants."minecraft:leather_boots"]
+		"minecraft:feather_falling" = 4
+
+	[enchants."aether:golden_pendant"]
+		"enchantedcharms:potency" = 1
+
+	[enchants."aether:golden_ring"]
+		"enchantedcharms:cluster_brew" = 1
+
+	[enchants."aether:iron_pendant"]
+		"enchantedcharms:ordnance" = 1
+
+	[enchants."aether:iron_ring"]
+		"enchantedcharms:prospecting" = 1
+
+	[enchants."betterend:terminite_sword"]
+		"tonsofenchants:excavator" = 1
+
+	[enchants."betterend:terminite_pickaxe"]
+		"tonsofenchants:excavator" = 1
+
+	[enchants."betterend:terminite_axe"]
+		"tonsofenchants:excavator" = 1
+
+	[enchants."betterend:terminite_shovel"]
+		"tonsofenchants:excavator" = 1
+
+	[enchants."betterend:terminite_hoe"]
+		"tonsofenchants:excavator" = 1

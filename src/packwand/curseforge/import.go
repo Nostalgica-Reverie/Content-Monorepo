@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/src/packwand/core"
@@ -43,6 +44,19 @@ func downloadCurseForgeImport(source string) (string, error) {
 		return "", err
 	}
 	return path, nil
+}
+
+// normalizeImportPath produces a canonical form of a pack file path so that
+// override files can be matched against metadata-referenced files even when
+// the zip entry and the CurseForge API disagree on case or path separators.
+// A trailing ".disabled" (used by the CurseForge launcher for disabled
+// optional mods) is stripped so disabled override copies are matched too.
+func normalizeImportPath(path string) string {
+	if abs, err := filepath.Abs(path); err == nil {
+		path = abs
+	}
+	path = strings.TrimSuffix(path, ".disabled")
+	return strings.ToLower(filepath.ToSlash(path))
 }
 
 // importCmd represents the import command
@@ -296,10 +310,8 @@ var importCmd = &cobra.Command{
 			}
 
 			modFilePath := getPathForFile(modInfoValue.GameID, modInfoValue.ClassID, modInfoValue.PrimaryCategoryID, modInfoValue.Slug)
-			ref, err := filepath.Abs(filepath.Join(filepath.Dir(modFilePath), modFileInfoValue.FileName))
-			if err == nil {
-				referencedModPaths = append(referencedModPaths, ref)
-			}
+			referencedModPaths = append(referencedModPaths,
+				normalizeImportPath(filepath.Join(filepath.Dir(modFilePath), modFileInfoValue.FileName)))
 
 			fmt.Printf("Imported dependency \"%s\" successfully!\n", modInfoValue.Name)
 			successes++
@@ -317,25 +329,16 @@ var importCmd = &cobra.Command{
 		successes = 0
 		for _, v := range filesList {
 			filePath := index.ResolveIndexPath(v.Name())
-			filePathAbs, err := filepath.Abs(filePath)
-			if err == nil {
-				found := false
-				for _, v := range referencedModPaths {
-					if v == filePathAbs {
-						found = true
-						break
-					}
-				}
-				if found {
-					fmt.Printf("Ignored file \"%s\" (referenced by metadata)\n", filePath)
-					successes++
-					continue
-				}
-				if v.Name() == "manifest.json" || v.Name() == "minecraftinstance.json" || v.Name() == ".curseclient" {
-					fmt.Printf("Ignored file \"%s\"\n", v.Name())
-					successes++
-					continue
-				}
+			filePathNorm := normalizeImportPath(filePath)
+			if slices.Contains(referencedModPaths, filePathNorm) {
+				fmt.Printf("Ignored file \"%s\" (referenced by metadata)\n", filePath)
+				successes++
+				continue
+			}
+			if v.Name() == "manifest.json" || v.Name() == "minecraftinstance.json" || v.Name() == ".curseclient" {
+				fmt.Printf("Ignored file \"%s\"\n", v.Name())
+				successes++
+				continue
 			}
 
 			f, err := os.Create(filePath)
