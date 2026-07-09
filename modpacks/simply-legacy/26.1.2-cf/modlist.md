@@ -22,7 +22,6 @@
 - [FerriteCore (Fabric)]()
 - [Fzzy Config]()
 - [Global Packs]()
-- [Gnetum]()
 - [ImmediatelyFast]()
 - [Immersive Optimization]()
 - [KryptonReno's Fabric Patcher]()

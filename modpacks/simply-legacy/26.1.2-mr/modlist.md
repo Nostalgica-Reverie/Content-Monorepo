@@ -12,7 +12,6 @@
 - [Cubes Without Borders](https://modrinth.com/mod/ETlrkaYF)
 - [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
 - [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
-- [Gnetum](https://modrinth.com/mod/7MoE34WK)
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
 - [Mod Menu](https://modrinth.com/mod/mOgUt4GM)
 - [More Culling](https://modrinth.com/mod/51shyZVL)
