@@ -51,6 +51,8 @@ jobs:
         with:
           fetch-depth: 0
           filter: blob:none
+          sparse-checkout: |
+            .forgejo/workflows
       - name: Determine changed components
         id: filter
         shell: bash
@@ -107,7 +109,12 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            .forgejo
+            Taskfile.yml
+            _typos.toml
       - uses: https://github.com/taiki-e/install-action@v2
         with:
           tool: typos
@@ -130,7 +137,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/packwand
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-go
       - uses: ./.forgejo/actions/setup-task
       - name: Vet Go
@@ -146,7 +159,14 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/mod-browser-webview
+            packages/packwand-core
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-rust
         with:
           components: clippy, rustfmt
@@ -173,7 +193,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/packwand-installer
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-java
       - uses: ./.forgejo/actions/setup-task
       - name: Compile-check installer
@@ -187,7 +213,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            docs
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-docs-node
       - uses: ./.forgejo/actions/setup-task
       - name: Type-check docs scripts
@@ -201,7 +233,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/bot
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-bot
       - uses: ./.forgejo/actions/setup-task
       - name: Lint bot (eslint + prettier)
@@ -217,7 +255,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/packwand
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-go
       - uses: ./.forgejo/actions/setup-task
       - name: Go tests
@@ -231,7 +275,14 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/mod-browser-webview
+            packages/packwand-core
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-rust
         with:
           linux-deps: "true"
@@ -252,7 +303,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/packwand-installer
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-java
       - uses: ./.forgejo/actions/setup-task
       - name: Installer tests
@@ -269,7 +326,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/packwand
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-go
       - uses: ./.forgejo/actions/setup-task
       - name: Build
@@ -284,7 +347,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/packwand
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-go
       - uses: ./.forgejo/actions/setup-task
       - name: Build
@@ -299,7 +368,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/packwand-installer
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-java
       - uses: ./.forgejo/actions/setup-task
       - name: Build
@@ -314,7 +389,14 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/mod-browser-webview
+            packages/packwand-core
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-rust
         with:
           linux-deps: "true"
@@ -332,7 +414,13 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
+          filter: blob:none
           fetch-depth: 1
+          sparse-checkout: |
+            apps/bot
+            tools
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-bot
       - uses: ./.forgejo/actions/setup-task
       - name: Build
@@ -360,6 +448,14 @@ jobs:
         with:
           fetch-depth: 0
           filter: blob:none
+          sparse-checkout: |
+            apps
+            packages
+            docs
+            tools
+            .chglog
+            Taskfile.yml
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-go
       - uses: ./.forgejo/actions/setup-docs-node
         if: needs.changes.outputs.docs == 'true' || needs.changes.outputs.go == 'true'
@@ -448,6 +544,9 @@ jobs:
         with:
           fetch-depth: 0
           filter: blob:none
+          sparse-checkout: |
+            .chglog
+            .forgejo/actions
       - uses: ./.forgejo/actions/setup-go
       - name: Generate component changelog
         run: |
