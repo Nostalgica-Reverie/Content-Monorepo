@@ -322,7 +322,7 @@ func SetAutomationFreeze(packDir, subKey string, slugs []string) error {
 		m.Automation.Freeze = nil
 	}
 	if m.Automation.AutoUpdate == nil && m.Automation.ServerPromo == nil &&
-		len(m.Automation.SyncExclude) == 0 && m.Automation.Freeze == nil {
+		len(m.Automation.SyncExclude) == 0 && !m.Automation.SyncOnBuild &&\n\t\tlen(m.Automation.SyncFolders) == 0 && m.Automation.Freeze == nil {
 		m.Automation = nil
 	}
 	return Write(mfPath, m)

@@ -194,6 +194,18 @@
           },
           "description": "Paths sync never copies into this consumer."
         },
+        "sync_on_build": {
+          "type": "boolean",
+          "description": "Run this consumer sync before build/export change detection."
+        },
+        "sync_folders": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["mods", "config", "resourcepacks", "global_packs"]
+          },
+          "description": "Top-level folders copied by sync; defaults to all syncable folders."
+        },
         "freeze": {
           "type": "object",
           "description": "Frozen (pinned) mods per subdir key, maintained by 'packwand freeze'.",
