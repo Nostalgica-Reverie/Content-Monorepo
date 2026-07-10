@@ -1049,7 +1049,7 @@ func uploadCurseforge(r pubResolved, projectID, changelog, fileName string, data
 		})
 
 		status, detail := postWithRetry("curseforge", url, map[string]string{
-			"X-Api-Token":  token,
+			"X-API-Key":    token,
 			"Content-Type": contentType,
 		}, body)
 		if status >= 200 && status < 300 {
@@ -1189,7 +1189,8 @@ func cfGetJSON(token, path string, target any) {
 	if err != nil {
 		cmd.Fail(fmt.Sprintf("CF %s lookup failed: %v", path, err))
 	}
-	req.Header.Set("X-Api-Token", token)
+	req.Header.Set("X-API-Key", token)
+	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", httpUserAgent)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
