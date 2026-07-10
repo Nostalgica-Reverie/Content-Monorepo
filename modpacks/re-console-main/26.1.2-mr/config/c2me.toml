@@ -10,10 +10,10 @@ threadPoolPriority = 3
 
 [noTickViewDistance]
 	compatibilityMode = false
-	maxConcurrentChunkLoads = 24
+	maxConcurrentChunkLoads = 18
 	enableExtRenderDistanceProtocol = false
 	maxViewDistance = 32
-	chunkSendingSpeedMultiplierPercentage = "300"
+	chunkSendingSpeedMultiplierPercentage = "250"
 	
 [ioSystem]
 	gcFreeChunkSerializer = true
@@ -21,7 +21,3 @@ threadPoolPriority = 3
 [chunkSystem]
 	syncPlayerTickets = false
 	lowMemoryMode = "true"
-
-[openclAccel]
-	maxConcurrentTasksPerDevice = "48"
-	allowIncompatibilityFallback = "true"
