@@ -1,20 +1,8 @@
 hash-format = "sha512"
 
 [[files]]
-file = "config/animatium.json"
-hash = "5aac27088926147435f019905c6bacaf51e15acc1263f0f5a4ecf2077223245ab551f0850ab5e7b54f018102ebcc6966c97bcccf14a825eebbcd4db524ef567d"
-
-[[files]]
-file = "config/bhmenu/bhmenu-general.properties"
-hash = "f9fc1f7972a5961a214fb0920f0edaa66da9972d299e6d286ed6140c6932ff666df3d6fc767576dbcc5767a03cdcba249366a837054b6401f0cb9c20c294f011"
-
-[[files]]
-file = "config/bhmenu/bhmenu-public_server_list.properties"
-hash = "0f6dca1412494b2d24f9210979a2741ea969f04152dd2d813f5eaae5e9984810d6f39f005a8723b286822a23d2e5e4a13f1fc5c837c4abd1f8d4d24d6b751d63"
-
-[[files]]
-file = "config/bhmenu/bhmenu-server_creator_banner.properties"
-hash = "813474b434e3f91bfd6b80d40b23d67e649d71362f1aa1108d01b38ebaf72161305c5aa093685ccc4e01a5b0d61d94bf2183ca8c4b9555dc9bf91c67836ab988"
+file = "config/animatium3.json"
+hash = "2192fb4bbb939f01c0cf28567abbcf4f6ac445fbda8d49d4881d7ec1c88a82b5e1931afa087a57ae82ba6a39abc64e41398c41269fca3428ee2b2746f2f66235"
 
 [[files]]
 file = "config/bobby.conf"
@@ -130,7 +118,7 @@ hash = "08f24468f32bc3f0c8239b68d7a37da8a15487dec43ea2e2370fab7934896d007ea28fce
 
 [[files]]
 file = "config/modpack_defaults/config/cwb.json"
-hash = "5b1fc8dbfea40908c9792db9ce1dc95b1ec4de9d3a15a4300f69338e95b595d4caba92fb588c98af84328a5c9351f22c71ff78ffdb5249799ce85c9d69d2a829"
+hash = "b00c361b67cc2ae5fe4f2512763652ee348b26639013635d689b72d8f003a60e24affb39d3e85282ed7f51e91dc344253c527fb6d94b4dd5f73becc2caa4e560"
 
 [[files]]
 file = "config/modpack_defaults/config/entity_model_features.json"
@@ -165,10 +153,6 @@ file = "config/modpack_defaults/config/ferritecore.mixin.properties"
 hash = "4054daee2e4fdf81cc5ccab0179400e5c964258aec2d8266347109851247ff93fd0c296ea664f5b2b6425faf3d6b81f44f42ceec40c582c115d8f1129b3abd92"
 
 [[files]]
-file = "config/modpack_defaults/config/gnetum.json"
-hash = "5aa3ab37f01fa3f531364232504380979bc8a9c3b648f5e26bb78625e19888ba5f2985431450746e9fff6ec63778ef04b099a38734745622c2522a8a7560507c"
-
-[[files]]
 file = "config/modpack_defaults/config/immediatelyfast.json"
 hash = "6cc7c0e90245e11a477d747a20aa322cd69679937d1e6c6a1bbe6c003224aa3fc1eb3b55f70bf1cc21ded769df8506f3075be6fbbdac40dbe752c75bc26835a5"
 
@@ -190,7 +174,7 @@ hash = "a60493e982cb1767e724c427450707227ebfbf2980716090e12decba679681c68622aa66
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/client_options.json"
-hash = "a1426c6c621e9d164aa9de8c93f10db85929dd1c5d860dca12c624557b25dfb2bc5f155e314e44f4f21ac4e38225858c8b1c55c1c62ee076e7743ef7aae8413e"
+hash = "3d90542a38b61467c4aae47faaf7280b60ec813c82cb1e6aa23a2737c69c9d9c42602d29420c298bc31f95e152979f435741c273603d4363e15336cae066bb82"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/common.json"
@@ -202,7 +186,7 @@ hash = "fed3a638b0b31816fbf400590fe058b9c849547d220eb7b57520f03fda56fdb0132cf1d0
 
 [[files]]
 file = "config/modpack_defaults/config/legacy/global_packs.json"
-hash = "d69e52de9127382605b549e679f043b3fbeccb748c92a680a76c3e7d30b9038b716dc4e795492c7d287c79c3a76ebd94cae994ba0b0b6903053008262bc3f88d"
+hash = "7ecabef48ca72d3aefae6e3ff8cbaecd291e61a508d6019839679b1a321b71d3fc6320da6a07849da64b0a37c00836c1fb9edec852bbe0ea33b4318b9331f19d"
 
 [[files]]
 file = "config/modpack_defaults/config/legacy_world_sizes/common.json"
@@ -211,6 +195,10 @@ hash = "57fcab93d8c87ff3a5cc0f37725425e297914247bf262e6f4c60a525ac2092e9e0b97ebe
 [[files]]
 file = "config/modpack_defaults/config/legacy_world_sizes/common_mixin.json"
 hash = "27c74670adb75075fad058d5ceaf7b20c4e7786c83bae8a32f626f9782af34c9a33c2046ef60fd2a7878d378e29fec851806bbd9a67878f3a9f1cda4830763fd"
+
+[[files]]
+file = "config/modpack_defaults/config/lithium.properties"
+hash = "18e5370e2ab298c3432c197793391118d5e948f1a8c17b7b9fef4bac21646f99d5e1bb630b2ac3599c9b4b7afd28d21fcf7389518d8f4f6b7698b74f863ab79e"
 
 [[files]]
 file = "config/modpack_defaults/config/modelfix-client.json"
@@ -893,8 +881,196 @@ file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resou
 hash = "b50ff79901bdf1854ac445bc090a98bd901a05e3000acb702eb9376ffcba7bf5bd28dbceee768d39b83618d507db07a33957f1f20f25fc9518da11162f5aa459"
 
 [[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/af_za.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ar_sa.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ca_es.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/cs_cz.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/da_dk.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/de_de.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/el_gr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_au.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_ca.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_gb.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_nz.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_pt.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_ud.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_us.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/enp.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/es_es.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/es_mx.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/fi_fi.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/fr_fr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/he_il.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/hu_hu.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/it_it.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ja_jp.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ko_kr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/nl_nl.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/no_no.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/pl_pl.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/pt_br.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/pt_pt.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ro_ro.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ru_ru.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/sr_sp.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/sv_se.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/tr_tr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/uk_ua.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/vi_vn.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/zh_cn.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/zh_tw.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "f38077029a26137ba48f5f9efae6c2341c3259a446ce9e2294a003f34279cfbda7f9137926f3025ce78b1aed11c8163d1cd6fb1bd10c79483ef7f0ce31443368"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "c841ec185cbfb36a6310a8d0c8752805662c81c65286a1bc1c45d488fee6db9045c898b8baa1544d8b261263fb82923d9d07fb2c7ae8581d7928fda5bbf8dc99"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "3d646c9a10cc14b86bef218be00943b900a073a9e32e7cf235eca445bd158f91860765f53e5fd7ade444ce8673729ebe39e9b163cfe050e208497948b05f6a20"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "c6a57b170e9e1f52eaa462756d33066ac9daf968e3bfc38f9bcd28dba2a0dd7845c87ba3e0f15826364f394e64c4a9acd4205de0613cd03b89f1096a59fd4c62"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/legacy_world_sizes/lang/en_us.json"
+hash = "19002dd2b1e015c729cfe0343a570955bbe3425ab08e440abfa3823cd2d3e180c1c293e160ae37c736e3920e8518b94a53c1a7f93d853927067d99919e62d2bf"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/assets/minecraft/lang/en_us.json"
+hash = "d25e330be0912aa1abf46a4651d0d89916572dce7dc2014a308535401a133ef069009c0da104c45f9c35f5e17f192f09651d917fdff1c8dbcd38d59b8b012e1f"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/pack.mcmeta"
+hash = "b3451b0dd2a093234354801cfe0aa54d63a966bc58767acea55dcd149bef92f5b6c329ac2618c21a00b135188ceb21db5e10a51ae55a54d6e6fe9133fae73c04"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Simply Legacy Resources/pack.png"
+hash = "ad3e3e33cae5d5136d86ecf08403ecae5c8ffce7534412f9af7d89ea036a7f18922011cde7466b8b944b751a94b8420b0cc4bd8430ad2bcbf8519e35853f9524"
+
+[[files]]
 file = "config/modpack_defaults/options.amecs.key_modifiers.txt"
 hash = "2dc816879195042d207a63c5135dd6c8f1517ccadf287657bbaff13fb5edb849f49f845d32b426e5780c5b936bce2d85d5b0393299b54aab28b271579a6ccbc7"
+
+[[files]]
+file = "config/modpack_defaults/options.txt"
+hash = "9dbaa1d8d75579ee6fcc052cfd83685d84b5fb8935d770608d9db0793f317db9e75f7a432a2ff6c87f3b4e2f72fa112c31c935d665a822692db2eb085847d629"
 
 [[files]]
 file = "config/modpack_defaults/resource_albums.json"
@@ -1431,10 +1607,6 @@ hash = "ff9a565cbcf69760dafb9f6f577e5846787d9ad889b59dcda7ff49f0d2588268b6aabcea
 [[files]]
 file = "config/moreculling.toml"
 hash = "dc9205e988170dfcd766f488ef4ba035c55730820c601499bb8e5a0be5642e687ca1eeddfc4efc4c2485aa5e409cc4acc037b01348abb31e81feb9eea9ac80ee"
-
-[[files]]
-file = "config/rsls.properties"
-hash = "3bc6d27e7e1ecd2da9f41b699aa3858463c62572983efa0723289911b2a57a173862b11f9fa7fb5f84a6fdd9ca572286279fcc35f0e695fa09b96133e827472b"
 
 [[files]]
 file = "config/servercore/config.yml"
@@ -2039,6 +2211,190 @@ hash = "cc6199af17db28a957b162e3a53d0a4e0c2cb9f43fad108e3af1b81c99f5f08910029343
 [[files]]
 file = "global_packs/required_resources/LCE Common Resources/pack.png"
 hash = "b50ff79901bdf1854ac445bc090a98bd901a05e3000acb702eb9376ffcba7bf5bd28dbceee768d39b83618d507db07a33957f1f20f25fc9518da11162f5aa459"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/af_za.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ar_sa.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ca_es.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/cs_cz.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/da_dk.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/de_de.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/el_gr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_au.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_ca.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_gb.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_nz.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_pt.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_ud.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/en_us.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/enp.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/es_es.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/es_mx.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/fi_fi.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/fr_fr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/he_il.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/hu_hu.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/it_it.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ja_jp.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ko_kr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/nl_nl.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/no_no.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/pl_pl.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/pt_br.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/pt_pt.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ro_ro.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/ru_ru.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/sr_sp.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/sv_se.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/tr_tr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/uk_ua.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/vi_vn.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/zh_cn.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/lang/zh_tw.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "f38077029a26137ba48f5f9efae6c2341c3259a446ce9e2294a003f34279cfbda7f9137926f3025ce78b1aed11c8163d1cd6fb1bd10c79483ef7f0ce31443368"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "c841ec185cbfb36a6310a8d0c8752805662c81c65286a1bc1c45d488fee6db9045c898b8baa1544d8b261263fb82923d9d07fb2c7ae8581d7928fda5bbf8dc99"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "3d646c9a10cc14b86bef218be00943b900a073a9e32e7cf235eca445bd158f91860765f53e5fd7ade444ce8673729ebe39e9b163cfe050e208497948b05f6a20"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "c6a57b170e9e1f52eaa462756d33066ac9daf968e3bfc38f9bcd28dba2a0dd7845c87ba3e0f15826364f394e64c4a9acd4205de0613cd03b89f1096a59fd4c62"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/legacy_world_sizes/lang/en_us.json"
+hash = "19002dd2b1e015c729cfe0343a570955bbe3425ab08e440abfa3823cd2d3e180c1c293e160ae37c736e3920e8518b94a53c1a7f93d853927067d99919e62d2bf"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/assets/minecraft/lang/en_us.json"
+hash = "d25e330be0912aa1abf46a4651d0d89916572dce7dc2014a308535401a133ef069009c0da104c45f9c35f5e17f192f09651d917fdff1c8dbcd38d59b8b012e1f"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/pack.mcmeta"
+hash = "b3451b0dd2a093234354801cfe0aa54d63a966bc58767acea55dcd149bef92f5b6c329ac2618c21a00b135188ceb21db5e10a51ae55a54d6e6fe9133fae73c04"
+
+[[files]]
+file = "global_packs/required_resources/Simply Legacy Resources/pack.png"
+hash = "ad3e3e33cae5d5136d86ecf08403ecae5c8ffce7534412f9af7d89ea036a7f18922011cde7466b8b944b751a94b8420b0cc4bd8430ad2bcbf8519e35853f9524"
 
 [[files]]
 file = "modlist.md"
@@ -3504,453 +3860,9 @@ hash = "35957f00b87102f6fd8d1d2ba8ab26d3629a114fdab2fc220b13ad5a2a28e9a981ba587e
 metafile = true
 
 [[files]]
-file = "resources/resourcepack/required/.packwizignore"
-hash = "80b73e9e66716d2d0583ed4d4615e94525cb01ef2b344ec6e849ab94127dd76f434a2a9b3c7b564a4a282cde684a75ec64d3a4a255a9bbb2c534d808d7b269e8"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/chest.jem"
-hash = "4fd2398b181385d3dd5a069b1e0c20482140f879e9aff9f549496c5ac38fd81b541dbb22cdd82f5a350c2129f4809bf1ab8ab0088a40f189f0563f14930122fb"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/chest_large.jem"
-hash = "b7b12ade8a3edcae0676708e086a9e23c3db0f5cd3f439cae601962ad83085296752f05f1aba0bcbdfdc657327b6d3b6fcb6ab3e168eb415ad4eb0545f89f155"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/ender_chest.jem"
-hash = "4fd2398b181385d3dd5a069b1e0c20482140f879e9aff9f549496c5ac38fd81b541dbb22cdd82f5a350c2129f4809bf1ab8ab0088a40f189f0563f14930122fb"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest.jem"
-hash = "4fd2398b181385d3dd5a069b1e0c20482140f879e9aff9f549496c5ac38fd81b541dbb22cdd82f5a350c2129f4809bf1ab8ab0088a40f189f0563f14930122fb"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/assets/cem/trapped_chest_large.jem"
-hash = "b7b12ade8a3edcae0676708e086a9e23c3db0f5cd3f439cae601962ad83085296752f05f1aba0bcbdfdc657327b6d3b6fcb6ab3e168eb415ad4eb0545f89f155"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/pack.mcmeta"
-hash = "6b62de619a830c8ee42e5f7ec4a7e29c007ea737280754811dafb2c26264507bd23d2c45f6af8f2893aae7073da0225f58fb51bee60cc269110ce0fb12128c82"
-
-[[files]]
-file = "resources/resourcepack/required/Fixed Chest Models/pack.png"
-hash = "b50ff79901bdf1854ac445bc090a98bd901a05e3000acb702eb9376ffcba7bf5bd28dbceee768d39b83618d507db07a33957f1f20f25fc9518da11162f5aa459"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/intro.json"
-hash = "b68228998a41ab8a4faab5c5f4b04dd1caf35b1ba8ca662cc350bab559d5c522f50b55d5d71c725b505e85d0b62bd24020fe9be56eb46a3a180bc9b1b5350232"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/af_za.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/ar_sa.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/ca_es.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/cs_cz.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/da_dk.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/de_de.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/el_gr.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_au.json"
-hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_ca.json"
-hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_gb.json"
-hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_nz.json"
-hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_pt.json"
-hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_ud.json"
-hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/en_us.json"
-hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/enp.json"
-hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/es_es.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/es_mx.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/fi_fi.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/fr_fr.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/he_il.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/hu_hu.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/it_it.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/ja_jp.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/ko_kr.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/nl_nl.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/no_no.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/pl_pl.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/pt_br.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/pt_pt.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/ro_ro.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/ru_ru.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/sr_sp.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/sv_se.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/tr_tr.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/uk_ua.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/vi_vn.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/zh_cn.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/lang/zh_tw.json"
-hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/store_categories.json"
-hash = "b0e69d7e84d2f7484dda78edfe123cb97bc01525edb18848e2dad2610ec730145160e4420cbdedaf3f849759e3330b88fca020a7f8bee70ec955acf28d2bd931"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/texts/tips.json"
-hash = "7abce9362a6e4c1276e252d036f61507073a21bfeb3bf6fd0e413c3e0bdf65b3b767e2e7cbb3e0661e141d2eecf6ccf663844879589b9f146c6af0d38184b838"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading.png"
-hash = "8d48f1b7db08e0acad1aeaf06456a2cc605ebbd4c093c5af3e7497f09b414e6e66a0011ccc0b9feb140053259e2c6c94a119b956976b2006bd8040494002c933"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading1.png"
-hash = "941aa2d51b7c567ddda31ba5bf7a4e687e5f096398c59954db1fe58cd21c55a02044eaffc52d3245e21a2a7eb714e384fce1a1f017c7e9b9bf51c4c0de53a72c"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading2.png"
-hash = "7e7154eae9168a9268cd99da7e7d97cc0b878b75fa1c4f36c6f63e499a61f7c885023637613a0fd2c5f21b54ecfb5a684b222a8fb473adb0a063f486c40a9f0c"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/intro/loading3.png"
-hash = "36bd25843f858631769e34a440342faacbf495b1df07f0671c03d81ef525ec38eef02f45c91198d1f11ddc65f7eea47cf4e3fd8e0abc8c0908ebdb31d8fd0c88"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/comparison.png"
-hash = "322044b92ddc9bb0af1e3e0bee75ef35e08acd57236e5c9deef35452b86751d0a17daa701373fb8dcf762a4d51a7233bad5115a32f034911a5a4b67b29dd933d"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/icon.png"
-hash = "500f60a60483e147f3cac5cb96962927fbcdc964c5b7fba3ea6863abadc96dada7b8432e7f80c96f5af6f730b001437271eb41907ebec9cf3bf83a8294d9414c"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/candy/comparison.png"
-hash = "1311d87bf53d9c01efea7384140f54b9f719e799ee74d2500a74930d1dd8e36ec74dcf3f4315949df4ad367f990d0bff5f8d388355cce2ed5625414a9df64693"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/candy/icon.png"
-hash = "f5639439b74b9081e8c199bfbd8ff38657bbda6afa9ad7ccb524cab658bbf2c6888e8004670e960b181a18e5b36bc94b8225064f82b4db1d243e91bdcce11bb2"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/comparison.png"
-hash = "5949c2faf2f77f23999c993ffcce4496e378eae38999ac12dafb714cc5f4d64154cea17a417130b6034f8151a26ad3abed4b7f8adc928ed1fa86119a37b2b57a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/icon.png"
-hash = "2dd735a1d9e55489b005539e69009ce096d5f20836729a0a97006eed9526a459ba6d08e44ddf66e8a0d0f11b8b00b3f6c6140b54c566d25d2e0f8574963d2768"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/comparison.png"
-hash = "86f45ea3bc626231ad488fc67462c098c74b6c93aa659a2678dae43ba2ae869322f26b53544296a2f1ef392385edb1cb9559d1bc57269e266cfbb51a03efcdfd"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/icon.png"
-hash = "ec541722fcf2af5d522e0ad9a484a5debdaf8f5d936415d088e62235954dd90cbc9ce8c9da7fc06cde129d59aa3673445edbada5ad6bbb75379f58bb0537358c"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/comparison.png"
-hash = "bb597a9e28bae25c59ff2d11b66423bee422efa6628fd162411a001742e110207c17c99fbee8891eb8140336ec1afbf49bbf10702ddb60ccd33fe2062f852c22"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/icon.png"
-hash = "8ba28e3152a021d22f8c992c575f7f8b6ff38a121c69aebd0d0b19a425add2b6f61ee0a569624c197bea3e9505191bce334963bc63fed93e8d4fd6087f95b354"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/city/comparison.png"
-hash = "f34f68996dc4fcb3fbdec5024ae9efc474976df73272899250a50d22698dd2bf340dd47e1a75bca7190d637c1391faa6e0ef60885be80f58dbaf858e4c929326"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/city/icon.png"
-hash = "91b57153e58bb4ee6299cf901c780061353c6ef1d31b28020097e94890e03c0f981da0497c8650d8976f1adc71477e144b0e492ece1d0e128af24123cde93893"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/comparison.png"
-hash = "f5db0b90fc433a89d6457f23918712193af9011d8c3871174383a36b29b010da7027017649bd37751d2445350890dab88723633237ae201599dc944076c2bb17"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/icon.png"
-hash = "cf7bb1aad3768f987efaf4cce86598ac83681b213393c191cd4327cc01a17651a13af42aa92083bf6d35df5ceeb0951f0202478d5e9d47adf74594d779619f0d"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/comparison.png"
-hash = "bd5d13d7496562a2738c66cb7f0ea4f51135a46f344564ce1d880ad359d18ec21a0764febdf4d653b008e9e665213dfba1cb97f6b7ae27f8624afed65ff942a5"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/icon.png"
-hash = "92b376a3fb41b56e987842ef9a1bc8e257ccfabeaa544726a250ad0eee8e2f83231d09002eba5e55fd2d00f65399f192f074aeff004cb3ee5c27855dad8e7a51"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/comparison.png"
-hash = "15404fb0b6d78bad3209b398a85d9fba7b0bc007fda7d74a18c16a58146d25d4853d9e27d3602101ebd1674f0d41c5418c3e9e91cab94298cfd4884cb8eea0b8"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/icon.png"
-hash = "c7271bcfc3c3787835d08982bc4fc21548e01579508bd849219969b49ce838d5aafe70daf99b9605c8d88aa6d84ca975c15365fbc9fe82587679516f644f8544"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/comparison.png"
-hash = "a07c6b94e3a6643903ceccdde8f3f9f4136a8b61d60e2a6c3c082426f466b8cab45d1903c63e8698ed7488193609ad3aa3d26b92c1bd10ea13f414aec8c9cf2c"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/icon.png"
-hash = "16386b8f1b197788f812379bca561e304481d9e4af5a0e51d4ebf8a88d92bb275fc39529701d652b30ccc16a69f16f4443a0c09383f7e9529aa989f87e4cabfb"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/festive/comparison.png"
-hash = "8fa40f9a9338b15a5ab335ef7b5d3c4d81250746acd4b6051f3fd287efb3b770eae923472bdf9d94c72f6969f8501dddd2e4038fe38f1de61bb08e04d6148c63"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/festive/icon.png"
-hash = "6d0325efe582c266728563633cff2b5ecbd230633afc4f43542961ce42b4f569258a0d9e1b876aaf7682be0be095c881f687c7572464f9710a2d9a3419fed3ac"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/greek/comparison.png"
-hash = "0f6d709550dd8720700773c4cc8473c5d897b56dd3301d1749f96afedfde9127c8a0c0e03fe29f31d2d877dbc2ede95911dc90531319287ac37db2702b47d9ee"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/greek/icon.png"
-hash = "9eb92be3b5241335ae6af8356577d1c5fd9950d181ee88f1d68eecb99cad061ca95ad166c2f618e54da4e9a05589db084540689bcf2f8dccf504d876c6155727"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/comparison.png"
-hash = "72a69fec015fad6214534e34635e378014ae0c3bbbbde1c7b766436cdc363a918ee40695172f3e2bbf71fb1e42ad2668da7cbad8f3aa1f8bc17f9bc56c7e3d53"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/icon.png"
-hash = "89d14016013496fb8f4150470c5e908c64a97010115797e1788372276190e310f560d83296100b0aa2ce6761077a8674141f76225177705e6a2bdf457e67f98a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/comparison.png"
-hash = "480f1b2cbb46d7ca66d511bd590bcb43f49c861b263821075e2b369456e0095a6898ba4bcf7f79bef4ed4598f92dfaa05ff95b40241b348f14689d26320cf13e"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/icon.png"
-hash = "4d30d52fed89acd02d563b747be74a957206bdabe9d3c90285f4e21b2b8fafe4d82c95bccd4e53c029463b0c5a7a4bdaa15f9e03d2b56d09d7d29cba7c427529"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/comparison.png"
-hash = "fe9ee844156c09f5685faf86ca51eeadf605ad1266f77bfb8b36d7c699aa8bd6317cc6efe7ab18871b44dadff174d3800808b1f02c68ed6e4a655b72ce9ab0bb"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/icon.png"
-hash = "3931b13131e84a16cce906709f164854c14e428340e66722abf5f16e9982ffc6ecd07bc93dc9ef60dfaef7583c373624809de4668e533e18a44f5b5e2643ae01"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/n7/comparison.png"
-hash = "3f31f47cbfd7a64f46c5b5d26d1d3253d92c68cc1cbed08e1fccdaa663213cf40edc2d41525d0b73bf30a12f88e82c6e7e244cc3aa8a35028ee5008605f2ec14"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/n7/icon.png"
-hash = "5b985c1bd048feae8718f1e526f2294a7fce6bc9e208749487210f34b98dd3c15078c58b7ffc60fd296791ea6d183609a5c51fbd366651f0845da9fa11b60919"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/natural/comparison.png"
-hash = "2497e8e49331c4b0ea3ecffb2841e1595138dc1366246ed7df60c69d3d5ec28dea2b5e3de5937157c2c1a7003f13c1360069efd0e9b6882eee7ab9a46a7d38a4"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/natural/icon.png"
-hash = "2eb75e3176a964234c7e894f02a78d7370eebbbb0bdfbd616bb89ec4adbdeaaac77ac56859831c5fd93eb42a78ec967b492c6c110fff1d73ee70b9bf13b97c4d"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/comparison.png"
-hash = "732b618b57bc532bc4f543cd582dbb11a122b8a3099c20208578acd4e2818bfa573dde8fd4ea25e873cf6035c00c52a16c048958a7eb55fdd33921b2b37d7f5b"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/icon.png"
-hash = "cf55bdf263c98d5dffb295bd6ac9e23d8ed4d75ef933fd286d94b95cdbd05a06d3928f28155cc32b57582b64089b2bf6ea9720320a4bb77384a0cd4e01340453"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/norse/comparison.png"
-hash = "b0dc3a192279c951cfe487ee03b9d50386a26ae1aa071bcaaf9736c4ed040a507396471204206c8b39f31c4202690dcab09178d08044e0b2e1a179c3ed26d86c"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/norse/icon.png"
-hash = "26fd63c6d1607b07cd4bfa3ca29eb1a2f14bec20602c7a27190215ce333dcf07aea3e0afd75e1989bfbae4f04ba2cf676acbdbe8afff89712fecf60d1076b591"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/comparison.png"
-hash = "b1a243e54a6812d08cfac68abc3ce5e036918e3adc44dc4dd5754e2a7000e86c890bea5bf830f8c492d0452e6cf90f59b01418c15c00b6be2fe32bb6fa37e777"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/icon.png"
-hash = "3dde7df2027e2118cb4e12a590fce63b5ea87d9dabb2ae604a7c63232c92b09b5e65fe548e6fc257abde4374c728118cd3a2d3957477a12abc9a9e33262c57ef"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/comparison.png"
-hash = "6fdbfc539e3278218d79b553f13835139bbba0d94122ba161192b81927776eb23d373c5e9337ec96094b598a38bf76e306fd338bc7d7a6298c62c67fdfbd1a22"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/icon.png"
-hash = "ba3d23ff63ca302e8e7987595bf70952ba37188bde42ff63c57942715a691e26c188da362a926fc7ac92edabf757646c7ba05d823d4ed2e9ec45c4b71b146e98"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/comparison.png"
-hash = "36b36599b968406769c13d832d4f1c8c9474470ec2549de54344d0cb19375c5252073b5b3f8ef8d4fe169258cc1f3ed3de53849550420d4dfddb2d4bcb7ad877"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/icon.png"
-hash = "f55a6d3c4d551c40235eefdf8a707ac0c854f4c9a5548d71f9f1b954ec5a22298d5bc9df782591dce597f43e67111d84ac606fb2fe027a95cbb1ce9c288e9fc2"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/comparison.png"
-hash = "2f14db31d1b06317830fae63f9e088e28b687d502089e7e90e47ff5fabd87d30f09c71d4455d835290e22784276676eb56f6484556730f2e4bc231b28adb34b7"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/icon.png"
-hash = "305631485710dea153e8a19428239a9dec2674923b9c10b37d9806607754566130ed87f9800b931689ecbc3515565e962c939ff232793b87183c23a8beab75f3"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/comparison.png"
-hash = "3a1cf26b219f39736200d9d373d3fb3e3125769e9f0a4b166d72d4edfa4f9e3106219a3b57febe7a3243eb3b8405cce02d99ca86f2e36b247581c595077215b0"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/icon.png"
-hash = "26694deade781e67d4927dcaf3b6c2f4cbd0f0f430fcda94edec5390384e7d021ba25fd0987754b225728ce1391ba475a9b03aa2ccdbbd4e3aea57be034b776d"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/comparison.png"
-hash = "37c02b01d107228fcd8466647339bf882044ecffdaa0a945877a1342d0c7599a64a5d024b8bc5c3d79c9b72b59b6dab9359f9e92c923f28e9a9cf874d8a37d33"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/icon.png"
-hash = "2390da11d6df8adfa7488bf76e5d23e49d63a01dea5592fc5bbcf39b135c6e71ea083f401ec6935bf3c745c3214235bd7dc80d140a029ccbed04ab3bf2c8efed"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/comparison.png"
-hash = "df940f51be09a55e11363a7b996afa46ac08db8d1aacde69a46b5bf4b33ec2699e385085552ca7d8a7a2402792e443b8aae89aa11dc9c0c86120da8f2f025120"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/icon.png"
-hash = "469b6cbe56d88c1306ddb963f924dcfe5bfca7f81300ae0ff37505aecef4478e41756e493c3ba74a9c9a3488987734e687b9c8197ed6444d2272d47a12ce103a"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/toy/comparison.png"
-hash = "9f06ed3f26f98e585920bde15218ece1b15e59b6b9100033d7959d015d4ccb810e8fe60fde28e9f886cb6628878988ecb871b2af158f669e5a083f594af34f35"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy/textures/gui/sprites/comparisons/toy/icon.png"
-hash = "fa1e5ff87e35621af6aebe56fb6e170ace242d51a3e69d1eb34fd378553e99c4fc188404ac43af94fb32a54c30ff47eba086221729a3a1e52fb0cd749a10db08"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/legacy_world_sizes/lang/en_us.json"
-hash = "19002dd2b1e015c729cfe0343a570955bbe3425ab08e440abfa3823cd2d3e180c1c293e160ae37c736e3920e8518b94a53c1a7f93d853927067d99919e62d2bf"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/assets/minecraft/lang/en_us.json"
-hash = "d25e330be0912aa1abf46a4651d0d89916572dce7dc2014a308535401a133ef069009c0da104c45f9c35f5e17f192f09651d917fdff1c8dbcd38d59b8b012e1f"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/pack.mcmeta"
-hash = "b3451b0dd2a093234354801cfe0aa54d63a966bc58767acea55dcd149bef92f5b6c329ac2618c21a00b135188ceb21db5e10a51ae55a54d6e6fe9133fae73c04"
-
-[[files]]
-file = "resources/resourcepack/required/Simply Legacy Resources/pack.png"
-hash = "ad3e3e33cae5d5136d86ecf08403ecae5c8ffce7534412f9af7d89ea036a7f18922011cde7466b8b944b751a94b8420b0cc4bd8430ad2bcbf8519e35853f9524"
-
-[[files]]
 file = "sync-exclude.json"
 hash = "f6d491348c4b0181b5567d7a39471480cd7d8e25a1e31f198a8bcc83b3500dfa5d78d60c2d5880075a15be659982adbbc3045f511b6c0f120b952705cf3e2494"
 
 [[files]]
 file = "sync.json"
-hash = "9d4ec01078a9dbe7993fe5f3be8956377911b42289cb2faa7dda0d82e42844e97cc277d3b3761f2f1825a464b3695f2c71c799daffa91af4f3824851c73d892d"
+hash = "dae9bf29d1f0c954b76abc8ec03fa5a552158a573f1966d4634e0b1a33f9949c1c54adbd28b1df2989a4f545a48ebd93cf2f6d10ac31b8b636056b0b9fd60494"
