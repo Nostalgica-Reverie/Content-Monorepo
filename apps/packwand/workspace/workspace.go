@@ -616,8 +616,8 @@ func runVariantSync(packDir, packID string, v manifest.SyncVariant) error {
 		if _, err := os.Stat(src); err != nil {
 			return fmt.Errorf("%s: sync source %s is missing: %w", packID, src, err)
 		}
-		if _, err := os.Stat(dst); err != nil {
-			return fmt.Errorf("%s: sync target %s is missing: %w", packID, dst, err)
+		if err := os.MkdirAll(dst, 0o755); err != nil {
+			return fmt.Errorf("%s: sync target %s could not be created: %w", packID, dst, err)
 		}
 		placed := map[string]bool{}
 		if _, err := copyTreeRecording(src, dst, folder, placed, map[string]bool{}); err != nil {

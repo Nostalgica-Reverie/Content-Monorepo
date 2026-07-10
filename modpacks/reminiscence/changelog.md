@@ -1,5 +1,5 @@
 # Reminiscence 2.0.0-hotfix
-This is a minor release to 2.0.0 which improves performance, fixes licensing issues found on Modrinth, and updates mods.
+This is a minor release to 2.0.0 which improves performance, fixes licensing issues found on Modrinth, and updates mods. This is the first update done in conjunction with Reverie Projects and Bali.
 
 ## Added zFastNoise
 This mod can improve world-gen speeds by upwards of 20%.
@@ -32,7 +32,7 @@ Relatively large TPS improvements in edge cases :)
 Ran all images in the modpack through oxipng. 
 
 ## Updated Crash Assistant Config
-This was based off of Re-Console & Simply Legacy's Crash Assistant config, setting it to a dark-mode and recommending support in Bali's discord server.
+This was based off of Re-Console & Simply Legacy's Crash Assistant config, and now it starts recommending support in Bali's discord server.
 
 ## Updated servers.dat
 Now includes the official Remi SMP by default.
