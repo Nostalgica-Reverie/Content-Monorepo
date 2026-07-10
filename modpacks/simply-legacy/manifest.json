@@ -5,7 +5,7 @@
   "type": "modpack",
   "loader": "fabric",
   "mc_version": "26.1.2",
-  "version": "26.07.1",
+  "version": "26.07",
   "release_type": "release",
   "modrinth_id": "simply-legacy",
   "curseforge_id": "simply-legacy",
@@ -13,18 +13,12 @@
     "performance_base": {
       "pack": "lce-common",
       "mappings": [
-        {
-          "source": "26.1.2-mr",
-          "target": "26.1.2-mr"
-        },
-        {
-          "source": "26.1.2-cf",
-          "target": "26.1.2-cf"
-        }
+        { "source": "26.1.2-mr", "target": "26.1.2-mr" },
+        { "source": "26.1.2-cf", "target": "26.1.2-cf" }
       ]
     }
   },
   "automation": {
-    "server_promo": false
+    "server_promo": true
   }
 }
