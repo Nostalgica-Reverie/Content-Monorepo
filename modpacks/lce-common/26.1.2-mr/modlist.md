@@ -9,6 +9,7 @@
 - [Bedrock Entity Models](https://modrinth.com/mod/MmYSmcY6)
 - [BisectHosting Server Integration Menu](https://modrinth.com/mod/yWSAtnfH)
 - [Bobby](https://modrinth.com/mod/M08ruV16)
+- [Console Advancement Sounds](https://modrinth.com/mod/v2x7Gozv)
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
 - [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
 - [Fast Noise](https://modrinth.com/mod/OnlVIpq5)

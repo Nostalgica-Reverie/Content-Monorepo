@@ -7,6 +7,7 @@
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
 - [Bedrock Entity Models](https://modrinth.com/mod/MmYSmcY6)
 - [Bobby](https://modrinth.com/mod/M08ruV16)
+- [Console Advancement Sounds](https://modrinth.com/mod/v2x7Gozv)
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
 - [Cubes Without Borders](https://modrinth.com/mod/ETlrkaYF)
 - [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
