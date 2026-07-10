@@ -2,9 +2,13 @@
 
 ## Client Mods
 
+- [Async Logger](https://modrinth.com/mod/zvNzKfGF)
 - [Better F1 Reborn](https://modrinth.com/mod/2JIeCmxb)
 - [CIT Resewn](https://modrinth.com/mod/otVJckYQ)
 - [Controlling](https://modrinth.com/mod/xv94TkTM)
+- [Gnetum](https://modrinth.com/mod/7MoE34WK)
+- [Ixeris](https://modrinth.com/mod/p8RJPJIC)
+- [Kerria](https://modrinth.com/mod/f0ruQTF7)
 - [Missing Mods Checker](https://modrinth.com/mod/gR4YXm1s)
 - [Searchables](https://modrinth.com/mod/fuuu3xnx)
 - [Toast Control](https://modrinth.com/mod/CnOG2wlS)
@@ -156,4 +160,5 @@
 ## Server Mods
 
 - [Feature Recycler](https://modrinth.com/mod/IAzu52kG)
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
 - [In Control!](https://modrinth.com/mod/KpICtuVx)
