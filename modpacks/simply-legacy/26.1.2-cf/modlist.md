@@ -2,7 +2,6 @@
 
 ## Shared Mods
 
-- [Amecs (Fabric)]()
 - [Async Logger]()
 - [Bedrock Skins]()
 - [BisectHosting Server Integration Menu [FABRIC]]()
@@ -22,7 +21,6 @@
 - [FerriteCore (Fabric)]()
 - [Fzzy Config]()
 - [Global Packs]()
-- [Gnetum]()
 - [ImmediatelyFast]()
 - [Immersive Optimization]()
 - [KryptonReno's Fabric Patcher]()
@@ -36,7 +34,6 @@
 - [No Chat Reports]()
 - [No Chat Restrictions]()
 - [Particle Core]()
-- [Raise Sound Limit Simplified]()
 - [ScalableLux]()
 - [ServerCore]()
 - [Shuttfup]()

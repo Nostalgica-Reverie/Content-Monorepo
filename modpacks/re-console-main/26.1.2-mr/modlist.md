@@ -42,7 +42,6 @@
 - [Picture Mode](https://modrinth.com/mod/kFU5UCQz)
 - [Ping View](https://modrinth.com/mod/gvl7lVcV)
 - [Pro Placer](https://modrinth.com/mod/LhK0LkWd)
-- [Raise Sound Limit Simplified](https://modrinth.com/mod/SKW62Pht)
 - [RenderScale](https://modrinth.com/mod/Va8PJBFX)
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Simple Music Control](https://modrinth.com/mod/8AX2hHnX)

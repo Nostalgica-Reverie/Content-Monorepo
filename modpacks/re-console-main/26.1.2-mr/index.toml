@@ -1,8 +1,8 @@
 hash-format = "sha512"
 
 [[files]]
-file = "config/animatium.json"
-hash = "5aac27088926147435f019905c6bacaf51e15acc1263f0f5a4ecf2077223245ab551f0850ab5e7b54f018102ebcc6966c97bcccf14a825eebbcd4db524ef567d"
+file = "config/animatium3.json"
+hash = "2192fb4bbb939f01c0cf28567abbcf4f6ac445fbda8d49d4881d7ec1c88a82b5e1931afa087a57ae82ba6a39abc64e41398c41269fca3428ee2b2746f2f66235"
 
 [[files]]
 file = "config/bhmenu/bhmenu-general.properties"
@@ -101,12 +101,8 @@ file = "config/modpack_defaults/animatium_utility.json"
 hash = "ac98dd3cc88f72a4812d4dbcac98bb41314995df8cac77675b7eb53887c8477995f619c3730011f577a8c0b30d01fe636c25f037622308791ce6e573d234c584"
 
 [[files]]
-file = "config/modpack_defaults/config/animatium.json"
-hash = "5aac27088926147435f019905c6bacaf51e15acc1263f0f5a4ecf2077223245ab551f0850ab5e7b54f018102ebcc6966c97bcccf14a825eebbcd4db524ef567d"
-
-[[files]]
 file = "config/modpack_defaults/config/animatium3.json"
-hash = "3b23fb62b4d95f357cccb0899ab263fb0962e7adf0a9edbaafd34361cefd875cffc30838a0c0580f91fa2958e65dbcbb668684646c5038a47f82c40ec7ffaf51"
+hash = "2192fb4bbb939f01c0cf28567abbcf4f6ac445fbda8d49d4881d7ec1c88a82b5e1931afa087a57ae82ba6a39abc64e41398c41269fca3428ee2b2746f2f66235"
 
 [[files]]
 file = "config/modpack_defaults/config/badoptimizations.txt"
@@ -230,7 +226,7 @@ hash = "4054daee2e4fdf81cc5ccab0179400e5c964258aec2d8266347109851247ff93fd0c296e
 
 [[files]]
 file = "config/modpack_defaults/config/gnetum.json"
-hash = "5aa3ab37f01fa3f531364232504380979bc8a9c3b648f5e26bb78625e19888ba5f2985431450746e9fff6ec63778ef04b099a38734745622c2522a8a7560507c"
+hash = "67881268d904b3ae393b94bcf54e5fd15be50267e86717d279c1b205731859123c2f15c8bc03d78ba42d5709939976c0cd3d6c085b7ce324d66acf27dc74898a"
 
 [[files]]
 file = "config/modpack_defaults/config/idletweaks.config"
@@ -285,10 +281,6 @@ file = "config/modpack_defaults/config/legacy_world_sizes/common_mixin.json"
 hash = "27c74670adb75075fad058d5ceaf7b20c4e7786c83bae8a32f626f9782af34c9a33c2046ef60fd2a7878d378e29fec851806bbd9a67878f3a9f1cda4830763fd"
 
 [[files]]
-file = "config/modpack_defaults/config/lithium.properties"
-hash = "9be53266efb7c570695232da01571f0ff34737191061a1fe502dbbda7c28bd816795db5ddf0ab9cfe57b676e30afb0486c7b0d3f9fe64d1a2bc720b099156ba8"
-
-[[files]]
 file = "config/modpack_defaults/config/misctweaks/client_config.toml"
 hash = "6b7ebf6ada786340f9572dcd0e1616dc8c90dde3c7ba8ba8e738c33dbea7c67d37efe8cf343a5b70d2da0a309b3dd6d97977a216dee0273f7d9643cf3fb30ecf"
 
@@ -313,14 +305,6 @@ file = "config/modpack_defaults/config/moreculling.toml"
 hash = "8e528310a6469ed53cc7459c871a6fafc44fa9b989bb9c783241d808bc9befd95b2b170c87948ccef02bdbbbc429645ac86179058a1b88bddde2ae3ed73e5043"
 
 [[files]]
-file = "config/modpack_defaults/config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json"
-hash = "9405c4db4001beecca6ef61dffc9292a87630e92f8ae6aa9ac66f1923901d1fe011850dd209eef74115998e11d9764ef0ababd734a0808f5788c82091ff3ed37"
-
-[[files]]
-file = "config/modpack_defaults/config/nostalgic_tweaks/nostalgic_tweaks.json"
-hash = "9405c4db4001beecca6ef61dffc9292a87630e92f8ae6aa9ac66f1923901d1fe011850dd209eef74115998e11d9764ef0ababd734a0808f5788c82091ff3ed37"
-
-[[files]]
 file = "config/modpack_defaults/config/npe.json"
 hash = "5d46823c50c63c83107a41b196820c355a8686b3315a50ae0885873603682bb1322cd07532fa7b85ad550426323ad2627eb097baf638b2c55c967ecc38a7dee2"
 
@@ -330,7 +314,7 @@ hash = "b2a18ab52a510a36872ea2e8b9665e4e58907ad63c1ad7cbcd1b7e53b1b6eeec74c8a2e8
 
 [[files]]
 file = "config/modpack_defaults/config/particle_core_config.toml"
-hash = "dccf647ad9aab2596f9544403b49d7025c00e3c9dc0344f1ad210e094590289595176ec42a920d069b117c746ddd7f25e1f63c74e70dd5f65506c900b6753028"
+hash = "342e2a60a8d63d76f6dade18df575d35184c70e86322bd2680016d59743103e85953541ec20e910bff784ea886ab65b54a953fa90b21ba8479569e36669c837f"
 
 [[files]]
 file = "config/modpack_defaults/config/particle_core_disabled_optimizations_v2.json"
@@ -346,7 +330,7 @@ hash = "3b7ba2c55db83d46e45f6dcb8301ea525c366c1805c61e963467cfe581e27264319572d6
 
 [[files]]
 file = "config/modpack_defaults/config/servercore/config.yml"
-hash = "fc07340e94811b9d0e76f2d4938aad76fe8dfce175d388c5accee5b4531b6f2b18180732bc29b3286ba818030541e742bfbab8b8a1016d8bdf3e9ec255bf2985"
+hash = "c1fbece14783940e140477dfb81d9e9efb2685daa3fd736492a5c5ef9eab4b3dffc5f14dfc6d242df33bdc46cce5d46b17c346784a7e14661e4dc002309ba760"
 
 [[files]]
 file = "config/modpack_defaults/config/servercore/optimizations.yml"
@@ -391,6 +375,1234 @@ hash = "9c0887731d03d4f3debca1e4820dec95c303c3d261f2869019e20fa4ff96945c9908e41e
 [[files]]
 file = "config/modpack_defaults/config/zfastnoise.mixin.toml"
 hash = "f713f24b20e7f0c8d59f19300136d5c154c471198864502650550dcb66afc0ef731e85dd27cb83e6b6e7ac40bbfae001fd616b23f512acc83ccc6686a51d5260"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/control_tooltips/icons/xbox_360_old.json"
+hash = "8b014c31a5672a9fdbb4c9355c324e61a2858cf6c538436998c6b61e4514de4a82a48e39e87081c5e7517db352571d18b6c7a8fcd23523364dd5c6769be870d8"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/control_tooltips/icons/xbox_one_old.json"
+hash = "6a33e44793bd95106e5e9c14bee1ef44cb34ced790b55301329f9161460c40aeb0109d63e14181ff3af9e63cdf39eaedcb0467ae05d95836771b5b3a4be6093a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/control_types.json"
+hash = "cad7c54d9f9730d6153ec0553d7988ade775148c9a979519daf0c1dfa208346f72f33b371965f77fad794a5a933fd778d386f8179dd151037492462cec94018e"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/font/gamecube.json"
+hash = "5a9a18b1232e9b8815626db0d2fa53b97503ae307ac7803f87570eb1c0b74e1c6471ec4da01a6c3160f073d288eb3c67672ac684aa4cdcfd79f71fc3fc48b8c3"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/font/xbox_360_old.json"
+hash = "beae9ad09758ea25146d403af100c13cefd771799ee20bea6a9c0cc0e6ccf24d465467abcdbbd2bf71ae06cae9cf5274183ba2c541fdd4cfab700c63da88f7d6"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/font/xbox_one_old.json"
+hash = "f53c488ccfd7c5448681bc8e8baaaefc62657eb77857a6486b4f33f572e778d5d771f38b8d4529d23d7e52b7697448d3a70881ef714d47d210973f58ac913283"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/back_button.png"
+hash = "bbb95b53fe13a4dfd791d0a85ccc8c3a46ac9b38bfa6794b797899d966200020f5592104f6c3b2d9aa9b58009248d445736b4bec6ad61fbe5694a6b19a147ed9"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/back_button_pressed.png"
+hash = "829fdb81cd5836ee85d4511fd4d597bbe454c7dec61dde543d333d8920977baf4700b4dadd53641a69908a4d0ee735a1391e166a85af5679c07ec94b8aa174a3"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/down_button.png"
+hash = "194eed9d41ac042d2d8b8a11141ccbb2af578adc24961b7433d6e1bc87e0a39539d107d3cbcb962a3c6eb91cbc61ca189cee9a875284a84e0627afd4b0d1fad0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/down_button_pressed.png"
+hash = "e77d7ecdc13ff5de8bff27060556b5f4170fd7adc5e22bbb325703b846a9d49e89c1f19464dc4a0e6f51073c0924d9be479f39f4f96f71427cb42579268deb10"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/dpad_down.png"
+hash = "edeeea2ccf23a8548d964861b38129294c8361a37adf90989da96b3af0f1b1f136660394df2bc2a05b01b70d3439f40382f6a14b7385e0bb8a2b8b43a3433725"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/dpad_down_pressed.png"
+hash = "c93adec6a7879d0bcac4e4e5b870b71080bd6d85506a90e2afea159652d611da542102982834c7770ecbf9a630d1f67808d5e8510df273f1f68d7e7b7c4c73b4"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/dpad_left.png"
+hash = "cf4e6c5ffb1d1ca0bb9653905107a839271ff2b98dde6789cecaf91e2d96aab22bba941fb98d0983ee4eef8486c587534df4c8315f49ed956935b2fe4e0019e7"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/dpad_left_pressed.png"
+hash = "d2266b8c4890faa74fc4ee21c7859e383b0900239381ed45004a75152622ebd07d6da1a18196ad3c8dde677d475bc641ed968f97dcd75e9b66fbc513a85d1e9f"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/dpad_right.png"
+hash = "12f3507edb5286ee486e95120a820ba8205629a40f91ca3bef293e57dd03dbccb0e316d1c7cfec435c8dc1ee1a953011a218c1cfc9afe2d85140819d509059ca"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/dpad_right_pressed.png"
+hash = "92fe0515ff81b7a6c25141ffe345a0a914bf36a56a6d23b777a8f7f8eb6d72bea1fae28ed40204e0c969077155ec053bdd4e6642bff4e22a989bc330bcb3d62b"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/dpad_up.png"
+hash = "a7daf252c848b6529928bfc484b528db1deb3a259f64b5159668c3e0f23ed93c7ab325ef8ff007f41205013f82c6d4d5e7dfdef35bc9428ae842035c48db9073"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/dpad_up_pressed.png"
+hash = "fb0ddc13ddd9c9ede2185389e8d7b832ac245cf9c838005d66595bf6174ae82944121138e08432af8d12a56873540836616828ebd89e817e8249ce6560a1ded7"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/guide_button.png"
+hash = "fa955a30a8a5e9ffd6abdfea8b2e32e9b24799db4c1c52773ba6610bf397b48eb722e997a51cfb116f8434061887fda1e3856bb42a08d8f4a9ebd65691a1a4b3"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_bumper.png"
+hash = "268b360dc9184d8b6ce50e89b2e28fe92ada2871972577d9be826a3ba10007c3800dca0a0c22fd5e0bc28b18291a8d7e9228078412141d62322ffd732b13a63f"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_bumper_pressed.png"
+hash = "8d87a9c974060801d9cb83eedf84e1c7efb6436d24c1a483da84509cefe9145cad59f3f08189f12d1014e06c4483c8700d7a13508b20c49b437f9c57a26f3fbc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_button.png"
+hash = "183161f39384196edafe2a83a14fd0ba5a667657eb9b0a159c7d0a2b20ab6e4dac091fdc5c8b0992af28f3aacd19f3ddcbdb6f4b456c1bed0eb2a8858dde1626"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_button_pressed.png"
+hash = "358563783ae0529f03676cddf50249bf95a3e139f1e142026eea0d8e9e06512298b15736c125c6c5446d39d103c80f20c3ef86b81145a6682fe12bbf1366266e"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_stick.png"
+hash = "c70997a48b0d36e9e3e9f8c5b81c7eab4a6229b5f1ec27b672a31118bffd0871ea07b58f67e3ee136b3fb2736053f30c40a5d9366c56bef88135497dbe3ef6a5"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_stick_button.png"
+hash = "ff94778c81da3e42e64d70bdf06f304753a93498e1766da63bbc8620094a9b247d062f306b2efb326e36027637fe52a3aa40d779211944804fe81a107376b0b1"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_stick_button_pressed.png"
+hash = "bc7c4a05c7c13c276cfde87108ee9f337239b4de4df6aee7ff2704149797f16392faae69f59827fa14ff5ecf729094696a5d89fc980400fa2087969ce4c7d124"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_stick_pressed_left.png"
+hash = "198f9e30f5a820587f5ab62e1f4dfb2877ed11cf53210dc0451cdcee264880705c79f2b1ec6e23cd350a4d4b58611ba7fa0dec304bc8365fb04b54fe04fb1db3"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_stick_pressed_right.png"
+hash = "f30fdf471b04e73033e0464cd22e9e5f024522e68d4b1d1abc38ad5f06f45e5834aa106c201a1d3903e5ececb48756ffc18214bf34a4073fe60f035840d6df22"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_trigger.png"
+hash = "390ed37099cfef70efd9bbc8751007aa04681e47405321b712641536ede2d591b2776c05c58bf2735cb955eef0a81006c8f8015b65637db634c911830cf89a1c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/left_trigger_pressed.png"
+hash = "196c5babae73d10fcaaa12cee5025474a7b70c046affde240e0e4792822fdf8814adc0e18629f14d527ee1e9e58a7315eaa0b515f99c93b877e1885ae182bf04"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_bumper.png"
+hash = "e3cacfc0227832140c9ab60acfc362fecf3c52c3677462bdee997bacbe9e61d854ef69424141f87cf869c3513e1a370b542f73917c971d6ac9a53373858a47c7"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_bumper_pressed.png"
+hash = "a1538fca898e88a2a3fab2aefaee141bd1bbc165c1d6bd35f7a5061d40138c867869dd586e7bea3c7b2d7bbdfc7e70dcaa3e470e5bb26a337196d46ca8a9c6c9"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_button.png"
+hash = "b55d899737680c50f0bfb6e201e11033e4a6a2909e15a5b2859172d52e71e62e6efa3b5df5cacae8948f6f41119d5704d2be9d2647bd34543cc3a0fbd5d10b80"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_button_pressed.png"
+hash = "dda8eb1b0501d428b4ef67ee79870c162a03a23b7fecb8187c26a22315900b34e000039c01a91c28dd3b15d538bdb5f49050ec1349116ce08c291889c9b00fef"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_stick.png"
+hash = "bcf56fc02d36ce5911bb594d417301976240dde5f4ec93201b172de8fbbbd8f679986cd3db8124a64da1072440c6af73c04ee3fc39411775a867cf16d061aa59"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_stick_button.png"
+hash = "dad4d22675c4eae4a8f6ed22d5e1eea6e43d87e5bb2fa5c4bd5d6cdbd8a5ea769b20fab4f24aa3596e2fc38e53c5cb63d281838bf512e6e2eff0a1c8f119fe8a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_stick_button_pressed.png"
+hash = "15a03ff77baed19fbe3b39199093c55de9742bab5c47052a41ae9f1350e81ad6f4047d1ddb0ed8c5419f98fa5f78c6a0894215b05c59cc006152bbf012ced1c0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_stick_pressed_left.png"
+hash = "116491b8efc12184da839794deb6162e532fb0681408660d87106f01afd5856b4dfcfd05eaed682dc81fe69cdd2d3fcdb2a0843712e4764db5195ba9470b9bc7"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_stick_pressed_right.png"
+hash = "98b51796d2959751705ad44354fc82edf3fe0fc4d124daa906f1fa990ba0ef661348eb3dd08a53b9c986df0cccf04f357a3dd12d03f0aa43884b64529999e255"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_trigger.png"
+hash = "c12f222956d894a9fe09d6fb20858456520be336d566cf728bd7aa2c7c5fd7e67ee8922bdc4cc91ef5fb63772e26d8c8fe66fc0b036bd2abe60f3fb0f311291b"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/right_trigger_pressed.png"
+hash = "03f26296144d4a8236b22514da7dd8b3232981843cdfbd8885174955f83f1f74e905ad92bfdac4379de1c962e5cff3d548d0119d3084ff599e0f5fba87308fde"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/start_button.png"
+hash = "ac598c2731b62d5ae33a335d973b4667ebc681771abde40519999fc7cdad1458c13c8943b3c1b5b05bafd2b14b77c80fe5fa34af41481a70b3d10327ad383e7a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/start_button_pressed.png"
+hash = "205c31183826d2fc84fe75e08324a24ef6ddb259861f279abed8a73a6fedfc82f878d146a33553641e6cf7e5f4553885f0618f33263adad535abee80749fd582"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/unknown.png"
+hash = "2555b562f915daa379adbcee920b44daf4838ad351445ff15c3d038b3b7e206ae9ad93d3a1a69f486752bbc16587d455dc339a30974219f7a7221baaedefaccf"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/up_button.png"
+hash = "6ecba8e69e7c11bd1e43d85e2e9acaf09c8d8fa1534786d59bc2a550241ae5f51d96454a0b9e48248c33801dc1988f1f3fc0a4d3c26d889d7df3cfb7312855bd"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/gamecube/up_button_pressed.png"
+hash = "49de35f258383ed981caddb75c2d4cb3efc50e8709423cf658908be59070a3e5f021ca479cb9c5ca59ccf470d22cc6a2f941ff8359d679255519e46c7cea7366"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/back_button.png"
+hash = "2b133b5415b81bd0c34b72d2463f921be8eadaf66d6fff944bbb8f312786c52f5d645253ef10dbc1d9072726f050543c4c3d183c462cb8e878cebc6e29a31d9b"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/back_button_pressed.png"
+hash = "97ce04af98bf192fe25777e9a5bd21e2ac0b59ec89df614694bd55a4d34a13ec254e02e56706c21a490d188b50034771b6426da9946aff1e8231a24358a12b8c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/down_button.png"
+hash = "9e44a1ee0664acd8dd6ba34d60889393e3b5b3f5257884693b959845a1c4c56176da2ace13290b34cea06ea612925995343b63c512d1339ebe903fcd04f992cc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/down_button_icon.png"
+hash = "d75eb5918f99abbfecad319ca7005862bf83ec455534b1237fcd44401674a960a9b006be22b02c008756b5238bf1da08d4055afb8c633ce40c8f5c4ecb2d690b"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/down_button_overlay.png"
+hash = "ccd158bbe7627f7b8869d327c6b2a47b73f9f34e554bb83fcd835b26cd1db3985e2b9a2f3c2f048aaf5a901707df9a129b2d7bce5104a4bd624cc1d6bb91ff03"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/down_button_pressed.png"
+hash = "cb52c7bce0d0b9dc7dbe940ab0e007ee07bd1262c15bffe6aa94aed6553ad9dbe44af552b4addc76e0b530359e2660c2f19cc0a962a2c3dfc5e406be70eb65df"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/down_overlay.png"
+hash = "0aa50b835bff424801af78ec466025a81cac1c0f175c4185ca0de51e0f2838c8a3ff06f0fda34a77fce343ea41452b7f694716c6562c9cca198c12da2df9396a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/dpad_down.png"
+hash = "a13332171197cd1cecafbfc5adf3ce9115d91ea5307889d4faeb5de0d1e1704502d91ae0c2e7f981a92ad0bba59847f8af0a176b9af4eae6f0a8d07cf343a12c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/dpad_down_pressed.png"
+hash = "e5a4ab1d11210cf056ceaf9b38b04358ea5add091e1902ab60f0c31f28c27eca872064534fc568df7ec56f79ad1a2259b43adffaed917d9f754295a8f3491b16"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/dpad_left.png"
+hash = "b8ea4adf5090e6ced6f88d9f4783143aa4ea09649cf9e6e7227608a92658179b55b7eb81b116b53df03d8ff2d0cab25d191b4ad5e57766fd566378f9e4f84080"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/dpad_left_pressed.png"
+hash = "df74d2a2a379c438e110529bceaa2a6824e97b2a848259865fe5951b95c481ae8eaf7ed5eb8282de62317d4abcd82559c32779e716817eefd63605aa4e6f7942"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/dpad_right.png"
+hash = "f90d22c718e91d4d86728f201ba19a8e63ce34770bea5512545ba8c69e48cf2c2740b160aeca3be1ecf206e38a8d5fcb3c945e4c4b3f94ff3614703b92e7fcbb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/dpad_right_pressed.png"
+hash = "3260d00a81568ee51b1686fef83d1218dd9d880492194bd20ff3b9325f1e22c22915f0bb8dfcf02c694b7b1fd90a22a95ea5b6a9d3d2c7bf09de85937c16c3a0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/dpad_up.png"
+hash = "0e0c1bcf300ca8fe6cd81a0f44024463af4a5abb3c51fb3c9008347f5f3e9f3e7ba37128119fb2dee152cbd89372db1f8340bc599e66637851c2d1a9ca3cf3b4"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/dpad_up_pressed.png"
+hash = "d32cb78aad8b6212cf000a6a5b3902a25b0ba1a22db4c696874834e82467bbf033bbea7bb44dd405e98e6853b4e1e9a5492b16553793cd1b1aaf9e0c750e5d54"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/guide_button.png"
+hash = "0db4cc4c0d06d3abf576f59ba4bda3d5e0aca6d5bdd10128f3d9d07ea2719822cc3435b58a8eb9928159b1c0872aa767c5a9e8acb48982c08cae151873ae9459"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_bumper.png"
+hash = "25f2067d11c610779e3dbae71f8f9c5adaf75ab60876fbffe896e1ac6eccc98730380631bcb32a395ecb8f127c8b54d93a4830fe8b4b1da7c9e66f3a36b15dfb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_bumper_pressed.png"
+hash = "31ee9aaf1697cfdf31b08ec3276ded79ba6bcdef604ab23e67558c47f93c5b80ac5cf16d5c5596ba2fcc686fe191542819393383a66cdd223670c42cc180ae89"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_button.png"
+hash = "cdd7ab80ce3708bdc9df864270b5f21269f439eac948a74c21b5cd24fb6b48aba0d2649fee31e037cff1c4841e7c579b08466217f1d0245b304e5df98b0fbbc0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_button_icon.png"
+hash = "887bebc81d8235c04363b1e359b7ba25545ff0468df310597a243167e95aba88ace7b9e5054e2196997983ba2f2084601672d496a609dd23330d501d3de82d48"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_button_pressed.png"
+hash = "3849ef3dd3d923369331e5cb8247d47d322796235730683402f6022390495eba61f9da07112b9d9272f848208dbc8a670ce0eed8354acf97f865b002e2a40174"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_overlay.png"
+hash = "3d8a2ec8ed2c935a819559d6f94d950b06c5ff5f8bbf81f973deac46544240f7e1e86f2ef2a1d5cc03d5e1241b05b45aa616cb3a494a850b82a6e4cf340efdd6"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_stick.png"
+hash = "c7115af726768c8cfdbb6ed07b2326a3a2af7fefcda844729652e091c4676018b6fda9046c569696a59bdedb95cef2083ce10ece95ce2044f2998373c730499a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_stick_button.png"
+hash = "f5cce28d874920fad89906a8ee910f892130b976220dd585581b9a6b2fb63fcdda9e6ef6eb36ad52e1727cd81a17ad307c14274aee81527076753d72f0a47a43"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_stick_button_pressed.png"
+hash = "cc62748205269869c1605b08d1ec5852b05b4641b588f18e1e413538ee2b72bb33586537bee4a8efdd246ece9133b5bfdde8fc48ad6c62f484fbd6c2498f49fc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_stick_pressed_left.png"
+hash = "c9d941e6badaeb0efd04805b82e57236bc510e2bacb7f0e0b7c325a3831f82d596581e8cc7dace413c668a9c70f9defc9922961a3a2db264bdbdb3ebdf30be06"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_stick_pressed_right.png"
+hash = "305197df4c2158fdf7ffdd6dbe9a022b2f3559881e7914c7cf9d8ab07d92443c7af94db580c71d4af31237126ddcd29724749c8e0bf4e54d44efd98d9229b53d"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_trigger.png"
+hash = "fddd91b8702b06339cc1abbb063f21d74ac9469212746d82500a2d156c48efcdd4a635de0a3fe25ec5dbe46a78fee14ee1d706c7a10b46b6690f8346851a3beb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/left_trigger_pressed.png"
+hash = "ce995cc2deb7ddf9e72cf35fe47f07094d80a5d02cbec7a8ac7ffee387b5d06354a7c3f76d59ed009233b343a1675e195122336c71496e22bb757c49e31ebaf4"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_bumper.png"
+hash = "d1ceea637c6d248bef44e95d715e62f09064f8cde65365db168337ac937828b49aeb71eeb2de83f07bf3e7de6557ad2111e97498ae419a21d9da33d50df117be"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_bumper_pressed.png"
+hash = "dd63c57cb25e86e6458d2ac8c1c774087bcf5238ebeaa6511c3cd3114ddc649437b7d3edc4a5ff0340f4b711557f4ddcc7a7d1f849c2bd870289374ff2fccb20"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_button.png"
+hash = "4b6c2056f53ff1ccd7e2486f45c5524197c49becf3110d7f4e061f9f072a0a8d97d3892e975de777981c912599f251f415ad40e9e87bb2e515de0fae654e0d8c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_button_icon.png"
+hash = "b80c2901d6cddfffd7e9221f945810d133ca43f84872ba4a377646b43d2e1dc4460cd92f51dd02d1fe7e3592a63b7dded544820db5c513d72c3ef746b759653a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_button_pressed.png"
+hash = "84a2a3561da49ad56a95a0013dcea77f78073dddc1372c2c7a09d9b17e9816a20c35c918d54a62830cd34054643ef5b9240af64805fc0c9090d8a2e93d91cb12"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_overlay.png"
+hash = "086a9f260f173821134c578c3563d8a9fed5e837b7935ea57372552002098e1910116f90e7c6ae2c972de83724d425366ac4cf98f18c9bd95098f26ef1babbb0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_stick.png"
+hash = "4a4b8541a79a43081fa0a683e2d57c6af080528d0ea61223a76b792324040049ed74b1c11eacb081a6a164e3640981eac4b69c81d12099c46e6c9a41c91d65ad"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_stick_button.png"
+hash = "67180c248d7702f61fcbb902ad34b653f9d16432b7a5aa3b50c780c7d0214f530edfe95b24f6a3fa4f2ed4a7ef0027514362b2eea36eb2a61f2c056bbcb5181c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_stick_button_pressed.png"
+hash = "8ca120dc5d2c76a935e3f12c7196fcda620a55df7599ab9436456f0cf48646f05e80c8fe9aad272f9f40a1a92b287546fcba04cbf521844fec8730bb3c4c7dee"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_stick_pressed_left.png"
+hash = "73e4de427d3803f89efa70d55291c7aeda2108dd1e2032b9efb2121a27e8004c3afeaba27668233565ebdea082e9df9aedb81b329cc3c1c91414c7ec4429987e"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_stick_pressed_right.png"
+hash = "ebb180e20e5e73108efed17ed0f355a92be47a58e89a4c39f9602fbf8a1c9ac62088d6bfdf16017eaa61c4cf22950f09ba9bc0690cc4ea1863ef8a48acc05614"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_trigger.png"
+hash = "361ddc8cb531e00984b4103389019e6545e8f5c862da6bfc7c65d1d1b714d16ad249e786150c6f32f7e90613c674644176afc135276949d5fb7a1052546924d6"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/right_trigger_pressed.png"
+hash = "1a004454f829921fbcdd83175f6ff3af79948714ef88ef5f520b14260f94c809f0ff1039e31d90151dd4dec675f875b4eafc0330bede7118d9b5d1fc505a31d5"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/start_button.png"
+hash = "19fb7574c0387e7d77fe5968d3349af90821a63972ef67247455a882c827291d5f0675d9706a39e9c7d06884009a3186c1e43e06b5dcb5452c14217930a8ed0e"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/start_button_pressed.png"
+hash = "4f0d447166abf04f99ae402f8eaa7620e893c302d7fb1b390f458396189df0db1c2d0d731944fa584bfe5b02b3392fd9976d6da2c750df8f1f5b4c39fb03e78b"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/unknown.png"
+hash = "31f164a2d9fe2f5c7c0237986ab01c2f4108dbc019dbba1f1ec2e4794729f86cdda04e2f943de0962f2ffd4d72da279b1964751a2f0ddaa46916918fd109aa81"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/up_button.png"
+hash = "ef6a787e63d56efb46da0744435dad847db833a43647060bd36e065f81a7e5206eef02bc7ec41cbd65e0a051d1117f3156c1280a9c6b725730bbbe4fb99f0eec"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/up_button_icon.png"
+hash = "e3457b51ddbd7b2b53ec739d8c3c0669a1e8691e6d3f87b9cf6aee8fcc88dfb1a8673bba9c3c93849c7e729a325b9c8eaed38465adcf0594a5f385fc0bd59500"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/up_button_pressed.png"
+hash = "d52ea2884b8f7505c97006df984665c22cc702b133ab010059e40f87f6d0c636f19fe439e4eda309f52090400f1eb8686b09d397b4d90804b3599cc9fdd05d41"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/x360_old/up_overlay.png"
+hash = "4662cb9bd0e91142a8876a8d90874bdc35803aed9b80cc76afd7cd3b4c5ffb25d7673e986d1d26523b92ed86f83dc8055a985484c1e228870cc4b0a38f356864"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/back_button.png"
+hash = "ce4c96939ab41e7bd5a46488e50d1dc868cae2c799b0c416d1789d6cfda212e66a4d6efac2c35443bc2274dcfd06e3d1cbbbb79011612cebc8235148f15f5759"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/back_button_pressed.png"
+hash = "62946a486fc98e846dcdf08e0714e2a19c54dc625fa0f9a90a5bb1ce8486282da80b848e50d497b8463ba268d7922ba7b8597a509c61f0a151be2359aa151446"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/back_overlay.png"
+hash = "c94665bdf708882101639421abfe07cdc012fac1300a437e8f88e522f268767048b2e307b30d62527da1b315b90c5bb55b3475785df1c389300e46ae64eba05d"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/down_button.png"
+hash = "1aa460db59628d93339231e341749e823b350c991ed79abeac24e539363dde14590f86c852024953b73c4a6f10c0b4f379c1fb4a876a25597bb04d00dc2d7256"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/down_button_icon.png"
+hash = "cf4e5d557835487f18642fc578ab0f56a32807001bc355ec07d864f8f343a3c63e637f3ab0c4e431aff6c62d71390bfda2ac7aefe8ce8dec28318530c7e76561"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/down_button_pressed.png"
+hash = "822b98e39f9896f0686d877483395d91cda0f45ece73585f4002899d7f45f8e697b3ec5b457d265626fb71fe0e6848f91ad41e37dc4d233183603c65f554d2f6"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/down_overlay.png"
+hash = "4f6d426ff8a8f28b9386767d530f7e8009a4181abbd209095a2b368882f7138646a4e6acaa8563618192c5bbaab25b60468c74521e1df70219376aed6718f13f"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/dpad_down.png"
+hash = "cc208948bcf25c3cdd98abf2d56e799d67aa4295d490cf2661f4d582939b623e2beda04ac4d415b906a30a19279889a19cfe36dd0c43868f22216871888c067c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/dpad_down_pressed.png"
+hash = "125aaee85fd36a7c871eb5f4d858f90965503f6ab3215587dd1a06abe97d2eefd7dd487d12293627961ae554470bd87cb56b6a87cb3dd2b0c2cdd4bed8abdac4"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/dpad_left.png"
+hash = "3f496e9165579fb8f9a2550acc436a42d409f48c7169ce5e4603ba92e532531515e993ebcccfe39dae38e17890178d24434eec8d0d648199190419e16bd3c579"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/dpad_left_pressed.png"
+hash = "e356e81aa2c371784ac7166d4fc89163b5fef005fc6206ffe4ef4bba7c8dcfd4494f60c040422d5e85d3fa8d61ed3f63d73cb4b99779e4cb72dddd65376f2428"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/dpad_right.png"
+hash = "e7616c9a6d1d22944bd6af1b0cf48f5ecd9aa4cb85e0afffa8bdd3110bec20c82554ed3d1088b6403e4f35213326590073d3f2ef6f770e4d74a03ca44c9a4210"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/dpad_right_pressed.png"
+hash = "d8861f83906ca8433d1ac1c0f46102016778e970d75d7c8f62e57a4a8c56c282bb0f9ea0e92dd2e3ea47a68587486bfc616bb2ac20123f2fc5c471bb5c24c1a7"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/dpad_up.png"
+hash = "f7a90f726ac7b6db7c1f735720131ccb0d5857ecf9d3797fa71ee9fb0d2534c3d561df817301e9a312387cc9a974290486c67a5d030643991b6676c751e257ef"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/dpad_up_pressed.png"
+hash = "4e3cea01f4f0e830c53eeef783242be470861769940d516511df1a90a087d2c1e4bf2cbb77ecaa3c84402b17e0954fcde327f0246e62d631e0c4e3f8b45b7375"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/guide_button.png"
+hash = "859b99d3500b9d88ec82a85ca31898b9a6269defe33e104bd8c7f8db554fd851b0226fabe019f8a85e64795bbd5dfec6aa3acc6368a024bfded6c4c01654fef0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_bumper.png"
+hash = "122ca1f6f518ffc375e2eacb90318d83e35a66b8f3800eb047f36c3e4c05d2d20dfb13330e3f07e613d063416985df5b8aef21fccd603829a4ac261a0ebe9e92"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_bumper_pressed.png"
+hash = "9aa57134662db7642e3a2157332bda69d86a865d23ccb0bb11dc4a7efe45ca1a877f11b290d3830ffe33ac9692657e5b712400a1e9d610e369f984e40908c00f"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_button.png"
+hash = "60e6280ec5b4e4dc7fe93add26edb19fe1a98ec5df1adac876d61d9f94537b13f604ff09e6690130dfa2de8b7c9acffe968d823cda091818893293ceacefb232"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_button_icon.png"
+hash = "ca639c4c0d387ab3d5e6ed2f0035df5bda451895858f248f1a0cca9e99b20f21c9754de5cb2afb79d8fa08b0ced0b5df2246f2deb15f7f83df871135f4949d15"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_button_pressed.png"
+hash = "42dd8b9b9de21ce92e258931c88ed4f27e25a5f6bbe0ab77d5e82a0123e67808c4c38898cd00e5163896abf066369dfd44ece247e0c34133cea971097524b579"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_overlay.png"
+hash = "d5fea401d8ddb045f80dd7ea67e4aa5cc438b5ba19c129a98068584ba9cbb3d3220f2bea445eb9d663aa89cc1e8565df505d40a4eb132b0db79bbbbc3cdb61af"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_stick.png"
+hash = "bfa996e743f1b2d1b21999e0c608824b8eb5bb5fe5baa30b65ca991992c359dc147038a8d8f05496aba55b8a31bfa577eb6bb70cf6dc71758451b1e175bb6728"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_stick_button.png"
+hash = "66e370deeb0ebb04716f5111cdde02055e5d68da8b0cb5bd54ae4c34a3df2adff59a7650780182b90d7d50538178947f9c2445ee030b511528858e1d009ea6c0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_stick_button_pressed.png"
+hash = "cc62748205269869c1605b08d1ec5852b05b4641b588f18e1e413538ee2b72bb33586537bee4a8efdd246ece9133b5bfdde8fc48ad6c62f484fbd6c2498f49fc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_stick_pressed_left.png"
+hash = "c9d941e6badaeb0efd04805b82e57236bc510e2bacb7f0e0b7c325a3831f82d596581e8cc7dace413c668a9c70f9defc9922961a3a2db264bdbdb3ebdf30be06"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_stick_pressed_right.png"
+hash = "305197df4c2158fdf7ffdd6dbe9a022b2f3559881e7914c7cf9d8ab07d92443c7af94db580c71d4af31237126ddcd29724749c8e0bf4e54d44efd98d9229b53d"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_trigger.png"
+hash = "690c855cd36e670cd288cda46a6b8c2379baefe7bba920274eae77d68fbcc34391f16e0f0931a58a5023d94fe1a32cfd8ff15244781b7227a79795fdc644dd2b"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/left_trigger_pressed.png"
+hash = "cbd358a57efde09be5d6db55dd37df7814ed3c9bac0c554cbb748ce7f89b4c4f38c642d7198b9d71df90b4bee14760db88f8e86eb601a6be1ea6ed7d872ac255"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_bumper.png"
+hash = "fa2f4c569c945eac95bead790ad7cf4675fdff184c483605100a0c8b25ed997f7fce9f84180b4666815b608a6d8f416df5325192756088d3f648a967591fecf8"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_bumper_pressed.png"
+hash = "9d168b6e5fa84eee8863bc562363f80abb54f10edeb248a3188e7bca4658d73dc4011dc621cad1ce298be5517c767d5b4c16138b8fd4a754e54a9e019edd3b65"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_button.png"
+hash = "2ba691241ec0a51f3beaef9dd1318a0b32f1e12c3e7ca8d0d132a8677685ab1c42c4e442c72f9c4e454a7540654e0d6cb64012c02eaab7bcdccaa1cbd3838f9b"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_button_icon.png"
+hash = "96e050da54a35bb1897b79e8a4596943aeb3fd7dd698caad9fa9af40a7e5bfad72e73b2a7bcfbcee03da89010a2c01d4eec480353e07bf14893493f715055e34"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_button_pressed.png"
+hash = "7b720d456f384f01b275729caa3003e92c7de28bfc7564ba81757751540738ab20ebfde329af621f2665a38e111ce2d61a796016ee434ce8cb0adf428e3f48ab"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_overlay.png"
+hash = "fc1eef7851a05fe8d42f86eefbd8a8b19d0ef0c7888dadfa94a0ebc74aad5b2de500f84baca12210608ab1ea23e1b76dc3e330aafc3202b903d51fad9fa9df07"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_stick.png"
+hash = "a4e62d3539b540b7e4420fca90313830390f300d93ffd205ac279186f192c98251385b1bc75eda68781ec3f9d5aca436500ed7d4c17afe52c85a06550a6ec8ca"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_stick_button.png"
+hash = "e720dd4b41c8f8699470326ede76e318e8d4c5f018a6d117511f49e0cf8e18a35578b5a43f5c2418c649d1d41d8be7736acda9ed4aaccac1dd9477d13c93dd10"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_stick_button_pressed.png"
+hash = "8ca120dc5d2c76a935e3f12c7196fcda620a55df7599ab9436456f0cf48646f05e80c8fe9aad272f9f40a1a92b287546fcba04cbf521844fec8730bb3c4c7dee"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_stick_pressed_left.png"
+hash = "73e4de427d3803f89efa70d55291c7aeda2108dd1e2032b9efb2121a27e8004c3afeaba27668233565ebdea082e9df9aedb81b329cc3c1c91414c7ec4429987e"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_stick_pressed_right.png"
+hash = "ebb180e20e5e73108efed17ed0f355a92be47a58e89a4c39f9602fbf8a1c9ac62088d6bfdf16017eaa61c4cf22950f09ba9bc0690cc4ea1863ef8a48acc05614"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_trigger.png"
+hash = "db02560e7e8ffe21ad32cff44cf831e1d2734e16cce9999dac22e178fbc6207c72c45a2d90fcc6c0c42bc7072de0e2aee28a2e7821479ea12fc038bbcbf33402"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/right_trigger_pressed.png"
+hash = "6409bb6ee36597a86cb2713bb0390eb93218576e164a21f5e49275a40f7f21aae1446a43e0f0b557d8f2375d398c76c417ca0a3cebe5c33939b29985decd8338"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/start_button.png"
+hash = "c2e8f1c074845cc7174d14afa8ebf58708d03b019f1266e36f8ab5855b37e749fdf44913d2f9f671f0b082dbd4d403cb8ec71978b9318911bbd7b964263b3a18"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/start_button_pressed.png"
+hash = "6ccc8461bf6d95ade17fbdabbe34f2488ca96eb2d3955c1e1bc3343805d90ce814225d7896fe100cec155147c8305ff8b299dc46dfcf462957f670fa1c99a5cb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/start_overlay.png"
+hash = "bde5c23fc9867821270f1b05cfc59e18b3fd5d5b3751280a554b9666cf4bfec834a5ef3667e86622ea6400c6e85ab9de1126b330c8939a83caa6663db58eb5c5"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/up_button.png"
+hash = "c85f73467acfed84cb995866abb06e9a38746a930816ca744c1bc56411bcf7461fe737d2e1430bb4bbc1192fce93abbcfed1d833c87df9a466ec13c5ccc2eeac"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/up_button_icon.png"
+hash = "8b346c05d670cecaca6a7da878207cbc8063e9522c131f77fcdd5f7e5b3eda5619ef124e44ba11f4a9bbb19d44a37b69adce2669015f51684d7124944c18a734"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/up_button_pressed.png"
+hash = "ddbc35c2b6cbd326e8c347dcbd87361f827645c43c3233591107ca27922c8d6933e9190f2c74cd868cc02ea613cd285b433acd386c39f4fbebaa2c2c73247b70"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/component/xone_old/up_overlay.png"
+hash = "b5a71b140986f61669bacde480ef8880bd450ab707b28dcb20bdbd9af339e7087df2a7c1a43d3b0bd3131fb4fae297dbe1109d84037bbee4e875c7f5c0713586"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/gui/title/minecraft/gamecube.png"
+hash = "a7178726a2d60ea7cb2615f8bad9543bfafeaf5fbd02df97616be6a9902253f35f29b93198cba6334aba89c311a505fec9a1792492662ed277ffb5fe36cbd85e"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/gui/title/minecraft/gamecube.png.mcmeta"
+hash = "d40e2c40a83a82ccf2e0818110f8b5e52011108adea346b9f19bbe949f26710ac45bb7807473f3bd86eab0a05595cf3d60df4dc0e92a30058679ea196bb0bf71"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/gui/title/minecraft/xbox_360_old.png"
+hash = "a5430b807162487a403ee6b23805dc436f72ff83e1736a6d2f7d1fff8a41f209e033c3b01edcfc335a7dba1c5cff68e18414528bc0c60d612f226c4f52aefba9"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/assets/legacy/textures/gui/title/minecraft/xbox_360_old.png.mcmeta"
+hash = "d40e2c40a83a82ccf2e0818110f8b5e52011108adea346b9f19bbe949f26710ac45bb7807473f3bd86eab0a05595cf3d60df4dc0e92a30058679ea196bb0bf71"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/pack.mcmeta"
+hash = "8bc9a5b45785337b11bee08747b09ecc4e80240067f047a147fa011dcd3a2e375c38c5462f914227d161dda404711a5917e2bf82174bf7e3a47046d85afe5d20"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/2000s Edition Controller Tips/pack.png"
+hash = "b50ff79901bdf1854ac445bc090a98bd901a05e3000acb702eb9376ffcba7bf5bd28dbceee768d39b83618d507db07a33957f1f20f25fc9518da11162f5aa459"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/af_za.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/ar_sa.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/ca_es.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/cs_cz.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/da_dk.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/de_de.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/el_gr.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/en_au.json"
+hash = "beba2b33e6c0e93cbb5e02bd0e2f43db7b7348d5451157895ea2ab3df3483d9cce9e1ff6f960437366ff2c7c323f7c084027cfc3123ee1fefa9c480f34ac7883"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/en_ca.json"
+hash = "beba2b33e6c0e93cbb5e02bd0e2f43db7b7348d5451157895ea2ab3df3483d9cce9e1ff6f960437366ff2c7c323f7c084027cfc3123ee1fefa9c480f34ac7883"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/en_gb.json"
+hash = "beba2b33e6c0e93cbb5e02bd0e2f43db7b7348d5451157895ea2ab3df3483d9cce9e1ff6f960437366ff2c7c323f7c084027cfc3123ee1fefa9c480f34ac7883"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/en_nz.json"
+hash = "beba2b33e6c0e93cbb5e02bd0e2f43db7b7348d5451157895ea2ab3df3483d9cce9e1ff6f960437366ff2c7c323f7c084027cfc3123ee1fefa9c480f34ac7883"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/en_pt.json"
+hash = "beba2b33e6c0e93cbb5e02bd0e2f43db7b7348d5451157895ea2ab3df3483d9cce9e1ff6f960437366ff2c7c323f7c084027cfc3123ee1fefa9c480f34ac7883"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/en_ud.json"
+hash = "beba2b33e6c0e93cbb5e02bd0e2f43db7b7348d5451157895ea2ab3df3483d9cce9e1ff6f960437366ff2c7c323f7c084027cfc3123ee1fefa9c480f34ac7883"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/en_us.json"
+hash = "beba2b33e6c0e93cbb5e02bd0e2f43db7b7348d5451157895ea2ab3df3483d9cce9e1ff6f960437366ff2c7c323f7c084027cfc3123ee1fefa9c480f34ac7883"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/enp.json"
+hash = "beba2b33e6c0e93cbb5e02bd0e2f43db7b7348d5451157895ea2ab3df3483d9cce9e1ff6f960437366ff2c7c323f7c084027cfc3123ee1fefa9c480f34ac7883"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/es_es.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/es_mx.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/fi_fi.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/fr_fr.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/he_il.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/hu_hu.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/it_it.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/ja_jp.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/ko_kr.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/nl_nl.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/no_no.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/pl_pl.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/pt_br.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/pt_pt.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/ro_ro.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/ru_ru.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/sr_sp.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/sv_se.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/tr_tr.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/uk_ua.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/vi_vn.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/zh_cn.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/assets/legacy/lang/zh_tw.json"
+hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/pack.mcmeta"
+hash = "42c67cf8efe59eaf1af638cae417c08e946d3416666d6875068db038da390bee047951becc09d688f2dd1c27dca962802470167f65c4319fdd2413a7efb23534"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Clean World Loading/pack.png"
+hash = "990fb3dfa65e6bb731a9a7d5afac1e6bbd07d6ed9cb902552b9bc2c5783eab37e6671bff9aa1b6687a5f42735dfaa175503cad2f384213b08b7ad74c974f1b63"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Community Splashes Pack/assets/minecraft/texts/splashes.txt"
+hash = "8f09c517e1a269e9e337aa5e66cc418d465543ee78c4a96941b2cafc6b9dc1768a2875c835420bcf7df1d6178e09a0e775cef048a46d50a3e2e187a1abc58078"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Community Splashes Pack/pack.mcmeta"
+hash = "1dbd9a4768f5ab559c77fa2b6c565bbecf1a5929ef20187536f4cdd7437a555851f4a65c364a4167b302141abadfcc75abec3c302b00f41358ac4e0e1e85a980"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Community Splashes Pack/pack.png"
+hash = "b50ff79901bdf1854ac445bc090a98bd901a05e3000acb702eb9376ffcba7bf5bd28dbceee768d39b83618d507db07a33957f1f20f25fc9518da11162f5aa459"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Fixed Chest Models/assets/cem/chest.jem"
+hash = "4fd2398b181385d3dd5a069b1e0c20482140f879e9aff9f549496c5ac38fd81b541dbb22cdd82f5a350c2129f4809bf1ab8ab0088a40f189f0563f14930122fb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Fixed Chest Models/assets/cem/chest_large.jem"
+hash = "b7b12ade8a3edcae0676708e086a9e23c3db0f5cd3f439cae601962ad83085296752f05f1aba0bcbdfdc657327b6d3b6fcb6ab3e168eb415ad4eb0545f89f155"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Fixed Chest Models/assets/cem/ender_chest.jem"
+hash = "4fd2398b181385d3dd5a069b1e0c20482140f879e9aff9f549496c5ac38fd81b541dbb22cdd82f5a350c2129f4809bf1ab8ab0088a40f189f0563f14930122fb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Fixed Chest Models/assets/cem/trapped_chest.jem"
+hash = "4fd2398b181385d3dd5a069b1e0c20482140f879e9aff9f549496c5ac38fd81b541dbb22cdd82f5a350c2129f4809bf1ab8ab0088a40f189f0563f14930122fb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Fixed Chest Models/assets/cem/trapped_chest_large.jem"
+hash = "b7b12ade8a3edcae0676708e086a9e23c3db0f5cd3f439cae601962ad83085296752f05f1aba0bcbdfdc657327b6d3b6fcb6ab3e168eb415ad4eb0545f89f155"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Fixed Chest Models/pack.mcmeta"
+hash = "10d627500c162a884255e523bca82167e65accafa4b08f160e313d58a18997a13a246cedd6b941d7ca1c1a97d0cb6479a6310cdfb8eeec86796fcad35edfa983"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Fixed Chest Models/pack.png"
+hash = "b50ff79901bdf1854ac445bc090a98bd901a05e3000acb702eb9376ffcba7bf5bd28dbceee768d39b83618d507db07a33957f1f20f25fc9518da11162f5aa459"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/intro.json"
+hash = "b68228998a41ab8a4faab5c5f4b04dd1caf35b1ba8ca662cc350bab559d5c522f50b55d5d71c725b505e85d0b62bd24020fe9be56eb46a3a180bc9b1b5350232"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/af_za.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/ar_sa.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/ca_es.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/cs_cz.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/da_dk.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/de_de.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/el_gr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/en_au.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/en_ca.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/en_gb.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/en_nz.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/en_pt.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/en_ud.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/en_us.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/enp.json"
+hash = "f429540d95665469aadf7d0d616e255fea8354edf375f5f4b684a95462f172468005f9f9afd03e4ac12fd14796a5e57b9762504f5f932bde971a1c21184b296a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/es_es.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/es_mx.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/fi_fi.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/fr_fr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/he_il.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/hu_hu.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/it_it.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/ja_jp.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/ko_kr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/nl_nl.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/no_no.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/pl_pl.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/pt_br.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/pt_pt.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/ro_ro.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/ru_ru.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/sr_sp.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/sv_se.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/tr_tr.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/uk_ua.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/vi_vn.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/zh_cn.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/lang/zh_tw.json"
+hash = "3bcbe9e657de61f5c667843782637412e896c7b19dd2af4b4ab08887b6e58b0fa87cbb9bf054a99bc357878eb8a5e67331872903cfd7e69a9f5a0e86b2a0fbcc"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/store_categories.json"
+hash = "b0e69d7e84d2f7484dda78edfe123cb97bc01525edb18848e2dad2610ec730145160e4420cbdedaf3f849759e3330b88fca020a7f8bee70ec955acf28d2bd931"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/texts/tips.json"
+hash = "7abce9362a6e4c1276e252d036f61507073a21bfeb3bf6fd0e413c3e0bdf65b3b767e2e7cbb3e0661e141d2eecf6ccf663844879589b9f146c6af0d38184b838"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/comparison.png"
+hash = "322044b92ddc9bb0af1e3e0bee75ef35e08acd57236e5c9deef35452b86751d0a17daa701373fb8dcf762a4d51a7233bad5115a32f034911a5a4b67b29dd933d"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/adv_time/icon.png"
+hash = "500f60a60483e147f3cac5cb96962927fbcdc964c5b7fba3ea6863abadc96dada7b8432e7f80c96f5af6f730b001437271eb41907ebec9cf3bf83a8294d9414c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/candy/comparison.png"
+hash = "1311d87bf53d9c01efea7384140f54b9f719e799ee74d2500a74930d1dd8e36ec74dcf3f4315949df4ad367f990d0bff5f8d388355cce2ed5625414a9df64693"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/candy/icon.png"
+hash = "f5639439b74b9081e8c199bfbd8ff38657bbda6afa9ad7ccb524cab658bbf2c6888e8004670e960b181a18e5b36bc94b8225064f82b4db1d243e91bdcce11bb2"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/comparison.png"
+hash = "5949c2faf2f77f23999c993ffcce4496e378eae38999ac12dafb714cc5f4d64154cea17a417130b6034f8151a26ad3abed4b7f8adc928ed1fa86119a37b2b57a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/caribbean/icon.png"
+hash = "2dd735a1d9e55489b005539e69009ce096d5f20836729a0a97006eed9526a459ba6d08e44ddf66e8a0d0f11b8b00b3f6c6140b54c566d25d2e0f8574963d2768"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/comparison.png"
+hash = "86f45ea3bc626231ad488fc67462c098c74b6c93aa659a2678dae43ba2ae869322f26b53544296a2f1ef392385edb1cb9559d1bc57269e266cfbb51a03efcdfd"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/cartoon/icon.png"
+hash = "ec541722fcf2af5d522e0ad9a484a5debdaf8f5d936415d088e62235954dd90cbc9ce8c9da7fc06cde129d59aa3673445edbada5ad6bbb75379f58bb0537358c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/comparison.png"
+hash = "bb597a9e28bae25c59ff2d11b66423bee422efa6628fd162411a001742e110207c17c99fbee8891eb8140336ec1afbf49bbf10702ddb60ccd33fe2062f852c22"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/chinese/icon.png"
+hash = "8ba28e3152a021d22f8c992c575f7f8b6ff38a121c69aebd0d0b19a425add2b6f61ee0a569624c197bea3e9505191bce334963bc63fed93e8d4fd6087f95b354"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/city/comparison.png"
+hash = "f34f68996dc4fcb3fbdec5024ae9efc474976df73272899250a50d22698dd2bf340dd47e1a75bca7190d637c1391faa6e0ef60885be80f58dbaf858e4c929326"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/city/icon.png"
+hash = "91b57153e58bb4ee6299cf901c780061353c6ef1d31b28020097e94890e03c0f981da0497c8650d8976f1adc71477e144b0e492ece1d0e128af24123cde93893"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/comparison.png"
+hash = "f5db0b90fc433a89d6457f23918712193af9011d8c3871174383a36b29b010da7027017649bd37751d2445350890dab88723633237ae201599dc944076c2bb17"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/dragonborn/icon.png"
+hash = "cf7bb1aad3768f987efaf4cce86598ac83681b213393c191cd4327cc01a17651a13af42aa92083bf6d35df5ceeb0951f0202478d5e9d47adf74594d779619f0d"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/comparison.png"
+hash = "bd5d13d7496562a2738c66cb7f0ea4f51135a46f344564ce1d880ad359d18ec21a0764febdf4d653b008e9e665213dfba1cb97f6b7ae27f8624afed65ff942a5"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/egyptian/icon.png"
+hash = "92b376a3fb41b56e987842ef9a1bc8e257ccfabeaa544726a250ad0eee8e2f83231d09002eba5e55fd2d00f65399f192f074aeff004cb3ee5c27855dad8e7a51"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/comparison.png"
+hash = "15404fb0b6d78bad3209b398a85d9fba7b0bc007fda7d74a18c16a58146d25d4853d9e27d3602101ebd1674f0d41c5418c3e9e91cab94298cfd4884cb8eea0b8"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/fallout/icon.png"
+hash = "c7271bcfc3c3787835d08982bc4fc21548e01579508bd849219969b49ce838d5aafe70daf99b9605c8d88aa6d84ca975c15365fbc9fe82587679516f644f8544"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/comparison.png"
+hash = "a07c6b94e3a6643903ceccdde8f3f9f4136a8b61d60e2a6c3c082426f466b8cab45d1903c63e8698ed7488193609ad3aa3d26b92c1bd10ea13f414aec8c9cf2c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/fantasy/icon.png"
+hash = "16386b8f1b197788f812379bca561e304481d9e4af5a0e51d4ebf8a88d92bb275fc39529701d652b30ccc16a69f16f4443a0c09383f7e9529aa989f87e4cabfb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/festive/comparison.png"
+hash = "8fa40f9a9338b15a5ab335ef7b5d3c4d81250746acd4b6051f3fd287efb3b770eae923472bdf9d94c72f6969f8501dddd2e4038fe38f1de61bb08e04d6148c63"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/festive/icon.png"
+hash = "6d0325efe582c266728563633cff2b5ecbd230633afc4f43542961ce42b4f569258a0d9e1b876aaf7682be0be095c881f687c7572464f9710a2d9a3419fed3ac"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/greek/comparison.png"
+hash = "0f6d709550dd8720700773c4cc8473c5d897b56dd3301d1749f96afedfde9127c8a0c0e03fe29f31d2d877dbc2ede95911dc90531319287ac37db2702b47d9ee"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/greek/icon.png"
+hash = "9eb92be3b5241335ae6af8356577d1c5fd9950d181ee88f1d68eecb99cad061ca95ad166c2f618e54da4e9a05589db084540689bcf2f8dccf504d876c6155727"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/comparison.png"
+hash = "72a69fec015fad6214534e34635e378014ae0c3bbbbde1c7b766436cdc363a918ee40695172f3e2bbf71fb1e42ad2668da7cbad8f3aa1f8bc17f9bc56c7e3d53"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/halloween/icon.png"
+hash = "89d14016013496fb8f4150470c5e908c64a97010115797e1788372276190e310f560d83296100b0aa2ce6761077a8674141f76225177705e6a2bdf457e67f98a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/comparison.png"
+hash = "480f1b2cbb46d7ca66d511bd590bcb43f49c861b263821075e2b369456e0095a6898ba4bcf7f79bef4ed4598f92dfaa05ff95b40241b348f14689d26320cf13e"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/halloween_2015/icon.png"
+hash = "4d30d52fed89acd02d563b747be74a957206bdabe9d3c90285f4e21b2b8fafe4d82c95bccd4e53c029463b0c5a7a4bdaa15f9e03d2b56d09d7d29cba7c427529"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/comparison.png"
+hash = "fe9ee844156c09f5685faf86ca51eeadf605ad1266f77bfb8b36d7c699aa8bd6317cc6efe7ab18871b44dadff174d3800808b1f02c68ed6e4a655b72ce9ab0bb"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/master_chief/icon.png"
+hash = "3931b13131e84a16cce906709f164854c14e428340e66722abf5f16e9982ffc6ecd07bc93dc9ef60dfaef7583c373624809de4668e533e18a44f5b5e2643ae01"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/n7/comparison.png"
+hash = "3f31f47cbfd7a64f46c5b5d26d1d3253d92c68cc1cbed08e1fccdaa663213cf40edc2d41525d0b73bf30a12f88e82c6e7e244cc3aa8a35028ee5008605f2ec14"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/n7/icon.png"
+hash = "5b985c1bd048feae8718f1e526f2294a7fce6bc9e208749487210f34b98dd3c15078c58b7ffc60fd296791ea6d183609a5c51fbd366651f0845da9fa11b60919"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/natural/comparison.png"
+hash = "2497e8e49331c4b0ea3ecffb2841e1595138dc1366246ed7df60c69d3d5ec28dea2b5e3de5937157c2c1a7003f13c1360069efd0e9b6882eee7ab9a46a7d38a4"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/natural/icon.png"
+hash = "2eb75e3176a964234c7e894f02a78d7370eebbbb0bdfbd616bb89ec4adbdeaaac77ac56859831c5fd93eb42a78ec967b492c6c110fff1d73ee70b9bf13b97c4d"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/comparison.png"
+hash = "732b618b57bc532bc4f543cd582dbb11a122b8a3099c20208578acd4e2818bfa573dde8fd4ea25e873cf6035c00c52a16c048958a7eb55fdd33921b2b37d7f5b"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/nightmare/icon.png"
+hash = "cf55bdf263c98d5dffb295bd6ac9e23d8ed4d75ef933fd286d94b95cdbd05a06d3928f28155cc32b57582b64089b2bf6ea9720320a4bb77384a0cd4e01340453"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/norse/comparison.png"
+hash = "b0dc3a192279c951cfe487ee03b9d50386a26ae1aa071bcaaf9736c4ed040a507396471204206c8b39f31c4202690dcab09178d08044e0b2e1a179c3ed26d86c"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/norse/icon.png"
+hash = "26fd63c6d1607b07cd4bfa3ca29eb1a2f14bec20602c7a27190215ce333dcf07aea3e0afd75e1989bfbae4f04ba2cf676acbdbe8afff89712fecf60d1076b591"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/comparison.png"
+hash = "b1a243e54a6812d08cfac68abc3ce5e036918e3adc44dc4dd5754e2a7000e86c890bea5bf830f8c492d0452e6cf90f59b01418c15c00b6be2fe32bb6fa37e777"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/pattern/icon.png"
+hash = "3dde7df2027e2118cb4e12a590fce63b5ea87d9dabb2ae604a7c63232c92b09b5e65fe548e6fc257abde4374c728118cd3a2d3957477a12abc9a9e33262c57ef"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/comparison.png"
+hash = "6fdbfc539e3278218d79b553f13835139bbba0d94122ba161192b81927776eb23d373c5e9337ec96094b598a38bf76e306fd338bc7d7a6298c62c67fdfbd1a22"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/plastic/icon.png"
+hash = "ba3d23ff63ca302e8e7987595bf70952ba37188bde42ff63c57942715a691e26c188da362a926fc7ac92edabf757646c7ba05d823d4ed2e9ec45c4b71b146e98"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/comparison.png"
+hash = "36b36599b968406769c13d832d4f1c8c9474470ec2549de54344d0cb19375c5252073b5b3f8ef8d4fe169258cc1f3ed3de53849550420d4dfddb2d4bcb7ad877"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/sackboy/icon.png"
+hash = "f55a6d3c4d551c40235eefdf8a707ac0c854f4c9a5548d71f9f1b954ec5a22298d5bc9df782591dce597f43e67111d84ac606fb2fe027a95cbb1ce9c288e9fc2"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/comparison.png"
+hash = "2f14db31d1b06317830fae63f9e088e28b687d502089e7e90e47ff5fabd87d30f09c71d4455d835290e22784276676eb56f6484556730f2e4bc231b28adb34b7"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/steampunk/icon.png"
+hash = "305631485710dea153e8a19428239a9dec2674923b9c10b37d9806607754566130ed87f9800b931689ecbc3515565e962c939ff232793b87183c23a8beab75f3"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/comparison.png"
+hash = "3a1cf26b219f39736200d9d373d3fb3e3125769e9f0a4b166d72d4edfa4f9e3106219a3b57febe7a3243eb3b8405cce02d99ca86f2e36b247581c595077215b0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/steven_uni/icon.png"
+hash = "26694deade781e67d4927dcaf3b6c2f4cbd0f0f430fcda94edec5390384e7d021ba25fd0987754b225728ce1391ba475a9b03aa2ccdbbd4e3aea57be034b776d"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/comparison.png"
+hash = "37c02b01d107228fcd8466647339bf882044ecffdaa0a945877a1342d0c7599a64a5d024b8bc5c3d79c9b72b59b6dab9359f9e92c923f28e9a9cf874d8a37d33"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/super_cute/icon.png"
+hash = "2390da11d6df8adfa7488bf76e5d23e49d63a01dea5592fc5bbcf39b135c6e71ea083f401ec6935bf3c745c3214235bd7dc80d140a029ccbed04ab3bf2c8efed"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/comparison.png"
+hash = "df940f51be09a55e11363a7b996afa46ac08db8d1aacde69a46b5bf4b33ec2699e385085552ca7d8a7a2402792e443b8aae89aa11dc9c0c86120da8f2f025120"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/super_mario/icon.png"
+hash = "469b6cbe56d88c1306ddb963f924dcfe5bfca7f81300ae0ff37505aecef4478e41756e493c3ba74a9c9a3488987734e687b9c8197ed6444d2272d47a12ce103a"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/toy/comparison.png"
+hash = "9f06ed3f26f98e585920bde15218ece1b15e59b6b9100033d7959d015d4ccb810e8fe60fde28e9f886cb6628878988ecb871b2af158f669e5a083f594af34f35"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy/textures/gui/sprites/comparisons/toy/icon.png"
+hash = "fa1e5ff87e35621af6aebe56fb6e170ace242d51a3e69d1eb34fd378553e99c4fc188404ac43af94fb32a54c30ff47eba086221729a3a1e52fb0cd749a10db08"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/legacy_world_sizes/lang/en_us.json"
+hash = "19002dd2b1e015c729cfe0343a570955bbe3425ab08e440abfa3823cd2d3e180c1c293e160ae37c736e3920e8518b94a53c1a7f93d853927067d99919e62d2bf"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/assets/minecraft/lang/en_us.json"
+hash = "d25e330be0912aa1abf46a4651d0d89916572dce7dc2014a308535401a133ef069009c0da104c45f9c35f5e17f192f09651d917fdff1c8dbcd38d59b8b012e1f"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/pack.mcmeta"
+hash = "cc6199af17db28a957b162e3a53d0a4e0c2cb9f43fad108e3af1b81c99f5f089100293438ee1a431c17ed04ca35146472538ff98467a16e3a0c2d1e8f6069512"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/LCE Common Resources/pack.png"
+hash = "b50ff79901bdf1854ac445bc090a98bd901a05e3000acb702eb9376ffcba7bf5bd28dbceee768d39b83618d507db07a33957f1f20f25fc9518da11162f5aa459"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Re-Console Resources/assets/legacy/intro.json"
+hash = "b68228998a41ab8a4faab5c5f4b04dd1caf35b1ba8ca662cc350bab559d5c522f50b55d5d71c725b505e85d0b62bd24020fe9be56eb46a3a180bc9b1b5350232"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Re-Console Resources/assets/legacy/lang/en_us.json"
+hash = "099e8214ba30a8d41b9d1580b63c60e82ed5a38da5ec0d9803497627cb0fc10d618f61261ec855ee8f054c0f364161d5caf35daf02cb6b5e8d440c8e86b7b029"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Re-Console Resources/assets/legacy/textures/gui/intro/loading.png"
+hash = "8635c3374b139e962a721d4e2b98263eba4cb122234efe9be040a8f91c7b77b55a8fcb9d2e3a80e3aa14b37320dd1ae665d4f501b4a77379fb17633819b9aee8"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Re-Console Resources/assets/legacy/textures/gui/intro/loading1.png"
+hash = "2106627502b474fc02658ad673602ca44d18715e2fb840621fc0f7ba2b1e95d31df216b11e1c990a889cee2385a45a5debf73fe0a765a043b03691a1e1a9dac0"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Re-Console Resources/assets/legacy/textures/gui/intro/loading2.png"
+hash = "df4df5e2b1e223da30a7b6a7f519b8fa71f0ba97b11416d03bace595d714df064cb4ff532dc398a047c59d42544459b812e1339f7ce1e17f30930ae9dbade092"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Re-Console Resources/assets/legacy/textures/gui/intro/loading3.png"
+hash = "cd72c0d20e0616cbfd7a4eecaf04dc4f28e8e2bb4c91ef4ac33f53b8237a77594d8fbd9237e70b3f8556017c8e72ae9147897637b47a8da0b4ef0e693264c0f9"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Re-Console Resources/pack.mcmeta"
+hash = "7210ca83c2792350eb163b4b7480a64a49344e4a9355f103f44990f2f80aa76d81bcc5eb98cd946bb1fa1eb495d56c09bbecff64a929301656c89ef5d66839d9"
+
+[[files]]
+file = "config/modpack_defaults/global_packs/required_resources/Re-Console Resources/pack.png"
+hash = "a32d9a1fb7421fb734e9d0af0b2faa12645b08575bd43641a26d4045051b2d80061aea41a689c72cb0ff7b9bc2b081c444fb257bd86374e0f98c6daef351afa3"
 
 [[files]]
 file = "config/modpack_defaults/options.amecs.key_modifiers.txt"
@@ -550,7 +1762,7 @@ hash = "dd460279807c6642d317a510e22a9be350a6384205fc852c79fdddd81eed2c085aa1e79e
 
 [[files]]
 file = "config/modpack_defaults/resource_albums/whimscape.json"
-hash = "fb215ec31ea1e0084433e54f4c2acaad0cdbe58f28b946b5c3fd8a1c811a093aff593ec743141346eb8e18fd5961ef8cb96481fed3d37e5fa324553afdd682c9"
+hash = "789c187837c1f87e85e6936a83a608e51ec9b62b4d6a0a5ad5b423bec3f9c0d45e0d397a9ce73dc2bfed806bfdc08bf457d1189bbe6b6374612206c9cbd192cd"
 
 [[files]]
 file = "config/modpack_defaults/servers.dat"
@@ -1794,7 +3006,7 @@ hash = "a32d9a1fb7421fb734e9d0af0b2faa12645b08575bd43641a26d4045051b2d80061aea41
 
 [[files]]
 file = "modlist.md"
-hash = "04582c2b462a95393e1e992fbc90c4efd30861d4fa60f3127845bd04fbfe1dbe8006c7ad81a109a278c90894f3672589d1243436b1d7a50183de0415063ef28a"
+hash = "665ec329996a092c3dd7f2bdd3042347ae95ca990fba85c65db135616f722a979e58e3db6d85d8f8ee8e0c8f8a9c14c02e137e42af866f85ac2fda42105649cf"
 
 [[files]]
 file = "mods/advancement-screenshot.pw.toml"
@@ -1973,7 +3185,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "931b1b8823c73ab0140ec540987f4c839719ce2b54e9f5693068305ed1dcae42d6bc9443570c555acfb38275e5e113d19d8fd7543904e2e5dc8f4acfe850d095"
+hash = "6793df6b5253ffc885184d28099601e3fc9604b84e03669ab01eb99480b1286668e8b4c6a3cb3f6e8470055608ccc27e7361d312f8456be23eb288d19bed81a7"
 metafile = true
 
 [[files]]
@@ -2093,7 +3305,7 @@ metafile = true
 
 [[files]]
 file = "mods/minimega.pw.toml"
-hash = "d59cda0624d9e34d1e3814d82979d7f3ae2487797f1c34ad9954b3ca2c5abe14a34e46138d643f8d6cdb3dc17fc58a25e4880fb649fdf3a816adc40623bad71b"
+hash = "53d8c9dbcf8b7ab56b32b2ab7cbec899fc2794f524464ba15ce3c8cdb503ed5d144b17081bf7041ddb405a3f0ef9efc2c48e641e3774276bd31f1f36a89dc45c"
 metafile = true
 
 [[files]]
@@ -2172,13 +3384,8 @@ hash = "f05518c2e20b3c8d8ab1215cda1688a9d7fa4f7ffb32b360379720e7de75b4bb1ca9659f
 metafile = true
 
 [[files]]
-file = "mods/rsls.pw.toml"
-hash = "90196f652ee1545a7b472995354bea2b501a1a5b222499f8663768622930bcd9cc6d9d535d2817bbc0e119d0bbbd7afdea16618cdd9e5e5cf77c44083f7cc7bb"
-metafile = true
-
-[[files]]
 file = "mods/scalablelux.pw.toml"
-hash = "ec1b4b09854e8fe8a15f401e366e7bc7b550b493dbe7b86d986d2d0d66df0ec381765965f3215d833ab07446e1d037afaed82c55f5fc5c4462eb643d6fff6d13"
+hash = "1a8a32cdc226100a090d04a8f4b650aeab917f14585fdccddd0151d98750b0b4576bb93c8e4800f407b7bbeae03ca79c953b2edb0cbdd91b28b3e8cba66c02eb"
 metafile = true
 
 [[files]]
@@ -2213,7 +3420,7 @@ metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "830ba2343854e513747f2f5be6c3b1e092eb807d603d976fec5433f3f107630597293092e9906f0c31295a2256ce8d4e79e183b01bf6a639afa80e18a5571a94"
+hash = "79bdc32c78492a8a5549fd8cefe59928ce704239ecd4147d51fd3cc2d44806d4b9d7fe476c72575333f69a95751b5a000a03341d61dcc4629f87cac76eb3ae8b"
 metafile = true
 
 [[files]]
@@ -2233,7 +3440,7 @@ metafile = true
 
 [[files]]
 file = "mods/zfastnoise.pw.toml"
-hash = "0b7844f5243443e02272112ea2500d59372c09ba0c91cfb954f8839964868b2d2880866b7c38af6dae9d5211bbe226bbf2ceff48ac83aebc804b38fab6eb24a9"
+hash = "6c7d4ba1b7232d0032ecb4f9d0860e2027522aaa6db4389a5aa0e2e54296a16123a4331abf68da1f87fa0290737d204a29ca008b2b3448c825f0f5b8cd781313"
 metafile = true
 
 [[files]]
@@ -2382,7 +3589,7 @@ hash = "dd460279807c6642d317a510e22a9be350a6384205fc852c79fdddd81eed2c085aa1e79e
 
 [[files]]
 file = "resource_albums/whimscape.json"
-hash = "66b15bef4dd0648fd561622d99a82d2f16a923b444e0ec87c777f95ab0794a1e1801c3ab7bb70af640af6430906a7c3a42be59ccc109934c2abf17d5c9e7e507"
+hash = "789c187837c1f87e85e6936a83a608e51ec9b62b4d6a0a5ad5b423bec3f9c0d45e0d397a9ce73dc2bfed806bfdc08bf457d1189bbe6b6374612206c9cbd192cd"
 
 [[files]]
 file = "resourcepacks/3d-crops.pw.toml"
@@ -3893,4 +5100,4 @@ metafile = true
 
 [[files]]
 file = "sync.json"
-hash = "878ef1a297a12ac471b2aaacd5144cd9fe266fc8b9ecf2b4a352e71dd7969257da1bd900411ba3fa42b57c40d1175ad562d898631faffd2c62b1906e518855e5"
+hash = "1053faf45e30347e96c5345bb8d86c353985a1fbdc5ba98128fa298906cfa9cc79a7ed157c46d554e33a9d5328c68dc0968d6ee54307c0b0b00ead93f5ee2254"

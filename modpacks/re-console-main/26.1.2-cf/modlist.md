@@ -57,7 +57,6 @@
 - [Ping View]()
 - [Pro Placer]()
 - [Puzzles Lib]()
-- [Raise Sound Limit Simplified]()
 - [RenderScale]()
 - [ScalableLux]()
 - [ServerCore]()
