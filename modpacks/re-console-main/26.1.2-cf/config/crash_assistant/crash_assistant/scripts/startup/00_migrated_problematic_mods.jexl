@@ -26,6 +26,13 @@ if (m_legacy_mipmaps != null) {
     warn.withModActions(m_legacy_mipmaps);
 }
 
+var m_nochatreports = mods.get("nochatreports");
+if (m_nochatreports != null) {
+    var warn = Startup.addCrashWarning("⚠️ <strong>No Chat Reports installed</strong>\n\nNo Chat Reports is superseded by No Prying Eyes, and adding it will just introduce compatibility and performance issues.");
+    warn.withModActions(m_nochatreports);
+    Startup.markForCrash();
+}
+
 var m_noisium = mods.get("noisium");
 if (m_noisium != null) {
     var warn = Startup.addCrashWarning("⚠️ <strong>Noisium not supported</strong>\n\nNoisium is not supported, as the mod does not have significant performance boost and is superseded by Fast Noise!");
