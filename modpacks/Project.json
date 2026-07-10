@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-10T21:41:16Z",
+  "generated": "2026-07-10T18:50:39Z",
   "projects": [
     {
       "id": "gold-not-old",
@@ -519,7 +519,7 @@
           "key": "1.20.1-cf",
           "path": "modpacks/reminiscence/1.20.1-cf",
           "platform": "curseforge",
-          "mod_count": 177,
+          "mod_count": 170,
           "has_index": true,
           "has_pack": true
         },
@@ -527,7 +527,7 @@
           "key": "1.20.1-mr",
           "path": "modpacks/reminiscence/1.20.1-mr",
           "platform": "modrinth",
-          "mod_count": 154,
+          "mod_count": 149,
           "has_index": true,
           "has_pack": true
         }
@@ -624,7 +624,7 @@
       "manifest_path": "modpacks/simply-legacy/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.07.2",
+      "version": "26.07",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
@@ -642,7 +642,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/simply-legacy/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 44,
+          "mod_count": 45,
           "has_index": true,
           "has_pack": true
         },
@@ -653,12 +653,6 @@
           "mod_count": 48,
           "has_index": true,
           "has_pack": true
-        },
-        {
-          "key": "artifacts",
-          "path": "modpacks/simply-legacy/artifacts",
-          "has_index": false,
-          "has_pack": false
         }
       ]
     },
