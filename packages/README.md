@@ -7,7 +7,3 @@ consumers, not run directly.
 | ------- | -------- | ---------- |
 | [`packwand-core`](packwand-core/) | Rust | Launcher-core crates (packwand-runtime, -minecraft, -auth, -instance, -launch, -devboot, -msa); consumed by the Tauri GUI via path dependencies |
 | [`packwand2nix`](packwand2nix/) | Nix | Vendored packwiz2nix fork; re-exported by the root `flake.nix` |
-
-User-facing deliverables live in [`apps/`](../apps/). See
-[ARCHITECTURE.md](../ARCHITECTURE.md) for the full repository layout and
-conventions.
