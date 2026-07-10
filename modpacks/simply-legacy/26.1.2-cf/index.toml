@@ -269,6 +269,10 @@ file = "config/modpack_defaults/config/stfu-disable.txt"
 hash = "9ad843e23844a211c053d710ca8a48fb97279031ed65c6addd78d722eb409518016348eb61e8ce9a077b72885587751d0415ceb10ea04fa5a2e9f12bb632d717"
 
 [[files]]
+file = "config/modpack_defaults/config/stfu.json5"
+hash = "144b8f063595a2d5f455411f10173c90b4752567defedc087fc4885c05e097db1e0964e64dacfd4fba019e8e4816d0a00c0c4c4e8e2c260856a5b481a9c690ae"
+
+[[files]]
 file = "config/modpack_defaults/config/threadtweak.json"
 hash = "62a8c3bf8dc95a83c4cfbac1e52b55e02bb4ae8b8430ab253b2d74fca8895d82e2c57737940ce045752f8ecb6df17015476c984685cdb4fca44e09b6f0855a42"
 
@@ -1617,6 +1621,10 @@ file = "config/servercore/optimizations.yml"
 hash = "a3b03609a0422ce6bebfb502d0a935f7c253695a20729d518633f88714643028134513fc694ee61737d571d101e7eaad73622bc569822deeb8b2204a35f7c9e6"
 
 [[files]]
+file = "config/stfu.json5"
+hash = "144b8f063595a2d5f455411f10173c90b4752567defedc087fc4885c05e097db1e0964e64dacfd4fba019e8e4816d0a00c0c4c4e8e2c260856a5b481a9c690ae"
+
+[[files]]
 file = "global_packs/required_resources/Clean World Loading/assets/legacy/lang/af_za.json"
 hash = "e2788704205804fcf6894f5edcbbe37f4700467f4a48e6535df4841e7c67097c4fa670d98bab2ef6183a2d21de4fb2ce18e0e54aaa6891fca88842ee8fad1abc"
 
@@ -2427,7 +2435,7 @@ metafile = true
 
 [[files]]
 file = "mods/c2me.pw.toml"
-hash = "802b5966cf1947a9903a4244a26393c338ac212a89ea8503c2b12a1cd2c3e7fd1518c4ac0423a5dc2923a2094500f23a725057f0352bc8a27fb525de6fee3002"
+hash = "ceab0a93efd42a493b1efa35920b52616b521a388e7f290586c31f75031d7377722f421d099d6c11e44231c3d42e1cee6e8f11fb051ba3eb62ad24f634582060"
 metafile = true
 
 [[files]]
@@ -2477,7 +2485,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "5ebd7c1e34e61d5dbbc503d9485401004787fcd339f4e4a1c6c7cbfac4cc64218bdec4ad0e16e8fe6fa4e020efcaa3311cbe6c07f46afec8280c8f8807a1a9f1"
+hash = "87126c6e010cf30eacd440c93a6f10ea2e90c1df44890cb73ff7bedbb1d40b5dce66c93f2bdd132c4dce271c1a171f9ebc006f8b7352bb6ff0c06dfd71bac0c8"
 metafile = true
 
 [[files]]
@@ -2572,7 +2580,7 @@ metafile = true
 
 [[files]]
 file = "mods/scalablelux.pw.toml"
-hash = "dc55a7dcee0239d983da4b1154638076488246f5ac7dfafb4982384c752256257a9c4dfdd750160e131c506af1d8d58bd0ad7f340719d8c78fd0ac403706e707"
+hash = "691535a7db473c1e5670a9a3b60d268bbc056fdab2cbecbb1fac00164dee959bd576adbcd6541fd56c152315680ef628fcfe6d970d83e1072ff28c0c89eecdba"
 metafile = true
 
 [[files]]
@@ -2622,7 +2630,7 @@ metafile = true
 
 [[files]]
 file = "mods/zfastnoise.pw.toml"
-hash = "b803e8ee1bca19c8cc8043d11a8ca1bab55723cf778a14a46a8a9ee59f4d26a57b609866875141a7f8fdac522dc5e27854856cb9184bc543d79b0de0eba8f8f1"
+hash = "531a37b14e1df33a83db4f3494fc716a0cc0875040d0a7fa4ed29a0bbc0c2a9766a9692af5d5ef31753f48e817606f48e0e7d3c4a2f4c90263f2bd5cd0ce856a"
 metafile = true
 
 [[files]]
