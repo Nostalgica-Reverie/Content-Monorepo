@@ -1,0 +1,44 @@
+{
+  "parent": "quark:tiny_potato/base",
+  "textures": {
+    "all": "quark:block/tiny_potato/default",
+    "glasses": "quark:block/tiny_potato/sus"
+  },
+  "elements": [
+    {
+      "from": [ 6, 0, 6 ],
+      "to": [ 10, 6, 10 ],
+      "faces": {
+        "down": { "uv": [ 12.0, 4.0, 8.0, 0.0 ], "texture": "#all" },
+        "up": { "uv": [ 8.0, 4.0, 4.0, 0.0 ], "texture": "#all" },
+        "north": { "uv": [ 4.0, 4.0, 8.0, 10.0 ], "texture": "#all" },
+        "south": { "uv": [ 12.0, 4.0, 16.0, 10.0 ], "texture": "#all" },
+        "west": { "uv": [ 8.0, 4.0, 12.0, 10.0 ], "texture": "#all" },
+        "east": { "uv": [ 0.0, 4.0, 4.0, 10.0 ], "texture": "#all" }
+      }
+    },
+    {
+      "from": [ 6.5, 1.5, 10 ],
+      "to": [ 9.5, 5, 10.5 ],
+      "faces": {
+        "up": { "uv": [ 8.0, 4.0, 12.5, 4.5 ], "texture": "#all" },
+        "down": { "uv": [ 8.0, 9.0, 12.5, 9.5 ], "texture": "#all" },
+        "north": { "uv": [ 8.0, 4.0, 12.5, 9.5 ], "texture": "#all" },
+        "south": { "uv": [ 12.0, 4.0, 16.0, 10.0 ], "texture": "#all" },
+        "west": { "uv": [ 12.0, 5.0, 12.5, 8.5 ], "texture": "#all" },
+        "east": { "uv": [ 8.0, 5.0, 8.5, 8.5 ], "texture": "#all" }
+      }
+    },
+    {
+      "from": [ 6.2, 4.3, 5.8 ],
+      "to": [ 9.8, 5.3, 6.0 ],
+      "faces": {
+        "up": { "uv": [ 0.0, 0.0, 16.0, 1.0 ], "texture": "#glasses" },
+        "down": { "uv": [ 0.0, 4.0, 16.0, 5.0 ], "texture": "#glasses" },
+        "north": { "uv": [ 0.0, 0.0, 16.0, 5.0 ], "texture": "#glasses" },
+        "west": { "uv": [ 15.0, 0.0, 16.0, 5.0 ], "texture": "#glasses" },
+        "east": { "uv": [ 0.0, 0.0, 1.0, 5.0 ], "texture": "#glasses" }
+      }
+    }
+  ]
+}

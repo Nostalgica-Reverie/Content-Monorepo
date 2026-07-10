@@ -1,0 +1,26 @@
+{
+  "criteria": {
+    "soul": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "endrem:undead_soul"
+              ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "endrem:undead_eye"
+    ]
+  },
+  "requirements": [
+    [
+      "soul"
+    ]
+  ]
+}

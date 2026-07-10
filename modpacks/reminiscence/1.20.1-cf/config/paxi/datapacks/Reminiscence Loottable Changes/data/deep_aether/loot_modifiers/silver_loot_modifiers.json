@@ -1,0 +1,20 @@
+{
+  "type": "deep_aether:aether_dungeon_loot_no_replacement",
+  "chanceToSpawn": 0.8,
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "aether:chests/dungeon/silver/silver_dungeon"
+    }
+  ],
+  "items": [
+    {
+      "data": {
+        "Count": 1,
+        "id": "minecraft:emerald"
+      },
+      "weight": 5
+    }
+  ],
+  "totalWeight": 100
+}

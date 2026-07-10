@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:story/smelt_silver",
+  "criteria": {
+    "silver_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "caverns_and_chasms:silver_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Construct a silver pickaxe",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "caverns_and_chasms:silver_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "Silver Tongue"
+  },
+  "requirements": [
+    [
+      "silver_pickaxe"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

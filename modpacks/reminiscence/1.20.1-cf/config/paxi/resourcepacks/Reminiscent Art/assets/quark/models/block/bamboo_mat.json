@@ -1,0 +1,28 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"particle": "quark:block/bamboo_mat",
+
+		"down": "quark:block/bamboo_mat",
+		"up": "quark:block/bamboo_mat",
+
+		"north": "quark:block/bamboo_mat_full",
+		"south": "quark:block/bamboo_mat_borderless",
+
+		"west": "quark:block/bamboo_mat_side",
+		"east": "quark:block/bamboo_mat_side"
+	},
+	"elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#down", "cullface": "down", "rotation":  180 },
+                "up":    { "texture": "#up", "cullface": "up" },
+                "north": { "texture": "#north", "cullface": "north" },
+                "south": { "texture": "#south", "cullface": "south" },
+                "west":  { "texture": "#west", "cullface": "west" },
+                "east":  { "texture": "#east", "cullface": "east", "rotation": 180 }
+            }
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:story/upgrade_tools",
+  "criteria": {
+    "coal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:coal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Acquire Coal",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:coal"
+    },
+    "show_toast": true,
+    "title": "Yearning for the Mines"
+  },
+  "requirements": [
+    [
+      "coal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

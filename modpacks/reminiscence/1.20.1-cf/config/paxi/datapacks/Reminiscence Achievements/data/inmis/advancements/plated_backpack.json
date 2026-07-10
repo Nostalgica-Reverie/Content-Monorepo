@@ -1,0 +1,32 @@
+{
+    "display": {
+        "title": {
+            "translate": "inmis.advancement.plated_backpack.title"
+        },
+        "description": {
+            "translate": "inmis.advancement.plated_backpack.description"
+        },
+        "icon": {
+            "item": "inmis:plated_backpack"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "backpack": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "inmis:plated_backpack"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "parent": "minecraft:story/iron_tools"
+}

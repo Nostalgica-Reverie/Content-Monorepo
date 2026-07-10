@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "#": {
+      "item": "deep_aether:sun_core"
+    },
+    "h": {
+      "item": "minecraft:diamond"
+    },
+    "i": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " H ",
+    "h#h",
+    " i "
+  ],
+  "result": {
+    "item": "aether:vampire_blade"
+  },
+  "show_notification": true
+}

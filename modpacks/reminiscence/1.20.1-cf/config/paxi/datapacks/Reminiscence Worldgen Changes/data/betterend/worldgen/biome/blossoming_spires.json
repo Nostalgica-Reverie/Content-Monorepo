@@ -1,0 +1,78 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "effects": {
+    "mood_sound": {
+      "sound": "betterend:betterend.ambient.dust_wastelands",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "ambient_sound": "betterend:betterend.ambient.blossoming_spires",
+    "sky_color": 0,
+    "foliage_color": -8770182,
+    "grass_color": -8770182,
+    "fog_color": -945435,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": [
+    [
+      "betterend:spire",
+      "betterend:floating_spire"
+    ],
+    [],
+    [],
+    [],
+    [
+      "betterend:silk_moth_nest"
+    ],
+    [],
+    [
+      "betterend:thallasium_ore",
+      "kubejs:opal_ore",
+      "kubejs:titanium_ore"
+    ],
+    [],
+    [],
+    [
+      "betterend:tenanea",
+      "betterend:bulb_vine",
+      "betterend:bushy_grass",
+      "betterend:bushy_grass_wg",
+      "betterend:blossom_berry",
+      "betterend:twisted_moss",
+      "betterend:twisted_moss_wood"
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:enderman",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "creature": [],
+    "ambient": [
+      {
+        "type": "betterend:silk_moth",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {}
+}

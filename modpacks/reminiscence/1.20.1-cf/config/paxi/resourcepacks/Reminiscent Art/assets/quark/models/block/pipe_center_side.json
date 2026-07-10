@@ -1,0 +1,17 @@
+{
+	"__comment": "Designed by Wiiv with Cubik Studio - https://cubik.studio",
+	"textures": {
+		"particle": "quark:block/pipe_structure",
+		"texture": "quark:block/pipe_structure"
+	},
+	"elements": [ 	 
+		{
+			"from": [ 5, 5, 5 ],
+			"to": [ 11, 11, 5 ],
+			"faces": {
+				"north": { "uv": [ 5, 5, 11, 11 ], "texture": "#texture" },
+				"south": { "uv": [ 5, 5, 11, 11 ], "texture": "#texture" }
+			}
+		}
+	]
+}

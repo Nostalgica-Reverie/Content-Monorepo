@@ -1,0 +1,16 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"lizard_tail.flip": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"root": {
+					"rotation": ["Math.cos((query.anim_time - 0.0) * 720) * 16", 0, 0],
+					"position": [0, 1, 0]
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

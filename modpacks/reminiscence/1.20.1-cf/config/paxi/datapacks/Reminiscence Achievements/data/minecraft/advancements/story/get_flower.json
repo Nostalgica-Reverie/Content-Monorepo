@@ -1,0 +1,24 @@
+{
+  "display": {
+    "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:poppy"
+    },
+    "title": "Whee! Flowers!",
+    "description": "Obtain a flower",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/build_shovel",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:flowers"
+          }
+        ]
+      }
+    }
+  }
+}

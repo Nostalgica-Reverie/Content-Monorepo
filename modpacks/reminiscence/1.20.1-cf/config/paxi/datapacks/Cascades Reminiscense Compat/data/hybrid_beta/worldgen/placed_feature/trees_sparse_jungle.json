@@ -1,0 +1,32 @@
+{
+  "feature": "minecraft:trees_sparse_jungle",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:clamped_normal",
+        "value": 
+          {
+            "mean": 2,
+            "deviation": 2,
+            "min_inclusive": 0,
+            "max_inclusive": 4
+          }
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:surface_water_depth_filter",
+      "max_water_depth": 0
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "OCEAN_FLOOR"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

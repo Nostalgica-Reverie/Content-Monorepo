@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "tag": "forge:cobblestone"
+    },
+    "$": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "#$",
+    "$#"
+  ],
+  "result": {
+    "item": "kubejs:planked_stone",
+    "count": 4
+  },
+  "show_notification": true
+}

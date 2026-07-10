@@ -1,0 +1,74 @@
+{
+  "parent": "minecraft:story/smelt_copper",
+  "criteria": {
+    "copper_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bettercopper:copper_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "copper_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bettercopper:copper_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "copper_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bettercopper:copper_helmet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "copper_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bettercopper:copper_leggings"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Boost your mining speed with a piece of copper armor",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "bettercopper:copper_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "Prospecting"
+  },
+  "requirements": [
+    [
+      "copper_helmet",
+      "copper_chestplate",
+      "copper_leggings",
+      "copper_boots"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

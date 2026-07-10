@@ -1,0 +1,76 @@
+{
+  "parent": "aether:gravitite_armor",
+  "criteria": {
+    "slider": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether:slider"
+            }
+          }
+        ]
+      },
+      "trigger": "deep_aether:flawless_boss_trigger"
+    },
+    "valkyrie_queen": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether:valkyrie_queen"
+            }
+          }
+        ]
+      },
+      "trigger": "deep_aether:flawless_boss_trigger"
+    },
+    "sun_spirit": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether:sun_spirit"
+            }
+          }
+        ]
+      },
+      "trigger": "deep_aether:flawless_boss_trigger"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.deep_aether.aether_champion.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "aether:victory_medal"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.deep_aether.aether_champion.title"
+    }
+  },
+  "requirements": [
+    [
+      "slider"
+    ],
+    [
+      "valkyrie_queen"
+    ],
+    [
+      "sun_spirit"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  }
+}

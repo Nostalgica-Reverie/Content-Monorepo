@@ -2,6 +2,7 @@
   import { page } from "$app/state";
   import Seo from "sk-seo";
   import type { Snippet } from "svelte";
+  import { siteConfig } from "$lib/site";
   import Version from "./reusables/Version.svelte";
 
   type Props = {
@@ -16,7 +17,16 @@
   const tagsArr = $derived(props.tags.split(",").map((el: string) => el.trim()).filter(Boolean));
 </script>
 
-<Seo title="{props.title ? props.title + ' - ' : ''} Modpack Dev Handbook" description={props.description} author="Lasting Legacy" siteName="Modpack Dev Handbook" keywords="minecraft, modpack development, packwand, packwiz, handbook" name="Modpack Dev Handbook" schemaOrg={true} canonical={`https://docs.nostalgica.net${page.url.pathname}`} socials={["https://discord.gg/6pRkrYxbGW"]} />
+<Seo
+  title="{props.title ? props.title + ' - ' : ''}{siteConfig.handbook.title}"
+  description={props.description}
+  author={siteConfig.handbook.author}
+  siteName={siteConfig.handbook.title}
+  keywords={siteConfig.handbook.keywords}
+  name={siteConfig.handbook.title}
+  schemaOrg={true}
+  canonical={`${siteConfig.handbook.siteUrl}${page.url.pathname}`}
+  socials={[siteConfig.handbook.discordUrl]} />
 
 <main class="md px-4 md:px-8 lg:px-16 prose-headings:text-stone-200" id="main_content">
   {#if props.version}

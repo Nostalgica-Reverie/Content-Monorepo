@@ -28,10 +28,10 @@ cd lib/packwiz-installer && ./gradlew build
 cd lib/packwiz-installer && ./gradlew :bootstrap:shadowJar
 
 # mod_browser_webview (output: target/release/mod_browser_webview)
-cd lib/mod-browser-webview && cargo build --release
+cd apps/mod-browser-webview && cargo build --release
 
 # Go bootstrap
-cd src/packwand && go build ./cmd/packwiz-bootstrap
+cd apps/packwand && go build ./cmd/packwiz-bootstrap
 ```
 
 ::: info

@@ -28,5 +28,5 @@ packwand settings [flags]
 
 * [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand settings acceptable-loaders](packwand_settings_acceptable-loaders.md)	 - Manage your pack's acceptable mod loaders. Takes a comma-separated list, e.g. fabric,forge
-* [packwand settings acceptable-versions](packwand_settings_acceptable-versions.md)	 - Manage your pack's acceptable Minecraft versions. This must be a comma seperated list of Minecraft versions, e.g. 1.16.3,1.16.4,1.16.5
+* [packwand settings acceptable-versions](packwand_settings_acceptable-versions.md)	 - Manage your pack's acceptable Minecraft versions. This must be a comma separated list of Minecraft versions, e.g. 1.16.3,1.16.4,1.16.5
 

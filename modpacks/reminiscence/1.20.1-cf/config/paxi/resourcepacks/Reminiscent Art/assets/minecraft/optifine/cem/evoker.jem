@@ -1,0 +1,136 @@
+{
+	"credit": "Made with Blockbench",
+	"textureSize": [64, 64],
+	"texture": "evoker.png",
+	"models": [
+		{
+			"part": "head",
+			"id": "head",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"boxes": [
+				{"coordinates": [-4, 27, -4, 8, 10, 8], "textureOffset": [0, 0]}
+			]
+		},
+		{
+			"part": "hat",
+			"id": "hat",
+			"invertAxis": "xy",
+			"translate": [0, 0, 0]
+		},
+		{
+			"part": "nose",
+			"id": "nose",
+			"invertAxis": "xy",
+			"translate": [0, -26, 0]
+		},
+		{
+			"part": "body",
+			"id": "body",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"submodels": [
+				{
+					"id": "short_body",
+					"invertAxis": "xy",
+					"translate": [0, 24, 0],
+					"boxes": [
+						{"coordinates": [-4, -7, -2, 8, 10, 4], "textureOffset": [0, 18]}
+					]
+				},
+				{
+					"id": "fakeleft_arm",
+					"invertAxis": "xy",
+					"translate": [-4, 26, 0],
+					"boxes": [
+						{"coordinates": [-2, -16, -1, 2, 17, 3], "textureOffset": [0, 32]}
+					]
+				},
+				{
+					"id": "fakeright_arm",
+					"invertAxis": "xy",
+					"translate": [4, 26, 0],
+					"boxes": [
+						{"coordinates": [0, -16, -1, 2, 17, 3], "textureOffset": [24, 18]}
+					]
+				},
+				{
+					"id": "fakeleft_leg",
+					"invertAxis": "xy",
+					"translate": [-2, 17, 0],
+					"boxes": [
+						{"coordinates": [-1, -17, -1, 2, 17, 2], "textureOffset": [10, 32]}
+					]
+				},
+				{
+					"id": "fakeright_leg",
+					"invertAxis": "xy",
+					"translate": [2, 17, 0],
+					"boxes": [
+						{"coordinates": [-1, -17, -1, 2, 17, 2], "textureOffset": [34, 0]}
+					]
+				}
+			],
+			"animations": [
+				{
+					"fakeleft_arm.rx": "-sin(limb_swing)*limb_speed",
+					"fakeright_arm.rx": "sin(limb_swing)*limb_speed",
+					"fakeleft_leg.rx": "sin(limb_swing)*limb_speed",
+					"fakeright_leg.rx": "-sin(limb_swing)*limb_speed"
+				}
+			]
+		},
+		{
+			"part": "arms",
+			"id": "arms",
+			"invertAxis": "xy",
+			"translate": [0, -20.5, -0.3],
+			"submodels": [
+				{
+					"id": "arms_rotation",
+					"invertAxis": "xy",
+					"translate": [0, 22.5, 0.35],
+					"submodels": [
+						{
+							"id": "arms_flipped",
+							"invertAxis": "xy",
+							"mirrorTexture": "u",
+							"translate": [0, -24, 0]
+						}
+					]
+				}
+			],
+			"animations": [
+				{
+					"arms_rotation.rx": 0
+				}
+			]
+		},
+		{
+			"part": "left_arm",
+			"id": "left_arm",
+			"invertAxis": "xy",
+			"mirrorTexture": "u",
+			"translate": [5, -25, 0]
+		},
+		{
+			"part": "right_arm",
+			"id": "right_arm",
+			"invertAxis": "xy",
+			"translate": [-5, -25, 0]
+		},
+		{
+			"part": "left_leg",
+			"id": "left_leg",
+			"invertAxis": "xy",
+			"mirrorTexture": "u",
+			"translate": [2, -23, 0]
+		},
+		{
+			"part": "right_leg",
+			"id": "right_leg",
+			"invertAxis": "xy",
+			"translate": [-2, -18, 0]
+		}
+	]
+}

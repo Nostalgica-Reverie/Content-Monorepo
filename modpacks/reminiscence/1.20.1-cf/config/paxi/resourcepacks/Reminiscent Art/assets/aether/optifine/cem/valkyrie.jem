@@ -1,0 +1,338 @@
+{
+	"credit": "Made with Blockbench",
+	"textureSize": [64, 64],
+	"texture": "valkyrie.png",
+	"models": [
+		{
+			"part": "left_side_skirt",
+			"id": "left_side_skirt",
+			"invertAxis": "xy",
+			"translate": [3, -15, 1.505],
+			"scale": 1
+		},
+		{
+			"part": "right_arm",
+			"id": "right_arm",
+			"invertAxis": "xy",
+			"translate": [-4, -22.5, 0],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [4, 12, -2, 4, 12, 4], "textureOffset": [40, 48]}
+			]
+		},
+		{
+			"part": "right_front_skirt",
+			"id": "right_front_skirt",
+			"invertAxis": "xy",
+			"translate": [-3, -15, 1.5],
+			"scale": 1
+		},
+		{
+			"part": "sword_blade_end",
+			"id": "sword_blade_end",
+			"invertAxis": "xy",
+			"translate": [-4, -22.5, 0],
+			"scale": 1
+		},
+		{
+			"part": "body",
+			"id": "body",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [-4, 12, -2, 8, 12, 4], "textureOffset": [16, 48]}
+			]
+		},
+		{
+			"part": "sword_hilt",
+			"id": "sword_hilt",
+			"invertAxis": "xy",
+			"translate": [-4, -22.5, 0],
+			"scale": 1
+		},
+		{
+			"part": "sword_blade_base",
+			"id": "sword_blade_base",
+			"invertAxis": "xy",
+			"translate": [-4, -22.5, 0],
+			"scale": 1
+		},
+		{
+			"part": "head",
+			"id": "head",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [-4, 24, -4, 8, 8, 8], "textureOffset": [0, 32]}
+			]
+		},
+		{
+			"part": "left_back_skirt",
+			"id": "left_back_skirt",
+			"invertAxis": "xy",
+			"translate": [0, -15, -1.5],
+			"scale": 1
+		},
+		{
+			"part": "upper_body",
+			"id": "upper_body",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_1",
+			"id": "hair_1",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_13",
+			"id": "hair_13",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_2",
+			"id": "hair_2",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_12",
+			"id": "hair_12",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "left_arm",
+			"id": "left_arm",
+			"invertAxis": "xy",
+			"mirrorTexture": "u",
+			"translate": [5, -22.5, 0],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [-8, 12, -2, 4, 12, 4], "textureOffset": [40, 48]}
+			]
+		},
+		{
+			"part": "right_leg",
+			"id": "right_leg",
+			"invertAxis": "xy",
+			"mirrorTexture": "u",
+			"translate": [-1, -12, 0],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [0, 0, -2, 4, 12, 4], "textureOffset": [0, 48]}
+			]
+		},
+		{
+			"part": "hair_3",
+			"id": "hair_3",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_11",
+			"id": "hair_11",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_4",
+			"id": "hair_4",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_10",
+			"id": "hair_10",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "root",
+			"id": "root",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_5",
+			"id": "hair_5",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_6",
+			"id": "hair_6",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_7",
+			"id": "hair_7",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hat",
+			"id": "hat",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [-4, 24, -4, 8, 8, 8], "textureOffset": [32, 32], "sizeAdd": 0.5}
+			]
+		},
+		{
+			"part": "hair_8",
+			"id": "hair_8",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_9",
+			"id": "hair_9",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "sword_blade_middle",
+			"id": "sword_blade_middle",
+			"invertAxis": "xy",
+			"translate": [-4, -22.5, 0],
+			"scale": 1
+		},
+		{
+			"part": "left_leg",
+			"id": "left_leg",
+			"invertAxis": "xy",
+			"translate": [2, -12, 0],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [-4, 0, -2, 4, 12, 4], "textureOffset": [0, 48]}
+			]
+		},
+		{
+			"part": "hair_17",
+			"id": "hair_17",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_16",
+			"id": "hair_16",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "right_side_skirt",
+			"id": "right_side_skirt",
+			"invertAxis": "xy",
+			"translate": [-3, -15, 1.505],
+			"scale": 1
+		},
+		{
+			"part": "hair_15",
+			"id": "hair_15",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_14",
+			"id": "hair_14",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_19",
+			"id": "hair_19",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "right_shoulder",
+			"id": "right_shoulder",
+			"invertAxis": "xy",
+			"translate": [-4, -22.5, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_18",
+			"id": "hair_18",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_20",
+			"id": "hair_20",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_22",
+			"id": "hair_22",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "hair_21",
+			"id": "hair_21",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		},
+		{
+			"part": "right_back_skirt",
+			"id": "right_back_skirt",
+			"invertAxis": "xy",
+			"translate": [-3, -15, -1.5],
+			"scale": 1
+		},
+		{
+			"part": "left_shoulder",
+			"id": "left_shoulder",
+			"invertAxis": "xy",
+			"translate": [5, -22.5, 0],
+			"scale": 1
+		},
+		{
+			"part": "left_front_skirt",
+			"id": "left_front_skirt",
+			"invertAxis": "xy",
+			"translate": [0, -15, 1.5],
+			"scale": 1
+		},
+		{
+			"part": "sword_handle",
+			"id": "sword_handle",
+			"invertAxis": "xy",
+			"translate": [-4, -22.5, 0],
+			"scale": 1
+		}
+	]
+}

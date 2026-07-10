@@ -15,8 +15,8 @@ artifacts/
 packwand-bin/
 # Per-pack launcher artifacts (logs/natives) from "boot a pack" dev testing.
 **/.packwand-launcher/
-src/packwand/gui/ui/build/
-src/packwand/packwand
+apps/packwand/gui/ui/build/
+apps/packwand/packwand
 /packwand
 *.exe
 *.exe~
@@ -63,14 +63,11 @@ replay_*.log
 *.hprof
 *.jfr
 
-# lib/ build outputs
-lib/packwiz-installer/build/
-lib/packwiz-installer/bootstrap/build/
-lib/packwiz-installer/.gradle/
-lib/mod-browser-webview/target/
+# component build outputs
+apps/mod-browser-webview/target/
 docs/packwiz/docs/.vitepress/cache
 docs/packwiz/docs/.vitepress/dist
-src/packwand/gui/tauri/src-tauri/target/
-src/packwand/gui/tauri/src-tauri/gen/
-src/packwand/gui/tauri/src-tauri/binaries/
-src/packwand/.gocache
+apps/packwand/gui/tauri/src-tauri/target/
+apps/packwand/gui/tauri/src-tauri/gen/
+apps/packwand/gui/tauri/src-tauri/binaries/
+apps/packwand/.gocache

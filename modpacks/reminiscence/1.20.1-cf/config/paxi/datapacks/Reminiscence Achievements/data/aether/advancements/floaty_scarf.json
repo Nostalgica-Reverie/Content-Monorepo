@@ -1,0 +1,34 @@
+{
+  "parent": "aether:serpant_horn",
+  "criteria": {
+    "floaty_scarf": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "deep_aether:floaty_scarf"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Craft a Floaty Scarf using a horn from the Eye of the Storm.",
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "deep_aether:floaty_scarf"
+    },
+    "show_toast": true,
+    "title": "Hired Help"
+  },
+  "requirements": [
+    [
+      "floaty_scarf"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

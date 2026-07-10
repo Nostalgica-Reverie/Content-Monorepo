@@ -1,0 +1,26 @@
+{
+  "display": {
+   "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:stonecutter"
+    },
+    "title": "Masonry",
+    "description": "Craft a stonecutter with three blocks of Cobblestone and an Iron Ingot",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/iron_tools",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stonecutter"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

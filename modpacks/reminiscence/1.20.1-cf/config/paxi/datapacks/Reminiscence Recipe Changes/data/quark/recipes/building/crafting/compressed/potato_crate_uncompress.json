@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:potato_crate"
+    }
+  ],
+  "result": {
+    "item": "minecraft:potato",
+    "count": 9
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+        "flag": "potato_crate"
+    }
+  ]
+} 

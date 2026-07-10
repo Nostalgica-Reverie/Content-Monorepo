@@ -1,0 +1,73 @@
+{
+  "variants": {
+    "facing=up,power=off": {
+      "model": "quark:block/crafter",
+      "x": 270
+    },
+    "facing=up,power=triggered": {
+      "model": "quark:block/crafter_triggered",
+      "x": 270
+    },
+    "facing=up,power=on": {
+      "model": "quark:block/crafter_on",
+      "x": 270
+    },
+    "facing=down,power=off": {
+      "model": "quark:block/crafter",
+      "x": 90
+    },
+    "facing=down,power=triggered": {
+      "model": "quark:block/crafter_triggered",
+      "x": 90
+    },
+    "facing=down,power=on": {
+      "model": "quark:block/crafter_on",
+      "x": 90
+    },
+    "facing=east,power=off": {
+      "model": "quark:block/crafter",
+      "y": 90
+    },
+    "facing=east,power=triggered": {
+      "model": "quark:block/crafter_triggered",
+      "y": 90
+    },
+    "facing=east,power=on": {
+      "model": "quark:block/crafter_on",
+      "y": 90
+    },
+    "facing=north,power=off": {
+      "model": "quark:block/crafter"
+    },
+    "facing=north,power=triggered": {
+      "model": "quark:block/crafter_triggered"
+    },
+    "facing=north,power=on": {
+      "model": "quark:block/crafter_on"
+    },
+    "facing=south,power=off": {
+      "model": "quark:block/crafter",
+      "y": 180
+    },
+    "facing=south,power=triggered": {
+      "model": "quark:block/crafter_triggered",
+      "y": 180
+    },
+    "facing=south,power=on": {
+      "model": "quark:block/crafter_on",
+      "y": 180
+    },
+    "facing=west,power=off": {
+      "model": "quark:block/crafter",
+      "y": 270
+    },
+    "facing=west,power=triggered": {
+      "model": "quark:block/crafter_triggered",
+      "y": 270
+    },
+    "facing=west,power=on": {
+      "model": "quark:block/crafter_on",
+      "y": 270
+    }
+  }
+}

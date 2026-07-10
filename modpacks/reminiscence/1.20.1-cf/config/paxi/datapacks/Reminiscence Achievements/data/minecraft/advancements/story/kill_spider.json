@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:story/kill_zombie",
+  "display": {
+    "icon": {
+      "item": "minecraft:string"
+    },
+    "title": "Kill it with fire!",
+    "description": "Kill a Spider for its string",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "string": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:string"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "string"
+    ]
+  ]
+}

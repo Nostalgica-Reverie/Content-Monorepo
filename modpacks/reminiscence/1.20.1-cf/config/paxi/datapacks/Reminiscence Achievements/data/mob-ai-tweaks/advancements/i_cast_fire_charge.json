@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:fire_charge"
+    },
+    "title": {
+      "translate": "advancements.mob-ai-tweaks.i_cast_fire_charge.title"
+    },
+    "description": {
+      "translate": "advancements.mob-ai-tweaks.i_cast_fire_charge.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "minecraft:nether/obtain_blaze_rod",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+        "damage": {
+          "type": {
+            "direct_entity": {
+              "type": "minecraft:small_fireball"
+            }
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 5
+  }
+}

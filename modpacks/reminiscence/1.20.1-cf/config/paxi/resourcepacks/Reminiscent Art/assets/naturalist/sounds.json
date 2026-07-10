@@ -1,0 +1,627 @@
+{
+  "entity.tortoise.egg_break": {
+    "sounds": [
+      "mob/turtle/egg/egg_break1",
+      "mob/turtle/egg/egg_break2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.tortoise.egg_break"
+  },
+  "entity.tortoise.egg_crack": {
+    "sounds": [
+      "mob/turtle/egg/egg_crack1",
+      "mob/turtle/egg/egg_crack2",
+      "mob/turtle/egg/egg_crack3",
+      "mob/turtle/egg/egg_crack4",
+      "mob/turtle/egg/egg_crack5"
+    ],
+    "subtitle": "naturalist.subtitles.entity.tortoise.egg_crack"
+  },
+  "entity.tortoise.egg_hatch": {
+    "sounds": [
+      "mob/turtle/baby/egg_hatched1",
+      "mob/turtle/baby/egg_hatched2",
+      "mob/turtle/baby/egg_hatched3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.tortoise.egg_hatch"
+  },
+
+  "entity.alligator.egg_break": {
+    "sounds": [
+      "mob/turtle/egg/egg_break1",
+      "mob/turtle/egg/egg_break2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.alligator.egg_break"
+  },
+  "entity.alligator.egg_crack": {
+    "sounds": [
+      "mob/turtle/egg/egg_crack1",
+      "mob/turtle/egg/egg_crack2",
+      "mob/turtle/egg/egg_crack3",
+      "mob/turtle/egg/egg_crack4",
+      "mob/turtle/egg/egg_crack5"
+    ],
+    "subtitle": "naturalist.subtitles.entity.alligator.egg_crack"
+  },
+  "entity.alligator.egg_hatch": {
+    "sounds": [
+      "mob/turtle/baby/egg_hatched1",
+      "mob/turtle/baby/egg_hatched2",
+      "mob/turtle/baby/egg_hatched3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.alligator.egg_hatch"
+  },
+
+  "entity.snake.hiss": {
+    "sounds": [
+      "naturalist:snake_hiss"
+    ],
+    "subtitle": "naturalist.subtitles.entity.snake.hiss"
+  },
+  "entity.snake.hurt": {
+    "sounds": [
+      "naturalist:snake_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.snake.hurt"
+  },
+  "entity.snake.rattle": {
+    "sounds": [
+      "naturalist:snake_rattle"
+    ],
+    "subtitle": "naturalist.subtitles.entity.snake.rattle"
+  },
+  "entity.snail.crush": {
+    "sounds": [
+      "minecraft:mob/turtle/egg/egg_crack1",
+      "minecraft:mob/turtle/egg/egg_crack2",
+      "minecraft:mob/turtle/egg/egg_crack3",
+      "minecraft:mob/turtle/egg/egg_crack4",
+      "minecraft:mob/turtle/egg/egg_crack5"
+    ],
+    "subtitle": "naturalist.subtitles.entity.snail.crush"
+  },
+  "entity.snail.forward": {
+    "sounds": [
+      "goldendays:blank"
+    ],
+    "subtitle": "naturalist.subtitles.entity.snail.move"
+  },
+  "entity.snail.back": {
+    "sounds": [
+      "goldendays:blank"
+    ],
+    "subtitle": "naturalist.subtitles.entity.snail.move"
+  },
+  "item.bucket.fill_snail": {
+    "sounds": [
+      "naturalist:bucket_fill_snail"
+    ],
+    "subtitle": "naturalist.subtitles.item.bucket.fill_snail"
+  },
+  "item.bucket.empty_snail": {
+    "sounds": [
+      "naturalist:bucket_empty_snail"
+    ],
+    "subtitle": "naturalist.subtitles.item.bucket.empty_snail"
+  },
+  "entity.bear.hurt": {
+    "sounds": [
+      "minecraft:mob/polarbear/hurt1",
+      "minecraft:mob/polarbear/hurt2",
+      "minecraft:mob/polarbear/hurt3",
+      "minecraft:mob/polarbear/hurt4"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.hurt"
+  },
+  "entity.bear.death": {
+    "sounds": [
+      "minecraft:mob/polarbear/death1",
+      "minecraft:mob/polarbear/death2",
+      "minecraft:mob/polarbear/death3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.death"
+  },
+  "entity.bear.ambient": {
+    "sounds": [
+      "minecraft:mob/polarbear/idle1",
+      "minecraft:mob/polarbear/idle2",
+      "minecraft:mob/polarbear/idle3",
+      "minecraft:mob/polarbear/idle4"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.ambient"
+  },
+  "entity.bear.ambient_baby": {
+    "sounds": [
+      "minecraft:mob/panda/cant_breed1",
+      "minecraft:mob/panda/cant_breed2",
+      "minecraft:mob/panda/cant_breed3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.ambient_baby"
+  },
+  "entity.bear.hurt_baby": {
+    "sounds": [
+      "minecraft:mob/panda/hurt1",
+      "minecraft:mob/panda/hurt2",
+      "minecraft:mob/panda/hurt3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.hurt_baby"
+  },
+  "entity.bear.sleep": {
+    "sounds": [
+      "minecraft:mob/fox/sleep1",
+      "minecraft:mob/fox/sleep2",
+      "minecraft:mob/fox/sleep3",
+      "minecraft:mob/fox/sleep4",
+      "minecraft:mob/fox/sleep5"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.sleep"
+  },
+  "entity.bear.sniff": {
+    "sounds": [
+      "minecraft:mob/fox/sniff1",
+      "minecraft:mob/fox/sniff2",
+      "minecraft:mob/fox/sniff3",
+      "minecraft:mob/fox/sniff4"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.sniff"
+  },
+  "entity.bear.spit": {
+    "sounds": [
+      "minecraft:mob/fox/spit1",
+      "minecraft:mob/fox/spit2",
+      "minecraft:mob/fox/spit3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.spit"
+  },
+  "entity.bear.eat": {
+    "sounds": [
+      "minecraft:mob/panda/eat1",
+      "minecraft:mob/panda/eat2",
+      "minecraft:mob/panda/eat3",
+      "minecraft:mob/panda/eat4",
+      "minecraft:mob/panda/eat5",
+      "minecraft:mob/panda/eat6",
+      "minecraft:mob/panda/eat7",
+      "minecraft:mob/panda/eat8",
+      "minecraft:mob/panda/eat9",
+      "minecraft:mob/panda/eat10",
+      "minecraft:mob/panda/eat11",
+      "minecraft:mob/panda/eat12"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bear.eat"
+  },
+  "entity.bird.hurt": {
+    "sounds": [
+      "minecraft:mob/parrot/hurt1",
+      "minecraft:mob/parrot/hurt2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.hurt"
+  },
+  "entity.bird.death": {
+    "sounds": [
+      "minecraft:mob/parrot/death1",
+      "minecraft:mob/parrot/death2",
+      "minecraft:mob/parrot/death3",
+      "minecraft:mob/parrot/death4"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.death"
+  },
+  "entity.bird.eat": {
+    "sounds": [
+      "minecraft:mob/parrot/eat1",
+      "minecraft:mob/parrot/eat2",
+      "minecraft:mob/parrot/eat3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.eat"
+  },
+  "entity.bird.fly": {
+    "sounds": [
+      "minecraft:mob/parrot/fly1",
+      "minecraft:mob/parrot/fly2",
+      "minecraft:mob/parrot/fly3",
+      "minecraft:mob/parrot/fly4",
+      "minecraft:mob/parrot/fly5",
+      "minecraft:mob/parrot/fly6",
+      "minecraft:mob/parrot/fly7"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.fly"
+  },
+  "entity.bird.ambient_bluejay": {
+    "sounds": [
+      "naturalist:bluejay_idle_1",
+      "naturalist:bluejay_idle_2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.ambient_bluejay"
+  },
+  "entity.bird.ambient_canary": {
+    "sounds": [
+      "naturalist:canary_idle",
+      "naturalist:canary_song"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.ambient_canary"
+  },
+  "entity.bird.ambient_robin": {
+    "sounds": [
+      "naturalist:robin_idle",
+      "naturalist:robin_song"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.ambient_robin"
+  },
+  "entity.bird.ambient_finch": {
+    "sounds": [
+      "naturalist:entity/bird/finch/idle1",
+      "naturalist:entity/bird/finch/idle2",
+      "naturalist:entity/bird/finch/idle3",
+      "naturalist:entity/bird/finch/song1",
+      "naturalist:entity/bird/finch/song2",
+      "naturalist:entity/bird/finch/song3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.ambient_finch"
+  },
+  "entity.bird.ambient_sparrow": {
+    "sounds": [
+      "naturalist:entity/bird/sparrow/idle1",
+      "naturalist:entity/bird/sparrow/idle2",
+      "naturalist:entity/bird/sparrow/idle3",
+      "naturalist:entity/bird/sparrow/idle4"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.ambient_sparrow"
+  },
+  "entity.bird.ambient_cardinal": {
+    "sounds": [
+      "naturalist:cardinal_idle",
+      "naturalist:cardinal_song"
+    ],
+    "subtitle": "naturalist.subtitles.entity.bird.ambient_cardinal"
+  },
+  "entity.firefly.hurt": {
+    "sounds": [
+      "naturalist:firefly_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.firefly.hurt"
+  },
+  "entity.firefly.death": {
+    "sounds": [
+      "naturalist:firefly_death"
+    ],
+    "subtitle": "naturalist.subtitles.entity.firefly.death"
+  },
+  "entity.firefly.hide": {
+    "sounds": [
+      "naturalist:firefly_hide"
+    ],
+    "subtitle": "naturalist.subtitles.entity.firefly.hide"
+  },
+  "entity.rhino.scrape": {
+    "sounds": [
+      "naturalist:rhino_scrape"
+    ],
+    "subtitle": "naturalist.subtitles.entity.rhino.scrape"
+  },
+  "entity.rhino.ambient": {
+    "sounds": [
+      "naturalist:rhino_idle1",
+      "naturalist:rhino_idle2",
+      "naturalist:rhino_idle3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.rhino.ambient"
+  },
+  "entity.rhino.ambient_baby": {
+    "sounds": [
+      "naturalist:rhino_idle_baby"
+    ],
+    "subtitle": "naturalist.subtitles.entity.rhino.ambient_baby"
+  },
+  "entity.lion.hurt": {
+    "sounds": [
+      "naturalist:lion_hurt1"
+    ],
+    "subtitle": "naturalist.subtitles.entity.lion.hurt"
+  },
+  "entity.lion.ambient": {
+    "sounds": [
+      "naturalist:lion_idle1",
+      "naturalist:lion_roar1"
+    ],
+    "subtitle": "naturalist.subtitles.entity.lion.ambient"
+  },
+  "entity.lion.roar": {
+    "sounds": [
+      "naturalist:lion_roar1",
+      "naturalist:lion_roar2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.lion.roar"
+  },
+  "entity.elephant.ambient": {
+    "sounds": [
+      "naturalist:elephant_idle1",
+      "naturalist:elephant_idle2",
+      "naturalist:elephant_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.elephant.ambient"
+  },
+  "entity.elephant.hurt": {
+    "sounds": [
+      "naturalist:elephant_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.elephant.hurt"
+  },
+  "entity.deer.ambient": {
+    "sounds": [
+      "naturalist:deer_idle1",
+      "naturalist:deer_idle2",
+      "naturalist:deer_idle3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.deer.ambient"
+  },
+  "entity.deer.hurt": {
+    "sounds": [
+      "naturalist:deer_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.deer.hurt"
+  },
+    "entity.deer.death": {
+    "sounds": [
+      "naturalist:deer_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.deer.death"
+  },
+  "entity.deer.ambient_baby": {
+    "sounds": [
+      "naturalist:fawn_idle"
+    ],
+    "subtitle": "naturalist.subtitles.entity.deer.ambient_baby"
+  },
+  "entity.deer.hurt_baby": {
+    "sounds": [
+      "naturalist:fawn_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.deer.hurt_baby"
+  },
+  "entity.zebra.ambient": {
+    "sounds": [
+      "naturalist:zebra_idle1",
+      "naturalist:zebra_idle2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.zebra.ambient"
+  },
+  "entity.zebra.hurt": {
+    "sounds": [
+      "naturalist:zebra_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.zebra.hurt"
+  },
+  "entity.zebra.death": {
+    "sounds": [
+      "minecraft:mob/horse/death"
+    ],
+    "subtitle": "naturalist.subtitles.entity.zebra.death"
+  },
+  "entity.zebra.eat": {
+    "sounds": [
+      "minecraft:entity/horse/eat1",
+      "minecraft:entity/horse/eat2",
+      "minecraft:entity/horse/eat3",
+      "minecraft:entity/horse/eat4",
+      "minecraft:entity/horse/eat5"
+    ],
+    "subtitle": "naturalist.subtitles.entity.zebra.eat"
+  },
+  "entity.zebra.breathe": {
+    "sounds": [
+      "minecraft:mob/horse/breathe1",
+      "minecraft:mob/horse/breathe2",
+      "minecraft:mob/horse/breathe3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.zebra.breathe"
+  },
+  "entity.zebra.angry": {
+    "sounds": [
+      "minecraft:mob/horse/angry1"
+    ],
+    "subtitle": "naturalist.subtitles.entity.zebra.angry"
+  },
+  "entity.zebra.jump": {
+    "sounds": [
+      "minecraft:mob/horse/jump"
+    ],
+    "subtitle": "naturalist.subtitles.entity.zebra.jump"
+  },
+  "entity.vulture.ambient": {
+    "sounds": [
+      "naturalist:vulture_idle"
+    ],
+    "subtitle": "naturalist.subtitles.entity.vulture.ambient"
+  },
+  "entity.vulture.hurt": {
+    "sounds": [
+      "naturalist:vulture_hurt"
+    ],
+    "subtitle": "naturalist.subtitles.entity.vulture.hurt"
+  },
+  "entity.vulture.death": {
+    "sounds": [
+      "naturalist:vulture_death"
+    ],
+    "subtitle": "naturalist.subtitles.entity.vulture.death"
+  },
+  "entity.giraffe.ambient": {
+    "sounds": [
+      "naturalist:giraffe_idle"
+    ],
+    "subtitle": "naturalist.subtitles.entity.giraffe.ambient"
+  },
+  "entity.hippo.ambient": {
+    "sounds": [
+      "naturalist:hippo_idle1",
+      "naturalist:hippo_idle2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.hippo.ambient"
+  },
+  "entity.hippo.hurt": {
+    "sounds": [
+      "naturalist:hippo_hurt1",
+      "naturalist:hippo_hurt2",
+      "naturalist:hippo_hurt3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.hippo.hurt"
+  },
+  "entity.alligator.hurt": {
+    "sounds": [
+      "naturalist:gator_hurt1",
+      "naturalist:gator_hurt2",
+      "naturalist:gator_hurt3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.alligator.hurt"
+  },
+  "entity.alligator.death": {
+    "sounds": [
+      "naturalist:gator_death"
+    ],
+    "subtitle": "naturalist.subtitles.entity.alligator.death"
+  },
+  "entity.alligator.ambient": {
+    "sounds": [
+      "naturalist:gator_idle1",
+      "naturalist:gator_idle2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.alligator.ambient"
+  },
+  "entity.alligator.ambient_baby": {
+    "sounds": [
+      "naturalist:gator_baby_idle"
+    ],
+    "subtitle": "naturalist.subtitles.entity.alligator.ambient_baby"
+  },
+  "entity.boar.ambient": {
+    "sounds": [
+      "minecraft:mob/pig/say1",
+      "minecraft:mob/pig/say2",
+      "minecraft:mob/pig/say3"
+    ],
+    "subtitle": "naturalist.subtitles.entity.boar.ambient"
+  },
+    "entity.boar.hurt": {
+        "sounds": [
+        "minecraft:mob/pig/say1",
+        "minecraft:mob/pig/say2",
+        "minecraft:mob/pig/say3"
+        ],
+        "subtitle": "naturalist.subtitles.entity.boar.hurt"
+    },
+    "entity.boar.death": {
+        "sounds": [
+        "minecraft:mob/pig/death"
+        ],
+        "subtitle": "naturalist.subtitles.entity.boar.death"
+    },
+  "entity.boar.step": {
+    "sounds": [
+      "minecraft:mob/pig/step1",
+      "minecraft:mob/pig/step2",
+      "minecraft:mob/pig/step3",
+      "minecraft:mob/pig/step4"
+    ],
+    "subtitle": "naturalist.subtitles.entity.boar.step"
+  },
+  "entity.catfish.flop": {
+    "sounds": [
+      {
+        "name": "minecraft:entity/pufferfish/flop1",
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:entity/pufferfish/flop2",
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:entity/pufferfish/flop3",
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:entity/pufferfish/flop4",
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "naturalist.subtitles.entity.catfish.flop"
+  },
+  "entity.bass.flop": {
+    "sounds": [
+      {
+        "name": "minecraft:entity/fish/flop1",
+        "pitch": 0.8,
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:entity/fish/flop2",
+        "pitch": 0.8,
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:entity/fish/flop3",
+        "pitch": 0.8,
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:entity/fish/flop4",
+        "pitch": 0.8,
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "naturalist.subtitles.entity.bass.flop"
+  },
+  "entity.dragonfly.loop": {
+    "sounds": [
+      "minecraft:mob/bee/loop1",
+      "minecraft:mob/bee/loop2",
+      "minecraft:mob/bee/loop3",
+      "minecraft:mob/bee/loop4",
+      "minecraft:mob/bee/loop5"
+    ],
+    "subtitle": "naturalist.subtitles.entity.dragonfly.loop"
+  },
+  "entity.duck.ambient": {
+    "sounds": [
+      "naturalist:entity/duck/idle1",
+      "naturalist:entity/duck/idle2"
+    ],
+    "subtitle": "naturalist.subtitles.entity.duck.ambient"
+  },
+  "entity.duck.hurt": {
+      "sounds": [
+      "naturalist:entity/duck/hurt1",
+      "naturalist:entity/duck/hurt2"
+      ],
+      "subtitle": "naturalist.subtitles.entity.duck.hurt"
+  },
+  "entity.duck.death": {
+      "sounds": [
+        "naturalist:entity/duck/hurt1",
+        "naturalist:entity/duck/hurt2"
+      ],
+      "subtitle": "naturalist.subtitles.entity.duck.death"
+  },
+  "entity.duck.step": {
+      "sounds": [
+      "naturalist:entity/duck/step1",
+      "naturalist:entity/duck/step2",
+      "naturalist:entity/duck/step3",
+      "naturalist:entity/duck/step4",
+      "naturalist:entity/duck/step5"
+      ],
+      "subtitle": "subtitles.block.generic.footsteps"
+  },
+    "entity.rubber_ducky.ambient": {
+        "sounds": [
+        "naturalist:entity/duck/rubber_ducky/idle1",
+        "naturalist:entity/duck/rubber_ducky/idle2"
+        ],
+        "subtitle": "naturalist.subtitles.entity.duck.ambient"
+    },
+    "entity.rubber_ducky.hurt": {
+        "sounds": [
+        "naturalist:entity/duck/rubber_ducky/hurt1",
+        "naturalist:entity/duck/rubber_ducky/hurt2"
+        ],
+        "subtitle": "naturalist.subtitles.entity.duck.hurt"
+    }
+}

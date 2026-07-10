@@ -1,0 +1,106 @@
+{
+  "display": {
+    "icon": {
+      "item": "quark:dragon_scale"
+    },
+    "title": "The Tortured Path",
+    "description": "Kill every boss and mini-boss",
+    "frame": "challenge",
+    "announce_to_chat": false,
+    "show_toast": true,
+    "hidden": false
+  },
+  "parent": "minecraft:end/enter_end_gateway",
+  "criteria": {
+    "v": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:ender_dragon"
+        }
+      }
+    },
+    "z": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:wither"
+        }
+      }
+    },
+    "w": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:elder_guardian"
+        }
+      }
+    },
+    "h": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:warden"
+        }
+      }
+    },
+    "t": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:ravager"
+        }
+      }
+    },
+    "u": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "aether:slider"
+        }
+      }
+    },
+    "i": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "aether:valkyrie_queen"
+        }
+      }
+    },
+    "o": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "aether:sun_spirit"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "v"
+    ],
+    [
+      "z"
+    ],
+    [
+      "t"
+    ],
+    [
+      "w"
+    ],
+    [
+      "h"
+    ],
+    [
+      "u"
+    ],
+    [
+      "i"
+    ],
+    [
+      "o"
+    ]
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+   "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:spyglass"
+    },
+    "title": "Is It a Bird?",
+    "description": "Make a Spyglass",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/mine_amethyst",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:spyglass"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

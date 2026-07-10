@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "tag": "minecraft:wool"
+    },
+    "#": {
+      "item": "kubejs:valkyrie_feather"
+    },
+    "h": {
+      "item": "caverns_and_chasms:silver_ingot"
+    }
+  },
+  "pattern": [
+    "HhH",
+    "h#h",
+    "HhH"
+  ],
+  "result": {
+    "item": "aether:invisibility_cloak"
+  },
+  "show_notification": true
+}

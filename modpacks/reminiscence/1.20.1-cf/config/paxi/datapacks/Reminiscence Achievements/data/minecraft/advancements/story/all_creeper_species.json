@@ -1,0 +1,51 @@
+{
+  "display": {
+    "icon": {
+      "item": "caverns_and_chasms:deeper_head"
+    },
+    "title": "Generational Trauma",
+    "description": "Kill every Creeper subspecies",
+    "frame": "challenge",
+    "announce_to_chat": false,
+    "show_toast": true,
+    "hidden": false
+  },
+  "parent": "caverns_and_chasms:adventure/dont_move",
+  "criteria": {
+    "v": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:creeper"
+        }
+      }
+    },
+    "z": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "caverns_and_chasms:peeper"
+        }
+      }
+    },
+    "t": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "caverns_and_chasms:deeper"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "v"
+    ],
+    [
+      "z"
+    ],
+    [
+      "t"
+    ]
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "caverns_and_chasms:ore_gold_buried",
+    "features": [
+      {
+        "chance": 0.5,
+        "feature": "caverns_and_chasms:ore_silver_buried"
+      }
+    ]
+  }
+}

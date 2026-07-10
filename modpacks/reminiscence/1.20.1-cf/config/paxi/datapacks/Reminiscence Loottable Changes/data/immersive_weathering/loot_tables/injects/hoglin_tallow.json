@@ -1,0 +1,88 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:tallow",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 3
+              },
+              "add": true,
+              "conditions": [
+                {
+                  "condition": "minecraft:any_of",
+                  "terms": [
+                    {
+                      "condition": "minecraft:damage_source_properties",
+                      "predicate": {
+                        "tags": [
+                          {
+                            "id": "minecraft:is_fire",
+                            "expected": false
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "condition": "minecraft:damage_source_properties",
+                      "predicate": {
+                        "source_entity": {
+                          "equipment": {
+                            "mainhand": {
+                              "enchantments": [
+                                {
+                                  "enchantment": "minecraft:flame"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "condition": "minecraft:damage_source_properties",
+                      "predicate": {
+                        "source_entity": {
+                          "equipment": {
+                            "mainhand": {
+                              "enchantments": [
+                                {
+                                  "enchantment": "minecraft:fire_aspect"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 3
+              },
+              "add": true
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

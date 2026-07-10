@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "quark:block/green_corundum_cluster",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "quark:block/green_corundum_cluster",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "quark:block/green_corundum_cluster",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "quark:block/green_corundum_cluster",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "quark:block/green_corundum_cluster"
+    },
+    "facing=west": {
+      "model": "quark:block/green_corundum_cluster",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "end_metal_chestplates",
+  "key": {
+    "#": {
+      "item": "betterend:terminite_ingot"
+    }
+  },
+  "pattern": [
+    "# #",
+    "###",
+    "###"
+  ],
+  "result": {
+    "item": "betterend:terminite_chestplate"
+  },
+  "show_notification": true
+}

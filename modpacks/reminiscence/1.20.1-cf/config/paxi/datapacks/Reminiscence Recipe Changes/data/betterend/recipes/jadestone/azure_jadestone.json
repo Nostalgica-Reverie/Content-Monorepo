@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "XO",
+    "OX"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:end_stone"
+    },
+    "X": {
+      "item": "caverns_and_chasms:raw_silver"
+    }
+  },
+  "result": {
+    "item": "betterend:azure_jadestone",
+    "count": 2
+  }
+}

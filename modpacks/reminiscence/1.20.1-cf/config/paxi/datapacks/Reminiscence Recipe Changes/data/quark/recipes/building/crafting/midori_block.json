@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "immersive_weathering:moss_clump"
+    }
+  },
+  "result": {
+    "item": "quark:midori_block",
+    "count": 4
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "midori"
+    }
+  ]
+} 

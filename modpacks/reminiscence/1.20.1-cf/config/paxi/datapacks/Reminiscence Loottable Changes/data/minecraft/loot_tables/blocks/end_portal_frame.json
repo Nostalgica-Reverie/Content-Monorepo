@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:end_portal_frame"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "tag": "betterend:can_break_end_portal_frames"
+          }
+        }
+      ]
+    }
+  ],
+  "functions": [],
+  "random_sequence": "minecraft:blocks/end_portal_frame"
+}

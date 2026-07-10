@@ -4,12 +4,16 @@ description:
   "This page is an introduction to our Git practices as a page for the wiki."
 ---
 
+<script>
+  import { siteConfig } from '$lib/site';
+</script>
+
 # Git Practices
 
 **Last Updated:** 07-08-2026
 
 This page is an introduction to how we use Git in the
-[wiki repository](https://git.nostalgica.net/Reverie-Projects/monorepo). In order to keep the
+<a href={siteConfig.handbook.repoUrl}>wiki repository</a>. In order to keep the
 wiki consistent and reputable, we have a few rules that we follow.
 
 Git provides a lot of features that are great for collaboration, and we try to
@@ -31,7 +35,7 @@ Branches are useful additions to help separate features in your fork. Please all
 
 ## Commit Messages
 
-Abide by the Conventional Commit standard as outlined in CONTRIBUTING.md at the monorepo root.
+Abide by the Conventional Commit standard as outlined in CONTRIBUTING.md at the repository root.
 
 ## Merging
 
@@ -39,16 +43,11 @@ Whenever you start working on a new branch or features, pull the latest changes
 from the main branch. This will ensure that you have the most up-to-date
 changes.
 
-```
-node run ./gen_search_indexes_node.js
-
-OR
-
-bun ./gen_search_indexes.js
+```sh
+bun run docs:index
 ```
 
 ## Other Important Information
 
 - Make a description of your changes in your PR.
 - Reviewers: Proofread changes before approving them.
-

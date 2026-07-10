@@ -1,0 +1,46 @@
+{
+  "parent": "minecraft:end/smelt_titanium",
+  "criteria": {
+    "got_aeternium_tool": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:aeternium_axe",
+              "betterend:aeternium_pickaxe",
+              "betterend:aeternium_shovel",
+              "betterend:aeternium_hoe",
+              "betterend:aeternium_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.betterend.aeternium_tool.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "betterend:aeternium_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.betterend.aeternium_tool.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_aeternium_tool"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  },
+  "sends_telemetry_event": false
+}

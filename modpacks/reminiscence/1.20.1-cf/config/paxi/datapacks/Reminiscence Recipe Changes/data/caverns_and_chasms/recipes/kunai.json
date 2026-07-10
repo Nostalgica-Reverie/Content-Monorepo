@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "tag": "forge:nuggets/silver"
+    }
+  },
+  "pattern": [
+    " S",
+    "# "
+  ],
+  "result": {
+    "item": "caverns_and_chasms:kunai"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,215 @@
+{
+  "parent": "aether:the_aether",
+  "criteria": {
+    "aether:skyroot_forest": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "aether:skyroot_forest"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "aether:skyroot_grove": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "aether:skyroot_grove"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "aether:skyroot_meadow": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "aether:skyroot_meadow"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "aether:skyroot_woodland": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "aether:skyroot_woodland"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "deep_aether:aerglow_forest": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "deep_aether:aerglow_forest"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "deep_aether:aerlavender_fields": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "deep_aether:aerlavender_fields"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "deep_aether:blue_aerglow_forest": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "deep_aether:blue_aerglow_forest"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "deep_aether:mystic_aerglow_forest": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "deep_aether:mystic_aerglow_forest"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "deep_aether:yagroot_swamp": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "deep_aether:yagroot_swamp"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "deep_aether:golden_heights": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "deep_aether:golden_heights"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.deep_aether.explore_aether.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "deep_aether:roseroot_sapling"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.deep_aether.explore_aether.title"
+    }
+  },
+  "requirements": [
+    [
+      "aether:skyroot_grove"
+    ],
+    [
+      "aether:skyroot_forest"
+    ],
+    [
+      "aether:skyroot_meadow"
+    ],
+    [
+      "aether:skyroot_woodland"
+    ],
+    [
+      "deep_aether:aerglow_forest"
+    ],
+    [
+      "deep_aether:blue_aerglow_forest"
+    ],
+    [
+      "deep_aether:mystic_aerglow_forest"
+    ],
+    [
+      "deep_aether:aerlavender_fields"
+    ],
+    [
+      "deep_aether:yagroot_swamp"
+    ],
+    [
+      "deep_aether:golden_heights"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  }
+}

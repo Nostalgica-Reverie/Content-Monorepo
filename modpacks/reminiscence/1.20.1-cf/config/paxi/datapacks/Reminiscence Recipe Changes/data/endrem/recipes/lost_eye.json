@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGr",
+    "GSG",
+    "TGt"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:lapis_block"
+    },
+    "R": {
+      "item": "minecraft:emerald"
+    },
+    "r": {
+      "item": "minecraft:iron_ingot"
+    },
+    "T": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "t": {
+      "item": "minecraft:diamond"
+    },
+    "S": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "endrem:lost_eye"
+  }
+}

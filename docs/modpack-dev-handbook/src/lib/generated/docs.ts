@@ -383,7 +383,7 @@ export const docsIndex: DocMeta[] = [
     "tags": []
   },
   {
-    "title": "mod_browser_webview",
+    "title": "modbrowserwebview",
     "url": "/wiki/modpack-management/packwiz/components/webview",
     "sourcePath": "docs/modpack-dev-handbook/src/routes/wiki/modpack-management/packwiz/components/webview/+page.md",
     "description": "",
@@ -1888,7 +1888,7 @@ export const navSections: NavSection[] = [
                     "children": []
                   },
                   {
-                    "title": "mod_browser_webview",
+                    "title": "modbrowserwebview",
                     "url": "/wiki/modpack-management/packwiz/components/webview",
                     "children": []
                   },
@@ -2054,7 +2054,8 @@ export function normalizeDocUrl(url: string): string {
   return url || '/';
 }
 
+const docsByUrl = new Map(docsIndex.map((doc) => [normalizeDocUrl(doc.url), doc]));
+
 export function findDocByUrl(url: string): DocMeta | undefined {
-  const normalized = normalizeDocUrl(url);
-  return docsIndex.find((doc) => normalizeDocUrl(doc.url) === normalized);
+  return docsByUrl.get(normalizeDocUrl(url));
 }

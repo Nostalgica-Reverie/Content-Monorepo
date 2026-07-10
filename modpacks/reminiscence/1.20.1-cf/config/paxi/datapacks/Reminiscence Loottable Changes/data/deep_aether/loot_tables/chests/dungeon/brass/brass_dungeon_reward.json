@@ -1,0 +1,159 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "deep_aether:chests/dungeon/brass/brass_dungeon_fodder"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "deep_aether:chests/dungeon/brass/brass_dungeon_treasure"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "deep_aether:chests/dungeon/brass/brass_dungeon_gummies"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:skyjade_helmet",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:skyjade_chestplate",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:skyjade_leggings",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:skyjade_boots",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:skyjade_ring"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:wind_shield",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:cloud_staff",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:cloud_cape",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:emerald",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:cold_aercloud",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:music_disc_cyclone",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:nimbus_stone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:nimbus_pillar"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 5.0,
+        "min": 3.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:golden_dart",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:arrow",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:nimbus_stone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:nimbus_pillar"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 6.0,
+        "min": 3.0
+      }
+    }
+  ],
+  "random_sequence": "deep_aether:chests/dungeon/brass/brass_dungeon_reward"
+}

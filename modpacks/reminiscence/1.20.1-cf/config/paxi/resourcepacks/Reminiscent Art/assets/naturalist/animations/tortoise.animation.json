@@ -1,0 +1,207 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"tortoise.spin": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"body": {
+					"rotation": [0, "q.anim_time * 720", 0],
+					"position": [0, -2, 0]
+				},
+				"head": {
+					"scale": [0, 0, 1]
+				},
+				"left_arm": {
+					"scale": [0, 0, 1]
+				},
+				"right_arm": {
+					"scale": [0, 0, 1]
+				},
+				"right_leg": {
+					"scale": [0, 0, 1]
+				},
+				"left_leg": {
+					"scale": [0, 0, 1]
+				}
+			}
+		},
+		"tortoise.walk": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"left_arm": {
+					"rotation": ["Math.sin((query.anim_time - 0.0) * 360) * 20", 0, 0]
+				},
+				"right_arm": {
+					"rotation": ["Math.sin((query.anim_time - 0.0) * 360) * -20", 0, 0]
+				},
+				"right_leg": {
+					"rotation": ["Math.sin((query.anim_time - 0.0) * 360) * 20", 0, 0]
+				},
+				"left_leg": {
+					"rotation": ["Math.sin((query.anim_time - 0.0) * 360) * -20", 0, 0]
+				}
+			}
+		},
+		"tortoise.retreat": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"body": {
+					"position": [0, -3, 0]
+				},
+				"head": {
+					"scale": [0, 0, 1]
+				},
+				"left_arm": {
+					"scale": [0, 0, 1]
+				},
+				"right_arm": {
+					"scale": [0, 0, 1]
+				},
+				"right_leg": {
+					"scale": [0, 0, 1]
+				},
+				"left_leg": {
+					"scale": [0, 0, 1]
+				},
+				"root": {
+					"position": [0, 1, 0]
+				}
+			}
+		},
+		"tortoise.sit": {
+			"loop": true,
+			"animation_length": 0.8333,
+			"bones": {
+				"body": {
+					"position": [0, -2, 0]
+				},
+				"head": {
+					"position": [0, -2, 0]
+				},
+				"left_arm": {
+					"rotation": [-90, 0, 0],
+					"position": [0, -3, 0]
+				},
+				"right_arm": {
+					"rotation": [-90, 0, 0],
+					"position": [0, -3, 0]
+				},
+				"left_leg": {
+					"rotation": [90, -89.5, -180],
+					"position": [0.5, -3, 0]
+				},
+				"right_leg": {
+					"rotation": [-89.9999, 89.5, 0.0001],
+					"position": [-0.5, -3, 0]
+				}
+			}
+		},
+		"tortoise.hide": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"position": [0, -1, 0]
+				},
+				"head": {
+					"position": [0, 1, 10]
+				},
+				"left_arm": {
+					"rotation": [-61.1632, -20.35882, -11.52421],
+					"position": [-8, 1, 6]
+				},
+				"right_arm": {
+					"rotation": [-61.16, 20.36, 11.52],
+					"position": [8, 1, 6]
+				},
+				"left_leg": {
+					"rotation": [28.99769, 9.89348, -66.24074],
+					"position": [-8, 1, -6]
+				},
+				"right_leg": {
+					"rotation": [28.99769, -9.89348, 66.24074],
+					"position": [8, 1, -6]
+				},
+				"body": {
+					"position": [0, -1, 0]
+				}
+			}
+		},
+		"tortoise.dinnerbone": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"body": {
+					"rotation": [7.5, 0, 0],
+					"position": [0, -0.99144, 0.13053]
+				},
+				"left_arm": {
+					"rotation": ["Math.cos((query.anim_time - 0.0) * 720) * -32", 0, 0],
+					"position": [0, 0, 1]
+				},
+				"right_arm": {
+					"rotation": ["Math.cos((query.anim_time - 0.0) * 720) * 32", 0, 0],
+					"position": [0, 0, 1]
+				},
+				"root": {
+					"rotation": [-367.5, 0, 180],
+					"position": [0, -1, 0.15]
+				},
+				"left_leg": {
+					"rotation": ["Math.cos((query.anim_time - 0.2) * 720) * -32", 0, 0]
+				},
+				"right_leg": {
+					"rotation": ["Math.cos((query.anim_time - 0.0) * 720) * -32", 0, 0]
+				}
+			}
+		},
+		"tortoise.dig": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"tail": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5417": [0, 0, 0],
+						"0.7917": [0, 0, 0],
+						"1.7917": [0, 0, 0]
+					}
+				},
+				"left_foot": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5417": [0, 0, 0],
+						"0.7917": [0, 0, 0],
+						"1.7917": [0, 0, 0]
+					}
+				},
+				"right_foot": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5417": [0, 0, 0],
+						"0.7917": [0, 0, 0],
+						"1.7917": [0, 0, 0]
+					}
+				},
+				"body": {
+					"rotation": [15, 0, 0]
+				},
+				"left_arm": {
+					"rotation": ["20 + Math.cos((query.anim_time - 0.0) * 720) * 45", 0, 0]
+				},
+				"right_arm": {
+					"rotation": ["20 + Math.cos((query.anim_time - 0.0) * 720) * -45", 0, 0]
+				},
+				"head_rot": {
+					"rotation": [10, "Math.sin((query.anim_time - 0.0) * 720) * 10", 0]
+				}
+			}
+		},
+		"tortoise.hurt": {
+			"animation_length": 0.25
+		}
+	},
+	"geckolib_format_version": 2
+}

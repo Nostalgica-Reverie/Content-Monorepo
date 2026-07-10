@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:nether/mine_nether_stone",
+  "criteria": {
+    "netherite_scrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherite_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.nether.obtain_ancient_debris.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.nether.obtain_ancient_debris.title"
+    }
+  },
+  "requirements": [
+    [
+      "netherite_scrap"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

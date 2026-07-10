@@ -1,6 +1,6 @@
 # Building the native GUI app
 
-The Packwand GUI ships in two forms: the browser-based `packwand gui` command, and a native desktop app built with [Tauri v2](https://v2.tauri.app/) that wraps the same frontend and server. The Tauri shell lives in `src/packwand/gui/tauri/`.
+The Packwand GUI ships in two forms: the browser-based `packwand gui` command, and a native desktop app built with [Tauri v2](https://v2.tauri.app/) that wraps the same frontend and server. The Tauri shell lives in `apps/packwand/gui/tauri/`.
 
 ## Architecture
 
@@ -36,7 +36,7 @@ From the repository root:
 task build-gui
 ```
 
-This builds the `packwand` CLI first, then runs `cargo tauri build` in `src/packwand/gui/tauri`, producing a platform installer/bundle under `src/packwand/gui/tauri/src-tauri/target/release/bundle/`.
+This builds the `packwand` CLI first, then runs `cargo tauri build` in `apps/packwand/gui/tauri`, producing a platform installer/bundle under `apps/packwand/gui/tauri/src-tauri/target/release/bundle/`.
 
 ::: warning
 The packaged app expects a `packwand` executable next to it or on `PATH` (or `PACKWAND_BIN` set). When distributing, ship the `packwand` binary alongside the app bundle.
@@ -45,7 +45,7 @@ The packaged app expects a `packwand` executable next to it or on `PATH` (or `PA
 ## Development
 
 ```sh
-cd src/packwand/gui/tauri/src-tauri
+cd apps/packwand/gui/tauri/src-tauri
 cargo tauri dev
 ```
 

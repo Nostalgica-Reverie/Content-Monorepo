@@ -1,0 +1,14 @@
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 1 run function lost_tracks_dp:cfouroneeightcertitudes/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 2 run function lost_tracks_dp:cfouroneeightdeath/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 3 run function lost_tracks_dp:cfouroneeightdog/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 4 run function lost_tracks_dp:cfouroneeightdroopylikesyourface/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 5 run function lost_tracks_dp:cfouroneeighteleven/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 6 run function lost_tracks_dp:cfouroneeightfifflas/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 7 run function lost_tracks_dp:cfouroneeightiglovethyflob/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 8 run function lost_tracks_dp:cfouroneeightintro/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 9 run function lost_tracks_dp:cfouroneeightone/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 10 run function lost_tracks_dp:cfouroneeightsociallego/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 11 run function lost_tracks_dp:cfouroneeightsurfacepension/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 12 run function lost_tracks_dp:cfouroneeightthisdoesntwork/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 13 run function lost_tracks_dp:cfouroneeightandlaurashigiharatsukinokoibumi/play
+execute if score @e[type=marker,tag=imd_jukebox_marker,distance=..0.1,limit=1] imd_disc_id matches 14 run function lost_tracks_dp:notchmagneticcircuit/play

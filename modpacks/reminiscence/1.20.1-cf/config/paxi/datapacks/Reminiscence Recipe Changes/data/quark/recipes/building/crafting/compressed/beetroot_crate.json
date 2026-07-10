@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:beetroot"
+    }
+  },
+  "result": {
+    "item": "quark:beetroot_crate"
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "beetroot_crate"
+    }
+  ]
+}

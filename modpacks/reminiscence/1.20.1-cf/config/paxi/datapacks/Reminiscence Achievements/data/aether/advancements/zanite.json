@@ -1,0 +1,38 @@
+{
+  "parent": "aether:mine_holystone",
+  "criteria": {
+    "zanite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:zanite_gemstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.aether.zanite.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:zanite_gemstone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.zanite"
+    }
+  },
+  "requirements": [
+    [
+      "zanite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

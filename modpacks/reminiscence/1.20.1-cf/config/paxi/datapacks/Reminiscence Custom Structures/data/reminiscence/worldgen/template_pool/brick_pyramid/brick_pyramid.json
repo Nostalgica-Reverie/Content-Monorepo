@@ -1,0 +1,13 @@
+{
+    "name": "reminiscence:brick_pyramid",
+    "fallback": "minecraft:empty",
+    "elements": [{
+        "weight": 1,
+        "element": {
+            "location": "reminiscence:brick_pyramid/brick_pyramid",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }]
+}

@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"facing=north,powered=off": { "model": "quark:block/randomizer_off", "y": 180 },
+		
+		"facing=south,powered=off": { "model": "quark:block/randomizer_off", "y": 0 },
+
+		"facing=east,powered=off": { "model": "quark:block/randomizer_off", "y": 270 },
+		
+		"facing=west,powered=off": { "model": "quark:block/randomizer_off", "y": 90 },
+
+		"facing=north,powered=left": { "model": "quark:block/randomizer_on_left", "y": 180 },
+		"facing=south,powered=left": { "model": "quark:block/randomizer_on_left", "y": 0 },
+		"facing=east,powered=left": { "model": "quark:block/randomizer_on_left", "y": 270 },
+		"facing=west,powered=left": { "model": "quark:block/randomizer_on_left", "y": 90 },
+
+		"facing=north,powered=right": { "model": "quark:block/randomizer_on_right", "y": 180 },
+		"facing=south,powered=right": { "model": "quark:block/randomizer_on_right", "y": 0 },
+		"facing=east,powered=right": { "model": "quark:block/randomizer_on_right", "y": 270 },
+		"facing=west,powered=right": { "model": "quark:block/randomizer_on_right", "y": 90 }
+	}
+}

@@ -1,0 +1,410 @@
+{
+  "tab_enabled": true,
+  "tab_name": "redstone_rework",
+  "replace": true,
+  "tab_stack": {
+    "name":"minecraft:redstone"
+  },
+  "tab_items": [      
+    {
+"name": "minecraft:redstone"
+}, 
+{
+"name": "minecraft:redstone_torch"
+}, 
+{
+"name": "supplementaries:sconce_lever"
+}, 
+{
+"name": "minecraft:redstone_block"
+}, 
+{
+"name": "minecraft:repeater"
+}, 
+{
+"name": "minecraft:comparator"
+}, 
+{
+"name": "quark:redstone_randomizer"
+}, 
+{
+"name": "supplementaries:cog_block"
+}, 
+{
+"name": "minecraft:target"
+}, 
+{
+"name": "supplementaries:crank"
+}, 
+{
+"name": "minecraft:lever"
+}, 
+{
+"name": "minecraft:oak_button"
+}, 
+{
+"name": "aether:skyroot_button"
+}, 
+{
+"name": "minecraft:stone_button"
+}, 
+{
+"name": "aether:holystone_button"
+}, 
+{
+"name": "quark:gold_button"
+}, 
+{
+"name": "quark:iron_button"
+}, 
+{
+"name": "caverns_and_chasms:waxed_copper_button"
+}, 
+{
+"name": "caverns_and_chasms:waxed_exposed_copper_button"
+}, 
+{
+"name": "caverns_and_chasms:waxed_weathered_copper_button"
+}, 
+{
+"name": "caverns_and_chasms:waxed_oxidized_copper_button"
+}, 
+{
+"name": "minecraft:oak_pressure_plate"
+}, 
+{
+"name": "aether:skyroot_pressure_plate"
+}, 
+{
+"name": "minecraft:stone_pressure_plate"
+}, 
+{
+"name": "aether:holystone_pressure_plate"
+}, 
+{
+"name": "minecraft:light_weighted_pressure_plate"
+}, 
+{
+"name": "caverns_and_chasms:medium_weighted_pressure_plate"
+}, 
+{
+"name": "minecraft:heavy_weighted_pressure_plate"
+}, 
+{
+"name": "quark:obsidian_pressure_plate"
+}, 
+{
+"name": "minecraft:sculk_sensor"
+}, 
+{
+"name": "minecraft:calibrated_sculk_sensor"
+}, 
+{
+"name": "minecraft:sculk_shrieker"
+}, 
+{
+"name": "minecraft:amethyst_block"
+}, 
+{
+"name": "minecraft:white_wool"
+}, 
+{
+"name": "minecraft:tripwire_hook"
+}, 
+{
+"name": "minecraft:string"
+}, 
+{
+"name": "minecraft:lectern"
+}, 
+{
+"name": "minecraft:daylight_detector"
+}, 
+{
+"name": "minecraft:lightning_rod"
+}, 
+{
+"name": "supplementaries:wind_vane"
+}, 
+{
+"name": "supplementaries:turn_table"
+}, 
+{
+"name": "supplementaries:spring_launcher"
+}, 
+{
+"name": "minecraft:piston"
+}, 
+{
+"name": "minecraft:sticky_piston"
+}, 
+{
+"name": "minecraft:slime_block"
+}, 
+{
+"name": "minecraft:honey_block"
+}, 
+{
+"name": "upgrade_aquatic:mulberry_jam_block"
+}, 
+{
+"name": "minecraft:dispenser"
+}, 
+{
+"name": "minecraft:dropper"
+}, 
+{
+"name": "minecraft:hopper"
+}, 
+{
+"name": "supplementaries:faucet"
+}, 
+{
+"name": "minecraft:chest"
+}, 
+{
+"name": "minecraft:barrel"
+}, 
+{
+"name": "minecraft:chiseled_bookshelf"
+}, 
+{
+"name": "minecraft:furnace"
+}, 
+{
+"name": "aether:altar"
+}, 
+{
+"name": "aether:freezer"
+}, 
+{
+"name": "aether:incubator"
+}, 
+{
+"name": "minecraft:trapped_chest"
+}, 
+{
+"name": "aether:treasure_chest"
+}, 
+{
+"name": "minecraft:jukebox"
+}, 
+{
+"name": "minecraft:observer"
+}, 
+{
+"name": "supplementaries:relayer"
+}, 
+{
+"name": "supplementaries:crystal_display"
+}, 
+{
+"name": "supplementaries:bellows"
+}, 
+{
+"name": "minecraft:note_block"
+}, 
+{
+"name": "supplementaries:speaker_block"
+}, 
+{
+"name": "minecraft:composter"
+}, 
+{
+"name": "minecraft:cauldron"
+}, 
+{
+"name": "minecraft:rail"
+}, 
+{
+"name": "minecraft:powered_rail"
+}, 
+
+{
+"name": "modernminecarts:copper_rail"
+}, 
+{
+"name": "modernminecarts:exposed_copper_rail"
+}, 
+{
+"name": "modernminecarts:weathered_copper_rail"
+}, 
+{
+"name": "modernminecarts:oxidized_copper_rail"
+}, 
+
+{
+"name": "modernminecarts:waxed_copper_rail"
+}, 
+{
+"name": "modernminecarts:waxed_exposed_copper_rail"
+}, 
+{
+"name": "modernminecarts:waxed_weathered_copper_rail"
+}, 
+{
+"name": "modernminecarts:waxed_oxidized_copper_rail"
+}, 
+
+{
+"name": "caverns_and_chasms:spiked_rail"
+}, 
+{
+"name": "minecraft:detector_rail"
+}, 
+{
+"name": "modernminecarts:powered_detector_rail"
+}, 
+
+{
+"name": "minecraft:activator_rail"
+}, 
+
+{
+"name": "modernminecarts:rail_crossing"
+}, 
+{
+"name": "modernminecarts:sloped_rail"
+}, 
+
+{
+"name": "minecraft:minecart"
+}, 
+{
+"name": "minecraft:hopper_minecart"
+}, 
+{
+"name": "minecraft:chest_minecart"
+}, 
+{
+"name": "minecraft:furnace_minecart"
+}, 
+{
+"name": "minecraft:tnt_minecart"
+}, 
+{
+"name": "supplementaries:dispenser_minecart"
+}, 
+{
+"name": "minecraft:oak_chest_boat"
+}, 
+{
+"name": "minecraft:bamboo_chest_raft"
+}, 
+{
+"name": "supplementaries:lock_block"
+}, 
+{
+"name": "minecraft:oak_door"
+}, 
+{
+"name": "aether:skyroot_door"
+}, 
+{
+"name": "minecraft:iron_door"
+}, 
+{
+"name": "supplementaries:gold_door"
+}, 
+{
+"name": "supplementaries:netherite_door"
+}, 
+{
+"name": "supplementaries:iron_gate"
+}, 
+{
+"name": "minecraft:oak_fence_gate"
+}, 
+{
+"name": "aether:skyroot_fence_gate"
+}, 
+{
+"name": "minecraft:oak_trapdoor"
+}, 
+{
+"name": "aether:skyroot_trapdoor"
+}, 
+{
+"name": "minecraft:iron_trapdoor"
+}, 
+{
+"name": "supplementaries:gold_trapdoor"
+}, 
+{
+"name": "supplementaries:netherite_trapdoor"
+}, 
+{
+"name": "minecraft:tnt"
+}, 
+{
+"name": "caverns_and_chasms:tmt"
+}, 
+{
+"name": "supplementaries:redstone_illuminator"
+}, 
+{
+"name": "minecraft:redstone_lamp"
+}, 
+{
+"name": "ascended_quark:ambrosium_lamp"
+}, 
+{
+"name": "minecraft:bell"
+}, 
+{
+"name": "minecraft:big_dripleaf"
+}, 
+{
+"name": "minecraft:armor_stand"
+}, 
+{
+"name": "minecraft:redstone_ore"
+}, 
+{
+"name": "aether:enchanted_gravitite"
+}, 
+{
+"name": "quark:chute"
+}, 
+{
+"name": "quark:crafter"
+}, 
+{
+"name": "quark:ender_watcher"
+}, 
+{
+"name": "quark:gravisand"
+}, 
+{
+"name": "quark:iron_rod"
+}, 
+{
+"name": "quark:red_crystal_lamp"
+}, 
+{
+"name": "quark:orange_crystal_lamp"
+}, 
+{
+"name": "quark:yellow_crystal_lamp"
+}, 
+{
+"name": "quark:green_crystal_lamp"
+}, 
+{
+"name": "quark:blue_crystal_lamp"
+}, 
+{
+"name": "quark:indigo_crystal_lamp"
+}, 
+{
+"name": "quark:violet_crystal_lamp"
+}, 
+{
+"name": "quark:white_crystal_lamp"
+}, 
+{
+"name": "quark:black_crystal_lamp"
+}
+  ]
+
+}

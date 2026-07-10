@@ -1,0 +1,36 @@
+{
+  "parent": "aether:sun_core",
+  "criteria": {
+    "regen_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:regeneration_stone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Craft a Regeneration Stone using a fragment from the Sun Spirit.",
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "aether:regeneration_stone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.regen_stone"
+    }
+  },
+  "requirements": [
+    [
+      "regen_stone"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

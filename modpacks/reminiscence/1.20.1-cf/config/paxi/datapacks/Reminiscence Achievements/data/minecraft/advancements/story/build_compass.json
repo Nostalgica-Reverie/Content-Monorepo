@@ -1,0 +1,24 @@
+{
+  "display": {
+     "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:compass"
+    },
+    "title": "Doesn't Even Point North",
+    "description": "Make a Compass",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/build_altimeter",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:compass"]
+          }
+        ]
+      }
+    }
+  }
+}

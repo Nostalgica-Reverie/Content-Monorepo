@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "minecraft:block/sculk_sensor",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "minecraft:block/sculk_sensor",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "minecraft:block/sculk_sensor",
+      "y": 360
+    },
+    "facing=west": {
+      "model": "minecraft:block/sculk_sensor",
+      "y": 90
+    }
+  }
+}

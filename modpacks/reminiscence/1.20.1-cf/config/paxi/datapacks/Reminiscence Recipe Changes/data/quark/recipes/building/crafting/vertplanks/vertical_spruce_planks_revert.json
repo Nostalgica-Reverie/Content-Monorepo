@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:vertical_spruce_planks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:spruce_planks",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+        "flag": "vertical_planks"
+    }
+  ]
+} 

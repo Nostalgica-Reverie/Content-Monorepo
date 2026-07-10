@@ -1,0 +1,77 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.snake",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 3,
+				"visible_bounds_offset": [0, 0.5, 0]
+			},
+			"bones": [
+				{
+					"name": "main",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "neck",
+					"parent": "main",
+					"pivot": [0, 2, -3],
+					"cubes": [
+						{"origin": [-1.5, 0, -5], "size": [3, 7, 3], "uv": [0, 22]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "neck",
+					"pivot": [0, 7, -3],
+					"cubes": [
+						{"origin": [-2, 7, -8], "size": [4, 3, 6], "uv": [12, 13]}
+					]
+				},
+				{
+					"name": "tongue",
+					"parent": "head",
+					"pivot": [0, 8, -4],
+					"cubes": [
+						{"origin": [-0.5, 8, -7], "size": [1, 0, 3], "uv": [24, 15]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "main",
+					"pivot": [0, 1.5, -2],
+					"cubes": [
+						{"origin": [-1.5, 0, -2], "size": [3, 3, 6], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "tail2",
+					"parent": "tail",
+					"pivot": [0, 1.5, 4],
+					"cubes": [
+						{"origin": [-1.5, 0, 4], "size": [3, 2.5, 6], "inflate": 0.01, "uv": [0, 9]}
+					]
+				},
+				{
+					"name": "tail3",
+					"parent": "tail2",
+					"pivot": [0, 1, 10],
+					"cubes": [
+						{"origin": [-1, 0, 10], "size": [2, 2, 6], "uv": [13, 4]}
+					]
+				},
+				{
+					"name": "tail4",
+					"parent": "tail3",
+					"pivot": [0, 1, 16],
+					"cubes": [
+						{"origin": [-1, 0, 16], "size": [2, 2, 4], "inflate": 0.01, "uv": [12, 26]}
+					]
+				}
+			]
+		}
+	]
+}

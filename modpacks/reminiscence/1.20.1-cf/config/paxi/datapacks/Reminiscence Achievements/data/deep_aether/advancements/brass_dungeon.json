@@ -1,0 +1,38 @@
+{
+  "parent": "forge:impossible",
+  "criteria": {
+    "kill_eots": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "deep_aether:eots_controller"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+   "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.deep_aether.brass_dungeon.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "item": "deep_aether:brass_dungeon_key"
+    },
+    "title": {
+      "translate": "advancement.deep_aether.brass_dungeon"
+    }
+  },
+  "requirements": [
+    [
+      "kill_eots"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

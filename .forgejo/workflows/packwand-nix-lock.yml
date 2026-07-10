@@ -20,7 +20,7 @@ jobs:
 
       - name: Update flake.lock
         run: nix flake update
-        working-directory: src/packwand
+        working-directory: apps/packwand
 
       - name: Commit
         uses: https://github.com/EndBug/add-and-commit@v9
@@ -28,4 +28,4 @@ jobs:
           author_name: forgejo-actions[bot]
           author_email: omo50@noreply.nostalgica.net
           message: 'chore(packwand): update flake.lock'
-          add: 'src/packwand/flake.lock'
+          add: 'apps/packwand/flake.lock'

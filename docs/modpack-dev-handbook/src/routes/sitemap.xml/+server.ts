@@ -6,7 +6,7 @@ export const prerender = true;
 export const GET: RequestHandler = async () => {
   return await sitemap.response({
     origin: "https://datapack.wiki",
-    excludeRoutePatterns: ["^/sitemap.xml", "^/meta.json", "^/robots.txt", "^/search.json"],
+    excludeRoutePatterns: ["^/sitemap.xml", "^/robots.txt"],
     defaultChangefreq: "weekly",
   });
 };

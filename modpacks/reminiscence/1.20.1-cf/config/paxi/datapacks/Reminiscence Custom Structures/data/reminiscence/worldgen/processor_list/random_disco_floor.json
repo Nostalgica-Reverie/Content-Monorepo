@@ -1,0 +1,172 @@
+[
+  {
+    "processor_type": "minecraft:rule",
+    "rules": [
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:orange_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:red_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:yellow_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:lime_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:magenta_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:pink_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:blue_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:light_blue_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:cyan_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:purple_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:gray_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:brown_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:green_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:light_gray_wool" }
+      },
+      {
+        "input_predicate": {
+          "predicate_type": "minecraft:random_block_match",
+          "block": "minecraft:white_wool",
+          "probability": 0.25
+        },
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "output_state": { "Name": "minecraft:black_wool" }
+      }
+    ]
+  }
+]

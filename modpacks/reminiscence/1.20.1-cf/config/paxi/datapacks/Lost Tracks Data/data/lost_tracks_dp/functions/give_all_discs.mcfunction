@@ -1,0 +1,14 @@
+execute at @s run function lost_tracks_dp:give_cfouroneeightcertitudes
+execute at @s run function lost_tracks_dp:give_cfouroneeightdeath
+execute at @s run function lost_tracks_dp:give_cfouroneeightdog
+execute at @s run function lost_tracks_dp:give_cfouroneeightdroopylikesyourface
+execute at @s run function lost_tracks_dp:give_cfouroneeighteleven
+execute at @s run function lost_tracks_dp:give_cfouroneeightfifflas
+execute at @s run function lost_tracks_dp:give_cfouroneeightiglovethyflob
+execute at @s run function lost_tracks_dp:give_cfouroneeightintro
+execute at @s run function lost_tracks_dp:give_cfouroneeightone
+execute at @s run function lost_tracks_dp:give_cfouroneeightsociallego
+execute at @s run function lost_tracks_dp:give_cfouroneeightsurfacepension
+execute at @s run function lost_tracks_dp:give_cfouroneeightthisdoesntwork
+execute at @s run function lost_tracks_dp:give_cfouroneeightandlaurashigiharatsukinokoibumi
+execute at @s run function lost_tracks_dp:give_notchmagneticcircuit

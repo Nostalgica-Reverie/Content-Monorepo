@@ -1,0 +1,97 @@
+{
+  "modifiers": [
+    {
+      "type": "display",
+      "config": {
+        "description": {
+          "translate": "advancements.caverns_and_chasms.husbandry.wax_on.description"
+        },
+        "mode": "modify"
+      }
+    },
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "caverns_and_chasms:wax_on_blocks": {
+            "conditions": {
+              "location": [
+                {
+                  "condition": "minecraft:location_check",
+                  "predicate": {
+                    "block": {
+                      "state": {
+                        "powered": "false"
+                      },
+                      "tag": "forge:waxable_copper_blocks"
+                    }
+                  }
+                },
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "items": [
+                      "minecraft:honeycomb"
+                    ]
+                  }
+                }
+              ]
+            },
+            "trigger": "minecraft:item_used_on_block"
+          },
+          "caverns_and_chasms:wax_on_golem": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "caverns_and_chasms:copper_golem"
+                  }
+                }
+              ],
+              "item": {
+                "items": [
+                  "minecraft:honeycomb"
+                ]
+              }
+            },
+            "trigger": "minecraft:player_interacted_with_entity"
+          },
+          "caverns_and_chasms:wax_on_oxidized_golem": {
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "caverns_and_chasms:oxidized_copper_golem"
+                  }
+                }
+              ],
+              "item": {
+                "items": [
+                  "minecraft:honeycomb"
+                ]
+              }
+            },
+            "trigger": "minecraft:player_interacted_with_entity"
+          }
+        },
+        "indexed_requirements": [
+          {
+            "index": 0,
+            "replace": false,
+            "requirements": [
+              "caverns_and_chasms:wax_on_blocks",
+              "caverns_and_chasms:wax_on_golem",
+              "caverns_and_chasms:wax_on_oxidized_golem"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": "minecraft:husbandry/wax_on"
+}

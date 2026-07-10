@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:story/smelt_copper",
+  "criteria": {
+    "copper_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bettercopper:copper_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Sidegrade your upgraded Pickaxe and reap the (potentially) doubled rewards",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "bettercopper:copper_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "Getting a Sidegrade"
+  },
+  "requirements": [
+    [
+      "copper_pickaxe"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

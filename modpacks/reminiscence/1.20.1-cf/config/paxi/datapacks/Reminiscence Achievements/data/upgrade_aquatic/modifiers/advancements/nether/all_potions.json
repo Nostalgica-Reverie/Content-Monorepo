@@ -1,0 +1,17 @@
+{
+  "modifiers": [
+    {
+      "type": "effects_changed",
+      "config": {
+        "criteria": "all_effects",
+        "effects": {
+          "upgrade_aquatic:repellence": {},
+          "upgrade_aquatic:vibing": {}
+        },
+        "removes": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": "minecraft:nether/all_potions"
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#f#",
+    "fXf",
+    "#f#"
+  ],
+  "key": {
+    "#": {
+      "item": "aether:zanite_gemstone"
+    },
+    "f": {
+      "item": "kubejs:meteorite_ingot"
+    },
+    "X": {
+      "item": "inmis:blazing_backpack"
+    }
+  },
+  "result": {
+    "item": "inmis:withered_backpack"
+  }
+}

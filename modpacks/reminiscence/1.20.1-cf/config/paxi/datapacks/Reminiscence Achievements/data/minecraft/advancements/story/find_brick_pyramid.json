@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:story/build_pickaxe",
+  "criteria": {
+    "brickpyramid": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "reminiscence:brick_pyramid"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Find a Brick Pyramid",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "kubejs:enchanted_bricks"
+    },
+    "show_toast": true,
+    "title": "In Development"
+  },
+  "requirements": [
+    [
+      "brickpyramid"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

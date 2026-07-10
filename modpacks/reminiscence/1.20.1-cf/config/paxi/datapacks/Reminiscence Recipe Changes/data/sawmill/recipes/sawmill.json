@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "i": {
+      "item": "minecraft:oak_planks"
+    }
+  },
+  "pattern": [
+    "iii",
+    "iIi",
+    "iii"
+  ],
+  "result": {
+    "item": "sawmill:sawmill"
+  }
+}

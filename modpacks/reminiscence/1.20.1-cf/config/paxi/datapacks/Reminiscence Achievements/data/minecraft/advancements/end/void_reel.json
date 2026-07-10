@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:end/smelt_titanium",
+  "criteria": {
+    "voidreel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hookshot:longshot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Make a Reel of the Void",
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "hookshot:longshot"
+    },
+    "show_toast": true,
+    "title": "We've gone places!"
+  },
+  "requirements": [
+    [
+      "voidreel"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

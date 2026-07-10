@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "betterend:thallasium_block"
+    },
+    "i": {
+      "item": "quark:dragon_scale"
+    },
+    "o": {
+      "item": "minecraft:ender_eye"
+    },
+    "O": {
+      "item": "minecraft:end_stone"
+    }
+  },
+  "pattern": [
+    "IiI",
+    "ioi",
+    "OOO"
+  ],
+  "result": {
+    "item": "minecraft:end_portal_frame"
+  },
+  "show_notification": false
+}

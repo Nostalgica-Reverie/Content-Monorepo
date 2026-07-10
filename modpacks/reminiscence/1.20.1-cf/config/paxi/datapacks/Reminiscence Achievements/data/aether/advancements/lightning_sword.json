@@ -1,0 +1,34 @@
+{
+  "parent": "aether:valkyrie_feather",
+  "criteria": {
+    "lightning_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:lightning_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Craft a Lightning Sword using a feather from the Valkyrie Queen.",
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "aether:lightning_sword"
+    },
+    "show_toast": true,
+    "title": "Strike Me Down, Zeus!"
+  },
+  "requirements": [
+    [
+      "lightning_sword"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

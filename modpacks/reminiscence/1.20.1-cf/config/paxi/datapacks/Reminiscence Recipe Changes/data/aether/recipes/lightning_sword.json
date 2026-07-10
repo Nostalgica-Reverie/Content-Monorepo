@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "minecraft:copper_ingot"
+    },
+    "#": {
+      "item": "kubejs:valkyrie_feather"
+    },
+    "h": {
+      "item": "caverns_and_chasms:silver_ingot"
+    },
+    "i": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " H ",
+    "h#h",
+    " i "
+  ],
+  "result": {
+    "item": "aether:lightning_sword"
+  },
+  "show_notification": true
+}

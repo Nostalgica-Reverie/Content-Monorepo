@@ -1,0 +1,34 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "boatload"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "group": "large_boat",
+        "key": {
+          "#": {
+            "item": "caverns_and_chasms:azalea_planks"
+          },
+          "B": {
+            "item": "caverns_and_chasms:azalea_boat"
+          }
+        },
+        "pattern": [
+          "#B#",
+          "###"
+        ],
+        "result": {
+          "item": "caverns_and_chasms:large_azalea_boat"
+        },
+        "show_notification": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:green_corundum"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "result": {
+    "item": "quark:waxed_green_corundum"
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "corundum"
+    }
+  ]
+} 

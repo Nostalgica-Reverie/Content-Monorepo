@@ -1,0 +1,201 @@
+{
+  "parent": "minecraft:nether/brew_potion",
+  "criteria": {
+    "swiftness": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{swiftness:1b}" }
+        ]
+      }
+    },
+    "slowness": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{slowness:1b}" }
+        ]
+      }
+    },
+    "strength": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{strength:1b}" }
+        ]
+      }
+    },
+    "rewind": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{rewind:1b}" }
+        ]
+      }
+    },
+    "harming": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{harming:1b}" }
+        ]
+      }
+    },
+    "regeneration": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{regeneration:1b}" }
+        ]
+      }
+    },
+    "fire_resistance": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{fire_immunity:1b}" }
+        ]
+      }
+    },
+    "water_breathing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{water_breathing:1b}" }
+        ]
+      }
+    },
+    "invisibility": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{invisibility:1b}" }
+        ]
+      }
+    },
+    "night_vision": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{night_vision:1b}" }
+        ]
+      }
+    },
+    "poison": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{poison:1b}" }
+        ]
+      }
+    },
+    "weakness": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{weakness:1b}" }
+        ]
+      }
+    },
+    "slow_falling": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{slow_falling:1b}" }
+        ]
+      }
+    },
+    "blindness": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{blindness:1b}" }
+        ]
+      }
+    },
+    "leaping": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{leaping:1b}" }
+        ]
+      }
+    },
+    "luck": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "minecraft:potion", "nbt": "{luck:1b}" }
+        ]
+      }
+  }
+},
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.nether.brew_potion.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:potion"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.nether.brew_potion.title"
+    }
+  },
+  "requirements": [
+    [
+      "swiftness"
+    ],
+    [
+      "slowness"
+    ],
+    [
+      "strength"
+    ],
+    [
+      "rewind"
+    ],
+    [
+      "harming"
+    ],
+    [
+      "regeneration"
+    ],
+    [
+      "fire_resistance"
+    ],
+    [
+      "water_breathing"
+    ],
+    [
+      "invisibility"
+    ],
+    [
+      "night_vision"
+    ],
+    [
+      "poison"
+    ],
+    [
+      "weakness"
+    ],
+    [
+      "slow_falling"
+    ],
+    [
+      "blindness"
+    ],
+    [
+      "leaping"
+    ],
+    [
+      "luck"
+    ],
+    [
+      "bad_luck"
+    ]
+  ]
+}

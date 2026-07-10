@@ -1,0 +1,25 @@
+{
+    "display": {
+     "announce_to_chat": false,
+      "icon": {
+        "item": "minecraft:wooden_pickaxe"
+      },
+      "title": "Time to Mine!",
+      "description": "Make a pickaxe.",
+      "frame": "task"
+    },
+    "parent": "minecraft:story/build_work_bench",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "tag": "minecraft:pickaxes"
+            }
+          ]
+        }
+      }
+    }
+  }
+  

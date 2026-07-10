@@ -1,0 +1,41 @@
+{
+  "naturalist:alligator":[
+    {
+      "attribute": "minecraft:generic.max_health",
+      "modify": 40.0,
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "minecraft:generic.attack_damage",
+      "min": 8,
+      "max": 11,
+      "uuid": "a516026a-bee2-4014-bcb6-b6a5775553de",
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "minecraft:generic.attack_speed",
+      "modify": 5,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "modify": 1.001,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "attribute": "reach-entity-attributes:reach",
+      "modify": 2,
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "forge:swim_speed",
+      "modify": 1.05,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "attribute": "puffish_attributes:armor_shred",
+      "modify": 4,
+      "operation": "SET_BASE"
+    }
+  ]
+}

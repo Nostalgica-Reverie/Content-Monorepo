@@ -1,0 +1,34 @@
+{
+  "parent": "aether:mine_holystone",
+  "criteria": {
+    "ambrosium": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:ambrosium_shard"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Acquire Ambrosium, coal from the heavens",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:ambrosium_shard"
+    },
+    "show_toast": true,
+    "title": "Enlightenment"
+  },
+  "requirements": [
+    [
+      "ambrosium"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

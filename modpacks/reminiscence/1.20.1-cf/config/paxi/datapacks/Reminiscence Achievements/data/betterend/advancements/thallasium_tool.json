@@ -1,0 +1,91 @@
+{
+  "parent": "minecraft:end/smelt_bismuth",
+  "criteria": {
+    "got_thallasium_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_axe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_thallasium_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_hoe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_thallasium_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_thallasium_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_shovel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_thallasium_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:thallasium_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.betterend.thallasium_tool.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "betterend:thallasium_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.betterend.thallasium_tool.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_thallasium_pickaxe",
+      "got_thallasium_hoe",
+      "got_thallasium_axe",
+      "got_thallasium_shovel",
+      "got_thallasium_sword"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S",
+    "S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:sand"
+    },
+    "S": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "item": "immersive_weathering:sandy_dirt",
+    "count": 4
+  }
+}

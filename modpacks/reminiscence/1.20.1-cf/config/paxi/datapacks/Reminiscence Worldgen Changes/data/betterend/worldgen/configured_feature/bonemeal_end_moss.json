@@ -1,0 +1,130 @@
+{
+  "type": "bclib:condition",
+  "config": {
+    "filter": {
+      "type": "bclib:in_biome",
+      "biomes": [
+        "betterend:glowing_grasslands"
+      ],
+      "negate": false
+    },
+    "filter_fail": {
+      "feature": {
+        "type": "minecraft:random_patch",
+        "config": {
+          "feature": {
+            "feature": {
+              "type": "minecraft:simple_block",
+              "config": {
+                "to_place": {
+                  "type": "minecraft:weighted_state_provider",
+                  "entries": [
+                    {
+                      "data": {
+                        "Name": "betterend:creeping_moss"
+                      },
+                      "weight": 10
+                    },
+                    {
+                      "data": {
+                        "Name": "betterend:umbrella_moss"
+                      },
+                      "weight": 10
+                    }
+                  ]
+                }
+              }
+            },
+            "placement": [
+              {
+                "type": "minecraft:block_predicate_filter",
+                "predicate": {
+                  "type": "minecraft:matching_blocks",
+                  "blocks": "minecraft:air"
+                }
+              }
+            ]
+          },
+          "tries": 9,
+          "xz_spread": 3,
+          "y_spread": 1
+        }
+      },
+      "placement": []
+    },
+    "filter_pass": {
+      "feature": {
+        "type": "minecraft:random_patch",
+        "config": {
+          "feature": {
+            "feature": {
+              "type": "minecraft:simple_block",
+              "config": {
+                "to_place": {
+                  "type": "minecraft:weighted_state_provider",
+                  "entries": [
+                    {
+                      "data": {
+                        "Name": "betterend:creeping_moss"
+                      },
+                      "weight": 10
+                    },
+                    {
+                      "data": {
+                        "Name": "betterend:umbrella_moss"
+                      },
+                      "weight": 10
+                    },
+                    {
+                      "data": {
+                        "Name": "betterend:blooming_cooksonia"
+                      },
+                      "weight": 100
+                    },
+                    {
+                      "data": {
+                        "Name": "betterend:vaiolush_fern"
+                      },
+                      "weight": 100
+                    },
+                    {
+                      "data": {
+                        "Name": "betterend:fracturn"
+                      },
+                      "weight": 100
+                    },
+                    {
+                      "data": {
+                        "Name": "betterend:salteago"
+                      },
+                      "weight": 100
+                    },
+                    {
+                      "data": {
+                        "Name": "betterend:twisted_umbrella_moss"
+                      },
+                      "weight": 10
+                    }
+                  ]
+                }
+              }
+            },
+            "placement": [
+              {
+                "type": "minecraft:block_predicate_filter",
+                "predicate": {
+                  "type": "minecraft:matching_blocks",
+                  "blocks": "minecraft:air"
+                }
+              }
+            ]
+          },
+          "tries": 9,
+          "xz_spread": 3,
+          "y_spread": 1
+        }
+      },
+      "placement": []
+    }
+  }
+}

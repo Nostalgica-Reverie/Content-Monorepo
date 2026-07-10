@@ -1,0 +1,44 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "blueprint:and",
+          "values": [
+            {
+              "type": "forge:mod_loaded",
+              "modid": "woodworks"
+            },
+            {
+              "type": "woodworks:config",
+              "value": "wooden_beehives"
+            }
+          ]
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "group": "wooden_beehive",
+        "key": {
+          "#": {
+            "item": "caverns_and_chasms:azalea_planks"
+          },
+          "H": {
+            "item": "minecraft:honeycomb"
+          }
+        },
+        "pattern": [
+          "###",
+          "HHH",
+          "###"
+        ],
+        "result": {
+          "item": "caverns_and_chasms:azalea_beehive"
+        },
+        "show_notification": true
+      }
+    }
+  ]
+}

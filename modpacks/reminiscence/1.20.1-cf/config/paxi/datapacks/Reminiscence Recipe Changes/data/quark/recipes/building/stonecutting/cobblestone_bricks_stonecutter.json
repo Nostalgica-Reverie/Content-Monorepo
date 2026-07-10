@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:cobblestone"
+  },
+  "result": "quark:cobblestone_bricks",
+  "count": 1,
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "cobblestone_bricks"
+    }
+  ]
+}

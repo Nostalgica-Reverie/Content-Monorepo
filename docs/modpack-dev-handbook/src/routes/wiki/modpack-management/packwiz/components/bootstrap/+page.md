@@ -6,7 +6,7 @@ Two implementations are maintained:
 
 ## Go bootstrap (recommended)
 
-Source: `src/packwand/cmd/packwiz-bootstrap`. A single native binary with no Java requirement of its own, following packwand's CLI conventions.
+Source: `apps/packwand/cmd/packwiz-bootstrap`. A single native binary with no Java requirement of its own, following packwand's CLI conventions.
 
 ```sh
 packwiz-bootstrap [options] <pack.toml URL> [-- installer options...]

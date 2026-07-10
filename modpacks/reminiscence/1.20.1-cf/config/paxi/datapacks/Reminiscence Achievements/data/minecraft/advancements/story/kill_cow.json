@@ -1,0 +1,26 @@
+{
+  "display": {
+ "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:leather"
+    },
+    "title": "Cow Tipper",
+    "description": "Attack and destroy a cow for its leather",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/build_sword",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:leather"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

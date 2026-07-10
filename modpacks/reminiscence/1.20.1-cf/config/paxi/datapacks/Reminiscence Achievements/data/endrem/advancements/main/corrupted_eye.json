@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:story/salvage_sherd",
+  "display": {
+    "icon": {
+      "item": "endrem:corrupted_eye"
+    },
+    "title": {
+      "translate": "advancements.main.corrupted_eye.title"
+    },
+    "description": {
+      "translate": "advancements.main.corrupted_eye.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "corrupted_eye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "endrem:corrupted_eye"
+              ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "corrupted_eye"
+    ]
+  ]
+}

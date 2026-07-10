@@ -1,0 +1,443 @@
+{
+	"credit": "Made with Blockbench",
+	"textureSize": [32, 32],
+	"texture": "aechor_plant.png",
+	"models": [
+		{
+			"part": "lower_petal_5",
+			"id": "lower_petal_5",
+			"invertAxis": "xy",
+			"translate": [0, -21, 0],
+			"scale": 1
+		},
+		{
+			"part": "lower_petal_4",
+			"id": "lower_petal_4",
+			"invertAxis": "xy",
+			"translate": [0, -21, 0],
+			"scale": 1
+		},
+		{
+			"part": "lower_petal_3",
+			"id": "lower_petal_3",
+			"invertAxis": "xy",
+			"translate": [0, -21, 0],
+			"scale": 1
+		},
+		{
+			"part": "head",
+			"id": "head",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1,
+			"submodels": [
+				{
+					"id": "base2",
+					"invertAxis": "xy",
+					"translate": [0, -4.5, 0],
+					"rotate": [0, 0, 90],
+					"boxes": [
+						{"coordinates": [23, -3, -3, 1, 6, 6], "textureOffset": [0, 8]}
+					]
+				},
+				{
+					"id": "things",
+					"invertAxis": "xy",
+					"translate": [0, 19.5, 0],
+					"rotate": [0, -45, 0],
+					"submodels": [
+						{
+							"id": "thingy",
+							"invertAxis": "xy",
+							"translate": [0, 0, 0],
+							"boxes": [
+								{"coordinates": [0, 0, -4, 0, 6, 8], "textureOffset": [14, -8]}
+							]
+						},
+						{
+							"id": "thingy2",
+							"invertAxis": "xy",
+							"translate": [0, 0, 0],
+							"rotate": [0, -90, 0],
+							"boxes": [
+								{"coordinates": [0, 0, -4, 0, 6, 8], "textureOffset": [14, -8]}
+							]
+						}
+					]
+				},
+				{
+					"id": "petals",
+					"invertAxis": "xy",
+					"translate": [0, 18.5, 0],
+					"submodels": [
+						{
+							"id": "petal",
+							"invertAxis": "xy",
+							"translate": [0, 0.5, -2],
+							"rotate": [22.5, 0, 0],
+							"boxes": [
+								{"coordinates": [-3, 0, -7, 6, 0, 7], "textureOffset": [7, 6]}
+							]
+						},
+						{
+							"id": "petal2",
+							"invertAxis": "xy",
+							"translate": [2, 0.5, 0],
+							"rotate": [0, -90, 22.5],
+							"boxes": [
+								{"coordinates": [-3, 0, -7, 6, 0, 7], "textureOffset": [7, 6]}
+							]
+						},
+						{
+							"id": "petal3",
+							"invertAxis": "xy",
+							"translate": [-2, 0.5, 0],
+							"rotate": [0, 90, -22.5],
+							"boxes": [
+								{"coordinates": [-3, 0, -7, 6, 0, 7], "textureOffset": [7, 6]}
+							]
+						},
+						{
+							"id": "petal4",
+							"invertAxis": "xy",
+							"translate": [0, 0.5, 2],
+							"rotate": [-157.5, 0, 180],
+							"boxes": [
+								{"coordinates": [-3, 0, -7, 6, 0, 7], "textureOffset": [7, 6]}
+							]
+						},
+						{
+							"id": "petal5",
+							"invertAxis": "xy",
+							"translate": [2, -0.1, -2],
+							"rotate": [22.5, -45, 0],
+							"boxes": [
+								{"coordinates": [-3, 0, -7, 6, 0, 7], "textureOffset": [7, 6]}
+							]
+						},
+						{
+							"id": "petal6",
+							"invertAxis": "xy",
+							"translate": [2, -0.1, 2],
+							"rotate": [-157.5, -45, 180],
+							"boxes": [
+								{"coordinates": [-3, 0, -7, 6, 0, 7], "textureOffset": [7, 6]}
+							]
+						},
+						{
+							"id": "petal7",
+							"invertAxis": "xy",
+							"translate": [-2, -0.1, 2],
+							"rotate": [-157.5, 45, 180],
+							"boxes": [
+								{"coordinates": [-3, 0, -7, 6, 0, 7], "textureOffset": [7, 6]}
+							]
+						},
+						{
+							"id": "petal8",
+							"invertAxis": "xy",
+							"translate": [-2, -0.1, -2],
+							"rotate": [22.5, 45, 0],
+							"boxes": [
+								{"coordinates": [-3, 0, -7, 6, 0, 7], "textureOffset": [7, 6]}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"part": "leaf_9",
+			"id": "leaf_9",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "upper_petal_1",
+			"id": "upper_petal_1",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "root",
+			"id": "root",
+			"invertAxis": "xy",
+			"translate": [0, -21, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_1",
+			"id": "leaf_1",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_2",
+			"id": "leaf_2",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_3",
+			"id": "leaf_3",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_4",
+			"id": "leaf_4",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_5",
+			"id": "leaf_5",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "stamen_tip_3",
+			"id": "stamen_tip_3",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_6",
+			"id": "leaf_6",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_7",
+			"id": "leaf_7",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "stamen_tip_1",
+			"id": "stamen_tip_1",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_8",
+			"id": "leaf_8",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "stamen_tip_2",
+			"id": "stamen_tip_2",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "leaf_10",
+			"id": "leaf_10",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "stamen_stem_1",
+			"id": "stamen_stem_1",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "upper_petal_5",
+			"id": "upper_petal_5",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "stamen_stem_2",
+			"id": "stamen_stem_2",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "upper_petal_4",
+			"id": "upper_petal_4",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "stamen_stem_3",
+			"id": "stamen_stem_3",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "upper_petal_3",
+			"id": "upper_petal_3",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "upper_petal_2",
+			"id": "upper_petal_2",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "thorn_4",
+			"id": "thorn_4",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "thorn_1",
+			"id": "thorn_1",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "thorn_2",
+			"id": "thorn_2",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "thorn_3",
+			"id": "thorn_3",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1
+		},
+		{
+			"part": "lower_petal_2",
+			"id": "lower_petal_2",
+			"invertAxis": "xy",
+			"translate": [0, -21, 0],
+			"scale": 1
+		},
+		{
+			"part": "lower_petal_1",
+			"id": "lower_petal_1",
+			"invertAxis": "xy",
+			"translate": [0, -21, 0],
+			"scale": 1
+		},
+		{
+			"part": "stem",
+			"id": "stem",
+			"invertAxis": "xy",
+			"translate": [0, -20, 0],
+			"scale": 1,
+			"submodels": [
+				{
+					"id": "base",
+					"invertAxis": "xy",
+					"translate": [0, -5, 0],
+					"rotate": [0, 0, 90],
+					"boxes": [
+						{"coordinates": [21, -2, -2, 2, 4, 4], "textureOffset": [0, 0]}
+					]
+				},
+				{
+					"id": "stems",
+					"invertAxis": "xy",
+					"translate": [0, 16, 0],
+					"submodels": [
+						{
+							"id": "stem2",
+							"invertAxis": "xy",
+							"translate": [0, 1, 2],
+							"rotate": [0, 0, -90],
+							"boxes": [
+								{"coordinates": [0, -1, 0, 0, 2, 3], "textureOffset": [0, 17]}
+							]
+						},
+						{
+							"id": "stem3",
+							"invertAxis": "xy",
+							"translate": [-2, 1, 0],
+							"rotate": [90, 0, -90],
+							"boxes": [
+								{"coordinates": [0, -1, 0, 0, 2, 3], "textureOffset": [0, 17]}
+							]
+						},
+						{
+							"id": "stem4",
+							"invertAxis": "xy",
+							"translate": [-1.5, 1, 1.5],
+							"rotate": [45, 0, -90],
+							"boxes": [
+								{"coordinates": [0, -1, -0.12132, 0, 2, 3], "textureOffset": [0, 17]}
+							]
+						},
+						{
+							"id": "stem5",
+							"invertAxis": "xy",
+							"translate": [-1.5, 1, -1.5],
+							"rotate": [-45, 0, -90],
+							"boxes": [
+								{"coordinates": [0, -1, -2.87868, 0, 2, 3], "textureOffset": [0, 17]}
+							]
+						},
+						{
+							"id": "stem6",
+							"invertAxis": "xy",
+							"translate": [1.5, 1, 1.5],
+							"rotate": [-45, 0, -90],
+							"boxes": [
+								{"coordinates": [0, -1, -0.12132, 0, 2, 3], "textureOffset": [0, 17]}
+							]
+						},
+						{
+							"id": "stem7",
+							"invertAxis": "xy",
+							"translate": [1.5, 1, -1.5],
+							"rotate": [45, 0, -90],
+							"boxes": [
+								{"coordinates": [0, -1, -2.87868, 0, 2, 3], "textureOffset": [0, 17]}
+							]
+						},
+						{
+							"id": "stem8",
+							"invertAxis": "xy",
+							"translate": [2, 1, 0],
+							"rotate": [90, 0, -90],
+							"boxes": [
+								{"coordinates": [0, -1, -3, 0, 2, 3], "textureOffset": [0, 17]}
+							]
+						},
+						{
+							"id": "stem9",
+							"invertAxis": "xy",
+							"translate": [0, 1, -2],
+							"rotate": [0, 0, -90],
+							"boxes": [
+								{"coordinates": [0, -1, -3, 0, 2, 3], "textureOffset": [0, 17]}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

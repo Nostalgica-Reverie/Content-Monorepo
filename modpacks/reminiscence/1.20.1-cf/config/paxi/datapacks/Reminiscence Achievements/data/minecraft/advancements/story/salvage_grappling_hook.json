@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:story/salvage_sherd",
+  "criteria": {
+    "grapplehook": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hookshot:hookshot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Salvage a Grappling Hook",
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "hookshot:hookshot"
+    },
+    "show_toast": true,
+    "title": "We're going places!"
+  },
+  "requirements": [
+    [
+      "grapplehook"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

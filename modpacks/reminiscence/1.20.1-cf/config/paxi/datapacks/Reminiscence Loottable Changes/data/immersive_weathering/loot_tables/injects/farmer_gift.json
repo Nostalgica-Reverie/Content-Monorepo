@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:mulch_block"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:loam"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:silt"
+        }
+      ]
+    }
+  ]
+}

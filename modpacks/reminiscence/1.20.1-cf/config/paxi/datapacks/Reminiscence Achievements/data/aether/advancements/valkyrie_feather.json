@@ -1,0 +1,34 @@
+{
+  "parent": "aether:silver_dungeon",
+  "criteria": {
+    "feather": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kubejs:valkyrie_feather"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Obtain a Valkyrie Feather by beating the Valkyrie Queen... without getting hit!",
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "kubejs:valkyrie_feather"
+    },
+    "show_toast": true,
+    "title": "Found Your Wings!"
+  },
+  "requirements": [
+    [
+      "feather"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

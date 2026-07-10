@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "kubejs:slider_rubble"
+    },
+    "h": {
+      "item": "aether:sentry_stone"
+    }
+  },
+  "pattern": [
+    "hHh"
+  ],
+  "result": {
+    "item": "aether:sentry_boots"
+  },
+  "show_notification": true
+}

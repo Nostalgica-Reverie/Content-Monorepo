@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "quark:permafrost"
+  },
+  "result": "quark:permafrost_bricks",
+  "count": 1,
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "permafrost"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#Y#",
+    "YXY",
+    "#Y#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "X": {
+      "item": "inmis:frayed_backpack"
+    },
+    "Y": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "inmis:plated_backpack"
+  }
+}

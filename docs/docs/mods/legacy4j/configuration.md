@@ -52,7 +52,7 @@ Allows attacking to be triggered by toggling a key rather than holding it.
 Resets all the controller binds to their defaults.
 #### Unbind Conflicting Keys
 Automatically removes the older bind when setting a bind with a key that has already been set.
-#### Display Connnection Toasts
+#### Display Connection Toasts
 Displays a pop-up notification when a controller is connected or disconnected.
 #### Toggle Sneak
 Allows sneaking to be triggered by toggling a button rather than holding it.
@@ -96,7 +96,7 @@ Allows gradual movement using the analog stick.
 #### Force Smooth Movement
 Forces the ability to have gradual movement using the analog stick.
 #### Linear Camera Movement
-Adjusts the responce curve of the joystick camera to be linear instead of exponential, like in Bedrock Edition.
+Adjusts the response curve of the joystick camera to be linear instead of exponential, like in Bedrock Edition.
 
 ## Game Options
 #### Auto-Jump

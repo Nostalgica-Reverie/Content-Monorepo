@@ -1,0 +1,52 @@
+{
+  "parent": "chalk:story/draw_mark_in_maze",
+  "criteria": {
+    "draw_with_chalk_color": {
+      "conditions": {
+        "colorPredicate": {
+          "colors": [
+            "black"
+          ]
+        },
+        "location": {
+          "light": {
+            "light": {
+              "max": 7
+            }
+          }
+        },
+        "materialColorPredicate": {
+          "colors": [
+            29
+          ]
+        }
+      },
+      "trigger": "chalk:mark_drawn"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.chalk.black_chalk_on_black_block.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "chalk:black_chalk",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.chalk.black_chalk_on_black_block"
+    }
+  },
+  "requirements": [
+    [
+      "draw_with_chalk_color"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

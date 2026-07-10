@@ -1,0 +1,35 @@
+{
+  "pack": {
+    "id": "Cascades",
+    "supported_formats": [
+      15,
+      41
+    ],
+    "pack_format": 15,
+    "description": [
+      {
+        "text": "Cascades",
+        "color": "green"
+      },
+      {
+        "text": ": Making Minecraft more inspiring!",
+        "color": "white"
+      }
+    ]
+  },
+  "overlays": {
+		"entries": [
+			{
+				"formats": [
+					26,
+					41
+				],
+				"directory": "overlay-1.20.3"
+			},
+			{
+				"formats": 41,
+				"directory": "overlay-1.20.5"
+			}
+		]
+	}
+}

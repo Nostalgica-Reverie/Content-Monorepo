@@ -1,0 +1,192 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "min": 0.0,
+                                "max": 2.0,
+                                "type": "minecraft:uniform"
+                            }
+                        },
+                        {
+                            "function": "minecraft:looting_enchant",
+                            "count": {
+                                "min": 0.0,
+                                "max": 1.0
+                            }
+                        }
+                    ],
+                    "name": "minecraft:gunpowder"
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:tag",
+                    "weight": 1,
+                    "name": "minecraft:creeper_drop_music_discs",
+                    "expand": true
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:2, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - Death\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:3, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - Dog\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:4, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - Droopy likes your Face\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:6, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - Fifflas\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:7, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - I Glove Thy Flob\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:9, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - One\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:10, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - Social Lego\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:11, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - Surface Pension\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:12, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 - This Doesnt Work\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:13, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77C418 and Laura Shigihara - Tsuki No Koibumi\\\"\"]}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 1,
+                    "name": "supplementaries:music_disc_heave_ho",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{CustomModelData:14, HideFlags:32, display:{Lore:[\"\\\"\\\\u00a77Notch - Magnetic Circuit\\\"\"]}}"
+                        }
+                    ]
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:entity_properties",
+                    "predicate": {
+                        "type": "#minecraft:skeletons"
+                    },
+                    "entity": "killer"
+                }
+            ]
+        },
+        {
+            "bonus_rolls": 0.0,
+            "conditions": [
+              {
+                "condition": "minecraft:killed_by_player"
+              },
+              {
+                "chance": 0.025,
+                "condition": "minecraft:random_chance_with_looting",
+                "looting_multiplier": 0.01
+              }
+            ],
+            "entries": [
+              {
+                "type": "minecraft:loot_table",
+                "name": "minecraft:entities/structure_map"
+              }
+            ],
+            "rolls": 1.0
+          }
+    ]
+}

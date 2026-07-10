@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "quark:glowberry_sack"
+    }
+  ],
+  "result": {
+    "item": "minecraft:glow_berries",
+    "count": 9
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+        "flag": "glowberry_sack"
+    }
+  ]
+} 

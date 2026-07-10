@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:story/smelt_iron",
+  "criteria": {
+    "cooking_pot": {
+      "conditions": {
+        "location": [
+          {
+            "block": "farmersdelight:cooking_pot",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "farmersdelight.advancement.place_cooking_pot.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "farmersdelight:cooking_pot"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "farmersdelight.advancement.place_cooking_pot"
+    }
+  },
+  "requirements": [
+    [
+      "cooking_pot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

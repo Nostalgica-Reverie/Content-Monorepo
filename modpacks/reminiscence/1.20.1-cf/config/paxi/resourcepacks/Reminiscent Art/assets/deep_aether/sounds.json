@@ -1,0 +1,109 @@
+{
+  "item.music_disc.a_morning_wish": {
+    "sounds": [
+      {
+        "name": "deep_aether:emile-van-krieken-a-morning-wish",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.nabooru": {
+    "sounds": [
+      {
+        "name": "deep_aether:emile-van-krieken-nabooru",
+        "stream": true
+      }
+    ]
+  },
+  "entity.quail.ambient": {
+    "sounds": [
+      "deep_aether:entity/quail/say1",
+      "deep_aether:entity/quail/say2",
+      "deep_aether:entity/quail/say3"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.quail.ambient"
+  },
+  "entity.quail.death": {
+    "sounds": [
+      "deep_aether:entity/quail/death"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.quail.death"
+  },
+  "entity.quail.hurt": {
+    "sounds": [
+      "deep_aether:entity/quail/hurt1",
+      "deep_aether:entity/quail/hurt2"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.quail.hurt"
+  },
+  "entity.venomite.ambient": {
+    "sounds": [
+      "deep_aether:entity/venomite/ambient"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.venomite.ambient"
+  },
+  "entity.venomite.hurt": {
+    "sounds": [
+      "deep_aether:entity/venomite/hurt"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.venomite.hurt"
+  },
+  "entity.venomite.death": {
+    "sounds": [
+      "deep_aether:entity/venomite/death"
+    ],
+    "subtitle": "subtitles.deep_aether.entity.venomite.death"
+  },
+  "item.armor.equip_skyjade": {
+    "replace": "true",
+    "sounds": [  "goldendays/blank"  ],
+    "subtitle": "subtitles.deep_aether.item.armor.equip_skyjade"
+  },
+  "item.armor.equip_stratus": {
+    "replace": "true",
+    "sounds": [  "goldendays/blank"  ],
+    "subtitle": "subtitles.deep_aether.item.armor.equip_stratus"
+  },
+  "item.accessory.equip_skyjade_ring": {
+    "replace": "true",
+    "sounds": [  "goldendays/blank"  ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_skyjade_ring"
+  },
+  "item.accessory.equip_gravitite_ring": {
+    "replace": "true",
+    "sounds": [  "goldendays/blank"  ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_gravitite_ring"
+  },
+  "item.accessory.equip_stratus_ring": {
+    "replace": "true",
+    "sounds": [  "goldendays/blank"  ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_stratus_ring"
+  },
+  "item.accessory.equip_spooky_ring": {
+    "replace": "true",
+    "sounds": [  "goldendays/blank"  ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_spooky_ring"
+  },
+  "item.accessory.equip_slider_eye": {
+    "replace": "true",
+    "sounds": [  "goldendays/blank"  ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_slider_eye"
+  },
+  "item.accessory.ability_slider_eye": {
+    "sounds": [
+      "aether:entity/slider/move"
+    ],
+    "subtitle": "subtitles.deep_aether.item.accessory.ability_slider_eye"
+  },
+  "item.tool.afterburner_fires" : {
+    "sounds": [
+      "mob/ghast/fireball4"
+    ],
+    "subtitle": "subtitles.deep_aether.item.tool.afterburner_fires"
+  },
+  "item.accessory.equip_medal_of_honor" : {
+    "replace": "true",
+    "sounds": [  "goldendays/blank"  ],
+    "subtitle": "subtitles.deep_aether.item.accessory.equip_medal_of_honor"
+  }
+}

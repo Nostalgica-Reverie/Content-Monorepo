@@ -1,0 +1,34 @@
+{
+  "parent": "aether:sun_core",
+  "criteria": {
+    "vampire_blade": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:vampire_blade"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Craft a Vampire Blade using a fragment from the Sun Spirit.",
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "aether:vampire_blade"
+    },
+    "show_toast": true,
+    "title": "Still Better Than Twilight"
+  },
+  "requirements": [
+    [
+      "vampire_blade"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

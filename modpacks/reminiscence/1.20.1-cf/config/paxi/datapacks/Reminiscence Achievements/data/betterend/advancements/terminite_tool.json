@@ -1,0 +1,91 @@
+{
+  "parent": "minecraft:end/mine_opal",
+  "criteria": {
+    "got_terminite_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_axe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_terminite_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_hoe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_terminite_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_terminite_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_shovel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_terminite_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:terminite_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.betterend.terminite_tool.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "betterend:terminite_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.betterend.terminite_tool.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_terminite_pickaxe",
+      "got_terminite_hoe",
+      "got_terminite_axe",
+      "got_terminite_shovel",
+      "got_terminite_sword"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:story/upgrade_tools",
+  "criteria": {
+    "amethyst": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:amethyst_shard"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Acquire Amethyst",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "show_toast": true,
+    "title": "Ow, sharp!"
+  },
+  "requirements": [
+    [
+      "amethyst"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

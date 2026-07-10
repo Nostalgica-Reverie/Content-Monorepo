@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:charcoal"
+    }
+  },
+  "result": {
+    "item": "quark:charcoal_block"
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "charcoal_block"
+    }
+  ]
+}

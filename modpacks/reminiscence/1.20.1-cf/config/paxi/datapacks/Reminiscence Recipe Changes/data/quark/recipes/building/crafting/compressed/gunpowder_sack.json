@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "quark:gunpowder_sack"
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "gunpowder_sack"
+    }
+  ]
+}

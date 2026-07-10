@@ -1,0 +1,36 @@
+{
+  "minecraft:polar_bear":[
+    {
+      "attribute": "minecraft:generic.max_health",
+      "modify": 60.0,
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "minecraft:generic.attack_damage",
+      "min": 11,
+      "max": 13,
+      "uuid": "a516026a-bee2-4014-bcb6-b6a5775553de",
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "minecraft:generic.attack_speed",
+      "modify": 10,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "modify": 1.005,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "attribute": "reach-entity-attributes:reach",
+      "modify": 4,
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "forge:swim_speed",
+      "modify": 1.01,
+      "operation": "MULTIPLY_TOTAL"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:story/upgrade_tools",
+  "criteria": {
+    "lapis_lazuli": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:lapis_lazuli"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Mine Lapis. Not responsible for crushed hope",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "show_toast": true,
+    "title": "DIAM- Oh, Nevermind"
+  },
+  "requirements": [
+    [
+      "lapis_lazuli"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

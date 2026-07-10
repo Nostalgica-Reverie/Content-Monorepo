@@ -1,0 +1,353 @@
+{
+  "music.record.epilogue": {
+    "sounds": [
+      {
+        "name": "caverns_and_chasms:record/epilogue",
+        "stream": true
+      }
+    ]
+  },
+  "block.note_block.imitate.mime": {
+    "sounds": [
+      {
+        "name": "caverns_and_chasms:entity.mime.mime",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.mime.mime"
+  },
+  "block.note_block.imitate.deeper": {
+    "sounds": [
+      {
+        "name": "entity.creeper.primed",
+        "pitch": 0.5,
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.deeper.primed"
+  },
+  "block.note_block.imitate.peeper": {
+    "sounds": [
+      {
+        "name": "entity.creeper.primed",
+        "pitch": 0.5,
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.creeper.primed"
+  },
+  "block.rocky_dirt.break": {
+    "sounds": [
+      "caverns_and_chasms:block/rocky_dirt/place1",
+      "caverns_and_chasms:block/rocky_dirt/place2",
+      "caverns_and_chasms:block/rocky_dirt/place3",
+      "caverns_and_chasms:block/rocky_dirt/place4"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.rocky_dirt.fall": {
+    "sounds": [
+      "caverns_and_chasms:block/rocky_dirt/step1",
+      "caverns_and_chasms:block/rocky_dirt/step2",
+      "caverns_and_chasms:block/rocky_dirt/step3",
+      "caverns_and_chasms:block/rocky_dirt/step4"
+    ]
+  },
+  "block.rocky_dirt.hit": {
+    "sounds": [
+      "caverns_and_chasms:block/rocky_dirt/step1",
+      "caverns_and_chasms:block/rocky_dirt/step2",
+      "caverns_and_chasms:block/rocky_dirt/step3",
+      "caverns_and_chasms:block/rocky_dirt/step4"
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.rocky_dirt.place": {
+    "sounds": [
+      "caverns_and_chasms:block/rocky_dirt/place1",
+      "caverns_and_chasms:block/rocky_dirt/place2",
+      "caverns_and_chasms:block/rocky_dirt/place3",
+      "caverns_and_chasms:block/rocky_dirt/place4"
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.rocky_dirt.step": {
+    "sounds": [
+      "caverns_and_chasms:block/rocky_dirt/step1",
+      "caverns_and_chasms:block/rocky_dirt/step2",
+      "caverns_and_chasms:block/rocky_dirt/step3",
+      "caverns_and_chasms:block/rocky_dirt/step4"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.toolbox.close": {
+    "sounds": [
+      "common.door.close",
+      "common.door.close",
+      "common.door.close"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.block.toolbox.close"
+  },
+  "block.toolbox.open": {
+    "sounds": [
+      "common.door.open"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.block.toolbox.open"
+  },
+  "item.tuning_fork.vibrate": {
+    "sounds": [
+      "caverns_and_chasms:item/tuning_fork/vibrate"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.item.tuning_fork.vibrate"
+  },
+  "item.tether_potion.equip": {
+    "sounds": [
+      "common.silent",
+      "common.silent",
+      "common.silent",
+      "common.silent"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.item.tether_potion.equip"
+  },
+  "item.tether_potion.break": {
+    "sounds": [
+      "random/glass1",
+      "random/glass2",
+	  "random/glass3"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.item.tether_potion.break"
+  },
+  "entity.deeper.death": {
+    "sounds": [
+      "entity/creeper/death"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.deeper.death"
+  },
+  "entity.deeper.hurt": {
+    "sounds": [
+      "entity/creeper/say1",
+      "entity/creeper/say2",
+      "entity/creeper/say3",
+      "entity/creeper/say4"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.deeper.hurt"
+  },
+  "entity.deeper.primed": {
+    "sounds": [
+      "random/fuse"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.deeper.primed"
+  },
+  "entity.mime.death": {
+    "sounds": [
+      "caverns_and_chasms:mob/mime/death"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.mime.death"
+  },
+  "entity.mime.hurt": {
+    "sounds": [
+      "caverns_and_chasms:mob/mime/hurt1",
+      "caverns_and_chasms:mob/mime/hurt2"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.mime.hurt"
+  },
+  "entity.mime.mime": {
+    "sounds": [
+      "caverns_and_chasms:mob/mime/mime1",
+      "caverns_and_chasms:mob/mime/mime2",
+      "caverns_and_chasms:mob/mime/mime3"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.mime.mime"
+  },
+  "entity.mime.impersonate": {
+    "sounds": [
+      "common.silent"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.mime.impersonate"
+  },
+  "entity.copper_golem.death": {
+    "sounds": [
+      "caverns_and_chasms:mob/copper_golem/death"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.copper_golem.death"
+  },
+  "entity.copper_golem.hurt": {
+    "sounds": [
+	  {
+        "name": "caverns_and_chasms:mob/copper_golem/hurt1",
+        "volume": 0.8
+      },
+	  {
+        "name": "caverns_and_chasms:mob/copper_golem/hurt2",
+        "volume": 0.8
+      },
+	  {
+        "name": "caverns_and_chasms:mob/copper_golem/hurt3",
+        "volume": 0.8
+      },
+	  {
+        "name": "caverns_and_chasms:mob/copper_golem/hurt4",
+        "volume": 0.8
+      }
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.copper_golem.hurt"
+  },
+  "entity.copper_golem.repair": {
+    "sounds": [
+      "caverns_and_chasms:mob/copper_golem/repair"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.copper_golem.repair"
+  },
+  "entity.copper_golem.damage": {
+    "sounds": [
+      {
+        "name": "mob/irongolem/damage1",
+        "volume": 0.8
+      },
+      {
+        "name": "mob/irongolem/damage2",
+        "volume": 0.8
+      },
+      {
+        "name": "mob/irongolem/damage1",
+        "volume": 0.8,
+        "pitch": 0.8
+      },
+      {
+        "name": "mob/irongolem/damage2",
+        "volume": 0.8,
+        "pitch": 0.8
+      }
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.copper_golem.damage"
+  },
+  "entity.copper_golem.gear": {
+    "sounds": [
+	  {
+        "name": "caverns_and_chasms:mob/copper_golem/gear1",
+        "volume": 0.8,
+		"pitch": 1.2
+      },
+	  {
+        "name": "caverns_and_chasms:mob/copper_golem/gear2",
+        "volume": 0.8,
+		"pitch": 1.2
+      },
+	  {
+        "name": "caverns_and_chasms:mob/copper_golem/gear3",
+        "volume": 0.8,
+		"pitch": 1.2
+      }
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.copper_golem.gear"
+  },
+  "entity.copper_golem.step": {
+    "sounds": [
+      "caverns_and_chasms:mob/copper_golem/step1",
+      "caverns_and_chasms:mob/copper_golem/step2",
+      "caverns_and_chasms:mob/copper_golem/step3",
+      "caverns_and_chasms:mob/copper_golem/step4"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "entity.glare.ambient": {
+    "sounds": [
+      "caverns_and_chasms:mob/glare/ambient1",
+      "caverns_and_chasms:mob/glare/ambient2",
+      "caverns_and_chasms:mob/glare/ambient3",
+      "caverns_and_chasms:mob/glare/ambient4"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.glare.ambient"
+  },
+  "entity.glare.angry": {
+    "sounds": [
+      "caverns_and_chasms:mob/glare/angry1",
+      "caverns_and_chasms:mob/glare/angry2"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.glare.angry"
+  },
+  "entity.glare.death": {
+    "sounds": [
+      "caverns_and_chasms:mob/glare/death"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.glare.death"
+  },
+  "entity.glare.eat": {
+    "sounds": [
+      "caverns_and_chasms:mob/glare/eat1",
+      "caverns_and_chasms:mob/glare/eat2",
+      "caverns_and_chasms:mob/glare/eat3"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.glare.eat"
+  },
+  "entity.glare.hurt": {
+    "sounds": [
+      "caverns_and_chasms:mob/glare/hurt1",
+      "caverns_and_chasms:mob/glare/hurt2",
+      "caverns_and_chasms:mob/glare/hurt3",
+      "caverns_and_chasms:mob/glare/hurt4"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.glare.hurt"
+  },
+  "entity.glare.tame": {
+    "sounds": [
+      "caverns_and_chasms:mob/glare/tame1",
+      "caverns_and_chasms:mob/glare/tame2",
+      "caverns_and_chasms:mob/glare/tame3",
+      "caverns_and_chasms:mob/glare/tame4"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.glare.tame"
+  },
+  "entity.glare.untame": {
+    "sounds": [
+      "caverns_and_chasms:mob/glare/untame1",
+      "caverns_and_chasms:mob/glare/untame2"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.glare.untame"
+  },
+  "item.lost_goat_horn.sound.0": {
+    "sounds": [
+      "caverns_and_chasms:item/lost_goat_horn/call0"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.item.lost_goat_horn.play"
+  },
+  "item.lost_goat_horn.sound.1": {
+    "sounds": [
+      "caverns_and_chasms:item/lost_goat_horn/call1"
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.item.lost_goat_horn.play"
+  },
+  "entity.parrot.imitate.deeper": {
+    "sounds": [
+      {
+        "name": "caverns_and_chasms:entity.deeper.primed",
+        "pitch": 1.8,
+        "type": "event",
+        "volume": 0.6
+      }
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.parrot.imitate.deeper"
+  },
+  "entity.parrot.imitate.peeper": {
+    "sounds": [
+      {
+        "name": "entity.creeper.primed",
+        "pitch": 1.8,
+        "type": "event",
+        "volume": 0.6
+      }
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.parrot.imitate.peeper"
+  },
+  "entity.parrot.imitate.mime": {
+    "sounds": [
+      {
+        "name": "caverns_and_chasms:entity.mime.mime",
+        "pitch": 1.8,
+        "type": "event",
+        "volume": 0.6
+      }
+    ],
+    "subtitle": "subtitles.caverns_and_chasms.entity.parrot.imitate.mime"
+  }
+}

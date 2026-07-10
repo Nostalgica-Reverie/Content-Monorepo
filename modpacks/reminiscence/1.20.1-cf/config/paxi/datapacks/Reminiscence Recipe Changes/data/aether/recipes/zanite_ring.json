@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "aether:gems/zanite"
+    },
+    "x": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    " # ",
+    "x x",
+    " x "
+  ],
+  "result": {
+    "item": "aether:zanite_ring"
+  },
+  "show_notification": true
+}

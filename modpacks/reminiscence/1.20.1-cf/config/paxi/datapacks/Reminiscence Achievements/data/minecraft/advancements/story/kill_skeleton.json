@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:story/kill_spider",
+  "display": {
+    "icon": {
+      "item": "minecraft:bone"
+    },
+    "title": "Rattling!",
+    "description": "Kill a Skeleton for its bones",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "bone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:bone"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bone"
+    ]
+  ]
+}

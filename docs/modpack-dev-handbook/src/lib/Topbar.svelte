@@ -8,8 +8,7 @@
   import { page } from "$app/state";
   import { base } from "$app/paths";
   import { findDocByUrl } from "$lib/generated/docs";
-
-  const REPO_BROWSE_ROOT = "https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo/src/branch/main/";
+  import { handbookSourceUrl, siteConfig } from "$lib/site";
 
   let shareText = $state("Share");
 
@@ -30,7 +29,7 @@
   let logoBonked = $state(false);
 
   const currentDoc = $derived(findDocByUrl(page.url.pathname.replace(base, "") || "/"));
-  const editHref = $derived(currentDoc ? `${REPO_BROWSE_ROOT}${currentDoc.sourcePath}` : REPO_BROWSE_ROOT);
+  const editHref = $derived(currentDoc ? handbookSourceUrl(currentDoc.sourcePath) : siteConfig.handbook.sourceBrowseRoot);
 
   export async function handleKeyInput(
     e: KeyboardEvent & {
@@ -56,13 +55,12 @@
     <button class="px-2 pr-3 sm:hidden focus-visible:outline-2 focus-visible:outline-mdw-yellow" aria-label="{windowInfo.isNavOpen ? 'Collapse' : 'Expand'} Sidebar" onclick={() => (windowInfo.isNavOpen = !windowInfo.isNavOpen)}><IconMenu /></button>
     <a class="flex items-center hover:text-white p-1 focus-visible:outline-2 focus-visible:outline-mdw-yellow" href={`${base}`}>
       <img alt="Modpack Dev Handbook Logo" src={`${base}/logos/dph.svg`} class="h-8 mr-2 {logoFlipped ? 'rotate-180' : ''} {logoBonked ? 'scale-y-50' : ''} transition-transform" width="32" height="32" />
-      <h1 class="font-bold hidden text-lg lg:text-xl sm:block">Modpack Dev Handbook</h1>
+      <h1 class="font-bold hidden text-lg lg:text-xl sm:block">{siteConfig.handbook.title}</h1>
     </a>
   </div>
   <div class="flex items-center gap-2">
     <a href={editHref} class="p-2 rounded-lg py-1 flex items-center gap-2 hover:bg-stone-700 hover:text-white hover:font-medium aspect-square sm:aspect-auto focus-visible:outline-2 focus-visible:outline-mdw-yellow" aria-label="Edit"><IconEdit /><span class="hidden sm:block">Source</span></a>
     <button class="p-2 rounded-lg py-1 flex items-center gap-2 hover:bg-stone-700 hover:text-white hover:font-medium aspect-square sm:aspect-auto focus-visible:outline-2 focus-visible:outline-mdw-yellow cursor-pointer" aria-label="Copy URL" onclick={copyUrl}><IconShare /><span class="hidden sm:block">{shareText}</span></button>
-    <a href="https://discord.gg/6pRkrYxbGW" class="p-2 rounded-lg py-1 flex items-center gap-2 hover:bg-stone-700 hover:text-white hover:font-medium aspect-square sm:aspect-auto focus-visible:outline-2 focus-visible:outline-mdw-yellow" aria-label="Discord"><IconDiscord /><span class="hidden sm:block">Discord</span></a>
+    <a href={siteConfig.handbook.discordUrl} class="p-2 rounded-lg py-1 flex items-center gap-2 hover:bg-stone-700 hover:text-white hover:font-medium aspect-square sm:aspect-auto focus-visible:outline-2 focus-visible:outline-mdw-yellow" aria-label="Discord"><IconDiscord /><span class="hidden sm:block">Discord</span></a>
   </div>
 </div>
-

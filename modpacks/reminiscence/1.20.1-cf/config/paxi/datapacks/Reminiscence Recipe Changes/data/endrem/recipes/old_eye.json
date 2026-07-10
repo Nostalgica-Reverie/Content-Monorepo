@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGr",
+    "gSg",
+    "rGR"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:chiseled_sandstone"
+    },
+    "g": {
+      "item": "minecraft:chiseled_red_sandstone"
+    },
+    "R": {
+      "item": "quark:jasper"
+    },
+    "r": {
+      "item": "quark:cactus_block"
+    },
+    "S": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "endrem:old_eye"
+  }
+}

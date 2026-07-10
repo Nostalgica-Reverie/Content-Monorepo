@@ -1,0 +1,8 @@
+# Repo-wide clippy config — like rustfmt.toml, discovered upward from each
+# crate, so it applies to every Rust tree in the repo.
+
+# Keep signatures honest: functions taking many args should take a struct.
+too-many-arguments-threshold = 8
+# Tests may unwrap/expect freely.
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true

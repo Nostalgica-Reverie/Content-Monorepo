@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:story/iron_tools",
+  "criteria": {
+    "gold": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:gold_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Smelt a Gold Ingot",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:gold_ingot"
+    },
+    "show_toast": true,
+    "title": "It'll Buff Out"
+  },
+  "requirements": [
+    [
+      "gold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

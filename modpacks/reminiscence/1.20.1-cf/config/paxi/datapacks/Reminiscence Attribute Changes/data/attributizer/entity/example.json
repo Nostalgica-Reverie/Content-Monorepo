@@ -1,0 +1,26 @@
+{
+  "minecraft:polar_bear":[
+    {
+      "attribute": "minecraft:generic.follow_range",
+      "modify": 4,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "attribute": "minecraft:generic.attack_damage",
+      "min": 7,
+      "max": 9,
+      "uuid": "a516026a-bee2-4014-bcb6-b6a5775553de",
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "minecraft:generic.max_health",
+      "modify": 50,
+      "operation": "SET_BASE"
+    },
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "modify": 1.2,
+      "operation": "MULTIPLY_TOTAL"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "type": "minecraft:flower",
+  "config": {
+    "feature": {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "config": {
+          "to_place": {
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "data": {
+                  "Name": "deep_aether:medium_golden_grass"
+                },
+                "weight": 48
+              },
+              {
+                "data": {
+                  "Name": "deep_aether:golden_flower"
+                },
+                "weight": 12
+              },
+              {
+                "data": {
+                  "Name": "deep_aether:enchanted_blossom"
+                },
+                "weight": 3
+              },
+              {
+                "data": {
+                  "Name": "deep_aether:tall_golden_grass",
+                  "Properties": {
+                    "half": "lower"
+                  }
+                },
+                "weight": 8
+              }
+            ]
+          }
+        }
+      },
+      "placement": [
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
+          }
+        }
+      ]
+    },
+    "tries": 218,
+    "xz_spread": 7,
+    "y_spread": 3
+  }
+}

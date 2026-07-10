@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "snowy=false": [
+      {
+        "model": "aether:block/aether_grass_block"
+      }
+    ],
+    "snowy=true": {
+      "model": "aether:block/aether_grass_block_snow"
+    }
+  }
+}

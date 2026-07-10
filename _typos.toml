@@ -1,0 +1,33 @@
+# typos (https://github.com/crate-ci/typos) — repo-wide spell-check config.
+# Run locally with `task lint-typos`; CI runs it in the lint-infra job.
+
+[files]
+extend-exclude = [
+    # Published content: full of mod slugs, pack ids, and intentional names.
+    "modpacks/",
+    "resourcepacks/",
+    "datapacks/",
+    # Generated build output (Gleam/Lustre bundles, marked linguist-generated).
+    "apps/packwand/gui/static/",
+    "docs/modpack-dev-handbook/src/lib/gleam/runtime/",
+    "docs/docs/.vitepress/theme/gleam/",
+    # Generated CLI reference pages (fix typos in the Go source instead).
+    "docs/modpack-dev-handbook/src/routes/wiki/modpack-management/packwand/reference/commands/",
+    # Handbook search index is generated from the pages.
+    "docs/modpack-dev-handbook/src/lib/generated/",
+    # Lockfiles and licenses.
+    "*.lock",
+    "**/LICENSE*",
+]
+
+[default.extend-words]
+# Brand: the org's git host is nostalgica.net.
+nostalgica = "nostalgica"
+Nostalgica = "Nostalgica"
+# Valid alternative spellings we use.
+unparseable = "unparseable"
+clonable = "clonable"
+
+[default.extend-identifiers]
+# tools/stats: totalFo = total followers.
+totalFo = "totalFo"

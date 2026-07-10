@@ -1,0 +1,13 @@
+{
+    "name": "reminiscence:tutorial_house",
+    "fallback": "minecraft:empty",
+    "elements": [{
+        "weight": 1,
+        "element": {
+            "location": "reminiscence:tutorial_house/tutorial_house",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element",
+            "processors": "reminiscence:gravel_to_cobble"
+        }
+    }]
+}

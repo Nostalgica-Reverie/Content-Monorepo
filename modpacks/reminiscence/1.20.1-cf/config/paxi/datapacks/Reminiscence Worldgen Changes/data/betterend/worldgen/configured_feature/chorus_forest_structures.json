@@ -1,0 +1,85 @@
+{
+  "type": "betterend:building_list_feature",
+  "config": {
+    "default": {
+      "Name": "minecraft:end_stone"
+    },
+    "structures": [
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/fallen_tree_1.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/fallen_tree_2.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/fallen_tree_3.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/fallen_tree_4.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/stump_1.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/stump_2.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/stump_3.nbt",
+        "terrain_merger": "OBJECT"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/ruins_1.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/ruins_2.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/ruins_3.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/ruins_4.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/ruins_5.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/ruins_6.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/ruins_7.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/chorus_forest/ruins_8.nbt",
+        "terrain_merger": "SURFACE"
+      }
+    ]
+  }
+}

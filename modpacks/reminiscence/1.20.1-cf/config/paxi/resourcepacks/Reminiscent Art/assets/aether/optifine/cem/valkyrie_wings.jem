@@ -1,0 +1,34 @@
+{
+	"credit": "Made with Blockbench",
+	"textureSize": [64, 64],
+	"texture": "valkyrie.png",
+	"models": [
+		{
+			"part": "right_wing",
+			"id": "right_wing",
+			"invertAxis": "xy",
+			"translate": [-0.5, -19.5, -2.5],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [0.5, 16, 2.5, 19, 8, 1], "textureOffset": [24, 31]}
+			]
+		},
+		{
+			"part": "left_wing",
+			"id": "left_wing",
+			"invertAxis": "xy",
+			"translate": [0.5, -19.5, -2.5],
+			"scale": 1,
+			"boxes": [
+				{"coordinates": [-19.5, 16, 2.5, 19, 8, 1], "textureOffset": [24, 31]}
+			]
+		},
+		{
+			"part": "root",
+			"id": "root",
+			"invertAxis": "xy",
+			"translate": [0, -24, 0],
+			"scale": 1
+		}
+	]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "deep_aether:aether_force_dungeon_loot",
+  "chanceToSpawn": 0.0,
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "aether:chests/dungeon/gold/gold_dungeon_reward"
+    }
+  ],
+  "items": {
+    "Count": 1,
+    "id": "minecraft:emerald"
+  }
+}

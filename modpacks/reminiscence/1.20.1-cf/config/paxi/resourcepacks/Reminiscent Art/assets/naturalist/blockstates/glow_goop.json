@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "goop=1,waterlogged=false": {
+      "model": "naturalist:block/goop_1"
+    },
+    "goop=2,waterlogged=false": {
+      "model": "naturalist:block/goop_2"
+    },
+    "goop=3,waterlogged=false": {
+      "model": "naturalist:block/goop_3"
+    },
+
+
+    "goop=1,waterlogged=true": {
+      "model": "naturalist:block/goop_1"
+    },
+    "goop=2,waterlogged=true": {
+      "model": "naturalist:block/goop_2"
+    },
+    "goop=3,waterlogged=true": {
+      "model": "naturalist:block/goop_3"
+    }
+  }
+}

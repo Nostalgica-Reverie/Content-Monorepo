@@ -1,0 +1,51 @@
+{
+  "parent": "minecraft:story/build_work_bench",
+  "criteria": {
+    "all_tools": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:swords"
+          },
+          {
+            "tag": "minecraft:pickaxes"
+          },
+          {
+            "tag": "minecraft:axes"
+          },
+          {
+            "tag": "minecraft:shovels"
+          },
+          {
+            "tag": "minecraft:hoes"
+          },
+          {
+            "tag": "farmersdelight:tools/knives"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Construct one type of each tool",
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:golden_axe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "MOAR Tools"
+  },
+  "requirements": [
+    [
+      "all_tools"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

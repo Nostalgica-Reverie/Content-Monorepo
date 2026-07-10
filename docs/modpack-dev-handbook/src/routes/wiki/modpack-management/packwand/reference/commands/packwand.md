@@ -40,6 +40,7 @@ packwand [flags]
 * [packwand gui](packwand_gui.md)	 - Run the local Packwand web GUI
 * [packwand import](packwand_import.md)	 - Import an .mrpack or CurseForge zip as a new modpack
 * [packwand init](packwand_init.md)	 - Initialise a packwiz modpack
+* [packwand json](packwand_json.md)	 - JSON utilities for pack files
 * [packwand lint](packwand_lint.md)	 - Check JSON and .pw.toml files for syntax errors (no args: lints git-changed files)
 * [packwand list](packwand_list.md)	 - List all the mods in the modpack
 * [packwand migrate](packwand_migrate.md)	 - Migrate Minecraft/loader versions or pack-format to a newer generation.
@@ -49,6 +50,7 @@ packwand [flags]
 * [packwand nix](packwand_nix.md)	 - Nix integration (packwiz2nix-compatible outputs)
 * [packwand packs](packwand_packs.md)	 - Look up or edit any pack's manifest fields by id
 * [packwand pages](packwand_pages.md)	 - Regenerate modlist.md files for all packs (or a single pack) and the projects index
+* [packwand parity](packwand_parity.md)	 - Report content drift between a pack's Modrinth (-mr) and CurseForge (-cf) variant subdirs (no args: all modpacks)
 * [packwand pin](packwand_pin.md)	 - Pin a file so it does not get updated automatically
 * [packwand port](packwand_port.md)	 - Compare MR and CF subdirs and port missing mods from Modrinth to CurseForge
 * [packwand publish](packwand_publish.md)	 - Build, upload, verify, or list publish targets for a pack

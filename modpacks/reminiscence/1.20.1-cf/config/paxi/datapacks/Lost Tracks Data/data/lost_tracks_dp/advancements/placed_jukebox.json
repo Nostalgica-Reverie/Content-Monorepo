@@ -1,0 +1,24 @@
+{
+    "criteria": {
+        "placed_jukebox": {
+            "trigger": "minecraft:placed_block",
+            "conditions": {
+                "location": [
+                    {
+                        "condition": "minecraft:location_check",
+                        "predicate": {
+                            "block": {
+                                "blocks": [
+                                    "minecraft:jukebox"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "rewards": {
+        "function": "lost_tracks_dp:on_placed_jukebox"
+    }
+}

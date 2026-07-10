@@ -1,0 +1,94 @@
+{
+  "sources": [
+    {
+      "type": "blueprint:paletted_permutations",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "amethyst": "minecraft:trims/color_palettes/amethyst",
+        "copper": "minecraft:trims/color_palettes/copper",
+        "diamond": "minecraft:trims/color_palettes/diamond",
+        "diamond_darker": "minecraft:trims/color_palettes/diamond_darker",
+        "emerald": "minecraft:trims/color_palettes/emerald",
+        "gold": "minecraft:trims/color_palettes/gold",
+        "gold_darker": "minecraft:trims/color_palettes/gold_darker",
+        "iron": "minecraft:trims/color_palettes/iron",
+        "iron_darker": "minecraft:trims/color_palettes/iron_darker",
+        "lapis": "minecraft:trims/color_palettes/lapis",
+        "netherite": "minecraft:trims/color_palettes/netherite",
+        "netherite_darker": "minecraft:trims/color_palettes/netherite_darker",
+        "quartz": "minecraft:trims/color_palettes/quartz",
+        "redstone": "minecraft:trims/color_palettes/redstone",
+        "bismuth": "betterend:trims/color_palettes/bismuth",
+        "opal": "betterend:trims/color_palettes/opal",
+        "gravitite": "aether:trims/color_palettes/gravitite",
+        "zanite": "aether:trims/color_palettes/zanite"
+      },
+      "textures": [
+        "trims/models/armor/coast",
+        "trims/models/armor/coast_leggings",
+        "trims/models/armor/sentry",
+        "trims/models/armor/sentry_leggings",
+        "trims/models/armor/dune",
+        "trims/models/armor/dune_leggings",
+        "trims/models/armor/wild",
+        "trims/models/armor/wild_leggings",
+        "trims/models/armor/ward",
+        "trims/models/armor/ward_leggings",
+        "trims/models/armor/eye",
+        "trims/models/armor/eye_leggings",
+        "trims/models/armor/vex",
+        "trims/models/armor/vex_leggings",
+        "trims/models/armor/tide",
+        "trims/models/armor/tide_leggings",
+        "trims/models/armor/snout",
+        "trims/models/armor/snout_leggings",
+        "trims/models/armor/rib",
+        "trims/models/armor/rib_leggings",
+        "trims/models/armor/spire",
+        "trims/models/armor/spire_leggings",
+        "trims/models/armor/wayfinder",
+        "trims/models/armor/wayfinder_leggings",
+        "trims/models/armor/shaper",
+        "trims/models/armor/shaper_leggings",
+        "trims/models/armor/silence",
+        "trims/models/armor/silence_leggings",
+        "trims/models/armor/raiser",
+        "trims/models/armor/raiser_leggings",
+        "trims/models/armor/host",
+        "trims/models/armor/host_leggings",
+        "caverns_and_chasms:trims/models/armor/exile",
+        "caverns_and_chasms:trims/models/armor/exile_leggings",
+        "caverns_and_chasms:trims/models/armor/sanguine",
+        "caverns_and_chasms:trims/models/armor/sanguine_leggings"
+      ]
+    },
+    {
+      "type": "blueprint:paletted_permutations",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "gravitite": "aether:trims/color_palettes/gravitite",
+        "zanite": "aether:trims/color_palettes/zanite"
+      }
+    },
+    {
+      "type": "blueprint:paletted_permutations",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "caverns_and_chasms_necromium": "caverns_and_chasms:trims/color_palettes/necromium",
+        "caverns_and_chasms_necromium_darker": "caverns_and_chasms:trims/color_palettes/necromium_darker",
+        "caverns_and_chasms_sanguine": "caverns_and_chasms:trims/color_palettes/sanguine",
+        "caverns_and_chasms_sanguine_darker": "caverns_and_chasms:trims/color_palettes/sanguine_darker",
+        "caverns_and_chasms_silver": "caverns_and_chasms:trims/color_palettes/silver",
+        "caverns_and_chasms_silver_darker": "caverns_and_chasms:trims/color_palettes/silver_darker",
+        "caverns_and_chasms_spinel": "caverns_and_chasms:trims/color_palettes/spinel"
+      },
+      "sources": [
+        {
+          "type": "minecraft:directory",
+          "prefix": "trims/models/armor/",
+          "source": "trims/models/armor"
+        }
+      ]
+    }
+  ]
+}

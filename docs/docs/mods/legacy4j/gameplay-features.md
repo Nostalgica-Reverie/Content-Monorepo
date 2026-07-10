@@ -97,7 +97,7 @@ Swimming from Update Aquatic and newer versions of LCE have been implemented.
 This is controlled by the `legacySwimming` gamerule.
 
 ## TNT Limit
-The `tntLimit` gamerule can be used to limit the amount of Primed TNT entites that can exist in a world. <br>
+The `tntLimit` gamerule can be used to limit the amount of Primed TNT entities that can exist in a world. <br>
 This is controlled with an integer value, and defaults to `20`
 
 ## Starter Map

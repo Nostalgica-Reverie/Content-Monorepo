@@ -1,0 +1,46 @@
+{
+  "parent": "minecraft:story/silk_touch_nest",
+  "criteria": {
+    "safely_harvest_honeycomb": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "tag": "minecraft:beehives"
+              },
+              "smokey": true
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "minecraft:shears"
+              ]
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Obtain Honeycomb, obtained the same way as Honey but with Shears instead",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:honeycomb"
+    },
+    "show_toast": true,
+    "title": "Bee happy"
+  },
+  "requirements": [
+    [
+      "safely_harvest_honeycomb"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

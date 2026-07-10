@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "quark:block/jasper_pillar" },
+        "axis=z":   { "model": "quark:block/jasper_pillar", "x": 90 },
+        "axis=x":   { "model": "quark:block/jasper_pillar", "x": 90, "y": 90 }
+    }
+}

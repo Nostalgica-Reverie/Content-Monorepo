@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "aether:carved_stone"
+    },
+    "a": {
+      "item": "kubejs:slider_rubble"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#a#",
+    " # "
+  ],
+  "result": {
+    "item": "deep_aether:slider_eye"
+  },
+  "show_notification": true
+}

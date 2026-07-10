@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "quark:block/glow_shroom_ring",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "quark:block/glow_shroom_ring"
+    },
+    "facing=south": {
+      "model": "quark:block/glow_shroom_ring",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "quark:block/glow_shroom_ring",
+      "y": 270
+    }
+  }
+}

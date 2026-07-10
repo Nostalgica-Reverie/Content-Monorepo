@@ -1,0 +1,40 @@
+{
+  "parent": "aether:mine_holystone",
+  "criteria": {
+    "shot_dart": {
+      "conditions": {
+        "damage": {
+          "type": {
+            "direct_entity": {
+              "type": "#aether:darts"
+            },
+            "tags": [
+              {
+                "expected": true,
+                "id": "minecraft:is_projectile"
+              }
+            ]
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Shoot something with a dart",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:golden_dart_shooter"
+    },
+    "show_toast": true,
+    "title": "Better manners when I'm holding a dart..."
+  },
+  "requirements": [
+    [
+      "shot_dart"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

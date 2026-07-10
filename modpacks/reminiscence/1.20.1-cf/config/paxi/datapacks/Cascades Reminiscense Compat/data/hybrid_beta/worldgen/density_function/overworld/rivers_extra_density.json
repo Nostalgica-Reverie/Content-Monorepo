@@ -1,0 +1,52 @@
+{
+  "type": "cache_once",
+  "argument": {
+    "type": "minecraft:mul",
+    "argument1": 1,
+    "argument2": {
+      "type": "minecraft:clamp",
+      "input": {
+        "type": "minecraft:mul",
+        "argument1": {
+          "type": "minecraft:clamp",
+          "input": {
+            "type": "minecraft:add",
+            "argument1": 1,
+            "argument2": {
+              "type": "minecraft:mul",
+              "argument1": -0.04,
+              "argument2": {
+                "type": "minecraft:square",
+                "argument": {
+                  "type": "minecraft:add",
+                  "argument1": "minecraft:y",
+                  "argument2": -64
+                }
+              }
+            }
+          },
+          "min": 0,
+          "max": 1
+        },
+        "argument2": {
+          "type": "minecraft:add",
+          "argument1": 1,
+          "argument2": {
+            "type": "minecraft:mul",
+            "argument1": -1,
+            "argument2": {
+              "type": "minecraft:mul",
+              "argument1": 12.5,
+              "argument2": {
+                "type": "minecraft:abs",
+                "argument": "minecraft:overworld/ridges"
+              }
+            }
+          }
+        }
+      },
+      "min": 0,
+      "max": 1
+    }
+  }
+}

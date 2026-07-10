@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:leather"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "a": {
+      "item": "kubejs:valkyrie_feather"
+    }
+  },
+  "pattern": [
+    "###",
+    "AaA"
+  ],
+  "result": {
+    "item": "deep_aether:aerwhale_saddle"
+  },
+  "show_notification": true
+}

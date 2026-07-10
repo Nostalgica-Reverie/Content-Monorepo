@@ -1,0 +1,159 @@
+{
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "upgrade_aquatic:boiled_pickerelweed": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:boiled_pickerelweed"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:cooked_lionfish": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:cooked_lionfish"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:cooked_perch": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:cooked_perch"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:cooked_pike": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:cooked_pike"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:lionfish": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:lionfish"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:mulberry": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:mulberry"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:mulberry_bread": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:mulberry_bread"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:mulberry_jam_bottle": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:mulberry_jam_bottle"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:mulberry_pie": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:mulberry_pie"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:perch": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:perch"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          },
+          "upgrade_aquatic:pike": {
+            "conditions": {
+              "item": {
+                "items": [
+                  "upgrade_aquatic:pike"
+                ]
+              }
+            },
+            "trigger": "minecraft:consume_item"
+          }
+        },
+        "requirements": [
+          [
+            "upgrade_aquatic:boiled_pickerelweed"
+          ],
+          [
+            "upgrade_aquatic:pike"
+          ],
+          [
+            "upgrade_aquatic:cooked_pike"
+          ],
+          [
+            "upgrade_aquatic:lionfish"
+          ],
+          [
+            "upgrade_aquatic:cooked_lionfish"
+          ],
+          [
+            "upgrade_aquatic:perch"
+          ],
+          [
+            "upgrade_aquatic:cooked_perch"
+          ],
+          [
+            "upgrade_aquatic:mulberry"
+          ],
+          [
+            "upgrade_aquatic:mulberry_jam_bottle"
+          ],
+          [
+            "upgrade_aquatic:mulberry_bread"
+          ],
+          [
+            "upgrade_aquatic:mulberry_pie"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": "minecraft:husbandry/balanced_diet"
+}

@@ -1,0 +1,32 @@
+{
+    "display": {
+        "title": {
+            "translate": "inmis.advancement.gilded_backpack.title"
+        },
+        "description": {
+            "translate": "inmis.advancement.gilded_backpack.description"
+        },
+        "icon": {
+            "item": "inmis:gilded_backpack"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "backpack": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "inmis:gilded_backpack"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "parent": "minecraft:story/gold_tools"
+}

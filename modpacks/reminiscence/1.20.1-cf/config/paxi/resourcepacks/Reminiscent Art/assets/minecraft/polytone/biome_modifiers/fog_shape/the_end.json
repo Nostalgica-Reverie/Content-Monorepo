@@ -1,0 +1,15 @@
+{
+	"targets": ["minecraft:end_highlands", "minecraft:small_end_islands", "minecraft:end_midlands", "minecraft:end_barrens", "minecraft:the_end",
+	 {
+	  "id": "endercon:end_hallows",
+	  "required": false
+	 },
+	 {
+	  "id": "endercon:end_border",
+	  "required": false
+	 }
+	],
+	"fog_color": 8087248,
+	"fog_end": 0.95,
+	"fog_start": "max(2, 15.5 * max(0, min(1, (abs(POS_X) > 128) + (abs(POS_Z) > 128))))"
+}

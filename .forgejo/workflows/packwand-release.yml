@@ -16,10 +16,7 @@ jobs:
         with:
           fetch-depth: 0 # goreleaser needs tags + history for the changelog
 
-      - uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: "stable"
-          cache: true
+      - uses: ./.forgejo/actions/setup-go
 
       - name: Install Syft for release SBOMs
         run: |
@@ -32,6 +29,6 @@ jobs:
           distribution: goreleaser
           version: "~> v2"
           args: release --clean
-          workdir: src/packwand
+          workdir: apps/packwand
         env:
           GITEA_TOKEN: ${{ secrets.GITHUB_TOKEN }}

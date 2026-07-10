@@ -1,0 +1,24 @@
+{
+  "display": {
+    "announce_to_chat": false,
+    "icon": {
+      "item": "betterend:pythadendron_log"
+    },
+    "title": "Getting... Wood?",
+    "description": "What even is this stuff?",
+    "frame": "task"
+  },
+  "parent": "minecraft:end/enter_end_gateway",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "betterend:void_logs"
+          }
+        ]
+      }
+    }
+  }
+}

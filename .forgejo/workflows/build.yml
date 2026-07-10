@@ -32,7 +32,7 @@ jobs:
             modpacks
             datapacks
             resourcepacks
-            src/packwand
+            apps/packwand
             .forgejo/actions
 
       - name: Meta
@@ -44,10 +44,7 @@ jobs:
           echo "$CHANGED" | grep -q '^modpacks/'  && echo "has_modpacks=true"  >> $GITHUB_OUTPUT || echo "has_modpacks=false"  >> $GITHUB_OUTPUT
 
       - name: Setup Go
-        uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
+        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
@@ -104,6 +101,9 @@ jobs:
             -H "Content-Type: application/json" \
             --data-binary @"$RUNNER_TEMP/validate-comment.json" \
             "${{ github.api_url }}/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
+
+      - name: Minify JSON (smaller built artifacts)
+        run: packwand json minify modpacks datapacks resourcepacks
 
       - name: Run Build
         run: packwand build "${{ steps.meta.outputs.short_sha }}"

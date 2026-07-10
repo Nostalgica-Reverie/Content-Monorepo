@@ -1,0 +1,34 @@
+{
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "caverns_and_chasms:golden_lava_bucket": {
+            "conditions": {
+              "items": [
+                {
+                  "items": [
+                    "caverns_and_chasms:golden_lava_bucket"
+                  ]
+                }
+              ]
+            },
+            "trigger": "minecraft:inventory_changed"
+          }
+        },
+        "indexed_requirements": [
+          {
+            "index": 0,
+            "replace": false,
+            "requirements": [
+              "caverns_and_chasms:golden_lava_bucket"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "priority": "normal",
+  "selector": "minecraft:story/lava_bucket"
+}

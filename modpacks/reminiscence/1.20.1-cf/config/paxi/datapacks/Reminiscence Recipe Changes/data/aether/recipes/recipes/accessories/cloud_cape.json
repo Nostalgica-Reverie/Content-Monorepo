@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "aether:cold_aercloud"
+    },
+    "#": {
+      "item": "deep_aether:sun_core"
+    },
+    "h": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "hHh",
+    "H#H",
+    "hHh"
+  ],
+  "result": {
+    "item": "deep_aether:cloud_cape"
+  },
+  "show_notification": true
+}

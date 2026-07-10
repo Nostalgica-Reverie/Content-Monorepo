@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "betterend:thallasium_block"
+    },
+    "C": {
+      "item": "betterend:crystal_shards"
+    },
+    "S": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "pattern": [
+    "CSC",
+    "CSC",
+    "AAA"
+  ],
+  "result": {
+    "item": "betterend:respawn_obelisk"
+  },
+  "show_notification": true
+}

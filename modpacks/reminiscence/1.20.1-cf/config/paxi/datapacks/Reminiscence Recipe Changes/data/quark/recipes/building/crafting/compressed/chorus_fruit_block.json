@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:chorus_fruit"
+    }
+  },
+  "result": {
+    "item": "quark:chorus_fruit_block"
+  },
+  "conditions": [
+    {
+      "type": "quark:flag",
+      "flag": "chorus_fruit_block"
+    }
+  ]
+}

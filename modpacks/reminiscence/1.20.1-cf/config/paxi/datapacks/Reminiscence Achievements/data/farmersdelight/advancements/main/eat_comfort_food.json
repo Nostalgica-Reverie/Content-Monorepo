@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:story/make_bread",
+  "criteria": {
+    "finger_food": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:fingerfood"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Make a Finger Food. Recommended for stack size",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "farmersdelight:bacon_sandwich"
+    },
+    "show_toast": true,
+    "title": "Novice Chef"
+  },
+  "requirements": [
+    [
+      "finger_food"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

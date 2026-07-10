@@ -4,7 +4,6 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "validate": "bun manifest/validate.ts",
     "changelog": "bun changelog/generate-changelog.ts",
     "stats": "bun stats/stats.ts"
   },

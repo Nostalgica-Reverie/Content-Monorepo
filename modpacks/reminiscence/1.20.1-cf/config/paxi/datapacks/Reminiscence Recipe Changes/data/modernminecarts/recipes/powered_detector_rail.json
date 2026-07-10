@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "_": {
+      "item": "minecraft:stone_pressure_plate"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "gQg",
+    "g_g",
+    "grg"
+  ],
+  "result": {
+    "count": 6,
+    "item": "modernminecarts:powered_detector_rail"
+  }
+}

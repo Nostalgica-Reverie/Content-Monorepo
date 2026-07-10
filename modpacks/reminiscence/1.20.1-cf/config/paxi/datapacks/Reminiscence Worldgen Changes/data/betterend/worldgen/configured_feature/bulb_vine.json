@@ -1,0 +1,16 @@
+{
+  "type": "betterend:vine_feature",
+  "config": {
+    "max_length": 12,
+    "radius": 2,
+    "state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:bulb_vine",
+        "Properties": {
+          "shape": "bottom"
+        }
+      }
+    }
+  }
+}

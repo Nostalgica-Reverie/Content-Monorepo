@@ -1,0 +1,75 @@
+{
+  "type": "betterend:building_list_feature",
+  "config": {
+    "default": {
+      "Name": "minecraft:end_stone"
+    },
+    "structures": [
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/stump_1.nbt",
+        "terrain_merger": "NONE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/stump_2.nbt",
+        "terrain_merger": "NONE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/fallen_log_1.nbt",
+        "terrain_merger": "NONE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/fallen_log_2.nbt",
+        "terrain_merger": "NONE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/ruins_1.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/ruins_2.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/ruins_3.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/ruins_4.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/ruins_5.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/ruins_6.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/ruins_7.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": 0,
+        "path": "/data/betterend/structures/biome/shadow_forest/ruins_8.nbt",
+        "terrain_merger": "SURFACE"
+      },
+      {
+        "offset_y": -1,
+        "path": "/data/betterend/structures/biome/shadow_forest/small_mansion.nbt",
+        "terrain_merger": "OBJECT"
+      }
+    ]
+  }
+}

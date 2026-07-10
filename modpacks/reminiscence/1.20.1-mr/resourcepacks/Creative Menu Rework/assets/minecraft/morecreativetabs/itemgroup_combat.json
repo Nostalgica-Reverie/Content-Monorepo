@@ -1,0 +1,788 @@
+{
+  "tab_enabled": true,
+  "tab_name": "combat_rework",
+  "replace": true,
+  "tab_stack": {
+    "name":"minecraft:diamond_sword"
+  },
+  "tab_items": [      
+
+
+
+  {
+"name": "minecraft:wooden_sword",
+"nbt": "{Damage:0}"
+},
+{
+"name": "minecraft:stone_sword"
+},
+{
+"name": "bettercopper:copper_sword",
+"nbt": "{Damage:0}"
+},
+{
+"name": "minecraft:iron_sword",
+"nbt": "{Damage:0}"
+},
+{
+"name": "aether:zanite_sword"
+},
+{
+"name": "minecraft:golden_sword"
+},
+{
+"name": "caverns_and_chasms:silver_sword"
+},
+{
+"name": "deep_aether:skyjade_sword"
+},
+{
+"name": "minecraft:diamond_sword"
+},
+{
+"name": "aether:gravitite_sword"
+},
+{
+"name": "aether:valkyrie_lance"
+},
+{
+"name": "minecraft:netherite_sword"
+},
+{
+"name": "betterend:thallasium_sword"
+},
+{
+"name": "betterend:terminite_sword"
+},
+{
+"name": "betterend:aeternium_sword"
+},
+{
+"name": "aether:lightning_sword"
+},
+{
+"name": "aether:holy_sword"
+},
+{
+"name": "aether:flaming_sword"
+},
+{
+"name": "aether:vampire_blade"
+},
+{
+"name": "aether:candy_cane_sword"
+},
+{
+"name": "minecraft:bow"
+},
+{
+"name": "aether:phoenix_bow"
+},
+{
+"name": "minecraft:crossbow"
+},
+{
+"name": "aether:golden_dart_shooter" 
+},
+{
+"name": "aether:poison_dart_shooter" 
+},
+{
+"name": "aether:enchanted_dart_shooter" 
+},
+{
+"name": "minecraft:trident"
+},
+{
+"name": "caverns_and_chasms:kunai"
+},
+{
+"name": "aether:lightning_knife" 
+},
+{
+"name": "aether:pig_slayer"
+},
+{
+"name": "aether:hammer_of_kingbdogz"
+},
+{
+"name": "supplementaries:bomb" 
+},
+{
+"name": "supplementaries:bomb_blue" 
+},
+{
+"name": "aether:cloud_staff"
+},
+{
+"name": "minecraft:leather_helmet"
+},
+{
+"name": "minecraft:leather_chestplate"
+},
+{
+"name": "minecraft:leather_leggings"
+},
+{
+"name": "minecraft:leather_boots"
+},
+{
+"name": "aether:leather_gloves"
+},
+{
+"name": "caverns_and_chasms:necromium_helmet"
+},
+{
+"name": "caverns_and_chasms:necromium_chestplate"
+},
+{
+"name": "caverns_and_chasms:necromium_leggings"
+},
+{
+"name": "caverns_and_chasms:necromium_boots"
+},
+{
+"name": "minecraft:chainmail_helmet"
+},
+{
+"name": "minecraft:chainmail_chestplate"
+},
+{
+"name": "minecraft:chainmail_leggings"
+},
+{
+"name": "minecraft:chainmail_boots"
+},
+{
+"name": "aether:chainmail_gloves"
+},
+{
+"name": "bettercopper:copper_helmet"
+},
+{
+"name": "bettercopper:copper_chestplate"
+},
+{
+"name": "bettercopper:copper_leggings"
+},
+{
+"name": "bettercopper:copper_boots" 
+},
+{
+"name": "minecraft:iron_helmet"
+},
+{
+"name": "minecraft:iron_chestplate"
+},
+{
+"name": "minecraft:iron_leggings"
+},
+{
+"name": "minecraft:iron_boots"
+},
+{
+"name": "aether:iron_gloves"
+},
+{
+"name": "aether:zanite_helmet"
+},
+{
+"name": "aether:zanite_chestplate"
+},
+{
+"name": "aether:zanite_leggings"
+},
+{
+"name": "aether:zanite_boots"
+},
+{
+"name": "aether:neptune_helmet"
+},
+{
+"name": "aether:neptune_chestplate"
+},
+{
+"name": "aether:neptune_leggings"
+},
+{
+"name": "aether:neptune_boots"
+},
+{
+"name": "minecraft:golden_helmet"
+},
+{
+"name": "minecraft:golden_chestplate"
+},
+{
+"name": "minecraft:golden_leggings"
+},
+{
+"name": "minecraft:golden_boots"
+},
+{
+"name": "aether:golden_gloves"
+},
+{
+"name": "caverns_and_chasms:silver_helmet"
+},
+{
+"name": "caverns_and_chasms:silver_chestplate"
+},
+{
+"name": "caverns_and_chasms:silver_leggings"
+},
+{
+"name": "caverns_and_chasms:silver_boots"
+},
+{
+"name": "deep_aether:skyjade_helmet"
+},
+{
+"name": "deep_aether:skyjade_chestplate"
+},
+{
+"name": "deep_aether:skyjade_leggings"
+},
+{
+"name": "deep_aether:skyjade_boots"
+},
+{
+"name": "minecraft:diamond_helmet"
+},
+{
+"name": "minecraft:diamond_chestplate"
+},
+{
+"name": "minecraft:diamond_leggings"
+},
+{
+"name": "minecraft:diamond_boots"
+},
+{
+"name": "aether:diamond_gloves"
+},
+{
+"name": "aether:gravitite_helmet"
+},
+{
+"name": "aether:gravitite_chestplate"
+},
+{
+"name": "aether:gravitite_leggings"
+},
+{
+"name": "aether:gravitite_boots"
+},
+{
+"name": "aether:valkyrie_helmet"
+},
+{
+"name": "aether:valkyrie_chestplate"
+},
+{
+"name": "aether:valkyrie_leggings"
+},
+{
+"name": "aether:valkyrie_boots"
+},
+{
+"name": "aether:obsidian_helmet"
+},
+{
+"name": "aether:obsidian_chestplate"
+},
+{
+"name": "aether:obsidian_leggings"
+},
+{
+"name": "aether:obsidian_boots"
+},
+{
+"name": "minecraft:netherite_helmet"
+},
+{
+"name": "minecraft:netherite_chestplate"
+},
+{
+"name": "minecraft:netherite_leggings"
+},
+{
+"name": "minecraft:netherite_boots"
+},
+{
+"name": "aether:netherite_gloves"
+},
+{
+"name": "betterend:thallasium_helmet"
+},
+{
+"name": "betterend:thallasium_chestplate"
+},
+{
+"name": "betterend:thallasium_leggings"
+},
+{
+"name": "betterend:thallasium_boots"
+},
+{
+"name": "betterend:terminite_helmet"
+},
+{
+"name": "betterend:terminite_chestplate"
+},
+{
+"name": "betterend:terminite_leggings"
+},
+{
+"name": "betterend:terminite_boots"
+},
+{
+"name": "betterend:aeternium_helmet"
+},
+{
+"name": "betterend:aeternium_chestplate"
+},
+{
+"name": "betterend:aeternium_leggings"
+},
+{
+"name": "betterend:aeternium_boots"
+},
+{
+"name": "minecraft:turtle_helmet"
+},
+{
+"name": "aether:sentry_boots"
+},
+{
+"name": "aether:iron_ring" 
+},
+{
+"name": "aether:iron_pendant" 
+},
+{
+"name": "aether:golden_ring" 
+},
+{
+"name": "aether:golden_pendant" 
+},
+{
+"name": "aether:zanite_ring"
+},
+{
+"name": "aether:zanite_pendant"
+},
+{
+"name": "aether:ice_ring"
+},
+{
+"name": "aether:ice_pendant"
+},
+{
+"name": "deep_aether:skyjade_ring"
+},
+{
+"name": "deep_aether:gravitite_ring"
+},
+{
+"name": "deep_aether:spooky_ring"
+},
+{
+"name": "deep_aether:aercloud_necklace"
+},
+{
+"name": "deep_aether:medal_of_honor" 
+},
+{
+"name": "aether:white_cape" 
+},
+{
+"name": "aether:yellow_cape" 
+},
+{
+"name": "aether:red_cape" 
+},
+{
+"name": "aether:blue_cape" 
+},
+{
+"name": "deep_aether:cloud_cape" 
+},
+{
+"name": "aether:agility_cape" 
+},
+{
+"name": "aether:swet_cape" 
+},
+{
+"name": "aether:invisibility_cloak" 
+},
+{
+"name": "aether:valkyrie_cape" 
+},
+{
+"name": "aether:regeneration_stone" 
+},
+{
+"name": "aether:iron_bubble" 
+},
+{
+"name": "aether:shield_of_repulsion"
+},
+{
+"name": "deep_aether:wind_shield"
+},
+{
+"name": "deep_aether:slider_eye"
+},
+{
+"name": "supplementaries:quiver" 
+},
+{
+"name": "minecraft:leather_horse_armor" 
+},
+{
+"name": "bettercopper:copper_horse_armor" 
+},
+{
+"name": "minecraft:iron_horse_armor" 
+},
+{
+"name": "minecraft:golden_horse_armor" 
+},
+{
+"name": "caverns_and_chasms:silver_horse_armor" 
+},
+{
+"name": "minecraft:diamond_horse_armor" 
+},
+{
+"name": "caverns_and_chasms:netherite_horse_armor" 
+},
+{
+"name": "minecraft:snowball" 
+},
+{
+"name": "minecraft:egg" 
+},
+{
+"name": "minecraft:tnt" 
+},
+{
+"name": "caverns_and_chasms:tmt" 
+},
+{
+"name": "minecraft:end_crystal" 
+},
+{
+"name": "minecraft:firework_rocket",
+"nbt": "{Fireworks:{Flight:1b}}"
+},
+{
+"name": "minecraft:firework_rocket",
+"nbt": "{Fireworks:{Flight:2b}}"
+},
+{
+"name": "minecraft:firework_rocket",
+"nbt": "{Fireworks:{Flight:3b}}"
+},
+{
+"name": "aether:golden_dart" 
+},
+{
+"name": "aether:poison_dart" 
+},
+{
+"name": "aether:enchanted_dart" 
+},
+{
+"name": "minecraft:arrow" 
+},
+{
+"name": "minecraft:spectral_arrow" 
+},
+{
+"name": "supplementaries:rope_arrow"
+},
+{
+"name": "caverns_and_chasms:blunt_arrow" 
+},
+{
+"name": "caverns_and_chasms:large_arrow" 
+},
+{
+"name": "quark:torch_arrow"
+},
+{
+"name": "ascended_quark:ambrosium_torch_arrow"
+},
+
+
+
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{Potion:\"minecraft:water\"}"
+},
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{Potion:\"minecraft:awkward\"}"
+},
+
+
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:3407864,CustomPotionEffects:[{Amplifier:1b,Duration:12000,Id:1b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Swiftness Arrow\",\"italic\":false}'},swiftness:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:16751685,CustomPotionEffects:[{Amplifier:0b,Duration:12000,Id:12b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Fire Immunity Arrow\",\"italic\":false}'},fire_immunity:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:16724787,CustomPotionEffects:[{Amplifier:0b,Duration:6000,Id:11b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Resistance Arrow\",\"italic\":false}'},resistance:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:16718944,CustomPotionEffects:[{Amplifier:0b,Duration:6000,Id:5b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Strength Arrow\",\"italic\":false}'},strength:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:16760875,CustomPotionEffects:[{Amplifier:0b,Duration:12000,Id:3b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Haste Arrow\",\"italic\":false}'},haste:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:16773698,CustomPotionEffects:[{Amplifier:0b,Duration:18000,Id:14b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Invisibility Arrow\",\"italic\":false}'},invisibility:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:3669808,CustomPotionEffects:[{Amplifier:3b,Duration:12000,Id:8b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Leaping Arrow\",\"italic\":false}'},leaping:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:16736751,CustomPotionEffects:[{Amplifier:0b,Duration:6000,Id:10b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Regeneration Arrow\",\"italic\":false}'},regeneration:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:1519359,CustomPotionEffects:[{Amplifier:0b,Duration:24000,Id:13b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Water Breathing Arrow\",\"italic\":false}'},water_breathing:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:46079,CustomPotionEffects:[{Amplifier:3b,Duration:12000,Id:48b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Knockback Immunity Arrow\",\"italic\":false}'},knockback_immunity:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:12779775,CustomPotionEffects:[{Amplifier:0b,Duration:18000,Id:16b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Night Vision Arrow\",\"italic\":false}'},night_vision:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:65424,CustomPotionEffects:[{Amplifier:0b,Duration:12000,Id:28b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Slow Falling Arrow\",\"italic\":false}'},slow_falling:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:10092288,CustomPotionEffects:[{Amplifier:1b,Duration:36000,Id:26b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Luck Arrow\",\"italic\":false}'},luck:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:7274751,CustomPotionEffects:[{Amplifier:0b,Duration:24000,Id:46b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Rewind Arrow\",\"italic\":false}'},rewind:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:10266329,CustomPotionEffects:[{Amplifier:1b,Duration:600,Id:2b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Slowness Arrow\",\"italic\":false}'},slowness:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:8204850,CustomPotionEffects:[{Amplifier:0b,Duration:2400,Id:18b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Weakness Arrow\",\"italic\":false}'},weakness:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:3439924,CustomPotionEffects:[{Amplifier:1b,Duration:600,Id:19b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Poison Arrow\",\"italic\":false}'},poison:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:3483702,CustomPotionEffects:[{Amplifier:0b,Duration:600,Id:15b,ShowParticles:0b}],Potion:\"minecraft:thick\",blindness:1b,display:{Name:'{\"text\":\"Blindness Arrow\",\"italic\":false}'}}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:4327945,CustomPotionEffects:[{Amplifier:1b,Duration:1,Id:7b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Harming Arrow\",\"italic\":false}'},harming:1b}"
+
+},
+
+{
+"name": "minecraft:tipped_arrow", 
+"nbt": "{CustomPotionColor:6454579,CustomPotionEffects:[{Amplifier:1b,Duration:12000,Id:27b,ShowParticles:0b}],Potion:\"minecraft:thick\",bad_luck:1b,display:{Name:'{\"text\":\"Bad Luck Arrow\",\"italic\":false}'}}"
+},
+
+
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{Potion:\"minecraft:water\"}"
+},
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{Potion:\"minecraft:awkward\"}"
+},
+
+
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:3407864,CustomPotionEffects:[{Amplifier:1b,Duration:12000,Id:1b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Swiftness Tether Brew\",\"italic\":false}'},swiftness:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:16751685,CustomPotionEffects:[{Amplifier:0b,Duration:12000,Id:12b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Fire Immunity Tether Brew\",\"italic\":false}'},fire_immunity:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:16724787,CustomPotionEffects:[{Amplifier:0b,Duration:6000,Id:11b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Resistance Tether Brew\",\"italic\":false}'},resistance:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:16718944,CustomPotionEffects:[{Amplifier:0b,Duration:6000,Id:5b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Strength Tether Brew\",\"italic\":false}'},strength:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:16760875,CustomPotionEffects:[{Amplifier:0b,Duration:12000,Id:3b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Haste Tether Brew\",\"italic\":false}'},haste:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:16773698,CustomPotionEffects:[{Amplifier:0b,Duration:18000,Id:14b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Invisibility Tether Brew\",\"italic\":false}'},invisibility:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:3669808,CustomPotionEffects:[{Amplifier:3b,Duration:12000,Id:8b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Leaping Tether Brew\",\"italic\":false}'},leaping:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:16736751,CustomPotionEffects:[{Amplifier:0b,Duration:6000,Id:10b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Regeneration Tether Brew\",\"italic\":false}'},regeneration:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:1519359,CustomPotionEffects:[{Amplifier:0b,Duration:24000,Id:13b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Water Breathing Tether Brew\",\"italic\":false}'},water_breathing:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:46079,CustomPotionEffects:[{Amplifier:3b,Duration:12000,Id:48b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Knockback Immunity Tether Brew\",\"italic\":false}'},knockback_immunity:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:12779775,CustomPotionEffects:[{Amplifier:0b,Duration:18000,Id:16b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Night Vision Tether Brew\",\"italic\":false}'},night_vision:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:65424,CustomPotionEffects:[{Amplifier:0b,Duration:12000,Id:28b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Slow Falling Tether Brew\",\"italic\":false}'},slow_falling:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:10092288,CustomPotionEffects:[{Amplifier:1b,Duration:36000,Id:26b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Luck Tether Brew\",\"italic\":false}'},luck:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:7274751,CustomPotionEffects:[{Amplifier:0b,Duration:24000,Id:46b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Rewind Tether Brew\",\"italic\":false}'},rewind:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:10266329,CustomPotionEffects:[{Amplifier:1b,Duration:600,Id:2b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Slowness Tether Brew\",\"italic\":false}'},slowness:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:8204850,CustomPotionEffects:[{Amplifier:0b,Duration:2400,Id:18b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Weakness Tether Brew\",\"italic\":false}'},weakness:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:3439924,CustomPotionEffects:[{Amplifier:1b,Duration:600,Id:19b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Poison Tether Brew\",\"italic\":false}'},poison:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:3483702,CustomPotionEffects:[{Amplifier:0b,Duration:600,Id:15b,ShowParticles:0b}],Potion:\"minecraft:thick\",blindness:1b,display:{Name:'{\"text\":\"Blindness Tether Brew\",\"italic\":false}'}}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:4327945,CustomPotionEffects:[{Amplifier:1b,Duration:1,Id:7b,ShowParticles:0b}],Potion:\"minecraft:thick\",display:{Name:'{\"text\":\"Harming Tether Brew\",\"italic\":false}'},harming:1b}"
+
+},
+
+{
+"name": "caverns_and_chasms:tether_potion", 
+"nbt": "{CustomPotionColor:6454579,CustomPotionEffects:[{Amplifier:1b,Duration:12000,Id:27b,ShowParticles:0b}],Potion:\"minecraft:thick\",bad_luck:1b,display:{Name:'{\"text\":\"Bad Luck Tether Brew\",\"italic\":false}'}}"
+}
+
+
+  ]
+
+}

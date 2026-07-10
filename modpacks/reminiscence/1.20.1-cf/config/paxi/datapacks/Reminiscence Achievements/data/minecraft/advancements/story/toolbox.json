@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:story/smelt_copper",
+  "criteria": {
+    "toolbox": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "caverns_and_chasms:toolbox"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Construct a toolbox, used for storing your tools!",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "caverns_and_chasms:toolbox"
+    },
+    "show_toast": true,
+    "title": "Sneakers o' Toole"
+  },
+  "requirements": [
+    [
+      "toolbox"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

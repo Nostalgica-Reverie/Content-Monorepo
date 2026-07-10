@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "CCC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "kubejs:cobbled_diorite"
+    }
+  },
+  "result": {
+    "item": "kubejs:sturdy_diorite"
+  },
+  "conditions": [
+    {
+      "type": "forge:and",
+      "values": [
+        {
+          "type": "forge:not",
+          "value": {
+            "type": "forge:mod_loaded",
+            "modid": "cyclic"  
+          }
+        },
+        {
+          "type": "quark:flag",
+          "flag": "sturdy_stone"
+        }
+      ]
+    }
+  ]
+}

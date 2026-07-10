@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "modernminecarts:powered_detector_rail"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "modernminecarts:blocks/powered_detector_rail"
+}

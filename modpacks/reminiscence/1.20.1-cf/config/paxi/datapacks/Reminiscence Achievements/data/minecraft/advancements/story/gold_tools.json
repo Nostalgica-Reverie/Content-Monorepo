@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:story/smelt_gold",
+  "criteria": {
+    "golden_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:golden_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Construct a golden pickaxe and gain the ability to obtain blocks in their original form",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:golden_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "Midas Touch"
+  },
+  "requirements": [
+    [
+      "golden_pickaxe"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

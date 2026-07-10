@@ -1,0 +1,27 @@
+{
+    "display": {
+     "announce_to_chat": false,
+      "icon": {
+        "item": "minecraft:tnt"
+      },
+      "title": "Creepers K.O.",
+      "description": "Make TNT out of gunpowder and sand",
+      "frame": "task"
+    },
+    "parent": "minecraft:story/kill_creeper",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": [
+                "minecraft:tnt"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+  

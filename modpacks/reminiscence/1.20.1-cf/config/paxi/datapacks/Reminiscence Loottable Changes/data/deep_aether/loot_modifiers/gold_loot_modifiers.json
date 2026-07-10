@@ -1,0 +1,27 @@
+{
+  "type": "deep_aether:aether_dungeon_loot_no_replacement",
+  "chanceToSpawn": 0.55,
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "aether:chests/dungeon/gold/gold_dungeon_reward"
+    }
+  ],
+  "items": [
+    {
+      "data": {
+        "Count": 2,
+        "id": "deep_aether:sterling_aercloud"
+      },
+      "weight": 5
+    },
+    {
+      "data": {
+        "Count": 1,
+        "id": "deep_aether:sterling_aercloud"
+      },
+      "weight": 15
+    }
+  ],
+  "totalWeight": 110
+}

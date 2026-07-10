@@ -1,0 +1,39 @@
+{
+  "parent": "betterend:aeternium_hammer_head",
+  "criteria": {
+    "got_aeternium_hammer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "betterend:aeternium_hammer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.betterend.aeternium_hammer.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "betterend:aeternium_hammer",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.betterend.aeternium_hammer.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_aeternium_hammer"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,13 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 8,
+    "separation": 5,
+    "salt": 123456789,
+    "spread_type": "linear"
+  },
+    "structures": [{
+        "structure": "reminiscence:disco_dungeon",
+        "weight": 1
+    }]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "kubejs:valkyrie_feather"
+    },
+    "h": {
+      "item": "caverns_and_chasms:silver_nugget"
+    },
+    "i": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "h#h",
+    " i "
+  ],
+  "result": {
+    "item": "aether:lightning_knife",
+    "count": 8
+  },
+  "show_notification": true
+}

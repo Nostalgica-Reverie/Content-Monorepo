@@ -1,0 +1,7 @@
+{
+  "type": "caverns_and_chasms:add_features_blacklisted",
+  "biomes": "#minecraft:is_overworld",
+  "blacklisted_biomes": "#caverns_and_chasms:has_feature/silver_ore",
+  "features": "caverns_and_chasms:ore_gold_buried_with_silver",
+  "step": "underground_ores"
+}

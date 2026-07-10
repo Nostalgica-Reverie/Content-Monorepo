@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:end/mine_void_wood",
+  "criteria": {
+    "get_blackstone": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "betterend:void_stone_types"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Mine stone... in the void.",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "betterend:flavolite"
+    },
+    "show_toast": true,
+    "title": "Voidstone Age"
+  },
+  "requirements": [
+    [
+      "get_blackstone"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

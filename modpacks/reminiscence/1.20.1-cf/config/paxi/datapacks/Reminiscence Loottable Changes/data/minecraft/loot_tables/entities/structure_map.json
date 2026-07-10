@@ -1,0 +1,151 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"minecraft:igloo\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"minecraft:trail_ruins\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"reminiscence:brick_pyramid\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"reminiscence:disco_dungeon\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"reminiscence:tutorial_house\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"minecraft:ocean_monument\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"minecraft:stronghold\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"minecraft:witch_hut\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"betterdungeons:skeleton_dungeon\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"betterdungeons:spider_dungeon\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"betterdungeons:zombie_dungeon\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"minecraft:mineshaft\"}"
+            }
+          ]
+        },
+
+        {
+          "type": "minecraft:item",
+          "name": "supplementaries:cartographers_quill",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{targetStructure:\"minecraft:shipwreck\"}"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "minecraft:entities/structure_map"
+}

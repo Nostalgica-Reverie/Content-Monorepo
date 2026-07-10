@@ -1,0 +1,26 @@
+{
+  "display": {
+   "announce_to_chat": false,
+    "icon": {
+      "item": "minecraft:crafting_table"
+    },
+    "title": "Benchmarking",
+    "description": "Craft a workbench with four blocks of Wooden Planks",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/mine_wood",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:crafting_table"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

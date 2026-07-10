@@ -1,0 +1,27 @@
+{
+    "display": {
+     "announce_to_chat": false,
+      "icon": {
+        "item": "supplementaries:confetti_popper"
+      },
+      "title": "Yippee!",
+      "description": "Make a confetti popper. Not useful, but fun",
+      "frame": "task"
+    },
+    "parent": "minecraft:story/kill_creeper",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": [
+                "supplementaries:confetti_popper"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+  

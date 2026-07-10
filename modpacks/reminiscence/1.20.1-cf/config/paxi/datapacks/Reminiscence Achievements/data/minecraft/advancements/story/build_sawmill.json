@@ -1,0 +1,26 @@
+{
+  "display": {
+   "announce_to_chat": false,
+    "icon": {
+      "item": "sawmill:sawmill"
+    },
+    "title": "Millworking",
+    "description": "Craft a sawmill",
+    "frame": "task"
+  },
+  "parent": "minecraft:story/iron_tools",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sawmill:sawmill"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

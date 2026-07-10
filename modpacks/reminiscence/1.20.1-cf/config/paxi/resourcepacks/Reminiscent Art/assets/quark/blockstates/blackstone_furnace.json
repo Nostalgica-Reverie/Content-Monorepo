@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "facing=east,lit=false,soul=false": { "model": "quark:block/blackstone_furnace", "y": 90 },
+    "facing=east,lit=true,soul=false": { "model": "quark:block/blackstone_furnace_on", "y": 90 },
+    "facing=north,lit=false,soul=false": { "model": "quark:block/blackstone_furnace" },
+    "facing=north,lit=true,soul=false": { "model": "quark:block/blackstone_furnace_on" },
+    "facing=south,lit=false,soul=false": { "model": "quark:block/blackstone_furnace", "y": 180 },
+    "facing=south,lit=true,soul=false": { "model": "quark:block/blackstone_furnace_on", "y": 180 },
+    "facing=west,lit=false,soul=false": { "model": "quark:block/blackstone_furnace", "y": 270 },
+    "facing=west,lit=true,soul=false": { "model": "quark:block/blackstone_furnace_on", "y": 270 },
+
+    "facing=east,lit=false,soul=true": { "model": "quark:block/blackstone_furnace", "y": 90 },
+    "facing=east,lit=true,soul=true": { "model": "quark:block/blackstone_furnace_on_soul", "y": 90 },
+    "facing=north,lit=false,soul=true": { "model": "quark:block/blackstone_furnace" },
+    "facing=north,lit=true,soul=true": { "model": "quark:block/blackstone_furnace_on_soul" },
+    "facing=south,lit=false,soul=true": { "model": "quark:block/blackstone_furnace", "y": 180 },
+    "facing=south,lit=true,soul=true": { "model": "quark:block/blackstone_furnace_on_soul", "y": 180 },
+    "facing=west,lit=false,soul=true": { "model": "quark:block/blackstone_furnace", "y": 270 },
+    "facing=west,lit=true,soul=true": { "model": "quark:block/blackstone_furnace_on_soul", "y": 270 }
+  }
+}

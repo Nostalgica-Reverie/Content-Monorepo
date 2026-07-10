@@ -1,0 +1,41 @@
+{
+  "parent": "pet_cemetery:nether/respawn_pet",
+  "criteria": {
+    "respawn_zombie_pet": {
+      "conditions": {
+        "respawned_pet": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "#pet_cemetery:skeleton_pets"
+            }
+          }
+        ]
+      },
+      "trigger": "pet_cemetery:respawn_pet"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.pet_cemetery.nether.respawn_zombie_pet.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "pet_cemetery:pet_collar",
+      "nbt": "{CollarColor:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.pet_cemetery.nether.respawn_zombie_pet.title"
+    }
+  },
+  "requirements": [
+    [
+      "respawn_zombie_pet"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

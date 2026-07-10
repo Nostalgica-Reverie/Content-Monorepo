@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "quark:block/azalea_log" },
+        "axis=z":   { "model": "quark:block/azalea_log", "x": 90 },
+        "axis=x":   { "model": "quark:block/azalea_log", "x": 90, "y": 90 }
+    }
+}

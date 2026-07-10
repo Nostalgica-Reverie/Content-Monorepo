@@ -27,14 +27,11 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            src/packwand
+            apps/packwand
             .forgejo/actions
 
       - name: Setup Go
-        uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
+        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
@@ -61,15 +58,12 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            src/packwand
+            apps/packwand
             tools/changelog
             .forgejo/actions
 
       - name: Setup Go
-        uses: https://github.com/actions/setup-go@v5
-        with:
-          go-version: 'stable'
-          cache: true
+        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
@@ -81,6 +75,9 @@ jobs:
 
       - name: Validate Manifest
         run: packwand validate "${{ matrix.entry.manifest }}"
+
+      - name: Minify JSON (smaller published artifacts)
+        run: packwand json minify "$(dirname '${{ matrix.entry.manifest }}')"
 
       - name: Generate Changelog
         run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}" "$RUNNER_TEMP/release-notes.md"

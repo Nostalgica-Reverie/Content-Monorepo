@@ -1,0 +1,74 @@
+{
+  "parent": "minecraft:story/smelt_silver",
+  "criteria": {
+    "silver_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "caverns_and_chasms:silver_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "silver_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "caverns_and_chasms:silver_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "silver_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "caverns_and_chasms:silver_helmet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "silver_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "caverns_and_chasms:silver_leggings"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Immunize with a piece of silver armor",
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "caverns_and_chasms:silver_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": "Your techniques are useless against me!"
+  },
+  "requirements": [
+    [
+      "silver_helmet",
+      "silver_chestplate",
+      "silver_leggings",
+      "silver_boots"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

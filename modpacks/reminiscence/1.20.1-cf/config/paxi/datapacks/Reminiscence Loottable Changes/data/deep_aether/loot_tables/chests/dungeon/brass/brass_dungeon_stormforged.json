@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:stormforged_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:stormforged_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:stormforged_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "deep_aether:stormforged_gloves"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "deep_aether:chests/dungeon/brass/brass_dungeon_stormforged"
+}

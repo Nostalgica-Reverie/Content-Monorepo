@@ -1,0 +1,409 @@
+{
+    "name": "reminiscence:disco_dungeon",
+    "fallback": "minecraft:empty",
+    "elements": [
+    {
+        "weight": 1,
+        "element": {
+            "location": "reminiscence:disco_dungeon/disco_dungeon",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element",
+            "processors": [
+
+
+
+                {
+                    "processor_type": "minecraft:rule",
+                    "rules": [
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:orange_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:red_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:yellow_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:lime_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:magenta_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:pink_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:blue_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:light_blue_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:cyan_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:purple_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:gray_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:brown_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:green_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:light_gray_wool" }
+                    },
+                    {
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:white_wool",
+                        "probability": 0.15
+                        },
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": { "Name": "minecraft:black_wool" }
+                    }
+                    ]
+                },
+
+
+
+
+
+                {
+                    "processor_type": "minecraft:rule",
+                    "rules": [
+                    {
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:spawner",
+                        "probability": 0.65
+                        },
+                        "output_state": {
+                        "Name": "minecraft:spawner"
+                        },
+                        "block_entity_modifier": {
+                        "type": "minecraft:append_static",
+                        "data": {
+                            "id": "minecraft:mob_spawner",
+                            "SpawnData": {
+                            "entity": {
+                                "id": "minecraft:zombie"
+                            }
+                            }
+                        }
+                        }
+                    }
+                    ]
+                },
+                {
+                    "processor_type": "minecraft:rule",
+                    "rules": [
+                    {
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:spawner",
+                        "probability": 0.65
+                        },
+                        "output_state": {
+                        "Name": "minecraft:spawner"
+                        },
+                        "block_entity_modifier": {
+                        "type": "minecraft:append_static",
+                        "data": {
+                            "id": "minecraft:mob_spawner",
+                            "SpawnData": {
+                            "entity": {
+                                "id": "minecraft:skeleton"
+                            }
+                            }
+                        }
+                        }
+                    }
+                    ]
+                },
+                {
+                    "processor_type": "minecraft:rule",
+                    "rules": [
+                    {
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:spawner",
+                        "probability": 0.65
+                        },
+                        "output_state": {
+                        "Name": "minecraft:spawner"
+                        },
+                        "block_entity_modifier": {
+                        "type": "minecraft:append_static",
+                        "data": {
+                            "id": "minecraft:mob_spawner",
+                            "SpawnData": {
+                            "entity": {
+                                "id": "minecraft:spider"
+                            }
+                            }
+                        }
+                        }
+                    }
+                    ]
+                },
+                {
+                    "processor_type": "minecraft:rule",
+                    "rules": [
+                    {
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:spawner",
+                        "probability": 0.65
+                        },
+                        "output_state": {
+                        "Name": "minecraft:spawner"
+                        },
+                        "block_entity_modifier": {
+                        "type": "minecraft:append_static",
+                        "data": {
+                            "id": "minecraft:mob_spawner",
+                            "SpawnData": {
+                            "entity": {
+                                "id": "minecraft:cave_spider"
+                            }
+                            }
+                        }
+                        }
+                    }
+                    ]
+                },                  
+                {
+                    "processor_type": "minecraft:rule",
+                    "rules": [
+                    {
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "minecraft:spawner",
+                        "probability": 1.0
+                        },
+                        "output_state": {
+                        "Name": "minecraft:spawner"
+                        },
+                        "block_entity_modifier": {
+                        "type": "minecraft:append_static",
+                        "data": {
+                            "id": "minecraft:mob_spawner",
+                            "SpawnData": {
+                            "entity": {
+                                "id": "minecraft:creeper"
+                            }
+                            }
+                        }
+                        }
+                    }
+                    ]
+                },
+
+
+
+
+                {
+                    "processor_type": "lithostitched:apply_random",
+                    "mode": "per_piece",
+                    "processor_lists": [
+                        {
+                        "weight": 2,
+                        "data": "reminiscence:disco_dungeon/wood/oak"
+                        },
+                        {
+                        "weight": 2,
+                        "data": "reminiscence:disco_dungeon/wood/birch"
+                        },
+                        {
+                        "weight": 2,
+                        "data": "reminiscence:disco_dungeon/wood/spruce"
+                        }
+                    ]
+                },
+
+
+
+                {
+                    "processor_type": "lithostitched:apply_random",
+                    "mode": "per_piece",
+                    "processor_lists": [
+                        {
+                        "weight": 2,
+                        "data": "reminiscence:disco_dungeon/wall/cobble"
+                        },
+                        {
+                        "weight": 2,
+                        "data": "reminiscence:disco_dungeon/wall/brick"
+                        },
+                        {
+                        "weight": 2,
+                        "data": "reminiscence:disco_dungeon/wall/fieldstone"
+                        }
+                    ]
+                },
+
+
+
+
+
+                {
+                    "processor_type": "minecraft:rule",
+                    "rules": [
+                    {
+                        "location_predicate": {
+                        "predicate_type": "minecraft:always_true"
+                        },
+                        "input_predicate": {
+                        "predicate_type": "minecraft:random_block_match",
+                        "block": "kubejs:fired_cobblestone",
+                        "probability": 0.3
+                        },
+                        "output_state": {
+                        "Name": "kubejs:mossy_fired_cobblestone"
+                        }
+                    }
+                    ]
+                }
+
+
+
+            ]
+        }
+    }
+
+]
+}

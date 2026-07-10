@@ -1,0 +1,29 @@
+{
+  "parent": "aether:the_aether",
+  "criteria": {
+    "transform_poison": {
+      "trigger": "deep_aether:poison_trigger"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.deep_aether.transform_poison.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "deep_aether:poison_bucket"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.deep_aether.transform_poison"
+    }
+  },
+  "requirements": [
+    [
+      "transform_poison"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

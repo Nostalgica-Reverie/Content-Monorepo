@@ -1,0 +1,37 @@
+{
+  "parent": "mob-ai-tweaks:warden_of_nothing",
+  "display": {
+    "icon": {
+      "item": "endrem:magical_eye"
+    },
+    "title": {
+      "translate": "advancements.main.magical_eye.title"
+    },
+    "description": {
+      "translate": "advancements.main.magical_eye.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "magical_eye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "endrem:magical_eye"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "magical_eye"
+    ]
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "axis": "y"
+      },
+      "apply": {
+        "model": "quark:block/stripped_dark_oak_post"
+      }
+    },
+    {
+      "when": {
+        "axis": "x"
+      },
+      "apply": {
+        "model": "quark:block/stripped_dark_oak_post",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "z"
+      },
+      "apply": {
+        "model": "quark:block/stripped_dark_oak_post",
+        "x": 90
+      }
+    },
+    
+    {   
+      "when": { "connect_down": "chain" },
+        "apply": { "model": "quark:block/chain_small" }
+    },
+    {   
+      "when": { "connect_up": "chain" },
+        "apply": { "model": "quark:block/chain_small_top" }
+    },
+    {   
+      "when": { "connect_north": "chain" },
+        "apply": { "model": "quark:block/chain_small_top", "x": 90 }
+    },
+    {   
+      "when": { "connect_south": "chain" },
+        "apply": { "model": "quark:block/chain_small", "x": 90 }
+    },
+    {   
+      "when": { "connect_east": "chain" },
+        "apply": { "model": "quark:block/chain_small_top", "x": 90, "y": 90 }
+    },
+    {   
+      "when": { "connect_west": "chain" },
+        "apply": { "model": "quark:block/chain_small", "x": 90, "y": 90 }
+    },
+
+    {   
+      "when": { "connect_down": "other_post" },
+        "apply": { "model": "quark:block/stripped_dark_oak_post_connect" }
+    },
+    {   
+      "when": { "connect_up": "other_post" },
+        "apply": { "model": "quark:block/stripped_dark_oak_post_connect_top" }
+    },
+    {   
+      "when": { "connect_north": "other_post" },
+        "apply": { "model": "quark:block/stripped_dark_oak_post_connect_top", "x": 90 }
+    },
+    {   
+      "when": { "connect_south": "other_post" },
+        "apply": { "model": "quark:block/stripped_dark_oak_post_connect", "x": 90 }
+    },
+    {   
+      "when": { "connect_east": "other_post" },
+        "apply": { "model": "quark:block/stripped_dark_oak_post_connect_top", "x": 90, "y": 90 }
+    },
+    {   
+      "when": { "connect_west": "other_post" },
+        "apply": { "model": "quark:block/stripped_dark_oak_post_connect", "x": 90, "y": 90 }
+    }
+  ]
+}

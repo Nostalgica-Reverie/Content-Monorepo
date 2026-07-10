@@ -1,0 +1,25 @@
+{
+  "type": "betterend:bush_feature",
+  "config": {
+    "leaves": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:pythadendron_leaves",
+        "Properties": {
+          "distance": "7",
+          "persistent": "false",
+          "waterlogged": "false"
+        }
+      }
+    },
+    "stem": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "betterend:pythadendron_bark",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    }
+  }
+}

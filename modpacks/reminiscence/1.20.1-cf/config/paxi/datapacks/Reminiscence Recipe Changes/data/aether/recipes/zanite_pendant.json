@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "aether:gems/zanite"
+    },
+    "S": {
+      "item": "bettercopper:copper_nugget"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "S S",
+    " # "
+  ],
+  "result": {
+    "item": "aether:zanite_pendant"
+  },
+  "show_notification": true
+}
