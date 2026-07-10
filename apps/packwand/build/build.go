@@ -836,7 +836,7 @@ func pubWriteOutputs(r pubResolved, pDir string) {
 
 const (
 	modrinthAPI   = "https://api.modrinth.com/v2"
-	curseforgeAPI = "https://api.curseforge.com/v1"
+	curseforgeAPI = "https://minecraft.curseforge.com/api"
 
 	// Both APIs sit behind Cloudflare; requests with Go's default
 	// "Go-http-client" User-Agent get met with a JS challenge page (HTTP
@@ -1026,11 +1026,17 @@ func uploadCurseforge(r pubResolved, projectID, changelog, fileName string, data
 
 	gameIDs, loaderIDs := cfResolveVersionIDs(token, r.mcVer, r.loader)
 
-	// CurseForge rejects loader IDs on non-mod project types with errorCode
-	// 1009 (invalid game version), so fall back to game-version IDs alone.
-	variants := [][]int64{append(append([]int64{}, gameIDs...), loaderIDs...)}
-	if len(loaderIDs) > 0 {
-		variants = append(variants, gameIDs)
+	// Modpacks and datapacks do not accept loader IDs. Submit only the
+	// Minecraft game-version IDs for the project types Packwand publishes.
+	// Keep the loader-bearing variant for any future project types that use it.
+	var variants [][]int64
+	if r.pType == "modpack" || r.pType == "datapack" {
+		variants = [][]int64{gameIDs}
+	} else {
+		variants = [][]int64{append(append([]int64{}, gameIDs...), loaderIDs...)}
+		if len(loaderIDs) > 0 {
+			variants = append(variants, gameIDs)
+		}
 	}
 
 	url := fmt.Sprintf("%s/projects/%s/upload-file", curseforgeAPI, projectID)
@@ -1131,19 +1137,37 @@ func postOnce(url string, headers map[string]string, body []byte) (int, []byte, 
 // "modloader" for loaders) so a loader name can never match a game version
 // entry or vice versa.
 func cfResolveVersionIDs(token, mcVer, loader string) (gameIDs, loaderIDs []int64) {
+	var types []struct {
+		ID   int64  `json:"id"`
+		Slug string `json:"slug"`
+	}
+	cfGetJSON(token, "/game/version-types?cache=true", &types)
+
+	mcTypes := map[int64]bool{}
+	loaderTypes := map[int64]bool{}
+	for _, t := range types {
+		switch {
+		case strings.HasPrefix(t.Slug, "minecraft"):
+			mcTypes[t.ID] = true
+		case strings.HasPrefix(t.Slug, "modloader"):
+			loaderTypes[t.ID] = true
+		}
+	}
+
 	var versions []struct {
 		ID                int64  `json:"id"`
 		GameVersionTypeID int64  `json:"gameVersionTypeID"`
 		Name              string `json:"name"`
 		Slug              string `json:"slug"`
 	}
-	cfGetJSON(token, "/game/versions", &versions)
+	cfGetJSON(token, "/game/versions?cache=true", &versions)
 
 	for _, v := range versions {
-		if strings.EqualFold(v.Name, mcVer) || strings.EqualFold(v.Slug, mcVer) {
+		if mcTypes[v.GameVersionTypeID] &&
+			(strings.EqualFold(v.Name, mcVer) || strings.EqualFold(v.Slug, mcVer)) {
 			gameIDs = append(gameIDs, v.ID)
 		}
-		if loader != "" &&
+		if loader != "" && loaderTypes[v.GameVersionTypeID] &&
 			(strings.EqualFold(v.Name, loader) || strings.EqualFold(v.Slug, loader)) {
 			loaderIDs = append(loaderIDs, v.ID)
 		}
