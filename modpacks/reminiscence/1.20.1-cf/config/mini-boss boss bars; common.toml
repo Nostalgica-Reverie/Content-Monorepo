@@ -1,0 +1,26 @@
+
+["Mini-Boss Boss Bars - Disable Boss Bars"]
+	#Prevents boss bar activation for all listed mobs (please put minecraft:warden if you aren't using any mods that treat it like a boss)
+	"Disable boss bar for" = ["examplemod:examplemob1", "examplemod:examplemob2"]
+
+["Mini-Boss Boss Bars - Disable Boss Bars (Extended mod support)"]
+	#Used for mods where the mobs supported by this mod don't come with their own registry IDs
+	"Disable for: Super Golem (Ad Astra: More Structures)" = false
+	"Disable for: Super Raptor (Ad Astra: More Structures)" = false
+	"Disable for: Super Mogler (Ad Astra: More Structures)" = false
+	"Disable for: Super Lunarian (Ad Astra: More Structures)" = false
+	"Disable for: Super Evoker (Ad Astra: More Structures)" = false
+	"Disable for: Uncommon Apothic Boss (Apotheosis)" = false
+	"Disable for: Rare Apothic Boss (Apotheosis)" = false
+	"Disable for: Epic Apothic Boss (Apotheosis)" = false
+	"Disable for: Mythic Apothic Boss (Apotheosis)" = false
+	"Disable for: Ancient Apothic Boss (Apotheosis)" = false
+	"Disable for: Battle Tower Guardian (Battle Towers)" = false
+	"Disable for: Illusioner (Ultris: Boss Expansion)" = false
+	"Disable for: Pharaoh (YUNG's Better Desert Temples)" = false
+	"Disable for: Verdant Guardian (Florcraft)" = false
+	"Disable for: Aqueous Guardian (Florcraft)" = false
+	"Disable for: Arid Guardian (Florcraft)" = false
+	"Disable for: The Wild Hunt (Occultism)" = false
+	"Disable for: Skeletal Techpriest (Mortality)" = false
+

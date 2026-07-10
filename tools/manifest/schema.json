@@ -196,15 +196,23 @@
         },
         "sync_on_build": {
           "type": "boolean",
-          "description": "Run this consumer sync before build/export change detection."
+          "description": "Run configured same-pack variant syncs before build and publish."
         },
-        "sync_folders": {
+        "sync_variants": {
           "type": "array",
           "items": {
-            "type": "string",
-            "enum": ["mods", "config", "resourcepacks", "global_packs"]
-          },
-          "description": "Top-level folders copied by sync; defaults to all syncable folders."
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source", "target"],
+            "properties": {
+              "source": { "type": "string" },
+              "target": { "type": "string" },
+              "folders": {
+                "type": "array",
+                "items": { "type": "string", "enum": ["mods", "config", "resourcepacks", "global_packs"] }
+              }
+            }
+          }
         },
         "freeze": {
           "type": "object",

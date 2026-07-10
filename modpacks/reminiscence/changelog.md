@@ -19,9 +19,6 @@ Improves jigsaw structure generation.
 ## Added Ixeris
 Optimizes input. Config taken from Simply Optimized Forked v26.06.8
 
-## Added Kerria
-Optimizes animated textures
-
 ## Added Async Logger
 Async Logger can improve logging performance by 43x
 

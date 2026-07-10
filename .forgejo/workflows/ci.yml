@@ -113,6 +113,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             .forgejo
+            apps/packwand
             Taskfile.yml
             _typos.toml
       - uses: https://github.com/taiki-e/install-action@v2

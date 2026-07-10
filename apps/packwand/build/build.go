@@ -115,6 +115,10 @@ func runBuild(targetedPack, shortSHA string) {
 		cmd.Fail(fmt.Sprintf("failed to create %s: %v", artifactsDir, err))
 	}
 
+	if err := workspace.RunBuildSync(); err != nil {
+		cmd.Fail(fmt.Sprintf("build-time sync failed: %v", err))
+	}
+
 	var changed []buildTarget
 	if targetedPack != "" {
 		t, err := resolvePack(targetedPack)
@@ -670,6 +674,9 @@ func pubList(manifestPaths []string) {
 }
 
 func pubBuild(manifestPath, variant string) {
+	if err := workspace.RunBuildSync(); err != nil {
+		cmd.Fail(fmt.Sprintf("publish-time sync failed: %v", err))
+	}
 	pDir := filepath.Dir(manifestPath)
 	m, err := manifest.Read(manifestPath)
 	if err != nil {

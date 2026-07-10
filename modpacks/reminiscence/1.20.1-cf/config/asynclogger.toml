@@ -1,0 +1,41 @@
+#Specifies whether to enable the mod
+enabled = true
+#Specifies the value for log4j2.asyncLoggerRingBufferSize (0 = use mod default, -1 = use log4j2 default)
+ringBufferSize = 0
+#Specifies the value for log4j2.asyncLoggerWaitStrategy (leave empty for default)
+waitStrategy = ""
+#Specifies the value for log4j2.asyncLoggerSynchronizeEnqueueWhenQueueFull (leave empty for default)
+synchronizeEnqueueWhenQueueFull = ""
+#Specifies the value for log4j2.formatMsgAsync (leave empty for default)
+formatMsgAsync = ""
+#Specifies the value for log4j2.asyncQueueFullPolicy (leave empty for default)
+asyncQueueFullPolicy = ""
+#Specifies the value for log4j2.discardThreshold (leave empty for default)
+discardThreshold = ""
+#Specifies whether System.out and System.err should be redirected to the logger
+wrapSysOutSysErr = false
+#Forge/NeoForge-only: disables writing to `debug.log`
+#Note that when enabled, any archived debug log matching the glob pattern `debug-[1-5].log.gz` will be deleted.
+noDebugLog = false
+#When enabled, compares logging performance without and with AsyncLogger, and logs the test results. Will cause a mass amount of messages to be printed at startup.
+testPerformance = false
+
+[filtering]
+	#Specifies whether to enable filtering for logs.
+	#Unless "global" is set to true, filtering happens on the dedicated async thread, with no overhead for the caller.
+	enabled = false
+	#When set to true, filtering would happen globally instead of at the logger stage.
+	#This can avoid creating the LogEvent, at the cost of performing filtering on the caller thread, and not being able to process placeholders properly.
+	global = false
+	#Specifies whether to apply filtering to System.out (treated as INFO level) and System.err (treated as ERROR level.)
+	#Note that if `wrapSysOutSysErr` is disabled, filtering would happen on the caller thread.
+	sysout = false
+	#Note: you can also add filters in `config/asynclogger/*.toml`. That way you can freely add comments and format them as you wish.
+	#The specified logging levels will be filtered out and not logged. Valid values: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
+	levels = []
+	#Messages logged by loggers with the specified names will be filtered out and not logged.
+	loggers = []
+	#Messages containing the specified substrings will be filtered out and not logged.
+	strings = []
+	#Messages that match the specified regexes will be filtered out and not logged.
+	regexes = []

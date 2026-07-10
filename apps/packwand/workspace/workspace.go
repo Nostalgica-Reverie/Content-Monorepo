@@ -358,7 +358,7 @@ func Run(op Operation, packFilter string, explicit bool) error {
 	if _, err := exec.LookPath(SelfBin()); err != nil {
 		return fmt.Errorf("packwand binary not found: %w", err)
 	}
-	root := ModpacksDir()
+	root := FindRepoRoot()
 	if info, err := os.Stat(root); err != nil || !info.IsDir() {
 		return fmt.Errorf("modpacks directory not found: %s", root)
 	}
@@ -413,7 +413,7 @@ func ResolveScope(args []string, startCwd string) (packFilter string, explicit b
 		return dir, true
 	}
 	if startCwd != "" {
-		root := ModpacksDir()
+		root := FindRepoRoot()
 		if rel, err := filepath.Rel(root, startCwd); err == nil && !strings.HasPrefix(rel, "..") && rel != "." {
 			parts := strings.Split(filepath.ToSlash(rel), "/")
 			if len(parts) >= 1 {
@@ -578,11 +578,67 @@ type syncJob struct {
 }
 
 // RunSync performs the base→consumer pack sync. dryRun prints what would change.
+func RunBuildSync() error {
+	root := FindRepoRoot()
+	entries, err := manifest.LoadAll(root)
+	if err != nil {
+		return err
+	}
+	for _, entry := range entries {
+		a := manifest.ReadAutomation(entry.Dir)
+		if !a.SyncOnBuild {
+			continue
+		}
+		for _, v := range a.SyncVariants {
+			if err := runVariantSync(entry.Dir, entry.ID, v); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func runVariantSync(packDir, packID string, v manifest.SyncVariant) error {
+	if v.Source == "" || v.Target == "" {
+		return fmt.Errorf("%s: sync variant source and target are required", packID)
+	}
+	folders := v.Folders
+	if len(folders) == 0 {
+		folders = []string{"mods", "config", "resourcepacks", "global_packs"}
+	}
+	allowed := map[string]bool{"mods": true, "config": true, "resourcepacks": true, "global_packs": true}
+	for _, folder := range folders {
+		if !allowed[folder] {
+			return fmt.Errorf("%s: unsupported sync folder %q", packID, folder)
+		}
+		src := filepath.Join(packDir, v.Source, folder)
+		dst := filepath.Join(packDir, v.Target, folder)
+		if _, err := os.Stat(src); err != nil {
+			return fmt.Errorf("%s: sync source %s is missing: %w", packID, src, err)
+		}
+		if _, err := os.Stat(dst); err != nil {
+			return fmt.Errorf("%s: sync target %s is missing: %w", packID, dst, err)
+		}
+		placed := map[string]bool{}
+		if _, err := copyTreeRecording(src, dst, folder, placed, map[string]bool{}); err != nil {
+			return fmt.Errorf("%s: sync %s failed: %w", packID, folder, err)
+		}
+	}
+	cmd := exec.Command(SelfBin(), "refresh")
+	cmd.Dir = filepath.Join(packDir, v.Target)
+	ConfigureSubprocess(cmd)
+	if out, err := cmd.CombinedOutput(); err != nil {
+		return fmt.Errorf("%s: refresh failed: %v\n%s", packID, err, Indent(string(out), "    "))
+	}
+	fmt.Printf("synced %s -> %s (%s)\n", v.Source, v.Target, strings.Join(folders, ", "))
+	return nil
+}
+
 func RunSync(dryRun bool) error {
 	if _, err := exec.LookPath(SelfBin()); err != nil {
 		return fmt.Errorf("packwand binary not found: %w", err)
 	}
-	root := ModpacksDir()
+	root := FindRepoRoot()
 	packs, err := os.ReadDir(root)
 	if err != nil {
 		return fmt.Errorf("failed to read %s: %w", root, err)

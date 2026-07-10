@@ -2,13 +2,13 @@
   "schema_version": "2",
 
   "default_packs": [
-    "file/Enhanced Menus.zip",
-    "Lost Tracks Resources.zip",
-    "file/Creative Menu Rework.zip",
-    "file/Mob Variety.zip",
-    "Reminiscence Fixes.zip",
-    "Reminiscent Art.zip",
-    "file/golden-days-base-1.21.x-1.12.3"
+    "file/Enhanced Menus",
+    "Lost Tracks Resources",
+    "file/Creative Menu Rework",
+    "file/Mob Variety",
+    "Reminiscence Fixes",
+    "Reminiscent Art",
+    "file/golden-days-base-1.21.x-1.12.3.zip"
   ],
 
 
@@ -61,20 +61,18 @@
     "mod_resources": {
       "hidden": true
   },
-    "vanilla": {
-      "hidden": true
-  },
 
-  "file/golden-days-base-1.21.x-1.12.3": {
+
+  "file/golden-days-base-1.21.x-1.12.3.zip": {
       "required": true
   },
-    "Reminiscent Art.zip": {
+    "Reminiscent Art": {
       "required": true
   },
-    "Reminiscence Fixes.zip": {
+    "Reminiscence Fixes": {
       "required": true
   },
-    "Lost Tracks Resources.zip": {
+    "Lost Tracks Resources": {
       "required": true
   }
 

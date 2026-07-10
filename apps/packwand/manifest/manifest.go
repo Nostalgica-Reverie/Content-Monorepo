@@ -157,12 +157,20 @@ func ConsumerRole(pb PerformanceBase) Role {
 	return Role{raw: b}
 }
 
+type SyncVariant struct {
+	Source  string   `json:"source"`
+	Target  string   `json:"target"`
+	Folders []string `json:"folders,omitempty"`
+}
+
 type Automation struct {
-	AutoUpdate  *bool               `json:"auto_update,omitempty"`
-	ServerPromo *bool               `json:"server_promo,omitempty"`
-	SyncExclude []string            `json:"sync_exclude,omitempty"`
-	Freeze      map[string][]string `json:"freeze,omitempty"`
-	FullAuto    *FullAuto           `json:"full_auto,omitempty"`
+	AutoUpdate   *bool               `json:"auto_update,omitempty"`
+	ServerPromo  *bool               `json:"server_promo,omitempty"`
+	SyncExclude  []string            `json:"sync_exclude,omitempty"`
+	SyncOnBuild  bool                `json:"sync_on_build,omitempty"`
+	SyncVariants []SyncVariant       `json:"sync_variants,omitempty"`
+	Freeze       map[string][]string `json:"freeze,omitempty"`
+	FullAuto     *FullAuto           `json:"full_auto,omitempty"`
 }
 
 // FullAuto configures the end-to-end unattended release pipeline
@@ -322,7 +330,8 @@ func SetAutomationFreeze(packDir, subKey string, slugs []string) error {
 		m.Automation.Freeze = nil
 	}
 	if m.Automation.AutoUpdate == nil && m.Automation.ServerPromo == nil &&
-		len(m.Automation.SyncExclude) == 0 && !m.Automation.SyncOnBuild &&\n\t\tlen(m.Automation.SyncFolders) == 0 && m.Automation.Freeze == nil {
+		len(m.Automation.SyncExclude) == 0 && !m.Automation.SyncOnBuild &&
+		len(m.Automation.SyncVariants) == 0 && m.Automation.Freeze == nil {
 		m.Automation = nil
 	}
 	return Write(mfPath, m)
