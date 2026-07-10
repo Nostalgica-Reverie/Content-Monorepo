@@ -2,7 +2,6 @@
 
 ## Shared Mods
 
-- [Amecs (Fabric)]()
 - [Async Logger]()
 - [Bedrock Skins]()
 - [BisectHosting Server Integration Menu [FABRIC]]()
