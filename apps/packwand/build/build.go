@@ -835,9 +835,8 @@ func pubWriteOutputs(r pubResolved, pDir string) {
 // — upload / verify —
 
 const (
-	modrinthAPI       = "https://api.modrinth.com/v2"
-	curseforgeAPI     = "https://api.curseforge.com/v1"
-	cfMinecraftGameID = 432
+	modrinthAPI   = "https://api.modrinth.com/v2"
+	curseforgeAPI = "https://api.curseforge.com/v1"
 
 	// Both APIs sit behind Cloudflare; requests with Go's default
 	// "Go-http-client" User-Agent get met with a JS challenge page (HTTP
@@ -1049,7 +1048,6 @@ func uploadCurseforge(r pubResolved, projectID, changelog, fileName string, data
 		})
 
 		status, detail := postWithRetry("curseforge", url, map[string]string{
-			"X-API-Key":    token,
 			"X-Api-Token":  token,
 			"Content-Type": contentType,
 		}, body)
@@ -1133,46 +1131,21 @@ func postOnce(url string, headers map[string]string, body []byte) (int, []byte, 
 // "modloader" for loaders) so a loader name can never match a game version
 // entry or vice versa.
 func cfResolveVersionIDs(token, mcVer, loader string) (gameIDs, loaderIDs []int64) {
-	var typeResponse struct {
-		Data []struct {
-			ID   int64  `json:"id"`
-			Slug string `json:"slug"`
-		} `json:"data"`
+	var versions []struct {
+		ID                int64  `json:"id"`
+		GameVersionTypeID int64  `json:"gameVersionTypeID"`
+		Name              string `json:"name"`
+		Slug              string `json:"slug"`
 	}
-	cfGetJSON(token, fmt.Sprintf("/games/%d/version-types", cfMinecraftGameID), &typeResponse)
+	cfGetJSON(token, "/game/versions", &versions)
 
-	mcTypes := map[int64]bool{}
-	loaderTypes := map[int64]bool{}
-	for _, t := range typeResponse.Data {
-		switch {
-		case strings.HasPrefix(t.Slug, "minecraft"):
-			mcTypes[t.ID] = true
-		case strings.HasPrefix(t.Slug, "modloader"):
-			loaderTypes[t.ID] = true
+	for _, v := range versions {
+		if strings.EqualFold(v.Name, mcVer) || strings.EqualFold(v.Slug, mcVer) {
+			gameIDs = append(gameIDs, v.ID)
 		}
-	}
-
-	var versionResponse struct {
-		Data []struct {
-			Type     int64 `json:"type"`
-			Versions []struct {
-				ID   int64  `json:"id"`
-				Name string `json:"name"`
-				Slug string `json:"slug"`
-			} `json:"versions"`
-		} `json:"data"`
-	}
-	cfGetJSON(token, fmt.Sprintf("/games/%d/versions", cfMinecraftGameID), &versionResponse)
-
-	for _, group := range versionResponse.Data {
-		for _, v := range group.Versions {
-			if mcTypes[group.Type] && strings.EqualFold(v.Name, mcVer) {
-				gameIDs = append(gameIDs, v.ID)
-			}
-			if loader != "" && loaderTypes[group.Type] &&
-				(strings.EqualFold(v.Name, loader) || strings.EqualFold(v.Slug, loader)) {
-				loaderIDs = append(loaderIDs, v.ID)
-			}
+		if loader != "" &&
+			(strings.EqualFold(v.Name, loader) || strings.EqualFold(v.Slug, loader)) {
+			loaderIDs = append(loaderIDs, v.ID)
 		}
 	}
 
@@ -1190,7 +1163,6 @@ func cfGetJSON(token, path string, target any) {
 	if err != nil {
 		cmd.Fail(fmt.Sprintf("CF %s lookup failed: %v", path, err))
 	}
-	req.Header.Set("X-API-Key", token)
 	req.Header.Set("X-Api-Token", token)
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", httpUserAgent)

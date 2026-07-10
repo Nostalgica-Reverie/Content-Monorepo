@@ -1,0 +1,45 @@
+name: "CI - Bot"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/bot/**"
+      - ".forgejo/actions/setup-bot/**"
+      - ".forgejo/actions/setup-task/**"
+      - "Taskfile.yml"
+      - ".forgejo/workflows/ci-bot.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "apps/bot/**"
+      - ".forgejo/actions/setup-bot/**"
+      - ".forgejo/actions/setup-task/**"
+      - "Taskfile.yml"
+      - ".forgejo/workflows/ci-bot.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bot:
+    runs-on: technocality
+    timeout-minutes: 20
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          filter: blob:none
+          fetch-depth: 1
+          sparse-checkout: |
+            apps/bot
+            tools
+            Taskfile.yml
+            .forgejo/actions
+      - uses: ./.forgejo/actions/setup-bot
+      - uses: ./.forgejo/actions/setup-task
+      - name: Lint bot
+        run: task lint-bot
+      - name: Build bot
+        run: task build-bot

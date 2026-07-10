@@ -1,0 +1,50 @@
+name: "CI - Infrastructure"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "Taskfile.yml"
+      - "_typos.toml"
+      - ".forgejo/actions/**"
+      - ".forgejo/workflows/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "Taskfile.yml"
+      - "_typos.toml"
+      - ".forgejo/actions/**"
+      - ".forgejo/workflows/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  infra:
+    runs-on: technocality
+    timeout-minutes: 15
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          filter: blob:none
+          fetch-depth: 1
+          sparse-checkout: |
+            .forgejo
+            apps/packwand
+            Taskfile.yml
+            _typos.toml
+      - uses: https://github.com/taiki-e/install-action@v2
+        with:
+          tool: typos
+      - uses: ./.forgejo/actions/setup-go
+      - name: Install actionlint
+        run: |
+          go install github.com/rhysd/actionlint/cmd/actionlint@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - uses: ./.forgejo/actions/setup-task
+      - name: Spell check
+        run: task lint-typos
+      - name: Lint workflows
+        run: task lint-actions

@@ -1,0 +1,44 @@
+name: "CI - Release Notes"
+
+on:
+  push:
+    tags:
+      - "v*"
+      - "installer-v*"
+      - "gui-v*"
+  workflow_dispatch:
+
+jobs:
+  release-notes:
+    runs-on: technocality
+    timeout-minutes: 10
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            .chglog
+            .forgejo/actions
+      - uses: ./.forgejo/actions/setup-go
+      - name: Generate component changelog
+        run: |
+          set -eu
+          go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
+          TAG="${GITHUB_REF#refs/tags/}"
+          case "$TAG" in
+            installer-v*) COMPONENT=installer ;;
+            gui-v*)       COMPONENT=gui ;;
+            v*)           COMPONENT=packwand ;;
+            *) echo "unrecognised tag $TAG"; exit 1 ;;
+          esac
+          "$(go env GOPATH)/bin/git-chglog" --config ".chglog/$COMPONENT/config.yml" --output release-notes.md "$TAG"
+          mkdir -p release-assets
+      - name: Create/update Forgejo release with notes
+        uses: https://code.forgejo.org/actions/forgejo-release@v2
+        with:
+          direction: upload
+          tag: ${{ github.ref_name }}
+          token: ${{ secrets.RELEASE_TOKEN }}
+          release-dir: release-assets
+          release-notes: release-notes.md

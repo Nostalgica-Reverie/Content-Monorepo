@@ -1,0 +1,65 @@
+name: "CI - Rust"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/mod-browser-webview/**"
+      - "packages/packwand-core/**"
+      - "Taskfile.yml"
+      - ".forgejo/actions/setup-rust/**"
+      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/workflows/ci-rust.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "apps/mod-browser-webview/**"
+      - "packages/packwand-core/**"
+      - "Taskfile.yml"
+      - ".forgejo/actions/setup-rust/**"
+      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/workflows/ci-rust.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust:
+    runs-on: technocality
+    timeout-minutes: 30
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          filter: blob:none
+          fetch-depth: 1
+          sparse-checkout: |
+            apps/mod-browser-webview
+            packages/packwand-core
+            tools
+            Taskfile.yml
+            .forgejo/actions
+      - uses: ./.forgejo/actions/setup-rust
+        with:
+          components: clippy, rustfmt
+          linux-deps: "true"
+          workspaces: |
+            apps/mod-browser-webview
+            packages/packwand-core
+      - uses: https://github.com/taiki-e/install-action@v2
+        with:
+          tool: cargo-audit
+      - uses: ./.forgejo/actions/setup-task
+      - name: Lint Rust webview
+        run: task lint-webview
+      - name: Lint Packwand core
+        run: task lint-rust-core
+      - name: Audit Rust dependencies
+        run: task audit-rust
+      - name: Test Rust webview
+        run: task test-webview
+      - name: Test Packwand core
+        run: task test-rust-core
+      - name: Build Rust webview
+        run: task build-webview

@@ -1,0 +1,76 @@
+name: "CI - Go"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/packwand/**"
+      - "tools/**"
+      - "Taskfile.yml"
+      - ".forgejo/actions/setup-go/**"
+      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/workflows/ci-go.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "apps/packwand/**"
+      - "tools/**"
+      - "Taskfile.yml"
+      - ".forgejo/actions/setup-go/**"
+      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/workflows/ci-go.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  go:
+    runs-on: technocality
+    timeout-minutes: 30
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          filter: blob:none
+          fetch-depth: 1
+          sparse-checkout: |
+            apps/packwand
+            tools
+            Taskfile.yml
+            .forgejo/actions
+      - uses: ./.forgejo/actions/setup-go
+      - uses: ./.forgejo/actions/setup-task
+      - name: Lint Go
+        run: task lint-go
+      - name: Audit Go dependencies
+        run: task audit-go
+      - name: Test Go
+        run: task test-go
+      - name: Build Packwand
+        run: task build-packwand
+      - name: Build packwiz-bootstrap
+        run: task build-bootstrap
+      - name: Install Syft for snapshot SBOMs
+        if: github.ref == 'refs/heads/main'
+        run: |
+          go install github.com/anchore/syft/cmd/syft@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: GoReleaser snapshot
+        if: github.ref == 'refs/heads/main'
+        uses: https://github.com/goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --snapshot --clean --skip=publish
+          workdir: apps/packwand
+      - name: Upload Packwand snapshot
+        if: github.ref == 'refs/heads/main'
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: packwand-snapshot-${{ github.sha }}
+          path: |
+            apps/packwand/dist/*.tar.gz
+            apps/packwand/dist/*.zip
+            apps/packwand/dist/checksums.txt
+          compression-level: 0

@@ -1,0 +1,61 @@
+name: "CI - Docs"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "docs/**"
+      - "apps/packwand/**"
+      - "Taskfile.yml"
+      - ".forgejo/actions/setup-docs-node/**"
+      - ".forgejo/actions/setup-go/**"
+      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/workflows/ci-docs.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "docs/**"
+      - "apps/packwand/**"
+      - "Taskfile.yml"
+      - ".forgejo/actions/setup-docs-node/**"
+      - ".forgejo/actions/setup-go/**"
+      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/workflows/ci-docs.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docs:
+    runs-on: technocality
+    timeout-minutes: 25
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          filter: blob:none
+          fetch-depth: 1
+          sparse-checkout: |
+            docs
+            apps/packwand
+            tools
+            Taskfile.yml
+            .forgejo/actions
+      - uses: ./.forgejo/actions/setup-go
+      - uses: ./.forgejo/actions/setup-docs-node
+      - uses: ./.forgejo/actions/setup-task
+      - name: Type-check docs scripts
+        run: task docs-typecheck
+      - name: Build docs sites
+        run: task docs-build
+      - name: Check cross-site doc links
+        run: node docs/link-lint.mts
+      - name: Upload docs
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: docs-${{ github.sha }}
+          path: |
+            docs/docs/.vitepress/dist
+            docs/packwand/docs/.vitepress/dist
+            docs/packwiz/docs/.vitepress/dist
