@@ -9,6 +9,8 @@
 - Re-enabled potion particles for mobs
 
 ### Notable Updates
+- Re-added Console Advancement Sounds
+  - Now with re-balanced sounds!
 - Downgraded Sodium from 0.9.1-beta.3 to 0.8.12
   - It should now be possible to enter worlds again
 - Removed Gnetum
