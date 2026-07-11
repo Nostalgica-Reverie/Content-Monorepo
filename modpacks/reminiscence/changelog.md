@@ -1,4 +1,7 @@
 # Reminiscence 2.0.0-hotfix
+Hotfix re-release rolls back some mods that were not accidentally.
+
+
 This is a minor release to 2.0.0 which improves performance, fixes licensing issues found on Modrinth, and updates mods. This is the first update done in conjunction with Reverie Projects and Bali.
 
 ## Added zFastNoise
