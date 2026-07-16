@@ -3,9 +3,7 @@ name: "Publish"
 on:
   push:
     branches: ["main"]
-    paths:
-      - 'modpacks/**'
-      - 'datapacks/**'
+    # ci decided to kill itself
   workflow_dispatch:
 
 concurrency:
