@@ -1,8 +1,16 @@
+import * as $dict from "../../gleam_stdlib/gleam/dict.mjs";
 import * as $decode from "../../gleam_stdlib/gleam/dynamic/decode.mjs";
 import * as $list from "../../gleam_stdlib/gleam/list.mjs";
 import * as $option from "../../gleam_stdlib/gleam/option.mjs";
 import * as $string from "../../gleam_stdlib/gleam/string.mjs";
-import { toList, CustomType as $CustomType } from "../gleam.mjs";
+import {
+  Ok,
+  Error,
+  toList,
+  Empty as $Empty,
+  prepend as listPrepend,
+  CustomType as $CustomType,
+} from "../gleam.mjs";
 
 export class Health extends $CustomType {
   constructor(root, version) {
@@ -711,6 +719,230 @@ export const AuthEvent$AuthEvent$1 = (value) => value.username;
 export const AuthEvent$AuthEvent$error = (value) => value.error;
 export const AuthEvent$AuthEvent$2 = (value) => value.error;
 
+export class LauncherInstance extends $CustomType {
+  constructor(id, path, source_pack, installed_at) {
+    super();
+    this.id = id;
+    this.path = path;
+    this.source_pack = source_pack;
+    this.installed_at = installed_at;
+  }
+}
+export const LauncherInstance$LauncherInstance = (id, path, source_pack, installed_at) =>
+  new LauncherInstance(id, path, source_pack, installed_at);
+export const LauncherInstance$isLauncherInstance = (value) =>
+  value instanceof LauncherInstance;
+export const LauncherInstance$LauncherInstance$id = (value) => value.id;
+export const LauncherInstance$LauncherInstance$0 = (value) => value.id;
+export const LauncherInstance$LauncherInstance$path = (value) => value.path;
+export const LauncherInstance$LauncherInstance$1 = (value) => value.path;
+export const LauncherInstance$LauncherInstance$source_pack = (value) =>
+  value.source_pack;
+export const LauncherInstance$LauncherInstance$2 = (value) => value.source_pack;
+export const LauncherInstance$LauncherInstance$installed_at = (value) =>
+  value.installed_at;
+export const LauncherInstance$LauncherInstance$3 = (value) =>
+  value.installed_at;
+
+export class TreeFile extends $CustomType {
+  constructor(path, ref_id, kind, owner, editable) {
+    super();
+    this.path = path;
+    this.ref_id = ref_id;
+    this.kind = kind;
+    this.owner = owner;
+    this.editable = editable;
+  }
+}
+export const TreeFile$TreeFile = (path, ref_id, kind, owner, editable) =>
+  new TreeFile(path, ref_id, kind, owner, editable);
+export const TreeFile$isTreeFile = (value) => value instanceof TreeFile;
+export const TreeFile$TreeFile$path = (value) => value.path;
+export const TreeFile$TreeFile$0 = (value) => value.path;
+export const TreeFile$TreeFile$ref_id = (value) => value.ref_id;
+export const TreeFile$TreeFile$1 = (value) => value.ref_id;
+export const TreeFile$TreeFile$kind = (value) => value.kind;
+export const TreeFile$TreeFile$2 = (value) => value.kind;
+export const TreeFile$TreeFile$owner = (value) => value.owner;
+export const TreeFile$TreeFile$3 = (value) => value.owner;
+export const TreeFile$TreeFile$editable = (value) => value.editable;
+export const TreeFile$TreeFile$4 = (value) => value.editable;
+
+export class TreeGroup extends $CustomType {
+  constructor(name, files) {
+    super();
+    this.name = name;
+    this.files = files;
+  }
+}
+export const TreeGroup$TreeGroup = (name, files) => new TreeGroup(name, files);
+export const TreeGroup$isTreeGroup = (value) => value instanceof TreeGroup;
+export const TreeGroup$TreeGroup$name = (value) => value.name;
+export const TreeGroup$TreeGroup$0 = (value) => value.name;
+export const TreeGroup$TreeGroup$files = (value) => value.files;
+export const TreeGroup$TreeGroup$1 = (value) => value.files;
+
+export class TreeFolder extends $CustomType {
+  constructor(key, label, children) {
+    super();
+    this.key = key;
+    this.label = label;
+    this.children = children;
+  }
+}
+export const TreeNode$TreeFolder = (key, label, children) =>
+  new TreeFolder(key, label, children);
+export const TreeNode$isTreeFolder = (value) => value instanceof TreeFolder;
+export const TreeNode$TreeFolder$key = (value) => value.key;
+export const TreeNode$TreeFolder$0 = (value) => value.key;
+export const TreeNode$TreeFolder$label = (value) => value.label;
+export const TreeNode$TreeFolder$1 = (value) => value.label;
+export const TreeNode$TreeFolder$children = (value) => value.children;
+export const TreeNode$TreeFolder$2 = (value) => value.children;
+
+export class TreeLeaf extends $CustomType {
+  constructor(file) {
+    super();
+    this.file = file;
+  }
+}
+export const TreeNode$TreeLeaf = (file) => new TreeLeaf(file);
+export const TreeNode$isTreeLeaf = (value) => value instanceof TreeLeaf;
+export const TreeNode$TreeLeaf$file = (value) => value.file;
+export const TreeNode$TreeLeaf$0 = (value) => value.file;
+
+export class Diagnostic extends $CustomType {
+  constructor(severity, line, col, message, code) {
+    super();
+    this.severity = severity;
+    this.line = line;
+    this.col = col;
+    this.message = message;
+    this.code = code;
+  }
+}
+export const Diagnostic$Diagnostic = (severity, line, col, message, code) =>
+  new Diagnostic(severity, line, col, message, code);
+export const Diagnostic$isDiagnostic = (value) => value instanceof Diagnostic;
+export const Diagnostic$Diagnostic$severity = (value) => value.severity;
+export const Diagnostic$Diagnostic$0 = (value) => value.severity;
+export const Diagnostic$Diagnostic$line = (value) => value.line;
+export const Diagnostic$Diagnostic$1 = (value) => value.line;
+export const Diagnostic$Diagnostic$col = (value) => value.col;
+export const Diagnostic$Diagnostic$2 = (value) => value.col;
+export const Diagnostic$Diagnostic$message = (value) => value.message;
+export const Diagnostic$Diagnostic$3 = (value) => value.message;
+export const Diagnostic$Diagnostic$code = (value) => value.code;
+export const Diagnostic$Diagnostic$4 = (value) => value.code;
+
+export class CheckResult extends $CustomType {
+  constructor(valid, diagnostics) {
+    super();
+    this.valid = valid;
+    this.diagnostics = diagnostics;
+  }
+}
+export const CheckResult$CheckResult = (valid, diagnostics) =>
+  new CheckResult(valid, diagnostics);
+export const CheckResult$isCheckResult = (value) =>
+  value instanceof CheckResult;
+export const CheckResult$CheckResult$valid = (value) => value.valid;
+export const CheckResult$CheckResult$0 = (value) => value.valid;
+export const CheckResult$CheckResult$diagnostics = (value) => value.diagnostics;
+export const CheckResult$CheckResult$1 = (value) => value.diagnostics;
+
+export class CompletionItem extends $CustomType {
+  constructor(id, kind) {
+    super();
+    this.id = id;
+    this.kind = kind;
+  }
+}
+export const CompletionItem$CompletionItem = (id, kind) =>
+  new CompletionItem(id, kind);
+export const CompletionItem$isCompletionItem = (value) =>
+  value instanceof CompletionItem;
+export const CompletionItem$CompletionItem$id = (value) => value.id;
+export const CompletionItem$CompletionItem$0 = (value) => value.id;
+export const CompletionItem$CompletionItem$kind = (value) => value.kind;
+export const CompletionItem$CompletionItem$1 = (value) => value.kind;
+
+export class CreatedFile extends $CustomType {
+  constructor(path) {
+    super();
+    this.path = path;
+  }
+}
+export const CreatedFile$CreatedFile = (path) => new CreatedFile(path);
+export const CreatedFile$isCreatedFile = (value) =>
+  value instanceof CreatedFile;
+export const CreatedFile$CreatedFile$path = (value) => value.path;
+export const CreatedFile$CreatedFile$0 = (value) => value.path;
+
+export class PreflightIssue extends $CustomType {
+  constructor(level, path, message) {
+    super();
+    this.level = level;
+    this.path = path;
+    this.message = message;
+  }
+}
+export const PreflightIssue$PreflightIssue = (level, path, message) =>
+  new PreflightIssue(level, path, message);
+export const PreflightIssue$isPreflightIssue = (value) =>
+  value instanceof PreflightIssue;
+export const PreflightIssue$PreflightIssue$level = (value) => value.level;
+export const PreflightIssue$PreflightIssue$0 = (value) => value.level;
+export const PreflightIssue$PreflightIssue$path = (value) => value.path;
+export const PreflightIssue$PreflightIssue$1 = (value) => value.path;
+export const PreflightIssue$PreflightIssue$message = (value) => value.message;
+export const PreflightIssue$PreflightIssue$2 = (value) => value.message;
+
+export class PreflightStep extends $CustomType {
+  constructor(name, errors, warnings, issues) {
+    super();
+    this.name = name;
+    this.errors = errors;
+    this.warnings = warnings;
+    this.issues = issues;
+  }
+}
+export const PreflightStep$PreflightStep = (name, errors, warnings, issues) =>
+  new PreflightStep(name, errors, warnings, issues);
+export const PreflightStep$isPreflightStep = (value) =>
+  value instanceof PreflightStep;
+export const PreflightStep$PreflightStep$name = (value) => value.name;
+export const PreflightStep$PreflightStep$0 = (value) => value.name;
+export const PreflightStep$PreflightStep$errors = (value) => value.errors;
+export const PreflightStep$PreflightStep$1 = (value) => value.errors;
+export const PreflightStep$PreflightStep$warnings = (value) => value.warnings;
+export const PreflightStep$PreflightStep$2 = (value) => value.warnings;
+export const PreflightStep$PreflightStep$issues = (value) => value.issues;
+export const PreflightStep$PreflightStep$3 = (value) => value.issues;
+
+export class PreflightResult extends $CustomType {
+  constructor(ok, errors, warnings, steps) {
+    super();
+    this.ok = ok;
+    this.errors = errors;
+    this.warnings = warnings;
+    this.steps = steps;
+  }
+}
+export const PreflightResult$PreflightResult = (ok, errors, warnings, steps) =>
+  new PreflightResult(ok, errors, warnings, steps);
+export const PreflightResult$isPreflightResult = (value) =>
+  value instanceof PreflightResult;
+export const PreflightResult$PreflightResult$ok = (value) => value.ok;
+export const PreflightResult$PreflightResult$0 = (value) => value.ok;
+export const PreflightResult$PreflightResult$errors = (value) => value.errors;
+export const PreflightResult$PreflightResult$1 = (value) => value.errors;
+export const PreflightResult$PreflightResult$warnings = (value) =>
+  value.warnings;
+export const PreflightResult$PreflightResult$2 = (value) => value.warnings;
+export const PreflightResult$PreflightResult$steps = (value) => value.steps;
+export const PreflightResult$PreflightResult$3 = (value) => value.steps;
+
 export function action_name(action) {
   if (action instanceof PacksIndex) {
     return "packs-index";
@@ -1056,6 +1288,40 @@ export function auth_status_decoder() {
   );
 }
 
+function launcher_instance_decoder() {
+  return $decode.field(
+    "id",
+    $decode.string,
+    (id) => {
+      return $decode.field(
+        "path",
+        $decode.string,
+        (path) => {
+          return $decode.field(
+            "source_pack",
+            $decode.string,
+            (source_pack) => {
+              return $decode.field(
+                "installed_at",
+                $decode.int,
+                (installed_at) => {
+                  return $decode.success(
+                    new LauncherInstance(id, path, source_pack, installed_at),
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+export function launcher_instances_decoder() {
+  return $decode.list(launcher_instance_decoder());
+}
+
 export function auth_event_decoder() {
   return $decode.optional_field(
     "status",
@@ -1078,6 +1344,91 @@ export function auth_event_decoder() {
         },
       );
     },
+  );
+}
+
+function nest_tree_level(prefix, entries) {
+  let _block;
+  let _pipe = entries;
+  let _pipe$1 = $list.filter_map(
+    _pipe,
+    (entry) => {
+      let $ = entry[0];
+      if ($ instanceof $Empty) {
+        return new Error(undefined);
+      } else {
+        let $1 = $.tail;
+        if ($1 instanceof $Empty) {
+          return new Ok(entry[1]);
+        } else {
+          return new Error(undefined);
+        }
+      }
+    },
+  );
+  let _pipe$2 = $list.sort(
+    _pipe$1,
+    (a, b) => { return $string.compare(a.path, b.path); },
+  );
+  _block = $list.map(_pipe$2, (var0) => { return new TreeLeaf(var0); });
+  let leaves = _block;
+  let grouped = $list.fold(
+    entries,
+    $dict.new$(),
+    (acc, entry) => {
+      let $ = entry[0];
+      if ($ instanceof $Empty) {
+        return acc;
+      } else {
+        let head = $.head;
+        let rest = $.tail;
+        let _block$1;
+        let $1 = $dict.get(acc, head);
+        if ($1 instanceof Ok) {
+          let items = $1[0];
+          _block$1 = items;
+        } else {
+          _block$1 = toList([]);
+        }
+        let existing = _block$1;
+        return $dict.insert(acc, head, listPrepend([rest, entry[1]], existing));
+      }
+    },
+  );
+  let _block$1;
+  let _pipe$3 = grouped;
+  let _pipe$4 = $dict.to_list(_pipe$3);
+  let _pipe$5 = $list.sort(
+    _pipe$4,
+    (a, b) => { return $string.compare(a[0], b[0]); },
+  );
+  _block$1 = $list.map(
+    _pipe$5,
+    (pair) => {
+      let head = pair[0];
+      let children_entries = pair[1];
+      let key = (prefix + "/") + head;
+      return new TreeFolder(key, head, nest_tree_level(key, children_entries));
+    },
+  );
+  let folders = _block$1;
+  return $list.append(folders, leaves);
+}
+
+/**
+ * Groups a tree group's flat `files` list into a nested folder/file
+ * structure for display. Each `TreeFolder.key` is unique across the whole
+ * tree (group name plus joined path segments), for use as a collapse-state
+ * key. Folders sort before files; both sort alphabetically.
+ */
+export function nest_tree_files(group_key, files) {
+  let _pipe = files;
+  let _pipe$1 = $list.map(
+    _pipe,
+    (file) => { return [$string.split(file.path, "/"), file]; },
+  );
+  return ((_capture) => { return nest_tree_level(group_key, _capture); })(
+    _pipe$1,
   );
 }
 

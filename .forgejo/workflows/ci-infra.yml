@@ -4,14 +4,14 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "Taskfile.yml"
+      - "justfile"
       - "_typos.toml"
       - ".forgejo/actions/**"
       - ".forgejo/workflows/**"
   pull_request:
     branches: ["main"]
     paths:
-      - "Taskfile.yml"
+      - "justfile"
       - "_typos.toml"
       - ".forgejo/actions/**"
       - ".forgejo/workflows/**"
@@ -33,7 +33,7 @@ jobs:
           sparse-checkout: |
             .forgejo
             apps/packwand
-            Taskfile.yml
+            justfile
             _typos.toml
       - uses: https://github.com/taiki-e/install-action@v2
         with:
@@ -43,8 +43,8 @@ jobs:
         run: |
           go install github.com/rhysd/actionlint/cmd/actionlint@latest
           echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
-      - uses: ./.forgejo/actions/setup-task
+      - uses: ./.forgejo/actions/setup-just
       - name: Spell check
-        run: task lint-typos
+        run: just lint-typos
       - name: Lint workflows
-        run: task lint-actions
+        run: just lint-actions

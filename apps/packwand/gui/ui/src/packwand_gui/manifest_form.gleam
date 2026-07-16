@@ -146,11 +146,9 @@ pub fn apply(form: ManifestForm, field: Field) -> ManifestForm {
         "consumer" ->
           case form.role_mappings {
             [] ->
-              ManifestForm(
-                ..form,
-                role_kind: RoleConsumer,
-                role_mappings: [Mapping("", "")],
-              )
+              ManifestForm(..form, role_kind: RoleConsumer, role_mappings: [
+                Mapping("", ""),
+              ])
             _ -> ManifestForm(..form, role_kind: RoleConsumer)
           }
         _ -> ManifestForm(..form, role_kind: RoleNone)
@@ -566,8 +564,8 @@ pub fn validate(form: ManifestForm) -> List(Issue) {
   {
     True -> [
       Issue(
-          "loader",
-          IssueError,
+        "loader",
+        IssueError,
         "Modpacks must declare a loader (pack-level or on every variant).",
       ),
     ]
@@ -577,9 +575,7 @@ pub fn validate(form: ManifestForm) -> List(Issue) {
   let shape = case form.use_variants {
     True ->
       case form.variants {
-        [] -> [Issue(
-          "variants",
-          IssueError, "Add at least one variant.")]
+        [] -> [Issue("variants", IssueError, "Add at least one variant.")]
         variants ->
           variants
           |> list.index_map(fn(variant, index) {
@@ -632,9 +628,7 @@ pub fn validate(form: ManifestForm) -> List(Issue) {
         required("role_pack", form.role_pack, "Performance base pack"),
         case form.role_mappings {
           [] -> [
-            Issue(
-          "role_mappings",
-          IssueError, "Add at least one base mapping."),
+            Issue("role_mappings", IssueError, "Add at least one base mapping."),
           ]
           mappings ->
             mappings
@@ -651,9 +645,11 @@ pub fn validate(form: ManifestForm) -> List(Issue) {
     "" | "active" | "maintenance" | "archived" | "eol" -> []
     other -> [
       Issue(
-          "lifecycle",
-          IssueError,
-        "Invalid lifecycle '" <> other <> "' (active, maintenance, archived, eol).",
+        "lifecycle",
+        IssueError,
+        "Invalid lifecycle '"
+          <> other
+          <> "' (active, maintenance, archived, eol).",
       ),
     ]
   }
@@ -668,14 +664,22 @@ fn validate_mapping(mapping: Mapping, index: Int) -> List(Issue) {
   let target_suffix = platform_suffix(mapping.target)
   list.flatten([
     case source_suffix {
-      "" -> [Issue(label, IssueError, prefix <> ": source must end in -mr or -cf.")]
+      "" -> [
+        Issue(label, IssueError, prefix <> ": source must end in -mr or -cf."),
+      ]
       _ -> []
     },
     case target_suffix {
-      "" -> [Issue(label, IssueError, prefix <> ": target must end in -mr or -cf.")]
+      "" -> [
+        Issue(label, IssueError, prefix <> ": target must end in -mr or -cf."),
+      ]
       _ -> []
     },
-    case source_suffix != "" && target_suffix != "" && source_suffix != target_suffix {
+    case
+      source_suffix != ""
+      && target_suffix != ""
+      && source_suffix != target_suffix
+    {
       True -> [
         Issue(
           label,

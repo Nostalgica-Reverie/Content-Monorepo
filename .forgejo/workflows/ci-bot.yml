@@ -6,16 +6,16 @@ on:
     paths:
       - "apps/bot/**"
       - ".forgejo/actions/setup-bot/**"
-      - ".forgejo/actions/setup-task/**"
-      - "Taskfile.yml"
+      - ".forgejo/actions/setup-just/**"
+      - "justfile"
       - ".forgejo/workflows/ci-bot.yml"
   pull_request:
     branches: ["main"]
     paths:
       - "apps/bot/**"
       - ".forgejo/actions/setup-bot/**"
-      - ".forgejo/actions/setup-task/**"
-      - "Taskfile.yml"
+      - ".forgejo/actions/setup-just/**"
+      - "justfile"
       - ".forgejo/workflows/ci-bot.yml"
   workflow_dispatch:
 
@@ -35,11 +35,11 @@ jobs:
           sparse-checkout: |
             apps/bot
             tools
-            Taskfile.yml
+            justfile
             .forgejo/actions
       - uses: ./.forgejo/actions/setup-bot
-      - uses: ./.forgejo/actions/setup-task
+      - uses: ./.forgejo/actions/setup-just
       - name: Lint bot
-        run: task lint-bot
+        run: just lint-bot
       - name: Build bot
-        run: task build-bot
+        run: just build-bot

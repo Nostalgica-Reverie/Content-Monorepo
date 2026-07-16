@@ -80,6 +80,20 @@ pub fn save_manifest(
   )
 }
 
+pub fn save_changelog(
+  id: String,
+  content: String,
+  to_msg: fn(Result(Nil, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "PUT",
+    "/api/v1/packs/" <> uri.percent_encode(id) <> "/changelog",
+    json.object([#("content", json.string(content))]) |> json.to_string,
+    decode.success(Nil),
+    to_msg,
+  )
+}
+
 pub fn create_project(
   id: String,
   name: String,
@@ -167,6 +181,176 @@ pub fn action(
   )
 }
 
+// — IDE editor services (IDE.md §3–§4) —
+
+fn subdir_url(id: String, sub: String, tail: String) -> String {
+  "/api/v1/packs/"
+  <> uri.percent_encode(id)
+  <> "/subdirs/"
+  <> uri.percent_encode(sub)
+  <> tail
+}
+
+pub fn editor_tree(
+  id: String,
+  sub: String,
+  to_msg: fn(Result(List(domain.TreeGroup), domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request("GET", subdir_url(id, sub, "/tree"), "", tree_decoder(), to_msg)
+}
+
+pub fn read_editor_file(
+  id: String,
+  sub: String,
+  path: String,
+  to_msg: fn(Result(domain.ContentResponse, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "GET",
+    subdir_url(id, sub, "/file?path=" <> uri.percent_encode(path)),
+    "",
+    content_decoder(),
+    to_msg,
+  )
+}
+
+pub fn save_editor_file(
+  id: String,
+  sub: String,
+  path: String,
+  content: String,
+  to_msg: fn(Result(Nil, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "PUT",
+    subdir_url(id, sub, "/file"),
+    json.object([
+      #("path", json.string(path)),
+      #("content", json.string(content)),
+    ])
+      |> json.to_string,
+    decode.success(Nil),
+    to_msg,
+  )
+}
+
+/// Paste a new file into the pack, or (when `from_sub` is set) duplicate a
+/// file from a sibling subdir of the same pack (IDE.md §4.3).
+pub fn create_editor_file(
+  id: String,
+  sub: String,
+  path: String,
+  content: String,
+  from_sub: String,
+  from_path: String,
+  to_msg: fn(Result(domain.CreatedFile, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "POST",
+    subdir_url(id, sub, "/files"),
+    json.object([
+      #("path", json.string(path)),
+      #("content", json.string(content)),
+      #("from_sub", json.string(from_sub)),
+      #("from_path", json.string(from_path)),
+    ])
+      |> json.to_string,
+    created_file_decoder(),
+    to_msg,
+  )
+}
+
+/// Check an unsaved editor buffer for structural and reference problems
+/// (IDE.md §4.1).
+pub fn check_buffer(
+  id: String,
+  sub: String,
+  file: String,
+  content: String,
+  to_msg: fn(Result(domain.CheckResult, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "POST",
+    subdir_url(id, sub, "/check"),
+    json.object([
+      #("file", json.string(file)),
+      #("content", json.string(content)),
+    ])
+      |> json.to_string,
+    check_decoder(),
+    to_msg,
+  )
+}
+
+/// Registry-driven completion (IDE.md §4.2): matching entries for the token
+/// being typed, from the subdir's registry of the given kind.
+pub fn complete(
+  id: String,
+  sub: String,
+  kind: String,
+  query: String,
+  to_msg: fn(Result(List(domain.CompletionItem), domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "GET",
+    subdir_url(
+      id,
+      sub,
+      "/registry/"
+        <> uri.percent_encode(kind)
+        <> "/complete?q="
+        <> uri.percent_encode(query),
+    ),
+    "",
+    completions_decoder(),
+    to_msg,
+  )
+}
+
+/// Start the pre-launch validation gate as a job (IDE.md §4.4).
+pub fn preflight(
+  id: String,
+  sub: String,
+  to_msg: fn(Result(domain.ActionResponse, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "POST",
+    subdir_url(id, sub, "/preflight"),
+    "",
+    action_response_decoder(),
+    to_msg,
+  )
+}
+
+/// Start the CI-equivalent local validation stages as an SSE job (IDE.md §6).
+pub fn local_ci(
+  id: String,
+  sub: String,
+  to_msg: fn(Result(domain.ActionResponse, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "POST",
+    subdir_url(id, sub, "/ci-local"),
+    "",
+    action_response_decoder(),
+    to_msg,
+  )
+}
+
+/// Fetch the structured preflight report from a finished job.
+pub fn preflight_result(
+  job_id: String,
+  to_msg: fn(Result(domain.PreflightResult, domain.ApiError)) -> msg,
+) -> Effect(msg) {
+  request(
+    "GET",
+    "/api/v1/jobs/" <> uri.percent_encode(job_id),
+    "",
+    job_preflight_decoder(),
+    to_msg,
+  )
+}
+
 fn request(
   method: String,
   url: String,
@@ -226,7 +410,11 @@ fn feature_decoder() {
   use summary <- decode.optional_field("summary", "", decode.string)
   use group <- decode.optional_field("group", "", decode.string)
   use runnable <- decode.optional_field("runnable", False, decode.bool)
-  use gui_status <- decode.optional_field("gui_status", "cli-only", decode.string)
+  use gui_status <- decode.optional_field(
+    "gui_status",
+    "cli-only",
+    decode.string,
+  )
   use gui_action <- decode.optional_field("gui_action", "", decode.string)
   use scope <- decode.optional_field("scope", "", decode.string)
   use destructive <- decode.optional_field("destructive", False, decode.bool)
@@ -355,4 +543,111 @@ fn created_project_decoder() {
   use id <- decode.field("id", decode.string)
   use dir <- decode.field("dir", decode.string)
   decode.success(domain.CreatedProject(id:, dir:))
+}
+
+fn tree_decoder() {
+  use groups <- decode.optional_field(
+    "groups",
+    [],
+    decode.list(tree_group_decoder()),
+  )
+  decode.success(groups)
+}
+
+fn tree_group_decoder() {
+  use name <- decode.optional_field("name", "", decode.string)
+  use files <- decode.optional_field(
+    "files",
+    [],
+    decode.list(tree_file_decoder()),
+  )
+  decode.success(domain.TreeGroup(name:, files:))
+}
+
+fn tree_file_decoder() {
+  use path <- decode.field("path", decode.string)
+  use ref_id <- decode.optional_field("ref_id", "", decode.string)
+  use kind <- decode.optional_field("kind", "", decode.string)
+  use owner <- decode.optional_field("owner", "", decode.string)
+  use editable <- decode.optional_field("editable", False, decode.bool)
+  decode.success(domain.TreeFile(path:, ref_id:, kind:, owner:, editable:))
+}
+
+fn check_decoder() {
+  use valid <- decode.optional_field("valid", False, decode.bool)
+  use diagnostics <- decode.optional_field(
+    "diagnostics",
+    [],
+    decode.list(diagnostic_decoder()),
+  )
+  decode.success(domain.CheckResult(valid:, diagnostics:))
+}
+
+fn diagnostic_decoder() {
+  use severity <- decode.optional_field("severity", "error", decode.string)
+  use line <- decode.optional_field("line", 1, decode.int)
+  use col <- decode.optional_field("col", 1, decode.int)
+  use message <- decode.optional_field("message", "", decode.string)
+  use code <- decode.optional_field("code", "", decode.string)
+  decode.success(domain.Diagnostic(severity:, line:, col:, message:, code:))
+}
+
+fn completions_decoder() {
+  use items <- decode.optional_field(
+    "items",
+    [],
+    decode.list(completion_decoder()),
+  )
+  decode.success(items)
+}
+
+fn completion_decoder() {
+  use id <- decode.field("id", decode.string)
+  use kind <- decode.optional_field("kind", "", decode.string)
+  decode.success(domain.CompletionItem(id:, kind:))
+}
+
+fn created_file_decoder() {
+  use path <- decode.optional_field("path", "", decode.string)
+  decode.success(domain.CreatedFile(path:))
+}
+
+fn job_preflight_decoder() {
+  use result <- decode.optional_field(
+    "result",
+    domain.PreflightResult(ok: False, errors: 0, warnings: 0, steps: []),
+    preflight_result_decoder(),
+  )
+  decode.success(result)
+}
+
+fn preflight_result_decoder() {
+  use ok <- decode.optional_field("ok", False, decode.bool)
+  use errors <- decode.optional_field("errors", 0, decode.int)
+  use warnings <- decode.optional_field("warnings", 0, decode.int)
+  use steps <- decode.optional_field(
+    "steps",
+    [],
+    decode.list(preflight_step_decoder()),
+  )
+  decode.success(domain.PreflightResult(ok:, errors:, warnings:, steps:))
+}
+
+fn preflight_step_decoder() {
+  use name <- decode.optional_field("name", "", decode.string)
+  use errors <- decode.optional_field("errors", 0, decode.int)
+  use warnings <- decode.optional_field("warnings", 0, decode.int)
+  use issues <- decode.optional_field(
+    "issues",
+    [],
+    decode.list(preflight_issue_decoder()),
+  )
+  decode.success(domain.PreflightStep(name:, errors:, warnings:, issues:))
+}
+
+fn preflight_issue_decoder() {
+  use level <- decode.optional_field("level", "error", decode.string)
+  use path <- decode.optional_field("path", "", decode.string)
+  use message <- decode.optional_field("message", "", decode.string)
+  decode.success(domain.PreflightIssue(level:, path:, message:))
 }

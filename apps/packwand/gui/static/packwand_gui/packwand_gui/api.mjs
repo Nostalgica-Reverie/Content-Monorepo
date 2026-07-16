@@ -562,6 +562,19 @@ export function save_manifest(id, content, to_msg) {
   );
 }
 
+export function save_changelog(id, content, to_msg) {
+  return request(
+    "PUT",
+    ("/api/v1/packs/" + $uri.percent_encode(id)) + "/changelog",
+    (() => {
+      let _pipe = $json.object(toList([["content", $json.string(content)]]));
+      return $json.to_string(_pipe);
+    })(),
+    $decode.success(undefined),
+    to_msg,
+  );
+}
+
 function created_project_decoder() {
   return $decode.field(
     "id",
@@ -666,6 +679,440 @@ export function action(action, to_msg) {
     "/api/v1/actions",
     $json.to_string(body),
     action_response_decoder(),
+    to_msg,
+  );
+}
+
+function subdir_url(id, sub, tail) {
+  return ((("/api/v1/packs/" + $uri.percent_encode(id)) + "/subdirs/") + $uri.percent_encode(
+    sub,
+  )) + tail;
+}
+
+function tree_file_decoder() {
+  return $decode.field(
+    "path",
+    $decode.string,
+    (path) => {
+      return $decode.optional_field(
+        "ref_id",
+        "",
+        $decode.string,
+        (ref_id) => {
+          return $decode.optional_field(
+            "kind",
+            "",
+            $decode.string,
+            (kind) => {
+              return $decode.optional_field(
+                "owner",
+                "",
+                $decode.string,
+                (owner) => {
+                  return $decode.optional_field(
+                    "editable",
+                    false,
+                    $decode.bool,
+                    (editable) => {
+                      return $decode.success(
+                        new $domain.TreeFile(
+                          path,
+                          ref_id,
+                          kind,
+                          owner,
+                          editable,
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+function tree_group_decoder() {
+  return $decode.optional_field(
+    "name",
+    "",
+    $decode.string,
+    (name) => {
+      return $decode.optional_field(
+        "files",
+        toList([]),
+        $decode.list(tree_file_decoder()),
+        (files) => {
+          return $decode.success(new $domain.TreeGroup(name, files));
+        },
+      );
+    },
+  );
+}
+
+function tree_decoder() {
+  return $decode.optional_field(
+    "groups",
+    toList([]),
+    $decode.list(tree_group_decoder()),
+    (groups) => { return $decode.success(groups); },
+  );
+}
+
+export function editor_tree(id, sub, to_msg) {
+  return request(
+    "GET",
+    subdir_url(id, sub, "/tree"),
+    "",
+    tree_decoder(),
+    to_msg,
+  );
+}
+
+export function read_editor_file(id, sub, path, to_msg) {
+  return request(
+    "GET",
+    subdir_url(id, sub, "/file?path=" + $uri.percent_encode(path)),
+    "",
+    content_decoder(),
+    to_msg,
+  );
+}
+
+export function save_editor_file(id, sub, path, content, to_msg) {
+  return request(
+    "PUT",
+    subdir_url(id, sub, "/file"),
+    (() => {
+      let _pipe = $json.object(
+        toList([
+          ["path", $json.string(path)],
+          ["content", $json.string(content)],
+        ]),
+      );
+      return $json.to_string(_pipe);
+    })(),
+    $decode.success(undefined),
+    to_msg,
+  );
+}
+
+function created_file_decoder() {
+  return $decode.optional_field(
+    "path",
+    "",
+    $decode.string,
+    (path) => { return $decode.success(new $domain.CreatedFile(path)); },
+  );
+}
+
+/**
+ * Paste a new file into the pack, or (when `from_sub` is set) duplicate a
+ * file from a sibling subdir of the same pack (IDE.md §4.3).
+ */
+export function create_editor_file(
+  id,
+  sub,
+  path,
+  content,
+  from_sub,
+  from_path,
+  to_msg
+) {
+  return request(
+    "POST",
+    subdir_url(id, sub, "/files"),
+    (() => {
+      let _pipe = $json.object(
+        toList([
+          ["path", $json.string(path)],
+          ["content", $json.string(content)],
+          ["from_sub", $json.string(from_sub)],
+          ["from_path", $json.string(from_path)],
+        ]),
+      );
+      return $json.to_string(_pipe);
+    })(),
+    created_file_decoder(),
+    to_msg,
+  );
+}
+
+function diagnostic_decoder() {
+  return $decode.optional_field(
+    "severity",
+    "error",
+    $decode.string,
+    (severity) => {
+      return $decode.optional_field(
+        "line",
+        1,
+        $decode.int,
+        (line) => {
+          return $decode.optional_field(
+            "col",
+            1,
+            $decode.int,
+            (col) => {
+              return $decode.optional_field(
+                "message",
+                "",
+                $decode.string,
+                (message) => {
+                  return $decode.optional_field(
+                    "code",
+                    "",
+                    $decode.string,
+                    (code) => {
+                      return $decode.success(
+                        new $domain.Diagnostic(
+                          severity,
+                          line,
+                          col,
+                          message,
+                          code,
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+function check_decoder() {
+  return $decode.optional_field(
+    "valid",
+    false,
+    $decode.bool,
+    (valid) => {
+      return $decode.optional_field(
+        "diagnostics",
+        toList([]),
+        $decode.list(diagnostic_decoder()),
+        (diagnostics) => {
+          return $decode.success(new $domain.CheckResult(valid, diagnostics));
+        },
+      );
+    },
+  );
+}
+
+/**
+ * Check an unsaved editor buffer for structural and reference problems
+ * (IDE.md §4.1).
+ */
+export function check_buffer(id, sub, file, content, to_msg) {
+  return request(
+    "POST",
+    subdir_url(id, sub, "/check"),
+    (() => {
+      let _pipe = $json.object(
+        toList([
+          ["file", $json.string(file)],
+          ["content", $json.string(content)],
+        ]),
+      );
+      return $json.to_string(_pipe);
+    })(),
+    check_decoder(),
+    to_msg,
+  );
+}
+
+function completion_decoder() {
+  return $decode.field(
+    "id",
+    $decode.string,
+    (id) => {
+      return $decode.optional_field(
+        "kind",
+        "",
+        $decode.string,
+        (kind) => {
+          return $decode.success(new $domain.CompletionItem(id, kind));
+        },
+      );
+    },
+  );
+}
+
+function completions_decoder() {
+  return $decode.optional_field(
+    "items",
+    toList([]),
+    $decode.list(completion_decoder()),
+    (items) => { return $decode.success(items); },
+  );
+}
+
+/**
+ * Registry-driven completion (IDE.md §4.2): matching entries for the token
+ * being typed, from the subdir's registry of the given kind.
+ */
+export function complete(id, sub, kind, query, to_msg) {
+  return request(
+    "GET",
+    subdir_url(
+      id,
+      sub,
+      (("/registry/" + $uri.percent_encode(kind)) + "/complete?q=") + $uri.percent_encode(
+        query,
+      ),
+    ),
+    "",
+    completions_decoder(),
+    to_msg,
+  );
+}
+
+/**
+ * Start the pre-launch validation gate as a job (IDE.md §4.4).
+ */
+export function preflight(id, sub, to_msg) {
+  return request(
+    "POST",
+    subdir_url(id, sub, "/preflight"),
+    "",
+    action_response_decoder(),
+    to_msg,
+  );
+}
+
+/**
+ * Start the CI-equivalent local validation stages as an SSE job (IDE.md §6).
+ */
+export function local_ci(id, sub, to_msg) {
+  return request(
+    "POST",
+    subdir_url(id, sub, "/ci-local"),
+    "",
+    action_response_decoder(),
+    to_msg,
+  );
+}
+
+function preflight_issue_decoder() {
+  return $decode.optional_field(
+    "level",
+    "error",
+    $decode.string,
+    (level) => {
+      return $decode.optional_field(
+        "path",
+        "",
+        $decode.string,
+        (path) => {
+          return $decode.optional_field(
+            "message",
+            "",
+            $decode.string,
+            (message) => {
+              return $decode.success(
+                new $domain.PreflightIssue(level, path, message),
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+function preflight_step_decoder() {
+  return $decode.optional_field(
+    "name",
+    "",
+    $decode.string,
+    (name) => {
+      return $decode.optional_field(
+        "errors",
+        0,
+        $decode.int,
+        (errors) => {
+          return $decode.optional_field(
+            "warnings",
+            0,
+            $decode.int,
+            (warnings) => {
+              return $decode.optional_field(
+                "issues",
+                toList([]),
+                $decode.list(preflight_issue_decoder()),
+                (issues) => {
+                  return $decode.success(
+                    new $domain.PreflightStep(name, errors, warnings, issues),
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+function preflight_result_decoder() {
+  return $decode.optional_field(
+    "ok",
+    false,
+    $decode.bool,
+    (ok) => {
+      return $decode.optional_field(
+        "errors",
+        0,
+        $decode.int,
+        (errors) => {
+          return $decode.optional_field(
+            "warnings",
+            0,
+            $decode.int,
+            (warnings) => {
+              return $decode.optional_field(
+                "steps",
+                toList([]),
+                $decode.list(preflight_step_decoder()),
+                (steps) => {
+                  return $decode.success(
+                    new $domain.PreflightResult(ok, errors, warnings, steps),
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
+function job_preflight_decoder() {
+  return $decode.optional_field(
+    "result",
+    new $domain.PreflightResult(false, 0, 0, toList([])),
+    preflight_result_decoder(),
+    (result) => { return $decode.success(result); },
+  );
+}
+
+/**
+ * Fetch the structured preflight report from a finished job.
+ */
+export function preflight_result(job_id, to_msg) {
+  return request(
+    "GET",
+    "/api/v1/jobs/" + $uri.percent_encode(job_id),
+    "",
+    job_preflight_decoder(),
     to_msg,
   );
 }

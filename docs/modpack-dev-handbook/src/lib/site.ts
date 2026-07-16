@@ -1,4 +1,6 @@
-﻿export const siteConfig = {
+export const DOCS_BASE = "/modpack-dev-handbook";
+
+export const siteConfig = {
   handbook: {
     title: "Modpack Dev Handbook",
     siteUrl: "https://docs.nostalgica.net",

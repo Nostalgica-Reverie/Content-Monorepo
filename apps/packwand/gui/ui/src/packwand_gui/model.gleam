@@ -1,3 +1,4 @@
+import gleam/dict
 import gleam/dynamic/decode
 import gleam/list
 import gleam/option
@@ -295,11 +296,7 @@ pub fn launcher_progress_decoder() -> decode.Decoder(LauncherProgress) {
     0,
     decode.int,
   )
-  use total_downloads <- decode.optional_field(
-    "total_downloads",
-    0,
-    decode.int,
-  )
+  use total_downloads <- decode.optional_field("total_downloads", 0, decode.int)
   use downloaded_bytes <- decode.optional_field(
     "downloaded_bytes",
     0,
@@ -333,11 +330,159 @@ pub type AuthEvent {
   AuthEvent(status: String, username: String, error: String)
 }
 
+pub type LauncherInstance {
+  LauncherInstance(
+    id: String,
+    path: String,
+    source_pack: String,
+    installed_at: Int,
+  )
+}
+
+pub fn launcher_instances_decoder() -> decode.Decoder(List(LauncherInstance)) {
+  decode.list(launcher_instance_decoder())
+}
+
+fn launcher_instance_decoder() {
+  use id <- decode.field("id", decode.string)
+  use path <- decode.field("path", decode.string)
+  use source_pack <- decode.field("source_pack", decode.string)
+  use installed_at <- decode.field("installed_at", decode.int)
+  decode.success(LauncherInstance(id:, path:, source_pack:, installed_at:))
+}
+
 pub fn auth_event_decoder() -> decode.Decoder(AuthEvent) {
   use status <- decode.optional_field("status", "", decode.string)
   use username <- decode.optional_field("username", "", decode.string)
   use error <- decode.optional_field("error", "", decode.string)
   decode.success(AuthEvent(status:, username:, error:))
+}
+
+/// One file in the IDE editor tree (IDE.md §5), grouped by content domain.
+/// `ref_id` is the referenceable ID ("copy as reference", IDE.md §4.3) when
+/// the file backs a registry entry.
+pub type TreeFile {
+  TreeFile(
+    path: String,
+    ref_id: String,
+    kind: String,
+    owner: String,
+    editable: Bool,
+  )
+}
+
+pub type TreeGroup {
+  TreeGroup(name: String, files: List(TreeFile))
+}
+
+/// A folder or file node in the client-side nested rendering of a
+/// TreeGroup's flat `files` list, built by splitting each TreeFile's path on
+/// "/". Purely a view-layer concept - the backend tree stays flat, grouped
+/// by content domain only (see `nest_tree_files`).
+pub type TreeNode {
+  TreeFolder(key: String, label: String, children: List(TreeNode))
+  TreeLeaf(file: TreeFile)
+}
+
+/// Groups a tree group's flat `files` list into a nested folder/file
+/// structure for display. Each `TreeFolder.key` is unique across the whole
+/// tree (group name plus joined path segments), for use as a collapse-state
+/// key. Folders sort before files; both sort alphabetically.
+pub fn nest_tree_files(group_key: String, files: List(TreeFile)) -> List(TreeNode) {
+  files
+  |> list.map(fn(file) { #(string.split(file.path, "/"), file) })
+  |> nest_tree_level(group_key, _)
+}
+
+fn nest_tree_level(
+  prefix: String,
+  entries: List(#(List(String), TreeFile)),
+) -> List(TreeNode) {
+  let leaves =
+    entries
+    |> list.filter_map(fn(entry) {
+      case entry.0 {
+        [_] -> Ok(entry.1)
+        _ -> Error(Nil)
+      }
+    })
+    |> list.sort(fn(a, b) { string.compare(a.path, b.path) })
+    |> list.map(TreeLeaf)
+
+  let grouped =
+    list.fold(entries, dict.new(), fn(acc, entry) {
+      case entry.0 {
+        [head, ..rest] -> {
+          let existing = case dict.get(acc, head) {
+            Ok(items) -> items
+            Error(_) -> []
+          }
+          dict.insert(acc, head, [#(rest, entry.1), ..existing])
+        }
+        [] -> acc
+      }
+    })
+
+  let folders =
+    grouped
+    |> dict.to_list
+    |> list.sort(fn(a, b) { string.compare(a.0, b.0) })
+    |> list.map(fn(pair) {
+      let #(head, children_entries) = pair
+      let key = prefix <> "/" <> head
+      TreeFolder(key: key, label: head, children: nest_tree_level(
+        key,
+        children_entries,
+      ))
+    })
+
+  list.append(folders, leaves)
+}
+
+/// One problem reported by the buffer check endpoint (IDE.md §4.1).
+pub type Diagnostic {
+  Diagnostic(
+    severity: String,
+    line: Int,
+    col: Int,
+    message: String,
+    code: String,
+  )
+}
+
+pub type CheckResult {
+  CheckResult(valid: Bool, diagnostics: List(Diagnostic))
+}
+
+pub type CompletionItem {
+  CompletionItem(id: String, kind: String)
+}
+
+pub type CreatedFile {
+  CreatedFile(path: String)
+}
+
+pub type PreflightIssue {
+  PreflightIssue(level: String, path: String, message: String)
+}
+
+pub type PreflightStep {
+  PreflightStep(
+    name: String,
+    errors: Int,
+    warnings: Int,
+    issues: List(PreflightIssue),
+  )
+}
+
+/// The structured result of a `packwand preflight` run (IDE.md §4.4).
+pub type PreflightResult {
+  PreflightResult(
+    ok: Bool,
+    errors: Int,
+    warnings: Int,
+    steps: List(PreflightStep),
+  )
 }
 
 pub fn project_summary(project: Project) -> String {

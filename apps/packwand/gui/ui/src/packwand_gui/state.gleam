@@ -7,11 +7,25 @@ import packwand_gui/model as domain
 
 pub type View {
   Overview
+  Editor
+  Instances
   Exports
   Mods
   Changelog
   Logs
   Settings
+}
+
+/// One file open in the IDE editor: the live buffer, the last saved
+/// content (dirty = the two differ), and the tree metadata it opened with.
+pub type OpenFile {
+  OpenFile(
+    path: String,
+    content: String,
+    saved: String,
+    kind: String,
+    ref_id: String,
+  )
 }
 
 pub type ModProgressStatus {
@@ -97,6 +111,35 @@ pub type Model {
     /// Transient status/error text: "Opening Microsoft sign-in...", a
     /// specific failure (not whitelisted yet, no Xbox account, etc.), or "".
     auth_status_text: String,
+    // — IDE editor state (IDE.md §4–§5) —
+    editor_tree: List(domain.TreeGroup),
+    open_files: List(OpenFile),
+    active_path: String,
+    editor_diags: List(domain.Diagnostic),
+    editor_valid: Bool,
+    /// True once a check has completed for the active buffer.
+    editor_checked: Bool,
+    completions: List(domain.CompletionItem),
+    completion_open: Bool,
+    /// The token being completed and its [start, end) range in the buffer.
+    completion_prefix: String,
+    completion_anchor: #(Int, Int),
+    new_file_path: String,
+    /// idle | running | passed | failed
+    preflight_status: String,
+    preflight: Option(domain.PreflightResult),
+    /// The running preflight job, so JobFinished can fetch its report.
+    preflight_job: Option(String),
+    /// A boot request waiting on the preflight gate (IDE.md §4.4).
+    pending_boot: Option(String),
+    /// all | error | warning
+    problem_filter: String,
+    /// Collapsed content domains in the Editor file explorer.
+    collapsed_tree_groups: List(String),
+    /// Collapsed folders within a tree group, keyed by group name plus the
+    /// joined path segments down to that folder (see `nest_tree_files`).
+    collapsed_tree_folders: List(String),
+    instances: List(domain.LauncherInstance),
   )
 }
 
@@ -123,6 +166,9 @@ pub type Msg {
   SetManifestField(manifest_form.Field)
   SetManifestStructured(Bool)
   ManifestSaved(Result(Nil, domain.ApiError))
+  SaveChangelog
+  SetChangelog(String)
+  ChangelogSaved(Result(Nil, domain.ApiError))
   CreateProject
   ProjectCreated(Result(domain.CreatedProject, domain.ApiError))
   SetNewPackID(String)
@@ -149,6 +195,45 @@ pub type Msg {
   RequestAuthLogout
   AuthLogoutDone(Result(Nil, domain.ApiError))
   GotAuthStatus(Result(domain.AuthStatus, domain.ApiError))
+  // — IDE editor messages (IDE.md §4–§5) —
+  GotTree(Result(List(domain.TreeGroup), domain.ApiError))
+  ReloadTree
+  OpenPath(path: String, kind: String, ref_id: String)
+  GotFileContent(
+    path: String,
+    kind: String,
+    ref_id: String,
+    result: Result(domain.ContentResponse, domain.ApiError),
+  )
+  SelectTab(String)
+  CloseTab(String)
+  SetBuffer(String)
+  BufferCheckDue
+  GotCheck(path: String, result: Result(domain.CheckResult, domain.ApiError))
+  SaveBuffer
+  BufferSaved(path: String, result: Result(Nil, domain.ApiError))
+  RequestCompletions
+  GotCursor(Int)
+  GotCompletions(Result(List(domain.CompletionItem), domain.ApiError))
+  ApplyCompletion(String)
+  DismissCompletions
+  CopyRef(String)
+  SetNewFilePath(String)
+  CreateNewFile
+  NewFileCreated(Result(domain.CreatedFile, domain.ApiError))
+  DuplicateToSibling(String)
+  FileDuplicated(Result(domain.CreatedFile, domain.ApiError))
+  RunPreflight
+  RunLocalCI
+  LocalCIStarted(Result(domain.ActionResponse, domain.ApiError))
+  PreflightStarted(Result(domain.ActionResponse, domain.ApiError))
+  GotPreflightResult(Result(domain.PreflightResult, domain.ApiError))
+  RequestBoot(String)
+  SetProblemFilter(String)
+  ToggleTreeGroup(String)
+  ToggleTreeFolder(String)
+  ReloadInstances
+  GotInstances(Result(List(domain.LauncherInstance), domain.ApiError))
 }
 
 pub fn initial() -> Model {
@@ -185,6 +270,25 @@ pub fn initial() -> Model {
     auth_signed_in: False,
     auth_username: "",
     auth_status_text: "",
+    editor_tree: [],
+    open_files: [],
+    active_path: "",
+    editor_diags: [],
+    editor_valid: True,
+    editor_checked: False,
+    completions: [],
+    completion_open: False,
+    completion_prefix: "",
+    completion_anchor: #(0, 0),
+    new_file_path: "",
+    preflight_status: "idle",
+    preflight: None,
+    preflight_job: None,
+    pending_boot: None,
+    problem_filter: "all",
+    collapsed_tree_groups: [],
+    collapsed_tree_folders: [],
+    instances: [],
   )
 }
 
@@ -222,8 +326,7 @@ pub fn record_progress_line(model: Model, raw_line: String) -> Model {
         True -> Model(..model, mod_progress_in_block: False)
         False ->
           case string.starts_with(trimmed, "~ ") {
-            True ->
-              add_pending_pair(model, string.drop_start(trimmed, 2))
+            True -> add_pending_pair(model, string.drop_start(trimmed, 2))
             False -> record_progress_prefixed(model, trimmed)
           }
       }
@@ -255,7 +358,8 @@ fn record_progress_prefixed(model: Model, line: String) -> Model {
         False ->
           case string.starts_with(line, no_updater_prefix) {
             True -> {
-              let rest = string.drop_start(line, string.length(no_updater_prefix))
+              let rest =
+                string.drop_start(line, string.length(no_updater_prefix))
               case string.split_once(rest, "\"") {
                 Ok(#(name, _)) ->
                   upsert_progress(
@@ -323,7 +427,10 @@ pub fn append_launcher_log(model: Model, line: String) -> Model {
 /// Folds one decoded `LauncherEvent` into the model: updates status and
 /// appends a human-readable log line. `kind` mirrors the Rust `LaunchEvent`
 /// serde tag (`packwand-launch`'s `supervisor.rs`).
-pub fn apply_launcher_event(model: Model, event: domain.LauncherEvent) -> Model {
+pub fn apply_launcher_event(
+  model: Model,
+  event: domain.LauncherEvent,
+) -> Model {
   let #(status, line) = case event.kind {
     "starting" -> #("starting", "Starting...")
     "started" -> #(
@@ -331,10 +438,7 @@ pub fn apply_launcher_event(model: Model, event: domain.LauncherEvent) -> Model 
       "Started (pid " <> int.to_string(event.pid) <> ")",
     )
     "stdout" | "stderr" -> #(model.launcher_status, event.line)
-    "exited" -> #(
-      "exited",
-      "Exited (code " <> int.to_string(event.code) <> ")",
-    )
+    "exited" -> #("exited", "Exited (code " <> int.to_string(event.code) <> ")")
     "failed" -> #("failed", "Failed: " <> event.error)
     "cancelled" -> #("cancelled", "Cancelled")
     _ -> #(model.launcher_status, "")
@@ -343,6 +447,127 @@ pub fn apply_launcher_event(model: Model, event: domain.LauncherEvent) -> Model 
   case line {
     "" -> with_status
     _ -> append_launcher_log(with_status, line)
+  }
+}
+
+// — IDE editor helpers —
+
+pub fn active_file(model: Model) -> Result(OpenFile, Nil) {
+  list.find(model.open_files, fn(file) { file.path == model.active_path })
+}
+
+pub fn file_dirty(file: OpenFile) -> Bool {
+  file.content != file.saved
+}
+
+/// The subdir base name ("1.20.1-mr") of a repo-relative subdir path.
+pub fn sub_name(path: String) -> String {
+  case path |> string.split("/") |> list.last {
+    Ok(name) -> name
+    Error(_) -> path
+  }
+}
+
+/// Joins the workspace root (absolute, forward-slash normalized) with a
+/// repo-relative subdir path into an absolute path the Tauri launcher can
+/// canonicalize.
+pub fn workspace_path(model: Model, path: String) -> String {
+  case model.root, path {
+    "", _ -> path
+    root, "" -> root
+    root, rel -> root <> "/" <> rel
+  }
+}
+
+/// Which registry kind completes/validates a file at this path.
+pub fn registry_kind_for_path(path: String) -> String {
+  case
+    string.starts_with(path, "config/")
+    || string.starts_with(path, "defaultconfigs/")
+  {
+    True -> "config"
+    False ->
+      case string.contains(path, "assets/") {
+        True -> "resourcepack"
+        False ->
+          case string.contains(path, "data/") {
+            True -> "datapack"
+            False ->
+              case string.starts_with(path, "kubejs/") {
+                True -> "kubejs"
+                False -> "config"
+              }
+          }
+      }
+  }
+}
+
+/// Whether the check endpoint understands this file type.
+pub fn checkable_path(path: String) -> Bool {
+  string.ends_with(path, ".json")
+  || string.ends_with(path, ".mcmeta")
+  || string.ends_with(path, ".toml")
+}
+
+pub fn json_path(path: String) -> Bool {
+  string.ends_with(path, ".json") || string.ends_with(path, ".mcmeta")
+}
+
+const token_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:./#-"
+
+/// The reference token ending at `pos` in `content`, and its start index —
+/// the client-side counterpart of the server's InferFromFile token scan.
+pub fn token_at(content: String, pos: Int) -> #(String, Int) {
+  let before = string.slice(content, 0, pos)
+  let reversed_token =
+    before
+    |> string.to_graphemes
+    |> list.reverse
+    |> list.take_while(fn(char) { string.contains(token_chars, char) })
+  let token = reversed_token |> list.reverse |> string.concat
+  #(token, pos - list.length(reversed_token))
+}
+
+/// Updates the active file's buffer content.
+pub fn set_active_content(model: Model, content: String) -> Model {
+  let files =
+    list.map(model.open_files, fn(file) {
+      case file.path == model.active_path {
+        True -> OpenFile(..file, content: content)
+        False -> file
+      }
+    })
+  Model(..model, open_files: files)
+}
+
+/// Clears per-buffer state when switching or closing tabs.
+pub fn reset_buffer_state(model: Model) -> Model {
+  Model(
+    ..model,
+    editor_diags: [],
+    editor_checked: False,
+    editor_valid: True,
+    completions: [],
+    completion_open: False,
+  )
+}
+
+/// The sibling subdir (the -mr/-cf counterpart) of the selected subdir, if
+/// the selected project has one — target of "duplicate across subdirs"
+/// (IDE.md §4.3).
+pub fn sibling_subdir(model: Model) -> Result(String, Nil) {
+  case selected_project(model) {
+    Ok(project) ->
+      case
+        list.find(project.subdirs, fn(subdir) {
+          subdir.path != model.selected_subdir
+          && sub_name(subdir.path) != sub_name(model.selected_subdir)
+        })
+      {
+        Ok(subdir) -> Ok(sub_name(subdir.path))
+        Error(_) -> Error(Nil)
+      }
+    Error(_) -> Error(Nil)
   }
 }
 

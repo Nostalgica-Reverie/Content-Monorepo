@@ -1,6 +1,6 @@
 ﻿# Building
 
-All components build from the repository root with [Task](https://taskfile.dev) (`Taskfile.yml`), or directly with their native toolchains.
+All components build from the repository root with [just](https://just.systems) (`justfile`), or directly with their native toolchains.
 
 ## Prerequisites
 
@@ -11,11 +11,11 @@ All components build from the repository root with [Task](https://taskfile.dev) 
 ## With Task
 
 ```sh
-task build-installer   # packwiz-installer + legacy Java bootstrap (Gradle)
-task build-webview     # mod_browser_webview, release profile (cargo)
-task build-bootstrap   # Go packwiz-bootstrap
-task gen-licenses      # regenerate the webview's third-party licenses page
-task build             # everything
+just build-installer   # packwiz-installer + legacy Java bootstrap (Gradle)
+just build-webview     # mod_browser_webview, release profile (cargo)
+just build-bootstrap   # Go packwiz-bootstrap
+just gen-licenses      # regenerate the webview's third-party licenses page
+just build             # everything
 ```
 
 ## Directly

@@ -51,4 +51,4 @@ In the GUI's Mods view, CurseForge and Modrinth mods with a known file/version I
 
 ## Licenses page
 
-The About menu shows bundled third-party licenses from `src/licenses.html`. Regenerate it after dependency changes with `task gen-licenses` (or the commands in the README).
+The About menu shows bundled third-party licenses from `src/licenses.html`. Regenerate it after dependency changes with `just gen-licenses` (or the commands in the README).

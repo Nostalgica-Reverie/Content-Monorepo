@@ -73,8 +73,8 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Validate Manifest
-        run: packwand validate "${{ matrix.entry.manifest }}"
+      - name: Preflight content and manifest
+        run: packwand preflight "$(dirname '${{ matrix.entry.manifest }}')"
 
       - name: Minify JSON (smaller published artifacts)
         run: packwand json minify "$(dirname '${{ matrix.entry.manifest }}')"

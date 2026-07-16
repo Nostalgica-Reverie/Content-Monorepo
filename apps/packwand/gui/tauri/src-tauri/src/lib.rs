@@ -45,7 +45,7 @@ fn current_backend_url(state: &Backend) -> Option<String> {
 
 /// Locates the packwand executable: PACKWAND_BIN, then next to the app
 /// executable, then PATH.
-fn find_packwand() -> Result<PathBuf, String> {
+pub(crate) fn find_packwand() -> Result<PathBuf, String> {
     if let Ok(bin) = std::env::var("PACKWAND_BIN") {
         let path = PathBuf::from(bin);
         if path.is_file() {
@@ -88,6 +88,7 @@ fn spawn_backend(workspace: Option<&Path>) -> Result<BackendProcess, String> {
     if let Some(workspace) = workspace {
         command.current_dir(workspace);
     }
+    no_console_window(&mut command);
     let mut child = command
         .spawn()
         .map_err(|e| format!("failed to start {} gui: {e}", bin.display()))?;
@@ -151,6 +152,19 @@ fn backend_url(workspace: Option<String>, state: State<'_, Backend>) -> Result<S
     let url = backend.url.clone();
     *guard = Some(backend);
     Ok(url)
+}
+
+/// Suppresses the console window Windows otherwise allocates when this
+/// GUI-subsystem app spawns a console-subsystem child process (e.g. the Go
+/// `packwand` binary). No-op on other platforms.
+pub(crate) fn no_console_window(command: &mut Command) -> &mut Command {
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x0800_0000;
+        command.creation_flags(CREATE_NO_WINDOW);
+    }
+    command
 }
 
 /// Opens `path` in the OS's file manager.
@@ -251,6 +265,21 @@ fn spawn_job_watcher(app: AppHandle) {
 
 pub fn run() {
     let builder = tauri::Builder::default()
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            if let Some(window) = app.get_webview_window("main") {
+                let _ = window.show();
+                let _ = window.set_focus();
+            }
+        }))
+        .plugin(
+            tauri_plugin_window_state::Builder::default()
+                .with_state_flags(
+                    tauri_plugin_window_state::StateFlags::POSITION
+                        | tauri_plugin_window_state::StateFlags::SIZE
+                        | tauri_plugin_window_state::StateFlags::MAXIMIZED,
+                )
+                .build(),
+        )
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_dialog::init())
         .manage(Backend(Mutex::new(None)))
@@ -261,6 +290,8 @@ pub fn run() {
             select_workspace,
             launcher::core_list_instances,
             launcher::core_plan_launch,
+            launcher::launcher_list_pack_instances,
+            launcher::launcher_delete_pack_instance,
             launcher::launcher_boot,
             launcher::launcher_cancel,
             launcher::auth_login,

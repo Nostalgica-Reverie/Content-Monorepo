@@ -1,5 +1,13 @@
-﻿import type { SearchDocument } from "$lib/generated/search";
-
+type SearchDocument = {
+  kind: "page" | "section";
+  title: string;
+  pageTitle: string;
+  sectionTitle: string;
+  description: string;
+  content: string;
+  url: string;
+  tags: string[];
+};
 const MAX_RESULTS = 20;
 const SNIPPET_RADIUS = 90;
 
@@ -27,8 +35,33 @@ let documents: IndexedDocument[] | null = null;
 export async function ensureSearchReady() {
   if (documents) return;
 
-  const { searchDocuments } = await import("$lib/generated/search");
-  documents = searchDocuments.map((doc) => ({
+  const { searchPages, searchSections } = await import("$lib/generated/search");
+  const searchDocuments: SearchDocument[] = [
+    ...searchPages.map(page => ({
+      kind: "page" as const,
+      title: page.title,
+      pageTitle: page.title,
+      sectionTitle: "",
+      description: page.description,
+      content: page.content,
+      url: page.url,
+      tags: page.tags,
+    })),
+    ...searchSections.map(section => {
+      const page = searchPages[section.page];
+      return {
+        kind: "section" as const,
+        title: section.title,
+        pageTitle: page.title,
+        sectionTitle: section.sectionTitle,
+        description: page.description,
+        content: section.content,
+        url: section.url,
+        tags: page.tags,
+      };
+    }),
+  ];
+  documents = searchDocuments.map(doc => ({
     ...doc,
     normalized: {
       title: normalizeText(doc.title),
@@ -37,7 +70,7 @@ export async function ensureSearchReady() {
       description: normalizeText(doc.description),
       content: normalizeText(doc.content),
       url: normalizeText(doc.url),
-      tags: doc.tags.map((tag) => normalizeText(tag)),
+      tags: doc.tags.map(tag => normalizeText(tag)),
     },
   }));
 }
@@ -53,7 +86,7 @@ export function search(query: string): SearchResult[] {
   }
 
   return documents
-    .map((doc) => scoreDocument(doc, parsed))
+    .map(doc => scoreDocument(doc, parsed))
     .filter((result): result is SearchMatch => result !== null)
     .sort((a, b) => b.score - a.score || a.doc.title.localeCompare(b.doc.title))
     .slice(0, MAX_RESULTS)
@@ -70,7 +103,7 @@ type SearchMatch = {
 };
 
 function scoreDocument(doc: IndexedDocument, parsed: ParsedQuery): SearchMatch | null {
-  if (parsed.tags.length > 0 && !parsed.tags.some((tag) => doc.normalized.tags.includes(tag))) {
+  if (parsed.tags.length > 0 && !parsed.tags.some(tag => doc.normalized.tags.includes(tag))) {
     return null;
   }
 
@@ -107,7 +140,7 @@ function scoreTerm(doc: IndexedDocument, term: string) {
   score += scoreField(doc.normalized.url, term, 36, 18);
   score += scoreField(doc.normalized.content, term, 18, 10);
 
-  if (doc.normalized.tags.some((tag) => tag === term)) {
+  if (doc.normalized.tags.some(tag => tag === term)) {
     score += 60;
   }
 
@@ -141,7 +174,11 @@ function parseQuery(input: string): ParsedQuery {
 
   for (const part of normalizedInput.split(/\s+/)) {
     if (part.startsWith("tag:")) {
-      for (const tag of part.slice(4).split(",").map((value) => value.trim()).filter(Boolean)) {
+      for (const tag of part
+        .slice(4)
+        .split(",")
+        .map(value => value.trim())
+        .filter(Boolean)) {
         tags.push(tag);
       }
       continue;

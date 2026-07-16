@@ -8,27 +8,36 @@ import * as $attribute from "../../lustre/lustre/attribute.mjs";
 import * as $element from "../../lustre/lustre/element.mjs";
 import * as $html from "../../lustre/lustre/element/html.mjs";
 import * as $event from "../../lustre/lustre/event.mjs";
-import { Ok, toList, Empty as $Empty, prepend as listPrepend, isEqual } from "../gleam.mjs";
+import { Ok, Error, toList, Empty as $Empty, prepend as listPrepend, isEqual } from "../gleam.mjs";
 import * as $manifest_form from "../packwand_gui/manifest_form.mjs";
 import * as $model from "../packwand_gui/model.mjs";
 import {
   AddMod,
   Build,
   Bump,
+  Diagnostic,
   DocsModlist,
   DocsPages,
   Doctor,
   ExportCurseforge,
   ExportModrinth,
   FreezeMod,
+  LauncherInstance,
   Lint,
   NixGen,
   PacksIndex,
   PinMod,
+  PreflightIssue,
+  PreflightResult,
+  PreflightStep,
   RefreshSubdir,
   Rehash,
   RemoveMod,
   SetSide,
+  TreeFile,
+  TreeFolder,
+  TreeGroup,
+  TreeLeaf,
   UnfreezeMod,
   UnpinMod,
   UpdateAll,
@@ -38,35 +47,55 @@ import {
   WorkspaceStatus,
   WorkspaceSync,
   WorkspaceUpdate,
+  nest_tree_files,
   project_summary,
 } from "../packwand_gui/model.mjs";
 import * as $state from "../packwand_gui/state.mjs";
 import {
-  BootPack,
+  ApplyCompletion,
   CancelBoot,
   Changelog,
   CopyChangelog,
+  CopyRef,
+  CreateNewFile,
   CreateProject,
+  DuplicateToSibling,
+  Editor,
   Exports,
   IconFailed,
+  Instances,
   Logs,
   Mods,
   Navigate,
+  OpenFile,
+  OpenPath,
   Overview,
+  ReloadInstances,
+  ReloadTree,
   RequestAuthLogin,
   RequestAuthLogout,
+  RequestBoot,
+  RequestCompletions,
   RunAction,
+  RunLocalCI,
+  RunPreflight,
   RunWebview,
+  SaveBuffer,
+  SaveChangelog,
   SaveManifest,
   SelectProject,
   SelectSubdir,
+  SelectTab,
+  SetBuffer,
   SetBumpConfigs,
   SetBumpVersion,
+  SetChangelog,
   SetDockGameWindow,
   SetManifest,
   SetManifestField,
   SetManifestStructured,
   SetModSlug,
+  SetNewFilePath,
   SetNewPackDescription,
   SetNewPackID,
   SetNewPackLoader,
@@ -74,8 +103,12 @@ import {
   SetNewPackName,
   SetNewPackType,
   SetNewPackVersion,
+  SetProblemFilter,
   SetSearch,
   Settings,
+  ToggleTreeFolder,
+  ToggleTreeGroup,
+  file_dirty,
   job_running,
   launcher_running,
   progress_status_label,
@@ -87,6 +120,10 @@ import { currentHash as current_hash } from "./ffi.mjs";
 export function hash(view) {
   if (view instanceof Overview) {
     return "overview";
+  } else if (view instanceof Editor) {
+    return "editor";
+  } else if (view instanceof Instances) {
+    return "instances";
   } else if (view instanceof Exports) {
     return "exports";
   } else if (view instanceof Mods) {
@@ -103,6 +140,10 @@ export function hash(view) {
 export function from_name(value) {
   if (value === "exports") {
     return new Exports();
+  } else if (value === "editor") {
+    return new Editor();
+  } else if (value === "instances") {
+    return new Instances();
   } else if (value === "mods") {
     return new Mods();
   } else if (value === "changelog") {
@@ -285,6 +326,157 @@ function search_results_panel(model, project) {
         (() => {
           if (rows instanceof $Empty) {
             return toList([empty_row("No matches in this pack.")]);
+          } else {
+            return rows;
+          }
+        })(),
+      ),
+    ]),
+  );
+}
+
+function filter_button(model, value, label) {
+  return $html.button(
+    toList([
+      $attribute.classes(
+        toList([["ghost", true], ["active", model.problem_filter === value]]),
+      ),
+      $attribute.type_("button"),
+      $event.on_click(new SetProblemFilter(value)),
+    ]),
+    toList([$html.text(label)]),
+  );
+}
+
+function problem_row(severity, path, line, col, message, code) {
+  let _block;
+  let $ = line > 0;
+  if ($) {
+    _block = (((path + ":") + $int.to_string(line)) + ":") + $int.to_string(col);
+  } else {
+    _block = path;
+  }
+  let location = _block;
+  return $html.div(
+    toList([$attribute.class$("problem-row " + severity)]),
+    toList([
+      $html.span(
+        toList([$attribute.class$("problem-severity")]),
+        toList([$html.text(severity)]),
+      ),
+      (() => {
+        if (path === "") {
+          return $html.span(
+            toList([$attribute.class$("problem-location")]),
+            toList([$html.text("pack")]),
+          );
+        } else {
+          return $html.button(
+            toList([
+              $attribute.class$("problem-location"),
+              $attribute.type_("button"),
+              $event.on_click(new OpenPath(path, "file", "")),
+            ]),
+            toList([$html.text(location)]),
+          );
+        }
+      })(),
+      $html.span(
+        toList([$attribute.class$("problem-message")]),
+        toList([$html.text(message)]),
+      ),
+      $html.code(toList([]), toList([$html.text(code)])),
+    ]),
+  );
+}
+
+function problem_visible(filter, severity) {
+  return (filter === "all") || (filter === severity);
+}
+
+function problems_panel(model) {
+  let _block;
+  let _pipe = model.editor_diags;
+  _block = $list.filter_map(
+    _pipe,
+    (diag) => {
+      let severity = diag.severity;
+      let line = diag.line;
+      let col = diag.col;
+      let message = diag.message;
+      let code = diag.code;
+      let $ = problem_visible(model.problem_filter, severity);
+      if ($) {
+        return new Ok(
+          problem_row(severity, model.active_path, line, col, message, code),
+        );
+      } else {
+        return new Error(undefined);
+      }
+    },
+  );
+  let buffer_rows = _block;
+  let _block$1;
+  let $ = model.preflight;
+  if ($ instanceof Some) {
+    let steps = $[0].steps;
+    let _pipe$1 = steps;
+    _block$1 = $list.flat_map(
+      _pipe$1,
+      (step) => {
+        let issues = step.issues;
+        let _pipe$2 = issues;
+        return $list.filter_map(
+          _pipe$2,
+          (issue) => {
+            let level = issue.level;
+            let path = issue.path;
+            let message = issue.message;
+            let $1 = problem_visible(model.problem_filter, level);
+            if ($1) {
+              return new Ok(
+                problem_row(level, path, 0, 0, message, "preflight"),
+              );
+            } else {
+              return new Error(undefined);
+            }
+          },
+        );
+      },
+    );
+  } else {
+    _block$1 = toList([]);
+  }
+  let preflight_rows = _block$1;
+  let rows = $list.append(buffer_rows, preflight_rows);
+  return panel_with_head(
+    "span-12 problems-panel",
+    "Problems",
+    $html.div(
+      toList([$attribute.class$("problem-filters")]),
+      toList([
+        filter_button(model, "all", "All"),
+        filter_button(model, "error", "Errors"),
+        filter_button(model, "warning", "Warnings"),
+      ]),
+    ),
+    toList([
+      $html.div(
+        toList([$attribute.class$("problem-list")]),
+        (() => {
+          if (rows instanceof $Empty) {
+            return toList([
+              empty_row(
+                (() => {
+                  let $1 = model.preflight_status;
+                  if ($1 === "running") {
+                    return "Preflight is running…";
+                  } else {
+                    return "No problems reported.";
+                  }
+                })(),
+              ),
+            ]);
           } else {
             return rows;
           }
@@ -1388,7 +1580,7 @@ function bump_panel(model, project) {
   );
 }
 
-function subdir_row(subdir) {
+function subdir_row(model, subdir) {
   let _block;
   let $ = subdir.mod_count;
   if ($ === 0) {
@@ -1407,9 +1599,42 @@ function subdir_row(subdir) {
           $html.span(toList([]), toList([$html.text(subdir.path + count)])),
         ]),
       ),
-      $html.span(
-        toList([]),
-        toList([$html.text(fallback(subdir.platform, "content"))]),
+      $html.div(
+        toList([$attribute.class$("subdir-health")]),
+        toList([
+          $html.span(
+            toList([]),
+            toList([$html.text(fallback(subdir.platform, "content"))]),
+          ),
+          (() => {
+            let $1 = subdir.path === model.selected_subdir;
+            if ($1) {
+              return $html.span(
+                toList([
+                  $attribute.class$("status-badge " + model.preflight_status),
+                ]),
+                toList([
+                  $html.text(
+                    (() => {
+                      let $2 = model.preflight_status;
+                      if ($2 === "passed") {
+                        return "healthy";
+                      } else if ($2 === "failed") {
+                        return "issues";
+                      } else if ($2 === "running") {
+                        return "checking";
+                      } else {
+                        return "unchecked";
+                      }
+                    })(),
+                  ),
+                ]),
+              );
+            } else {
+              return $html.text("");
+            }
+          })(),
+        ]),
       ),
     ]),
   );
@@ -1427,7 +1652,7 @@ function subdir_panel(model, subdirs) {
       );
     },
   );
-  _block = $list.map(_pipe$1, subdir_row);
+  _block = $list.map(_pipe$1, (subdir) => { return subdir_row(model, subdir); });
   let rows = _block;
   return panel_with_head(
     "span-5",
@@ -1618,34 +1843,25 @@ function progress_panel(model) {
 }
 
 function changelog_panel(model) {
-  let _block;
-  let _pipe = model.changelog;
-  let _pipe$1 = $string.split(_pipe, "\n");
-  let _pipe$2 = $list.filter(
-    _pipe$1,
-    (line) => { return query_matches(model.search, line); },
-  );
-  _block = $string.join(_pipe$2, "\n");
-  let lines = _block;
   return panel_with_head(
     "span-12",
     "Changelog",
-    button("ghost", "Copy Summary", new CopyChangelog()),
+    $html.div(
+      toList([$attribute.class$("panel-actions")]),
+      toList([
+        button("ghost", "Copy Summary", new CopyChangelog()),
+        button("ghost", "Save Changelog", new SaveChangelog()),
+      ]),
+    ),
     toList([
-      $html.pre(
-        toList([$attribute.class$("changelog-preview")]),
+      $html.textarea(
         toList([
-          $html.text(
-            (() => {
-              if (lines === "") {
-                return "No changelog.md content found.";
-              } else {
-                return lines;
-              }
-            })(),
-          ),
+          $attribute.spellcheck(false),
+          $event.on_input((var0) => { return new SetChangelog(var0); }),
         ]),
+        model.changelog,
       ),
+      notice(model.notice),
     ]),
   );
 }
@@ -1924,7 +2140,7 @@ function actions_panel(model, subdirs) {
               return button_disabled(
                 "",
                 "Boot (dev test)",
-                new BootPack(model.selected_subdir),
+                new RequestBoot(model.selected_subdir),
                 model.selected_subdir === "",
               );
             }
@@ -1949,6 +2165,464 @@ function actions_panel(model, subdirs) {
           ),
         ]),
       ),
+    ]),
+  );
+}
+
+function instances_panel(model) {
+  return panel_with_head(
+    "span-12",
+    "Instances",
+    button("ghost", "Reload", new ReloadInstances()),
+    toList([
+      $html.div(
+        toList([$attribute.class$("list")]),
+        (() => {
+          let $ = model.instances;
+          if ($ instanceof $Empty) {
+            return toList([
+              empty_row("No managed instances yet. Boot a pack to install one."),
+            ]);
+          } else {
+            let instances = $;
+            let _pipe = instances;
+            return $list.map(
+              _pipe,
+              (instance) => {
+                let path = instance.path;
+                let source = instance.source_pack;
+                let installed = instance.installed_at;
+                return $html.div(
+                  toList([$attribute.class$("row")]),
+                  toList([
+                    $html.div(
+                      toList([]),
+                      toList([
+                        $html.strong(toList([]), toList([$html.text(source)])),
+                        $html.span(
+                          toList([]),
+                          toList([
+                            $html.text(
+                              (("Installed " + $int.to_string(installed)) + " · ") + path,
+                            ),
+                          ]),
+                        ),
+                      ]),
+                    ),
+                    button("", "Update & Boot", new RequestBoot(source)),
+                  ]),
+                );
+              },
+            );
+          }
+        })(),
+      ),
+    ]),
+  );
+}
+
+function editor_inspector(model) {
+  return $html.aside(
+    toList([$attribute.class$("editor-inspector")]),
+    toList([
+      $html.div(
+        toList([$attribute.class$("inspector-head")]),
+        toList([
+          $html.h3(toList([]), toList([$html.text("Problems")])),
+          $html.span(
+            toList([$attribute.class$("status-badge " + model.preflight_status)]),
+            toList([$html.text(model.preflight_status)]),
+          ),
+        ]),
+      ),
+      $html.p(
+        toList([$attribute.class$("inspector-status")]),
+        toList([
+          $html.text(
+            (() => {
+              let $ = model.editor_checked;
+              if ($) {
+                let $1 = model.editor_valid;
+                if ($1) {
+                  return "No buffer errors";
+                } else {
+                  return "Issues in buffer";
+                }
+              } else {
+                return "Checks run after you pause typing";
+              }
+            })(),
+          ),
+        ]),
+      ),
+      $html.div(
+        toList([$attribute.class$("inspector-list")]),
+        (() => {
+          let $ = model.editor_diags;
+          if ($ instanceof $Empty) {
+            return toList([
+              $html.span(
+                toList([]),
+                toList([$html.text("No diagnostics for the active file.")]),
+              ),
+            ]);
+          } else {
+            let diags = $;
+            let _pipe = diags;
+            return $list.map(
+              _pipe,
+              (diag) => {
+                let severity = diag.severity;
+                let line = diag.line;
+                let col = diag.col;
+                let message = diag.message;
+                return $html.div(
+                  toList([$attribute.class$("inspector-problem " + severity)]),
+                  toList([
+                    $html.strong(
+                      toList([]),
+                      toList([
+                        $html.text(
+                          (((severity + " · Ln ") + $int.to_string(line)) + ":") + $int.to_string(
+                            col,
+                          ),
+                        ),
+                      ]),
+                    ),
+                    $html.p(toList([]), toList([$html.text(message)])),
+                  ]),
+                );
+              },
+            );
+          }
+        })(),
+      ),
+    ]),
+  );
+}
+
+function completion_menu(model) {
+  let $ = model.completion_open;
+  if ($) {
+    return $html.div(
+      toList([$attribute.class$("completion-menu")]),
+      (() => {
+        let $1 = model.completions;
+        if ($1 instanceof $Empty) {
+          return toList([
+            $html.span(toList([]), toList([$html.text("No completions")])),
+          ]);
+        } else {
+          let items = $1;
+          let _pipe = items;
+          let _pipe$1 = $list.take(_pipe, 30);
+          return $list.map(
+            _pipe$1,
+            (item) => {
+              return button(
+                "completion-item",
+                (item.id + "  ") + item.kind,
+                new ApplyCompletion(item.id),
+              );
+            },
+          );
+        }
+      })(),
+    );
+  } else {
+    return $html.text("");
+  }
+}
+
+function editor_buffer(model) {
+  let $ = $list.find(
+    model.open_files,
+    (file) => { return file.path === model.active_path; },
+  );
+  if ($ instanceof Ok) {
+    let file = $[0];
+    return $html.div(
+      toList([$attribute.class$("editor-buffer")]),
+      toList([
+        $html.div(
+          toList([$attribute.class$("editor-toolbar")]),
+          toList([
+            $html.code(toList([]), toList([$html.text(file.path)])),
+            button("ghost", "Complete", new RequestCompletions()),
+            button_disabled("", "Save", new SaveBuffer(), !file_dirty(file)),
+          ]),
+        ),
+        $html.textarea(
+          toList([
+            $attribute.id("editorText"),
+            $attribute.spellcheck(false),
+            $event.on_input((var0) => { return new SetBuffer(var0); }),
+          ]),
+          file.content,
+        ),
+      ]),
+    );
+  } else {
+    return $html.div(
+      toList([$attribute.class$("editor-empty")]),
+      toList([$html.text("Select a file to edit.")]),
+    );
+  }
+}
+
+function editor_tabs(model) {
+  return $html.div(
+    toList([$attribute.class$("editor-tabs")]),
+    (() => {
+      let $ = model.open_files;
+      if ($ instanceof $Empty) {
+        return toList([
+          $html.span(
+            toList([]),
+            toList([$html.text("Open a file from the tree")]),
+          ),
+        ]);
+      } else {
+        let files = $;
+        let _pipe = files;
+        return $list.map(
+          _pipe,
+          (file) => {
+            let path = file.path;
+            return $html.button(
+              toList([
+                $attribute.classes(
+                  toList([
+                    ["editor-tab", true],
+                    ["active", path === model.active_path],
+                  ]),
+                ),
+                $attribute.type_("button"),
+                $event.on_click(new SelectTab(path)),
+              ]),
+              toList([
+                $html.text(
+                  path + (() => {
+                    let $1 = file_dirty(file);
+                    if ($1) {
+                      return " •";
+                    } else {
+                      return "";
+                    }
+                  })(),
+                ),
+              ]),
+            );
+          },
+        );
+      }
+    })(),
+  );
+}
+
+function tree_file(file, depth) {
+  let path = file.path;
+  let ref_id = file.ref_id;
+  let kind = file.kind;
+  let editable = file.editable;
+  return $html.div(
+    toList([
+      $attribute.class$("tree-file"),
+      $attribute.style("padding-left", $int.to_string(depth * 12) + "px"),
+    ]),
+    toList([
+      button_disabled(
+        "tree-open",
+        path,
+        new OpenPath(path, kind, ref_id),
+        !editable,
+      ),
+      $html.div(
+        toList([$attribute.class$("tree-actions")]),
+        toList([
+          (() => {
+            if (ref_id === "") {
+              return $html.text("");
+            } else {
+              return button("icon-btn ghost", "Copy ID", new CopyRef(ref_id));
+            }
+          })(),
+          button("icon-btn ghost", "Duplicate", new DuplicateToSibling(path)),
+        ]),
+      ),
+    ]),
+  );
+}
+
+function tree_node(model, node, depth) {
+  if (node instanceof TreeFolder) {
+    let key = node.key;
+    let label = node.label;
+    let children = node.children;
+    let collapsed = $list.contains(model.collapsed_tree_folders, key);
+    return $html.div(
+      toList([$attribute.class$("tree-folder")]),
+      toList([
+        $html.button(
+          toList([
+            $attribute.class$("tree-folder-toggle"),
+            $attribute.type_("button"),
+            $attribute.style("padding-left", $int.to_string(depth * 12) + "px"),
+            $event.on_click(new ToggleTreeFolder(key)),
+          ]),
+          toList([
+            $html.text(
+              (() => {
+                if (collapsed) {
+                  return "> ";
+                } else {
+                  return "v ";
+                }
+              })() + label,
+            ),
+          ]),
+        ),
+        (() => {
+          if (collapsed) {
+            return $html.text("");
+          } else {
+            return tree_nodes(model, children, depth + 1);
+          }
+        })(),
+      ]),
+    );
+  } else {
+    let file = node.file;
+    return tree_file(file, depth);
+  }
+}
+
+function tree_nodes(model, nodes, depth) {
+  return $html.div(
+    toList([]),
+    (() => {
+      let _pipe = nodes;
+      return $list.map(
+        _pipe,
+        (node) => { return tree_node(model, node, depth); },
+      );
+    })(),
+  );
+}
+
+function tree_group(model, group) {
+  let name = group.name;
+  let files = group.files;
+  let collapsed = $list.contains(model.collapsed_tree_groups, name);
+  return $html.section(
+    toList([$attribute.class$("tree-group")]),
+    toList([
+      $html.button(
+        toList([
+          $attribute.class$("tree-group-toggle"),
+          $attribute.type_("button"),
+          $event.on_click(new ToggleTreeGroup(name)),
+        ]),
+        toList([
+          $html.text(
+            ((((() => {
+              if (collapsed) {
+                return "> ";
+              } else {
+                return "v ";
+              }
+            })() + name) + " (") + $int.to_string($list.length(files))) + ")",
+          ),
+        ]),
+      ),
+      (() => {
+        if (collapsed) {
+          return $html.text("");
+        } else {
+          return tree_nodes(model, nest_tree_files(name, files), 0);
+        }
+      })(),
+    ]),
+  );
+}
+
+function editor_panel(model) {
+  return panel_with_head(
+    "span-12 ide-editor-panel",
+    "Editor",
+    $html.div(
+      toList([$attribute.class$("panel-actions")]),
+      toList([
+        button_disabled(
+          "ghost",
+          "Refresh tree",
+          new ReloadTree(),
+          model.selected_subdir === "",
+        ),
+        button_disabled(
+          "ghost",
+          "Run CI locally",
+          new RunLocalCI(),
+          job_running(model),
+        ),
+        button_disabled(
+          "",
+          "Validate pack",
+          new RunPreflight(),
+          job_running(model),
+        ),
+      ]),
+    ),
+    toList([
+      $html.div(
+        toList([$attribute.class$("editor-create")]),
+        toList([
+          $html.input(
+            toList([
+              $attribute.placeholder("config/example.json"),
+              $attribute.value(model.new_file_path),
+              $event.on_input((var0) => { return new SetNewFilePath(var0); }),
+            ]),
+          ),
+          button_disabled(
+            "ghost",
+            "New file",
+            new CreateNewFile(),
+            $string.trim(model.new_file_path) === "",
+          ),
+        ]),
+      ),
+      $html.div(
+        toList([$attribute.class$("ide-workbench")]),
+        toList([
+          $html.aside(
+            toList([$attribute.class$("file-tree")]),
+            (() => {
+              let $ = model.editor_tree;
+              if ($ instanceof $Empty) {
+                return toList([empty_row("No editable pack files found.")]);
+              } else {
+                let groups = $;
+                let _pipe = groups;
+                return $list.map(
+                  _pipe,
+                  (group) => { return tree_group(model, group); },
+                );
+              }
+            })(),
+          ),
+          $html.div(
+            toList([$attribute.class$("editor-main")]),
+            toList([
+              editor_tabs(model),
+              editor_buffer(model),
+              completion_menu(model),
+            ]),
+          ),
+          editor_inspector(model),
+        ]),
+      ),
+      notice(model.notice),
     ]),
   );
 }
@@ -2027,6 +2701,10 @@ function sections_for_view(model, project) {
       actions_panel(model, project.subdirs),
       variant_panel(model, project.variants),
     ]);
+  } else if ($ instanceof Editor) {
+    return toList([editor_panel(model)]);
+  } else if ($ instanceof Instances) {
+    return toList([instances_panel(model)]);
   } else if ($ instanceof Exports) {
     return toList([actions_panel(model, project.subdirs)]);
   } else if ($ instanceof Mods) {
@@ -2056,7 +2734,10 @@ function sections_for_view(model, project) {
 function sections(model, project) {
   let $ = $string.trim(model.search);
   if ($ === "") {
-    return sections_for_view(model, project);
+    return $list.append(
+      sections_for_view(model, project),
+      toList([problems_panel(model)]),
+    );
   } else {
     return toList([search_results_panel(model, project)]);
   }
@@ -2264,7 +2945,7 @@ function main_view(model) {
   }
 }
 
-function nav_button(current, target, label) {
+function nav_button(current, target, icon, label) {
   return $html.button(
     toList([
       $attribute.classes(
@@ -2273,7 +2954,16 @@ function nav_button(current, target, label) {
       $attribute.type_("button"),
       $event.on_click(new Navigate(target)),
     ]),
-    toList([$html.text(label)]),
+    toList([
+      $html.span(
+        toList([$attribute.class$("nav-icon")]),
+        toList([$html.text(icon)]),
+      ),
+      $html.span(
+        toList([$attribute.class$("nav-label")]),
+        toList([$html.text(label)]),
+      ),
+    ]),
   );
 }
 
@@ -2319,6 +3009,21 @@ function sidebar(model) {
           ),
         ]),
       ),
+      $html.div(
+        toList([$attribute.class$("explorer-title")]),
+        toList([
+          $html.span(toList([]), toList([$html.text("EXPLORER")])),
+          $html.span(
+            toList([
+              $attribute.class$("branch-option"),
+              $attribute.title(
+                "Git branch switching will appear here when repository branch actions are available.",
+              ),
+            ]),
+            toList([$html.text("⑂ branch")]),
+          ),
+        ]),
+      ),
       $html.label(
         toList([
           $attribute.class$("field-label"),
@@ -2335,14 +3040,16 @@ function sidebar(model) {
         project_options(model.projects, model.selected_id),
       ),
       $html.nav(
-        toList([]),
+        toList([$attribute.class$("activity-nav")]),
         toList([
-          nav_button(model.view, new Overview(), "Open"),
-          nav_button(model.view, new Exports(), "Exports"),
-          nav_button(model.view, new Mods(), "Mods"),
-          nav_button(model.view, new Changelog(), "Changelog"),
-          nav_button(model.view, new Logs(), "Logs"),
-          nav_button(model.view, new Settings(), "Settings"),
+          nav_button(model.view, new Overview(), "⌂", "Overview"),
+          nav_button(model.view, new Editor(), "▣", "Editor"),
+          nav_button(model.view, new Instances(), "◫", "Instances"),
+          nav_button(model.view, new Exports(), "⇧", "Exports"),
+          nav_button(model.view, new Mods(), "◈", "Mods"),
+          nav_button(model.view, new Changelog(), "≡", "Changelog"),
+          nav_button(model.view, new Logs(), "›_", "Logs"),
+          nav_button(model.view, new Settings(), "⚙", "Settings"),
         ]),
       ),
       $html.div(

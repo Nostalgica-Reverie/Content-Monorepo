@@ -70,11 +70,7 @@ jobs:
             STATUS=0
             while IFS= read -r pack; do
               [ -n "$pack" ] || continue
-              for mf in "$pack/manifest.json" "$pack/manifest-experimental.json"; do
-                if [ -f "$mf" ]; then
-                  packwand validate "$mf" || STATUS=1
-                fi
-              done
+              packwand preflight "$pack" || STATUS=1
             done <<< "$CHANGED_PACKS"
             exit $STATUS
           } 2>&1 | tee "$RUNNER_TEMP/validate-output.txt"

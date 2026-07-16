@@ -33,7 +33,7 @@ Platform-specific webview dependencies:
 From the repository root:
 
 ```sh
-task build-gui
+just build-gui
 ```
 
 This builds the `packwand` CLI first, then runs `cargo tauri build` in `apps/packwand/gui/tauri`, producing a platform installer/bundle under `apps/packwand/gui/tauri/src-tauri/target/release/bundle/`.
@@ -49,7 +49,7 @@ cd apps/packwand/gui/tauri/src-tauri
 cargo tauri dev
 ```
 
-`tauri dev` starts `packwand gui --no-open --port 8654` (via `beforeDevCommand`) and points the window at it, so frontend/API changes are picked up by restarting the server. To iterate on the Gleam frontend, rebuild it with `task gui-frontend` (the server serves the embedded static files, so rebuild the Go binary — or just restart `cargo tauri dev` — after changing them).
+`tauri dev` starts `packwand gui --no-open --port 8654` (via `beforeDevCommand`) and points the window at it, so frontend/API changes are picked up by restarting the server. To iterate on the Gleam frontend, rebuild it with `just gui-frontend` (the server serves the embedded static files, so rebuild the Go binary — or just restart `cargo tauri dev` — after changing them).
 
 ## Security boundaries
 

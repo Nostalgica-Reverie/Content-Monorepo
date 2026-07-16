@@ -5,17 +5,17 @@ on:
     branches: ["main"]
     paths:
       - "apps/packwand-installer/**"
-      - "Taskfile.yml"
+      - "justfile"
       - ".forgejo/actions/setup-java/**"
-      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/actions/setup-just/**"
       - ".forgejo/workflows/ci-installer.yml"
   pull_request:
     branches: ["main"]
     paths:
       - "apps/packwand-installer/**"
-      - "Taskfile.yml"
+      - "justfile"
       - ".forgejo/actions/setup-java/**"
-      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/actions/setup-just/**"
       - ".forgejo/workflows/ci-installer.yml"
   workflow_dispatch:
 
@@ -35,16 +35,16 @@ jobs:
           sparse-checkout: |
             apps/packwand-installer
             tools
-            Taskfile.yml
+            justfile
             .forgejo/actions
       - uses: ./.forgejo/actions/setup-java
-      - uses: ./.forgejo/actions/setup-task
+      - uses: ./.forgejo/actions/setup-just
       - name: Lint installer
-        run: task lint-installer
+        run: just lint-installer
       - name: Test installer
-        run: task test-installer
+        run: just test-installer
       - name: Build installer
-        run: task build-installer
+        run: just build-installer
       - name: Checksum installer snapshot
         if: github.ref == 'refs/heads/main'
         working-directory: apps/packwand-installer/build/dist

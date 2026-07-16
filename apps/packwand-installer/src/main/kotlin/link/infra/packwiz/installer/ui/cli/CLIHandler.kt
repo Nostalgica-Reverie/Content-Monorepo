@@ -8,7 +8,7 @@ import link.infra.packwiz.installer.ui.data.InstallProgress
 import link.infra.packwiz.installer.util.Log
 import kotlin.system.exitProcess
 
-class CLIHandler : IUserInterface {
+class CLIHandler(private val continueOnError: Boolean = false) : IUserInterface {
 	@Volatile
 	override var optionsButtonPressed = false
 	// TODO: treat ctrl+c as cancel?
@@ -59,6 +59,10 @@ class CLIHandler : IUserInterface {
 		for (ex in exceptions) {
 			print(ex.name + ": ")
 			ex.exception.printStackTrace()
+		}
+		if (continueOnError) {
+			println("--continue-on-error was given: skipping the above and continuing the install.")
+			return ExceptionListResult.CONTINUE
 		}
 		return ExceptionListResult.CANCEL
 	}

@@ -123,6 +123,7 @@ pub fn ensure_instance_for_session(
     managed_root: &Path,
     target: &PackTarget,
     session: &Session,
+    java: Option<PathBuf>,
     on_progress: impl Fn(InstallProgress) + Sync,
 ) -> Result<InstanceRecord, DevBootError> {
     let repo = FsInstanceRepository::new(managed_root.to_path_buf());
@@ -142,7 +143,7 @@ pub fn ensure_instance_for_session(
         loader: target.loader.clone(),
         loader_version: target.loader_version.clone(),
         session: session.clone(),
-        java: None,
+        java,
         memory_max_mb: None,
         workers: 8,
         endpoints: MetadataEndpoints::default(),
@@ -164,11 +165,12 @@ pub fn boot_pack(
     managed_root: &Path,
     pack_dir: &Path,
     session: &Session,
+    java: Option<PathBuf>,
     on_progress: impl Fn(InstallProgress) + Sync,
 ) -> Result<BootedPack, DevBootError> {
     let pack_toml = pack_dir.join("pack.toml");
     let target = resolve_pack_target(&pack_toml)?;
-    let record = ensure_instance_for_session(managed_root, &target, session, on_progress)?;
+    let record = ensure_instance_for_session(managed_root, &target, session, java, on_progress)?;
 
     let managed_paths = FsInstanceRepository::new(managed_root.to_path_buf())
         .instance_paths(&instance_id_for(&target));
