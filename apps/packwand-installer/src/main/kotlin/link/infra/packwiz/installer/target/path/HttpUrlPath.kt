@@ -7,22 +7,35 @@ import okhttp3.Request
 import okio.BufferedSource
 import okio.IOException
 
-class HttpUrlPath(private val url: HttpUrl, path: String? = null): PackwizPath<HttpUrlPath>(path) {
+class HttpUrlPath(
+	private val url: HttpUrl,
+	path: String? = null,
+	private val requestHeaders: Map<String, String> = emptyMap()
+): PackwizPath<HttpUrlPath>(path) {
 	private fun build() = if (path == null) { url } else { url.newBuilder().addPathSegments(path).build() }
-
-	@Throws(RequestException::class)
-	override fun source(clientHolder: ClientHolder): BufferedSource {
-		val req = Request.Builder()
+	internal fun request(): Request {
+		val builder = Request.Builder()
 			.url(build())
 			.header("Accept", "application/octet-stream")
 			.header("User-Agent", "packwiz-installer")
 			.get()
-			.build()
+		for ((name, value) in requestHeaders) {
+			builder.header(name, value)
+		}
+		return builder.build()
+	}
+
+	@Throws(RequestException::class)
+	override fun source(clientHolder: ClientHolder): BufferedSource {
+		val req = request()
 		try {
 			val res = clientHolder.okHttpClient.newCall(req).execute()
 			// Can't use .use since it would close the response body before returning it to the caller
 			try {
 				if (!res.isSuccessful) {
+					if ((res.code == 401 || res.code == 403) && req.header("X-API-Key") != null) {
+						throw RequestException.Response.HTTP.APIKeyRejected(req, res)
+					}
 					throw RequestException.Response.HTTP.ErrorCode(req, res)
 				}
 
@@ -40,7 +53,7 @@ class HttpUrlPath(private val url: HttpUrl, path: String? = null): PackwizPath<H
 		}
 	}
 
-	override fun construct(path: String): HttpUrlPath = HttpUrlPath(url, path)
+	override fun construct(path: String): HttpUrlPath = HttpUrlPath(url, path, requestHeaders)
 
 	override val folder: Boolean
 		get() = pathFolder ?: (url.pathSegments.last() == "")
@@ -55,6 +68,7 @@ class HttpUrlPath(private val url: HttpUrl, path: String? = null): PackwizPath<H
 		other as HttpUrlPath
 
 		if (url != other.url) return false
+		if (requestHeaders != other.requestHeaders) return false
 
 		return true
 	}
@@ -62,6 +76,7 @@ class HttpUrlPath(private val url: HttpUrl, path: String? = null): PackwizPath<H
 	override fun hashCode(): Int {
 		var result = super.hashCode()
 		result = 31 * result + url.hashCode()
+		result = 31 * result + requestHeaders.hashCode()
 		return result
 	}
 

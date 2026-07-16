@@ -13,8 +13,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.internal.closeQuietly
-import okio.ByteString.Companion.decodeBase64
-import java.nio.charset.StandardCharsets
 import kotlin.io.path.absolute
 
 private class GetFilesRequest(val fileIds: List<Int>)
@@ -42,13 +40,26 @@ private class GetModsResponse {
 }
 
 private const val APIServer = "api.curseforge.com"
-// If you fork/derive from packwiz, I request that you obtain your own API key.
-private val APIKey = "JDJhJDEwJHNBWVhqblU1N0EzSmpzcmJYM3JVdk92UWk2NHBLS3BnQ2VpbGc1TUM1UGNKL0RYTmlGWWxh".decodeBase64()!!
-	.string(StandardCharsets.UTF_8)
+// PackWand's CurseForge client identifier. Runtime environment variables take
+// precedence so releases can rotate it without changing installer behavior.
+private const val DefaultAPIKey = "\$2a\$10\$xOGBgtaSrq1idVZ3lOWfueL5n16U5fyNMZqTExBL3vq1v7zyjvJty"
+private const val APIKeyInstructions =
+	"Set CURSEFORGE_API_KEY to override PackWand's embedded client key."
+
+private fun configuredAPIKey(): String = sequenceOf(
+	System.getenv("PACKWAND_CURSEFORGE_API_KEY"),
+	System.getenv("CURSEFORGE_API_KEY"),
+	System.getenv("CF_API_KEY")
+).mapNotNull { it?.trim()?.takeIf { key -> key.isNotEmpty() } }.firstOrNull() ?: DefaultAPIKey
+
+internal fun createCurseForgeDownloadPath(downloadUrl: String, apiKey: String) =
+	HttpUrlPath(downloadUrl.toHttpUrl(), requestHeaders = mapOf("X-API-Key" to apiKey))
 
 @Throws(JsonSyntaxException::class, JsonIOException::class)
 fun resolveCfMetadata(mods: List<IndexFile.File>, packFolder: PackwizFilePath, clientHolder: ClientHolder): List<ExceptionDetails> {
 	val failures = mutableListOf<ExceptionDetails>()
+	if (mods.isEmpty()) return failures
+	val apiKey = configuredAPIKey()
 	val fileIdMap = mutableMapOf<Int, List<IndexFile.File>>()
 
 	for (mod in mods) {
@@ -65,13 +76,18 @@ fun resolveCfMetadata(mods: List<IndexFile.File>, packFolder: PackwizFilePath, c
 		.url("https://${APIServer}/v1/mods/files")
 		.header("Accept", "application/json")
 		.header("User-Agent", "packwiz-installer")
-		.header("X-API-Key", APIKey)
+		.header("X-API-Key", apiKey)
 		.post(Gson().toJson(reqData, GetFilesRequest::class.java).toRequestBody("application/json".toMediaType()))
 		.build()
 	val res = clientHolder.okHttpClient.newCall(req).execute()
 	if (!res.isSuccessful || res.body == null) {
+		val error = if (res.code == 401 || res.code == 403) {
+			Exception("CurseForge rejected the configured API key (${res.code}). $APIKeyInstructions")
+		} else {
+			Exception("Failed to resolve CurseForge metadata for file data: error code ${res.code}")
+		}
 		res.closeQuietly()
-		failures.add(ExceptionDetails("Other", Exception("Failed to resolve CurseForge metadata for file data: error code ${res.code}")))
+		failures.add(ExceptionDetails("CurseForge", error))
 		return failures
 	}
 
@@ -92,7 +108,7 @@ fun resolveCfMetadata(mods: List<IndexFile.File>, packFolder: PackwizFilePath, c
 		try {
 			for (indexFile in fileIdMap[file.id]!!) {
 				indexFile.linkedFile!!.resolvedUpdateData["curseforge"] =
-					HttpUrlPath(file.downloadUrl!!.toHttpUrl())
+					createCurseForgeDownloadPath(file.downloadUrl!!, apiKey)
 			}
 		} catch (e: IllegalArgumentException) {
 			failures.add(ExceptionDetails(file.id.toString(),
@@ -119,13 +135,18 @@ fun resolveCfMetadata(mods: List<IndexFile.File>, packFolder: PackwizFilePath, c
 			.url("https://${APIServer}/v1/mods")
 			.header("Accept", "application/json")
 			.header("User-Agent", "packwiz-installer")
-			.header("X-API-Key", APIKey)
+			.header("X-API-Key", apiKey)
 			.post(Gson().toJson(reqModsData, GetModsRequest::class.java).toRequestBody("application/json".toMediaType()))
 			.build()
 		val resMods = clientHolder.okHttpClient.newCall(reqMods).execute()
 		if (!resMods.isSuccessful || resMods.body == null) {
+			val error = if (resMods.code == 401 || resMods.code == 403) {
+				Exception("CurseForge rejected the configured API key (${resMods.code}). $APIKeyInstructions")
+			} else {
+				Exception("Failed to resolve CurseForge metadata for mod data: error code ${resMods.code}")
+			}
 			resMods.closeQuietly()
-			failures.add(ExceptionDetails("Other", Exception("Failed to resolve CurseForge metadata for mod data: error code ${resMods.code}")))
+			failures.add(ExceptionDetails("CurseForge", error))
 			return failures
 		}
 

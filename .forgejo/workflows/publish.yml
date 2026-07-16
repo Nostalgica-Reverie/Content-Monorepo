@@ -85,6 +85,7 @@ jobs:
       - name: Build artifacts
         env:
           GITHUB_SHA: ${{ github.sha }}
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
         run: |
           VARIANT='${{ matrix.entry.variant }}'
           if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then

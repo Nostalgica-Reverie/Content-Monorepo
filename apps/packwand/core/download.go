@@ -18,6 +18,13 @@ import (
 const UserAgent = "git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/packwand"
 
 func GetWithUA(url string, contentType string) (resp *http.Response, err error) {
+	return GetWithUAAndHeaders(url, contentType, nil)
+}
+
+// GetWithUAAndHeaders performs a GET request with PackWand's standard headers
+// and any additional provider-specific headers. It retries server errors using
+// the same policy as GetWithUA.
+func GetWithUAAndHeaders(url string, contentType string, headers http.Header) (resp *http.Response, err error) {
 	const maxRetries = 3
 	backoff := 500 * time.Millisecond
 	for attempt := 0; attempt <= maxRetries; attempt++ {
@@ -31,6 +38,11 @@ func GetWithUA(url string, contentType string) (resp *http.Response, err error) 
 		}
 		req.Header.Set("User-Agent", UserAgent)
 		req.Header.Set("Accept", contentType)
+		for name, values := range headers {
+			for _, value := range values {
+				req.Header.Add(name, value)
+			}
+		}
 		resp, err = http.DefaultClient.Do(req)
 		if err == nil && resp.StatusCode < 500 {
 			return resp, nil

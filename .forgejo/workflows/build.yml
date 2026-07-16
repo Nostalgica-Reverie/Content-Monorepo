@@ -102,6 +102,8 @@ jobs:
         run: packwand json minify modpacks datapacks resourcepacks
 
       - name: Run Build
+        env:
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
         run: packwand build "${{ steps.meta.outputs.short_sha }}"
 
       - name: Upload

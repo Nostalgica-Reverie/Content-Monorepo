@@ -2,31 +2,45 @@ package curseforge
 
 import (
 	"bytes"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/core"
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
+	"strings"
 	"time"
+
+	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/core"
 )
 
 const cfApiServer = "api.curseforge.com"
 
-// If you fork/derive from packwiz, I request that you obtain your own API key.
-const cfApiKeyDefault = "JDJhJDEwJHNBWVhqblU1N0EzSmpzcmJYM3JVdk92UWk2NHBLS3BnQ2VpbGc1TUM1UGNKL0RYTmlGWWxh"
+// This is a client identifier distributed with PackWand, matching packwiz's
+// CurseForge integration model. Environment variables can override it so the
+// key can be rotated without rebuilding PackWand.
+const cfAPIKeyDefault = "$2a$10$xOGBgtaSrq1idVZ3lOWfueL5n16U5fyNMZqTExBL3vq1v7zyjvJty"
 
-// Exists so you can provide it as a build parameter: -ldflags="-X 'packwand/curseforge.cfApiKey=key'"
-var cfApiKey = ""
+const cfAPIKeyInstructions = "set CURSEFORGE_API_KEY to override PackWand's embedded client key"
 
-func decodeDefaultKey() string {
-	k, err := base64.StdEncoding.DecodeString(cfApiKeyDefault)
-	if err != nil {
-		panic("failed to read API key!")
+var cfAPIKeyEnvironmentVariables = [...]string{
+	"PACKWAND_CURSEFORGE_API_KEY",
+	"CURSEFORGE_API_KEY",
+	"CF_API_KEY",
+}
+
+func getAPIKey() string {
+	for _, name := range cfAPIKeyEnvironmentVariables {
+		if key := strings.TrimSpace(os.Getenv(name)); key != "" {
+			return key
+		}
 	}
-	return string(k)
+	return cfAPIKeyDefault
+}
+
+func rejectedAPIKeyError(status string) error {
+	return fmt.Errorf("CurseForge rejected the configured API key (%s); %s", status, cfAPIKeyInstructions)
 }
 
 type cfApiClient struct {
@@ -38,6 +52,7 @@ var cfDefaultClient = cfApiClient{&http.Client{}}
 // doJSON performs an API request and decodes the JSON response into target,
 // always closing the response body.
 func (c *cfApiClient) doJSON(method, endpoint string, body io.Reader, target any) error {
+	apiKey := getAPIKey()
 	req, err := http.NewRequest(method, "https://"+cfApiServer+endpoint, body)
 	if err != nil {
 		return err
@@ -48,10 +63,7 @@ func (c *cfApiClient) doJSON(method, endpoint string, body io.Reader, target any
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
-	if cfApiKey == "" {
-		cfApiKey = decodeDefaultKey()
-	}
-	req.Header.Set("X-API-Key", cfApiKey)
+	req.Header.Set("X-API-Key", apiKey)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
@@ -59,6 +71,9 @@ func (c *cfApiClient) doJSON(method, endpoint string, body io.Reader, target any
 	}
 	defer func() { _ = resp.Body.Close() }()
 
+	if resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden {
+		return rejectedAPIKeyError(resp.Status)
+	}
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("invalid response status: %v", resp.Status)
 	}

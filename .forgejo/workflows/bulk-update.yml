@@ -26,3 +26,6 @@ jobs:
       scope: ${{ inputs.packs }}
       dry_run: ${{ inputs.dry_run }}
       commit-message: 'actions: bulk update'
+    secrets:
+      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
