@@ -1,3 +1,6 @@
 {
-	"claritymod.command.unknown": "Unknown command, or you do not have permission to use it. Enable cheats or ask a server administrator for access."
+	"claritymod.command.unknown": "Unknown command, or you do not have permission to use it. Enable cheats or ask a server administrator for access.",
+	"claritymod.disconnect.getsockopt_timeout": "Connection timed out. Check that the server is online and its address and port are correct. If you host the server, allow Java through the firewall and forward its Minecraft port. Otherwise, contact the server administrator.",
+	"claritymod.disconnect.getsockopt_refused": "Connection refused. The server may be offline, still starting, or not listening on that port. Check the address and port. If you host the server, start it and verify its firewall and port forwarding.",
+	"claritymod.disconnect.getsockopt_generic": "Could not connect to the server. Check that it is online and that its address and port are correct. If you host the server, check its firewall and port-forwarding settings."
 }

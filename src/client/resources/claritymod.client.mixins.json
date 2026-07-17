@@ -3,7 +3,7 @@
 	"package": "claritymod.creeereater.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"ExampleClientMixin"
+		"DisconnectedScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
