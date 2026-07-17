@@ -3,6 +3,7 @@
 	"package": "claritymod.creeereater.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
+		"BrigadierExceptionsMixin",
 		"CrashReportMixin"
 	],
 	"injectors": {
