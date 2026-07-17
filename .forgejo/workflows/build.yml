@@ -67,6 +67,9 @@ jobs:
             STATUS=0
             while IFS= read -r pack; do
               [ -n "$pack" ] || continue
+              # A rename/delete leaves the old pack path in git's changed-file
+              # list, but there is nothing at that path to preflight.
+              [ -d "$pack" ] || continue
               packwand preflight "$pack" || STATUS=1
             done <<< "$CHANGED_PACKS"
             exit $STATUS

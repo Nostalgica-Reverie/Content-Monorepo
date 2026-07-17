@@ -1,0 +1,13 @@
+name = "Hypixel Skyblock for Lunar Client"
+author = "CHANGEME"
+version = "0.0.8"
+pack-format = "packwand:26"
+
+[index]
+file = "index.toml"
+hash-format = "sha512"
+hash = "fc151082172d02df8ae9b3f38491c705b9a3b6ec126207971a2719b10d7fb449c7058a3b9e3ab51f6bf3cfd138b6e065a4e8dfe597f94a6bcf5f79e4c1d629a6"
+
+[versions]
+fabric = "0.19.3"
+minecraft = "26.1.2"

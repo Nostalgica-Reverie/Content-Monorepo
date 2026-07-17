@@ -70,3 +70,36 @@ func TestPreflightReportsMissingManifest(t *testing.T) {
 		t.Fatalf("expected failure without a manifest, got %#v", result)
 	}
 }
+
+func TestPreflightAcceptsCommentedConfigAndSkipsMacOSMetadata(t *testing.T) {
+	dir := preflightFixture(t)
+	commented := filepath.Join(dir, "config", "commented.json")
+	if err := os.MkdirAll(filepath.Dir(commented), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(commented, []byte(`{
+  // accepted mod config
+  "url": "https://example.com/a//b",
+  /* block comment */
+  "enabled": true
+}
+`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	metadata := filepath.Join(dir, "config", "paxi", "datapacks", "Example", "__MACOSX", "._pack.mcmeta")
+	if err := os.MkdirAll(filepath.Dir(metadata), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(metadata, []byte{0, 1, 2}, 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	result := RunPreflight(dir)
+	if !result.OK || result.Errors != 0 {
+		t.Fatalf("expected comments and OS metadata to be accepted, got %#v", result)
+	}
+	rootResult := RunPreflight(filepath.Dir(dir))
+	if !rootResult.OK || rootResult.Errors != 0 {
+		t.Fatalf("expected pack-root preflight to accept comments and OS metadata, got %#v", rootResult)
+	}
+}

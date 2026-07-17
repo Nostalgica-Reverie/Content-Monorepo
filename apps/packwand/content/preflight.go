@@ -133,9 +133,15 @@ func preflightSyntax(dir string) PreflightStep {
 			if name := d.Name(); name == ".git" || name == "node_modules" {
 				return filepath.SkipDir
 			}
+			if d.Name() == "__MACOSX" {
+				return filepath.SkipDir
+			}
 			return nil
 		}
 		name := d.Name()
+		if name == ".DS_Store" || strings.HasPrefix(name, "._") {
+			return nil
+		}
 		isJSON := strings.HasSuffix(name, ".json") || strings.HasSuffix(name, ".mcmeta")
 		isTOML := strings.HasSuffix(name, ".toml")
 		if !isJSON && !isTOML {
@@ -153,6 +159,16 @@ func preflightSyntax(dir string) PreflightStep {
 		if isJSON {
 			var value any
 			if err := json.Unmarshal(data, &value); err != nil {
+				// Several mods intentionally use JSON-with-comments for config
+				// files despite the .json suffix. Accept that narrow case only
+				// when removing comments produces otherwise strict JSON; embedded
+				// datapacks and resource packs remain strictly validated.
+				if isCommentedConfigJSON(rel, name) {
+					var commentedValue any
+					if json.Unmarshal(stripJSONComments(data), &commentedValue) == nil {
+						return nil
+					}
+				}
 				step.Issues = append(step.Issues, PreflightIssue{Level: "error", Path: rel, Message: "invalid JSON: " + err.Error()})
 			}
 			return nil
@@ -164,6 +180,75 @@ func preflightSyntax(dir string) PreflightStep {
 		return nil
 	})
 	return step
+}
+
+func isCommentedConfigJSON(rel, name string) bool {
+	if !strings.HasSuffix(name, ".json") {
+		return false
+	}
+	rel = filepath.ToSlash(rel)
+	if !strings.HasPrefix(rel, "config/") && !strings.Contains(rel, "/config/") {
+		return false
+	}
+	for _, nestedPack := range []string{"/datapacks/", "/resourcepacks/", "/global_packs/"} {
+		if strings.Contains(rel, nestedPack) {
+			return false
+		}
+	}
+	return true
+}
+
+// stripJSONComments removes // and /* */ comments while preserving quoted
+// strings and newlines. Its output is always passed through encoding/json, so
+// this does not relax any other part of JSON syntax.
+func stripJSONComments(data []byte) []byte {
+	out := make([]byte, 0, len(data))
+	inString := false
+	escaped := false
+	for i := 0; i < len(data); i++ {
+		c := data[i]
+		if inString {
+			out = append(out, c)
+			if escaped {
+				escaped = false
+			} else if c == '\\' {
+				escaped = true
+			} else if c == '"' {
+				inString = false
+			}
+			continue
+		}
+		if c == '"' {
+			inString = true
+			out = append(out, c)
+			continue
+		}
+		if c == '/' && i+1 < len(data) {
+			switch data[i+1] {
+			case '/':
+				i += 2
+				for ; i < len(data) && data[i] != '\n' && data[i] != '\r'; i++ {
+				}
+				if i < len(data) {
+					out = append(out, data[i])
+				}
+				continue
+			case '*':
+				i += 2
+				for ; i+1 < len(data) && !(data[i] == '*' && data[i+1] == '/'); i++ {
+					if data[i] == '\n' || data[i] == '\r' {
+						out = append(out, data[i])
+					}
+				}
+				if i+1 < len(data) {
+					i++
+				}
+				continue
+			}
+		}
+		out = append(out, c)
+	}
+	return out
 }
 
 // preflightReferences runs the registry-backed document checks over every
