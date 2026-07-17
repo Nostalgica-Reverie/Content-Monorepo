@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "claritymod",
+	"version": "${version}",
+	"name": "claritymod",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/claritymod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"claritymod.creeereater.Claritymod"
+		],
+		"client": [
+			"claritymod.creeereater.client.ClaritymodClient"
+		]
+	},
+	"mixins": [
+		"claritymod.mixins.json",
+		{
+			"config": "claritymod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.1.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
