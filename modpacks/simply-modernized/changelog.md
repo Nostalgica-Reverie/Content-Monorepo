@@ -1,2 +1,2 @@
-# Simply Modernized 26.06.1
-Add in Immersive Optimization
+# Simply Modernized 26.07.1
+add in nvidium, quickpack, async particles and particle core

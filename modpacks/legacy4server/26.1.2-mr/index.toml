@@ -25,13 +25,18 @@ file = "modlist.md"
 hash = "56155b3aabdc7c06c37193e8f9e1ac79f062b61a768033bacef07c7f334256a7a928157bf4a2fe49e838c615dd6e486e801410369cddd1bf2bec202426a15fcc"
 
 [[files]]
+file = "mods/asynclogger.pw.toml"
+hash = "7a1abc01c1bf85cb5e008c4f30a27338a05f649d16f5d9406505326bb4e88c860f932328c510874f5491004026b57e370697118ff15ddf2005a9eca793af3aaa"
+metafile = true
+
+[[files]]
 file = "mods/c2me-fabric.pw.toml"
-hash = "395a813add96787216918c2d14257bdd1090e99bcea596b438552d503ab4b37ebc28e4177b27827ec5d36ee1fa18648a144af6b2e54946795693e137005c32a1"
+hash = "809e4ff68c644440c6fbc35fd61e79822f041ca73f0ea882a358ed8c04af407c759e58bd3a2e1b6e97386c07b2b0d7b2a5c940bf9d14be79eb50c986a1fb5b5b"
 metafile = true
 
 [[files]]
 file = "mods/c2me-ocl.pw.toml"
-hash = "dd4532fb84f0961ef8403726cf70a69df068e7d968561f62a94a2c1b59da4c33bf13e40d0dd533abc601711c1709b14fd6123d70512a1384bc07577ffa6c36ce"
+hash = "534f3c9ad47e486554934dd59f7e98bb6b3a0c622c686717cf8f9578778914f052e25d6603b61461cfb41387a3eaa051f108948a1b8e8c2b729492226fe8af46"
 metafile = true
 
 [[files]]
@@ -41,7 +46,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "931b1b8823c73ab0140ec540987f4c839719ce2b54e9f5693068305ed1dcae42d6bc9443570c555acfb38275e5e113d19d8fd7543904e2e5dc8f4acfe850d095"
+hash = "9766da8e8f8bc04ed0addc35ab7a5ce6d9e1a641f193f768c55203cbbef03d1a90c0af36fd283cb92368f2c32f6e8f9bf4263b2e1c14186ae9912a21b36376a5"
 metafile = true
 
 [[files]]
@@ -56,7 +61,7 @@ metafile = true
 
 [[files]]
 file = "mods/immersive-optimization.pw.toml"
-hash = "aa5564ce4b8fa2242538ead3645f4a9316a4476c0641909a0e9088181ba2b39cb21c88d88ff7e5582258391768bd3c594d07885fc045c405239624d0eb2f8148"
+hash = "b94e4af9b7ded83ec7573ef4f485f5b90e492fa06f0c23a9f6f6d7013312a9c0637f7be66d1561fc5a2aa17d88e066b2237c919f716b3ddb0b79c298dcd92356"
 metafile = true
 
 [[files]]
@@ -96,12 +101,12 @@ metafile = true
 
 [[files]]
 file = "mods/no-prying-eyes.pw.toml"
-hash = "a3632d81cfa7b1a7f402b10d3354756244d1f683bb3bcbeb1a4a3d6d288254af44118edb0e277b0d009b55dd09841b5653c396af4cca52dc71ce072e17ea9183"
+hash = "e8ce8cf995126ba77884efd4c97700e0afecda68c4281d060824c35b08b9e89012e1840b7bf9eee8b6630ad9291a84924ae9dda4d66b39ebb444821d9b244d67"
 metafile = true
 
 [[files]]
 file = "mods/oxidizium.pw.toml"
-hash = "e981e335fedfff6d70b8059070506ae4188b0b549c884e15ae87f4c5ba9727db03bbc62990a5cf4a9704386c6310bb30cde7feb894e8db4d313d268f7ca62464"
+hash = "7bf5bad9adc2f4fc935dc55fbfee50f427ed9d9b196c888a7dc3672ec63edd21c0384ec8f3ac7f3f2381bf0112cd25e098355d77a4a83d31bfda6aad498b9d32"
 metafile = true
 
 [[files]]
@@ -110,13 +115,23 @@ hash = "8ce0129301316e30c7de923e9aac114721c6a24159ca36f0bb21821261c4ea29089016ae
 metafile = true
 
 [[files]]
+file = "mods/resourceful-config.pw.toml"
+hash = "e0880e5643a5cd56494e1fe53a5103bbb5b39be4f729b3949fc8db04447fc0384fa9f0a3c409e76de7bdbdbb02afe2109a41300c5881c97593566396bae26ab1"
+metafile = true
+
+[[files]]
 file = "mods/scalablelux.pw.toml"
-hash = "ec1b4b09854e8fe8a15f401e366e7bc7b550b493dbe7b86d986d2d0d66df0ec381765965f3215d833ab07446e1d037afaed82c55f5fc5c4462eb643d6fff6d13"
+hash = "1a8a32cdc226100a090d04a8f4b650aeab917f14585fdccddd0151d98750b0b4576bb93c8e4800f407b7bbeae03ca79c953b2edb0cbdd91b28b3e8cba66c02eb"
 metafile = true
 
 [[files]]
 file = "mods/servercore.pw.toml"
 hash = "e68c2d00c9745bc163faaebe6b6a9221f8bd7273e7a17d7da2e361d74fa4913b01559d13fe4176abe09e52b6ad2a48eb8afb40f941d14a4db279d8516a67bab8"
+metafile = true
+
+[[files]]
+file = "mods/structure-layout-optimizer.pw.toml"
+hash = "aa46b0cc428e4ca81728ffa60c74bc56aaaf123dceb8837fa1271a887956b1aefecaf1864c90951936d07766fe3217541ac906fecdf35258fb4a3b49d61b3de2"
 metafile = true
 
 [[files]]
@@ -131,5 +146,5 @@ metafile = true
 
 [[files]]
 file = "mods/zfastnoise.pw.toml"
-hash = "d4bc5446fb952117b55f3deaaaf03c66b51a67d0eb46637ed74a68a24d050b27cd958d8650ec0e10e9033d9037b127747a0ad5515add82f98b89fb562b4c64a3"
+hash = "ed561a74bdbca88d8de035929d80d09125c59041c9f73c68de5346e20a4d012e9dc41267b6eb7c20ac6bae8809a5711a081ae10107479d055b08cfc1a5ce6f65"
 metafile = true
