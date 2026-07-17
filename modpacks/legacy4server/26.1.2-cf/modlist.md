@@ -2,6 +2,7 @@
 
 ## Shared Mods
 
+- [Async Logger]()
 - [C2ME OpenCL Acceleration Module]()
 - [Concurrent Chunk Management Engine]()
 - [Fabric API]()
@@ -18,5 +19,6 @@
 - [No Chat Reports]()
 - [ScalableLux]()
 - [ServerCore]()
+- [Structure Layout Optimizer]()
 - [TT20 (TPS Fixer)]()
 - [Very Many Players (Fabric)]()

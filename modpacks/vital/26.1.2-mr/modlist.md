@@ -2,6 +2,7 @@
 
 ## Client Mods
 
+- [AsyncParticles](https://modrinth.com/mod/c3onkd5k)
 - [Better Block Entities](https://modrinth.com/mod/ONZm0H7Y)
 - [Chat Emoji Mod](https://modrinth.com/mod/XKImXJ45)
 - [Chat Heads](https://modrinth.com/mod/Wb5oqrBJ)
@@ -26,6 +27,7 @@
 - [Main Menu Credits](https://modrinth.com/mod/qJDfP7WN)
 - [McQoy](https://modrinth.com/mod/tNmWwdI2)
 - [Mod Menu](https://modrinth.com/mod/mOgUt4GM)
+- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
 - [OptiGUI](https://modrinth.com/mod/JuksLGBQ)
 - [Puzzle](https://modrinth.com/mod/3IuO68q1)
 - [Reese's Sodium Options](https://modrinth.com/mod/Bh37bMuy)

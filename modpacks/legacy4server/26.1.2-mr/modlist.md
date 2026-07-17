@@ -1,5 +1,9 @@
 # Modlist
 
+## Client Mods
+
+- [Async Logger](https://modrinth.com/mod/zvNzKfGF)
+
 ## Shared Mods
 
 - [C2ME OpenCL Acceleration Module](https://modrinth.com/mod/qtPMklut)
@@ -19,6 +23,7 @@
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
 - [Oxidizium](https://modrinth.com/mod/TLtbk2Er)
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)
+- [Resourceful Config](https://modrinth.com/mod/M1953qlQ)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [TT20 (TPS Fixer)](https://modrinth.com/mod/YS3ZignI)
@@ -27,3 +32,4 @@
 ## Server Mods
 
 - [LazyAI](https://modrinth.com/mod/qgWgCnzi)
+- [Structure Layout Optimizer](https://modrinth.com/mod/ayPU0OHc)

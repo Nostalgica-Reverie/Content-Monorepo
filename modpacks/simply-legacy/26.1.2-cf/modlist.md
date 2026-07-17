@@ -8,7 +8,6 @@
 - [Bobby]()
 - [BugFixerUpper]()
 - [Cloth Config API (Fabric/Forge/NeoForge)]()
-- [Concurrent Chunk Management Engine]()
 - [Config Manager]()
 - [Crash Assistant]()
 - [Cubes Without Borders]()

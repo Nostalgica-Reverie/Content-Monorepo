@@ -1,9 +1,14 @@
 # Modlist
 
+## Client Mods
+
+- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
+
 ## Shared Mods
 
 - [Animatica Refabricated]()
 - [Async Logger]()
+- [AsyncParticles]()
 - [BadOptimizations]()
 - [Better Block Entities]()
 - [C2ME OpenCL Acceleration Module]()
@@ -17,6 +22,7 @@
 - [Fabric Language Kotlin]()
 - [Fast Noise]()
 - [FerriteCore (Fabric)]()
+- [Fzzy Config]()
 - [Gnetum]()
 - [ImmediatelyFast]()
 - [Ixeris]()
@@ -25,6 +31,7 @@
 - [Lithium (Fabric/NeoForge)]()
 - [Mod Menu]()
 - [ModernFix-mVUS]()
+- [Particle Core]()
 - [ScalableLux]()
 - [ServerCore]()
 - [Sodium Extra]()
@@ -34,3 +41,4 @@
 - [[EMF] Entity Model Features [Fabric & Forge]]()
 - [[ESF] Entity Sound Features]()
 - [[ETF] Entity Texture Features - [Fabric & Forge]]()
+- [quick pack]()
