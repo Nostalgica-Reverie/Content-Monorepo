@@ -1,6 +1,50 @@
 hash-format = "sha512"
 
 [[files]]
+file = "config/crash_assistant/config.toml"
+hash = "7332f11ba721756879d55e9762506fdaa27a751f08b895ba976113a7e084dd60e6b1e8979ab86c9c7006b190abd0e9d330a5086dcd86c37cfe3b2cb491c4bb10"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/config.toml"
+hash = "fb32f83e38d5a968295855eb10d8ef0c892956cded675fd07a6aece492855546dfc6fbcae3575407618b34c454402dbe973f05db4b3b7c4905c6252d91f19761"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/crash_assistant_localization_overrides/README.md"
+hash = "f5f98f93f10ba11649c77c3eae696d91d37df6aae4d73f1ac6a88e2185a366aaa4f2934a56faa8390226c23fa7cae7ab5082db8242015df1e27fedcfa37e6649"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/modlist.json"
+hash = "c534ca8a49e01d8ae95751dec78d980222bbf565c057a646f95e50764e5cc8855da72d6598e3b14f438f6fbba7b261f481b75c5fdebb4d96d54f49ea1cbe5624"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/scripts/log_analysis/example.jexl"
+hash = "503ebb6b2a8ebf150d529087a9e6e7a70580f61adbdcb814c923aab066fd1c61d44bca928ada472dfc6499372724a9e0cf0d47f471a5450529af9273e67b3986"
+
+[[files]]
+file = "config/crash_assistant/crash_assistant/scripts/startup/example.jexl"
+hash = "6c6bcec06aa1b70a93dccd01feb3f9b1586133d243b666ae6b5f1179b4948e968e2d9d359daabb77649069ff54635ac90299fe4732352dede7213aac5a576154"
+
+[[files]]
+file = "config/crash_assistant/lang/README.md"
+hash = "f82911ca20e6d0e47b091b4fd25088dac2f0ca7226f464f0bc727b924f440eff388d5dca097e8dcf48d4a28361d25ddd186c75d5815c0226597394b5c5714425"
+
+[[files]]
+file = "config/crash_assistant/lang/en_us.json"
+hash = "09cd2e4e34035230acbba982ffd91c0de930b7d89c93d6d17f57b9e90a23ad0492053837d15c2a1026ad32b33e626462fe76a5404679a73507b141dca3b98dc5"
+
+[[files]]
+file = "config/crash_assistant/lang/ru_ru.json"
+hash = "09cd2e4e34035230acbba982ffd91c0de930b7d89c93d6d17f57b9e90a23ad0492053837d15c2a1026ad32b33e626462fe76a5404679a73507b141dca3b98dc5"
+
+[[files]]
+file = "config/crash_assistant/lang/zh_cn.json"
+hash = "09cd2e4e34035230acbba982ffd91c0de930b7d89c93d6d17f57b9e90a23ad0492053837d15c2a1026ad32b33e626462fe76a5404679a73507b141dca3b98dc5"
+
+[[files]]
+file = "config/crash_assistant/modlist.json"
+hash = "b9a9b059fbc1a992f6de49daa7f56b8fef4cc21174e05a5aee0507062115c0aef69fc81060db33254be68914bca1088421e918b1fc450d551d16545390811a9d"
+
+[[files]]
 file = "config/modpack_defaults/config/badoptimizations.txt"
 hash = "b0ceb59a46fc10eb9fc45c11728efd60c1ae60cfe02565269487eac4d045900ff520758d395501d6b2611b7ca9855076d6aca90ff3dd9671877f709dcbd903d3"
 
@@ -39,6 +83,10 @@ hash = "9be53266efb7c570695232da01571f0ff34737191061a1fe502dbbda7c28bd816795db5d
 [[files]]
 file = "config/modpack_defaults/config/modernfix-mixins.properties"
 hash = "4a03679445d2e0af0e67101b04cfbf578a650f58411774b59053e9121cc561178b08235ab368ef8134b5dfc3d3774caafcd4d502bb11f1b8710d6d4eaa10cd04"
+
+[[files]]
+file = "config/modpack_defaults/config/modmenu.json"
+hash = "202efbd151e44eea9a2a15bbfe684a63ea89db72136602989a844dcdd1d410c17851a66a1da99f8485c13016fcc462f15d4860f7dbffabe9d9b5c34841b68262"
 
 [[files]]
 file = "config/modpack_defaults/config/moreculling.toml"
@@ -82,7 +130,15 @@ hash = "f713f24b20e7f0c8d59f19300136d5c154c471198864502650550dcb66afc0ef731e85dd
 
 [[files]]
 file = "config/modpack_defaults/options.txt"
-hash = "d5150c087f8be175b8b41bec3e25c5ef9157b11e749cacd95dad1e01bf2fb6cfc1458814962ae5deca47a5b9d531dcd46d085ce5b69200318ce4dc330807dba9"
+hash = "d7f46367b13f2e2d9d1d8e2556a9457e85dc2fd6d354c222b5734e745090d41f6c0f8e5b2a344989f41d027528c19b20c3ad58669b48a8ea579a73b672d96414"
+
+[[files]]
+file = "config/modpack_defaults/servers.dat"
+hash = "87dcc8d6a099f7939780d4b02575e40d336f68202dadb143b4cde2242841f587b8e6b15dfe3ab17b4ac10548e8c2a06fbfa15f009c43bbea0353aef4e49d27f3"
+
+[[files]]
+file = "modlist.md"
+hash = "5ecb3c1539ee1da3cc13dad0bb01a0bbcd1cd0f81078b12d87e6b9d841d3994fdc1dbf5ea5b07a827d125390551b62a8ae60d415ab8d48e5fc7ab8136f02130c"
 
 [[files]]
 file = "mods/HypixelModAPI-1.0.2+build.1+mc26.1.pw.toml"
@@ -137,6 +193,11 @@ metafile = true
 [[files]]
 file = "mods/c2me-ocl.pw.toml"
 hash = "534f3c9ad47e486554934dd59f7e98bb6b3a0c622c686717cf8f9578778914f052e25d6603b61461cfb41387a3eaa051f108948a1b8e8c2b729492226fe8af46"
+metafile = true
+
+[[files]]
+file = "mods/catharsis.pw.toml"
+hash = "13c431a19c871a7cba8711eb371ab6eca195117bc2e7e9b339abc3c15299bb0fd8853fc266bdb6c2351c8fc77e707a5488ae68594eb03112fac50d78ae48b8ae"
 metafile = true
 
 [[files]]
@@ -255,11 +316,6 @@ hash = "ac7c1b65e0b064d7a0955c2f8bea3c9ce4950479a01f173140d310bbc48f5d6a52401e57
 metafile = true
 
 [[files]]
-file = "mods/moreculling-fabric-26.1.2-1.7.2.pw.toml"
-hash = "6f31998edc529b265c1f387f959001170b9b6db9cdaef0cd00c452478a9944a263c4f7f6e6cab64a038a9e4a556ec7aa7ce22f8756cf42c42ffd8c1e98320904"
-metafile = true
-
-[[files]]
 file = "mods/no-prying-eyes.pw.toml"
 hash = "e8ce8cf995126ba77884efd4c97700e0afecda68c4281d060824c35b08b9e89012e1840b7bf9eee8b6630ad9291a84924ae9dda4d66b39ebb444821d9b244d67"
 metafile = true
@@ -267,11 +323,6 @@ metafile = true
 [[files]]
 file = "mods/nvidium.pw.toml"
 hash = "1dc5b2c0d396115aa5597b3bb96994df13df2df1291dc1d9b5701bf893828271501835d150835e2d6e4a282b56848b0b0c9957035f05d48e7c7bd1a1c2711b9a"
-metafile = true
-
-[[files]]
-file = "mods/oxidizium.pw.toml"
-hash = "7bf5bad9adc2f4fc935dc55fbfee50f427ed9d9b196c888a7dc3672ec63edd21c0384ec8f3ac7f3f2381bf0112cd25e098355d77a4a83d31bfda6aad498b9d32"
 metafile = true
 
 [[files]]
@@ -327,6 +378,39 @@ metafile = true
 [[files]]
 file = "mods/zfastnoise.pw.toml"
 hash = "6c7d4ba1b7232d0032ecb4f9d0860e2027522aaa6db4389a5aa0e2e54296a16123a4331abf68da1f87fa0290737d204a29ca008b2b3448c825f0f5b8cd781313"
+metafile = true
+
+[[files]]
+file = "resourcepacks/Panorama/assets/minecraft/textures/gui/title/background/panorama_0.png"
+hash = "1a8c7f329541625aebf1409ef319c25196df54d9c874ce070799cd9a31cdb777f08430a34bcac324d3130fdb4b5e1504b629e57e112a090a378cece5a441505b"
+
+[[files]]
+file = "resourcepacks/Panorama/assets/minecraft/textures/gui/title/background/panorama_1.png"
+hash = "caa021003fb2b532bace5bfa21456bddf46a251610631a44741a9543f352d9a68277ed3a985e107dbd42c31fde514fce53bc325cc1ab4240144a1606a29b5aad"
+
+[[files]]
+file = "resourcepacks/Panorama/assets/minecraft/textures/gui/title/background/panorama_2.png"
+hash = "2441907b6a3c57603889ea3f68a4d1a739c90d7005a70640ca3eb51bf430f371dade18da98ca67abcac51a67b86f125ffff3b7e85d7c354d29e4843b71d94069"
+
+[[files]]
+file = "resourcepacks/Panorama/assets/minecraft/textures/gui/title/background/panorama_3.png"
+hash = "0f4793e9ad12cf7f62e9dca4162784bbe07cf59bac656577ae1823106cc649cc91eadac3e4180f3f69bfc5b9be4715707f2b5198128b68504cb44554573931fe"
+
+[[files]]
+file = "resourcepacks/Panorama/assets/minecraft/textures/gui/title/background/panorama_4.png"
+hash = "51f2b24bba2893da9074e6e2f5599bd6307c674f41f7b5c91eeaeb5b72e1ac5d2e06ab3929becb3349580cf9dcb1af81d33be1096367e18fd8251a1bb7a2c498"
+
+[[files]]
+file = "resourcepacks/Panorama/assets/minecraft/textures/gui/title/background/panorama_5.png"
+hash = "2ff8e68200549db3f332a2fbdf7a050d2e3319ffe8f9ef178fd90c49b9a7f804379a4a5d20bf8f697aaae26e2574a1cab0cc86a33512d48636e03662e29c5432"
+
+[[files]]
+file = "resourcepacks/Panorama/pack.mcmeta"
+hash = "8dbed345a1744a7031789290e123c9edbc606fa63d460707067ddfb5273666ea3b7a0f8dc0ae6eb311c07c88a8b5b461733fc67276d23c3dcf50fb2e47698c60"
+
+[[files]]
+file = "resourcepacks/hypixel-plus.pw.toml"
+hash = "b6622215517badbe1e43b6003fe9a5d21ebec62f380615055d7d713d2f043a751bccc1db63440faca8a3baccd1698a4ee1658d4d9a844ca38191af98cadd38ec"
 metafile = true
 
 [[files]]
