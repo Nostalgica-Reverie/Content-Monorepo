@@ -96,17 +96,17 @@ metafile = true
 
 [[files]]
 file = "mods/SkyHanni-7.25.0-mc26.1.pw.toml"
-hash = "156cb18d836fe92811808aad160e830cebc343c8a15b00905751fa56901a375c73c8bd41cddec01bd68a5578247873c8ca2100b7eb65a2593167d6d475fd5599"
+hash = "74d6582a5c607ae396308eeb2a618629b1326d6bf2be72bfd50d7cd481940a050143878c44402fb0ea2970bc083e91826a335ca9ade211fc750d419d7b35b823"
 metafile = true
 
 [[files]]
 file = "mods/aaron-mod-3.0.0+26.1.2.pw.toml"
-hash = "3130e59dcfaaafa58368772811ec1639cdd65dcc35e058c919379b7319471aac6800ff866656305f39148832c518d5bc6b3a7e001d896acbe9aca66779f9eaa5"
+hash = "b69aea265fb16d952d85e38cc998cf08dadd6f209083c15e5821bc345fab8e98d3b13c3e7ca2782dc885815d558be4846508b8f65b6ac6f86a119aad29a0826e"
 metafile = true
 
 [[files]]
 file = "mods/architectury-fabric-20.0.7.pw.toml"
-hash = "e6f8b5bdb5f520fa03d8dac76054ef53fedbb091bd5582016f151a74a6e0d04eeb5da6dfbbc4300ee2779195823d0e95ecbd2b3735fb082865b0ef2ddfb2ff1b"
+hash = "e04c2bf6c37afff82e65e8a5b4bb9ca72891c65636c8036832283953044a9748202ad1d91fd4739770ff4acc00f86fec72084f81af277c0403ddeb3217e6f15a"
 metafile = true
 
 [[files]]
@@ -155,6 +155,11 @@ hash = "4d91d391a024166170b198d90b964aa9cc566e26c8f87c93cb230f42b918ebfc530ad672
 metafile = true
 
 [[files]]
+file = "mods/crash-assistant.pw.toml"
+hash = "2f162d6d1265fdb8a0160737b5f3bc49aeafb94c43626bc6c3a081f8c4151294c41c7ce8610c72f292e7460c6a50083eb0079962d6ee7d9ec0ceef8acb1770f8"
+metafile = true
+
+[[files]]
 file = "mods/cull-fewer-leaves.pw.toml"
 hash = "02338e70d48662ab14265f7b98b591c607ceea5efd6597fcf1b925674d9e1d6290ce8b454f7156482f94d499f6af15b39dd3c703778c100c3e7a7701de8409f9"
 metafile = true
@@ -171,7 +176,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api-0.152.1+26.1.2.pw.toml"
-hash = "4b9e1cbf97ed1309c469682823afaea1fb76f95faf72ddd83fa21ff513ba1ae37ecd540180fa620f8b9022f9c6a034450494c243e03e803aef97c7359d010ef9"
+hash = "15fe584d1be1ecd119215800c6979a10eb101fb2f589aa2cced47d14d164c5ccb2595b92e8d39817ec469060d8cd8e69a861ea070b41015be22b9b7063ac0cdb"
 metafile = true
 
 [[files]]
@@ -181,7 +186,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-language-kotlin-1.13.12+kotlin.2.4.0.pw.toml"
-hash = "364c46f71ee263acd5dd2f3435d1fd864b5587c3511373f0ccedb5a97ab906082a32f00fa41948276e56361ea6326c0e98572ab63264769a57b80b8bb02e6d77"
+hash = "a50c935ab8b8bcead13cc8a824ff7f4992a6530f6f9987ec3b45bba09befd960f276e5ed1672c54029b49c86e6fa49f12a14ecc707a7d5d5e9897fd488cb9355"
 metafile = true
 
 [[files]]
@@ -221,7 +226,7 @@ metafile = true
 
 [[files]]
 file = "mods/iris-fabric-1.10.9+mc26.1.1.pw.toml"
-hash = "79ce8aebc2ae0ed677dd9cad1bb57866eefa931d2bc57dee9ed3653f96937494069c817b6c274ff7011a7b9d4df636e3638ce83f84139b6a8b135f75e88aba93"
+hash = "8fd47825cc3b6f33a2d13d85c9f4b5d3c176cda5232419e19df0f9a0403c446e3621420eaf46dd24fa069d06aaad30ae254ec73eec1db27ac2a78194b910c9e4"
 metafile = true
 
 [[files]]
@@ -246,7 +251,7 @@ metafile = true
 
 [[files]]
 file = "mods/modmenu-18.0.0-beta.1.pw.toml"
-hash = "21fa748dec475e388de0bf107f5806cba5c368f9bcafed3c7e29036e64fa657022d6d222bd1bd1f10685ec7d61c46f4eb37413163295f153f052c6128e4af0b8"
+hash = "ac7c1b65e0b064d7a0955c2f8bea3c9ce4950479a01f173140d310bbc48f5d6a52401e5723547378add63c320a563952fccbf478d69e4f861d3c84e2911daa3e"
 metafile = true
 
 [[files]]
@@ -296,12 +301,12 @@ metafile = true
 
 [[files]]
 file = "mods/skyblocker-6.5.3+26.1.2.pw.toml"
-hash = "dc9b0b117cb541b1b9eb231007d18f6b8aa4020aedca9fe02a1de77299bfaae5dbc4b7f6a98679799349a71cbaac4e7c071306c799ef949944eb90c6f1addcdb"
+hash = "7ce6be464f36cf0f536e8c4d705b0c18bacf2f3448609caab5ca8f1d598af7f3ecfa7c1d5d7c4d18ff2c788cfbed58dd549fa0364033bd8e929df59b204fc87c"
 metafile = true
 
 [[files]]
 file = "mods/sodium-fabric-0.8.12+mc26.1.2.pw.toml"
-hash = "e4aacf64982a325e867e434419b8efa80d3c2f7c8178495792ca723bf0582ef79fd711e9ca04a7d4cf567eb82f4bcc3a89be27a59b412d4bbc8638ede91a5820"
+hash = "b6070a0eb876ffe551d9a034d1e414852c9b00e651c9517e2b9744538fe92fd9396ce6517bc665b914b26fb9021d33ad4558ee28024cf0ea585de4f8cf138d57"
 metafile = true
 
 [[files]]
@@ -316,7 +321,7 @@ metafile = true
 
 [[files]]
 file = "mods/yet_another_config_lib_v3-3.9.4+26.1-fabric.pw.toml"
-hash = "8405e5a2fc7ab9b9c54807a05d17e0fa14c3f8efbd9f2d67acfc2c8ae9e46bbd6110dcea9c720c28182df10d1ccddb550c53004a7234873bd8a5e03045c04ccd"
+hash = "2f42976bf40f9192271dabbcb7f259ed58c9315b73e478715302ce12083efc851944e861eb1ca564975e1f5e3c8e1021a3c2f5cfe8c3e59a2722dc590054465a"
 metafile = true
 
 [[files]]
