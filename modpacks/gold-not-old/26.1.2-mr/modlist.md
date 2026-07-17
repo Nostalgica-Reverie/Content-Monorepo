@@ -4,6 +4,7 @@
 
 - [Animatium](https://modrinth.com/mod/zy0karK1)
 - [Async Logger](https://modrinth.com/mod/zvNzKfGF)
+- [AsyncParticles](https://modrinth.com/mod/c3onkd5k)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
 - [Better Block Entities](https://modrinth.com/mod/ONZm0H7Y)
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
@@ -18,6 +19,7 @@
 - [Ixeris](https://modrinth.com/mod/p8RJPJIC)
 - [Legacy Display](https://modrinth.com/mod/TmbxdF9G)
 - [Mod Menu](https://modrinth.com/mod/mOgUt4GM)
+- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
 - [Picture Mode](https://modrinth.com/mod/kFU5UCQz)
 - [Resource Pack Overrides](https://modrinth.com/mod/YsFycamt)
@@ -55,6 +57,7 @@
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
 - [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/1eAoo2KR)
 - [oωo (owo-lib)](https://modrinth.com/mod/ccKDOlHs)
+- [quick pack](https://modrinth.com/mod/pSISfJ4O)
 
 ## Server Mods
 

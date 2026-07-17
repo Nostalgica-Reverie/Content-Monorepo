@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-14T21:39:53Z",
+  "generated": "2026-07-17T00:51:53Z",
   "projects": [
     {
       "id": "gold-not-old",
@@ -27,7 +27,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/gold-not-old/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 51,
+          "mod_count": 54,
           "has_index": true,
           "has_pack": true
         }
@@ -80,7 +80,7 @@
       "manifest_path": "modpacks/legacy4server/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.06.3",
+      "version": "26.07.1",
       "release_type": "release",
       "lifecycle": "active",
       "role": "base",
@@ -97,7 +97,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/legacy4server/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 18,
+          "mod_count": 20,
           "has_index": true,
           "has_pack": true
         },
@@ -105,7 +105,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/legacy4server/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 22,
+          "mod_count": 25,
           "has_index": true,
           "has_pack": true
         }
@@ -166,7 +166,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/qualt/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 112,
+          "mod_count": 114,
           "has_index": true,
           "has_pack": true
         }
@@ -375,8 +375,8 @@
       "category": "modpack",
       "dir": "modpacks/reimagined",
       "manifest_path": "modpacks/reimagined/manifest.json",
-      "loader": "fabric",
-      "mc_version": "26.1.2",
+      "loader": "neoforge",
+      "mc_version": "1.21.1",
       "version": "26.05-dev",
       "release_type": "alpha",
       "lifecycle": "active",
@@ -386,10 +386,9 @@
       "docs_path": "/modpacks/reimagined/",
       "subdirs": [
         {
-          "key": "26.1.2-mr",
-          "path": "modpacks/reimagined/26.1.2-mr",
+          "key": "1.21.1-mr",
+          "path": "modpacks/reimagined/1.21.1-mr",
           "platform": "modrinth",
-          "mod_count": 69,
           "has_index": true,
           "has_pack": true
         }
@@ -663,7 +662,7 @@
       "category": "modpack",
       "dir": "modpacks/simply-modernized",
       "manifest_path": "modpacks/simply-modernized/manifest.json",
-      "version": "26.07",
+      "version": "26.07.1",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
@@ -689,15 +688,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/simply-modernized/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 43,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.1.2-mr",
-          "path": "modpacks/simply-modernized/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 29,
+          "mod_count": 46,
           "has_index": true,
           "has_pack": true
         },
@@ -705,7 +696,7 @@
           "key": "26.2-cf",
           "path": "modpacks/simply-modernized/26.2-cf",
           "platform": "curseforge",
-          "mod_count": 32,
+          "mod_count": 37,
           "has_index": true,
           "has_pack": true
         }
@@ -718,16 +709,16 @@
       "category": "modpack",
       "dir": "modpacks/simply-optimized-forked",
       "manifest_path": "modpacks/simply-optimized-forked/manifest.json",
-      "version": "26.07",
+      "version": "26.07.1",
       "release_type": "release",
       "lifecycle": "active",
       "role": "base",
       "auto_update": true,
       "modrinth_id": "simply-optimized-forked",
-      "curseforge_id": "simply-optimized-forked",
+      "curseforge_id": "1468747",
       "platforms": {
         "modrinth": "simply-optimized-forked",
-        "curseforge": "simply-optimized-forked"
+        "curseforge": "1468747"
       },
       "docs_path": "/modpacks/simply-optimized-forked/",
       "variants": [
@@ -745,7 +736,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/simply-optimized-forked/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 27,
+          "mod_count": 30,
           "has_index": true,
           "has_pack": true
         },
@@ -753,7 +744,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/simply-optimized-forked/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 28,
+          "mod_count": 31,
           "has_index": true,
           "has_pack": true
         },
@@ -761,7 +752,7 @@
           "key": "26.2-cf",
           "path": "modpacks/simply-optimized-forked/26.2-cf",
           "platform": "curseforge",
-          "mod_count": 21,
+          "mod_count": 26,
           "has_index": true,
           "has_pack": true
         },
@@ -769,7 +760,7 @@
           "key": "26.2-mr",
           "path": "modpacks/simply-optimized-forked/26.2-mr",
           "platform": "modrinth",
-          "mod_count": 24,
+          "mod_count": 29,
           "has_index": true,
           "has_pack": true
         }
@@ -784,7 +775,7 @@
       "manifest_path": "modpacks/vital/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.06.1",
+      "version": "26.07",
       "release_type": "release",
       "lifecycle": "active",
       "role": "base",
@@ -799,7 +790,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/vital/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 65,
+          "mod_count": 67,
           "has_index": true,
           "has_pack": true
         }

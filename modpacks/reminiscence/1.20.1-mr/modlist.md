@@ -2,9 +2,13 @@
 
 ## Client Mods
 
+- [Async Logger](https://modrinth.com/mod/zvNzKfGF)
 - [Better F1 Reborn](https://modrinth.com/mod/2JIeCmxb)
 - [CIT Resewn](https://modrinth.com/mod/otVJckYQ)
 - [Controlling](https://modrinth.com/mod/xv94TkTM)
+- [Gnetum](https://modrinth.com/mod/7MoE34WK)
+- [Ixeris](https://modrinth.com/mod/p8RJPJIC)
+- [Kerria](https://modrinth.com/mod/f0ruQTF7)
 - [Missing Mods Checker](https://modrinth.com/mod/gR4YXm1s)
 - [Searchables](https://modrinth.com/mod/fuuu3xnx)
 - [Toast Control](https://modrinth.com/mod/CnOG2wlS)
@@ -20,6 +24,7 @@
 - [BetterAdvancements-Forge-1.20.1-0.4.2.25](https://modrinth.com/mod/Q2OqKxDG)
 - [BetterF3-7.0.2-Forge-1.20.1](https://modrinth.com/mod/8shC1gFX)
 - [Block Swap-forge-1.20.1-5.0.0.0](https://modrinth.com/mod/f9kXyjJX)
+- [Caverns & Chasms](https://modrinth.com/mod/tfjmPSbI)
 - [Cloudflared-19.2.1-forge.jar](https://modrinth.com/mod/w5fammEF)
 - [ConnectorExtras-1.11.2+1.20.1](https://modrinth.com/mod/FYpiwiBR)
 - [CorpseComplexUnoffical-1.20.1-1.0](https://modrinth.com/mod/oI9YXDLO)
@@ -27,6 +32,7 @@
 - [CrashAssistant-forge-1.19-1.20.1-1.10.28](https://modrinth.com/mod/ix1qq8Ux)
 - [Debugify-1.20.1+2.0](https://modrinth.com/mod/QwxR6Gcd)
 - [DefaultWorldType-1.20.1-4.0.5](https://modrinth.com/mod/kZvO1mDq)
+- [Farmer's Delight](https://modrinth.com/mod/R2OftAxM)
 - [FarmersDelight-1.20.1-1.2.9](https://modrinth.com/mod/R2OftAxM)
 - [FastSuite](https://modrinth.com/mod/roccmqou)
 - [Fastload-Reforged-mc1.20.1-3.4.0](https://modrinth.com/mod/kCpssoSb)
@@ -36,7 +42,9 @@
 - [Krypton Reno](https://modrinth.com/mod/JkxWVYwU)
 - [Log-Begone-Forge-1.20.1-1.0.8](https://modrinth.com/mod/9ON3zv6e)
 - [Mini-boss Boss Bars 1.20.1 1.0.141](https://modrinth.com/mod/A8rzsSSb)
+- [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)
 - [MouseTweaks-forge-mc1.20.1-2.25.1](https://modrinth.com/mod/aC3cM3Vq)
+- [Naturalist](https://modrinth.com/mod/F8BQNPWX)
 - [Necronomicon-Forge-1.6.0+1.20.1](https://modrinth.com/mod/P1Kv5EAO)
 - [Neruina - Ticking Entity Fixer](https://modrinth.com/mod/1s5x833P)
 - [Neutron Tools](https://modrinth.com/mod/bnr3uObB)
@@ -156,4 +164,5 @@
 ## Server Mods
 
 - [Feature Recycler](https://modrinth.com/mod/IAzu52kG)
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
 - [In Control!](https://modrinth.com/mod/KpICtuVx)

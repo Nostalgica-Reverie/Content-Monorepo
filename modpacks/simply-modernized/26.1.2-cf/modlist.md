@@ -1,9 +1,14 @@
 # Modlist
 
+## Client Mods
+
+- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
+
 ## Shared Mods
 
 - [Animatica Refabricated]()
 - [Async Logger]()
+- [AsyncParticles]()
 - [BadOptimizations]()
 - [Better Block Entities]()
 - [Borderless Mining Updated]()
@@ -45,3 +50,4 @@
 - [[EMF] Entity Model Features [Fabric & Forge]]()
 - [[ESF] Entity Sound Features]()
 - [[ETF] Entity Texture Features - [Fabric & Forge]]()
+- [quick pack]()
