@@ -3,6 +3,7 @@
 	"package": "claritymod.creeereater.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
+		"CreateWorldScreenWorldTabMixin",
 		"DisconnectedScreenMixin"
 	],
 	"injectors": {

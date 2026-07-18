@@ -4,5 +4,9 @@
 	"claritymod.disconnect.getsockopt_refused": "Connection refused. The server may be offline, still starting, or not listening on that port. Check the address and port. If you host the server, start it and verify its firewall and port forwarding.",
 	"claritymod.disconnect.getsockopt_generic": "Could not connect to the server. Check that it is online and that its address and port are correct. If you host the server, check its firewall and port-forwarding settings.",
 	"claritymod.server.ready": "Server is online and ready to join!",
-	"claritymod.grave.void_reminder": "Your grave still exists despite your void death. Use your grave mod's recovery tools to find and retrieve it!"
+	"claritymod.grave.void_reminder": "Your grave still exists despite your void death. Use your grave mod's recovery tools to find and retrieve it!",
+	"claritymod.betterx.confirm.title": "Changing World Type May Break World Generation!",
+	"claritymod.betterx.confirm.message": "BetterEnd or BetterNether is installed. Changing the world type can permanently damage world generation. Are you sure you want to continue?",
+	"claritymod.betterx.confirm.accept": "Change World Type",
+	"claritymod.betterx.confirm.cancel": "Cancel"
 }
