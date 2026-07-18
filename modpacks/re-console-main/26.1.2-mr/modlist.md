@@ -3,7 +3,6 @@
 ## Client Mods
 
 - [Advancement Screenshot](https://modrinth.com/mod/lU8KbfG2)
-- [Amecs](https://modrinth.com/mod/rcLriA4v)
 - [Animatica Refabricated](https://modrinth.com/mod/xEyZuswh)
 - [Animatium](https://modrinth.com/mod/zy0karK1)
 - [Async Logger](https://modrinth.com/mod/zvNzKfGF)
@@ -15,7 +14,6 @@
 - [Borderless Mining Updated](https://modrinth.com/mod/KxYAzYLi)
 - [Cave Fog Stabilizer](https://modrinth.com/mod/ztUKf3vp)
 - [Chat Heads](https://modrinth.com/mod/Wb5oqrBJ)
-- [Chunks fade in](https://modrinth.com/mod/JaNmzvA8)
 - [Console Advancement Sounds](https://modrinth.com/mod/v2x7Gozv)
 - [Continuity](https://modrinth.com/mod/1IjD5062)
 - [Crash Assistant](https://modrinth.com/mod/ix1qq8Ux)
@@ -30,6 +28,7 @@
 - [Gnetum](https://modrinth.com/mod/7MoE34WK)
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
 - [Iris Shaders](https://modrinth.com/mod/YL57xq9U)
+- [Ixeris](https://modrinth.com/mod/p8RJPJIC)
 - [LambdaBetterGrass](https://modrinth.com/mod/2Uev7LdA)
 - [Language Reload](https://modrinth.com/mod/uLbm7CG6)
 - [Locator Lodestones](https://modrinth.com/mod/pMBcsVIg)

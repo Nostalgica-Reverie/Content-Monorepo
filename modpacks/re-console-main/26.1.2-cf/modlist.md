@@ -3,7 +3,6 @@
 ## Shared Mods
 
 - [Advancement Screenshot]()
-- [Amecs (Fabric)]()
 - [Async Logger]()
 - [Bannerpoint]()
 - [Bedrock Skins]()
@@ -38,6 +37,7 @@
 - [ImmediatelyFast]()
 - [Immersive Optimization]()
 - [Iris Shaders]()
+- [Ixeris]()
 - [KryptonReno's Fabric Patcher]()
 - [LambdaBetterGrass]()
 - [Language Reload]()
@@ -49,8 +49,7 @@
 - [MacOS Input Fixes]()
 - [Mod Menu]()
 - [Moderner Beta]()
-- [No Chat Reports]()
-- [No Chat Restrictions]()
+- [No Prying Eyes]()
 - [Ok Zoomer - It's Zoom!]()
 - [Particle Core]()
 - [Picture Mode]()
