@@ -1,4 +1,4 @@
-package claritymod.creeereater.server;
+package claritymod.creepereater.server;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;

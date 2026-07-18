@@ -1,6 +1,6 @@
-package claritymod.creeereater;
+package claritymod.creepereater;
 
-import claritymod.creeereater.server.ServerReadyNotifier;
+import claritymod.creepereater.server.ServerReadyNotifier;
 //? if fabric {
 import net.fabricmc.api.ModInitializer;
 //?} else {

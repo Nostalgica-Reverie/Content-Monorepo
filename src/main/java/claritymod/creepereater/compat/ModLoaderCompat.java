@@ -1,4 +1,4 @@
-package claritymod.creeereater.compat;
+package claritymod.creepereater.compat;
 
 //? if fabric {
 import net.fabricmc.loader.api.FabricLoader;

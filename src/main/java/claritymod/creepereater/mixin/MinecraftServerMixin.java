@@ -1,4 +1,4 @@
-package claritymod.creeereater.mixin;
+package claritymod.creepereater.mixin;
 
 import java.util.concurrent.TimeUnit;
 import net.minecraft.server.MinecraftServer;

@@ -1,6 +1,6 @@
-package claritymod.creeereater.client.mixin;
+package claritymod.creepereater.client.mixin;
 
-import claritymod.creeereater.compat.ModLoaderCompat;
+import claritymod.creepereater.compat.ModLoaderCompat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.ConfirmScreen;

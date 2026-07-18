@@ -1,4 +1,4 @@
-package claritymod.creeereater.compat;
+package claritymod.creepereater.compat;
 
 import java.util.Set;
 

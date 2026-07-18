@@ -1,4 +1,4 @@
-package claritymod.creeereater.client.mixin;
+package claritymod.creepereater.client.mixin;
 
 import java.util.Locale;
 import net.minecraft.client.gui.screens.DisconnectedScreen;

@@ -1,4 +1,4 @@
-package claritymod.creeereater.mixin;
+package claritymod.creepereater.mixin;
 
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.commands.BrigadierExceptions;

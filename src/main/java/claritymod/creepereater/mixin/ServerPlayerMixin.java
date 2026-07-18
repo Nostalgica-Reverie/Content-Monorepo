@@ -1,6 +1,6 @@
-package claritymod.creeereater.mixin;
+package claritymod.creepereater.mixin;
 
-import claritymod.creeereater.compat.GraveModCompat;
+import claritymod.creepereater.compat.GraveModCompat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
