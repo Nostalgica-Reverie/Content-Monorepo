@@ -3014,11 +3014,6 @@ hash = "bb7e7e0c71b88767a6d95e43e754fc8155473bbcb4c4a6ecb2e26a65a6ec7d9c52d52213
 metafile = true
 
 [[files]]
-file = "mods/amecs.pw.toml"
-hash = "12e512972221fb7efc77afd0bdbbef73ef0480fe0d99b6e7f472e95c8130f3587ad36b750e7df5c958261715e90269742168dcf6c75ef24ab477f297c2a05b3b"
-metafile = true
-
-[[files]]
 file = "mods/asynclogger.pw.toml"
 hash = "eed657e646c7031f3d04edd4fe7a8cb45af69e2f631689c82f3ae20f81deff901e468f445ab99a1d46b60ad20e9262da2b2c3a6b4e4c640c2d63c56f7a19547d"
 metafile = true
@@ -3140,7 +3135,7 @@ metafile = true
 
 [[files]]
 file = "mods/fabric-api.pw.toml"
-hash = "03bb31a6b1dd64df8cbdc4cededf220f387c0a10654341ff64d417612ef0c127b20a969772c0b888dc3c0a481a1a5449264d7877b90b714ccc3ff03f43b51841"
+hash = "04f474e34636295d065667ffdcc531a7e5b81dd21867f4adb41a3a4eb8a4fa1a21c58d43cab9594e911aa9613070596940aee99af221ded6835e87f3181a0242"
 metafile = true
 
 [[files]]
@@ -3195,7 +3190,12 @@ metafile = true
 
 [[files]]
 file = "mods/irisshaders.pw.toml"
-hash = "b0632cfa2a2b581896b5aa2e6b89ee9f2e2d66342953ce031f0f48e20433a99ca0db9c4e3d8ca1ea5b5f0de48c5f9821a8b152bc33001a8240f2d50ed08002af"
+hash = "fd6ad631d36ea0406b36f6a011bec001c63872692f05b0eab409cab932c63ea4ed6a72bd278f1608c48f4000e20158c73f56d6e8f478959fc5d2d1ba6b969536"
+metafile = true
+
+[[files]]
+file = "mods/ixeris.pw.toml"
+hash = "d4c06b259dce16088bc7acefe18a8ec2266b81714d2c2f5d9a87bb14959aa091bbbddc115363e2b59c9bb992427b999310b24b41530bd86c97c090afa9d79fda"
 metafile = true
 
 [[files]]
@@ -3254,13 +3254,8 @@ hash = "dff42f59e9f1720c1cb0dc259bfb7bfee4d2895aabb53e0facf1c71bc4787abd485a1ed4
 metafile = true
 
 [[files]]
-file = "mods/no-chat-reports.pw.toml"
-hash = "31203dea42c44c28086b9da32a1c4edfb05a4e7c7c11db45622e0061b5878d199cdf4d909873e35389ef970ae6cd2ad0a33fea22ac83d74ad875185ade829f45"
-metafile = true
-
-[[files]]
-file = "mods/no-chat-restrictions.pw.toml"
-hash = "b409e358cee758ce33eaebb5900c359b41d09f77ab20cf5de3bd364e5f6c5e4d11ce1047f13f18ccf5dd1f1e6f4e3b980eeb60954a77bcba150bb1a8703e4f85"
+file = "mods/no-prying-eyes.pw.toml"
+hash = "7bfb8cae260e3665bcd29ee7c4862b99b6b71b2e7d6cfd1e93819028b7bebbe9c661ce4871b0522e53749aeadd2e879a521e4b197708a086f179cd11a93a1d29"
 metafile = true
 
 [[files]]
@@ -3335,7 +3330,7 @@ metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "b53510635047016b970143a29c9f97994ee3129598e20dd101c1affdd0b73195f91b55b2657e11d53f1a9f26544eabcd2c1bf906ecca982a6bc03539509ea04c"
+hash = "ab2a6e4dacedbc2d1314d49010095737dc8b2ecc795f64de4c681f3bc77f72c6cabf508f6bb4d758826d11a65a5f4260aab073702fa1aa848bbf125f0498b301"
 metafile = true
 
 [[files]]
