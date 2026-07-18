@@ -2,7 +2,12 @@ package claritymod.creeereater.server;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+//? if fabric {
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+//?} else {
+/*import net.neoforged.neoforge.common.NeoForge;*/
+/*import net.neoforged.neoforge.event.server.ServerStartedEvent;*/
+//?}
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -14,8 +19,18 @@ public final class ServerReadyNotifier {
 	}
 
 	public static void register() {
+		//? if fabric {
 		ServerLifecycleEvents.SERVER_STARTED.register(ServerReadyNotifier::scheduleAnnouncement);
+		//?} else {
+		/*NeoForge.EVENT_BUS.addListener(ServerReadyNotifier::onServerStarted);*/
+		//?}
 	}
+
+	//? if neoforge {
+	/*private static void onServerStarted(ServerStartedEvent event) {*/
+		/*scheduleAnnouncement(event.getServer());*/
+	/*}*/
+	//?}
 
 	private static void scheduleAnnouncement(MinecraftServer server) {
 		if (!server.isDedicatedServer()) {

@@ -2,7 +2,11 @@ package claritymod.creeereater.mixin;
 
 import java.util.concurrent.TimeUnit;
 import net.minecraft.server.MinecraftServer;
+//? if >=26 {
 import net.minecraft.util.Util;
+//?} else {
+/*import net.minecraft.Util;*/
+//?}
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

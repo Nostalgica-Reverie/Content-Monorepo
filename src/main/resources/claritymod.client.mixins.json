@@ -1,7 +1,7 @@
 {
 	"required": true,
 	"package": "claritymod.creeereater.client.mixin",
-	"compatibilityLevel": "JAVA_25",
+	"compatibilityLevel": "${mixin_compatibility}",
 	"client": [
 		"CreateWorldScreenWorldTabMixin",
 		"DisconnectedScreenMixin"

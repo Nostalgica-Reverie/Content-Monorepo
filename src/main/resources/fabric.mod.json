@@ -2,14 +2,13 @@
 	"schemaVersion": 1,
 	"id": "claritymod",
 	"version": "${version}",
-	"name": "claritymod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Clarity Mod",
+	"description": "Support and clarity improvements for the Nostalgic Reverie modpack.",
 	"authors": [
-		"Me!"
+		"creeereater"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://discord.com/invite/urgaDHUueu"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/claritymod/icon.png",
@@ -17,9 +16,6 @@
 	"entrypoints": {
 		"main": [
 			"claritymod.creeereater.Claritymod"
-		],
-		"client": [
-			"claritymod.creeereater.client.ClaritymodClient"
 		]
 	},
 	"mixins": [
@@ -31,8 +27,8 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.19.3",
-		"minecraft": "~26.1.2",
-		"java": ">=25",
+		"minecraft": "~${minecraft_version}",
+		"java": ">=${java_version}",
 		"fabric-api": "*"
 	}
 }

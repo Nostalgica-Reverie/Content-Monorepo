@@ -7,6 +7,10 @@ import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.network.chat.Component;
+//? if <26 {
+/*import org.spongepowered.asm.mixin.Final;*/
+/*import org.spongepowered.asm.mixin.Shadow;*/
+//?}
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,13 +18,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net.minecraft.client.gui.screens.worldselection.CreateWorldScreen$WorldTab")
 public abstract class CreateWorldScreenWorldTabMixin {
+	//? if <26
+	/*@Shadow @Final private CreateWorldScreen this$0;*/
+
 	@Inject(
+		//? if >=26 {
 		method = "lambda$new$0(Lnet/minecraft/client/gui/screens/worldselection/CreateWorldScreen;Lnet/minecraft/client/gui/components/CycleButton;Lnet/minecraft/client/gui/screens/worldselection/WorldCreationUiState$WorldTypeEntry;)V",
+		//?} else {
+		/*method = "lambda$new$0(Lnet/minecraft/client/gui/components/CycleButton;Lnet/minecraft/client/gui/screens/worldselection/WorldCreationUiState$WorldTypeEntry;)V",*/
+		//?}
 		at = @At("HEAD"),
 		cancellable = true
 	)
-	private static void claritymod$confirmWorldTypeChange(
-		CreateWorldScreen createWorldScreen,
+	private /*? if >=26 {*/ static /*?}*/ void claritymod$confirmWorldTypeChange(
+		//? if >=26
+		CreateWorldScreen outerScreen,
 		CycleButton<WorldCreationUiState.WorldTypeEntry> typeButton,
 		WorldCreationUiState.WorldTypeEntry newWorldType,
 		CallbackInfo callback
@@ -29,6 +41,12 @@ public abstract class CreateWorldScreenWorldTabMixin {
 			return;
 		}
 
+		CreateWorldScreen createWorldScreen =
+			//? if >=26 {
+			outerScreen;
+			//?} else {
+			/*this.this$0;*/
+			//?}
 		Minecraft minecraft = Minecraft.getInstance();
 		minecraft.setScreen(new ConfirmScreen(
 			confirmed -> {

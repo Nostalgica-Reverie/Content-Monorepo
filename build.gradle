@@ -1,84 +1,115 @@
 plugins {
-	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'java-library'
 	id 'maven-publish'
 }
+
+def targetName = stonecutter.current.project
+def minecraftVersion = stonecutter.current.version
+def loader = targetName.substring(targetName.lastIndexOf('-') + 1)
+def javaRelease = minecraftVersion.startsWith('26.') ? 25 : 21
 
 version = project.mod_version
 group = project.maven_group
 
-repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+base {
+	archivesName = "claritymod-${loader}-${minecraftVersion}"
 }
 
-loom {
-	splitEnvironmentSourceSets()
+if (loader == 'fabric') {
+	apply plugin: 'net.fabricmc.fabric-loom'
 
-	mods {
-		"claritymod" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
+	loom {
+		mods {
+			claritymod {
+				sourceSet sourceSets.main
+			}
 		}
 	}
-}
 
-dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	dependencies {
+		minecraft "com.mojang:minecraft:${minecraftVersion}"
+		implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+		implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	}
+} else if (loader == 'neoforge') {
+	apply plugin: 'net.neoforged.moddev'
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	neoForge {
+		version = project.neo_version
+
+		runs {
+			client {
+				client()
+			}
+			server {
+				server()
+				programArgument '--nogui'
+			}
+		}
+
+		mods {
+			claritymod {
+				sourceSet sourceSets.main
+			}
+		}
+	}
+} else {
+	throw new GradleException("Unsupported Clarity Mod loader target: ${loader}")
 }
 
 processResources {
-	def version = project.version
-	inputs.property "version", version
+	inputs.property 'mod_version', project.version
+	inputs.property 'minecraft_version', minecraftVersion
+	inputs.property 'loader', loader
+	inputs.property 'java_release', javaRelease
 
-	filesMatching("fabric.mod.json") {
-		expand "version": version
+	filesMatching('fabric.mod.json') {
+		expand(
+			version: project.version,
+			minecraft_version: minecraftVersion,
+			java_version: javaRelease
+		)
+	}
+
+	filesMatching('META-INF/neoforge.mods.toml') {
+		expand(
+			version: project.version,
+			minecraft_version: minecraftVersion,
+			neo_version: project.findProperty('neo_version') ?: ''
+		)
+	}
+
+	filesMatching(['claritymod.mixins.json', 'claritymod.client.mixins.json']) {
+		expand(mixin_compatibility: "JAVA_${javaRelease}")
+	}
+
+	if (loader == 'fabric') {
+		exclude 'META-INF/neoforge.mods.toml'
+	} else {
+		exclude 'fabric.mod.json'
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 25
+	options.encoding = 'UTF-8'
+	options.release = javaRelease
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
+	toolchain.languageVersion = JavaLanguageVersion.of(javaRelease)
 	withSourcesJar()
-
-	sourceCompatibility = JavaVersion.VERSION_25
-	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {
-	def projectName = project.name
-	inputs.property "projectName", projectName
-
-	from("LICENSE") {
-		rename { "${it}_$projectName"}
+	from(rootProject.file('LICENSE')) {
+		rename { "${it}_claritymod" }
 	}
 }
 
-// configure the maven publication
 publishing {
 	publications {
-		create("mavenJava", MavenPublication) {
+		create('mavenJava', MavenPublication) {
 			from components.java
 		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
 	}
 }
