@@ -1,2 +1,2 @@
-# Re-Console Main 26.07
-Fixes 26.2, and updates mods.
+# Re-Console Main 26.07.1
+Fix outdated modlists and curseforge publishing
