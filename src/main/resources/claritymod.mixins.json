@@ -5,7 +5,8 @@
 	"mixins": [
 		"BrigadierExceptionsMixin",
 		"CrashReportMixin",
-		"MinecraftServerMixin"
+		"MinecraftServerMixin",
+		"ServerPlayerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
