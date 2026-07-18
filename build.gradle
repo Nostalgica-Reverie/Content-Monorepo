@@ -1,0 +1,106 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+}
+
+def minecraftVersion = stonecutter.current.version
+def loader = stonecutter.current.project.tokenize('-').last()
+def javaRelease = minecraftVersion.startsWith('26.') ? 25 : 21
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = "mod-audit-${loader}-${minecraftVersion}"
+}
+
+sourceSets {
+	main {
+		java.setSrcDirs([
+			rootProject.file('src/main/java'),
+			rootProject.file("src/${loader}/java")
+		])
+		resources.setSrcDirs([rootProject.file('src/main/resources')])
+	}
+}
+
+if (loader == 'fabric') {
+	apply plugin: 'net.fabricmc.fabric-loom'
+
+	loom {
+		mods {
+			modaudit {
+				sourceSet sourceSets.main
+			}
+		}
+	}
+
+	dependencies {
+		minecraft "com.mojang:minecraft:${minecraftVersion}"
+		implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	}
+} else if (loader == 'neoforge') {
+	apply plugin: 'net.neoforged.moddev'
+
+	neoForge {
+		version = project.neo_version
+
+		runs {
+			client {
+				client()
+			}
+		}
+
+		mods {
+			modaudit {
+				sourceSet sourceSets.main
+			}
+		}
+	}
+} else {
+	throw new GradleException("Unsupported Mod Audit loader target: ${loader}")
+}
+
+def metadata = [
+	version: project.version,
+	minecraft_version: minecraftVersion,
+	java_version: javaRelease,
+	loader_version: project.findProperty('loader_version') ?: '',
+	neo_version: project.findProperty('neo_version') ?: ''
+]
+def metadataFile = loader == 'fabric' ? 'fabric.mod.json' : 'META-INF/neoforge.mods.toml'
+def excludedMetadata = loader == 'fabric' ? 'META-INF/neoforge.mods.toml' : 'fabric.mod.json'
+
+processResources {
+	inputs.properties metadata
+	filesMatching(metadataFile) { expand metadata }
+	exclude excludedMetadata
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8'
+	options.release = javaRelease
+}
+
+java {
+	toolchain.languageVersion = JavaLanguageVersion.of(javaRelease)
+	withSourcesJar()
+}
+
+tasks.named('sourcesJar') {
+	exclude excludedMetadata
+}
+
+jar {
+	from(rootProject.file('LICENSE')) {
+		rename { "${it}_mod-audit" }
+	}
+}
+
+publishing {
+	publications {
+		create('mavenJava', MavenPublication) {
+			from components.java
+		}
+	}
+}

@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="modaudit"
+version="${version}"
+displayName="Mod Audit"
+authors="creepereater"
+description='''
+Prompts users to install non-modrinth or non-curseforge mods on install
+'''
+logoFile="assets/mod-audit/icon.png"
+displayURL="https://git.nostalgica.net/Reverie-Projects/modaudit"
+
+[[dependencies.modaudit]]
+modId="neoforge"
+type="required"
+versionRange="[${neo_version},)"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.modaudit]]
+modId="minecraft"
+type="required"
+versionRange="[${minecraft_version}]"
+ordering="NONE"
+side="CLIENT"
