@@ -3,6 +3,7 @@
 ## Shared Mods
 
 - [Advancement Screenshot]()
+- [Animatium]()
 - [Async Logger]()
 - [Bannerpoint]()
 - [Bedrock Skins]()

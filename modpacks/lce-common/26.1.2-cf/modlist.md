@@ -2,6 +2,7 @@
 
 ## Shared Mods
 
+- [Animatium]()
 - [Async Logger]()
 - [Bedrock Skins]()
 - [Bobby]()
