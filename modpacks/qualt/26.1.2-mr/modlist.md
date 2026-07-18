@@ -3,6 +3,7 @@
 ## Client Mods
 
 - [Async Logger](https://modrinth.com/mod/zvNzKfGF)
+- [AsyncParticles](https://modrinth.com/mod/c3onkd5k)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
 - [Better Block Entities](https://modrinth.com/mod/ONZm0H7Y)
 - [Borderless Mining Updated](https://modrinth.com/mod/KxYAzYLi)
@@ -35,6 +36,7 @@
 - [Main Menu Credits](https://modrinth.com/mod/qJDfP7WN)
 - [McQoy](https://modrinth.com/mod/tNmWwdI2)
 - [Mod Menu](https://modrinth.com/mod/mOgUt4GM)
+- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
 - [OptiGUI](https://modrinth.com/mod/JuksLGBQ)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
 - [Pro Placer](https://modrinth.com/mod/LhK0LkWd)

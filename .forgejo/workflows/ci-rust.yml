@@ -6,18 +6,18 @@ on:
     paths:
       - "apps/mod-browser-webview/**"
       - "packages/packwand-core/**"
-      - "Taskfile.yml"
+      - "justfile"
       - ".forgejo/actions/setup-rust/**"
-      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/actions/setup-just/**"
       - ".forgejo/workflows/ci-rust.yml"
   pull_request:
     branches: ["main"]
     paths:
       - "apps/mod-browser-webview/**"
       - "packages/packwand-core/**"
-      - "Taskfile.yml"
+      - "justfile"
       - ".forgejo/actions/setup-rust/**"
-      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/actions/setup-just/**"
       - ".forgejo/workflows/ci-rust.yml"
   workflow_dispatch:
 
@@ -38,7 +38,7 @@ jobs:
             apps/mod-browser-webview
             packages/packwand-core
             tools
-            Taskfile.yml
+            justfile
             .forgejo/actions
       - uses: ./.forgejo/actions/setup-rust
         with:
@@ -50,16 +50,16 @@ jobs:
       - uses: https://github.com/taiki-e/install-action@v2
         with:
           tool: cargo-audit
-      - uses: ./.forgejo/actions/setup-task
+      - uses: ./.forgejo/actions/setup-just
       - name: Lint Rust webview
-        run: task lint-webview
+        run: just lint-webview
       - name: Lint Packwand core
-        run: task lint-rust-core
+        run: just lint-rust-core
       - name: Audit Rust dependencies
-        run: task audit-rust
+        run: just audit-rust
       - name: Test Rust webview
-        run: task test-webview
+        run: just test-webview
       - name: Test Packwand core
-        run: task test-rust-core
+        run: just test-rust-core
       - name: Build Rust webview
-        run: task build-webview
+        run: just build-webview

@@ -71,6 +71,32 @@ GOPRIVATE=git.nostalgica.net go install git.nostalgica.net/Reverie-Projects/mono
 
 Prebuilt binaries are also published on the [Forgejo releases page](https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo/releases).
 
+### CurseForge API key
+
+PackWand includes its own CurseForge client API key, so CurseForge commands and
+metadata downloads work without additional configuration. This follows the
+same client-key model as upstream packwiz.
+
+To override the embedded key (for example, during rotation), set an environment
+variable before running PackWand.
+
+PowerShell:
+
+```powershell
+$env:CURSEFORGE_API_KEY = "your-key"
+```
+
+Bash:
+
+```sh
+export CURSEFORGE_API_KEY="your-key"
+```
+
+`PACKWAND_CURSEFORGE_API_KEY` and `CF_API_KEY` are also accepted.
+
+Forgejo automation workflows also accept a repository Actions secret named
+`CURSEFORGE_API_KEY`, which overrides the embedded key at runtime.
+
 ## Documentation
 See the Packwand documentation site: https://packwand.nostalgica.net
 

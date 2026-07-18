@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-10T18:47:39Z",
+  "generated": "2026-07-14T21:39:53Z",
   "projects": [
     {
       "id": "gold-not-old",
@@ -501,16 +501,16 @@
       "manifest_path": "modpacks/reminiscence/manifest.json",
       "loader": "forge",
       "mc_version": "1.20.1",
-      "version": "2.0.0-hotfix",
+      "version": "2.0.0-hotfix2",
       "release_type": "release",
       "lifecycle": "active",
       "role": "none",
       "auto_update": true,
       "modrinth_id": "reminiscence",
-      "curseforge_id": "reminiscence",
+      "curseforge_id": "1003617",
       "platforms": {
         "modrinth": "reminiscence",
-        "curseforge": "reminiscence"
+        "curseforge": "1003617"
       },
       "docs_path": "/modpacks/reminiscence/",
       "subdirs": [
@@ -518,7 +518,7 @@
           "key": "1.20.1-cf",
           "path": "modpacks/reminiscence/1.20.1-cf",
           "platform": "curseforge",
-          "mod_count": 170,
+          "mod_count": 176,
           "has_index": true,
           "has_pack": true
         },
@@ -526,7 +526,7 @@
           "key": "1.20.1-mr",
           "path": "modpacks/reminiscence/1.20.1-mr",
           "platform": "modrinth",
-          "mod_count": 149,
+          "mod_count": 158,
           "has_index": true,
           "has_pack": true
         }
@@ -623,7 +623,7 @@
       "manifest_path": "modpacks/simply-legacy/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.07",
+      "version": "26.07.2",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
@@ -641,7 +641,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/simply-legacy/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 45,
+          "mod_count": 44,
           "has_index": true,
           "has_pack": true
         },
@@ -652,12 +652,6 @@
           "mod_count": 48,
           "has_index": true,
           "has_pack": true
-        },
-        {
-          "key": "artifacts",
-          "path": "modpacks/simply-legacy/artifacts",
-          "has_index": false,
-          "has_pack": false
         }
       ]
     },

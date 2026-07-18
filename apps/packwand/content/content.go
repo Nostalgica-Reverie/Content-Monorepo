@@ -1051,31 +1051,48 @@ func slugify(name string) string {
 
 const defaultInstallerURL = "https://github.com/packwiz/packwiz-installer-bootstrap/releases/latest/download/packwiz-installer-bootstrap.jar"
 
-func resolveInstallerJar() (string, error) {
+// resolveInstallerJar finds a packwiz installer jar to run. It returns the
+// jar path and whether it is our own locally-built fork (in which case its
+// Main-Class is a RequiresBootstrap guard that refuses direct `-jar`
+// execution, so callers must invoke it via `-cp jar
+// link.infra.packwiz.installer.Main`, matching cmd/packwiz-bootstrap) versus
+// the legacy self-updating bootstrap jar (invoked via `-jar` as before).
+//
+// A repo checkout's own `task build-installer` output is preferred over the
+// cached/downloaded upstream bootstrap jar, so `packwand test` (used for dev
+// boot testing) exercises this repo's actual patched installer rather than
+// silently falling back to an unrelated upstream build.
+func resolveInstallerJar() (path string, direct bool, err error) {
 	for _, name := range []string{"PACKWAND_INSTALLER_JAR", "PACKWIZ_INSTALLER_JAR"} {
-		if path := os.Getenv(name); path != "" {
-			if _, err := os.Stat(path); err != nil {
-				return "", fmt.Errorf("%s points to %s: %w", name, path, err)
+		if p := os.Getenv(name); p != "" {
+			if _, err := os.Stat(p); err != nil {
+				return "", false, fmt.Errorf("%s points to %s: %w", name, p, err)
 			}
-			return path, nil
+			return p, false, nil
+		}
+	}
+	if root := workspace.FindRepoRoot(); root != "" {
+		local := filepath.Join(root, "apps", "packwand-installer", "build", "dist", "packwiz-installer.jar")
+		if _, err := os.Stat(local); err == nil {
+			return local, true, nil
 		}
 	}
 	cache, err := core.GetPackwandCache()
 	if err != nil {
-		return "", err
+		return "", false, err
 	}
-	path := filepath.Join(cache, "installer", "packwiz-installer-bootstrap.jar")
+	path = filepath.Join(cache, "installer", "packwiz-installer-bootstrap.jar")
 	if _, err := os.Stat(path); err == nil {
-		return path, nil
+		return path, false, nil
 	}
 	url := os.Getenv("PACKWAND_INSTALLER_URL")
 	if url == "" {
 		url = defaultInstallerURL
 	}
 	if err := downloadInstallerJar(path, url, os.Getenv("PACKWAND_INSTALLER_SHA256")); err != nil {
-		return "", err
+		return "", false, err
 	}
-	return path, nil
+	return path, false, nil
 }
 
 func downloadInstallerJar(destination, source, expectedSHA256 string) error {
@@ -1132,7 +1149,7 @@ var testCmd = &cobra.Command{
 		if _, err := exec.LookPath("java"); err != nil {
 			cmd.Fail("java not found in PATH; packwiz-installer requires a JRE/JDK")
 		}
-		installerJar, err := resolveInstallerJar()
+		installerJar, installerDirect, err := resolveInstallerJar()
 		if err != nil {
 			cmd.Fail(fmt.Sprintf("could not provision packwiz installer: %v", err))
 		}
@@ -1175,7 +1192,15 @@ var testCmd = &cobra.Command{
 
 		packURL := fmt.Sprintf("http://localhost:%s/pack.toml", servePort)
 		fmt.Printf("installing pack into %s ...\n", absInstance)
-		installer := exec.Command("java", "-jar", absJar, "-g", packURL)
+		var installer *exec.Cmd
+		if installerDirect {
+			// Our own build's Main-Class is a RequiresBootstrap guard that
+			// refuses direct `-jar` execution; invoke the real entry point
+			// via the classpath instead, matching cmd/packwiz-bootstrap.
+			installer = exec.Command("java", "-cp", absJar, "link.infra.packwiz.installer.Main", "-g", "--continue-on-error", packURL)
+		} else {
+			installer = exec.Command("java", "-jar", absJar, "-g", "--continue-on-error", packURL)
+		}
 		installer.Dir = absInstance
 		installer.Stdout = os.Stdout
 		installer.Stderr = os.Stderr

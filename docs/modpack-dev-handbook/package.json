@@ -6,15 +6,17 @@
   "type": "module",
   "packageManager": "bun@1.3.14",
   "scripts": {
-    "docs:commands": "node ../packwand/build-commands.mts && node ../packwand/check-command-coverage.mts",
-    "docs:index": "node scripts/prepare-docs.mts",
+    "docs:commands": "bun ../packwand/build-commands.mts && bun ../packwand/check-command-coverage.mts",
+    "docs:index": "bun scripts/prepare-docs.mts",
+    "docs:index:check": "bun scripts/prepare-docs.mts --check",
     "dev": "bun run docs:index && vite dev",
     "build": "bun run docs:commands && bun run docs:index && vite build",
     "preview": "vite preview",
-    "generate:usefulmods": "node scripts/usefulMods.mts",
+    "generate:usefulmods": "bun scripts/usefulMods.mts",
     "format": "prettier --write \\\"src/**/*.{svelte,ts,svx,md}\\\" \\\"scripts/*.{mts,ts}\\\"",
-    "check": "bun run docs:commands && bun run docs:index && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "bun run docs:index && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:generated": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check": "bun run docs:commands && bun run docs:index && bun run check:generated",
+    "check:watch": "bun run docs:index && bun run check:generated --watch"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.10",

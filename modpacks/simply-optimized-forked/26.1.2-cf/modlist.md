@@ -1,8 +1,13 @@
 # Modlist
 
+## Client Mods
+
+- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
+
 ## Shared Mods
 
 - [Async Logger]()
+- [AsyncParticles]()
 - [BadOptimizations]()
 - [Better Block Entities]()
 - [C2ME OpenCL Acceleration Module]()
@@ -29,3 +34,4 @@
 - [ServerCore]()
 - [Sodium]()
 - [Very Many Players (Fabric)]()
+- [quick pack]()

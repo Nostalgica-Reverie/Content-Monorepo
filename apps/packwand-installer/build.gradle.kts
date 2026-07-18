@@ -34,6 +34,7 @@ dependencies {
 	implementation(kotlin("stdlib-jdk8"))
 	implementation("com.squareup.okhttp3:okhttp:4.12.0")
 	implementation("cc.ekblad:4koma:1.1.0") // pinned: 1.2.x targets JVM 17, installer targets Java 8
+	testImplementation(kotlin("test"))
 
 	r8("com.android.tools:r8:8.5.35")
 }

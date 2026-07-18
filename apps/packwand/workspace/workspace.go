@@ -48,6 +48,24 @@ func ModpacksDir() string {
 	return "modpacks"
 }
 
+// resolvedModpacksDir returns the pack collection directory as an absolute
+// path. Workspace commands chdir to the repository root before dispatch, but
+// scope detection also compares this path with the absolute startup cwd.
+func resolvedModpacksDir() string {
+	dir := ModpacksDir()
+	if filepath.IsAbs(dir) {
+		return filepath.Clean(dir)
+	}
+	if root := FindRepoRoot(); root != "" {
+		return filepath.Join(root, dir)
+	}
+	abs, err := filepath.Abs(dir)
+	if err != nil {
+		return filepath.Clean(dir)
+	}
+	return abs
+}
+
 // FindRepoRoot walks up from cwd looking for .git or modpacks/.
 func FindRepoRoot() string {
 	dir, err := os.Getwd()
@@ -256,6 +274,13 @@ var (
 
 // CollectTargets discovers pack subdirectories eligible for op under root.
 func CollectTargets(root string, honorIgnore bool, packFilter string, explicit bool) (targets []string, skipped []string) {
+	cleanFilter := ""
+	if packFilter != "" {
+		cleanFilter = filepath.Clean(packFilter)
+		if abs, err := filepath.Abs(cleanFilter); err == nil {
+			cleanFilter = abs
+		}
+	}
 	packs, err := os.ReadDir(root)
 	if err != nil {
 		return nil, nil
@@ -265,8 +290,14 @@ func CollectTargets(root string, honorIgnore bool, packFilter string, explicit b
 			continue
 		}
 		packPath := filepath.Join(root, p.Name())
-		if packFilter != "" && filepath.Clean(packPath) != filepath.Clean(packFilter) {
-			continue
+		if cleanFilter != "" {
+			cleanPackPath := filepath.Clean(packPath)
+			if abs, err := filepath.Abs(cleanPackPath); err == nil {
+				cleanPackPath = abs
+			}
+			if cleanPackPath != cleanFilter {
+				continue
+			}
 		}
 		if packFilter != "" && explicit && honorIgnore {
 			lc := manifest.LifecycleState(packPath)
@@ -358,7 +389,7 @@ func Run(op Operation, packFilter string, explicit bool) error {
 	if _, err := exec.LookPath(SelfBin()); err != nil {
 		return fmt.Errorf("packwand binary not found: %w", err)
 	}
-	root := FindRepoRoot()
+	root := resolvedModpacksDir()
 	if info, err := os.Stat(root); err != nil || !info.IsDir() {
 		return fmt.Errorf("modpacks directory not found: %s", root)
 	}
@@ -413,7 +444,7 @@ func ResolveScope(args []string, startCwd string) (packFilter string, explicit b
 		return dir, true
 	}
 	if startCwd != "" {
-		root := FindRepoRoot()
+		root := resolvedModpacksDir()
 		if rel, err := filepath.Rel(root, startCwd); err == nil && !strings.HasPrefix(rel, "..") && rel != "." {
 			parts := strings.Split(filepath.ToSlash(rel), "/")
 			if len(parts) >= 1 {
@@ -638,7 +669,7 @@ func RunSync(dryRun bool) error {
 	if _, err := exec.LookPath(SelfBin()); err != nil {
 		return fmt.Errorf("packwand binary not found: %w", err)
 	}
-	root := FindRepoRoot()
+	root := resolvedModpacksDir()
 	packs, err := os.ReadDir(root)
 	if err != nil {
 		return fmt.Errorf("failed to read %s: %w", root, err)

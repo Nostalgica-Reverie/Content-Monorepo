@@ -57,13 +57,13 @@ jobs:
         if: matrix.name == 'windows'
         run: cargo install --locked cargo-xwin
 
-      - uses: ./.forgejo/actions/setup-task
+      - uses: ./.forgejo/actions/setup-just
 
       - name: Install Tauri CLI
         run: cargo install --locked tauri-cli --version "^2"
 
       - name: Build the packwand CLI sidecar
-        run: task build-gui-sidecar
+        run: just build-gui-sidecar
 
       - name: Build Tauri app (Linux, native)
         if: matrix.name == 'linux'

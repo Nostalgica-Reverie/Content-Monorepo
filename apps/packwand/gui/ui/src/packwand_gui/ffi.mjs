@@ -44,6 +44,24 @@ export function watchViewHash(onChange) {
   window.addEventListener("hashchange", notify);
 }
 
+// IDE editor bridge (IDE.md §4): cursor introspection for completion and a
+// single shared debounce timer for buffer checks.
+
+export function textareaCursor(id, cb) {
+  const el = document.getElementById(id);
+  cb(el && typeof el.selectionStart === "number" ? el.selectionStart : 0);
+}
+
+let checkTimer = null;
+
+export function scheduleCheck(delayMs, cb) {
+  if (checkTimer) clearTimeout(checkTimer);
+  checkTimer = setTimeout(() => {
+    checkTimer = null;
+    cb();
+  }, delayMs);
+}
+
 export async function copyText(value) {
   try {
     await navigator.clipboard.writeText(value);
@@ -72,6 +90,16 @@ export function bootPack(packDir, dock, onSessionId, onError) {
     .invoke("launcher_boot", { packDir, dock })
     .then(onSessionId)
     .catch((error) => onError(String(error)));
+}
+
+export function listPackInstances(onSuccess, onError) {
+  const tauri = requireTauri(onError); if (!tauri) return;
+  tauri.core.invoke("launcher_list_pack_instances").then((items) => onSuccess(JSON.stringify(items))).catch((error) => onError(String(error)));
+}
+
+export function deletePackInstance(instanceId, onDone, onError) {
+  const tauri = requireTauri(onError); if (!tauri) return;
+  tauri.core.invoke("launcher_delete_pack_instance", { instanceId }).then(() => onDone()).catch((error) => onError(String(error)));
 }
 
 export function cancelBoot(sessionId, onDone, onError) {

@@ -6,6 +6,7 @@ on:
     paths:
       - 'modpacks/**'
       - 'datapacks/**'
+      - 'resourcepacks/**'
   workflow_dispatch:
 
 concurrency:
@@ -73,8 +74,8 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Validate Manifest
-        run: packwand validate "${{ matrix.entry.manifest }}"
+      - name: Preflight content and manifest
+        run: packwand preflight "$(dirname '${{ matrix.entry.manifest }}')"
 
       - name: Minify JSON (smaller published artifacts)
         run: packwand json minify "$(dirname '${{ matrix.entry.manifest }}')"
@@ -85,6 +86,7 @@ jobs:
       - name: Build artifacts
         env:
           GITHUB_SHA: ${{ github.sha }}
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
         run: |
           VARIANT='${{ matrix.entry.variant }}'
           if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then

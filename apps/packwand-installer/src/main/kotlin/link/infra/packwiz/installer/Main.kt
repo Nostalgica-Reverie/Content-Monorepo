@@ -56,7 +56,7 @@ class Main(args: Array<String>) {
 			guiEnabled = false
 		}
 
-		val ui = if (guiEnabled) GUIHandler() else CLIHandler()
+		val ui = if (guiEnabled) GUIHandler() else CLIHandler(cmd.hasOption("continue-on-error"))
 
 		val unparsedArgs = cmd.args
 		if (unparsedArgs.size > 1) {
@@ -127,6 +127,7 @@ class Main(args: Array<String>) {
 			options.addOption(null, "multimc-folder", true, "The MultiMC pack folder (defaults to the parent of the pack directory)")
 			options.addOption(null, "meta-file", true, "JSON file to store pack metadata, relative to the pack folder (defaults to packwiz.json)")
 			options.addOption("t", "timeout", true, "Seconds to wait before automatically launching when asking about optional mods (defaults to 10)")
+			options.addOption(null, "continue-on-error", false, "CLI mode only: skip files that fail to resolve/download (e.g. content excluded from an API, requiring manual download) instead of cancelling the whole install")
 		}
 
 		// TODO: link these somehow so they're only defined once?

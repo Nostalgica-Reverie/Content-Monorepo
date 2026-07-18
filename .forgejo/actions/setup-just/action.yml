@@ -1,0 +1,26 @@
+name: "Setup just"
+description: "Install the just binary (just.systems) and add it to PATH. Downloads the release binary directly — no Rust toolchain required."
+
+inputs:
+  version:
+    description: "just version tag to install (e.g. 1.56.0), or 'latest'"
+    required: false
+    default: "1.56.0"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install just
+      shell: bash
+      run: |
+        set -eu
+        DEST="$GITHUB_WORKSPACE/just-bin"
+        mkdir -p "$DEST"
+        VERSION='${{ inputs.version }}'
+        if [ "$VERSION" = "latest" ]; then
+          curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "$DEST"
+        else
+          curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "$DEST" --tag "$VERSION"
+        fi
+        "$DEST/just" --version
+        echo "$DEST" >> "$GITHUB_PATH"

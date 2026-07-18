@@ -3,13 +3,21 @@ import * as $list from "../../gleam_stdlib/gleam/list.mjs";
 import * as $option from "../../gleam_stdlib/gleam/option.mjs";
 import { None } from "../../gleam_stdlib/gleam/option.mjs";
 import * as $string from "../../gleam_stdlib/gleam/string.mjs";
-import { Ok, toList, prepend as listPrepend, CustomType as $CustomType } from "../gleam.mjs";
+import { Ok, Error, toList, prepend as listPrepend, CustomType as $CustomType } from "../gleam.mjs";
 import * as $manifest_form from "../packwand_gui/manifest_form.mjs";
 import * as $domain from "../packwand_gui/model.mjs";
 
 export class Overview extends $CustomType {}
 export const View$Overview = () => new Overview();
 export const View$isOverview = (value) => value instanceof Overview;
+
+export class Editor extends $CustomType {}
+export const View$Editor = () => new Editor();
+export const View$isEditor = (value) => value instanceof Editor;
+
+export class Instances extends $CustomType {}
+export const View$Instances = () => new Instances();
+export const View$isInstances = (value) => value instanceof Instances;
 
 export class Exports extends $CustomType {}
 export const View$Exports = () => new Exports();
@@ -30,6 +38,30 @@ export const View$isLogs = (value) => value instanceof Logs;
 export class Settings extends $CustomType {}
 export const View$Settings = () => new Settings();
 export const View$isSettings = (value) => value instanceof Settings;
+
+export class OpenFile extends $CustomType {
+  constructor(path, content, saved, kind, ref_id) {
+    super();
+    this.path = path;
+    this.content = content;
+    this.saved = saved;
+    this.kind = kind;
+    this.ref_id = ref_id;
+  }
+}
+export const OpenFile$OpenFile = (path, content, saved, kind, ref_id) =>
+  new OpenFile(path, content, saved, kind, ref_id);
+export const OpenFile$isOpenFile = (value) => value instanceof OpenFile;
+export const OpenFile$OpenFile$path = (value) => value.path;
+export const OpenFile$OpenFile$0 = (value) => value.path;
+export const OpenFile$OpenFile$content = (value) => value.content;
+export const OpenFile$OpenFile$1 = (value) => value.content;
+export const OpenFile$OpenFile$saved = (value) => value.saved;
+export const OpenFile$OpenFile$2 = (value) => value.saved;
+export const OpenFile$OpenFile$kind = (value) => value.kind;
+export const OpenFile$OpenFile$3 = (value) => value.kind;
+export const OpenFile$OpenFile$ref_id = (value) => value.ref_id;
+export const OpenFile$OpenFile$4 = (value) => value.ref_id;
 
 export class ProgressPending extends $CustomType {}
 export const ModProgressStatus$ProgressPending = () => new ProgressPending();
@@ -101,7 +133,7 @@ export const NewPack$NewPack$description = (value) => value.description;
 export const NewPack$NewPack$6 = (value) => value.description;
 
 export class Model extends $CustomType {
-  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block, launcher_session, launcher_status, launcher_log, launcher_progress, dock_game_window, auth_signed_in, auth_username, auth_status_text) {
+  constructor(root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block, launcher_session, launcher_status, launcher_log, launcher_progress, dock_game_window, auth_signed_in, auth_username, auth_status_text, editor_tree, open_files, active_path, editor_diags, editor_valid, editor_checked, completions, completion_open, completion_prefix, completion_anchor, new_file_path, preflight_status, preflight, preflight_job, pending_boot, problem_filter, collapsed_tree_groups, collapsed_tree_folders, instances) {
     super();
     this.root = root;
     this.version = version;
@@ -135,9 +167,28 @@ export class Model extends $CustomType {
     this.auth_signed_in = auth_signed_in;
     this.auth_username = auth_username;
     this.auth_status_text = auth_status_text;
+    this.editor_tree = editor_tree;
+    this.open_files = open_files;
+    this.active_path = active_path;
+    this.editor_diags = editor_diags;
+    this.editor_valid = editor_valid;
+    this.editor_checked = editor_checked;
+    this.completions = completions;
+    this.completion_open = completion_open;
+    this.completion_prefix = completion_prefix;
+    this.completion_anchor = completion_anchor;
+    this.new_file_path = new_file_path;
+    this.preflight_status = preflight_status;
+    this.preflight = preflight;
+    this.preflight_job = preflight_job;
+    this.pending_boot = pending_boot;
+    this.problem_filter = problem_filter;
+    this.collapsed_tree_groups = collapsed_tree_groups;
+    this.collapsed_tree_folders = collapsed_tree_folders;
+    this.instances = instances;
   }
 }
-export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block, launcher_session, launcher_status, launcher_log, launcher_progress, dock_game_window, auth_signed_in, auth_username, auth_status_text) =>
+export const Model$Model = (root, version, projects, features, selected_id, selected_subdir, view, search, mods, mod_slug, changelog, manifest, manifest_form, manifest_structured, logs, job_status, refresh_mods_after_job, icon_failed, new_pack, notice, bump_version, bump_configs, mod_progress, mod_progress_in_block, launcher_session, launcher_status, launcher_log, launcher_progress, dock_game_window, auth_signed_in, auth_username, auth_status_text, editor_tree, open_files, active_path, editor_diags, editor_valid, editor_checked, completions, completion_open, completion_prefix, completion_anchor, new_file_path, preflight_status, preflight, preflight_job, pending_boot, problem_filter, collapsed_tree_groups, collapsed_tree_folders, instances) =>
   new Model(root,
   version,
   projects,
@@ -169,7 +220,26 @@ export const Model$Model = (root, version, projects, features, selected_id, sele
   dock_game_window,
   auth_signed_in,
   auth_username,
-  auth_status_text);
+  auth_status_text,
+  editor_tree,
+  open_files,
+  active_path,
+  editor_diags,
+  editor_valid,
+  editor_checked,
+  completions,
+  completion_open,
+  completion_prefix,
+  completion_anchor,
+  new_file_path,
+  preflight_status,
+  preflight,
+  preflight_job,
+  pending_boot,
+  problem_filter,
+  collapsed_tree_groups,
+  collapsed_tree_folders,
+  instances);
 export const Model$isModel = (value) => value instanceof Model;
 export const Model$Model$root = (value) => value.root;
 export const Model$Model$0 = (value) => value.root;
@@ -238,6 +308,46 @@ export const Model$Model$auth_username = (value) => value.auth_username;
 export const Model$Model$30 = (value) => value.auth_username;
 export const Model$Model$auth_status_text = (value) => value.auth_status_text;
 export const Model$Model$31 = (value) => value.auth_status_text;
+export const Model$Model$editor_tree = (value) => value.editor_tree;
+export const Model$Model$32 = (value) => value.editor_tree;
+export const Model$Model$open_files = (value) => value.open_files;
+export const Model$Model$33 = (value) => value.open_files;
+export const Model$Model$active_path = (value) => value.active_path;
+export const Model$Model$34 = (value) => value.active_path;
+export const Model$Model$editor_diags = (value) => value.editor_diags;
+export const Model$Model$35 = (value) => value.editor_diags;
+export const Model$Model$editor_valid = (value) => value.editor_valid;
+export const Model$Model$36 = (value) => value.editor_valid;
+export const Model$Model$editor_checked = (value) => value.editor_checked;
+export const Model$Model$37 = (value) => value.editor_checked;
+export const Model$Model$completions = (value) => value.completions;
+export const Model$Model$38 = (value) => value.completions;
+export const Model$Model$completion_open = (value) => value.completion_open;
+export const Model$Model$39 = (value) => value.completion_open;
+export const Model$Model$completion_prefix = (value) => value.completion_prefix;
+export const Model$Model$40 = (value) => value.completion_prefix;
+export const Model$Model$completion_anchor = (value) => value.completion_anchor;
+export const Model$Model$41 = (value) => value.completion_anchor;
+export const Model$Model$new_file_path = (value) => value.new_file_path;
+export const Model$Model$42 = (value) => value.new_file_path;
+export const Model$Model$preflight_status = (value) => value.preflight_status;
+export const Model$Model$43 = (value) => value.preflight_status;
+export const Model$Model$preflight = (value) => value.preflight;
+export const Model$Model$44 = (value) => value.preflight;
+export const Model$Model$preflight_job = (value) => value.preflight_job;
+export const Model$Model$45 = (value) => value.preflight_job;
+export const Model$Model$pending_boot = (value) => value.pending_boot;
+export const Model$Model$46 = (value) => value.pending_boot;
+export const Model$Model$problem_filter = (value) => value.problem_filter;
+export const Model$Model$47 = (value) => value.problem_filter;
+export const Model$Model$collapsed_tree_groups = (value) =>
+  value.collapsed_tree_groups;
+export const Model$Model$48 = (value) => value.collapsed_tree_groups;
+export const Model$Model$collapsed_tree_folders = (value) =>
+  value.collapsed_tree_folders;
+export const Model$Model$49 = (value) => value.collapsed_tree_folders;
+export const Model$Model$instances = (value) => value.instances;
+export const Model$Model$50 = (value) => value.instances;
 
 export class GotHealth extends $CustomType {
   constructor($0) {
@@ -466,6 +576,30 @@ export class ManifestSaved extends $CustomType {
 export const Msg$ManifestSaved = ($0) => new ManifestSaved($0);
 export const Msg$isManifestSaved = (value) => value instanceof ManifestSaved;
 export const Msg$ManifestSaved$0 = (value) => value[0];
+
+export class SaveChangelog extends $CustomType {}
+export const Msg$SaveChangelog = () => new SaveChangelog();
+export const Msg$isSaveChangelog = (value) => value instanceof SaveChangelog;
+
+export class SetChangelog extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetChangelog = ($0) => new SetChangelog($0);
+export const Msg$isSetChangelog = (value) => value instanceof SetChangelog;
+export const Msg$SetChangelog$0 = (value) => value[0];
+
+export class ChangelogSaved extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$ChangelogSaved = ($0) => new ChangelogSaved($0);
+export const Msg$isChangelogSaved = (value) => value instanceof ChangelogSaved;
+export const Msg$ChangelogSaved$0 = (value) => value[0];
 
 export class CreateProject extends $CustomType {}
 export const Msg$CreateProject = () => new CreateProject();
@@ -702,6 +836,321 @@ export const Msg$GotAuthStatus = ($0) => new GotAuthStatus($0);
 export const Msg$isGotAuthStatus = (value) => value instanceof GotAuthStatus;
 export const Msg$GotAuthStatus$0 = (value) => value[0];
 
+export class GotTree extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotTree = ($0) => new GotTree($0);
+export const Msg$isGotTree = (value) => value instanceof GotTree;
+export const Msg$GotTree$0 = (value) => value[0];
+
+export class ReloadTree extends $CustomType {}
+export const Msg$ReloadTree = () => new ReloadTree();
+export const Msg$isReloadTree = (value) => value instanceof ReloadTree;
+
+export class OpenPath extends $CustomType {
+  constructor(path, kind, ref_id) {
+    super();
+    this.path = path;
+    this.kind = kind;
+    this.ref_id = ref_id;
+  }
+}
+export const Msg$OpenPath = (path, kind, ref_id) =>
+  new OpenPath(path, kind, ref_id);
+export const Msg$isOpenPath = (value) => value instanceof OpenPath;
+export const Msg$OpenPath$path = (value) => value.path;
+export const Msg$OpenPath$0 = (value) => value.path;
+export const Msg$OpenPath$kind = (value) => value.kind;
+export const Msg$OpenPath$1 = (value) => value.kind;
+export const Msg$OpenPath$ref_id = (value) => value.ref_id;
+export const Msg$OpenPath$2 = (value) => value.ref_id;
+
+export class GotFileContent extends $CustomType {
+  constructor(path, kind, ref_id, result) {
+    super();
+    this.path = path;
+    this.kind = kind;
+    this.ref_id = ref_id;
+    this.result = result;
+  }
+}
+export const Msg$GotFileContent = (path, kind, ref_id, result) =>
+  new GotFileContent(path, kind, ref_id, result);
+export const Msg$isGotFileContent = (value) => value instanceof GotFileContent;
+export const Msg$GotFileContent$path = (value) => value.path;
+export const Msg$GotFileContent$0 = (value) => value.path;
+export const Msg$GotFileContent$kind = (value) => value.kind;
+export const Msg$GotFileContent$1 = (value) => value.kind;
+export const Msg$GotFileContent$ref_id = (value) => value.ref_id;
+export const Msg$GotFileContent$2 = (value) => value.ref_id;
+export const Msg$GotFileContent$result = (value) => value.result;
+export const Msg$GotFileContent$3 = (value) => value.result;
+
+export class SelectTab extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SelectTab = ($0) => new SelectTab($0);
+export const Msg$isSelectTab = (value) => value instanceof SelectTab;
+export const Msg$SelectTab$0 = (value) => value[0];
+
+export class CloseTab extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$CloseTab = ($0) => new CloseTab($0);
+export const Msg$isCloseTab = (value) => value instanceof CloseTab;
+export const Msg$CloseTab$0 = (value) => value[0];
+
+export class SetBuffer extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetBuffer = ($0) => new SetBuffer($0);
+export const Msg$isSetBuffer = (value) => value instanceof SetBuffer;
+export const Msg$SetBuffer$0 = (value) => value[0];
+
+export class BufferCheckDue extends $CustomType {}
+export const Msg$BufferCheckDue = () => new BufferCheckDue();
+export const Msg$isBufferCheckDue = (value) => value instanceof BufferCheckDue;
+
+export class GotCheck extends $CustomType {
+  constructor(path, result) {
+    super();
+    this.path = path;
+    this.result = result;
+  }
+}
+export const Msg$GotCheck = (path, result) => new GotCheck(path, result);
+export const Msg$isGotCheck = (value) => value instanceof GotCheck;
+export const Msg$GotCheck$path = (value) => value.path;
+export const Msg$GotCheck$0 = (value) => value.path;
+export const Msg$GotCheck$result = (value) => value.result;
+export const Msg$GotCheck$1 = (value) => value.result;
+
+export class SaveBuffer extends $CustomType {}
+export const Msg$SaveBuffer = () => new SaveBuffer();
+export const Msg$isSaveBuffer = (value) => value instanceof SaveBuffer;
+
+export class BufferSaved extends $CustomType {
+  constructor(path, result) {
+    super();
+    this.path = path;
+    this.result = result;
+  }
+}
+export const Msg$BufferSaved = (path, result) => new BufferSaved(path, result);
+export const Msg$isBufferSaved = (value) => value instanceof BufferSaved;
+export const Msg$BufferSaved$path = (value) => value.path;
+export const Msg$BufferSaved$0 = (value) => value.path;
+export const Msg$BufferSaved$result = (value) => value.result;
+export const Msg$BufferSaved$1 = (value) => value.result;
+
+export class RequestCompletions extends $CustomType {}
+export const Msg$RequestCompletions = () => new RequestCompletions();
+export const Msg$isRequestCompletions = (value) =>
+  value instanceof RequestCompletions;
+
+export class GotCursor extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotCursor = ($0) => new GotCursor($0);
+export const Msg$isGotCursor = (value) => value instanceof GotCursor;
+export const Msg$GotCursor$0 = (value) => value[0];
+
+export class GotCompletions extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotCompletions = ($0) => new GotCompletions($0);
+export const Msg$isGotCompletions = (value) => value instanceof GotCompletions;
+export const Msg$GotCompletions$0 = (value) => value[0];
+
+export class ApplyCompletion extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$ApplyCompletion = ($0) => new ApplyCompletion($0);
+export const Msg$isApplyCompletion = (value) =>
+  value instanceof ApplyCompletion;
+export const Msg$ApplyCompletion$0 = (value) => value[0];
+
+export class DismissCompletions extends $CustomType {}
+export const Msg$DismissCompletions = () => new DismissCompletions();
+export const Msg$isDismissCompletions = (value) =>
+  value instanceof DismissCompletions;
+
+export class CopyRef extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$CopyRef = ($0) => new CopyRef($0);
+export const Msg$isCopyRef = (value) => value instanceof CopyRef;
+export const Msg$CopyRef$0 = (value) => value[0];
+
+export class SetNewFilePath extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetNewFilePath = ($0) => new SetNewFilePath($0);
+export const Msg$isSetNewFilePath = (value) => value instanceof SetNewFilePath;
+export const Msg$SetNewFilePath$0 = (value) => value[0];
+
+export class CreateNewFile extends $CustomType {}
+export const Msg$CreateNewFile = () => new CreateNewFile();
+export const Msg$isCreateNewFile = (value) => value instanceof CreateNewFile;
+
+export class NewFileCreated extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$NewFileCreated = ($0) => new NewFileCreated($0);
+export const Msg$isNewFileCreated = (value) => value instanceof NewFileCreated;
+export const Msg$NewFileCreated$0 = (value) => value[0];
+
+export class DuplicateToSibling extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$DuplicateToSibling = ($0) => new DuplicateToSibling($0);
+export const Msg$isDuplicateToSibling = (value) =>
+  value instanceof DuplicateToSibling;
+export const Msg$DuplicateToSibling$0 = (value) => value[0];
+
+export class FileDuplicated extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$FileDuplicated = ($0) => new FileDuplicated($0);
+export const Msg$isFileDuplicated = (value) => value instanceof FileDuplicated;
+export const Msg$FileDuplicated$0 = (value) => value[0];
+
+export class RunPreflight extends $CustomType {}
+export const Msg$RunPreflight = () => new RunPreflight();
+export const Msg$isRunPreflight = (value) => value instanceof RunPreflight;
+
+export class RunLocalCI extends $CustomType {}
+export const Msg$RunLocalCI = () => new RunLocalCI();
+export const Msg$isRunLocalCI = (value) => value instanceof RunLocalCI;
+
+export class LocalCIStarted extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$LocalCIStarted = ($0) => new LocalCIStarted($0);
+export const Msg$isLocalCIStarted = (value) => value instanceof LocalCIStarted;
+export const Msg$LocalCIStarted$0 = (value) => value[0];
+
+export class PreflightStarted extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$PreflightStarted = ($0) => new PreflightStarted($0);
+export const Msg$isPreflightStarted = (value) =>
+  value instanceof PreflightStarted;
+export const Msg$PreflightStarted$0 = (value) => value[0];
+
+export class GotPreflightResult extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotPreflightResult = ($0) => new GotPreflightResult($0);
+export const Msg$isGotPreflightResult = (value) =>
+  value instanceof GotPreflightResult;
+export const Msg$GotPreflightResult$0 = (value) => value[0];
+
+export class RequestBoot extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$RequestBoot = ($0) => new RequestBoot($0);
+export const Msg$isRequestBoot = (value) => value instanceof RequestBoot;
+export const Msg$RequestBoot$0 = (value) => value[0];
+
+export class SetProblemFilter extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$SetProblemFilter = ($0) => new SetProblemFilter($0);
+export const Msg$isSetProblemFilter = (value) =>
+  value instanceof SetProblemFilter;
+export const Msg$SetProblemFilter$0 = (value) => value[0];
+
+export class ToggleTreeGroup extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$ToggleTreeGroup = ($0) => new ToggleTreeGroup($0);
+export const Msg$isToggleTreeGroup = (value) =>
+  value instanceof ToggleTreeGroup;
+export const Msg$ToggleTreeGroup$0 = (value) => value[0];
+
+export class ToggleTreeFolder extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$ToggleTreeFolder = ($0) => new ToggleTreeFolder($0);
+export const Msg$isToggleTreeFolder = (value) =>
+  value instanceof ToggleTreeFolder;
+export const Msg$ToggleTreeFolder$0 = (value) => value[0];
+
+export class ReloadInstances extends $CustomType {}
+export const Msg$ReloadInstances = () => new ReloadInstances();
+export const Msg$isReloadInstances = (value) =>
+  value instanceof ReloadInstances;
+
+export class GotInstances extends $CustomType {
+  constructor($0) {
+    super();
+    this[0] = $0;
+  }
+}
+export const Msg$GotInstances = ($0) => new GotInstances($0);
+export const Msg$isGotInstances = (value) => value instanceof GotInstances;
+export const Msg$GotInstances$0 = (value) => value[0];
+
+const token_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:./#-";
+
 export function progress_status_label(status) {
   if (status instanceof ProgressPending) {
     return "queued";
@@ -748,6 +1197,25 @@ export function initial() {
     false,
     "",
     "",
+    toList([]),
+    toList([]),
+    "",
+    toList([]),
+    true,
+    false,
+    toList([]),
+    false,
+    "",
+    [0, 0],
+    "",
+    "idle",
+    new None(),
+    new None(),
+    new None(),
+    "all",
+    toList([]),
+    toList([]),
+    toList([]),
   );
 }
 
@@ -801,6 +1269,25 @@ export function append_log(model, line) {
     model.auth_signed_in,
     model.auth_username,
     model.auth_status_text,
+    model.editor_tree,
+    model.open_files,
+    model.active_path,
+    model.editor_diags,
+    model.editor_valid,
+    model.editor_checked,
+    model.completions,
+    model.completion_open,
+    model.completion_prefix,
+    model.completion_anchor,
+    model.new_file_path,
+    model.preflight_status,
+    model.preflight,
+    model.preflight_job,
+    model.pending_boot,
+    model.problem_filter,
+    model.collapsed_tree_groups,
+    model.collapsed_tree_folders,
+    model.instances,
   );
 }
 
@@ -838,6 +1325,25 @@ export function reset_progress(model) {
     model.auth_signed_in,
     model.auth_username,
     model.auth_status_text,
+    model.editor_tree,
+    model.open_files,
+    model.active_path,
+    model.editor_diags,
+    model.editor_valid,
+    model.editor_checked,
+    model.completions,
+    model.completion_open,
+    model.completion_prefix,
+    model.completion_anchor,
+    model.new_file_path,
+    model.preflight_status,
+    model.preflight,
+    model.preflight_job,
+    model.pending_boot,
+    model.problem_filter,
+    model.collapsed_tree_groups,
+    model.collapsed_tree_folders,
+    model.instances,
   );
 }
 
@@ -898,6 +1404,25 @@ function upsert_progress(model, name, status, detail) {
     model.auth_signed_in,
     model.auth_username,
     model.auth_status_text,
+    model.editor_tree,
+    model.open_files,
+    model.active_path,
+    model.editor_diags,
+    model.editor_valid,
+    model.editor_checked,
+    model.completions,
+    model.completion_open,
+    model.completion_prefix,
+    model.completion_anchor,
+    model.new_file_path,
+    model.preflight_status,
+    model.preflight,
+    model.preflight_job,
+    model.pending_boot,
+    model.problem_filter,
+    model.collapsed_tree_groups,
+    model.collapsed_tree_folders,
+    model.instances,
   );
 }
 
@@ -1008,6 +1533,25 @@ export function record_progress_line(model, raw_line) {
       model.auth_signed_in,
       model.auth_username,
       model.auth_status_text,
+      model.editor_tree,
+      model.open_files,
+      model.active_path,
+      model.editor_diags,
+      model.editor_valid,
+      model.editor_checked,
+      model.completions,
+      model.completion_open,
+      model.completion_prefix,
+      model.completion_anchor,
+      model.new_file_path,
+      model.preflight_status,
+      model.preflight,
+      model.preflight_job,
+      model.pending_boot,
+      model.problem_filter,
+      model.collapsed_tree_groups,
+      model.collapsed_tree_folders,
+      model.instances,
     );
   } else if (trimmed === "All files are up to date!") {
     return new Model(
@@ -1043,6 +1587,25 @@ export function record_progress_line(model, raw_line) {
       model.auth_signed_in,
       model.auth_username,
       model.auth_status_text,
+      model.editor_tree,
+      model.open_files,
+      model.active_path,
+      model.editor_diags,
+      model.editor_valid,
+      model.editor_checked,
+      model.completions,
+      model.completion_open,
+      model.completion_prefix,
+      model.completion_anchor,
+      model.new_file_path,
+      model.preflight_status,
+      model.preflight,
+      model.preflight_job,
+      model.pending_boot,
+      model.problem_filter,
+      model.collapsed_tree_groups,
+      model.collapsed_tree_folders,
+      model.instances,
     );
   } else if (trimmed === "Cancelled!") {
     return new Model(
@@ -1078,6 +1641,25 @@ export function record_progress_line(model, raw_line) {
       model.auth_signed_in,
       model.auth_username,
       model.auth_status_text,
+      model.editor_tree,
+      model.open_files,
+      model.active_path,
+      model.editor_diags,
+      model.editor_valid,
+      model.editor_checked,
+      model.completions,
+      model.completion_open,
+      model.completion_prefix,
+      model.completion_anchor,
+      model.new_file_path,
+      model.preflight_status,
+      model.preflight,
+      model.preflight_job,
+      model.pending_boot,
+      model.problem_filter,
+      model.collapsed_tree_groups,
+      model.collapsed_tree_folders,
+      model.instances,
     );
   } else if (trimmed === "Files updated!") {
     return new Model(
@@ -1113,6 +1695,25 @@ export function record_progress_line(model, raw_line) {
       model.auth_signed_in,
       model.auth_username,
       model.auth_status_text,
+      model.editor_tree,
+      model.open_files,
+      model.active_path,
+      model.editor_diags,
+      model.editor_valid,
+      model.editor_checked,
+      model.completions,
+      model.completion_open,
+      model.completion_prefix,
+      model.completion_anchor,
+      model.new_file_path,
+      model.preflight_status,
+      model.preflight,
+      model.preflight_job,
+      model.pending_boot,
+      model.problem_filter,
+      model.collapsed_tree_groups,
+      model.collapsed_tree_folders,
+      model.instances,
     );
   } else if (trimmed === "") {
     return new Model(
@@ -1148,6 +1749,25 @@ export function record_progress_line(model, raw_line) {
       model.auth_signed_in,
       model.auth_username,
       model.auth_status_text,
+      model.editor_tree,
+      model.open_files,
+      model.active_path,
+      model.editor_diags,
+      model.editor_valid,
+      model.editor_checked,
+      model.completions,
+      model.completion_open,
+      model.completion_prefix,
+      model.completion_anchor,
+      model.new_file_path,
+      model.preflight_status,
+      model.preflight,
+      model.preflight_job,
+      model.pending_boot,
+      model.problem_filter,
+      model.collapsed_tree_groups,
+      model.collapsed_tree_folders,
+      model.instances,
     );
   } else {
     let $ = $string.starts_with(trimmed, "dry-run:");
@@ -1185,6 +1805,25 @@ export function record_progress_line(model, raw_line) {
         model.auth_signed_in,
         model.auth_username,
         model.auth_status_text,
+        model.editor_tree,
+        model.open_files,
+        model.active_path,
+        model.editor_diags,
+        model.editor_valid,
+        model.editor_checked,
+        model.completions,
+        model.completion_open,
+        model.completion_prefix,
+        model.completion_anchor,
+        model.new_file_path,
+        model.preflight_status,
+        model.preflight,
+        model.preflight_job,
+        model.pending_boot,
+        model.problem_filter,
+        model.collapsed_tree_groups,
+        model.collapsed_tree_folders,
+        model.instances,
       );
     } else {
       let $1 = $string.starts_with(trimmed, "~ ");
@@ -1239,6 +1878,25 @@ export function append_launcher_log(model, line) {
     model.auth_signed_in,
     model.auth_username,
     model.auth_status_text,
+    model.editor_tree,
+    model.open_files,
+    model.active_path,
+    model.editor_diags,
+    model.editor_valid,
+    model.editor_checked,
+    model.completions,
+    model.completion_open,
+    model.completion_prefix,
+    model.completion_anchor,
+    model.new_file_path,
+    model.preflight_status,
+    model.preflight,
+    model.preflight_job,
+    model.pending_boot,
+    model.problem_filter,
+    model.collapsed_tree_groups,
+    model.collapsed_tree_folders,
+    model.instances,
   );
 }
 
@@ -1303,11 +1961,306 @@ export function apply_launcher_event(model, event) {
     model.auth_signed_in,
     model.auth_username,
     model.auth_status_text,
+    model.editor_tree,
+    model.open_files,
+    model.active_path,
+    model.editor_diags,
+    model.editor_valid,
+    model.editor_checked,
+    model.completions,
+    model.completion_open,
+    model.completion_prefix,
+    model.completion_anchor,
+    model.new_file_path,
+    model.preflight_status,
+    model.preflight,
+    model.preflight_job,
+    model.pending_boot,
+    model.problem_filter,
+    model.collapsed_tree_groups,
+    model.collapsed_tree_folders,
+    model.instances,
   );
   if (line === "") {
     return with_status;
   } else {
     return append_launcher_log(with_status, line);
+  }
+}
+
+export function active_file(model) {
+  return $list.find(
+    model.open_files,
+    (file) => { return file.path === model.active_path; },
+  );
+}
+
+export function file_dirty(file) {
+  return file.content !== file.saved;
+}
+
+/**
+ * The subdir base name ("1.20.1-mr") of a repo-relative subdir path.
+ */
+export function sub_name(path) {
+  let $ = (() => {
+    let _pipe = path;
+    let _pipe$1 = $string.split(_pipe, "/");
+    return $list.last(_pipe$1);
+  })();
+  if ($ instanceof Ok) {
+    let name = $[0];
+    return name;
+  } else {
+    return path;
+  }
+}
+
+/**
+ * Joins the workspace root (absolute, forward-slash normalized) with a
+ * repo-relative subdir path into an absolute path the Tauri launcher can
+ * canonicalize.
+ */
+export function workspace_path(model, path) {
+  let $ = model.root;
+  if ($ === "") {
+    return path;
+  } else if (path === "") {
+    return $;
+  } else {
+    let root = $;
+    let rel = path;
+    return (root + "/") + rel;
+  }
+}
+
+/**
+ * Which registry kind completes/validates a file at this path.
+ */
+export function registry_kind_for_path(path) {
+  let $ = $string.starts_with(path, "config/") || $string.starts_with(
+    path,
+    "defaultconfigs/",
+  );
+  if ($) {
+    return "config";
+  } else {
+    let $1 = $string.contains(path, "assets/");
+    if ($1) {
+      return "resourcepack";
+    } else {
+      let $2 = $string.contains(path, "data/");
+      if ($2) {
+        return "datapack";
+      } else {
+        let $3 = $string.starts_with(path, "kubejs/");
+        if ($3) {
+          return "kubejs";
+        } else {
+          return "config";
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Whether the check endpoint understands this file type.
+ */
+export function checkable_path(path) {
+  return ($string.ends_with(path, ".json") || $string.ends_with(path, ".mcmeta")) || $string.ends_with(
+    path,
+    ".toml",
+  );
+}
+
+export function json_path(path) {
+  return $string.ends_with(path, ".json") || $string.ends_with(path, ".mcmeta");
+}
+
+/**
+ * The reference token ending at `pos` in `content`, and its start index —
+ * the client-side counterpart of the server's InferFromFile token scan.
+ */
+export function token_at(content, pos) {
+  let before = $string.slice(content, 0, pos);
+  let _block;
+  let _pipe = before;
+  let _pipe$1 = $string.to_graphemes(_pipe);
+  let _pipe$2 = $list.reverse(_pipe$1);
+  _block = $list.take_while(
+    _pipe$2,
+    (char) => { return $string.contains(token_chars, char); },
+  );
+  let reversed_token = _block;
+  let _block$1;
+  let _pipe$3 = reversed_token;
+  let _pipe$4 = $list.reverse(_pipe$3);
+  _block$1 = $string.concat(_pipe$4);
+  let token = _block$1;
+  return [token, pos - $list.length(reversed_token)];
+}
+
+/**
+ * Updates the active file's buffer content.
+ */
+export function set_active_content(model, content) {
+  let files = $list.map(
+    model.open_files,
+    (file) => {
+      let $ = file.path === model.active_path;
+      if ($) {
+        return new OpenFile(
+          file.path,
+          content,
+          file.saved,
+          file.kind,
+          file.ref_id,
+        );
+      } else {
+        return file;
+      }
+    },
+  );
+  return new Model(
+    model.root,
+    model.version,
+    model.projects,
+    model.features,
+    model.selected_id,
+    model.selected_subdir,
+    model.view,
+    model.search,
+    model.mods,
+    model.mod_slug,
+    model.changelog,
+    model.manifest,
+    model.manifest_form,
+    model.manifest_structured,
+    model.logs,
+    model.job_status,
+    model.refresh_mods_after_job,
+    model.icon_failed,
+    model.new_pack,
+    model.notice,
+    model.bump_version,
+    model.bump_configs,
+    model.mod_progress,
+    model.mod_progress_in_block,
+    model.launcher_session,
+    model.launcher_status,
+    model.launcher_log,
+    model.launcher_progress,
+    model.dock_game_window,
+    model.auth_signed_in,
+    model.auth_username,
+    model.auth_status_text,
+    model.editor_tree,
+    files,
+    model.active_path,
+    model.editor_diags,
+    model.editor_valid,
+    model.editor_checked,
+    model.completions,
+    model.completion_open,
+    model.completion_prefix,
+    model.completion_anchor,
+    model.new_file_path,
+    model.preflight_status,
+    model.preflight,
+    model.preflight_job,
+    model.pending_boot,
+    model.problem_filter,
+    model.collapsed_tree_groups,
+    model.collapsed_tree_folders,
+    model.instances,
+  );
+}
+
+/**
+ * Clears per-buffer state when switching or closing tabs.
+ */
+export function reset_buffer_state(model) {
+  return new Model(
+    model.root,
+    model.version,
+    model.projects,
+    model.features,
+    model.selected_id,
+    model.selected_subdir,
+    model.view,
+    model.search,
+    model.mods,
+    model.mod_slug,
+    model.changelog,
+    model.manifest,
+    model.manifest_form,
+    model.manifest_structured,
+    model.logs,
+    model.job_status,
+    model.refresh_mods_after_job,
+    model.icon_failed,
+    model.new_pack,
+    model.notice,
+    model.bump_version,
+    model.bump_configs,
+    model.mod_progress,
+    model.mod_progress_in_block,
+    model.launcher_session,
+    model.launcher_status,
+    model.launcher_log,
+    model.launcher_progress,
+    model.dock_game_window,
+    model.auth_signed_in,
+    model.auth_username,
+    model.auth_status_text,
+    model.editor_tree,
+    model.open_files,
+    model.active_path,
+    toList([]),
+    true,
+    false,
+    toList([]),
+    false,
+    model.completion_prefix,
+    model.completion_anchor,
+    model.new_file_path,
+    model.preflight_status,
+    model.preflight,
+    model.preflight_job,
+    model.pending_boot,
+    model.problem_filter,
+    model.collapsed_tree_groups,
+    model.collapsed_tree_folders,
+    model.instances,
+  );
+}
+
+/**
+ * The sibling subdir (the -mr/-cf counterpart) of the selected subdir, if
+ * the selected project has one — target of "duplicate across subdirs"
+ * (IDE.md §4.3).
+ */
+export function sibling_subdir(model) {
+  let $ = selected_project(model);
+  if ($ instanceof Ok) {
+    let project = $[0];
+    let $1 = $list.find(
+      project.subdirs,
+      (subdir) => {
+        return (subdir.path !== model.selected_subdir) && (sub_name(subdir.path) !== sub_name(
+          model.selected_subdir,
+        ));
+      },
+    );
+    if ($1 instanceof Ok) {
+      let subdir = $1[0];
+      return new Ok(sub_name(subdir.path));
+    } else {
+      return new Error(undefined);
+    }
+  } else {
+    return new Error(undefined);
   }
 }
 

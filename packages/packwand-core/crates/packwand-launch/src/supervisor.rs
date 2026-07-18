@@ -281,6 +281,15 @@ fn run_supervised(
         use std::os::unix::process::CommandExt;
         command.process_group(0);
     }
+    #[cfg(windows)]
+    {
+        // Suppress the console window Windows would otherwise allocate for
+        // this console-subsystem child (java.exe) spawned from our
+        // GUI-subsystem app. stdout/stderr stay piped above regardless.
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x0800_0000;
+        command.creation_flags(CREATE_NO_WINDOW);
+    }
     let mut child = match command.spawn() {
         Ok(child) => child,
         Err(e) => {

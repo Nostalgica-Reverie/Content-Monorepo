@@ -54,3 +54,15 @@ func TestIgnoredPackSubdirsExcludesArchivedPacks(t *testing.T) {
 		t.Fatalf("expected archived packs to be excluded (they're a different skip reason), got %#v", subdirs)
 	}
 }
+
+func TestResolveWorkspaceScopeAllOverridesPackCwd(t *testing.T) {
+	packDir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(packDir, "manifest.json"), []byte(`{"id":"example"}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	filter, explicit := resolveWorkspaceScope(nil, packDir, true)
+	if filter != "" || explicit {
+		t.Fatalf("resolveWorkspaceScope(..., all=true) = (%q, %v), want (empty, false)", filter, explicit)
+	}
+}

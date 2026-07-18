@@ -39,12 +39,12 @@ jobs:
       - name: Install handbook dependencies
         working-directory: docs/modpack-dev-handbook
         run: bun install --frozen-lockfile
-      - name: Type-check handbook
-        working-directory: docs/modpack-dev-handbook
-        run: bun run check
       - name: Build handbook
         working-directory: docs/modpack-dev-handbook
         run: bun run build
+      - name: Type-check generated handbook
+        working-directory: docs/modpack-dev-handbook
+        run: bun run docs:index:check && bun run check:generated
       - name: Upload handbook build
         uses: https://code.forgejo.org/forgejo/upload-artifact@v4
         with:

@@ -48,8 +48,17 @@ func (s *Server) Handler(fallback http.Handler) http.Handler {
 	mux.HandleFunc("GET "+Prefix+"/packs/{id}/manifest", s.handleManifest)
 	mux.HandleFunc("PUT "+Prefix+"/packs/{id}/manifest", s.handleSaveManifest)
 	mux.HandleFunc("GET "+Prefix+"/packs/{id}/changelog", s.handleChangelog)
+	mux.HandleFunc("PUT "+Prefix+"/packs/{id}/changelog", s.handleSaveChangelog)
 	mux.HandleFunc("GET "+Prefix+"/packs/{id}/icon", s.handleIcon)
 	mux.HandleFunc("GET "+Prefix+"/packs/{id}/mods", s.handleMods)
+	mux.HandleFunc("GET "+Prefix+"/packs/{id}/subdirs/{sub}/registry/{kind}", s.handleRegistry)
+	mux.HandleFunc("GET "+Prefix+"/packs/{id}/subdirs/{sub}/registry/{kind}/complete", s.handleRegistryComplete)
+	mux.HandleFunc("POST "+Prefix+"/packs/{id}/subdirs/{sub}/check", s.handleCheck)
+	mux.HandleFunc("POST "+Prefix+"/packs/{id}/subdirs/{sub}/kubejs/runtime-log", s.handleKubeJSRuntimeLog)
+	mux.HandleFunc("GET "+Prefix+"/packs/{id}/subdirs/{sub}/tree", s.handleTree)
+	mux.HandleFunc("GET "+Prefix+"/packs/{id}/subdirs/{sub}/file", s.handleReadFile)
+	mux.HandleFunc("PUT "+Prefix+"/packs/{id}/subdirs/{sub}/file", s.handleWriteFile)
+	mux.HandleFunc("POST "+Prefix+"/packs/{id}/subdirs/{sub}/files", s.handleCreateFile)
 	mux.HandleFunc("GET "+Prefix+"/mods", s.handleMods) // v1 GUI compatibility
 	mux.HandleFunc("GET "+Prefix+"/jobs", s.handleJobs)
 	mux.HandleFunc("GET "+Prefix+"/jobs/{id}", s.handleJob)
@@ -338,6 +347,26 @@ func (s *Server) handleSaveManifest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := manifest.Write(filepath.Join(dir, "manifest.json"), &m); err != nil {
+		writeError(w, 500, "internal", err.Error(), "")
+		return
+	}
+	writeJSON(w, map[string]string{"status": "saved"})
+}
+
+func (s *Server) handleSaveChangelog(w http.ResponseWriter, r *http.Request) {
+	dir, err := s.packDir(r.PathValue("id"))
+	if err != nil {
+		writeError(w, 404, "not_found", "pack not found", "id")
+		return
+	}
+	var request struct {
+		Content string `json:"content"`
+	}
+	if err := decodeBody(r, &request); err != nil {
+		writeError(w, 400, "invalid_argument", err.Error(), "body")
+		return
+	}
+	if err := os.WriteFile(filepath.Join(dir, "changelog.md"), []byte(request.Content), 0o644); err != nil {
 		writeError(w, 500, "internal", err.Error(), "")
 		return
 	}

@@ -11,7 +11,11 @@
 //! what's checked into the pack, live, with no copying.
 
 use std::collections::HashMap;
+use std::fs::File;
+use std::hash::{Hash, Hasher};
+use std::io;
 use std::path::PathBuf;
+use std::process::Command;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::Mutex;
 use std::thread;
@@ -24,11 +28,214 @@ use packwand_launch::{
     build_launch_plan, launch, CancellationToken, LaunchEvent, LaunchOptions, LaunchPlan,
 };
 use packwand_msa::{KeyringTokenStore, MsaConfig};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Emitter, Manager, State};
 
+use crate::no_console_window;
 use crate::open_with_os_handler;
 use crate::window_dock;
+
+const MANAGED_JAVA_MAJOR: u32 = 21;
+
+/// Ensures a pack-local managed Temurin runtime exists. Adoptium publishes a
+/// stable redirect endpoint for GA JRE archives; extracting it ourselves keeps
+/// the runtime entirely under Packwand app data and avoids system-wide install.
+fn ensure_managed_java(root: &std::path::Path) -> Result<PathBuf, String> {
+    let runtime_root = root.join("jre").join(MANAGED_JAVA_MAJOR.to_string());
+    if let Some(java) = find_java_executable(&runtime_root) {
+        return Ok(java);
+    }
+    std::fs::create_dir_all(&runtime_root).map_err(|e| e.to_string())?;
+    let archive = runtime_root.join("temurin.zip.part");
+    let os = if cfg!(target_os = "windows") {
+        "windows"
+    } else if cfg!(target_os = "macos") {
+        "mac"
+    } else {
+        "linux"
+    };
+    let arch = if cfg!(target_arch = "aarch64") {
+        "aarch64"
+    } else {
+        "x64"
+    };
+    let url = format!("https://api.adoptium.net/v3/binary/latest/{MANAGED_JAVA_MAJOR}/ga/{os}/{arch}/jre/hotspot/normal/eclipse");
+    let response = ureq::get(&url)
+        .call()
+        .map_err(|e| format!("failed to download Temurin {MANAGED_JAVA_MAJOR}: {e}"))?;
+    let mut output = File::create(&archive).map_err(|e| e.to_string())?;
+    io::copy(&mut response.into_reader(), &mut output)
+        .map_err(|e| format!("failed to save Temurin runtime: {e}"))?;
+    let zip = File::open(&archive).map_err(|e| e.to_string())?;
+    let mut archive_zip =
+        zip::ZipArchive::new(zip).map_err(|e| format!("invalid Temurin archive: {e}"))?;
+    for index in 0..archive_zip.len() {
+        let mut entry = archive_zip.by_index(index).map_err(|e| e.to_string())?;
+        let Some(relative) = entry.enclosed_name().map(|p| p.to_owned()) else {
+            continue;
+        };
+        let destination = runtime_root.join(relative);
+        if entry.is_dir() {
+            std::fs::create_dir_all(&destination).map_err(|e| e.to_string())?;
+            continue;
+        }
+        if let Some(parent) = destination.parent() {
+            std::fs::create_dir_all(parent).map_err(|e| e.to_string())?;
+        }
+        let mut file = File::create(&destination).map_err(|e| e.to_string())?;
+        io::copy(&mut entry, &mut file).map_err(|e| e.to_string())?;
+    }
+    let _ = std::fs::remove_file(archive);
+    find_java_executable(&runtime_root)
+        .ok_or_else(|| "Temurin archive did not contain a java executable".into())
+}
+
+fn find_java_executable(root: &std::path::Path) -> Option<PathBuf> {
+    let name = if cfg!(windows) { "java.exe" } else { "java" };
+    let entries = std::fs::read_dir(root).ok()?;
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            let direct = path.join("bin").join(name);
+            if direct.is_file() {
+                return Some(direct);
+            }
+            if let Some(found) = find_java_executable(&path) {
+                return Some(found);
+            }
+        }
+    }
+    None
+}
+
+#[derive(Deserialize, Serialize)]
+struct ManagedPackInstance {
+    source_pack: String,
+    installed_at: u64,
+}
+
+#[derive(Serialize)]
+pub struct PackInstance {
+    id: String,
+    path: String,
+    source_pack: String,
+    installed_at: u64,
+}
+
+/// Lists Packwiz instances prepared by Boot. This is the launcher-facing
+/// instance model: each entry is safe to delete/reinstall without modifying
+/// the source repository.
+#[tauri::command]
+pub fn launcher_list_pack_instances(app: AppHandle) -> Result<Vec<PackInstance>, String> {
+    let root = managed_root(&app)?.join("packs");
+    let mut instances = Vec::new();
+    let entries = match std::fs::read_dir(&root) {
+        Ok(entries) => entries,
+        Err(_) => return Ok(instances),
+    };
+    for entry in entries {
+        let Ok(entry) = entry else { continue };
+        let path = entry.path();
+        let metadata_path = path.join("packwand-instance.json");
+        let Ok(data) = std::fs::read(&metadata_path) else {
+            continue;
+        };
+        let Ok(metadata) = serde_json::from_slice::<ManagedPackInstance>(&data) else {
+            continue;
+        };
+        instances.push(PackInstance {
+            id: entry.file_name().to_string_lossy().into_owned(),
+            path: path.to_string_lossy().into_owned(),
+            source_pack: metadata.source_pack,
+            installed_at: metadata.installed_at,
+        });
+    }
+    instances.sort_by_key(|instance| std::cmp::Reverse(instance.installed_at));
+    Ok(instances)
+}
+
+#[tauri::command]
+pub fn launcher_delete_pack_instance(app: AppHandle, instance_id: String) -> Result<(), String> {
+    if instance_id.len() != 16 || !instance_id.chars().all(|c| c.is_ascii_hexdigit()) {
+        return Err("invalid managed instance id".into());
+    }
+    let path = managed_root(&app)?.join("packs").join(instance_id);
+    if !path.join("packwand-instance.json").is_file() {
+        return Err("managed instance not found".into());
+    }
+    std::fs::remove_dir_all(&path).map_err(|e| format!("failed to remove managed instance: {e}"))
+}
+
+/// Installs Packwiz metadata into a managed game directory before launching.
+/// The repository checkout remains source-only: mod jars are never downloaded
+/// into its tracked directories.
+fn install_pack_for_launch(
+    root: &std::path::Path,
+    pack_dir: &std::path::Path,
+    java: &std::path::Path,
+) -> Result<PathBuf, String> {
+    let canonical = pack_dir
+        .canonicalize()
+        .map_err(|e| format!("invalid pack directory {}: {e}", pack_dir.display()))?;
+    let mut hasher = std::collections::hash_map::DefaultHasher::new();
+    canonical.hash(&mut hasher);
+    let instance_dir = root.join("packs").join(format!("{:016x}", hasher.finish()));
+    std::fs::create_dir_all(&instance_dir).map_err(|e| {
+        format!(
+            "failed to create launch instance {}: {e}",
+            instance_dir.display()
+        )
+    })?;
+
+    let packwand = crate::find_packwand()?;
+    let mut command = Command::new(&packwand);
+    no_console_window(&mut command);
+    let status = command
+        .arg("test")
+        .arg(&canonical)
+        .env("PACKWAND_TEST_INSTANCE", &instance_dir)
+        .env("PACKWAND_BIN", &packwand)
+        .env(
+            "JAVA_HOME",
+            java.parent().and_then(|p| p.parent()).unwrap_or(java),
+        )
+        .env(
+            "PATH",
+            format!(
+                "{};{}",
+                java.parent().unwrap_or(java).display(),
+                std::env::var("PATH").unwrap_or_default()
+            ),
+        )
+        .status()
+        .map_err(|e| {
+            format!(
+                "failed to start Packwand installer {}: {e}",
+                packwand.display()
+            )
+        })?;
+    if !status.success() {
+        return Err(format!("Packwand installer failed with {status}"));
+    }
+    if !instance_dir.join("pack.toml").is_file() {
+        return Err(
+            "Packwand installer completed but did not create pack.toml in the launch instance"
+                .into(),
+        );
+    }
+    let installed_at = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs();
+    let metadata = serde_json::to_vec_pretty(&ManagedPackInstance {
+        source_pack: canonical.to_string_lossy().into_owned(),
+        installed_at,
+    })
+    .map_err(|e| e.to_string())?;
+    std::fs::write(instance_dir.join("packwand-instance.json"), metadata)
+        .map_err(|e| e.to_string())?;
+    Ok(instance_dir)
+}
 
 /// Tracks cancellation tokens for in-flight boot sessions, keyed by session
 /// id. A session only becomes cancellable once the game process has
@@ -259,12 +466,8 @@ fn emit_event(app: &AppHandle, session_id: &str, event: LaunchEvent) {
     );
 }
 
-/// Boots `pack_dir` for dev testing: ensures the shared Minecraft+loader
-/// install exists (bootstrapping it if not, reporting progress via
-/// `launcher://progress`), then launches it pointed at the pack's own
-/// directory, forwarding every lifecycle event via `launcher://event` until
-/// a terminal event. Returns a session id immediately; the boot itself runs
-/// on a background thread.
+/// Boots `pack_dir` for dev testing: first installs Packwiz files into a
+/// managed instance, then bootstraps Minecraft/loader and launches it.
 ///
 /// Uses the signed-in Microsoft account's session when one is available,
 /// falling back to the offline dev-testing session otherwise — signing in
@@ -314,7 +517,41 @@ pub fn launcher_boot(
             );
         };
 
-        let booted = match boot_pack(&root, &pack_path, &account_session, on_progress) {
+        let java = match ensure_managed_java(&root) {
+            Ok(java) => java,
+            Err(e) => {
+                emit_event(
+                    &thread_app,
+                    &thread_session,
+                    LaunchEvent::Failed {
+                        instance_id: pack_path.display().to_string(),
+                        error: e,
+                    },
+                );
+                return;
+            }
+        };
+        let installed_pack = match install_pack_for_launch(&root, &pack_path, &java) {
+            Ok(instance) => instance,
+            Err(e) => {
+                emit_event(
+                    &thread_app,
+                    &thread_session,
+                    LaunchEvent::Failed {
+                        instance_id: pack_path.display().to_string(),
+                        error: e,
+                    },
+                );
+                return;
+            }
+        };
+        let booted = match boot_pack(
+            &root,
+            &installed_pack,
+            &account_session,
+            Some(java),
+            on_progress,
+        ) {
             Ok(booted) => booted,
             Err(e) => {
                 emit_event(

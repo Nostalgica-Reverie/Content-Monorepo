@@ -6,20 +6,20 @@ on:
     paths:
       - "docs/**"
       - "apps/packwand/**"
-      - "Taskfile.yml"
+      - "justfile"
       - ".forgejo/actions/setup-docs-node/**"
       - ".forgejo/actions/setup-go/**"
-      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/actions/setup-just/**"
       - ".forgejo/workflows/ci-docs.yml"
   pull_request:
     branches: ["main"]
     paths:
       - "docs/**"
       - "apps/packwand/**"
-      - "Taskfile.yml"
+      - "justfile"
       - ".forgejo/actions/setup-docs-node/**"
       - ".forgejo/actions/setup-go/**"
-      - ".forgejo/actions/setup-task/**"
+      - ".forgejo/actions/setup-just/**"
       - ".forgejo/workflows/ci-docs.yml"
   workflow_dispatch:
 
@@ -40,15 +40,15 @@ jobs:
             docs
             apps/packwand
             tools
-            Taskfile.yml
+            justfile
             .forgejo/actions
       - uses: ./.forgejo/actions/setup-go
       - uses: ./.forgejo/actions/setup-docs-node
-      - uses: ./.forgejo/actions/setup-task
+      - uses: ./.forgejo/actions/setup-just
       - name: Type-check docs scripts
-        run: task docs-typecheck
+        run: just docs-typecheck
       - name: Build docs sites
-        run: task docs-build
+        run: just docs-build
       - name: Check cross-site doc links
         run: node docs/link-lint.mts
       - name: Upload docs

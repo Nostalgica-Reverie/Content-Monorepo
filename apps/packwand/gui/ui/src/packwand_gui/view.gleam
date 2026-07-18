@@ -9,26 +9,30 @@ import lustre/element/html
 import lustre/event
 import packwand_gui/manifest_form.{type ManifestForm}
 import packwand_gui/model.{
-  type Feature, type ModEntry, type Project, type Subdir, type Variant, AddMod,
-  Build, Bump, DocsModlist, DocsPages, Doctor, ExportCurseforge,
-  ExportModrinth, FreezeMod, Lint, NixGen, PacksIndex, PinMod, RefreshSubdir,
-  Rehash, RemoveMod, SetSide, UnfreezeMod, UnpinMod, UpdateAll, UpdateMod,
-  ValidateProject, WorkspaceRefresh, WorkspaceStatus, WorkspaceSync,
-  WorkspaceUpdate, project_summary,
+  type Feature, type ModEntry, type Project, type Subdir, type TreeFile,
+  type TreeGroup, type TreeNode, type Variant, AddMod, Build, Bump, Diagnostic,
+  DocsModlist, DocsPages, Doctor, ExportCurseforge, ExportModrinth, FreezeMod,
+  LauncherInstance, Lint, NixGen, PacksIndex, PinMod, PreflightIssue,
+  PreflightResult, PreflightStep, RefreshSubdir, Rehash, RemoveMod, SetSide,
+  TreeFile, TreeFolder, TreeGroup, TreeLeaf, UnfreezeMod, UnpinMod, UpdateAll,
+  UpdateMod, ValidateProject, WorkspaceRefresh, WorkspaceStatus, WorkspaceSync,
+  WorkspaceUpdate, nest_tree_files, project_summary,
 }
 import packwand_gui/state.{
-  type Model, type ModProgress, type Msg, type View, BootPack, CancelBoot,
-  Changelog, CopyChangelog,
-  CreateProject,
-  Exports, IconFailed, Logs, Mods, Navigate, Overview, RequestAuthLogin,
-  RequestAuthLogout, RunAction, RunWebview,
-  SaveManifest,
-  SelectProject, SelectSubdir, SetBumpConfigs, SetBumpVersion,
-  SetDockGameWindow, SetManifest, SetManifestField,
-  SetManifestStructured, SetModSlug, SetNewPackDescription,
-  SetNewPackID, SetNewPackLoader, SetNewPackMinecraft, SetNewPackName,
-  SetNewPackType, SetNewPackVersion, SetSearch, Settings, job_running,
-  launcher_running, progress_status_label, query_matches, selected_project,
+  type ModProgress, type Model, type Msg, type View, ApplyCompletion, CancelBoot,
+  Changelog, CopyChangelog, CopyRef, CreateNewFile, CreateProject,
+  DuplicateToSibling, Editor, Exports, IconFailed, Instances, Logs, Mods,
+  Navigate, OpenFile, OpenPath, Overview, ReloadInstances, ReloadTree,
+  RequestAuthLogin, RequestAuthLogout, RequestBoot, RequestCompletions,
+  RunAction, RunLocalCI, RunPreflight, RunWebview, SaveBuffer, SaveChangelog,
+  SaveManifest, SelectProject, SelectSubdir, SelectTab, SetBuffer,
+  SetBumpConfigs, SetBumpVersion, SetChangelog, SetDockGameWindow, SetManifest,
+  SetManifestField, SetManifestStructured, SetModSlug, SetNewFilePath,
+  SetNewPackDescription, SetNewPackID, SetNewPackLoader, SetNewPackMinecraft,
+  SetNewPackName, SetNewPackType, SetNewPackVersion, SetProblemFilter,
+  SetSearch, Settings, ToggleTreeFolder, ToggleTreeGroup, file_dirty,
+  job_running, launcher_running, progress_status_label, query_matches,
+  selected_project,
 }
 
 @external(javascript, "./ffi.mjs", "currentHash")
@@ -37,6 +41,8 @@ fn current_hash() -> String
 pub fn hash(view: View) -> String {
   case view {
     Overview -> "overview"
+    Editor -> "editor"
+    Instances -> "instances"
     Exports -> "exports"
     Mods -> "mods"
     Changelog -> "changelog"
@@ -52,6 +58,8 @@ pub fn from_hash() -> View {
 pub fn from_name(value: String) -> View {
   case value {
     "exports" -> Exports
+    "editor" -> Editor
+    "instances" -> Instances
     "mods" -> Mods
     "changelog" -> Changelog
     "logs" -> Logs
@@ -80,6 +88,18 @@ fn sidebar(model: Model) {
         html.span([attribute.title(model.root)], [html.text(model.root)]),
       ]),
     ]),
+    html.div([attribute.class("explorer-title")], [
+      html.span([], [html.text("EXPLORER")]),
+      html.span(
+        [
+          attribute.class("branch-option"),
+          attribute.title(
+            "Git branch switching will appear here when repository branch actions are available.",
+          ),
+        ],
+        [html.text("⑂ branch")],
+      ),
+    ]),
     html.label(
       [
         attribute.class("field-label"),
@@ -95,13 +115,15 @@ fn sidebar(model: Model) {
       ],
       project_options(model.projects, model.selected_id),
     ),
-    html.nav([], [
-      nav_button(model.view, Overview, "Open"),
-      nav_button(model.view, Exports, "Exports"),
-      nav_button(model.view, Mods, "Mods"),
-      nav_button(model.view, Changelog, "Changelog"),
-      nav_button(model.view, Logs, "Logs"),
-      nav_button(model.view, Settings, "Settings"),
+    html.nav([attribute.class("activity-nav")], [
+      nav_button(model.view, Overview, "⌂", "Overview"),
+      nav_button(model.view, Editor, "▣", "Editor"),
+      nav_button(model.view, Instances, "◫", "Instances"),
+      nav_button(model.view, Exports, "⇧", "Exports"),
+      nav_button(model.view, Mods, "◈", "Mods"),
+      nav_button(model.view, Changelog, "≡", "Changelog"),
+      nav_button(model.view, Logs, "›_", "Logs"),
+      nav_button(model.view, Settings, "⚙", "Settings"),
     ]),
     html.div([attribute.class("sidebar-footer")], [
       html.div([attribute.class("language-credit")], [
@@ -117,14 +139,17 @@ fn sidebar(model: Model) {
   ])
 }
 
-fn nav_button(current: View, target: View, label: String) {
+fn nav_button(current: View, target: View, icon: String, label: String) {
   html.button(
     [
       attribute.classes([#("nav-btn", True), #("active", current == target)]),
       attribute.type_("button"),
       event.on_click(Navigate(target)),
     ],
-    [html.text(label)],
+    [
+      html.span([attribute.class("nav-icon")], [html.text(icon)]),
+      html.span([attribute.class("nav-label")], [html.text(label)]),
+    ],
   )
 }
 
@@ -222,7 +247,12 @@ fn toolbar(model: Model, project: Project) {
     False -> html.text("")
     True ->
       html.section([attribute.class("toolbar")], [
-        button_disabled("", "Status", RunAction(WorkspaceStatus), job_running(model)),
+        button_disabled(
+          "",
+          "Status",
+          RunAction(WorkspaceStatus),
+          job_running(model),
+        ),
         button_disabled("", "Doctor", RunAction(Doctor), job_running(model)),
         button_disabled("", "Lint", RunAction(Lint), job_running(model)),
         button_disabled(
@@ -238,18 +268,20 @@ fn toolbar(model: Model, project: Project) {
           job_running(model),
         ),
         case model.view == Settings {
-          True -> button_disabled(
-            "ghost",
-            "Refresh Workspace",
-            RunAction(WorkspaceRefresh),
-            job_running(model),
-          )
-          False -> button_disabled(
-            "ghost",
-            "Validate Pack",
-            RunAction(ValidateProject(project.dir)),
-            job_running(model),
-          )
+          True ->
+            button_disabled(
+              "ghost",
+              "Refresh Workspace",
+              RunAction(WorkspaceRefresh),
+              job_running(model),
+            )
+          False ->
+            button_disabled(
+              "ghost",
+              "Validate Pack",
+              RunAction(ValidateProject(project.dir)),
+              job_running(model),
+            )
         },
       ])
   }
@@ -257,7 +289,8 @@ fn toolbar(model: Model, project: Project) {
 
 fn sections(model: Model, project: Project) -> List(Element(Msg)) {
   case string.trim(model.search) {
-    "" -> sections_for_view(model, project)
+    "" ->
+      list.append(sections_for_view(model, project), [problems_panel(model)])
     _ -> [search_results_panel(model, project)]
   }
 }
@@ -270,6 +303,8 @@ fn sections_for_view(model: Model, project: Project) -> List(Element(Msg)) {
       actions_panel(model, project.subdirs),
       variant_panel(model, project.variants),
     ]
+    Editor -> [editor_panel(model)]
+    Instances -> [instances_panel(model)]
     Exports -> [actions_panel(model, project.subdirs)]
     Mods -> [add_mod_panel(model), mods_panel(model, project)]
     Changelog -> [changelog_panel(model)]
@@ -285,6 +320,391 @@ fn sections_for_view(model: Model, project: Project) -> List(Element(Msg)) {
       account_panel(model),
     ]
   }
+}
+
+fn instances_panel(model: Model) {
+  panel_with_head(
+    "span-12",
+    "Instances",
+    button("ghost", "Reload", ReloadInstances),
+    [
+      html.div([attribute.class("list")], case model.instances {
+        [] -> [
+          empty_row("No managed instances yet. Boot a pack to install one."),
+        ]
+        instances ->
+          instances
+          |> list.map(fn(instance) {
+            let LauncherInstance(_, path, source, installed) = instance
+            html.div([attribute.class("row")], [
+              html.div([], [
+                html.strong([], [html.text(source)]),
+                html.span([], [
+                  html.text(
+                    "Installed " <> int.to_string(installed) <> " · " <> path,
+                  ),
+                ]),
+              ]),
+              button("", "Update & Boot", RequestBoot(source)),
+            ])
+          })
+      }),
+    ],
+  )
+}
+
+fn editor_panel(model: Model) {
+  panel_with_head(
+    "span-12 ide-editor-panel",
+    "Editor",
+    html.div([attribute.class("panel-actions")], [
+      button_disabled(
+        "ghost",
+        "Refresh tree",
+        ReloadTree,
+        model.selected_subdir == "",
+      ),
+      button_disabled("ghost", "Run CI locally", RunLocalCI, job_running(model)),
+      button_disabled("", "Validate pack", RunPreflight, job_running(model)),
+    ]),
+    [
+      html.div([attribute.class("editor-create")], [
+        html.input([
+          attribute.placeholder("config/example.json"),
+          attribute.value(model.new_file_path),
+          event.on_input(SetNewFilePath),
+        ]),
+        button_disabled(
+          "ghost",
+          "New file",
+          CreateNewFile,
+          string.trim(model.new_file_path) == "",
+        ),
+      ]),
+      html.div([attribute.class("ide-workbench")], [
+        html.aside([attribute.class("file-tree")], case model.editor_tree {
+          [] -> [empty_row("No editable pack files found.")]
+          groups -> groups |> list.map(fn(group) { tree_group(model, group) })
+        }),
+        html.div([attribute.class("editor-main")], [
+          editor_tabs(model),
+          editor_buffer(model),
+          completion_menu(model),
+        ]),
+        editor_inspector(model),
+      ]),
+      notice(model.notice),
+    ],
+  )
+}
+
+fn tree_group(model: Model, group: TreeGroup) {
+  let TreeGroup(name, files) = group
+  let collapsed = list.contains(model.collapsed_tree_groups, name)
+  html.section([attribute.class("tree-group")], [
+    html.button(
+      [
+        attribute.class("tree-group-toggle"),
+        attribute.type_("button"),
+        event.on_click(ToggleTreeGroup(name)),
+      ],
+      [
+        html.text(
+          case collapsed {
+            True -> "> "
+            False -> "v "
+          }
+          <> name
+          <> " ("
+          <> int.to_string(list.length(files))
+          <> ")",
+        ),
+      ],
+    ),
+    case collapsed {
+      True -> html.text("")
+      False -> tree_nodes(model, nest_tree_files(name, files), 0)
+    },
+  ])
+}
+
+fn tree_nodes(model: Model, nodes: List(TreeNode), depth: Int) {
+  html.div([], nodes |> list.map(fn(node) { tree_node(model, node, depth) }))
+}
+
+fn tree_node(model: Model, node: TreeNode, depth: Int) {
+  case node {
+    TreeLeaf(file) -> tree_file(file, depth)
+    TreeFolder(key, label, children) -> {
+      let collapsed = list.contains(model.collapsed_tree_folders, key)
+      html.div([attribute.class("tree-folder")], [
+        html.button(
+          [
+            attribute.class("tree-folder-toggle"),
+            attribute.type_("button"),
+            attribute.style("padding-left", int.to_string(depth * 12) <> "px"),
+            event.on_click(ToggleTreeFolder(key)),
+          ],
+          [
+            html.text(
+              case collapsed {
+                True -> "> "
+                False -> "v "
+              }
+              <> label,
+            ),
+          ],
+        ),
+        case collapsed {
+          True -> html.text("")
+          False -> tree_nodes(model, children, depth + 1)
+        },
+      ])
+    }
+  }
+}
+
+fn editor_inspector(model: Model) {
+  html.aside([attribute.class("editor-inspector")], [
+    html.div([attribute.class("inspector-head")], [
+      html.h3([], [html.text("Problems")]),
+      html.span([attribute.class("status-badge " <> model.preflight_status)], [
+        html.text(model.preflight_status),
+      ]),
+    ]),
+    html.p([attribute.class("inspector-status")], [
+      html.text(case model.editor_checked {
+        True ->
+          case model.editor_valid {
+            True -> "No buffer errors"
+            False -> "Issues in buffer"
+          }
+        False -> "Checks run after you pause typing"
+      }),
+    ]),
+    html.div([attribute.class("inspector-list")], case model.editor_diags {
+      [] -> [html.span([], [html.text("No diagnostics for the active file.")])]
+      diags ->
+        diags
+        |> list.map(fn(diag) {
+          let Diagnostic(severity, line, col, message, _) = diag
+          html.div([attribute.class("inspector-problem " <> severity)], [
+            html.strong([], [
+              html.text(
+                severity
+                <> " · Ln "
+                <> int.to_string(line)
+                <> ":"
+                <> int.to_string(col),
+              ),
+            ]),
+            html.p([], [html.text(message)]),
+          ])
+        })
+    }),
+  ])
+}
+
+fn tree_file(file: TreeFile, depth: Int) {
+  let TreeFile(path, ref_id, kind, _, editable) = file
+  html.div(
+    [
+      attribute.class("tree-file"),
+      attribute.style("padding-left", int.to_string(depth * 12) <> "px"),
+    ],
+    [
+      button_disabled(
+        "tree-open",
+        path,
+        OpenPath(path, kind, ref_id),
+        !editable,
+      ),
+      html.div([attribute.class("tree-actions")], [
+        case ref_id {
+          "" -> html.text("")
+          _ -> button("icon-btn ghost", "Copy ID", CopyRef(ref_id))
+        },
+        button("icon-btn ghost", "Duplicate", DuplicateToSibling(path)),
+      ]),
+    ],
+  )
+}
+
+fn editor_tabs(model: Model) {
+  html.div([attribute.class("editor-tabs")], case model.open_files {
+    [] -> [html.span([], [html.text("Open a file from the tree")])]
+    files ->
+      files
+      |> list.map(fn(file) {
+        let OpenFile(path, _, _, _, _) = file
+        html.button(
+          [
+            attribute.classes([
+              #("editor-tab", True),
+              #("active", path == model.active_path),
+            ]),
+            attribute.type_("button"),
+            event.on_click(SelectTab(path)),
+          ],
+          [
+            html.text(
+              path
+              <> case file_dirty(file) {
+                True -> " •"
+                False -> ""
+              },
+            ),
+          ],
+        )
+      })
+  })
+}
+
+fn editor_buffer(model: Model) {
+  case
+    list.find(model.open_files, fn(file) { file.path == model.active_path })
+  {
+    Error(_) ->
+      html.div([attribute.class("editor-empty")], [
+        html.text("Select a file to edit."),
+      ])
+    Ok(file) ->
+      html.div([attribute.class("editor-buffer")], [
+        html.div([attribute.class("editor-toolbar")], [
+          html.code([], [html.text(file.path)]),
+          button("ghost", "Complete", RequestCompletions),
+          button_disabled("", "Save", SaveBuffer, !file_dirty(file)),
+        ]),
+        html.textarea(
+          [
+            attribute.id("editorText"),
+            attribute.spellcheck(False),
+            event.on_input(SetBuffer),
+          ],
+          file.content,
+        ),
+      ])
+  }
+}
+
+fn completion_menu(model: Model) {
+  case model.completion_open {
+    False -> html.text("")
+    True ->
+      html.div([attribute.class("completion-menu")], case model.completions {
+        [] -> [html.span([], [html.text("No completions")])]
+        items ->
+          items
+          |> list.take(30)
+          |> list.map(fn(item) {
+            button(
+              "completion-item",
+              item.id <> "  " <> item.kind,
+              ApplyCompletion(item.id),
+            )
+          })
+      })
+  }
+}
+
+fn problems_panel(model: Model) {
+  let buffer_rows =
+    model.editor_diags
+    |> list.filter_map(fn(diag) {
+      let Diagnostic(severity, line, col, message, code) = diag
+      case problem_visible(model.problem_filter, severity) {
+        True ->
+          Ok(problem_row(severity, model.active_path, line, col, message, code))
+        False -> Error(Nil)
+      }
+    })
+  let preflight_rows = case model.preflight {
+    None -> []
+    Some(PreflightResult(_, _, _, steps)) ->
+      steps
+      |> list.flat_map(fn(step) {
+        let PreflightStep(_, _, _, issues) = step
+        issues
+        |> list.filter_map(fn(issue) {
+          let PreflightIssue(level, path, message) = issue
+          case problem_visible(model.problem_filter, level) {
+            True -> Ok(problem_row(level, path, 0, 0, message, "preflight"))
+            False -> Error(Nil)
+          }
+        })
+      })
+  }
+  let rows = list.append(buffer_rows, preflight_rows)
+  panel_with_head(
+    "span-12 problems-panel",
+    "Problems",
+    html.div([attribute.class("problem-filters")], [
+      filter_button(model, "all", "All"),
+      filter_button(model, "error", "Errors"),
+      filter_button(model, "warning", "Warnings"),
+    ]),
+    [
+      html.div([attribute.class("problem-list")], case rows {
+        [] -> [
+          empty_row(case model.preflight_status {
+            "running" -> "Preflight is running…"
+            _ -> "No problems reported."
+          }),
+        ]
+        _ -> rows
+      }),
+    ],
+  )
+}
+
+fn filter_button(model: Model, value: String, label: String) {
+  html.button(
+    [
+      attribute.classes([
+        #("ghost", True),
+        #("active", model.problem_filter == value),
+      ]),
+      attribute.type_("button"),
+      event.on_click(SetProblemFilter(value)),
+    ],
+    [html.text(label)],
+  )
+}
+
+fn problem_visible(filter: String, severity: String) -> Bool {
+  filter == "all" || filter == severity
+}
+
+fn problem_row(
+  severity: String,
+  path: String,
+  line: Int,
+  col: Int,
+  message: String,
+  code: String,
+) {
+  let location = case line > 0 {
+    True -> path <> ":" <> int.to_string(line) <> ":" <> int.to_string(col)
+    False -> path
+  }
+  html.div([attribute.class("problem-row " <> severity)], [
+    html.span([attribute.class("problem-severity")], [html.text(severity)]),
+    case path {
+      "" ->
+        html.span([attribute.class("problem-location")], [html.text("pack")])
+      _ ->
+        html.button(
+          [
+            attribute.class("problem-location"),
+            attribute.type_("button"),
+            event.on_click(OpenPath(path, "file", "")),
+          ],
+          [html.text(location)],
+        )
+    },
+    html.span([attribute.class("problem-message")], [html.text(message)]),
+    html.code([], [html.text(code)]),
+  ])
 }
 
 fn search_results_panel(model: Model, project: Project) {
@@ -428,7 +848,7 @@ fn subdir_panel(model: Model, subdirs: List(Subdir)) {
         subdir.key <> " " <> subdir.path <> " " <> subdir.platform,
       )
     })
-    |> list.map(subdir_row)
+    |> list.map(fn(subdir) { subdir_row(model, subdir) })
   panel_with_head(
     "span-5",
     "Subdirs",
@@ -514,10 +934,30 @@ fn actions_panel(model: Model, subdirs: List(Subdir)) {
             html.option([attribute.value(subdir.path)], subdir.key)
           }),
       ),
-      button_disabled("", "Refresh", RunAction(RefreshSubdir(model.selected_subdir)), disabled),
-      button_disabled("", "Update All", RunAction(UpdateAll(model.selected_subdir)), disabled),
-      button_disabled("ghost", "Build", RunAction(Build(model.selected_subdir)), disabled),
-      button_disabled("ghost", "Rehash", RunAction(Rehash(model.selected_subdir)), disabled),
+      button_disabled(
+        "",
+        "Refresh",
+        RunAction(RefreshSubdir(model.selected_subdir)),
+        disabled,
+      ),
+      button_disabled(
+        "",
+        "Update All",
+        RunAction(UpdateAll(model.selected_subdir)),
+        disabled,
+      ),
+      button_disabled(
+        "ghost",
+        "Build",
+        RunAction(Build(model.selected_subdir)),
+        disabled,
+      ),
+      button_disabled(
+        "ghost",
+        "Rehash",
+        RunAction(Rehash(model.selected_subdir)),
+        disabled,
+      ),
       button_disabled(
         "ghost",
         "Modrinth Export",
@@ -536,7 +976,7 @@ fn actions_panel(model: Model, subdirs: List(Subdir)) {
           button_disabled(
             "",
             "Boot (dev test)",
-            BootPack(model.selected_subdir),
+            RequestBoot(model.selected_subdir),
             model.selected_subdir == "",
           )
       },
@@ -602,22 +1042,19 @@ fn mods_panel(model: Model, project: Project) {
 }
 
 fn changelog_panel(model: Model) {
-  let lines =
-    model.changelog
-    |> string.split("\n")
-    |> list.filter(fn(line) { query_matches(model.search, line) })
-    |> string.join("\n")
   panel_with_head(
     "span-12",
     "Changelog",
-    button("ghost", "Copy Summary", CopyChangelog),
+    html.div([attribute.class("panel-actions")], [
+      button("ghost", "Copy Summary", CopyChangelog),
+      button("ghost", "Save Changelog", SaveChangelog),
+    ]),
     [
-      html.pre([attribute.class("changelog-preview")], [
-        html.text(case lines {
-          "" -> "No changelog.md content found."
-          _ -> lines
-        }),
-      ]),
+      html.textarea(
+        [attribute.spellcheck(False), event.on_input(SetChangelog)],
+        model.changelog,
+      ),
+      notice(model.notice),
     ],
   )
 }
@@ -690,15 +1127,32 @@ fn manifest_form_panel(model: Model, form: ManifestForm) {
       datalist("pw-subdir-keys", subdir_keys),
       html.h3([], [html.text("Identity")]),
       html.div([attribute.class("form-grid")], [
-        manifest_input(issues, "id", "ID", form.id, "my-pack", fn(v) {
-          manifest_form.FId(v)
-        }, ""),
-        manifest_input(issues, "name", "Name", form.name, "My Pack", fn(v) {
-          manifest_form.FName(v)
-        }, ""),
-        manifest_select(issues, "type", "Type", form.kind, [
-          "modpack", "datapack", "resourcepack",
-        ], fn(v) { manifest_form.FKind(v) }),
+        manifest_input(
+          issues,
+          "id",
+          "ID",
+          form.id,
+          "my-pack",
+          fn(v) { manifest_form.FId(v) },
+          "",
+        ),
+        manifest_input(
+          issues,
+          "name",
+          "Name",
+          form.name,
+          "My Pack",
+          fn(v) { manifest_form.FName(v) },
+          "",
+        ),
+        manifest_select(
+          issues,
+          "type",
+          "Type",
+          form.kind,
+          ["modpack", "datapack", "resourcepack"],
+          fn(v) { manifest_form.FKind(v) },
+        ),
         manifest_select(
           issues,
           "release_type",
@@ -707,9 +1161,14 @@ fn manifest_form_panel(model: Model, form: ManifestForm) {
           ["release", "beta", "alpha"],
           fn(v) { manifest_form.FReleaseType(v) },
         ),
-        manifest_select(issues, "lifecycle", "Lifecycle", form.lifecycle, [
-          "", "active", "maintenance", "archived", "eol",
-        ], fn(v) { manifest_form.FLifecycle(v) }),
+        manifest_select(
+          issues,
+          "lifecycle",
+          "Lifecycle",
+          form.lifecycle,
+          ["", "active", "maintenance", "archived", "eol"],
+          fn(v) { manifest_form.FLifecycle(v) },
+        ),
         manifest_input(
           issues,
           "version",
@@ -776,9 +1235,15 @@ fn manifest_form_panel(model: Model, form: ManifestForm) {
       html.h3([], [html.text("Distribution")]),
       issue_list(manifest_form.field_issues(issues, "platforms")),
       html.div([attribute.class("form-grid")], [
-        manifest_input(issues, "modrinth_id", "Modrinth ID", form.modrinth_id, "", fn(v) {
-          manifest_form.FModrinthId(v)
-        }, ""),
+        manifest_input(
+          issues,
+          "modrinth_id",
+          "Modrinth ID",
+          form.modrinth_id,
+          "",
+          fn(v) { manifest_form.FModrinthId(v) },
+          "",
+        ),
         manifest_input(
           issues,
           "curseforge_id",
@@ -788,15 +1253,33 @@ fn manifest_form_panel(model: Model, form: ManifestForm) {
           fn(v) { manifest_form.FCurseforgeId(v) },
           "",
         ),
-        manifest_input(issues, "github_id", "GitHub (owner/repo)", form.github_id, "", fn(v) {
-          manifest_form.FGithubId(v)
-        }, ""),
-        manifest_input(issues, "gitea_id", "Gitea (owner/repo)", form.gitea_id, "", fn(v) {
-          manifest_form.FGiteaId(v)
-        }, ""),
-        manifest_input(issues, "gitlab_id", "GitLab (owner/repo)", form.gitlab_id, "", fn(v) {
-          manifest_form.FGitlabId(v)
-        }, ""),
+        manifest_input(
+          issues,
+          "github_id",
+          "GitHub (owner/repo)",
+          form.github_id,
+          "",
+          fn(v) { manifest_form.FGithubId(v) },
+          "",
+        ),
+        manifest_input(
+          issues,
+          "gitea_id",
+          "Gitea (owner/repo)",
+          form.gitea_id,
+          "",
+          fn(v) { manifest_form.FGiteaId(v) },
+          "",
+        ),
+        manifest_input(
+          issues,
+          "gitlab_id",
+          "GitLab (owner/repo)",
+          form.gitlab_id,
+          "",
+          fn(v) { manifest_form.FGitlabId(v) },
+          "",
+        ),
       ]),
       html.h3([], [html.text("Role & Assets")]),
       html.div([attribute.class("form-grid")], [
@@ -904,26 +1387,54 @@ fn variants_editor(form: ManifestForm, issues) {
               },
               "",
             ),
-            form_input("ID", variant.id, "optional", fn(v) {
-              SetManifestField(
-                manifest_form.FVariant(index, manifest_form.VId(v)),
-              )
-            }, ""),
-            form_input("Name", variant.name, "optional", fn(v) {
-              SetManifestField(
-                manifest_form.FVariant(index, manifest_form.VName(v)),
-              )
-            }, ""),
-            form_input("Version", variant.version, "optional", fn(v) {
-              SetManifestField(
-                manifest_form.FVariant(index, manifest_form.VVersion(v)),
-              )
-            }, ""),
-            form_input("Loader", variant.loader, "inherits pack", fn(v) {
-              SetManifestField(
-                manifest_form.FVariant(index, manifest_form.VLoader(v)),
-              )
-            }, ""),
+            form_input(
+              "ID",
+              variant.id,
+              "optional",
+              fn(v) {
+                SetManifestField(manifest_form.FVariant(
+                  index,
+                  manifest_form.VId(v),
+                ))
+              },
+              "",
+            ),
+            form_input(
+              "Name",
+              variant.name,
+              "optional",
+              fn(v) {
+                SetManifestField(manifest_form.FVariant(
+                  index,
+                  manifest_form.VName(v),
+                ))
+              },
+              "",
+            ),
+            form_input(
+              "Version",
+              variant.version,
+              "optional",
+              fn(v) {
+                SetManifestField(manifest_form.FVariant(
+                  index,
+                  manifest_form.VVersion(v),
+                ))
+              },
+              "",
+            ),
+            form_input(
+              "Loader",
+              variant.loader,
+              "inherits pack",
+              fn(v) {
+                SetManifestField(manifest_form.FVariant(
+                  index,
+                  manifest_form.VLoader(v),
+                ))
+              },
+              "",
+            ),
           ]),
           button(
             "ghost danger",
@@ -933,11 +1444,7 @@ fn variants_editor(form: ManifestForm, issues) {
         ])
       }),
     ),
-    button(
-      "ghost",
-      "Add Variant",
-      SetManifestField(manifest_form.FVariantAdd),
-    ),
+    button("ghost", "Add Variant", SetManifestField(manifest_form.FVariantAdd)),
   ])
 }
 
@@ -963,9 +1470,7 @@ fn mappings_editor(form: ManifestForm, issues) {
               "Target (this pack)",
               mapping.target,
               "1.21.1-mr",
-              fn(v) {
-                SetManifestField(manifest_form.FMappingTarget(index, v))
-              },
+              fn(v) { SetManifestField(manifest_form.FMappingTarget(index, v)) },
               "pw-subdir-keys",
             ),
           ]),
@@ -977,11 +1482,7 @@ fn mappings_editor(form: ManifestForm, issues) {
         ])
       }),
     ),
-    button(
-      "ghost",
-      "Add Mapping",
-      SetManifestField(manifest_form.FMappingAdd),
-    ),
+    button("ghost", "Add Mapping", SetManifestField(manifest_form.FMappingAdd)),
   ])
 }
 
@@ -1247,14 +1748,12 @@ fn launcher_panel(model: Model) {
   case model.launcher_status, model.launcher_log {
     "idle", [] -> html.text("")
     status, log ->
-      panel_with_head(
-        "span-12",
-        "Launcher (dev test boot)",
-        pill(status),
-        [launcher_progress_line(model), html.pre([], [
+      panel_with_head("span-12", "Launcher (dev test boot)", pill(status), [
+        launcher_progress_line(model),
+        html.pre([], [
           html.text(string.join(list.reverse(log), "\n")),
-        ])],
-      )
+        ]),
+      ])
   }
 }
 
@@ -1296,22 +1795,25 @@ fn account_panel(model: Model) {
       button("", "Sign in with Microsoft", RequestAuthLogin),
     ]
   }
-  panel("span-12", "Account", list.append(body, [notice(model.auth_status_text)]))
+  panel(
+    "span-12",
+    "Account",
+    list.append(body, [notice(model.auth_status_text)]),
+  )
 }
 
 fn capabilities_panel(features: List(Feature)) {
   let runnable = list.filter(features, fn(feature) { feature.runnable })
-  let integrated = list.filter(runnable, fn(feature) {
-    feature.gui_status == "integrated"
-  })
+  let integrated =
+    list.filter(runnable, fn(feature) { feature.gui_status == "integrated" })
   panel_with_head(
     "span-12 capabilities-panel",
     "Packwand Feature Coverage",
     pill(
       int.to_string(list.length(integrated))
-        <> " / "
-        <> int.to_string(list.length(runnable))
-        <> " commands integrated",
+      <> " / "
+      <> int.to_string(list.length(runnable))
+      <> " commands integrated",
     ),
     [
       html.p([attribute.class("panel-copy")], [
@@ -1340,10 +1842,12 @@ fn feature_row(feature: Feature) {
           #("integrated", feature.gui_status == "integrated"),
         ]),
       ],
-      [html.text(case feature.gui_status {
-        "integrated" -> "GUI"
-        _ -> "CLI"
-      })],
+      [
+        html.text(case feature.gui_status {
+          "integrated" -> "GUI"
+          _ -> "CLI"
+        }),
+      ],
     ),
   ])
 }
@@ -1396,7 +1900,7 @@ fn detail(label: String, value: String) {
   ])
 }
 
-fn subdir_row(subdir: Subdir) {
+fn subdir_row(model: Model, subdir: Subdir) {
   let count = case subdir.mod_count {
     0 -> ""
     _ -> " - " <> int.to_string(subdir.mod_count) <> " mods"
@@ -1406,7 +1910,24 @@ fn subdir_row(subdir: Subdir) {
       html.strong([], [html.text(subdir.key)]),
       html.span([], [html.text(subdir.path <> count)]),
     ]),
-    html.span([], [html.text(fallback(subdir.platform, "content"))]),
+    html.div([attribute.class("subdir-health")], [
+      html.span([], [html.text(fallback(subdir.platform, "content"))]),
+      case subdir.path == model.selected_subdir {
+        True ->
+          html.span(
+            [attribute.class("status-badge " <> model.preflight_status)],
+            [
+              html.text(case model.preflight_status {
+                "passed" -> "healthy"
+                "failed" -> "issues"
+                "running" -> "checking"
+                _ -> "unchecked"
+              }),
+            ],
+          )
+        False -> html.text("")
+      },
+    ]),
   ])
 }
 
@@ -1466,10 +1987,30 @@ fn mod_row(model: Model, project: Project, mod: ModEntry) {
     ]),
     webview_button,
     side_select,
-    button_disabled("icon-btn", "Update", RunAction(UpdateMod(subdir, mod.slug)), job_running(model)),
-    button_disabled("icon-btn", pin_label, RunAction(pin_action), job_running(model)),
-    button_disabled("icon-btn", freeze_label, RunAction(freeze_action), job_running(model)),
-    button_disabled("icon-btn danger", "Remove", RunAction(RemoveMod(subdir, mod.slug)), job_running(model)),
+    button_disabled(
+      "icon-btn",
+      "Update",
+      RunAction(UpdateMod(subdir, mod.slug)),
+      job_running(model),
+    ),
+    button_disabled(
+      "icon-btn",
+      pin_label,
+      RunAction(pin_action),
+      job_running(model),
+    ),
+    button_disabled(
+      "icon-btn",
+      freeze_label,
+      RunAction(freeze_action),
+      job_running(model),
+    ),
+    button_disabled(
+      "icon-btn danger",
+      "Remove",
+      RunAction(RemoveMod(subdir, mod.slug)),
+      job_running(model),
+    ),
   ])
 }
 
@@ -1556,8 +2097,8 @@ fn selected_platform(subdirs: List(Subdir), path: String) -> String {
 
 fn platform_matches(platform: String, expected: String) -> Bool {
   platform == expected
-    || { platform == "mr" && expected == "modrinth" }
-    || { platform == "cf" && expected == "curseforge" }
+  || { platform == "mr" && expected == "modrinth" }
+  || { platform == "cf" && expected == "curseforge" }
 }
 
 fn pill(value: String) {

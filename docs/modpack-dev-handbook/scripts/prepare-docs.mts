@@ -1,4 +1,4 @@
-﻿import matter from "gray-matter";
+import matter from "gray-matter";
 import fg from "fast-glob";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -9,8 +9,10 @@ const appRoot = path.resolve(here, "..");
 const repoRoot = path.resolve(appRoot, "..", "..");
 const routesRoot = path.join(appRoot, "src", "routes");
 const generatedRoot = path.join(appRoot, "src", "lib", "generated");
-const docsModulePath = path.join(generatedRoot, "docs.ts");
-const searchModulePath = path.join(generatedRoot, "search.ts");
+const checkOnly = process.argv.includes("--check");
+const outputRoot = checkOnly ? await fs.mkdtemp(path.join(appRoot, ".docs-index-check-")) : generatedRoot;
+const docsModulePath = path.join(outputRoot, "docs.ts");
+const searchModulePath = path.join(outputRoot, "search.ts");
 
 type DocRecord = {
   title: string;
@@ -55,16 +57,26 @@ const sections = [
     ],
   },
   { title: "Pack Management", prefixes: [{ prefix: "/wiki/modpack-management", title: "Pack Management" }] },
-  { title: "Contribute", prefixes: [{ prefix: "/contribute", title: "Contribute" }, { prefix: "/credits", title: "Credits" }] },
+  {
+    title: "Contribute",
+    prefixes: [
+      { prefix: "/contribute", title: "Contribute" },
+      { prefix: "/credits", title: "Credits" },
+    ],
+  },
 ] as const;
 
-await main();
+try {
+  await main();
+} finally {
+  if (checkOnly) await fs.rm(outputRoot, { recursive: true, force: true });
+}
 
 async function main() {
   const { docs, searchDocuments } = await collectDocs();
   const navSections = buildNavigation(docs);
 
-  await fs.mkdir(generatedRoot, { recursive: true });
+  await fs.mkdir(outputRoot, { recursive: true });
 
   const docsModuleSource = [
     "export type DocMeta = {",
@@ -86,7 +98,11 @@ async function main() {
     "  children: NavNode[];",
     "};",
     "",
-    `export const docsIndex: DocMeta[] = ${JSON.stringify(docs.map(({ content, ...rest }) => rest), null, 2)};`,
+    `export const docsIndex: DocMeta[] = ${JSON.stringify(
+      docs.map(({ content, ...rest }) => rest),
+      null,
+      2
+    )};`,
     "",
     `export const navSections: NavSection[] = ${JSON.stringify(navSections, null, 2)};`,
     "",
@@ -104,24 +120,55 @@ async function main() {
   ].join("\n");
   await fs.writeFile(docsModulePath, docsModuleSource);
 
+  const searchPages = searchDocuments
+    .filter(document => document.kind === "page")
+    .map(({ title, description, content, url, tags }) => ({ title, description, content, url, tags }));
+  const pageIndexByUrl = new Map(searchPages.map((page, index) => [page.url, index]));
+  const searchSections = searchDocuments
+    .filter(document => document.kind === "section")
+    .map(({ title, sectionTitle, content, url }) => ({
+      page: pageIndexByUrl.get(url.split("#", 1)[0] ?? "") ?? -1,
+      title,
+      sectionTitle,
+      content,
+      url,
+    }))
+    .filter(section => section.page >= 0);
+
   const searchModuleSource = [
-    "export type SearchDocument = {",
-    "  kind: 'page' | 'section';",
+    "export type SearchPage = {",
     "  title: string;",
-    "  pageTitle: string;",
-    "  sectionTitle: string;",
     "  description: string;",
     "  content: string;",
     "  url: string;",
     "  tags: string[];",
     "};",
     "",
-    `export const searchDocuments: SearchDocument[] = ${JSON.stringify(searchDocuments, null, 2)};`,
+    "export type SearchSection = {",
+    "  page: number;",
+    "  title: string;",
+    "  sectionTitle: string;",
+    "  content: string;",
+    "  url: string;",
+    "};",
+    "",
+    `export const searchPages: SearchPage[] = ${JSON.stringify(searchPages, null, 2)};`,
+    "",
+    `export const searchSections: SearchSection[] = ${JSON.stringify(searchSections, null, 2)};`,
     "",
   ].join("\n");
   await fs.writeFile(searchModulePath, searchModuleSource);
 
-  console.log(`Prepared docs: ${docs.length} indexed pages and ${searchDocuments.length} search documents.`);
+  if (checkOnly) {
+    for (const generatedPath of ["docs.ts", "search.ts"] as const) {
+      const expected = await fs.readFile(path.join(generatedRoot, generatedPath), "utf8").catch(() => null);
+      const actual = await fs.readFile(path.join(outputRoot, generatedPath), "utf8");
+      if (expected !== actual) throw new Error(`Generated ${generatedPath} is stale; run bun run docs:index.`);
+    }
+    console.log("Generated docs are up to date.");
+  } else {
+    console.log(`Prepared docs: ${docs.length} indexed pages and ${searchDocuments.length} search documents.`);
+  }
 }
 
 async function collectDocs(): Promise<{ docs: DocRecord[]; searchDocuments: SearchDocument[] }> {
@@ -133,30 +180,42 @@ async function collectDocs(): Promise<{ docs: DocRecord[]; searchDocuments: Sear
     onlyFiles: true,
   });
 
-  for (const file of files) {
-    const url = routeUrlFromFile(file);
-    if (url === "/sitemap.xml") continue;
+  const collected = await Promise.all(
+    files.map(async file => {
+      const url = routeUrlFromFile(file);
+      if (url === "/sitemap.xml") return null;
 
-    const raw = await fs.readFile(file, "utf8");
-    const { data, content } = matter(raw);
-    const title = getTitle(data, content, file);
-    const description = typeof data.description === "string" ? data.description.trim() : "";
-    const tags = Array.isArray(data.tags) ? data.tags.map(String) : [];
-    const sourcePath = toPosix(path.relative(repoRoot, file));
-    const strippedContent = stripForSearch(content);
+      const raw = await fs.readFile(file, "utf8");
+      const { data, content } = matter(raw);
+      const title = getTitle(data, content, file);
+      const description = typeof data.description === "string" ? data.description.trim() : "";
+      const tags = Array.isArray(data.tags) ? data.tags.map(String) : [];
+      const sourcePath = toPosix(path.relative(repoRoot, file));
+      const strippedContent = stripForSearch(content);
 
-    docs.push({ title, url, sourcePath, description, tags, content: strippedContent });
-    searchDocuments.push({
-      kind: "page",
-      title,
-      pageTitle: title,
-      sectionTitle: "",
-      description,
-      content: strippedContent,
-      url,
-      tags,
-    });
-    searchDocuments.push(...extractSections(content, url, title, description, tags));
+      return {
+        doc: { title, url, sourcePath, description, tags, content: strippedContent },
+        searchDocuments: [
+          {
+            kind: "page" as const,
+            title,
+            pageTitle: title,
+            sectionTitle: "",
+            description,
+            content: strippedContent,
+            url,
+            tags,
+          },
+          ...extractSections(content, url, title, description, tags),
+        ],
+      };
+    })
+  );
+
+  for (const entry of collected) {
+    if (!entry) continue;
+    docs.push(entry.doc);
+    searchDocuments.push(...entry.searchDocuments);
   }
 
   docs.sort((a, b) => a.url.localeCompare(b.url));
@@ -164,7 +223,13 @@ async function collectDocs(): Promise<{ docs: DocRecord[]; searchDocuments: Sear
   return { docs, searchDocuments };
 }
 
-function extractSections(content: string, baseUrl: string, pageTitle: string, description: string, tags: string[]): SearchDocument[] {
+function extractSections(
+  content: string,
+  baseUrl: string,
+  pageTitle: string,
+  description: string,
+  tags: string[]
+): SearchDocument[] {
   const matches = [...content.matchAll(/^(#{2,6})\s+(.+)$/gm)];
   if (matches.length === 0) {
     return [];
@@ -190,37 +255,41 @@ function extractSections(content: string, baseUrl: string, pageTitle: string, de
     slugCounts.set(baseSlug, count + 1);
     const slug = count === 0 ? baseSlug : `${baseSlug}-${count}`;
 
-    return [{
-      kind: "section",
-      title: `${pageTitle} / ${heading}`,
-      pageTitle,
-      sectionTitle: heading,
-      description,
-      content: sectionContent || heading,
-      url: `${baseUrl}#${slug}`,
-      tags,
-    }];
+    return [
+      {
+        kind: "section",
+        title: `${pageTitle} / ${heading}`,
+        pageTitle,
+        sectionTitle: heading,
+        description,
+        content: sectionContent || heading,
+        url: `${baseUrl}#${slug}`,
+        tags,
+      },
+    ];
   });
 }
 
 function buildNavigation(docs: DocRecord[]): NavSection[] {
   return sections
-    .map((section) => ({
+    .map(section => ({
       title: section.title,
-      children: section.prefixes.map(({ prefix, title }) => buildTreeForPrefix(docs, prefix, title)).filter(Boolean) as NavNode[],
+      children: section.prefixes
+        .map(({ prefix, title }) => buildTreeForPrefix(docs, prefix, title))
+        .filter(Boolean) as NavNode[],
     }))
-    .filter((section) => section.children.length > 0);
+    .filter(section => section.children.length > 0);
 }
 
 function buildTreeForPrefix(docs: DocRecord[], prefix: string, fallbackTitle: string): NavNode | null {
-  const relevant = docs.filter((doc) => doc.url === prefix || doc.url.startsWith(prefix === "/" ? "/" : `${prefix}/`));
+  const relevant = docs.filter(doc => doc.url === prefix || doc.url.startsWith(prefix === "/" ? "/" : `${prefix}/`));
   if (prefix === "/") {
-    const home = docs.find((doc) => doc.url === "/");
+    const home = docs.find(doc => doc.url === "/");
     return home ? { title: home.title, url: home.url, children: [] } : null;
   }
   if (relevant.length === 0) return null;
 
-  const rootPage = relevant.find((doc) => normalizeUrl(doc.url) === normalizeUrl(prefix));
+  const rootPage = relevant.find(doc => normalizeUrl(doc.url) === normalizeUrl(prefix));
   const root: NavNode = { title: rootPage?.title ?? fallbackTitle, url: rootPage?.url ?? null, children: [] };
 
   for (const doc of relevant) {
@@ -231,7 +300,7 @@ function buildTreeForPrefix(docs: DocRecord[], prefix: string, fallbackTitle: st
       const segment = segments[currentIndex]!;
       const isLeaf = currentIndex === segments.length - 1;
       const title = isLeaf ? doc.title : titleize(segment);
-      let child = cursor.children.find((node) => node.title === title);
+      let child = cursor.children.find(node => node.title === title);
       if (!child) {
         child = { title, url: isLeaf ? doc.url : null, children: [] };
         cursor.children.push(child);
@@ -241,7 +310,7 @@ function buildTreeForPrefix(docs: DocRecord[], prefix: string, fallbackTitle: st
     }
   }
 
-  walkNodes(root, (node) => node.children.sort(compareNavNodes));
+  walkNodes(root, node => node.children.sort(compareNavNodes));
   return root;
 }
 
@@ -319,7 +388,7 @@ function titleize(segment: string) {
   };
   return segment
     .split(/[-_]/g)
-    .map((part) => replacements[part.toLowerCase()] ?? `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    .map(part => replacements[part.toLowerCase()] ?? `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
     .join(" ");
 }
 

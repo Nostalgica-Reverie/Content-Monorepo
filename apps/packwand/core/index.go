@@ -275,25 +275,67 @@ func (in *Index) Refresh() (RefreshStats, error) {
 		err  error
 	}
 	hashResults := make([]hashResult, len(fileList))
-	ParallelFor(fileList, HashConcurrent(), func(i int, v string) {
-		// Mtime short-circuit: if the file hasn't changed since the last
-		// index write, reuse the stored hash instead of reading the file.
+
+	// Mtime short-circuit: if a file hasn't changed since the last index
+	// write, reuse the stored hash instead of reading it. This pass is
+	// stat-only, so it stays sequential; only files that actually need
+	// hashing are handed to the parallel hash pass below.
+	var needIdx []int
+	var needPaths []string
+	for i, v := range fileList {
 		relPath, _ := in.RelIndexPath(v)
 		if !indexMtime.IsZero() {
 			if fi, err := os.Stat(v); err == nil && !fi.ModTime().After(indexMtime) {
 				if ce, ok := existing[relPath]; ok {
 					hashResults[i] = hashResult{v, ce.hash, ce.meta, nil}
 					progress.Increment(0)
-					return
+					continue
 				}
 			}
 		}
+		needIdx = append(needIdx, i)
+		needPaths = append(needPaths, v)
+	}
 
-		start := time.Now()
-		hash, meta, err := computeFileHash(v, in.HashFormat)
-		hashResults[i] = hashResult{v, hash, meta, err}
-		progress.Increment(time.Since(start))
-	})
+	// tools/hashutil is an optional batch accelerator for this exact loop:
+	// a local-disk-only, potentially-thousands-of-files hash pass with no
+	// network dependency (c.md section 1.2). It's sharded across
+	// HashConcurrent() subprocesses to match the parallelism the pure-Go
+	// path below would otherwise use -- hashutil itself is single-threaded
+	// by design. Falls back to the pure-Go path when hashutil isn't
+	// installed, when the index's hash format is one hashutil doesn't
+	// implement (e.g. sha1), or when -no-internal-hashes is set (computeFileHash
+	// short-circuits to an empty hash in that mode; going through hashutil
+	// would defeat the point of the flag). Mirrors packsquashBin()'s
+	// PATH-or-env-var, absence-is-not-an-error pattern in build/build.go.
+	usedHashutil := false
+	if bin := hashutilBin(); bin != "" && hashutilAlgos[in.HashFormat] && len(needPaths) > 0 &&
+		!viper.GetBool("no-internal-hashes") {
+		hashes, err := hashutilBatchParallel(bin, needPaths, in.HashFormat, HashConcurrent())
+		if err != nil {
+			return stats, err
+		}
+		for j, i := range needIdx {
+			meta := strings.HasSuffix(filepath.Base(needPaths[j]), MetaExtension)
+			hashResults[i] = hashResult{needPaths[j], hashes[j], meta, nil}
+			progress.Increment(0)
+		}
+		usedHashutil = true
+	}
+
+	if !usedHashutil && len(needPaths) > 0 {
+		results := make([]hashResult, len(needPaths))
+		ParallelFor(needPaths, HashConcurrent(), func(j int, v string) {
+			start := time.Now()
+			hash, meta, err := computeFileHash(v, in.HashFormat)
+			results[j] = hashResult{v, hash, meta, err}
+			progress.Increment(time.Since(start))
+		})
+		for j, i := range needIdx {
+			hashResults[i] = results[j]
+		}
+	}
+
 	progress.SetTotal(int64(len(fileList)), true)
 	progressContainer.Wait()
 

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"path/filepath"
 	"regexp"
 	"slices"
@@ -627,11 +628,18 @@ func (m *cfDownloadMetadata) GetManualDownload() (bool, core.ManualDownload) {
 }
 
 func (m *cfDownloadMetadata) DownloadFile() (io.ReadCloser, error) {
-	resp, err := core.GetWithUA(m.url, "application/octet-stream")
+	apiKey := getAPIKey()
+	headers := make(http.Header, 1)
+	headers.Set("X-API-Key", apiKey)
+	resp, err := core.GetWithUAAndHeaders(m.url, "application/octet-stream", headers)
 	if err != nil {
 		return nil, fmt.Errorf("failed to download %s: %w", m.url, err)
 	}
-	if resp.StatusCode != 200 {
+	if resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden {
+		_ = resp.Body.Close()
+		return nil, fmt.Errorf("failed to download %s: %w", m.url, rejectedAPIKeyError(resp.Status))
+	}
+	if resp.StatusCode != http.StatusOK {
 		_ = resp.Body.Close()
 		return nil, fmt.Errorf("failed to download %s: invalid status code %v", m.url, resp.StatusCode)
 	}

@@ -54,6 +54,8 @@ sealed class RequestException: Exception {
 			}
 
 			class ErrorCode(req: okhttp3.Request, res: okhttp3.Response): HTTP(req, res, "Non-successful error code from HTTP request: ${res.code}")
+			class APIKeyRejected(req: okhttp3.Request, res: okhttp3.Response): HTTP(req, res,
+				"Server rejected the configured API key (${res.code}). Create a key at https://console.curseforge.com and set CURSEFORGE_API_KEY.")
 		}
 
 		sealed class File: RequestException {

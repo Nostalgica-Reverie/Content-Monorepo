@@ -4,6 +4,11 @@ description = "Allows opening the workspace-selection dialog on the bundled boot
 commands.allow = ["select_workspace"]
 
 [[permission]]
+identifier = "allow-backend-url"
+description = "Allows the bundled boot page to start the local Packwand HTTP backend and navigate to it."
+commands.allow = ["backend_url"]
+
+[[permission]]
 identifier = "allow-core-list-instances"
 description = "Allows listing launcher instances for a workspace."
 commands.allow = ["core_list_instances"]
@@ -17,6 +22,16 @@ commands.allow = ["core_plan_launch"]
 identifier = "allow-launcher-boot"
 description = "Allows booting the Minecraft launcher for dev testing."
 commands.allow = ["launcher_boot"]
+
+[[permission]]
+identifier = "allow-launcher-list-pack-instances"
+description = "Allows listing Packwiz instances prepared by the launcher."
+commands.allow = ["launcher_list_pack_instances"]
+
+[[permission]]
+identifier = "allow-launcher-delete-pack-instance"
+description = "Allows deleting a managed launcher instance without touching its source pack."
+commands.allow = ["launcher_delete_pack_instance"]
 
 [[permission]]
 identifier = "allow-launcher-cancel"

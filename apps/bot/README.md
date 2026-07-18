@@ -36,8 +36,8 @@ Format and lint:
 bun run fix
 ```
 
-From the repository root you can also use the Taskfile entrypoints CI runs:
-`task lint-bot`, `task build-bot` (typecheck + bundle smoke-test).
+From the repository root you can also use the justfile entrypoints CI runs:
+`just lint-bot`, `just build-bot` (typecheck + bundle smoke-test).
 
 ## Deployment
 

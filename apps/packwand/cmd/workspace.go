@@ -217,15 +217,16 @@ var wsUpdateCmd = &cobra.Command{
 	Short: "Run packwand update --all in every pack subdir (honors auto_update)",
 	Run: func(cmd *cobra.Command, args []string) {
 		llChdir()
+		all, _ := cmd.Flags().GetBool("all")
 		check, _ := cmd.Flags().GetBool("check")
 		if check {
 			asJSON, _ := cmd.Flags().GetBool("json")
 			ignoredOnly, _ := cmd.Flags().GetBool("ignored-only")
-			wsRunUpdateCheck(args, asJSON, ignoredOnly)
+			wsRunUpdateCheck(args, asJSON, ignoredOnly, all)
 			return
 		}
 		reportPath, _ := cmd.Flags().GetString("report")
-		packFilter, explicit := workspace.ResolveScope(args, llStartCwd)
+		packFilter, explicit := resolveWorkspaceScope(args, llStartCwd, all)
 
 		op := workspace.OpUpdate
 		var reportDir string
@@ -367,13 +368,20 @@ func ignoredPackSubdirs(root string) []string {
 	return subdirs
 }
 
-func wsRunUpdateCheck(args []string, asJSON, ignoredOnly bool) {
+func resolveWorkspaceScope(args []string, startCwd string, all bool) (packFilter string, explicit bool) {
+	if all {
+		return "", false
+	}
+	return workspace.ResolveScope(args, startCwd)
+}
+
+func wsRunUpdateCheck(args []string, asJSON, ignoredOnly, all bool) {
 	root := workspace.ModpacksDir()
 	var targets []string
 	if ignoredOnly {
 		targets = ignoredPackSubdirs(root)
 	} else {
-		packFilter, _ := workspace.ResolveScope(args, llStartCwd)
+		packFilter, _ := resolveWorkspaceScope(args, llStartCwd, all)
 		targets, _ = workspace.CollectTargets(root, true, packFilter, false)
 	}
 	if len(targets) == 0 {
@@ -468,7 +476,8 @@ var wsRefreshCmd = &cobra.Command{
 	Short: "Run packwand refresh in every pack subdir",
 	Run: func(cmd *cobra.Command, args []string) {
 		llChdir()
-		packFilter, explicit := workspace.ResolveScope(args, llStartCwd)
+		all, _ := cmd.Flags().GetBool("all")
+		packFilter, explicit := resolveWorkspaceScope(args, llStartCwd, all)
 		dryRun, _ := cmd.Flags().GetBool("dry-run")
 		if dryRun {
 			targets, _ := workspace.CollectTargets(workspace.ModpacksDir(), false, packFilter, explicit)
