@@ -3,7 +3,7 @@
 	"package": "claritymod.creepereater.mixin",
 	"compatibilityLevel": "${mixin_compatibility}",
 	"mixins": [
-		"BrigadierExceptionsMixin",
+		"CommandErrorMixin",
 		"CrashReportMixin",
 		"MinecraftServerMixin",
 		"ServerPlayerMixin"
