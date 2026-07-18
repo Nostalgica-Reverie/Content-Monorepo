@@ -2,7 +2,6 @@
 
 ## Shared Mods
 
-- [Amecs (Fabric)]()
 - [Async Logger]()
 - [Bedrock Skins]()
 - [Bobby]()
@@ -26,8 +25,7 @@
 - [Legacy Nether: Extended]()
 - [Legacy4J]()
 - [Lithium (Fabric/NeoForge)]()
-- [No Chat Reports]()
-- [No Chat Restrictions]()
+- [No Prying Eyes]()
 - [Particle Core]()
 - [ScalableLux]()
 - [ServerCore]()

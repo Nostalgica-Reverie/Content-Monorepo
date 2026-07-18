@@ -2,7 +2,6 @@
 
 ## Client Mods
 
-- [Amecs](https://modrinth.com/mod/rcLriA4v)
 - [Animatium](https://modrinth.com/mod/zy0karK1)
 - [Async Logger](https://modrinth.com/mod/zvNzKfGF)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
