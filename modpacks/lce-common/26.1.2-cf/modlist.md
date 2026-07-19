@@ -23,6 +23,7 @@
 - [Gnetum]()
 - [ImmediatelyFast]()
 - [Immersive Optimization]()
+- [Jasione]()
 - [Legacy Nether: Extended]()
 - [Legacy4J]()
 - [Lithium (Fabric/NeoForge)]()

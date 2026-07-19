@@ -39,6 +39,7 @@
 - [Immersive Optimization]()
 - [Iris Shaders]()
 - [Ixeris]()
+- [Jasione]()
 - [KryptonReno's Fabric Patcher]()
 - [LambdaBetterGrass]()
 - [Language Reload]()

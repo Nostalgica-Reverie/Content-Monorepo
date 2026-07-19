@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-19T20:32:36Z",
+  "generated": "2026-07-19T21:21:39Z",
   "projects": [
     {
       "id": "SkyPixel",
@@ -98,7 +98,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/lce-common/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 33,
+          "mod_count": 34,
           "has_index": true,
           "has_pack": true
         },
@@ -106,7 +106,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/lce-common/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 39,
+          "mod_count": 40,
           "has_index": true,
           "has_pack": true
         }
@@ -387,7 +387,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/re-console-main/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 70,
+          "mod_count": 71,
           "has_index": true,
           "has_pack": true
         },
@@ -395,7 +395,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/re-console-main/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 86,
+          "mod_count": 87,
           "has_index": true,
           "has_pack": true
         },
@@ -682,7 +682,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/simply-legacy/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 44,
+          "mod_count": 45,
           "has_index": true,
           "has_pack": true
         },
@@ -690,7 +690,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/simply-legacy/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 48,
+          "mod_count": 49,
           "has_index": true,
           "has_pack": true
         }
@@ -822,8 +822,10 @@
       "role": "base",
       "auto_update": true,
       "modrinth_id": "vital",
+      "curseforge_id": "1123869",
       "platforms": {
-        "modrinth": "vital"
+        "modrinth": "vital",
+        "curseforge": "1123869"
       },
       "docs_path": "/modpacks/vital/",
       "subdirs": [
@@ -831,7 +833,7 @@
           "key": "26.1.2-cf",
           "path": "modpacks/vital/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 62,
+          "mod_count": 63,
           "has_index": true,
           "has_pack": true
         },
@@ -839,7 +841,7 @@
           "key": "26.1.2-mr",
           "path": "modpacks/vital/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 67,
+          "mod_count": 68,
           "has_index": true,
           "has_pack": true
         }

@@ -59,6 +59,7 @@
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
 - [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
+- [Jasione](https://modrinth.com/mod/qlDkBPij)
 - [KryptonReno's Fabric Patcher](https://modrinth.com/mod/yzkasIPx)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
 - [M.R.U](https://modrinth.com/mod/SNVQ2c0g)

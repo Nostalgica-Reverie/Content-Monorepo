@@ -37,6 +37,7 @@
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
 - [Global Packs](https://modrinth.com/mod/NRLPy2mk)
 - [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
+- [Jasione](https://modrinth.com/mod/qlDkBPij)
 - [KryptonReno's Fabric Patcher](https://modrinth.com/mod/yzkasIPx)
 - [LazyAI](https://modrinth.com/mod/qgWgCnzi)
 - [Legacy Nether: Extended](https://modrinth.com/mod/l54rfVmm)

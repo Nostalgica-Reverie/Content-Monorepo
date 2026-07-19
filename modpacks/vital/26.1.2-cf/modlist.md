@@ -32,6 +32,7 @@
 - [In-Game Account Switcher]()
 - [Iris Shaders]()
 - [Ixeris]()
+- [Jasione]()
 - [KryptonReno's Fabric Patcher]()
 - [LambDynamicLights]()
 - [LambdaBetterGrass]()

@@ -23,6 +23,7 @@
 - [Global Packs]()
 - [ImmediatelyFast]()
 - [Immersive Optimization]()
+- [Jasione]()
 - [KryptonReno's Fabric Patcher]()
 - [LazyAI]()
 - [Legacy Nether: Extended]()
