@@ -10,16 +10,16 @@ use packwand_instance::{
     FsInstanceRepository, InstanceError, InstanceRecord, InstanceRepository, InstanceSpec,
     MemoryLimits,
 };
-use packwand_minecraft::args::{has_unresolved_placeholder, resolve_launch_args, LaunchContext};
+use packwand_minecraft::args::{LaunchContext, has_unresolved_placeholder, resolve_launch_args};
 use packwand_minecraft::meta::InstallerProfile;
 use packwand_minecraft::model::VersionDoc;
 use packwand_minecraft::plan::{
-    build_asset_plan, build_library_downloads, build_version_plan, merge_plans, InstallLayout,
+    InstallLayout, build_asset_plan, build_library_downloads, build_version_plan, merge_plans,
 };
 use packwand_minecraft::{
     Host, InstallProgress, Installer, MetadataClient, MetadataEndpoints, UreqClient,
 };
-use packwand_runtime::{discover, select_compatible, DiscoveryConfig};
+use packwand_runtime::{DiscoveryConfig, discover, select_compatible};
 
 pub struct BootstrapRequest {
     pub root: PathBuf,

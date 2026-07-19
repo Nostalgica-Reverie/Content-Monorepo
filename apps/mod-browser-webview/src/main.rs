@@ -1,14 +1,15 @@
 use std::{
+    cell::RefCell,
     io::{self, BufRead, BufReader},
     path::PathBuf,
+    rc::Rc,
     sync::{Arc, Mutex, MutexGuard},
 };
 
-use anyhow::{bail, ensure, Context};
+use anyhow::{Context, bail, ensure};
 use closure::closure;
-use json::{object, JsonValue};
+use json::{JsonValue, object};
 use lazy_static::lazy_static;
-use rand::Rng;
 use regex::Regex;
 use wry::{
     application::{
@@ -151,7 +152,7 @@ fn create_confirm<T: Into<JsonValue>>(
     message: &str,
 ) -> wry::Result<()> {
     let mut cookie = ipc_cookie.lock().unwrap();
-    *cookie = rand::thread_rng().gen::<f64>();
+    *cookie = rand::random::<f64>();
     webview.evaluate_script(&format!(
         r#"window.ipc.postMessage(JSON.stringify({{...{},cookie:{},value:confirm({})}}))"#,
         json::stringify(ipc_data),
@@ -236,7 +237,7 @@ fn start() -> anyhow::Result<()> {
     let mut webcontext = WebContext::new(data_dir);
     let webview = WebViewBuilder::new(window)
 		.context("Failed to create webview")?
-		.with_html(&format!(
+		.with_html(format!(
 			"{}<script>window.location.href = {};</script>",
 			include_str!("loading.html"),
 			json::stringify(provider.file_page(&files[0].url, &files[0].id))
@@ -264,12 +265,12 @@ fn start() -> anyhow::Result<()> {
 				// Check for IPC cookie
 				if let Some(JsonValue::Number(num)) = obj.get("cookie") {
 					let num: f64 = (*num).into();
-					if (num - *ipc_cookie.lock().unwrap()).abs() < f64::EPSILON {
-						if let (Some(t), Some(uri), Some(JsonValue::Boolean(value))) = (obj.get("type"), obj.get("uri"), obj.get("value")) {
-							if t == "nonhttp" && *value {
-								_ = proxy.send_event(NavigationEvent::NonHTTPNavigationConfirmed(uri.to_string()));
-							}
-						}
+					if (num - *ipc_cookie.lock().unwrap()).abs() < f64::EPSILON
+					&& let (Some(t), Some(uri), Some(JsonValue::Boolean(value))) = (obj.get("type"), obj.get("uri"), obj.get("value"))
+					&& t == "nonhttp"
+					&& *value
+					{
+						_ = proxy.send_event(NavigationEvent::NonHTTPNavigationConfirmed(uri.to_string()));
 					}
 				}
 			}
@@ -279,7 +280,7 @@ fn start() -> anyhow::Result<()> {
         .build()
         .attach_os_ctx()
         .context("Failed to create webview")?;
-    let licenses_webview: Arc<Mutex<Option<WebView>>> = Arc::new(Mutex::new(None));
+    let licenses_webview: Rc<RefCell<Option<WebView>>> = Rc::new(RefCell::new(None));
 
     event_loop.run(move |event, event_loop, control_flow| {
         *control_flow = ControlFlow::Wait;
@@ -294,7 +295,7 @@ fn start() -> anyhow::Result<()> {
                 if window_id == main_window_id {
                     *control_flow = ControlFlow::Exit;
                 } else {
-                    *licenses_webview.lock().unwrap() = None;
+                    *licenses_webview.borrow_mut() = None;
                 }
                 Ok(())
             }
@@ -372,7 +373,7 @@ Please use the primary mouse button to open this link"#,
                 match menu_id {
                     id if id == licenses_menu_id => match show_licenses(event_loop) {
                         Ok(view) => {
-                            *licenses_webview.lock().unwrap() = Some(view);
+                            *licenses_webview.borrow_mut() = Some(view);
                             Ok(())
                         }
                         Err(err) => Err(err),

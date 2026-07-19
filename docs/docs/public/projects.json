@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-18T22:04:39Z",
+  "generated": "2026-07-19T16:06:59Z",
   "projects": [
     {
       "id": "SkyPixel",
@@ -692,12 +692,6 @@
           "mod_count": 48,
           "has_index": true,
           "has_pack": true
-        },
-        {
-          "key": "artifacts",
-          "path": "modpacks/simply-legacy/artifacts",
-          "has_index": false,
-          "has_pack": false
         }
       ]
     },
@@ -1444,6 +1438,197 @@
         {
           "key": "26.1.2",
           "path": "datapacks/legacy-nether-extended/26.1.2",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
+    },
+    {
+      "id": "claritymod",
+      "name": "Clarity Mod",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/claritymod",
+      "manifest_path": "mods/claritymod/manifest.json",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "GnCu0CQT",
+      "curseforge_id": "1615913",
+      "platforms": {
+        "modrinth": "GnCu0CQT",
+        "curseforge": "1615913"
+      },
+      "variants": [
+        {
+          "id": "1.21.1-neoforge",
+          "mc_version": "1.21.1",
+          "loader": "neoforge"
+        },
+        {
+          "id": "26.1.2-fabric",
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        }
+      ],
+      "subdirs": [
+        {
+          "key": ".gradle",
+          "path": "mods/claritymod/.gradle",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "artifacts",
+          "path": "mods/claritymod/artifacts",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "build",
+          "path": "mods/claritymod/build",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "gradle",
+          "path": "mods/claritymod/gradle",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "src",
+          "path": "mods/claritymod/src",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "versions",
+          "path": "mods/claritymod/versions",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
+    },
+    {
+      "id": "modaudit",
+      "name": "Mod Audit",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/modaudit",
+      "manifest_path": "mods/modaudit/manifest.json",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "qW56EyUi",
+      "curseforge_id": "1615941",
+      "gitea_id": "Reverie-Projects/modaudit",
+      "platforms": {
+        "modrinth": "qW56EyUi",
+        "curseforge": "1615941",
+        "gitea": "Reverie-Projects/modaudit"
+      },
+      "variants": [
+        {
+          "id": "1.21.1-neoforge",
+          "mc_version": "1.21.1",
+          "loader": "neoforge"
+        },
+        {
+          "id": "26.1.2-fabric",
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        }
+      ],
+      "subdirs": [
+        {
+          "key": ".gradle",
+          "path": "mods/modaudit/.gradle",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "gradle",
+          "path": "mods/modaudit/gradle",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "src",
+          "path": "mods/modaudit/src",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "versions",
+          "path": "mods/modaudit/versions",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
+    },
+    {
+      "id": "packstats",
+      "name": "PackStats",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/packstats",
+      "manifest_path": "mods/packstats/manifest.json",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "MEDfJmrm",
+      "curseforge_id": "1615937",
+      "platforms": {
+        "modrinth": "MEDfJmrm",
+        "curseforge": "1615937"
+      },
+      "variants": [
+        {
+          "id": "1.21.1-neoforge",
+          "mc_version": "1.21.1",
+          "loader": "neoforge"
+        },
+        {
+          "id": "26.1.2-fabric",
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        }
+      ],
+      "subdirs": [
+        {
+          "key": ".gradle",
+          "path": "mods/packstats/.gradle",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "build",
+          "path": "mods/packstats/build",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "gradle",
+          "path": "mods/packstats/gradle",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "src",
+          "path": "mods/packstats/src",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "versions",
+          "path": "mods/packstats/versions",
           "has_index": false,
           "has_pack": false
         }

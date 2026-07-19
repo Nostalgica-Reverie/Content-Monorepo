@@ -36,12 +36,13 @@ fn create_get_roundtrip() {
     assert_eq!(created.schema_version, SCHEMA_VERSION);
     let loaded = repo.get("alpha").unwrap();
     assert_eq!(created, loaded);
-    assert!(root
-        .path()
-        .join("instances")
-        .join("alpha")
-        .join("instance.json")
-        .is_file());
+    assert!(
+        root.path()
+            .join("instances")
+            .join("alpha")
+            .join("instance.json")
+            .is_file()
+    );
 }
 
 #[test]

@@ -113,7 +113,9 @@ pub struct InstancePaths {
 
 #[derive(Debug, thiserror::Error)]
 pub enum InstanceError {
-    #[error("instance id {0:?} is invalid: ids must be non-empty and use only ASCII letters, digits, '.', '-' and '_'")]
+    #[error(
+        "instance id {0:?} is invalid: ids must be non-empty and use only ASCII letters, digits, '.', '-' and '_'"
+    )]
     InvalidId(String),
     #[error("instance {0:?} already exists")]
     AlreadyExists(String),
@@ -124,7 +126,9 @@ pub enum InstanceError {
         path: PathBuf,
         source: serde_json::Error,
     },
-    #[error("instance record {path} has schema version {found}, but this build supports up to {supported}")]
+    #[error(
+        "instance record {path} has schema version {found}, but this build supports up to {supported}"
+    )]
     UnsupportedSchemaVersion {
         path: PathBuf,
         found: u32,
@@ -275,7 +279,7 @@ impl InstanceRepository for FsInstanceRepository {
         let bytes = match fs::read(&path) {
             Ok(bytes) => bytes,
             Err(e) if e.kind() == io::ErrorKind::NotFound => {
-                return Err(InstanceError::NotFound(id.to_string()))
+                return Err(InstanceError::NotFound(id.to_string()));
             }
             Err(source) => return Err(InstanceError::Io { path, source }),
         };

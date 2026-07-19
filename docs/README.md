@@ -10,14 +10,14 @@ The Lasting Legacy Documentation is powered by [VitePress](https://vitepress.dev
 
 To run the docs on your own machine for contribution purposes:
 
-- Install [Node.js](https://nodejs.org/en/download) version 18 or higher
-- Install VitePress through NPM in a terminal
+- Install [Bun](https://bun.sh/) 1.3.14
+- Install the monorepo dependencies from the repository root
 ```
-npm add -D vitepress@next
+bun install
 ```
 - Start the local development server
 ```
-npm run docs:dev
+bun run --cwd docs docs:dev
 ```
 
 ## License

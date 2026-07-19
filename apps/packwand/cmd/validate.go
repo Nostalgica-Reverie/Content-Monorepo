@@ -7,16 +7,19 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
+	"sync"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/clistyle"
+	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/core"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/manifest"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/workspace"
 	"github.com/spf13/cobra"
 )
 
 func init() {
-	llValidateCmd.Flags().Bool("all", false, "Discover and validate every manifest under modpacks/, datapacks/, resourcepacks/")
+	llValidateCmd.Flags().Bool("all", false, "Discover and validate every manifest under mods/, modpacks/, datapacks/, resourcepacks/")
 	llValidateCmd.GroupID = GroupInfo
 	rootCmd.AddCommand(llValidateCmd)
 
@@ -51,19 +54,87 @@ var llValidateCmd = &cobra.Command{
 			targets = args
 		}
 
-		for _, manifestPath := range targets {
-			validateManifestFile(manifestPath)
+		if !all {
+			for _, manifestPath := range targets {
+				if err := validateManifestFileErr(manifestPath); err != nil {
+					llFail(err.Error())
+				}
+			}
+			return
 		}
 
-		if all {
-			fmt.Printf(clistyle.IconOK+" all %d manifest(s) OK\n", len(targets))
+		// --all runs on every CI invocation: validate manifests in parallel via
+		// the workspace scheduler, serialising within a pack subdir but fanning
+		// out across packs. All failures are collected and reported, not just
+		// the first.
+		ctx := cmd.Context()
+		sched := workspace.NewScheduler(core.MaxConcurrent())
+		var mu sync.Mutex
+		failures := make(map[string]string, len(targets))
+		for _, manifestPath := range targets {
+			if ctx != nil && ctx.Err() != nil {
+				break
+			}
+			manifestPath := manifestPath
+			sched.Submit(workspace.Task{
+				Name:  manifestPath,
+				Needs: []workspace.Resource{workspace.Resource("subdir:" + filepath.Dir(manifestPath))},
+				Run: func() error {
+					if err := validateManifestFileErr(manifestPath); err != nil {
+						mu.Lock()
+						failures[manifestPath] = err.Error()
+						mu.Unlock()
+					}
+					return nil
+				},
+			})
 		}
+		sched.Close()
+		sched.Wait()
+
+		if len(failures) > 0 {
+			paths := make([]string, 0, len(failures))
+			for p := range failures {
+				paths = append(paths, p)
+			}
+			sort.Strings(paths)
+			for _, p := range paths {
+				llErrFile(p, "%s", failures[p])
+			}
+			llFail(fmt.Sprintf("%d of %d manifest(s) failed validation", len(failures), len(targets)))
+		}
+		fmt.Printf(clistyle.IconOK+" all %d manifest(s) OK\n", len(targets))
 	},
+}
+
+// validateFailure is the panic payload vFail uses to abort a single manifest's
+// validation without terminating the process, so `validate --all` can keep
+// going and report every broken manifest.
+type validateFailure struct{ msg string }
+
+func vFail(msg string) {
+	panic(validateFailure{msg})
+}
+
+// validateManifestFileErr validates one manifest, converting vFail aborts into
+// a returned error.
+func validateManifestFileErr(manifestPath string) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			if f, ok := r.(validateFailure); ok {
+				err = fmt.Errorf("%s", f.msg)
+				return
+			}
+			panic(r)
+		}
+	}()
+	validateManifestFile(manifestPath)
+	return nil
 }
 
 func discoverManifestPaths() []string {
 	var found []string
-	for _, root := range []string{workspace.ModpacksDir(), "datapacks", "resourcepacks"} {
+	for _, root := range []string{"mods", workspace.ModpacksDir(), "datapacks", "resourcepacks"} {
 		entries, err := os.ReadDir(root)
 		if err != nil {
 			continue
@@ -86,13 +157,13 @@ func discoverManifestPaths() []string {
 func validateManifestFile(manifestPath string) {
 	filename := filepath.Base(manifestPath)
 	if filename != "manifest.json" && filename != "manifest-experimental.json" {
-		llFail(fmt.Sprintf("unknown manifest filename: %s", filename))
+		vFail(fmt.Sprintf("unknown manifest filename: %s", filename))
 	}
 	isExperimental := filename == "manifest-experimental.json"
 
 	m, err := manifest.Read(manifestPath)
 	if err != nil {
-		llFail(fmt.Sprintf("failed to parse %s: %v", manifestPath, err))
+		vFail(fmt.Sprintf("failed to parse %s: %v", manifestPath, err))
 	}
 	packDir := filepath.Dir(manifestPath)
 
@@ -103,42 +174,45 @@ func validateManifestFile(manifestPath string) {
 		{"release_type", m.ReleaseType},
 	} {
 		if field.value == "" {
-			llFail(fmt.Sprintf("manifest missing required field: %s", field.name))
+			vFail(fmt.Sprintf("manifest missing required field: %s", field.name))
 		}
 	}
 	if m.Role.IsZero() {
-		llFail("manifest missing required field: role")
+		vFail("manifest missing required field: role")
 	}
 
-	if m.Type != "modpack" && m.Type != "datapack" && m.Type != "resourcepack" {
-		llFail(fmt.Sprintf("invalid 'type': %s", m.Type))
+	if m.Type != "mod" && m.Type != "modpack" && m.Type != "datapack" && m.Type != "resourcepack" {
+		vFail(fmt.Sprintf("invalid 'type': %s", m.Type))
 	}
 
 	variants := m.Variants
 
 	if m.Type == "modpack" && len(variants) == 0 && strings.TrimSpace(m.Loader) == "" {
-		llFail("modpack manifests must declare a 'loader'")
+		vFail("modpack manifests must declare a 'loader'")
 	}
 
-	if m.Type == "modpack" && len(variants) > 0 {
+	if (m.Type == "mod" || m.Type == "modpack") && len(variants) > 0 {
 		validateVariants(m, variants)
+	}
+	if m.Type == "mod" && len(variants) == 0 {
+		vFail("mod manifests must declare at least one Stonecutter variant")
 	}
 
 	hasMcVersion := m.MCVersion != nil
 	hasVariants := len(m.Variants) > 0
 	if hasMcVersion && hasVariants {
-		llFail("manifest declares both 'mc_version' and 'variants' — use exactly one")
+		vFail("manifest declares both 'mc_version' and 'variants' — use exactly one")
 	}
 	if !hasMcVersion && !hasVariants {
-		llFail("manifest must declare either 'mc_version' or 'variants'")
+		vFail("manifest must declare either 'mc_version' or 'variants'")
 	}
 
 	if !isExperimental && m.Version == "" {
-		llFail("manifest missing required field: version")
+		vFail("manifest missing required field: version")
 	}
 
 	if m.ReleaseType != "release" && m.ReleaseType != "beta" && m.ReleaseType != "alpha" {
-		llFail(fmt.Sprintf("invalid 'release_type': %s", m.ReleaseType))
+		vFail(fmt.Sprintf("invalid 'release_type': %s", m.ReleaseType))
 	}
 	if isExperimental && m.ReleaseType != "alpha" {
 		llWarn("experimental manifest uses release_type='%s'; convention is 'alpha'", m.ReleaseType)
@@ -150,28 +224,31 @@ func validateManifestFile(manifestPath string) {
 	hasGitea := strings.TrimSpace(m.GiteaID) != ""
 	hasGL := strings.TrimSpace(m.GitLabID) != ""
 	if !hasMr && !hasCf && !hasGH && !hasGitea && !hasGL {
-		llFail("manifest must set at least one platform id (modrinth_id, curseforge_id, github_id, gitea_id, or gitlab_id)")
+		vFail("manifest must set at least one platform id (modrinth_id, curseforge_id, github_id, gitea_id, or gitlab_id)")
 	}
 
 	validLifecycles := map[string]bool{"": true, "active": true, "maintenance": true, "archived": true, "eol": true}
 	if !validLifecycles[m.Lifecycle] {
-		llFail(fmt.Sprintf("invalid 'lifecycle': %q (valid: active, maintenance, archived, eol)", m.Lifecycle))
+		vFail(fmt.Sprintf("invalid 'lifecycle': %q (valid: active, maintenance, archived, eol)", m.Lifecycle))
 	}
 	if m.Lifecycle == "archived" || m.Lifecycle == "eol" {
 		llWarn("%s is lifecycle=%s; excluded from workspace auto-update", m.ID, m.Lifecycle)
 	}
 
 	pb, roleLabel := validateRole(m, isExperimental)
+	if m.Type == "mod" && m.Role.Label() != "none" {
+		vFail("mod manifests must use role 'none'; performance-base relationships apply only to modpacks")
+	}
 	if pb != nil {
 		validatePerformanceBase(m, pb, packDir)
 	}
 
 	if m.SharedAssets != "" {
 		if m.SharedAssets == m.ID {
-			llFail(fmt.Sprintf("'shared_assets' cannot reference the pack itself ('%s')", m.ID))
+			vFail(fmt.Sprintf("'shared_assets' cannot reference the pack itself ('%s')", m.ID))
 		}
 		if loadReferencedManifest(m.SharedAssets) == nil {
-			llFail(fmt.Sprintf("'shared_assets' references unknown pack '%s'", m.SharedAssets))
+			vFail(fmt.Sprintf("'shared_assets' references unknown pack '%s'", m.SharedAssets))
 		}
 	}
 
@@ -181,6 +258,8 @@ func validateManifestFile(manifestPath string) {
 
 	if m.Type == "modpack" {
 		validateModpackSubdirs(m, packDir, variants, hasMcVersion, hasMr, hasCf, hasGH || hasGitea || hasGL)
+	} else if m.Type == "mod" {
+		validateModStructure(packDir, variants)
 	} else {
 		validateZipPackStructure(packDir, m.Type)
 	}
@@ -236,7 +315,7 @@ func validateVariants(m *manifest.Manifest, variants []manifest.Variant) {
 		}
 		for _, v := range list {
 			if strings.TrimSpace(v.ID) == "" {
-				llFail(fmt.Sprintf("variant for mc_version '%s' shares that version with another variant and must declare a distinct 'id'", mc))
+				vFail(fmt.Sprintf("variant for mc_version '%s' shares that version with another variant and must declare a distinct 'id'", mc))
 			}
 		}
 		var ids, loaders []string
@@ -247,10 +326,10 @@ func validateVariants(m *manifest.Manifest, variants []manifest.Variant) {
 			}
 		}
 		if dupes := duplicateValues(ids); len(dupes) > 0 {
-			llFail(fmt.Sprintf("duplicate variant id(s) for mc_version '%s': %s", mc, strings.Join(dupes, ", ")))
+			vFail(fmt.Sprintf("duplicate variant id(s) for mc_version '%s': %s", mc, strings.Join(dupes, ", ")))
 		}
 		if dupes := duplicateValues(loaders); len(dupes) > 0 {
-			llFail(fmt.Sprintf("two variants share both mc_version '%s' and loader '%s'", mc, strings.Join(dupes, ", ")))
+			vFail(fmt.Sprintf("two variants share both mc_version '%s' and loader '%s'", mc, strings.Join(dupes, ", ")))
 		}
 	}
 
@@ -264,7 +343,7 @@ func validateVariants(m *manifest.Manifest, variants []manifest.Variant) {
 			if key == "" {
 				key = v.MCVersion
 			}
-			llFail(fmt.Sprintf("variant '%s' has no loader: set a variant 'loader' or a pack-level 'loader'", key))
+			vFail(fmt.Sprintf("variant '%s' has no loader: set a variant 'loader' or a pack-level 'loader'", key))
 		}
 	}
 }
@@ -277,52 +356,52 @@ func validateRole(m *manifest.Manifest, isExperimental bool) (*manifest.Performa
 	switch label {
 	case "none", "base":
 		if isExperimental && label == "base" {
-			llFail("experimental manifests cannot have role 'base' (bases must be stable)")
+			vFail("experimental manifests cannot have role 'base' (bases must be stable)")
 		}
 		return nil, label
 	default:
-		llFail(fmt.Sprintf("invalid 'role' string '%s' (expected 'none', 'base', or a performance_base object)", label))
+		vFail(fmt.Sprintf("invalid 'role' string '%s' (expected 'none', 'base', or a performance_base object)", label))
 		return nil, ""
 	}
 }
 
 func validatePerformanceBase(m *manifest.Manifest, pb *manifest.PerformanceBase, packDir string) {
 	if pb.Pack == "" || len(pb.Mappings) == 0 {
-		llFail("role.performance_base must have a 'pack' and a non-empty 'mappings' array")
+		vFail("role.performance_base must have a 'pack' and a non-empty 'mappings' array")
 	}
 	if pb.Pack == m.ID {
-		llFail(fmt.Sprintf("performance_base.pack cannot reference the pack itself ('%s')", m.ID))
+		vFail(fmt.Sprintf("performance_base.pack cannot reference the pack itself ('%s')", m.ID))
 	}
 
 	base := loadReferencedManifest(pb.Pack)
 	if base == nil {
-		llFail(fmt.Sprintf("performance_base.pack references unknown pack '%s'", pb.Pack))
+		vFail(fmt.Sprintf("performance_base.pack references unknown pack '%s'", pb.Pack))
 	}
 	if !base.Role.IsBase() {
-		llFail(fmt.Sprintf("performance_base.pack references '%s', but that pack's role is not 'base'", pb.Pack))
+		vFail(fmt.Sprintf("performance_base.pack references '%s', but that pack's role is not 'base'", pb.Pack))
 	}
 
 	basePackDir := filepath.Join(workspace.ModpacksDir(), pb.Pack)
 	for _, mp := range pb.Mappings {
 		if mp.Source == "" || mp.Target == "" {
-			llFail("each performance_base mapping needs both 'source' and 'target'")
+			vFail("each performance_base mapping needs both 'source' and 'target'")
 		}
 		sSuffix := llPlatformSuffix(mp.Source)
 		tSuffix := llPlatformSuffix(mp.Target)
 		if sSuffix == "" {
-			llFail(fmt.Sprintf("mapping source '%s' must end in '-mr' or '-cf'", mp.Source))
+			vFail(fmt.Sprintf("mapping source '%s' must end in '-mr' or '-cf'", mp.Source))
 		}
 		if tSuffix == "" {
-			llFail(fmt.Sprintf("mapping target '%s' must end in '-mr' or '-cf'", mp.Target))
+			vFail(fmt.Sprintf("mapping target '%s' must end in '-mr' or '-cf'", mp.Target))
 		}
 		if sSuffix != tSuffix {
-			llFail(fmt.Sprintf("FORBIDDEN cross-platform mapping: source '%s' (%s) → target '%s' (%s). MR/CF must never cross (license risk).", mp.Source, sSuffix, mp.Target, tSuffix))
+			vFail(fmt.Sprintf("FORBIDDEN cross-platform mapping: source '%s' (%s) → target '%s' (%s). MR/CF must never cross (license risk).", mp.Source, sSuffix, mp.Target, tSuffix))
 		}
 		if !dirExists(filepath.Join(basePackDir, mp.Source)) {
-			llFail(fmt.Sprintf("mapping source '%s' does not exist in base pack '%s'", mp.Source, pb.Pack))
+			vFail(fmt.Sprintf("mapping source '%s' does not exist in base pack '%s'", mp.Source, pb.Pack))
 		}
 		if !dirExists(filepath.Join(packDir, mp.Target)) {
-			llFail(fmt.Sprintf("mapping target '%s' does not exist in this pack", mp.Target))
+			vFail(fmt.Sprintf("mapping target '%s' does not exist in this pack", mp.Target))
 		}
 	}
 }
@@ -331,11 +410,11 @@ func validateChangelog(packDir string) {
 	changelogPath := filepath.Join(packDir, "changelog.md")
 	data, err := os.ReadFile(changelogPath)
 	if err != nil {
-		llFail(fmt.Sprintf("changelog.md is missing at %s", changelogPath))
+		vFail(fmt.Sprintf("changelog.md is missing at %s", changelogPath))
 	}
 	content := strings.TrimSpace(string(data))
 	if content == "" {
-		llFail(fmt.Sprintf("changelog.md is empty at %s", changelogPath))
+		vFail(fmt.Sprintf("changelog.md is empty at %s", changelogPath))
 	}
 	for _, line := range strings.Split(content, "\n") {
 		trimmed := strings.TrimSpace(line)
@@ -343,7 +422,7 @@ func validateChangelog(packDir string) {
 			return
 		}
 	}
-	llFail(fmt.Sprintf("changelog.md has headers but no content at %s", changelogPath))
+	vFail(fmt.Sprintf("changelog.md has headers but no content at %s", changelogPath))
 }
 
 func validateModpackSubdirs(m *manifest.Manifest, packDir string, variants []manifest.Variant, hasMcVersion, hasMr, hasCf, hasForge bool) {
@@ -356,10 +435,10 @@ func validateModpackSubdirs(m *manifest.Manifest, packDir string, variants []man
 		mr := filepath.Join(packDir, mc+"-mr")
 		cf := filepath.Join(packDir, mc+"-cf")
 		if hasMr && !dirExists(mr) {
-			llFail(fmt.Sprintf("modrinth_id is set but %s does not exist", mr))
+			vFail(fmt.Sprintf("modrinth_id is set but %s does not exist", mr))
 		}
 		if hasCf && !dirExists(cf) {
-			llFail(fmt.Sprintf("curseforge_id is set but %s does not exist", cf))
+			vFail(fmt.Sprintf("curseforge_id is set but %s does not exist", cf))
 		}
 		if dirExists(mr) && !hasMr {
 			llWarn("%s exists but modrinth_id is not set", mr)
@@ -380,7 +459,7 @@ func validateModpackSubdirs(m *manifest.Manifest, packDir string, variants []man
 		mrPresent := dirExists(mr)
 		cfPresent := dirExists(cf)
 		if hasMr && !mrPresent && !cfPresent {
-			llFail(fmt.Sprintf("variant %s: has neither %s nor %s", key, filepath.Base(mr), filepath.Base(cf)))
+			vFail(fmt.Sprintf("variant %s: has neither %s nor %s", key, filepath.Base(mr), filepath.Base(cf)))
 		}
 		if hasMr && !mrPresent {
 			llWarn("variant %s: %s absent — this variant will NOT publish to Modrinth", key, mr)
@@ -391,10 +470,43 @@ func validateModpackSubdirs(m *manifest.Manifest, packDir string, variants []man
 	}
 }
 
+var gradleProjectRe = regexp.MustCompile(`^[A-Za-z0-9._-]+$`)
+
+func validateModStructure(packDir string, variants []manifest.Variant) {
+	for _, file := range []string{"settings.gradle", "gradlew", "gradlew.bat"} {
+		if !fileExists(filepath.Join(packDir, file)) {
+			vFail(fmt.Sprintf("mod source is missing %s", filepath.Join(packDir, file)))
+		}
+	}
+
+	seen := map[string]bool{}
+	for _, variant := range variants {
+		key := variant.ID
+		if key == "" {
+			key = variant.MCVersion
+		}
+		project := strings.TrimSpace(variant.GradleProject)
+		if project == "" {
+			vFail(fmt.Sprintf("mod variant '%s' is missing gradle_project", key))
+		}
+		if !gradleProjectRe.MatchString(project) {
+			vFail(fmt.Sprintf("mod variant '%s' has invalid gradle_project %q", key, project))
+		}
+		if seen[project] {
+			vFail(fmt.Sprintf("multiple mod variants use gradle_project %q", project))
+		}
+		seen[project] = true
+		projectDir := filepath.Join(packDir, "versions", project)
+		if !dirExists(projectDir) {
+			vFail(fmt.Sprintf("mod variant '%s' references missing Stonecutter project directory %s", key, projectDir))
+		}
+	}
+}
+
 func validateZipPackStructure(packDir, packType string) {
 	entries, err := os.ReadDir(packDir)
 	if err != nil {
-		llFail(fmt.Sprintf("failed to read %s: %v", packDir, err))
+		vFail(fmt.Sprintf("failed to read %s: %v", packDir, err))
 	}
 	var versionDirs []string
 	for _, entry := range entries {
@@ -404,10 +516,10 @@ func validateZipPackStructure(packDir, packType string) {
 	}
 	base := filepath.Base(packDir)
 	if len(versionDirs) == 0 {
-		llFail(fmt.Sprintf("%s '%s' has no version directory", packType, base))
+		vFail(fmt.Sprintf("%s '%s' has no version directory", packType, base))
 	}
 	if len(versionDirs) > 1 {
-		llFail(fmt.Sprintf("%s '%s' must have exactly one version directory, found %d: %s", packType, base, len(versionDirs), strings.Join(versionDirs, ", ")))
+		vFail(fmt.Sprintf("%s '%s' must have exactly one version directory, found %d: %s", packType, base, len(versionDirs), strings.Join(versionDirs, ", ")))
 	}
 	versionDir := filepath.Join(packDir, versionDirs[0])
 	if !fileExists(filepath.Join(versionDir, "pack.mcmeta")) {
@@ -422,6 +534,9 @@ func validateManifestAutomation(manifestPath string, m *manifest.Manifest, packD
 	if auto == nil {
 		return
 	}
+	if m.Type == "mod" && (auto.SyncOnBuild || len(auto.SyncVariants) > 0) {
+		vFail(fmt.Sprintf("%s: mods cannot configure automation.sync_on_build or automation.sync_variants", manifestPath))
+	}
 	for sub := range auto.Freeze {
 		if !dirExists(filepath.Join(packDir, sub)) {
 			llWarn("%s: automation.freeze references subdir '%s' which does not exist", manifestPath, sub)
@@ -429,19 +544,29 @@ func validateManifestAutomation(manifestPath string, m *manifest.Manifest, packD
 	}
 	if auto.FullAuto != nil && auto.FullAuto.Enabled {
 		if m.Lifecycle == "archived" || m.Lifecycle == "eol" {
-			llFail(fmt.Sprintf("%s: automation.full_auto.enabled is true but lifecycle is %q — full automation cannot run on an archived/eol pack", manifestPath, m.Lifecycle))
+			vFail(fmt.Sprintf("%s: automation.full_auto.enabled is true but lifecycle is %q — full automation cannot run on an archived/eol pack", manifestPath, m.Lifecycle))
 		}
 		if !calVerRe.MatchString(m.Version) {
-			llFail(fmt.Sprintf("%s: automation.full_auto.enabled requires a CalVer 'version' (e.g. '26.06' or '26.06.1'), got %q", manifestPath, m.Version))
+			vFail(fmt.Sprintf("%s: automation.full_auto.enabled requires a CalVer 'version' (e.g. '26.06' or '26.06.1'), got %q", manifestPath, m.Version))
 		}
 	}
 }
 
+// referencedManifests memoizes loadReferencedManifest: a shared base pack's
+// manifest is referenced by many consumers in a single `validate --all` run,
+// and re-parsing it per reference is wasted I/O. Goroutine-safe.
+var referencedManifests sync.Map // packID -> *manifest.Manifest (nil-able)
+
 func loadReferencedManifest(packID string) *manifest.Manifest {
+	if cached, ok := referencedManifests.Load(packID); ok {
+		m, _ := cached.(*manifest.Manifest)
+		return m
+	}
 	m, err := manifest.Read(filepath.Join(workspace.ModpacksDir(), packID, "manifest.json"))
 	if err != nil {
-		return nil
+		m = nil
 	}
+	referencedManifests.Store(packID, m)
 	return m
 }
 
@@ -566,7 +691,7 @@ var llDoctorCmd = &cobra.Command{
 		}
 
 		total, broken := 0, 0
-		for _, cat := range []string{"modpacks", "datapacks", "resourcepacks"} {
+		for _, cat := range []string{"mods", "modpacks", "datapacks", "resourcepacks"} {
 			dir := filepath.Join(root, cat)
 			entries, err := os.ReadDir(dir)
 			if err != nil {

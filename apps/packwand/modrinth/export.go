@@ -22,33 +22,28 @@ var exportCmd = &cobra.Command{
 	Use:   "export",
 	Short: "Export the current modpack into a .mrpack for Modrinth",
 	Args:  cobra.NoArgs,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("Loading modpack...")
 		pack, err := core.LoadPack()
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			return err
 		}
 		index, err := pack.LoadIndex()
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			return err
 		}
 		// Do a refresh to ensure files are up to date
 		if _, err = index.Refresh(); err != nil {
-			fmt.Println(err)
-			return
+			return err
 		}
-		if err = core.CommitChanges(&index, &pack); err != nil {
-			fmt.Println(err)
-			return
+		if err = index.Write(); err != nil {
+			return err
 		}
 
 		fmt.Println("Reading external files...")
 		mods, err := index.LoadAllMods()
 		if err != nil {
-			fmt.Printf("Error reading file: %v\n", err)
-			os.Exit(1)
+			return fmt.Errorf("error reading file: %w", err)
 		}
 
 		fileName := viper.GetString("modrinth.export.output")
@@ -57,16 +52,14 @@ var exportCmd = &cobra.Command{
 		}
 		expFile, err := os.Create(fileName)
 		if err != nil {
-			fmt.Printf("Failed to create zip: %s\n", err.Error())
-			os.Exit(1)
+			return fmt.Errorf("failed to create zip: %w", err)
 		}
 		exp := zip.NewWriter(expFile)
 
 		// Add an overrides folder even if there are no files to go in it
 		_, err = exp.Create("overrides/")
 		if err != nil {
-			fmt.Printf("Failed to add overrides folder: %s\n", err.Error())
-			os.Exit(1)
+			return fmt.Errorf("failed to add overrides folder: %w", err)
 		}
 
 		fmt.Printf("Retrieving %v external files...\n", len(mods))
@@ -82,8 +75,7 @@ var exportCmd = &cobra.Command{
 
 		session, err := core.CreateDownloadSession(mods, []string{"sha1", "sha512", "length-bytes"})
 		if err != nil {
-			fmt.Printf("Error retrieving external files: %v\n", err)
-			os.Exit(1)
+			return fmt.Errorf("error retrieving external files: %w", err)
 		}
 
 		cmdshared.ListManualDownloads(session)
@@ -111,7 +103,7 @@ var exportCmd = &cobra.Command{
 				hashes["sha512"] = dl.Hashes["sha512"]
 				fileSize, err := strconv.ParseUint(dl.Hashes["length-bytes"], 10, 64)
 				if err != nil {
-					panic(err)
+					return fmt.Errorf("invalid length-bytes value for %s: %w", dl.Mod.Name, err)
 				}
 
 				// Create env options based on configured optional/side
@@ -169,8 +161,7 @@ var exportCmd = &cobra.Command{
 
 		err = session.SaveIndex()
 		if err != nil {
-			fmt.Printf("Error saving cache index: %v\n", err)
-			os.Exit(1)
+			return fmt.Errorf("error saving cache index: %w", err)
 		}
 
 		dependencies := make(map[string]string)
@@ -178,8 +169,7 @@ var exportCmd = &cobra.Command{
 		if err != nil {
 			_ = exp.Close()
 			_ = expFile.Close()
-			fmt.Println("Error creating manifest: " + err.Error())
-			os.Exit(1)
+			return fmt.Errorf("error creating manifest: %w", err)
 		}
 		if quiltVersion, ok := pack.Versions["quilt"]; ok {
 			dependencies["quilt-loader"] = quiltVersion
@@ -209,8 +199,7 @@ var exportCmd = &cobra.Command{
 		if err != nil {
 			_ = exp.Close()
 			_ = expFile.Close()
-			fmt.Println("Error creating manifest: " + err.Error())
-			os.Exit(1)
+			return fmt.Errorf("error creating manifest: %w", err)
 		}
 
 		w := json.NewEncoder(manifestFile)
@@ -219,24 +208,22 @@ var exportCmd = &cobra.Command{
 		if err != nil {
 			_ = exp.Close()
 			_ = expFile.Close()
-			fmt.Println("Error writing manifest: " + err.Error())
-			os.Exit(1)
+			return fmt.Errorf("error writing manifest: %w", err)
 		}
 
 		cmdshared.AddNonMetafileOverrides(&index, exp)
 
 		err = exp.Close()
 		if err != nil {
-			fmt.Println("Error writing export file: " + err.Error())
-			os.Exit(1)
+			return fmt.Errorf("error writing export file: %w", err)
 		}
 		err = expFile.Close()
 		if err != nil {
-			fmt.Println("Error writing export file: " + err.Error())
-			os.Exit(1)
+			return fmt.Errorf("error writing export file: %w", err)
 		}
 
 		fmt.Println("Modpack exported to " + fileName)
+		return nil
 	},
 }
 

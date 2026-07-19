@@ -15,7 +15,7 @@ type ghApiClient struct {
 	httpClient *http.Client
 }
 
-var ghDefaultClient = ghApiClient{&http.Client{}}
+var ghDefaultClient = ghApiClient{core.NewClient()}
 
 func (c *ghApiClient) makeGet(url string) (*http.Response, error) {
 	ghApiToken := viper.GetString("github.token")

@@ -9,7 +9,7 @@
 // this script resolves any markdown link matching one of them against that
 // site's built dist/ output.
 //
-// Run after `task docs-build` (or `npm run docs:build` in each site) has
+// Run after `just docs-build` (or `bun run docs:build` in each site) has
 // produced dist/ for all three sites - this script only reads already-built
 // output, it does not build anything itself.
 import { readdir, readFile, stat } from "node:fs/promises";
@@ -93,7 +93,7 @@ async function main() {
   if (distMissing.length > 0) {
     console.warn(
       `Skipping cross-site link check: no built dist/ for ${distMissing.join(", ")}. ` +
-        "Run `task docs-build` (or each site's `npm run docs:build`) first.",
+        "Run `just docs-build` (or each site's `bun run docs:build`) first.",
     );
     process.exit(0);
   }

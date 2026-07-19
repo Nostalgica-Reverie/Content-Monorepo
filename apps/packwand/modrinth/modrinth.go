@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"net/http"
 	"net/url"
 	"regexp"
 	"slices"
@@ -23,7 +22,7 @@ var modrinthCmd = &cobra.Command{
 	Short:   "Manage modrinth-based mods",
 }
 
-var mrDefaultClient = modrinthApi.NewClient(&http.Client{})
+var mrDefaultClient = modrinthApi.NewClient(core.NewClient())
 
 func init() {
 	cmd.AddToGroup(modrinthCmd, cmd.GroupPackManagement)

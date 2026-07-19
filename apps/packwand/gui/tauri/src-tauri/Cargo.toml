@@ -5,7 +5,7 @@ description = "Native desktop shell for the Packwand GUI"
 authors = ["Lasting Legacy"]
 license = "AGPL-3.0-or-later"
 repository = "https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo"
-edition = "2021"
+edition = "2024"
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }

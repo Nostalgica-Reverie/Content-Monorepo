@@ -15,6 +15,3 @@ jobs:
     with:
       verb: workspace update
       commit-message: 'actions: auto-update'
-    secrets:
-      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
-      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}

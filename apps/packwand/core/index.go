@@ -1,6 +1,7 @@
 package core
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -29,6 +30,16 @@ type Index struct {
 type indexTomlRepresentation struct {
 	HashFormat string                       `toml:"hash-format"`
 	Files      indexFilesTomlRepresentation `toml:"files"`
+}
+
+// NewIndex returns an empty generated index rooted at indexFile.
+func NewIndex(indexFile string) Index {
+	return Index{
+		HashFormat: DefaultHashFormat,
+		Files:      IndexFiles{},
+		indexFile:  indexFile,
+		packRoot:   filepath.Dir(indexFile),
+	}
 }
 
 // LoadIndex attempts to load the index file from a path
@@ -150,7 +161,9 @@ var ignoreDefaults = []string{
 func readGitignore(path string) (*gitignore.GitIgnore, bool) {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		// TODO: check for read errors (and present them)
+		if !errors.Is(err, fs.ErrNotExist) {
+			fmt.Fprintf(os.Stderr, "warning: could not read %s (%v); using default ignore rules\n", path, err)
+		}
 		return gitignore.CompileIgnoreLines(ignoreDefaults...), false
 	}
 

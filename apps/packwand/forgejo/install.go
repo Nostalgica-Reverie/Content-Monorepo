@@ -3,7 +3,6 @@ package forgejo
 import (
 	"errors"
 	"fmt"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -27,16 +26,14 @@ var installCmd = &cobra.Command{
 	Short:   "Add a project from a Forgejo/Gitea/Codeberg repository URL or slug",
 	Aliases: []string{"install", "get"},
 	Args:    cobra.ArbitraryArgs,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		pack, err := core.LoadPack()
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			return err
 		}
 
 		if len(args) == 0 || len(args[0]) == 0 {
-			fmt.Println("You must specify a Forgejo/Gitea/Codeberg repository URL or slug.")
-			os.Exit(1)
+			return errors.New("you must specify a Forgejo/Gitea/Codeberg repository URL or slug")
 		}
 
 		instance := instanceFlag
@@ -68,14 +65,13 @@ var installCmd = &cobra.Command{
 
 		repo, err := fetchRepo(instance, slug)
 		if err != nil {
-			fmt.Printf("Failed to add project: %s\n", err)
-			os.Exit(1)
+			return fmt.Errorf("failed to add project: %w", err)
 		}
 
 		if err = installMod(repo, instance, branchFlag, regex, pack); err != nil {
-			fmt.Printf("Failed to add project: %s\n", err)
-			os.Exit(1)
+			return fmt.Errorf("failed to add project: %w", err)
 		}
+		return nil
 	},
 }
 

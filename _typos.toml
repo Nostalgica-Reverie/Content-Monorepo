@@ -18,6 +18,10 @@ extend-exclude = [
     # Lockfiles and licenses.
     "*.lock",
     "**/LICENSE*",
+    # Audit/planning docs (prose uses hyphenated fragments typos misreads).
+    "packwandaudit.md",
+    # Golden hash vectors in the C self-test read as false-positive words.
+    "tools/hashutil/hashutil.c",
 ]
 
 [default.extend-words]

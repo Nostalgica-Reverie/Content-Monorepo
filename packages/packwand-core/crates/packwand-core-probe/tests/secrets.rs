@@ -8,7 +8,7 @@ use std::collections::BTreeMap;
 
 use packwand_auth::SecretString;
 use packwand_instance::{FsInstanceRepository, InstanceRepository, InstanceSpec, MemoryLimits};
-use packwand_launch::{build_launch_plan, launch, LaunchEvent, LaunchOptions};
+use packwand_launch::{LaunchEvent, LaunchOptions, build_launch_plan, launch};
 
 fn secret_spec(id: &str, record_path: &std::path::Path) -> InstanceSpec {
     InstanceSpec {

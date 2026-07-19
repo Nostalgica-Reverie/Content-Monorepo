@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://git.nostalgica.net/schema/manifest.json",
   "title": "Manifest",
-  "description": "Manifest for a modpack, datapack, or resourcepack. A manifest is either single-version (has 'mc_version') or multi-variant (has 'variants'), never both. Every manifest must declare a 'role'.",
+  "description": "Manifest for a mod, modpack, datapack, or resourcepack. A manifest is either single-version (has 'mc_version') or multi-variant (has 'variants'), never both. Every manifest must declare a 'role'.",
   "type": "object",
   "properties": {
     "$schema": {
@@ -11,15 +11,16 @@
     },
     "id": {
       "type": "string",
-      "description": "Stable pack identifier. Matches the pack's folder name."
+      "description": "Stable project identifier. Matches the project's folder name."
     },
     "name": {
       "type": "string",
-      "description": "Human-readable pack name."
+      "description": "Human-readable project name."
     },
     "type": {
       "type": "string",
       "enum": [
+        "mod",
         "modpack",
         "datapack",
         "resourcepack"
@@ -28,7 +29,7 @@
     },
     "loader": {
       "type": "string",
-      "description": "Mod loader (e.g. fabric, forge, neoforge, quilt). Required for modpacks. For multi-variant packs this is the default loader; individual variants may override it with their own 'loader'."
+      "description": "Mod loader (e.g. fabric, forge, neoforge, quilt). Required for single-version modpacks. For multi-variant projects this is the default loader; individual variants may override it with their own 'loader'."
     },
     "release_type": {
       "type": "string",
@@ -41,7 +42,7 @@
     },
     "version": {
       "type": "string",
-      "description": "Pack version (ideally CalVer). Required for single-version production manifests; generated for experimental."
+      "description": "Project version. Required for production manifests; generated for experimental builds."
     },
     "mc_version": {
       "type": "string",
@@ -49,7 +50,7 @@
     },
     "variants": {
       "type": "array",
-      "description": "Multi-variant packs: independently-built variants published as separate versions under one project. Each variant may set its own 'loader' (overriding the pack-level loader) for packs that span loaders across versions. Publish order = array order (last lands on top).",
+      "description": "Independently-built variants published as separate versions under one project. Each variant may set its own loader and, for mods, its Stonecutter Gradle project. Publish order = array order (last lands on top).",
       "minItems": 1,
       "items": {
         "type": "object",
@@ -77,6 +78,11 @@
           "loader": {
             "type": "string",
             "description": "Loader for this variant (e.g. fabric, forge, neoforge, quilt). Overrides the pack-level 'loader'. If omitted, the pack-level 'loader' applies."
+          },
+          "gradle_project": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._-]+$",
+            "description": "Stonecutter Gradle subproject that builds this mod variant (for example, '26.1.2-fabric'). Required for type 'mod'."
           }
         },
         "required": [
@@ -272,6 +278,26 @@
         "required": [
           "mc_version"
         ]
+      }
+    }
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": { "const": "mod" }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "required": ["variants"],
+        "properties": {
+          "variants": {
+            "items": {
+              "required": ["mc_version", "loader", "gradle_project"]
+            }
+          }
+        }
       }
     }
   ],

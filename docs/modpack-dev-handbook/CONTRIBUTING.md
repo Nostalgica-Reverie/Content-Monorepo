@@ -18,25 +18,20 @@ Before you begin developing the site, it's a good idea to set up a local dev
 server so you can view your changes on the site in real-time. You only need a
 few requirements:
 
-- [Node](https://nodejs.org/en)
-- A package manager (`npm`, the default with node.js, is more than enough)
-- [Bun (optional)](https://bun.sh) - we use this to generate our search indexes,
-  it can also be used to run the project
+- [Bun](https://bun.sh) 1.3.14
 
 ### Installing
 
-To install the project, first install the requirements, then, run the install
-command in your package manager, for this example, we will use NPM.
+Install the monorepo dependencies from the repository root.
 
-`$ npm install`
+`$ bun install`
 
 ### Running the dev server
 
-To run the dev server, run the `dev` script with your package manager, then open
-the URL. When you then make changes to files, they will automatically update on
-the dev URL.
+To run the dev server, run the handbook's `dev` script, then open the URL. When
+you make changes to files, they will automatically update on the dev URL.
 
-`$ npm run dev`
+`$ bun run --cwd docs/modpack-dev-handbook dev`
 
 ### Checking for errors (optional)
 

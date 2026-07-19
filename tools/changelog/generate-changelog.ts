@@ -189,7 +189,7 @@ interface ManifestFile {
 function serverPromoEnabled(pDir: string, manifest: ManifestFile): boolean {
     // packwand merges manifest.json automation with the legacy opt-out.json;
     // CI puts it on PATH via .forgejo/actions/setup-packwand.
-    const packwand = process.env.PACKWAND_BIN ?? process.env.PACKWIZ_BIN ?? 'packwand';
+    const packwand = process.env.PACKWAND_BIN ?? 'packwand';
     const proc = Bun.spawnSync([packwand, 'automation', 'get', pDir], { stdout: 'pipe', stderr: 'pipe' });
     if (proc.success) {
         try {

@@ -2,7 +2,7 @@
 //! and NeoForge/Forge profiles use the same convention) onto its parent
 //! vanilla version document.
 
-use crate::model::{maven_collision_key, Arguments, VersionDoc};
+use crate::model::{Arguments, VersionDoc, maven_collision_key};
 
 /// Merges `child` (the inheriting loader profile) over `parent`.
 ///

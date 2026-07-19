@@ -1,6 +1,6 @@
 # Repo-wide rustfmt config — rustfmt searches parent directories, so this one
 # file governs all three Rust trees (packages/packwand-core,
 # apps/mod-browser-webview, apps/packwand/gui/tauri/src-tauri).
-edition = "2021"
+edition = "2024"
 # Never emit CRLF, even when files were checked out or created on Windows.
 newline_style = "Unix"

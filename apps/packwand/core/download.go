@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
-	"time"
 
 	"slices"
 )
@@ -21,41 +20,34 @@ func GetWithUA(url string, contentType string) (resp *http.Response, err error) 
 	return GetWithUAAndHeaders(url, contentType, nil)
 }
 
+// defaultDownloadClient is shared by all downloads: transfer-scale timeout
+// with transparent retry/backoff handled by the client's transport.
+var defaultDownloadClient = NewDownloadClient()
+
 // GetWithUAAndHeaders performs a GET request with PackWand's standard headers
-// and any additional provider-specific headers. It retries server errors using
-// the same policy as GetWithUA.
+// and any additional provider-specific headers. Transient failures (network
+// errors, 429, 5xx) are retried with doubling backoff by the shared client.
 func GetWithUAAndHeaders(url string, contentType string, headers http.Header) (resp *http.Response, err error) {
-	const maxRetries = 3
-	backoff := 500 * time.Millisecond
-	for attempt := 0; attempt <= maxRetries; attempt++ {
-		if attempt > 0 {
-			time.Sleep(backoff)
-			backoff *= 2
-		}
-		req, reqErr := http.NewRequest(http.MethodGet, url, nil)
-		if reqErr != nil {
-			return nil, reqErr
-		}
-		req.Header.Set("User-Agent", UserAgent)
-		req.Header.Set("Accept", contentType)
-		for name, values := range headers {
-			for _, value := range values {
-				req.Header.Add(name, value)
-			}
-		}
-		resp, err = http.DefaultClient.Do(req)
-		if err == nil && resp.StatusCode < 500 {
-			return resp, nil
-		}
-		if resp != nil {
-			_ = resp.Body.Close()
-			resp = nil
-		}
-	}
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
 	}
-	return nil, fmt.Errorf("request to %s failed after %d retries", url, maxRetries)
+	req.Header.Set("User-Agent", UserAgent)
+	req.Header.Set("Accept", contentType)
+	for name, values := range headers {
+		for _, value := range values {
+			req.Header.Add(name, value)
+		}
+	}
+	resp, err = defaultDownloadClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode >= 500 {
+		_ = resp.Body.Close()
+		return nil, fmt.Errorf("request to %s failed after retries: %s", url, resp.Status)
+	}
+	return resp, nil
 }
 
 const DownloadCacheImportFolder = "import"
@@ -217,7 +209,11 @@ func downloadNewFile(task *downloadTask, cacheFolder string, hashesToObtain []st
 
 	// Create handle with calculated hashes
 	mu.Lock()
-	cacheHandle, alreadyExists := index.NewHandleFromHashes(hashes)
+	cacheHandle, alreadyExists, err := index.NewHandleFromHashes(hashes)
+	if err != nil {
+		mu.Unlock()
+		return CompletedDownload{}, err
+	}
 	warnings := cacheHandle.UpdateIndex()
 	mu.Unlock()
 
@@ -471,10 +467,12 @@ func (c *CacheIndex) rehashFile(cacheHash string, hashFormat string) (string, er
 	return rehashHasher.HashToString(rehashHasher.Sum(nil)), nil
 }
 
-func (c *CacheIndex) NewHandleFromHashes(hashes map[string]string) (*CacheIndexHandle, bool) {
-	// Ensure hashes contains the cache hash format
+func (c *CacheIndex) NewHandleFromHashes(hashes map[string]string) (*CacheIndexHandle, bool, error) {
+	// Ensure hashes contains the cache hash format. This is an internal
+	// invariant, but 48 files depend on core/ — surface a handleable error
+	// rather than crashing the whole process.
 	if _, ok := hashes[cacheHashFormat]; !ok {
-		panic("NewHandleFromHashes didn't get any value for " + cacheHashFormat)
+		return nil, false, fmt.Errorf("no %s hash available to look up cache entry", cacheHashFormat)
 	}
 	// Only compare with the cache hash format - other hashes might be insecure or likely to collide
 	handle := c.GetHandleFromHash(cacheHashFormat, hashes[cacheHashFormat])
@@ -483,7 +481,7 @@ func (c *CacheIndex) NewHandleFromHashes(hashes map[string]string) (*CacheIndexH
 		for hashFormat2, hash2 := range hashes {
 			handle.Hashes[hashFormat2] = strings.ToLower(hash2)
 		}
-		return handle, true
+		return handle, true, nil
 	}
 	i := c.nextHashIdx
 	c.nextHashIdx += 1
@@ -491,7 +489,7 @@ func (c *CacheIndex) NewHandleFromHashes(hashes map[string]string) (*CacheIndexH
 		index:   c,
 		hashIdx: i,
 		Hashes:  hashes,
-	}, false
+	}, false, nil
 }
 
 func (c *CacheIndex) MoveImportFiles() error {
@@ -516,9 +514,13 @@ func (c *CacheIndex) MoveImportFiles() error {
 			_ = file.Close()
 			return fmt.Errorf("failed to validate imported file %s: %w", path, err)
 		}
-		handle, exists := c.NewHandleFromHashes(map[string]string{
+		handle, exists, err := c.NewHandleFromHashes(map[string]string{
 			cacheHashFormat: hasher.HashToString(hasher.Sum(nil)),
 		})
+		if err != nil {
+			_ = file.Close()
+			return fmt.Errorf("failed to index imported file %s: %w", path, err)
+		}
 		if exists {
 			err = file.Close()
 			if err != nil {

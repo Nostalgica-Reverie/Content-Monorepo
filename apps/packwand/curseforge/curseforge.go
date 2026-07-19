@@ -194,7 +194,10 @@ func createModFile(modInfo modInfo, fileInfo modFileInfo, index *core.Index, opt
 		updateMap["curseforge"]["release-channel"] = releaseChannel
 	}
 
-	hash, hashFormat := fileInfo.getBestHash()
+	hash, hashFormat, err := fileInfo.getBestHash()
+	if err != nil {
+		return err
+	}
 
 	var optional *core.ModOption
 	if optionalDisabled {
@@ -501,7 +504,10 @@ func (u cfUpdater) DoUpdate(mods []*core.Mod, cachedState []interface{}) error {
 
 		v.FileName = fileInfoData.FileName
 		v.Name = modState.Name
-		hash, hashFormat := fileInfoData.getBestHash()
+		hash, hashFormat, err := fileInfoData.getBestHash()
+		if err != nil {
+			return err
+		}
 		v.Download = core.ModDownload{
 			HashFormat: hashFormat,
 			Hash:       hash,

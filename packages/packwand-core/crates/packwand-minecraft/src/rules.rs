@@ -46,10 +46,10 @@ impl Host {
 
 fn rule_matches(rule: &Rule, host: &Host) -> bool {
     if let Some(os) = &rule.os {
-        if let Some(name) = &os.name {
-            if name != &host.os_name {
-                return false;
-            }
+        if let Some(name) = &os.name
+            && name != &host.os_name
+        {
+            return false;
         }
         if let Some(arch) = &os.arch {
             // Mojang uses "x86" to mean 32-bit x86 only.

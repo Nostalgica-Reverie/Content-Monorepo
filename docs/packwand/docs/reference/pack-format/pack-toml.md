@@ -40,7 +40,7 @@ If the field is missing entirely, consumers assume `packwiz:1.1.0` for compatibi
 | --- | --- | --- |
 | `file` | path, required | The path to the index file, relative to `pack.toml` (forward slashes). Defaults to `index.toml` when empty. |
 | `hash-format` | string, required | The [hash format](#hash-formats) of the index hash. packwand writes `sha512`. |
-| `hash` | string | The hash of the index file. May be omitted when `no-internal-hashes` is enabled. |
+| `hash` | string | The hash of the generated index file. Omitted from source metadata; `packwand refresh --build` writes it for distribution. |
 
 ## `[versions]`
 

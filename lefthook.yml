@@ -19,3 +19,11 @@ pre-commit:
       run: typos {staged_files}
       skip:
         - run: '! command -v typos >/dev/null'
+    - name: generated-index
+      run: |
+        staged=$(git diff --cached --name-only --diff-filter=ACMR -- ':(glob)modpacks/*/*/index.toml' ':(glob)resourcepacks/*/*/index.toml' ':(glob)datapacks/*/*/index.toml')
+        if [ -n "$staged" ]; then
+          echo "index.toml is generated state and must not be committed:"
+          echo "$staged"
+          exit 1
+        fi

@@ -27,16 +27,37 @@ type Diagnostic struct {
 // its kind) and referential (IDs must exist in the relevant registry).
 // Referential checks skip vanilla and unknown namespaces, like content-lint.
 func CheckDocument(dir, rel string, content []byte) []Diagnostic {
+	return NewDocCheckSession(dir).CheckDocument(rel, content)
+}
+
+// DocCheckSession caches the lazily-built registries across many document
+// checks against the same scope dir. Callers looping over a pack's files
+// (e.g. preflight's reference step) should create one session for the loop
+// instead of calling the package-level CheckDocument per file, which would
+// rebuild the full registry (a filesystem walk) for every document.
+type DocCheckSession struct {
+	cache *registryCache
+}
+
+// NewDocCheckSession creates a session scoped to dir. It must not outlive the
+// operation it serves: registries are built once and never invalidated.
+func NewDocCheckSession(dir string) *DocCheckSession {
+	return &DocCheckSession{cache: &registryCache{dir: dir}}
+}
+
+// CheckDocument validates one document buffer as if it lived at rel, reusing
+// registries already built by earlier calls on this session.
+func (s *DocCheckSession) CheckDocument(rel string, content []byte) []Diagnostic {
 	rel = strings.TrimPrefix(path.Clean(strings.ReplaceAll(rel, "\\", "/")), "./")
 	switch {
 	case strings.HasSuffix(rel, ".json") || strings.HasSuffix(rel, ".mcmeta"):
-		return checkJSONDocument(dir, rel, content)
+		return checkJSONDocument(s.cache, rel, content)
 	case strings.HasSuffix(rel, ".toml"):
 		return checkTOMLDocument(content)
 	case strings.HasSuffix(rel, ".js") || strings.HasSuffix(rel, ".ts"):
-		return checkKubeJSScript(dir, rel, content)
+		return checkKubeJSScript(s.cache, rel, content)
 	case strings.HasSuffix(rel, ".mcfunction"):
-		return checkFunctionDocument(dir, rel, content)
+		return checkFunctionDocument(s.cache, rel, content)
 	}
 	return []Diagnostic{}
 }
@@ -58,7 +79,7 @@ func checkTOMLDocument(content []byte) []Diagnostic {
 	return []Diagnostic{}
 }
 
-func checkJSONDocument(dir, rel string, content []byte) []Diagnostic {
+func checkJSONDocument(cache *registryCache, rel string, content []byte) []Diagnostic {
 	var document any
 	if err := json.Unmarshal(content, &document); err != nil {
 		line, col := 1, 1
@@ -68,7 +89,7 @@ func checkJSONDocument(dir, rel string, content []byte) []Diagnostic {
 		return []Diagnostic{{Severity: "error", Line: line, Col: col, Message: "invalid JSON: " + err.Error(), Code: "syntax"}}
 	}
 
-	checker := &docChecker{dir: dir, content: content, diags: []Diagnostic{}}
+	checker := &docChecker{registryCache: cache, content: content, diags: []Diagnostic{}}
 	base := path.Base(rel)
 	dataRel, inData := subPathFrom(rel, "data")
 	assetRel, inAssets := subPathFrom(rel, "assets")
@@ -96,16 +117,21 @@ func subPathFrom(rel, top string) (string, bool) {
 	return "", false
 }
 
+// registryCache lazily builds and holds the per-kind registries for a scope
+// dir. It is shared across every document checked by one DocCheckSession, so
+// the full-tree walk happens at most once per kind per session.
+type registryCache struct {
+	dir          string
+	datapack     *Registry
+	resourcepack *Registry
+	kubejs       *Registry
+}
+
 type docChecker struct {
-	dir     string
+	*registryCache
 	content []byte
 
 	diags []Diagnostic
-
-	// registries are built lazily: buffers that need no referential check
-	// never pay for an index walk.
-	datapack     *Registry
-	resourcepack *Registry
 }
 
 func (c *docChecker) errorf(code, locate string, format string, a ...any) {
@@ -144,7 +170,7 @@ func offsetToLineCol(content []byte, offset int) (int, int) {
 	return line, col
 }
 
-func (c *docChecker) datapackRegistry() *Registry {
+func (c *registryCache) datapackRegistry() *Registry {
 	if c.datapack == nil {
 		reg, err := Build(c.dir, Datapack)
 		if err != nil {
@@ -155,7 +181,7 @@ func (c *docChecker) datapackRegistry() *Registry {
 	return c.datapack
 }
 
-func (c *docChecker) resourcepackRegistry() *Registry {
+func (c *registryCache) resourcepackRegistry() *Registry {
 	if c.resourcepack == nil {
 		reg, err := Build(c.dir, ResourcePack)
 		if err != nil {
@@ -164,6 +190,17 @@ func (c *docChecker) resourcepackRegistry() *Registry {
 		c.resourcepack = reg
 	}
 	return c.resourcepack
+}
+
+func (c *registryCache) kubejsRegistry() (*Registry, error) {
+	if c.kubejs == nil {
+		reg, err := Build(c.dir, KubeJS)
+		if err != nil {
+			return nil, err
+		}
+		c.kubejs = reg
+	}
+	return c.kubejs, nil
 }
 
 // has reports whether the registry contains id with any of the given kinds.

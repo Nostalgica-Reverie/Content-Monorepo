@@ -57,15 +57,15 @@ const (
 )
 
 var initCmd = &cobra.Command{
-	Use:   "new <modpacks|datapacks|resourcepacks> <name>",
+	Use:   "new <mods|modpacks|datapacks|resourcepacks> <name>",
 	Short: "Scaffold a new pack (manifest.json, changelog.md, packwiz subdirs)",
 	Args:  cobra.ExactArgs(2),
 	Run: func(c *cobra.Command, args []string) {
 		category, name := args[0], args[1]
 		switch category {
-		case "modpacks", "datapacks", "resourcepacks":
+		case "mods", "modpacks", "datapacks", "resourcepacks":
 		default:
-			cmd.Fail(fmt.Sprintf("invalid category %q (expected modpacks, datapacks, or resourcepacks)", category))
+			cmd.Fail(fmt.Sprintf("invalid category %q (expected mods, modpacks, datapacks, or resourcepacks)", category))
 		}
 
 		mcVersion, _ := c.Flags().GetString("mc")
@@ -83,9 +83,15 @@ var initCmd = &cobra.Command{
 				variants = append(variants, v)
 			}
 		}
+		if category == "mods" && len(variants) == 0 {
+			cmd.Fail("mod scaffolds require --variants with Stonecutter project names (for example, 1.21.1-neoforge,26.1.2-fabric)")
+		}
 
 		if asBase && consumesBase != "" {
 			cmd.Fail("--base and --consumes are mutually exclusive")
+		}
+		if category == "mods" && (asBase || consumesBase != "") {
+			cmd.Fail("mods cannot use --base or --consumes; their manifest role is always 'none'")
 		}
 
 		loaderFlag, ok := loaderLatestFlag(loader)
@@ -149,11 +155,21 @@ var initCmd = &cobra.Command{
 		if len(variants) > 0 {
 			var vs []map[string]string
 			for _, v := range variants {
-				vs = append(vs, map[string]string{
-					"id":         v,
-					"mc_version": mcVersion,
-					"name":       v,
-				})
+				entry := map[string]string{"id": v, "mc_version": mcVersion, "name": v}
+				if category == "mods" {
+					idx := strings.LastIndex(v, "-")
+					if idx <= 0 || idx == len(v)-1 {
+						cmd.Fail(fmt.Sprintf("mod variant %q must end in a loader name (for example, 26.1.2-fabric)", v))
+					}
+					variantLoader := v[idx+1:]
+					if _, ok := loaderLatestFlag(variantLoader); !ok {
+						cmd.Fail(fmt.Sprintf("mod variant %q has unsupported loader %q", v, variantLoader))
+					}
+					entry["mc_version"] = v[:idx]
+					entry["loader"] = variantLoader
+					entry["gradle_project"] = v
+				}
+				vs = append(vs, entry)
 			}
 			mf["variants"] = vs
 		}
@@ -209,6 +225,8 @@ var initCmd = &cobra.Command{
 			}
 			fmt.Printf("ready: %s initialized %d subdir-pair(s) (%s, latest) with .packwizignore. Add mods with packwand, then fill manifest placeholders.\n",
 				packDir, len(keys), loader)
+		} else if category == "mods" {
+			fmt.Printf("next: add the Stonecutter Gradle source and versions/ projects under %s, then run packwand validate %s/manifest.json.\n", packDir, packDir)
 		} else {
 			fmt.Printf("next: create %s/{version}/ and add the pack contents (pack.mcmeta at its root).\n", packDir)
 		}
@@ -221,6 +239,8 @@ func categoryType(category string) string {
 		return "datapack"
 	case "resourcepacks":
 		return "resourcepack"
+	case "mods":
+		return "mod"
 	default:
 		return "modpack"
 	}
@@ -706,7 +726,9 @@ func importMrpack(archivePath string, zr *zip.Reader, idx *mrIndex, customID str
 		"modrinth_id":  "",
 	})
 	changelog := fmt.Sprintf("# %s\n\nImported from .mrpack (%s).\n", idx.Name, idx.VersionID)
-	_ = os.WriteFile(filepath.Join(packDir, "changelog.md"), []byte(changelog), 0o644)
+	if err := os.WriteFile(filepath.Join(packDir, "changelog.md"), []byte(changelog), 0o644); err != nil {
+		cmd.Fail(fmt.Sprintf("failed to write changelog.md: %v", err))
+	}
 
 	fmt.Printf("\nimported %s:\n", packID)
 	fmt.Printf("  %d file(s) written (%d with update metadata, %d pinned-by-URL only)\n", wrote, updatable, wrote-updatable)
@@ -772,7 +794,9 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 				fmt.Fprintf(&pending, "packwand curseforge install --project-id %d --file-id %d\n", f.ProjectID, f.FileID)
 			}
 		}
-		_ = os.WriteFile(filepath.Join(subdir, "cf-pending.txt"), []byte(pending.String()), 0o644)
+		if err := os.WriteFile(filepath.Join(subdir, "cf-pending.txt"), []byte(pending.String()), 0o644); err != nil {
+			cmd.Fail(fmt.Sprintf("failed to write cf-pending.txt: %v", err))
+		}
 	}
 
 	// When curseforge import succeeded it has already copied the override
@@ -805,7 +829,9 @@ func importCFZip(archivePath string, zr *zip.Reader, cfm *cfManifest, customID s
 		"curseforge_id": "",
 	})
 	changelog := fmt.Sprintf("# %s\n\nImported from CurseForge zip (%s).\n", cfm.Name, cfm.Version)
-	_ = os.WriteFile(filepath.Join(packDir, "changelog.md"), []byte(changelog), 0o644)
+	if err := os.WriteFile(filepath.Join(packDir, "changelog.md"), []byte(changelog), 0o644); err != nil {
+		cmd.Fail(fmt.Sprintf("failed to write changelog.md: %v", err))
+	}
 
 	fmt.Printf("\nimported %s:\n", packID)
 	if cfImported {
@@ -849,8 +875,8 @@ func extractOverridesPrefix(zr *zip.Reader, subdir, prefix string, indexedPaths 
 			cmd.Warn("skipping override %s (already referenced by the index)", f.Name)
 			continue
 		}
-		dest := filepath.Join(subdir, filepath.FromSlash(rel))
-		if !strings.HasPrefix(filepath.Clean(dest), filepath.Clean(subdir)+string(os.PathSeparator)) {
+		dest, ok := safeJoin(subdir, filepath.FromSlash(rel))
+		if !ok {
 			cmd.Warn("skipping suspicious archive path %s", f.Name)
 			continue
 		}
@@ -977,9 +1003,24 @@ func pinLoaderVersion(packToml, loader, version string) {
 	cmd.Warn("no %q key under [versions] in %s; loader left at latest", loader, packToml)
 }
 
+// safeJoin joins rel onto base and reports whether the result still resolves
+// inside base — the guard both archive-extraction paths must apply before
+// writing a destination derived from untrusted archive contents.
+func safeJoin(base, rel string) (string, bool) {
+	dest := filepath.Join(base, rel)
+	if !strings.HasPrefix(filepath.Clean(dest), filepath.Clean(base)+string(os.PathSeparator)) {
+		return "", false
+	}
+	return dest, true
+}
+
 func writeImportedToml(subdir string, f mrIndexFile) (ok bool, hasUpdate bool) {
 	base := filepath.Base(f.Path)
-	metaPath := filepath.Join(subdir, filepath.Dir(f.Path), strings.TrimSuffix(base, filepath.Ext(base))+".pw.toml")
+	metaPath, safe := safeJoin(subdir, filepath.Join(filepath.Dir(filepath.FromSlash(f.Path)), strings.TrimSuffix(base, filepath.Ext(base))+".pw.toml"))
+	if !safe {
+		cmd.Warn("skipping suspicious import path %s", f.Path)
+		return false, false
+	}
 	if err := os.MkdirAll(filepath.Dir(metaPath), 0o755); err != nil {
 		cmd.Warn("%s: %v; skipped", f.Path, err)
 		return false, false

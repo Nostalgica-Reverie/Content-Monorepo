@@ -5,9 +5,9 @@ use std::fs;
 use std::io::{BufRead, BufReader, Read};
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
+use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::{self, Receiver, Sender};
-use std::sync::Arc;
 use std::thread::{self, JoinHandle};
 use std::time::Duration;
 
@@ -385,7 +385,7 @@ fn kill_process_tree(pid: u32) {
 /// as its own process group leader, so its pid doubles as the pgid.
 #[cfg(unix)]
 fn kill_process_tree(pid: u32) {
-    use nix::sys::signal::{killpg, Signal};
+    use nix::sys::signal::{Signal, killpg};
     use nix::unistd::Pid;
     let _ = killpg(Pid::from_raw(pid as i32), Signal::SIGKILL);
 }

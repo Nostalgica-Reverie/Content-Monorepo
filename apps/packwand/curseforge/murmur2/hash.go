@@ -2,7 +2,6 @@ package murmur2
 
 import (
 	"encoding/binary"
-	"github.com/aviddiviner/go-murmur"
 	"hash"
 )
 
@@ -33,8 +32,42 @@ func (m *Murmur2CF) Sum(b []byte) []byte {
 	if b == nil {
 		b = make([]byte, 4)
 	}
-	binary.BigEndian.PutUint32(b, murmur.MurmurHash2(m.buf, 1))
+	binary.BigEndian.PutUint32(b, MurmurHash2(m.buf, 1))
 	return b
+}
+
+// MurmurHash2 is Austin Appleby's public-domain 32-bit MurmurHash2,
+// implemented locally so the CurseForge fingerprint path does not depend on
+// an unmaintained external module. Verified against the golden fingerprint
+// vectors in hash_test.go.
+func MurmurHash2(data []byte, seed uint32) uint32 {
+	const m = 0x5bd1e995
+	const r = 24
+	h := seed ^ uint32(len(data))
+	for len(data) >= 4 {
+		k := binary.LittleEndian.Uint32(data)
+		k *= m
+		k ^= k >> r
+		k *= m
+		h *= m
+		h ^= k
+		data = data[4:]
+	}
+	switch len(data) {
+	case 3:
+		h ^= uint32(data[2]) << 16
+		fallthrough
+	case 2:
+		h ^= uint32(data[1]) << 8
+		fallthrough
+	case 1:
+		h ^= uint32(data[0])
+		h *= m
+	}
+	h ^= h >> 13
+	h *= m
+	h ^= h >> 15
+	return h
 }
 
 func (m *Murmur2CF) Reset() {

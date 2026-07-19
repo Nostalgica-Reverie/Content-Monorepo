@@ -3,7 +3,6 @@ package modrinth
 import (
 	"errors"
 	"fmt"
-	"os"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -23,17 +22,15 @@ var installCmd = &cobra.Command{
 	Short:   "Add a project from a Modrinth URL, slug/project ID or search",
 	Aliases: []string{"install", "get"},
 	Args:    cobra.ArbitraryArgs,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		pack, err := core.LoadPack()
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			return err
 		}
 
 		index, err := pack.LoadIndex()
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			return err
 		}
 
 		// If project/version IDs/version file name is provided in command line, use those
@@ -41,15 +38,13 @@ var installCmd = &cobra.Command{
 		if projectIDFlag != "" {
 			projectID = projectIDFlag
 			if len(args) != 0 {
-				fmt.Println("--project-id cannot be used with a separately specified URL/slug/search term")
-				os.Exit(1)
+				return errors.New("--project-id cannot be used with a separately specified URL/slug/search term")
 			}
 		}
 		if versionIDFlag != "" {
 			versionID = versionIDFlag
 			if len(args) != 0 {
-				fmt.Println("--version-id cannot be used with a separately specified URL/slug/search term")
-				os.Exit(1)
+				return errors.New("--version-id cannot be used with a separately specified URL/slug/search term")
 			}
 		}
 		if versionFilenameFlag != "" {
@@ -57,8 +52,7 @@ var installCmd = &cobra.Command{
 		}
 
 		if (len(args) == 0 || len(args[0]) == 0) && projectID == "" {
-			fmt.Println("You must specify a project; with the ID flags, or by passing a URL, slug or search term directly.")
-			os.Exit(1)
+			return errors.New("you must specify a project; with the ID flags, or by passing a URL, slug or search term directly")
 		}
 
 		var version string
@@ -67,19 +61,16 @@ var installCmd = &cobra.Command{
 			// Try interpreting the argument as a slug/project ID, or project/version/CDN URL
 			parsedSlug, err = parseSlugOrUrl(args[0], &projectID, &version, &versionID, &versionFilename)
 			if err != nil {
-				fmt.Printf("Failed to parse URL: %v\n", err)
-				os.Exit(1)
+				return fmt.Errorf("failed to parse URL: %w", err)
 			}
 		}
 
 		// Got version ID; install using this ID
 		if versionID != "" {
-			err = installVersionById(versionID, versionFilename, pack, &index)
-			if err != nil {
-				fmt.Printf("Failed to add project: %s\n", err)
-				os.Exit(1)
+			if err := installVersionById(versionID, versionFilename, pack, &index); err != nil {
+				return fmt.Errorf("failed to add project: %w", err)
 			}
-			return
+			return nil
 		}
 
 		// Look up project ID
@@ -93,38 +84,30 @@ var installCmd = &cobra.Command{
 					// Try to look up version number
 					versionData, err := resolveVersion(project, version)
 					if err != nil {
-						fmt.Printf("Failed to add project: %s\n", err)
-						os.Exit(1)
+						return fmt.Errorf("failed to add project: %w", err)
 					}
-					err = installVersion(project, versionData, versionFilename, pack, &index)
-					if err != nil {
-						fmt.Printf("Failed to add project: %s\n", err)
-						os.Exit(1)
+					if err := installVersion(project, versionData, versionFilename, pack, &index); err != nil {
+						return fmt.Errorf("failed to add project: %w", err)
 					}
-					return
+					return nil
 				}
 
 				// No version specified; find latest
-				err = installProject(project, versionFilename, pack, &index)
-				if err != nil {
-					fmt.Printf("Failed to add project: %s\n", err)
-					os.Exit(1)
+				if err := installProject(project, versionFilename, pack, &index); err != nil {
+					return fmt.Errorf("failed to add project: %w", err)
 				}
-				return
+				return nil
 			}
 		}
 
 		// Arguments weren't a valid slug/project ID, try to search for it instead (if it was not parsed as a URL)
 		if projectID == "" || parsedSlug {
-			err = installViaSearch(strings.Join(args, " "), versionFilename, !parsedSlug, pack, &index)
-			if err != nil {
-				fmt.Printf("Failed to add project: %s\n", err)
-				os.Exit(1)
+			if err := installViaSearch(strings.Join(args, " "), versionFilename, !parsedSlug, pack, &index); err != nil {
+				return fmt.Errorf("failed to add project: %w", err)
 			}
-		} else {
-			fmt.Printf("Failed to add project: %s\n", err)
-			os.Exit(1)
+			return nil
 		}
+		return fmt.Errorf("failed to add project: %w", err)
 	},
 }
 
@@ -226,7 +209,6 @@ func installVersion(project *modrinthApi.Project, version *modrinthApi.Version, 
 	}
 
 	if len(version.Dependencies) > 0 {
-		// TODO: could get installed version IDs, and compare to install the newest - i.e. preferring pinned versions over getting absolute latest?
 		installedProjects := getInstalledProjectIDs(index)
 		isQuilt := slices.Contains(pack.GetCompatibleLoaders(), "quilt")
 		mcVersion, err := pack.GetMCVersion()
@@ -237,6 +219,10 @@ func installVersion(project *modrinthApi.Project, version *modrinthApi.Version, 
 		var depMetadata []depMetadataStore
 		var depProjectIDPendingQueue []string
 		var depVersionIDPendingQueue []string
+		// Versions explicitly pinned by a dependency's version ID, keyed by
+		// project ID — preferred over the project's absolute latest version.
+		// When several dependencies pin the same project, the newest pin wins.
+		pinnedDepVersions := make(map[string]*modrinthApi.Version)
 
 		for _, dep := range version.Dependencies {
 			// TODO: recommend optional dependencies?
@@ -261,8 +247,17 @@ func installVersion(project *modrinthApi.Project, version *modrinthApi.Version, 
 					depVersions, err := mrDefaultClient.Versions.GetMultiple(depVersionIDPendingQueue)
 					if err == nil {
 						for _, v := range depVersions {
+							mapped := mapDepOverride(*v.ProjectID, isQuilt, mcVersion)
+							// Only keep the pin when the dependency wasn't overridden to a
+							// different project (the pinned version belongs to the original).
+							if mapped == *v.ProjectID && v.ID != nil {
+								cur, ok := pinnedDepVersions[mapped]
+								if !ok || (v.DatePublished != nil && cur.DatePublished != nil && v.DatePublished.After(*cur.DatePublished)) {
+									pinnedDepVersions[mapped] = v
+								}
+							}
 							// Add project ID to queue
-							depProjectIDPendingQueue = append(depProjectIDPendingQueue, mapDepOverride(*v.ProjectID, isQuilt, mcVersion))
+							depProjectIDPendingQueue = append(depProjectIDPendingQueue, mapped)
 						}
 					} else {
 						fmt.Printf("Error retrieving dependency data: %s\n", err.Error())
@@ -304,11 +299,16 @@ func installVersion(project *modrinthApi.Project, version *modrinthApi.Version, 
 					if project.ID == nil {
 						return errors.New("failed to get dependency data: invalid response")
 					}
-					// Get latest version - could reuse version lookup data but it's not as easy (particularly since the version won't necessarily be the latest)
-					latestVersion, err := getLatestVersion(*project.ID, *project.Title, pack)
-					if err != nil {
-						fmt.Printf("Failed to get latest version of dependency %v: %v\n", *project.Title, err)
-						continue
+					// Prefer the version explicitly pinned by the dependency; fall back
+					// to the project's latest compatible version.
+					latestVersion := pinnedDepVersions[*project.ID]
+					if latestVersion == nil {
+						var err error
+						latestVersion, err = getLatestVersion(*project.ID, *project.Title, pack)
+						if err != nil {
+							fmt.Printf("Failed to get latest version of dependency %v: %v\n", *project.Title, err)
+							continue
+						}
 					}
 
 					for _, dep := range version.Dependencies {

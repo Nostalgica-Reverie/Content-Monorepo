@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	murmur "github.com/aviddiviner/go-murmur"
+	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/curseforge/murmur2"
 )
 
 func isWhitespaceCF(b byte) bool {
@@ -29,7 +29,7 @@ func naiveMurmur2CF(data []byte) uint32 {
 			buf = append(buf, b)
 		}
 	}
-	return murmur.MurmurHash2(buf, 1)
+	return murmur2.MurmurHash2(buf, 1)
 }
 
 // correctedMurmur2CF avoids naiveMurmur2CF's per-byte append() growth
@@ -56,7 +56,7 @@ func correctedMurmur2CF(data []byte) uint32 {
 			i++
 		}
 	}
-	return murmur.MurmurHash2(buf, 1)
+	return murmur2.MurmurHash2(buf, 1)
 }
 
 // makeBenchData returns pseudo-random content with whitespace bytes

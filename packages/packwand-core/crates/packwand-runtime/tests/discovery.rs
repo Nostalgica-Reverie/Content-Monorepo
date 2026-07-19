@@ -3,7 +3,7 @@
 use std::path::{Path, PathBuf};
 
 use packwand_runtime::{
-    discover, inspect_java_home, select_compatible, DiscoveryConfig, DiscoverySource,
+    DiscoveryConfig, DiscoverySource, discover, inspect_java_home, select_compatible,
 };
 
 /// Creates a fake JDK home with a `bin/java` and a `release` file.

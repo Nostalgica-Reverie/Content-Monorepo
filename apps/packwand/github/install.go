@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"os"
 	"path/filepath"
 	"regexp"
 
@@ -23,16 +22,14 @@ var installCmd = &cobra.Command{
 	Short:   "Add a project from a GitHub repository URL or slug",
 	Aliases: []string{"install", "get"},
 	Args:    cobra.ArbitraryArgs,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		pack, err := core.LoadPack()
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			return err
 		}
 
 		if len(args) == 0 || len(args[0]) == 0 {
-			fmt.Println("You must specify a GitHub repository URL.")
-			os.Exit(1)
+			return errors.New("you must specify a GitHub repository URL")
 		}
 
 		// Try interpreting the argument as a slug, or GitHub repository URL.
@@ -61,8 +58,7 @@ var installCmd = &cobra.Command{
 		repo, err := fetchRepo(slug)
 
 		if err != nil {
-			fmt.Printf("Failed to add project: %s\n", err)
-			os.Exit(1)
+			return fmt.Errorf("failed to add project: %w", err)
 		}
 
 		if branchFlag != "" {
@@ -72,11 +68,10 @@ var installCmd = &cobra.Command{
 			regex = regexFlag
 		}
 
-		err = installMod(repo, branch, regex, pack)
-		if err != nil {
-			fmt.Printf("Failed to add project: %s\n", err)
-			os.Exit(1)
+		if err := installMod(repo, branch, regex, pack); err != nil {
+			return fmt.Errorf("failed to add project: %w", err)
 		}
+		return nil
 	},
 }
 

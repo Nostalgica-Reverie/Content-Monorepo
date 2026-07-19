@@ -18,6 +18,3 @@ jobs:
     with:
       verb: workspace sync
       commit-message: 'actions: sync'
-    secrets:
-      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
-      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}

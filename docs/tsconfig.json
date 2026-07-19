@@ -20,6 +20,7 @@
   "include": ["**/*.mts", "**/*.ts", "docs/.vitepress/*.mts"],
   "exclude": [
     "node_modules",
+    "modpack-dev-handbook",
     "packwand",
     "packwiz",
     "**/.vitepress/cache",

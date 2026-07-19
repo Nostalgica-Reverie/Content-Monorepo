@@ -6,12 +6,12 @@ use std::io::{Cursor, Read};
 use regex_lite::Regex;
 use serde::Deserialize;
 
+use crate::MinecraftError;
 use crate::http::HttpClient;
 use crate::merge::merge_inherited;
 use crate::model::{
     AssetIndex, AssetIndexRef, Library, ManifestVersion, VersionDoc, VersionManifest,
 };
-use crate::MinecraftError;
 
 /// Remote endpoints, parameterized so tests can point at fixtures.
 #[derive(Debug, Clone)]
@@ -129,10 +129,10 @@ fn select_maven_version(
         return Err(xml_error(context, "no compatible versions were found"));
     }
     for tag in ["release", "latest"] {
-        if let Some(value) = parse_xml_scalar(bytes, tag) {
-            if filter(&value) {
-                return Ok(value);
-            }
+        if let Some(value) = parse_xml_scalar(bytes, tag)
+            && filter(&value)
+        {
+            return Ok(value);
         }
     }
     filtered

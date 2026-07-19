@@ -13,3 +13,9 @@ go run -C apps/api ./cursorapi --root .
 It binds to `127.0.0.1:8097` by default. A non-loopback `--bind` requires
 `--token-file`; add `--generate-token` to create that file securely when it
 does not already exist.
+
+The root Nix flake also exposes the server as a callable app:
+
+```sh
+nix run .#cursorapi -- --root .
+```

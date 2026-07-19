@@ -1,15 +1,17 @@
-name: "Setup Node (docs sites)"
-description: "Node 22 with the npm cache keyed on all three docs-site lockfiles."
+name: "Setup Bun (docs sites)"
+description: "Pinned Bun runtime with its install cache keyed on the monorepo lockfile."
 
 runs:
   using: "composite"
   steps:
-    - name: Setup Node
-      uses: https://github.com/actions/setup-node@v4
+    - name: Setup Bun
+      uses: https://github.com/oven-sh/setup-bun@v2
       with:
-        node-version: "22"
-        cache: npm
-        cache-dependency-path: |
-          docs/package-lock.json
-          docs/packwand/package-lock.json
-          docs/packwiz/package-lock.json
+        bun-version: "1.3.14"
+
+    - name: Cache Bun installs
+      uses: https://code.forgejo.org/actions/cache@v4
+      with:
+        path: ~/.bun/install/cache
+        key: bun-docs-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+        restore-keys: bun-docs-${{ runner.os }}-

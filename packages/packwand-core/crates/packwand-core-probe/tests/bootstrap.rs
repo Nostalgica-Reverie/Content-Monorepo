@@ -223,12 +223,14 @@ fn bootstrap_plan_and_run_offline_fixture() {
     );
     // Classpath ends with the client jar, so the fixture library precedes it.
     let classpath = plan["classpath"].as_array().unwrap();
-    assert!(classpath
-        .last()
-        .unwrap()
-        .as_str()
-        .unwrap()
-        .ends_with("fixture-1.0.jar"));
+    assert!(
+        classpath
+            .last()
+            .unwrap()
+            .as_str()
+            .unwrap()
+            .ends_with("fixture-1.0.jar")
+    );
 
     // The instance runs: fake-java exits 0 and the secret resolves.
     let output = Command::new(common::probe_bin())

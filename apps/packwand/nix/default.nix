@@ -1,37 +1,30 @@
-let
-  # Import nixpkgs if needed
-  pkgs = import <nixpkgs> {};
-in
-  {
-    lib ? pkgs.lib,
-    buildGoModule ? pkgs.buildGoModule,
-    fetchFromGitHub ? pkgs.fetchFromGitHub,
-    installShellFiles ? pkgs.installShellFiles,
-    # version and vendorHash should be specified by the caller
-    version ? "latest",
-    vendorHash,
-  }:
-    buildGoModule rec {
-      pname = "packwand";
-      inherit version vendorHash;
+{
+  buildGo126Module,
+  installShellFiles,
+  lib,
+  vendorHash,
+  version ? "latest",
+}:
+buildGo126Module {
+  pname = "packwand";
+  inherit vendorHash version;
 
-      src = ./..;
+  src = lib.cleanSource ./..;
+  subPackages = [ "." ];
 
-      nativeBuildInputs = [
-        installShellFiles
-      ];
+  nativeBuildInputs = [ installShellFiles ];
 
-      # Install shell completions
-      postInstall = ''
-        installShellCompletion --cmd packwand \
-          --bash <($out/bin/packwand completion bash) \
-          --fish <($out/bin/packwand completion fish) \
-          --zsh <($out/bin/packwand completion zsh)
-      '';
+  postInstall = ''
+    installShellCompletion --cmd packwand \
+      --bash <($out/bin/packwand completion bash) \
+      --fish <($out/bin/packwand completion fish) \
+      --zsh <($out/bin/packwand completion zsh)
+  '';
 
-      meta = with lib; {
-        description = "Minecraft modpack toolchain — packwiz core with multi-pack workspace management";
-        license = licenses.mit;
-        mainProgram = "packwand";
-      };
-    }
+  meta = {
+    description = "Minecraft modpack toolchain with multi-pack workspace management";
+    license = lib.licenses.mit;
+    mainProgram = "packwand";
+    platforms = lib.platforms.unix;
+  };
+}

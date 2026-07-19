@@ -31,7 +31,7 @@ var minecraftCommand = &cobra.Command{
 		wantedMCVersion := args[0]
 		if wantedMCVersion == currentVersion {
 			fmt.Printf("Minecraft version is already %s!\n", wantedMCVersion)
-			os.Exit(0)
+			return
 		}
 		mcVersions, err := cmdshared.GetValidMCVersions()
 		if err != nil {

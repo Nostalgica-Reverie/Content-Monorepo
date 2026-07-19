@@ -7,6 +7,7 @@ on:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
+      - 'mods/**'
   workflow_dispatch:
 
 concurrency:
@@ -28,6 +29,7 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
+            mods
             apps/packwand
             .forgejo/actions
 
@@ -59,6 +61,7 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
+            mods
             apps/packwand
             tools/changelog
             .forgejo/actions
@@ -72,7 +75,12 @@ jobs:
       - name: Set up Bun
         uses: https://github.com/oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: "1.3.14"
+
+      - name: Setup Java for mod builds
+        uses: ./.forgejo/actions/setup-java
+        with:
+          java-version: "25"
 
       - name: Preflight content and manifest
         run: packwand preflight "$(dirname '${{ matrix.entry.manifest }}')"

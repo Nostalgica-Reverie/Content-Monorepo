@@ -21,11 +21,11 @@ use std::path::{Path, PathBuf};
 
 use packwand_auth::{SecretString, Session};
 use packwand_instance::{FsInstanceRepository, InstancePaths, InstanceRecord, InstanceRepository};
-use packwand_launch::{build_launch_plan, LaunchPlan};
+use packwand_launch::{LaunchPlan, build_launch_plan};
 use packwand_minecraft::MetadataEndpoints;
 use serde::{Deserialize, Serialize};
 
-pub use pack_target::{resolve_pack_target, PackTarget, PackTargetError};
+pub use pack_target::{PackTarget, PackTargetError, resolve_pack_target};
 pub use packwand_minecraft::InstallProgress;
 
 /// Everything needed to hand a plan to `packwand_launch::launch`: the plan
@@ -130,10 +130,10 @@ pub fn ensure_instance_for_session(
     let id = instance_id_for(target);
     let paths = repo.instance_paths(&id);
 
-    if let Ok(record) = repo.get(&id) {
-        if read_baked_identity(&paths).as_deref() == Some(session.uuid.as_str()) {
-            return Ok(record);
-        }
+    if let Ok(record) = repo.get(&id)
+        && read_baked_identity(&paths).as_deref() == Some(session.uuid.as_str())
+    {
+        return Ok(record);
     }
 
     let request = bootstrap::BootstrapRequest {

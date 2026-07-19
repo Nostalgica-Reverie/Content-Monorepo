@@ -29,6 +29,9 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "packwand",
 	Short: "Minecraft modpack toolchain — packwiz core with multi-pack workspace management",
+	// Runtime errors from RunE commands print as a single "Error: ..." line
+	// rather than re-dumping usage; usage still prints for flag-parse errors.
+	SilenceUsage: true,
 	// The branded status bar is printed once per invocation (to stderr, and
 	// only on interactive terminals) before any subcommand runs.
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {

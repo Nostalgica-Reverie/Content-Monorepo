@@ -78,6 +78,12 @@ func updateFailureError(rep *UpdateReport) error {
 
 func finishUpdateReport(path string, rep *UpdateReport) {
 	writeUpdateReport(path, rep)
+	if viper.GetBool("update.json") && rep != nil {
+		if wd, err := os.Getwd(); err == nil {
+			rep.Dir = wd
+		}
+		printJSON(rep)
+	}
 	if err := updateFailureError(rep); err != nil {
 		cmdshared.Fail(err.Error())
 	}
@@ -318,8 +324,15 @@ var UpdateCmd = &cobra.Command{
 						fmt.Println(err)
 						os.Exit(1)
 					}
+					allReport = newUpdateReport()
+					allReport.Checked = 1
+					allReport.Updated = append(allReport.Updated, updateReportEntry{Name: modData.Name, Change: check[0].UpdateString})
 				} else {
 					fmt.Printf("\"%s\" is already up to date!\n", modData.Name)
+					rep := newUpdateReport()
+					rep.Checked = 1
+					rep.UpToDate = 1
+					finishUpdateReport(reportPath, rep)
 					return
 				}
 
@@ -355,4 +368,6 @@ func init() {
 	_ = viper.BindPFlag("update.dry-run", UpdateCmd.Flags().Lookup("dry-run"))
 	UpdateCmd.Flags().String("report", "", "Write a machine-readable JSON update report to this file (requires --all)")
 	_ = viper.BindPFlag("update.report", UpdateCmd.Flags().Lookup("report"))
+	UpdateCmd.Flags().Bool("json", false, "Print the update report as JSON on stdout")
+	_ = viper.BindPFlag("update.json", UpdateCmd.Flags().Lookup("json"))
 }

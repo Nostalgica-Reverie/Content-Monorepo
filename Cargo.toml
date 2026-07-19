@@ -11,10 +11,11 @@ members = [
     "packages/packwand-core/crates/packwand-core-probe",
     "apps/packwand/gui/tauri/src-tauri",
 ]
+exclude = ["apps/mod-browser-webview"]
 
 [workspace.package]
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 license = "AGPL-3.0-or-later"
 repository = "https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo"
 

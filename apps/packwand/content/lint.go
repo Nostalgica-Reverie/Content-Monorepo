@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/core"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/manifest"
 	"github.com/spf13/cobra"
 )
@@ -58,11 +59,14 @@ var contentLintCmd = &cobra.Command{
 			cmd.Fail("provide pack dir(s) or use --all")
 		}
 
-		var reports []LintResult
+		// Each pack lints independently (full tree walk + per-file hashing), so
+		// fan out across packs; report order stays deterministic by index.
+		reports := make([]LintResult, len(targets))
+		core.ParallelFor(targets, core.MaxConcurrent(), func(i int, t string) {
+			reports[i] = lintPack(t)
+		})
 		errorsTotal := 0
-		for _, t := range targets {
-			rep := lintPack(t)
-			reports = append(reports, rep)
+		for _, rep := range reports {
 			errorsTotal += rep.Errors
 		}
 

@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"path/filepath"
 	"reflect"
@@ -85,12 +86,42 @@ func init() {
 		}
 		return dir, args, nil
 	}})
-	packAction("packs.mods.remove", http.MethodDelete, Prefix+"/packs/{id}/mods/{slug}", true, func(r *http.Request) []string { return []string{"remove", r.PathValue("slug")} })
-	packAction("packs.mods.pin", http.MethodPost, Prefix+"/packs/{id}/mods/{slug}/pin", true, func(r *http.Request) []string { return []string{"pin", r.PathValue("slug")} })
-	packAction("packs.mods.unpin", http.MethodPost, Prefix+"/packs/{id}/mods/{slug}/unpin", true, func(r *http.Request) []string { return []string{"unpin", r.PathValue("slug")} })
-	packAction("packs.mods.update", http.MethodPost, Prefix+"/packs/{id}/mods/{slug}/update", true, func(r *http.Request) []string { return []string{"update", r.PathValue("slug")} })
+	packActionErr("packs.mods.remove", http.MethodDelete, Prefix+"/packs/{id}/mods/{slug}", true, func(r *http.Request) ([]string, error) {
+		slug, err := validatedPathValue(r, "slug")
+		if err != nil {
+			return nil, err
+		}
+		return []string{"remove", slug}, nil
+	})
+	packActionErr("packs.mods.pin", http.MethodPost, Prefix+"/packs/{id}/mods/{slug}/pin", true, func(r *http.Request) ([]string, error) {
+		slug, err := validatedPathValue(r, "slug")
+		if err != nil {
+			return nil, err
+		}
+		return []string{"pin", slug}, nil
+	})
+	packActionErr("packs.mods.unpin", http.MethodPost, Prefix+"/packs/{id}/mods/{slug}/unpin", true, func(r *http.Request) ([]string, error) {
+		slug, err := validatedPathValue(r, "slug")
+		if err != nil {
+			return nil, err
+		}
+		return []string{"unpin", slug}, nil
+	})
+	packActionErr("packs.mods.update", http.MethodPost, Prefix+"/packs/{id}/mods/{slug}/update", true, func(r *http.Request) ([]string, error) {
+		slug, err := validatedPathValue(r, "slug")
+		if err != nil {
+			return nil, err
+		}
+		return []string{"update", slug}, nil
+	})
 
-	packAction("packs.run", http.MethodPost, Prefix+"/packs/{id}/run/{script}", true, func(r *http.Request) []string { return []string{"run", r.PathValue("script")} })
+	packActionErr("packs.run", http.MethodPost, Prefix+"/packs/{id}/run/{script}", true, func(r *http.Request) ([]string, error) {
+		script, err := validatedPathValue(r, "script")
+		if err != nil {
+			return nil, err
+		}
+		return []string{"run", script}, nil
+	})
 
 	packAction("packs.migrate.format", http.MethodPost, Prefix+"/packs/{id}/migrate/format", true, func(_ *http.Request) []string { return []string{"migrate", "format"} })
 	Register(Action{Name: "packs.migrate.loader", Method: http.MethodPost, Path: Prefix + "/packs/{id}/migrate/loader", Summary: "Migrate loader version(s)", Destructive: true, Build: func(s *Server, r *http.Request) (string, []string, error) {
@@ -258,17 +289,37 @@ func workspaceAction(name, method, path string, destructive bool, args []string,
 }
 
 func packAction(name, method, path string, destructive bool, arguments func(*http.Request) []string) {
+	packActionErr(name, method, path, destructive, func(r *http.Request) ([]string, error) {
+		return arguments(r), nil
+	})
+}
+
+func packActionErr(name, method, path string, destructive bool, arguments func(*http.Request) ([]string, error)) {
 	Register(Action{Name: name, Method: method, Path: path, Summary: name, Destructive: destructive, Build: func(s *Server, r *http.Request) (string, []string, error) {
 		dir, err := s.actionDir(r)
 		if err != nil {
 			return "", nil, err
 		}
-		args := arguments(r)
+		args, err := arguments(r)
+		if err != nil {
+			return "", nil, err
+		}
 		if len(args) == 0 {
 			return "", nil, errors.New("request body is missing required values")
 		}
 		return dir, args, nil
 	}})
+}
+
+// validatedPathValue returns the named path parameter, rejecting anything that
+// doesn't look like a slug/script name — in particular flag-shaped values that
+// the invoked subcommand would otherwise parse as flags.
+func validatedPathValue(r *http.Request, key string) (string, error) {
+	v := r.PathValue(key)
+	if !slugPattern.MatchString(v) {
+		return "", fmt.Errorf("invalid %s", key)
+	}
+	return v, nil
 }
 
 func queryBool(r *http.Request, name string) bool {
@@ -315,6 +366,9 @@ func (s *Server) resolveCompatibilityAction(input actionInput) (string, []string
 		return "", nil, err
 	}
 	slug := strings.TrimSpace(input.Slug)
+	if slug != "" && !slugPattern.MatchString(slug) {
+		return "", nil, errors.New("invalid slug")
+	}
 	switch input.Action {
 	case "validate-project":
 		return dir, []string{"validate", "manifest.json"}, nil

@@ -18,6 +18,7 @@ func newClient(instance string) *gitea.Client {
 	}
 	opts := []gitea.ClientOption{
 		gitea.SetUserAgent(core.UserAgent),
+		gitea.SetHTTPClient(core.NewClient()),
 	}
 	if token != "" {
 		opts = append(opts, gitea.SetToken(token))

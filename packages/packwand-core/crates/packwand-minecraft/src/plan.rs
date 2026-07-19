@@ -8,9 +8,9 @@ use std::path::{Component, Path, PathBuf};
 
 use serde::Serialize;
 
-use crate::model::{maven_artifact_path, AssetIndex, Library, LoggingConfig, VersionDoc};
-use crate::rules::{rules_allow, Host};
 use crate::MinecraftError;
+use crate::model::{AssetIndex, Library, LoggingConfig, VersionDoc, maven_artifact_path};
+use crate::rules::{Host, rules_allow};
 
 /// Shared directories an installation writes into.
 #[derive(Debug, Clone)]
@@ -164,13 +164,12 @@ pub fn build_library_downloads(
 ) -> Result<Vec<DownloadAction>, MinecraftError> {
     let mut downloads = Vec::new();
     for library in libraries {
-        if let Some(action) = library_download_action(library, &layout.libraries_dir)? {
-            if !downloads
+        if let Some(action) = library_download_action(library, &layout.libraries_dir)?
+            && !downloads
                 .iter()
                 .any(|existing: &DownloadAction| existing.target == action.target)
-            {
-                downloads.push(action);
-            }
+        {
+            downloads.push(action);
         }
     }
     Ok(downloads)
@@ -382,12 +381,16 @@ mod tests {
             .iter()
             .map(|d| d.target.display().to_string().replace('\\', "/"))
             .collect();
-        assert!(targets
-            .contains(&"root/libraries/com/mojang/brigadier/1.2/brigadier-1.2.jar".to_string()));
-        assert!(targets.contains(
-            &"root/libraries/net/fabricmc/fabric-loader/0.16.0/fabric-loader-0.16.0.jar"
-                .to_string()
-        ));
+        assert!(
+            targets
+                .contains(&"root/libraries/com/mojang/brigadier/1.2/brigadier-1.2.jar".to_string())
+        );
+        assert!(
+            targets.contains(
+                &"root/libraries/net/fabricmc/fabric-loader/0.16.0/fabric-loader-0.16.0.jar"
+                    .to_string()
+            )
+        );
         assert!(!targets.iter().any(|t| t.contains("linux-only")));
         assert_eq!(
             plan.classpath
@@ -410,17 +413,21 @@ mod tests {
         );
         // Natives jar is downloaded and queued for extraction.
         assert_eq!(plan.extractions.len(), 1);
-        assert!(plan.extractions[0]
-            .archive
-            .display()
-            .to_string()
-            .contains("natives-windows"));
+        assert!(
+            plan.extractions[0]
+                .archive
+                .display()
+                .to_string()
+                .contains("natives-windows")
+        );
         assert_eq!(plan.extractions[0].excludes, vec!["META-INF/".to_string()]);
         // Natives jars are not classpath entries.
-        assert!(!plan
-            .classpath
-            .iter()
-            .any(|p| p.display().to_string().contains("natives-windows")));
+        assert!(
+            !plan
+                .classpath
+                .iter()
+                .any(|p| p.display().to_string().contains("natives-windows"))
+        );
     }
 
     #[test]
@@ -449,9 +456,11 @@ mod tests {
         assert_eq!(plan.downloads.len(), 2, "duplicate hash downloads once");
         assert!(plan.copies.is_empty());
         assert_eq!(plan.known_download_bytes(), 15);
-        assert!(plan.downloads[0]
-            .url
-            .starts_with("https://resources.download.minecraft.net/aa/"));
+        assert!(
+            plan.downloads[0]
+                .url
+                .starts_with("https://resources.download.minecraft.net/aa/")
+        );
 
         let bad = AssetIndex::from_slice(br#"{"objects": {"x": {"hash": "not-hex!", "size": 1}}}"#)
             .unwrap();
@@ -514,12 +523,10 @@ mod tests {
             ..VersionDoc::default()
         };
         let plan = build_version_plan(&doc, &Host::current(), &layout(Path::new("root"))).unwrap();
-        assert!(plan.downloads.iter().any(|download| download
-            .target
-            .display()
-            .to_string()
-            .replace('\\', "/")
-            == "root/assets/log_configs/client-1.xml"));
+        assert!(plan.downloads.iter().any(|download| {
+            download.target.display().to_string().replace('\\', "/")
+                == "root/assets/log_configs/client-1.xml"
+        }));
     }
 
     #[test]

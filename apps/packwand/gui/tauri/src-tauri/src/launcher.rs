@@ -16,16 +16,16 @@ use std::hash::{Hash, Hasher};
 use std::io;
 use std::path::PathBuf;
 use std::process::Command;
-use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::Mutex;
+use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::thread;
 use std::time::Duration;
 
 use packwand_auth::Session;
-use packwand_devboot::{boot_pack, InstallProgress};
+use packwand_devboot::{InstallProgress, boot_pack};
 use packwand_instance::{FsInstanceRepository, InstanceRepository, ListEntry};
 use packwand_launch::{
-    build_launch_plan, launch, CancellationToken, LaunchEvent, LaunchOptions, LaunchPlan,
+    CancellationToken, LaunchEvent, LaunchOptions, LaunchPlan, build_launch_plan, launch,
 };
 use packwand_msa::{KeyringTokenStore, MsaConfig};
 use serde::{Deserialize, Serialize};
@@ -59,7 +59,9 @@ fn ensure_managed_java(root: &std::path::Path) -> Result<PathBuf, String> {
     } else {
         "x64"
     };
-    let url = format!("https://api.adoptium.net/v3/binary/latest/{MANAGED_JAVA_MAJOR}/ga/{os}/{arch}/jre/hotspot/normal/eclipse");
+    let url = format!(
+        "https://api.adoptium.net/v3/binary/latest/{MANAGED_JAVA_MAJOR}/ga/{os}/{arch}/jre/hotspot/normal/eclipse"
+    );
     let response = ureq::get(&url)
         .call()
         .map_err(|e| format!("failed to download Temurin {MANAGED_JAVA_MAJOR}: {e}"))?;
@@ -324,14 +326,12 @@ pub struct AuthStatus {
 /// user doesn't have to sign in again every app start.
 #[tauri::command]
 pub fn auth_status(state: State<'_, AuthState>) -> Result<AuthStatus, String> {
-    if !state.refresh_attempted.swap(true, Ordering::SeqCst) {
-        if let Some(config) = msa_config() {
-            if let Ok(Some(session)) = packwand_msa::refresh(&config, &state.store) {
-                if let Ok(mut guard) = state.session.lock() {
-                    *guard = Some(session);
-                }
-            }
-        }
+    if !state.refresh_attempted.swap(true, Ordering::SeqCst)
+        && let Some(config) = msa_config()
+        && let Ok(Some(session)) = packwand_msa::refresh(&config, &state.store)
+        && let Ok(mut guard) = state.session.lock()
+    {
+        *guard = Some(session);
     }
     let guard = state
         .session
@@ -590,18 +590,12 @@ pub fn launcher_boot(
         }
 
         for event in handle.events() {
-            if dock {
-                if let LaunchEvent::Started { pid, .. } = &event {
-                    let dock_app = thread_app.clone();
-                    let dock_pid = *pid;
-                    thread::spawn(move || {
-                        window_dock::dock_game_window(
-                            &dock_app,
-                            dock_pid,
-                            Duration::from_secs(300),
-                        );
-                    });
-                }
+            if dock && let LaunchEvent::Started { pid, .. } = &event {
+                let dock_app = thread_app.clone();
+                let dock_pid = *pid;
+                thread::spawn(move || {
+                    window_dock::dock_game_window(&dock_app, dock_pid, Duration::from_secs(300));
+                });
             }
             emit_event(&thread_app, &thread_session, event);
         }

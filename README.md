@@ -1,11 +1,11 @@
 # Reverie Projects/monorepo
-This is the repository hosting all of the different Reverie Projects modpacks, resource packs, and datapacks.
+This is the repository hosting all of the different Reverie Projects mods, modpacks, resource packs, and datapacks.
 
 ## Notice
 Development is (currently) held on [git.nostalgica.net](https://git.nostalgica.net/Lasting-Legacy/Content-Monorepo), Tangled, GitHub and Codeberg are mirrors. Please go to our [GitHub Issues](https://github.com/Nostalgica-Reverie/Content-Monorepo/issues) page to report any issues.
 
 # General
-This repository hosts all the source and files for all of our resource packs, data packs, modpacks and documentation. This readme is primarily intended for internal developer usage.
+This repository hosts all the source and files for all of our mods, resource packs, data packs, modpacks and documentation. This readme is primarily intended for internal developer usage.
 
 ## Contributing
 First, please refer to the CONTRIBUTING.md file in the repository. This will tell you some basics.
@@ -18,20 +18,49 @@ First, please refer to the CONTRIBUTING.md file in the repository. This will tel
 Now you have our tooling set up.
 
 # Documentation
-- Install [Node.js](https://nodejs.org/en/download) version 18 or higher
-- Install VitePress through NPM in a terminal
+- Install [Bun](https://bun.sh/) 1.3.14
+- Install the monorepo dependencies from the repository root
 ```
-npm add -D vitepress@next
+bun install
 ```
 - Start the local development server
 ```
-npm run docs:dev
+bun run --cwd docs docs:dev
 ```
 
 Any changes made in the docs segment of the repo will now automatically update locally
 
 # Modpacks
 To work on modpacks, you must install Packwand, which the download was provided above.
+
+# Mods
+Minecraft mod source lives under `mods/`. Each project is a Stonecutter Gradle
+build with Fabric 26.1.2 and NeoForge 1.21.1 variants. From the repository root:
+
+```
+just lint-mods
+just test-mods
+just build-mods
+```
+
+Packwand publish manifests map each release variant to its exact Gradle project
+through `variants[].gradle_project`.
+
+# Nix
+The root flake is the Nix entry point for the monorepo. It builds Packwand,
+checks every generated modpack checksum inventory, exposes a small development
+shell, and re-exports the vendored `packwand2nix` helpers:
+
+```
+nix develop
+nix build .#packwand
+nix run .#cursorapi -- --root .
+nix flake check
+```
+
+The equivalent CI-facing commands are `just lint-nix`, `just test-nix`, and
+`just build-nix`; the build covers both Packwand and Cursor API. Nix runs
+natively on Linux and macOS, or through WSL on Windows.
 
 # Actions
 The repository makes usage of Forgejo actions, for CI/CD and general QoL improvements to our dev process.

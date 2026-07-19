@@ -26,14 +26,6 @@ on:
         required: false
         type: string
         default: "modpacks"
-    secrets:
-      CURSEFORGE_API_KEY:
-        description: "Optional override for PackWand's embedded CurseForge client key"
-        required: false
-      FORGEJO_TOKEN:
-        description: "Forgejo token used to check out and commit changes"
-        required: true
-
 jobs:
   packwand:
     runs-on: technocality

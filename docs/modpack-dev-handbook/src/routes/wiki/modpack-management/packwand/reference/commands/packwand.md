@@ -9,7 +9,7 @@ packwand [flags]
 ### Options
 
 ```
-      --cache string              The directory where packwiz will cache downloaded mods (default "C:\\Users\\jmtmm\\AppData\\Local\\packwand\\cache")
+      --cache string              The directory where packwiz will cache downloaded mods (default: your platform cache directory)
       --config string             The config file to use (default: .packwand.toml in your platform config directory)
   -h, --help                      help for packwand
       --meta-folder string        The folder in which new metadata files will be added, defaulting to a folder based on the category (mods, resourcepacks, etc; if the category is unknown the current directory is used)
@@ -24,9 +24,10 @@ packwand [flags]
 * [packwand add](packwand_add.md)	 - Add a mod to all (or a specific) pack's Modrinth and CurseForge subdirs
 * [packwand api](packwand_api.md)	 - Run and inspect the Packwand HTTP API
 * [packwand automation](packwand_automation.md)	 - Query effective automation settings for a pack
-* [packwand build](packwand_build.md)	 - Build modpack exports and zip packs from git-changed targets (CI mode)
+* [packwand build](packwand_build.md)	 - Build mod jars, modpack exports, and zip packs from git-changed targets (CI mode)
 * [packwand bump](packwand_bump.md)	 - Bump the manifest version (--configs also updates in-pack version files)
 * [packwand cache](packwand_cache.md)	 - Inspect and maintain the shared download cache
+* [packwand ci-local](packwand_ci-local.md)	 - Run the Packwand CI-equivalent validation stages for a subdir
 * [packwand completion](packwand_completion.md)	 - Generate the autocompletion script for the specified shell
 * [packwand content-lint](packwand_content-lint.md)	 - Lint pack content — namespaces, texture/model refs, pack.mcmeta, function tags, duplicate and case-colliding files
 * [packwand curseforge](packwand_curseforge.md)	 - Manage curseforge-based mods
@@ -53,8 +54,10 @@ packwand [flags]
 * [packwand parity](packwand_parity.md)	 - Report content drift between a pack's Modrinth (-mr) and CurseForge (-cf) variant subdirs (no args: all modpacks)
 * [packwand pin](packwand_pin.md)	 - Pin a file so it does not get updated automatically
 * [packwand port](packwand_port.md)	 - Compare MR and CF subdirs and port missing mods from Modrinth to CurseForge
-* [packwand publish](packwand_publish.md)	 - Build, upload, verify, or list publish targets for a pack
+* [packwand preflight](packwand_preflight.md)	 - Run the pre-launch validation gate — manifest, syntax, and registry reference checks
+* [packwand publish](packwand_publish.md)	 - Build, upload, verify, or list publish targets for a project
 * [packwand refresh](packwand_refresh.md)	 - Refresh the index file
+* [packwand registry](packwand_registry.md)	 - Build content registries — indexes of referenceable IDs backing IDE completion and validation
 * [packwand rehash](packwand_rehash.md)	 - Migrate all hashes to a specific format
 * [packwand remove](packwand_remove.md)	 - Remove an external file from the modpack; equivalent to manually removing the file and running packwiz refresh
 * [packwand run](packwand_run.md)	 - Execute a user-defined script from the [scripts] section of pack.toml

@@ -45,13 +45,18 @@ func TestMain(m *testing.M) {
 }
 
 // runRefresh runs `packwand refresh` in dir and returns stdout+stderr.
-func runRefresh(t *testing.T, dir string) string {
+func runRefresh(t *testing.T, dir string, args ...string) string {
 	t.Helper()
-	cmd := exec.Command(packwandBin, "refresh")
+	return runPackwand(t, dir, append([]string{"refresh"}, args...)...)
+}
+
+func runPackwand(t *testing.T, dir string, args ...string) string {
+	t.Helper()
+	cmd := exec.Command(packwandBin, args...)
 	cmd.Dir = dir
 	out, err := cmd.CombinedOutput()
 	if err != nil {
-		t.Fatalf("packwand refresh failed: %v\n%s", err, out)
+		t.Fatalf("packwand %s failed: %v\n%s", strings.Join(args, " "), err, out)
 	}
 	return string(out)
 }
@@ -181,8 +186,7 @@ func TestRefreshIndexesExpectedFiles(t *testing.T) {
 		}
 	}
 
-	// pack.toml carries the sha512 of the exact index.toml bytes; the
-	// installer uses it as its staleness check.
+	// Normal refreshes keep the generated index digest out of source metadata.
 	var pack struct {
 		Index struct {
 			HashFormat string `toml:"hash-format"`
@@ -192,8 +196,50 @@ func TestRefreshIndexesExpectedFiles(t *testing.T) {
 	if _, err := toml.Decode(string(read(t, dir, "pack.toml")), &pack); err != nil {
 		t.Fatal(err)
 	}
+	if pack.Index.Hash != "" {
+		t.Errorf("pack.toml source index hash = %s, want it omitted", pack.Index.Hash)
+	}
+}
+
+func TestBuildRefreshWritesDistributionHash(t *testing.T) {
+	dir := writeFixturePack(t)
+	runRefresh(t, dir, "--build")
+
+	var pack struct {
+		Index struct {
+			Hash string `toml:"hash"`
+		} `toml:"index"`
+	}
+	if _, err := toml.Decode(string(read(t, dir, "pack.toml")), &pack); err != nil {
+		t.Fatal(err)
+	}
 	if expected := sha512hex(read(t, dir, "index.toml")); pack.Index.Hash != expected {
-		t.Errorf("pack.toml index hash = %s, want %s", pack.Index.Hash, expected)
+		t.Errorf("distribution index hash = %s, want %s", pack.Index.Hash, expected)
+	}
+}
+
+func TestRefreshRegeneratesMissingIndex(t *testing.T) {
+	dir := writeFixturePack(t)
+	if err := os.Remove(filepath.Join(dir, "index.toml")); err != nil {
+		t.Fatal(err)
+	}
+	runRefresh(t, dir)
+	if findFile(decodeIndex(t, dir), "mods/example.pw.toml") == nil {
+		t.Fatal("refresh did not regenerate the missing index")
+	}
+}
+
+func TestIndexConsumerRegeneratesMissingIndexInMemory(t *testing.T) {
+	dir := writeFixturePack(t)
+	if err := os.Remove(filepath.Join(dir, "index.toml")); err != nil {
+		t.Fatal(err)
+	}
+	out := runPackwand(t, dir, "list")
+	if !strings.Contains(out, "Example Mod") {
+		t.Fatalf("list did not consume a regenerated index:\n%s", out)
+	}
+	if _, err := os.Stat(filepath.Join(dir, "index.toml")); !os.IsNotExist(err) {
+		t.Fatalf("read-only index consumer unexpectedly persisted index.toml: %v", err)
 	}
 }
 

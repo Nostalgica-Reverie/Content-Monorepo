@@ -61,12 +61,12 @@ pub(crate) fn find_packwand() -> Result<PathBuf, String> {
     } else {
         "packwand"
     };
-    if let Ok(exe) = std::env::current_exe() {
-        if let Some(dir) = exe.parent() {
-            let sibling = dir.join(name);
-            if sibling.is_file() {
-                return Ok(sibling);
-            }
+    if let Ok(exe) = std::env::current_exe()
+        && let Some(dir) = exe.parent()
+    {
+        let sibling = dir.join(name);
+        if sibling.is_file() {
+            return Ok(sibling);
         }
     }
     // Fall back to PATH resolution by the OS.
@@ -340,17 +340,16 @@ pub fn run() {
         .build(tauri::generate_context!())
         .expect("error while building Packwand GUI")
         .run(|app, event| {
-            if let RunEvent::Exit = event {
+            if let RunEvent::Exit = event
                 // Terminate the packwand gui server with the app.
-                if let Some(state) = app.try_state::<Backend>() {
-                    if let Ok(mut guard) = state.0.lock() {
-                        if let Some(backend) = guard.as_mut() {
-                            let _ = backend.child.kill();
-                            let _ = backend.child.wait();
-                        }
-                        *guard = None;
-                    }
+                && let Some(state) = app.try_state::<Backend>()
+                && let Ok(mut guard) = state.0.lock()
+            {
+                if let Some(backend) = guard.as_mut() {
+                    let _ = backend.child.kill();
+                    let _ = backend.child.wait();
                 }
+                *guard = None;
             }
         });
 }

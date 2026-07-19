@@ -1,0 +1,56 @@
+name: "CI - Mods"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "mods/**"
+      - "justfile"
+      - ".forgejo/actions/setup-java/**"
+      - ".forgejo/actions/setup-just/**"
+      - ".forgejo/workflows/ci-mods.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "mods/**"
+      - "justfile"
+      - ".forgejo/actions/setup-java/**"
+      - ".forgejo/actions/setup-just/**"
+      - ".forgejo/workflows/ci-mods.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mods:
+    runs-on: technocality
+    timeout-minutes: 45
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          filter: blob:none
+          fetch-depth: 1
+          sparse-checkout: |
+            mods
+            justfile
+            .forgejo/actions
+      - uses: ./.forgejo/actions/setup-java
+        with:
+          java-version: "25"
+      - uses: ./.forgejo/actions/setup-just
+      - name: Verify mods
+        run: just lint-mods
+      - name: Test mods
+        run: just test-mods
+      - name: Build mods
+        run: just build-mods
+      - name: Upload mod snapshots
+        if: github.ref == 'refs/heads/main'
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: mod-snapshots-${{ github.sha }}
+          path: |
+            mods/*/versions/*/build/libs/*.jar
+            !mods/*/versions/*/build/libs/*-sources.jar

@@ -101,8 +101,16 @@ func (s *Server) auth(next http.Handler) http.Handler {
 	})
 }
 
-func (s *Server) handleVersion(w http.ResponseWriter, _ *http.Request) {
-	writeJSON(w, map[string]any{"ok": true, "version": cmd.Version(), "api_version": "v1", "root": filepath.ToSlash(s.root)})
+func (s *Server) handleVersion(w http.ResponseWriter, r *http.Request) {
+	// /version is deliberately reachable without auth so clients can probe the
+	// server, but the absolute repo path is only disclosed to authorized
+	// callers (or when no token is configured at all, e.g. the embedded GUI).
+	out := map[string]any{"ok": true, "version": cmd.Version(), "api_version": "v1"}
+	provided := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+	if s.token == "" || (len(provided) == len(s.token) && subtle.ConstantTimeCompare([]byte(provided), []byte(s.token)) == 1) {
+		out["root"] = filepath.ToSlash(s.root)
+	}
+	writeJSON(w, out)
 }
 
 type capability struct {
@@ -148,10 +156,11 @@ type Pack struct {
 }
 
 type Variant struct {
-	ID        string `json:"id,omitempty"`
-	MCVersion string `json:"mc_version,omitempty"`
-	Loader    string `json:"loader,omitempty"`
-	Version   string `json:"version,omitempty"`
+	ID            string `json:"id,omitempty"`
+	MCVersion     string `json:"mc_version,omitempty"`
+	Loader        string `json:"loader,omitempty"`
+	Version       string `json:"version,omitempty"`
+	GradleProject string `json:"gradle_project,omitempty"`
 }
 
 type Subdir struct {
@@ -180,7 +189,7 @@ func toAPIPack(root string, entry manifest.Entry) Pack {
 		pack.MCVersion = *m.MCVersion
 	}
 	for _, variant := range m.Variants {
-		pack.Variants = append(pack.Variants, Variant{ID: variant.ID, MCVersion: variant.MCVersion, Loader: first(variant.Loader, m.Loader), Version: variant.Version})
+		pack.Variants = append(pack.Variants, Variant{ID: variant.ID, MCVersion: variant.MCVersion, Loader: first(variant.Loader, m.Loader), Version: variant.Version, GradleProject: variant.GradleProject})
 	}
 	for _, subdir := range manifest.SubDirsOf(entry.Dir) {
 		platform := ""
@@ -244,7 +253,11 @@ func (s *Server) handleCreatePack(w http.ResponseWriter, r *http.Request) {
 	}
 	category, typ, ok := packCategory(request.Type)
 	if !ok {
-		writeError(w, 400, "invalid_argument", "type must be modpack, datapack, or resourcepack", "type")
+		writeError(w, 400, "invalid_argument", "type must be mod, modpack, datapack, or resourcepack", "type")
+		return
+	}
+	if typ == "mod" {
+		writeError(w, 400, "invalid_argument", "mod source projects must be scaffolded with their Gradle and Stonecutter files before adding a manifest", "type")
 		return
 	}
 	dir := filepath.Join(s.root, category, request.ID)
@@ -276,6 +289,8 @@ func packCategory(value string) (string, string, bool) {
 		return "datapacks", "datapack", true
 	case "resourcepack", "resourcepacks", "resource-pack":
 		return "resourcepacks", "resourcepack", true
+	case "mod", "mods":
+		return "mods", "mod", true
 	}
 	return "", "", false
 }
@@ -284,7 +299,7 @@ func (s *Server) packDir(id string) (string, error) {
 	if !idPattern.MatchString(id) {
 		return "", errors.New("invalid pack id")
 	}
-	for _, category := range []string{"modpacks", "datapacks", "resourcepacks"} {
+	for _, category := range []string{"mods", "modpacks", "datapacks", "resourcepacks"} {
 		root := filepath.Join(s.root, category)
 		entries, _ := os.ReadDir(root)
 		for _, entry := range entries {

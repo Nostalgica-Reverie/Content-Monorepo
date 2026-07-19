@@ -54,7 +54,7 @@ try {
 
   const sanitizers: [RegExp, string][] = [
     [
-      /\(default "[^"]*[\/]+packwand[\/]+cache"\)/g,
+      /\(default "[^"]*[\\/]+packwand[\\/]+cache"\)/g,
       "(default: your platform cache directory)",
     ],
     [

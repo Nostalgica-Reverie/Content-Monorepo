@@ -9,7 +9,7 @@ packwand refresh [flags]
 ### Options
 
 ```
-      --build   Only has an effect in no-internal-hashes mode: generates internal hashes for distribution with packwiz-installer
+      --build   Generate the index and matching pack hash for distribution with packwiz-installer
   -h, --help    help for refresh
 ```
 
@@ -28,4 +28,3 @@ packwand refresh [flags]
 ### SEE ALSO
 
 * [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
-

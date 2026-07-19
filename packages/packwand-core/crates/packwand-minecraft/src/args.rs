@@ -13,9 +13,9 @@
 //!   supervisor resolves at spawn time; the raw value never enters the
 //!   record or the plan.
 
-use crate::model::{Argument, VersionDoc};
-use crate::rules::{rules_allow, Host};
 use crate::MinecraftError;
+use crate::model::{Argument, VersionDoc};
+use crate::rules::{Host, rules_allow};
 
 /// Bootstrap-time values for identity and static placeholders.
 #[derive(Debug, Clone)]

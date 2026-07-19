@@ -100,5 +100,7 @@ Forgejo automation workflows also accept a repository Actions secret named
 ## Documentation
 See the Packwand documentation site: https://packwand.nostalgica.net
 
+For the codebase's package layout, dependency shape, and concurrency/HTTP/error-handling conventions, see [ARCHITECTURE.md](ARCHITECTURE.md).
+
 ## License
 All packwand new features are under AGPL-3.0 or later. All original packwiz code remains under MIT license.

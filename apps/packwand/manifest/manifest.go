@@ -47,7 +47,7 @@ type Entry struct {
 // ignored, matching the established CLI and HTTP API behaviour.
 func LoadAll(root string) ([]Entry, error) {
 	var out []Entry
-	for _, category := range []string{"modpacks", "datapacks", "resourcepacks"} {
+	for _, category := range []string{"mods", "modpacks", "datapacks", "resourcepacks"} {
 		entries, err := os.ReadDir(filepath.Join(root, category))
 		if os.IsNotExist(err) {
 			continue
@@ -81,11 +81,12 @@ func LoadAll(root string) ([]Entry, error) {
 }
 
 type Variant struct {
-	MCVersion string `json:"mc_version"`
-	ID        string `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	Loader    string `json:"loader,omitempty"`
-	Version   string `json:"version,omitempty"`
+	MCVersion     string `json:"mc_version"`
+	ID            string `json:"id,omitempty"`
+	Name          string `json:"name,omitempty"`
+	Loader        string `json:"loader,omitempty"`
+	Version       string `json:"version,omitempty"`
+	GradleProject string `json:"gradle_project,omitempty"`
 }
 
 type PerformanceBase struct {

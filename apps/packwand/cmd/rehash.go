@@ -59,23 +59,21 @@ var rehashCmd = &cobra.Command{
 			} else {
 				dl.Mod.Download.HashFormat = args[0]
 				dl.Mod.Download.Hash = dl.Hashes[args[0]]
-				_, _, err := dl.Mod.Write()
+				format, hash, err := dl.Mod.Write()
 				if err != nil {
 					fmt.Printf("Error saving mod %s: %v\n", dl.Mod.Name, err)
 					os.Exit(1)
 				}
+				if err := index.RefreshFileWithHash(dl.Mod.GetFilePath(), format, hash, true); err != nil {
+					fmt.Printf("Error updating index for %s: %v\n", dl.Mod.Name, err)
+					os.Exit(1)
+				}
 			}
-			// TODO pass the hash to index instead of recomputing from scratch
 		}
 
 		err = session.SaveIndex()
 		if err != nil {
 			fmt.Printf("Error saving cache index: %v\n", err)
-			os.Exit(1)
-		}
-
-		if _, err = index.Refresh(); err != nil {
-			fmt.Printf("Error refreshing index: %v\n", err)
 			os.Exit(1)
 		}
 

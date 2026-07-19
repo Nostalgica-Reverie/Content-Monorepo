@@ -52,19 +52,13 @@ pub enum RuntimeError {
     NotAJavaHome { home: PathBuf, reason: String },
     #[error("could not parse Java version {0:?}")]
     UnparseableVersion(String),
-    #[error(
-        "no discovered Java installation satisfies major version {required}; found: [{found}]"
-    )]
+    #[error("no discovered Java installation satisfies major version {required}; found: [{found}]")]
     NoCompatibleJava { required: u32, found: String },
 }
 
 /// The name of the Java executable on this platform.
 pub fn java_executable_name() -> &'static str {
-    if cfg!(windows) {
-        "java.exe"
-    } else {
-        "java"
-    }
+    if cfg!(windows) { "java.exe" } else { "java" }
 }
 
 /// Parses a `JAVA_VERSION` string into its feature-release number:
@@ -241,10 +235,10 @@ pub fn discover(config: &DiscoveryConfig) -> Vec<JavaInstallation> {
         candidates.push((home.clone(), DiscoverySource::JavaHome));
     }
     for dir in &config.path_entries {
-        if dir.join(java_executable_name()).is_file() {
-            if let Some(home) = dir.parent() {
-                candidates.push((home.to_path_buf(), DiscoverySource::PathEnv));
-            }
+        if dir.join(java_executable_name()).is_file()
+            && let Some(home) = dir.parent()
+        {
+            candidates.push((home.to_path_buf(), DiscoverySource::PathEnv));
         }
     }
     for vendor_dir in &config.vendor_dirs {

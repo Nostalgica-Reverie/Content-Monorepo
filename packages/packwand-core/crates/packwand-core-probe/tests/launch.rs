@@ -10,8 +10,8 @@ use std::path::Path;
 use common::{fake_java_spec, file_len, next_event, wait_until};
 use packwand_instance::{FsInstanceRepository, InstanceRecord, InstanceRepository};
 use packwand_launch::{
-    build_launch_plan, launch, CancellationToken, LaunchError, LaunchEvent, LaunchOptions,
-    LaunchPlan,
+    CancellationToken, LaunchError, LaunchEvent, LaunchOptions, LaunchPlan, build_launch_plan,
+    launch,
 };
 
 fn plan_for(
@@ -299,9 +299,11 @@ fn token_like_output_passes_through_and_never_reaches_the_plan() {
     // Child output resembling a token is forwarded verbatim: it is the
     // child's output, not a secret the supervisor holds.
     let events = launch(&plan, LaunchOptions::default()).unwrap().wait();
-    assert!(events
-        .iter()
-        .any(|e| matches!(e, LaunchEvent::Stdout { line, .. } if line == token_like)));
+    assert!(
+        events
+            .iter()
+            .any(|e| matches!(e, LaunchEvent::Stdout { line, .. } if line == token_like))
+    );
 
     // Events never grow a session/secret payload: only the child's own
     // output lines are forwarded, and the plan's session map stays empty

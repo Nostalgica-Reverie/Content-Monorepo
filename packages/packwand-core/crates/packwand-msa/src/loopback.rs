@@ -72,8 +72,7 @@ fn handle_connection(mut stream: TcpStream) -> Result<String, MsaError> {
         .unwrap_or("")
         .to_string();
 
-    let body =
-        "<html><body><p>Signed in - you can close this tab and return to Packwand.</p></body></html>";
+    let body = "<html><body><p>Signed in - you can close this tab and return to Packwand.</p></body></html>";
     let response = format!(
         "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
         body.len(),

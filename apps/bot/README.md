@@ -42,4 +42,5 @@ From the repository root you can also use the justfile entrypoints CI runs:
 ## Deployment
 
 `Dockerfile` (oven/bun) + `docker-entrypoint.sh` build a self-contained image;
-Drizzle migrations run on start.
+Drizzle migrations run on start. Build it with the monorepo root as context:
+`docker build -f apps/bot/Dockerfile .`.

@@ -1,9 +1,12 @@
-name: "Update Packwand Nix Vendor Hash"
+name: "Update Go Nix Vendor Hashes"
 
 on:
   push:
     branches: ["main"]
     paths:
+      - 'apps/api/go.mod'
+      - 'apps/api/go.sum'
+      - 'apps/packwand/go.mod'
       - 'apps/packwand/go.sum'
   workflow_dispatch:
 
@@ -16,20 +19,22 @@ jobs:
           token: ${{ secrets.FORGEJO_TOKEN }}
           fetch-depth: 1
 
-      - name: Install Nix
-        uses: https://github.com/cachix/install-nix-action@v30
-        with:
-          extra_nix_config: |
-            experimental-features = nix-command flakes
+      - uses: ./.forgejo/actions/setup-nix
 
-      - name: Update vendor hash
-        working-directory: apps/packwand
-        run: nix run nixpkgs#nix-prefetch ./nix/prefetcher.nix | tee ./nix/vendor-hash
+      - name: Update vendor hashes
+        run: |
+          set -eu
+          for component in api packwand; do
+            (
+              cd "apps/$component"
+              nix run nixpkgs#nix-prefetch ./nix/prefetcher.nix | tee ./nix/vendor-hash
+            )
+          done
 
       - name: Commit
         uses: https://github.com/EndBug/add-and-commit@v9
         with:
           author_name: forgejo-actions[bot]
           author_email: omo50@noreply.nostalgica.net
-          message: 'chore(packwand): update nix vendor hash'
-          add: 'apps/packwand/nix/vendor-hash'
+          message: 'chore(nix): update Go vendor hashes'
+          add: 'apps/api/nix/vendor-hash apps/packwand/nix/vendor-hash'

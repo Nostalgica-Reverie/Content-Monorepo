@@ -117,11 +117,39 @@ func LoadPack() (Pack, error) {
 
 // LoadIndex attempts to load the index file of this modpack
 func (pack Pack) LoadIndex() (Index, error) {
+	index, err := pack.loadIndex()
+	if !os.IsNotExist(err) {
+		return index, err
+	}
+
+	// index.toml is generated state and may be absent in a clean checkout.
+	// Rebuild it in memory so commands that consume the index continue to
+	// work; commands that mutate the pack will persist it via CommitChanges.
+	index = NewIndex(pack.indexPath())
+	_, err = index.Refresh()
+	return index, err
+}
+
+// LoadIndexForRefresh loads the generated index when present, or returns an
+// empty index that Refresh can populate when starting from a clean checkout.
+func (pack Pack) LoadIndexForRefresh() (Index, error) {
+	index, err := pack.loadIndex()
+	if os.IsNotExist(err) {
+		return NewIndex(pack.indexPath()), nil
+	}
+	return index, err
+}
+
+func (pack Pack) loadIndex() (Index, error) {
+	return LoadIndex(pack.indexPath())
+}
+
+func (pack Pack) indexPath() string {
 	if filepath.IsAbs(pack.Index.File) {
-		return LoadIndex(pack.Index.File)
+		return pack.Index.File
 	}
 	fileNative := filepath.FromSlash(pack.Index.File)
-	return LoadIndex(filepath.Join(filepath.Dir(viper.GetString("pack-file")), fileNative))
+	return filepath.Join(filepath.Dir(viper.GetString("pack-file")), fileNative)
 }
 
 // UpdateIndexHash recalculates the hash of the index file of this modpack.
@@ -156,6 +184,13 @@ func (pack *Pack) UpdateIndexHash() error {
 	return f.Close()
 }
 
+// ClearIndexHash removes the derived index digest from source pack metadata.
+// Distribution builds call UpdateIndexHash after generating their index.
+func (pack *Pack) ClearIndexHash() {
+	pack.Index.HashFormat = DefaultHashFormat
+	pack.Index.Hash = ""
+}
+
 // Write saves the pack file
 func (pack Pack) Write() error {
 	f, err := os.Create(viper.GetString("pack-file"))
@@ -174,7 +209,7 @@ func (pack Pack) Write() error {
 	return f.Close()
 }
 
-// CommitChanges persists the index and pack files to disk.
+// CommitChanges persists the generated index and source pack metadata.
 // When the global --no-refresh flag is set, this is a no-op;
 // .pw.toml files remain on disk but the index is not rebuilt.
 // Run packwand refresh to finalize after batch operations.
@@ -185,9 +220,7 @@ func CommitChanges(index *Index, pack *Pack) error {
 	if err := index.Write(); err != nil {
 		return err
 	}
-	if err := pack.UpdateIndexHash(); err != nil {
-		return err
-	}
+	pack.ClearIndexHash()
 	return pack.Write()
 }
 

@@ -38,7 +38,7 @@
 				},
 				"hash": {
 					"type": "string",
-					"description": "The hash of the index file, as a string. May be omitted when the pack uses no-internal-hashes mode; run packwand refresh --build to generate hashes for distribution.\n\nBinary hashes should be stored as hexadecimal, and case should be ignored during parsing. Numeric hashes (e.g. Murmur2) should still be stored as a string, to ensure the value is preserved correctly.",
+					"description": "The hash of the generated index file, as a string. It is omitted from source metadata; run packwand refresh --build to generate it for distribution.\n\nBinary hashes should be stored as hexadecimal, and case should be ignored during parsing. Numeric hashes (e.g. Murmur2) should still be stored as a string, to ensure the value is preserved correctly.",
 					"examples": [
 						"08f98e28057a0fbdb288c947b7871def4b18b176"
 					]

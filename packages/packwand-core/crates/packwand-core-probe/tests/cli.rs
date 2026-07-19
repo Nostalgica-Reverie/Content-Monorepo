@@ -89,9 +89,11 @@ fn create_list_plan_run_end_to_end() {
         .collect();
     assert_eq!(events.first().unwrap()["event"], "starting");
     assert_eq!(events[1]["event"], "started");
-    assert!(events
-        .iter()
-        .any(|e| e["event"] == "stdout" && e["line"] == "cli says hi"));
+    assert!(
+        events
+            .iter()
+            .any(|e| e["event"] == "stdout" && e["line"] == "cli says hi")
+    );
     let last = events.last().unwrap();
     assert_eq!(last["event"], "exited");
     assert_eq!(last["code"], 0);

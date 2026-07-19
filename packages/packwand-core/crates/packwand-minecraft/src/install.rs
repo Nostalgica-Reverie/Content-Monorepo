@@ -11,14 +11,14 @@ use std::collections::VecDeque;
 use std::fs;
 use std::io;
 use std::path::Path;
-use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering};
 use std::sync::Mutex;
+use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering};
 
 use sha1::{Digest, Sha1};
 
+use crate::MinecraftError;
 use crate::http::HttpClient;
 use crate::plan::{CopyAction, DownloadAction, ExtractAction, InstallPlan};
-use crate::MinecraftError;
 
 /// What one [`Installer::execute`] run did.
 #[derive(Debug, Default, Clone, PartialEq, Eq)]
@@ -129,14 +129,14 @@ fn perform_download(
             });
         }
     }
-    if let Some(expected) = action.size {
-        if bytes.len() as u64 != expected {
-            return Err(MinecraftError::SizeMismatch {
-                url: action.url.clone(),
-                expected,
-                actual: bytes.len() as u64,
-            });
-        }
+    if let Some(expected) = action.size
+        && bytes.len() as u64 != expected
+    {
+        return Err(MinecraftError::SizeMismatch {
+            url: action.url.clone(),
+            expected,
+            actual: bytes.len() as u64,
+        });
     }
     write_staged(&action.target, &bytes)?;
     Ok(true)
@@ -236,66 +236,69 @@ impl<'a> Installer<'a> {
 
         std::thread::scope(|scope| {
             for _ in 0..self.workers.min(total_downloads.max(1)) {
-                scope.spawn(|| loop {
-                    if failed.load(Ordering::SeqCst) {
-                        return;
-                    }
-                    let action = {
-                        let mut queue = queue.lock().expect("download queue poisoned");
-                        queue.pop_front()
-                    };
-                    let Some(action) = action else { return };
+                scope.spawn(|| {
+                    loop {
+                        if failed.load(Ordering::SeqCst) {
+                            return;
+                        }
+                        let action = {
+                            let mut queue = queue.lock().expect("download queue poisoned");
+                            queue.pop_front()
+                        };
+                        let Some(action) = action else { return };
 
-                    if is_satisfied(action) {
-                        skipped.fetch_add(1, Ordering::SeqCst);
-                        let satisfied = satisfied_bytes(action);
-                        let aggregate =
-                            downloaded_bytes.fetch_add(satisfied, Ordering::SeqCst) + satisfied;
-                        let finished = completed.fetch_add(1, Ordering::SeqCst) + 1;
-                        progress(InstallProgress {
-                            finished_downloads: finished,
-                            total_downloads,
-                            downloaded_bytes: aggregate,
-                            total_bytes,
-                            current_download_bytes: satisfied,
-                            current_download_total: action.size.or(Some(satisfied)),
-                        });
-                        continue;
-                    }
-
-                    let mut last_chunk_bytes = 0u64;
-                    match perform_download(self.http, action, &mut |current, current_total| {
-                        let delta = current.saturating_sub(last_chunk_bytes);
-                        last_chunk_bytes = current;
-                        let aggregate = downloaded_bytes.fetch_add(delta, Ordering::SeqCst) + delta;
-                        progress(InstallProgress {
-                            finished_downloads: completed.load(Ordering::SeqCst),
-                            total_downloads,
-                            downloaded_bytes: aggregate,
-                            total_bytes,
-                            current_download_bytes: current,
-                            current_download_total: current_total,
-                        });
-                    }) {
-                        Ok(true) => {
-                            downloaded.fetch_add(1, Ordering::SeqCst);
+                        if is_satisfied(action) {
+                            skipped.fetch_add(1, Ordering::SeqCst);
+                            let satisfied = satisfied_bytes(action);
+                            let aggregate =
+                                downloaded_bytes.fetch_add(satisfied, Ordering::SeqCst) + satisfied;
                             let finished = completed.fetch_add(1, Ordering::SeqCst) + 1;
                             progress(InstallProgress {
                                 finished_downloads: finished,
                                 total_downloads,
-                                downloaded_bytes: downloaded_bytes.load(Ordering::SeqCst),
+                                downloaded_bytes: aggregate,
                                 total_bytes,
-                                current_download_bytes: last_chunk_bytes,
-                                current_download_total: action.size,
+                                current_download_bytes: satisfied,
+                                current_download_total: action.size.or(Some(satisfied)),
                             });
+                            continue;
                         }
-                        Ok(false) => {
-                            unreachable!("satisfied downloads are handled before streaming")
-                        }
-                        Err(e) => {
-                            failed.store(true, Ordering::SeqCst);
-                            errors.lock().expect("error list poisoned").push(e);
-                            return;
+
+                        let mut last_chunk_bytes = 0u64;
+                        match perform_download(self.http, action, &mut |current, current_total| {
+                            let delta = current.saturating_sub(last_chunk_bytes);
+                            last_chunk_bytes = current;
+                            let aggregate =
+                                downloaded_bytes.fetch_add(delta, Ordering::SeqCst) + delta;
+                            progress(InstallProgress {
+                                finished_downloads: completed.load(Ordering::SeqCst),
+                                total_downloads,
+                                downloaded_bytes: aggregate,
+                                total_bytes,
+                                current_download_bytes: current,
+                                current_download_total: current_total,
+                            });
+                        }) {
+                            Ok(true) => {
+                                downloaded.fetch_add(1, Ordering::SeqCst);
+                                let finished = completed.fetch_add(1, Ordering::SeqCst) + 1;
+                                progress(InstallProgress {
+                                    finished_downloads: finished,
+                                    total_downloads,
+                                    downloaded_bytes: downloaded_bytes.load(Ordering::SeqCst),
+                                    total_bytes,
+                                    current_download_bytes: last_chunk_bytes,
+                                    current_download_total: action.size,
+                                });
+                            }
+                            Ok(false) => {
+                                unreachable!("satisfied downloads are handled before streaming")
+                            }
+                            Err(e) => {
+                                failed.store(true, Ordering::SeqCst);
+                                errors.lock().expect("error list poisoned").push(e);
+                                return;
+                            }
                         }
                     }
                 });
@@ -540,9 +543,11 @@ mod tests {
         })
         .unwrap();
         let events = events.into_inner().unwrap();
-        assert!(events
-            .iter()
-            .any(|event| event.current_download_total.is_none()));
+        assert!(
+            events
+                .iter()
+                .any(|event| event.current_download_total.is_none())
+        );
         assert!(events.iter().all(|event| event.total_bytes.is_none()));
         assert_eq!(events.last().unwrap().downloaded_bytes, body.len() as u64);
     }

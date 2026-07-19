@@ -81,7 +81,7 @@ class IndexRef {
 	file = new Path();
 
 	@property.ref(
-		`The hash of the index file, as a string. May be omitted when the pack uses no-internal-hashes mode; run packwand refresh --build to generate hashes for distribution.`,
+		`The hash of the generated index file, as a string. It is omitted from source metadata; run packwand refresh --build to generate it for distribution.`,
 	)
 	hash = new Hash();
 

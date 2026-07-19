@@ -256,6 +256,9 @@ func stripJSONComments(data []byte) []byte {
 // skipped here — the syntax step already reported them.
 func preflightReferences(dir string) PreflightStep {
 	step := PreflightStep{Name: "references", Issues: []PreflightIssue{}}
+	// One session for the whole loop: registries are built at most once per
+	// kind, instead of once per checked document.
+	session := registry.NewDocCheckSession(dir)
 	for _, kind := range []registry.Kind{registry.Datapack, registry.ResourcePack, registry.Config, registry.KubeJS} {
 		reg, err := registry.Build(dir, kind)
 		if err != nil {
@@ -277,7 +280,7 @@ func preflightReferences(dir string) PreflightStep {
 			if err != nil {
 				continue
 			}
-			for _, diag := range registry.CheckDocument(dir, rel, data) {
+			for _, diag := range session.CheckDocument(rel, data) {
 				if diag.Code == "syntax" {
 					continue
 				}

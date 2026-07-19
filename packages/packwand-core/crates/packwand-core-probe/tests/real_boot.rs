@@ -70,7 +70,8 @@ fn boots_disposable_vanilla_instance_and_cleans_up() {
 
     // Disposable: the tempdir (instance data, assets, libraries) is
     // removed when `dir` drops. Verify nothing outside it was written.
-    assert!(root
-        .join("instances/disposable-boot/instance.json")
-        .exists());
+    assert!(
+        root.join("instances/disposable-boot/instance.json")
+            .exists()
+    );
 }

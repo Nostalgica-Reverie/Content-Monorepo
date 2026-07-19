@@ -1,6 +1,6 @@
 ## packwand publish
 
-Build, upload, verify, or list publish targets for a pack
+Build, upload, verify, or list publish targets for a project
 
 ```
 packwand publish [flags]
@@ -15,7 +15,7 @@ packwand publish [flags]
 ### Options inherited from parent commands
 
 ```
-      --cache string              The directory where packwiz will cache downloaded mods (default "C:\\Users\\jmtmm\\AppData\\Local\\packwand\\cache")
+      --cache string              The directory where packwiz will cache downloaded mods (default: your platform cache directory)
       --config string             The config file to use (default: .packwand.toml in your platform config directory)
       --meta-folder string        The folder in which new metadata files will be added, defaulting to a folder based on the category (mods, resourcepacks, etc; if the category is unknown the current directory is used)
       --meta-folder-base string   The base folder from which meta-folder will be resolved, defaulting to the current directory (so you can put all mods/etc in a subfolder while still using the default behaviour) (default ".")
@@ -27,7 +27,7 @@ packwand publish [flags]
 ### SEE ALSO
 
 * [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
-* [packwand publish build](packwand_publish_build.md)	 - Export the pack artifact(s) for publishing
+* [packwand publish build](packwand_publish_build.md)	 - Build the project artifact(s) for publishing
 * [packwand publish list](packwand_publish_list.md)	 - Enumerate all (manifest, variant) publish pairs as JSON (for CI matrix)
 * [packwand publish plan](packwand_publish_plan.md)	 - Compute the publish matrix from git changes, with include/skip reasons (JSON on stdout)
 * [packwand publish upload](packwand_publish_upload.md)	 - Upload pre-built artifacts to Modrinth and/or CurseForge

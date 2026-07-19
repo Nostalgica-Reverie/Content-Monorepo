@@ -21,6 +21,3 @@ jobs:
     with:
       verb: workspace loader-update ${{ inputs.target }}
       commit-message: 'actions: bulk loader update (${{ inputs.target }})'
-    secrets:
-      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
-      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}

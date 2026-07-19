@@ -2,6 +2,7 @@ package core
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -75,6 +76,9 @@ func LoadMod(modFile string) (Mod, error) {
 			return mod, errors.New("Update plugin " + k + " not found!")
 		}
 	}
+	if IsInternalHashFormat(mod.Download.HashFormat) {
+		return mod, fmt.Errorf("%s: hash format %q is internal-only and should never appear in a saved file", modFile, mod.Download.HashFormat)
+	}
 	mod.metaFile = modFile
 	return mod, nil
 }
@@ -87,6 +91,9 @@ func (m *Mod) SetMetaPath(metaFile string) string {
 
 // Write saves the mod file, returning a hash format and the value of the hash of the saved file
 func (m Mod) Write() (string, string, error) {
+	if IsInternalHashFormat(m.Download.HashFormat) {
+		return DefaultHashFormat, "", fmt.Errorf("refusing to save %s: hash format %q is internal-only and must not be persisted", m.metaFile, m.Download.HashFormat)
+	}
 	f, err := os.Create(m.metaFile)
 	if err != nil {
 		// Attempt to create the containing directory

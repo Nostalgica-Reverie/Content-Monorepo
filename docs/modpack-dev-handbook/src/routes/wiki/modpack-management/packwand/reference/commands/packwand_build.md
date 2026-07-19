@@ -1,6 +1,6 @@
 ## packwand build
 
-Build modpack exports and zip packs from git-changed targets (CI mode)
+Build mod jars, modpack exports, and zip packs from git-changed targets (CI mode)
 
 ```
 packwand build [sha] [flags]
@@ -10,13 +10,13 @@ packwand build [sha] [flags]
 
 ```
   -h, --help          help for build
-  -p, --pack string   Build a specific pack by name (skip git diff detection)
+  -p, --pack string   Build a specific project by name (skip git diff detection)
 ```
 
 ### Options inherited from parent commands
 
 ```
-      --cache string              The directory where packwiz will cache downloaded mods (default "C:\\Users\\jmtmm\\AppData\\Local\\packwand\\cache")
+      --cache string              The directory where packwiz will cache downloaded mods (default: your platform cache directory)
       --config string             The config file to use (default: .packwand.toml in your platform config directory)
       --meta-folder string        The folder in which new metadata files will be added, defaulting to a folder based on the category (mods, resourcepacks, etc; if the category is unknown the current directory is used)
       --meta-folder-base string   The base folder from which meta-folder will be resolved, defaulting to the current directory (so you can put all mods/etc in a subfolder while still using the default behaviour) (default ".")

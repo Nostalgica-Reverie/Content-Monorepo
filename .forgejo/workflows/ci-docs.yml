@@ -5,6 +5,8 @@ on:
     branches: ["main"]
     paths:
       - "docs/**"
+      - "package.json"
+      - "bun.lock"
       - "apps/packwand/**"
       - "justfile"
       - ".forgejo/actions/setup-docs-node/**"
@@ -15,6 +17,8 @@ on:
     branches: ["main"]
     paths:
       - "docs/**"
+      - "package.json"
+      - "bun.lock"
       - "apps/packwand/**"
       - "justfile"
       - ".forgejo/actions/setup-docs-node/**"
@@ -36,12 +40,16 @@ jobs:
         with:
           filter: blob:none
           fetch-depth: 1
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            docs
-            apps/packwand
-            tools
-            justfile
-            .forgejo/actions
+            /docs/
+            /apps/packwand/
+            /apps/bot/package.json
+            /tools/
+            /package.json
+            /bun.lock
+            /justfile
+            /.forgejo/actions/
       - uses: ./.forgejo/actions/setup-go
       - uses: ./.forgejo/actions/setup-docs-node
       - uses: ./.forgejo/actions/setup-just
@@ -50,7 +58,7 @@ jobs:
       - name: Build docs sites
         run: just docs-build
       - name: Check cross-site doc links
-        run: node docs/link-lint.mts
+        run: bun docs/link-lint.mts
       - name: Upload docs
         uses: https://code.forgejo.org/forgejo/upload-artifact@v4
         with:

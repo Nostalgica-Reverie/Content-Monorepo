@@ -15,7 +15,7 @@ packwand packs list [flags]
 ### Options inherited from parent commands
 
 ```
-      --cache string              The directory where packwiz will cache downloaded mods (default "C:\\Users\\jmtmm\\AppData\\Local\\packwand\\cache")
+      --cache string              The directory where packwiz will cache downloaded mods (default: your platform cache directory)
       --config string             The config file to use (default: .packwand.toml in your platform config directory)
       --json                      Output as JSON
       --meta-folder string        The folder in which new metadata files will be added, defaulting to a folder based on the category (mods, resourcepacks, etc; if the category is unknown the current directory is used)

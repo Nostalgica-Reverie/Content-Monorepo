@@ -1,48 +1,47 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # This maps to https://github.com/NixOS/nixpkgs/tree/nixos-unstable
-    # The `url` option is the pattern of `github:USER_OR_ORG/REPO/BRANCH`
+  description = "Packwand command-line interface";
+
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
   outputs = {
     self,
     nixpkgs,
   }:
-    with nixpkgs.lib; let
-      # List of explicitly unsupported systems
-      explicitlyUnsupportedSystems = [];
-
-      # Packwand should support all 64-bit systems supported by go, but nix only
-      # support strictly less, so all nix-supported systems are included
-      # (except ones in explicitlyUnsupportedSystems).
-      supportedSystems =
+    let
+      inherit (nixpkgs.lib)
+        elem
         filter
-        # Filter out systems that are explicitly supported
-        (s: ! elem s explicitlyUnsupportedSystems)
-        # This lists all systems reasonably well-supported by nix
-        (import "${nixpkgs}/lib/systems/flake-systems.nix" {});
+        genAttrs
+        substring
+        ;
 
-      # Helper generating outputs for each supported system
+      # Packwand supports every 64-bit system on which Nixpkgs supports Go.
+      explicitlyUnsupportedSystems = [ ];
+      supportedSystems = filter (
+        system: !(elem system explicitlyUnsupportedSystems)
+      ) (import "${nixpkgs}/lib/systems/flake-systems.nix" { });
       forAllSystems = genAttrs supportedSystems;
+      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+    in
+    {
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        rec {
+          packwand = pkgs.callPackage ./nix {
+            version = substring 0 8 (self.rev or "dirty");
+            vendorHash = nixpkgs.lib.fileContents ./nix/vendor-hash;
+          };
+          default = packwand;
+        }
+      );
 
-      # Import nixpkgs' package set for each system.
-      nixpkgsFor = forAllSystems (system: import nixpkgs {inherit system;});
-    in {
-      # Packwand package
-      packages = forAllSystems (system: let
-        pkgs = nixpkgsFor.${system};
-      in rec {
-        packwand = pkgs.callPackage ./nix {
-          version = substring 0 8 self.rev or "dirty";
-          vendorHash = readFile ./nix/vendor-hash;
-          buildGoModule = pkgs.buildGoModule;
-            # As of writing, `pkgs.buildGoModule` is aliased to
-            # `pkgs.buildGo121Module` in Nixpkgs.
-        };
-        # Build packwand by default when no package name is specified
-        default = packwand;
+      checks = forAllSystems (system: {
+        inherit (self.packages.${system}) packwand;
       });
 
-      # This flake's nix code formatter
       formatter = forAllSystems (system: nixpkgsFor.${system}.alejandra);
     };
 }

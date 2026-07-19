@@ -25,4 +25,4 @@ runs:
       shell: bash
       run: |
         echo "$GITHUB_WORKSPACE/packwand-bin" >> "$GITHUB_PATH"
-        echo "PACKWIZ_BIN=$GITHUB_WORKSPACE/packwand-bin/packwand" >> "$GITHUB_ENV"
+        echo "PACKWAND_BIN=$GITHUB_WORKSPACE/packwand-bin/packwand" >> "$GITHUB_ENV"

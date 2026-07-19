@@ -48,7 +48,7 @@ func newClient(instance string) *glApiClient {
 		token = viper.GetString("gitlab.token")
 	}
 	return &glApiClient{
-		httpClient: &http.Client{},
+		httpClient: core.NewClient(),
 		instance:   instance,
 		token:      token,
 	}

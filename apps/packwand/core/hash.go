@@ -30,10 +30,17 @@ func GetHashImpl(hashType string) (HashStringer, error) {
 		return hexStringer{md5.New()}, nil
 	case "murmur2": // TODO: change to something indicating that this is the CF variant
 		return number32As64Stringer{murmur2.New()}, nil
-	case "length-bytes": // TODO: only used internally for now; should not be saved
+	case "length-bytes": // internal-only; see IsInternalHashFormat
 		return number64Stringer{&LengthHasher{}}, nil
 	}
 	return nil, fmt.Errorf("hash implementation %s not found", hashType)
+}
+
+// IsInternalHashFormat reports whether a hash format is only meaningful inside
+// a single process run (e.g. length-bytes, used for export size accounting)
+// and must never be persisted to pack.toml/index/.pw.toml files.
+func IsInternalHashFormat(hashType string) bool {
+	return strings.ToLower(hashType) == "length-bytes"
 }
 
 // preferredHashList controls download verification priority; later entries win.

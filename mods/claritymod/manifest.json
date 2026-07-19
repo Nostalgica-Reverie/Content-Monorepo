@@ -1,0 +1,28 @@
+{
+  "$schema": "../../tools/manifest/schema.json",
+  "id": "claritymod",
+  "name": "Clarity Mod",
+  "type": "mod",
+  "version": "1.0.0",
+  "release_type": "release",
+  "modrinth_id": "GnCu0CQT",
+  "curseforge_id": "1615913",
+  "lifecycle": "active",
+  "role": "none",
+  "variants": [
+    {
+      "id": "1.21.1-neoforge",
+      "name": "NeoForge 1.21.1",
+      "mc_version": "1.21.1",
+      "loader": "neoforge",
+      "gradle_project": "1.21.1-neoforge"
+    },
+    {
+      "id": "26.1.2-fabric",
+      "name": "Fabric 26.1.2",
+      "mc_version": "26.1.2",
+      "loader": "fabric",
+      "gradle_project": "26.1.2-fabric"
+    }
+  ]
+}

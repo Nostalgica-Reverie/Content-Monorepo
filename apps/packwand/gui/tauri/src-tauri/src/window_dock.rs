@@ -34,12 +34,12 @@ mod windows_impl {
     use std::time::{Duration, Instant};
 
     use tauri::{AppHandle, Manager};
-    use windows::core::BOOL;
     use windows::Win32::Foundation::{HWND, LPARAM};
     use windows::Win32::UI::WindowsAndMessaging::{
-        EnumWindows, GetWindowThreadProcessId, IsWindowVisible, SetWindowPos, SWP_NOACTIVATE,
-        SWP_NOSIZE, SWP_NOZORDER,
+        EnumWindows, GetWindowThreadProcessId, IsWindowVisible, SWP_NOACTIVATE, SWP_NOSIZE,
+        SWP_NOZORDER, SetWindowPos,
     };
+    use windows::core::BOOL;
 
     struct FindContext {
         pid: u32,

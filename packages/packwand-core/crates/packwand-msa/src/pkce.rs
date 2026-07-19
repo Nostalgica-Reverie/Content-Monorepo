@@ -4,8 +4,8 @@
 //! secret) — PKCE is what stops an intercepted authorization code from
 //! being redeemed by anyone but the process that started this flow.
 
-use base64::engine::general_purpose::URL_SAFE_NO_PAD;
 use base64::Engine;
+use base64::engine::general_purpose::URL_SAFE_NO_PAD;
 use rand::RngCore;
 use sha2::{Digest, Sha256};
 

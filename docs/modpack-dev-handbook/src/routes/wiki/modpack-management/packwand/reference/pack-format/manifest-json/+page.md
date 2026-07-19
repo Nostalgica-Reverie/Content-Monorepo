@@ -1,6 +1,6 @@
 # manifest.json
 
-The packwand manifest is the root metadata file for a pack directory. It stores the pack's identity, loader/version matrix, publishing identifiers, role, lifecycle, and automation settings.
+The packwand manifest is the root metadata file for a publishable project directory. It stores the project's identity, loader/version matrix, publishing identifiers, role, lifecycle, and automation settings.
 
 packwand reads and writes `manifest.json` in each pack directory. Commands such as `packwand new`, `packwand validate`, `packwand publish`, `packwand automation`, and the workspace operations all treat it as the pack's source of truth.
 
@@ -8,7 +8,7 @@ packwand reads and writes `manifest.json` in each pack directory. Commands such 
 
 - `id` Unique pack identifier, usually the directory name
 - `name` Human-readable pack name
-- `type` Pack kind, such as `modpack`, `datapack`, or `resourcepack`
+- `type` Project kind: `mod`, `modpack`, `datapack`, or `resourcepack`
 - `role` Pack role, usually `none`, `base`, or a consumer/base mapping object
 
 ## Common fields
@@ -33,6 +33,9 @@ Each entry in `variants` is an object with:
 - `mc_version` Minecraft version for that variant
 - `loader` Optional loader override for that variant
 - `version` Optional variant-specific pack version
+- `gradle_project` Stonecutter Gradle subproject to build. Required for every `mod` variant.
+
+Mods must use multi-variant manifests, declare a loader and `gradle_project` for every variant, and use `role: "none"`. Pack-to-pack role and `automation.sync_variants` settings do not apply to mod source projects.
 
 ## Role
 
@@ -77,5 +80,28 @@ Each entry in `variants` is an object with:
       "tests": []
     }
   }
+}
+```
+
+A Stonecutter mod maps each release directly to an existing Gradle subproject:
+
+```json
+{
+  "$schema": "../../tools/manifest/schema.json",
+  "id": "claritymod",
+  "name": "Clarity Mod",
+  "type": "mod",
+  "version": "1.0.0",
+  "release_type": "release",
+  "modrinth_id": "claritymod",
+  "role": "none",
+  "variants": [
+    {
+      "id": "26.1.2-fabric",
+      "mc_version": "26.1.2",
+      "loader": "fabric",
+      "gradle_project": "26.1.2-fabric"
+    }
+  ]
 }
 ```

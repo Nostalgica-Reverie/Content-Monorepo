@@ -3,7 +3,7 @@
 # shows every public recipe. CI (.forgejo/workflows/) drives these same
 # recipes so local runs match the build server.
 #
-# Windows: recipe bodies (and the `TRIPLE` variable below) run through a
+# Windows: recipe bodies run through a
 # real external `sh`, matching just's default on every platform -- this
 # repo does not override `windows-shell`. Git for Windows is already a
 # hard requirement for `git` itself, and its usr/bin (sh, awk, ...) is
@@ -20,6 +20,7 @@ GUI_TAURI_DIR := "apps/packwand/gui/tauri"
 BOT_DIR := "apps/bot"
 API_DIR := "apps/api"
 DOCS_SITES := "docs docs/packwand docs/packwiz"
+HANDBOOK_DIR := "docs/modpack-dev-handbook"
 
 # just has no built-in equivalent of Task's `{{exeExt}}`; define it explicitly.
 EXE_EXT := if os() == "windows" { ".exe" } else { "" }
@@ -35,22 +36,24 @@ default:
 # — Shared helpers (the "defaults": component recipes call these instead of
 #   re-encoding platform quirks) —
 
-[working-directory: 'apps/packwand-installer']
 [unix]
-_gradlew ARGS:
-    ./gradlew {{ ARGS }} --no-daemon
+_gradlew DIR ARGS:
+    cd "{{ DIR }}" && ./gradlew {{ ARGS }} --no-daemon
 
-[working-directory: 'apps/packwand-installer']
 [windows]
-_gradlew ARGS:
-    cmd /c '.\gradlew.bat' {{ ARGS }} --no-daemon
+_gradlew DIR ARGS:
+    cd "{{ DIR }}" && cmd.exe //d //c gradlew.bat {{ ARGS }} --no-daemon
+
+_mod_gradlew_all ARGS:
+    found=0; for d in mods/*; do [ -f "$d/gradlew" ] || continue; found=1; just _gradlew "$d" "{{ ARGS }}" || exit 1; done; [ "$found" -eq 1 ] || { echo "no Gradle mod projects found under mods/" >&2; exit 1; }
 
 # — Lint —
 
-# Vet the Go module
+# Vet the Go module; also guard that os.Exit stays confined to cmd/ and cmdshared/
 [working-directory: 'apps/packwand']
 lint-go:
     go vet ./...
+    ! grep -rn --include='*.go' 'os\.Exit' core/ content/ registry/ workspace/ manifest/ build/ api/ migrate/ modrinth/ curseforge/ github/ gitlab/ forgejo/ url/ settings/ utils/ clistyle/ nix/ 2>/dev/null | grep -v _test.go || { echo 'os.Exit found outside cmd/ — return an error instead' >&2; exit 1; }
 
 # Vet the cursorapi Go module
 [working-directory: 'apps/api']
@@ -60,10 +63,13 @@ lint-cursorapi:
 # Clippy on mod-browser-webview
 [working-directory: 'apps/mod-browser-webview']
 lint-webview:
-    cargo clippy --all-targets
+    cargo clippy --all-targets -- -D warnings
 
 # Compile-check packwiz-installer (Gradle has no separate lint; compilation surfaces diagnostics)
-lint-installer: (_gradlew "classes bootstrap:classes")
+lint-installer: (_gradlew INSTALLER_DIR "classes bootstrap:classes")
+
+# Run every mod's Gradle verification lifecycle
+lint-mods: (_mod_gradlew_all "check")
 
 # Scan the Go module for known vulnerabilities
 [working-directory: 'apps/packwand']
@@ -83,7 +89,7 @@ audit-rust:
 # ESLint + Prettier check on the Discord bot (requires bun)
 [working-directory: 'apps/bot']
 lint-bot:
-    bun install --frozen-lockfile
+    bun install --cwd ../.. --frozen-lockfile --filter @reverie/pineapple
     bun run lint
 
 # Repo-wide spell check (requires typos -- cargo install typos-cli); config in _typos.toml
@@ -94,13 +100,17 @@ lint-typos:
 lint-actions:
     actionlint -config-file .forgejo/actionlint.yaml -ignore 'in invalid format because owner and repo' .forgejo/workflows/*.yml
 
+# Evaluate every Nix flake output without building it (Nix requires Linux, macOS, or WSL)
+lint-nix:
+    nix flake check --no-build --no-update-lock-file
+
 # clang-format check on tools/hashutil (requires clang-format)
 [working-directory: 'tools/hashutil']
 lint-hashutil:
     clang-format --dry-run --Werror *.c *.h
 
 # All linters/vetters and vulnerability scans
-lint: lint-go lint-cursorapi lint-webview lint-installer lint-rust-core lint-bot lint-typos lint-actions lint-hashutil audit-go audit-rust docs-typecheck
+lint: lint-go lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-hashutil audit-go audit-rust docs-typecheck
 
 # — Test —
 
@@ -125,7 +135,10 @@ test-cursorapi:
     go test ./...
 
 # Gradle tests (installer + bootstrap)
-test-installer: (_gradlew "test")
+test-installer: (_gradlew INSTALLER_DIR "test")
+
+# Run unit/integration tests for every Stonecutter mod project
+test-mods: (_mod_gradlew_all "test")
 
 # Cargo tests
 [working-directory: 'apps/mod-browser-webview']
@@ -141,8 +154,12 @@ test-rust-core:
 test-hashutil: build-hashutil
     ./hashutil{{ EXE_EXT }} --selftest
 
+# Build all flake checks, including Packwand and the generated modpack inventory
+test-nix:
+    nix flake check --no-update-lock-file --print-build-logs
+
 # All tests
-test: test-go test-cursorapi test-installer test-webview test-rust-core test-hashutil
+test: test-go test-cursorapi test-installer test-mods test-webview test-rust-core test-hashutil
 
 # — Build —
 
@@ -157,7 +174,10 @@ build-cursorapi:
     go build -o cursorapi{{ EXE_EXT }} ./cursorapi
 
 # Build packwiz-installer (and the legacy Java bootstrap) via Gradle
-build-installer: (_gradlew "build -x test")
+build-installer: (_gradlew INSTALLER_DIR "build -x test")
+
+# Build distributable jars for every Stonecutter mod project
+build-mods: (_mod_gradlew_all "build -x test")
 
 # Build mod-browser-webview (release). Linux requires webkit2gtk; Windows requires the WebView2 runtime at run time.
 [working-directory: 'apps/mod-browser-webview']
@@ -169,13 +189,10 @@ build-webview:
 build-bootstrap:
     go build -o packwiz-bootstrap{{ EXE_EXT }} ./cmd/packwiz-bootstrap
 
-# rustc's host target triple, used to name the Tauri sidecar binary.
-TRIPLE := `rustc -vV | awk '/^host:/ {print $2}'`
-
 # Build the packwand CLI and stage it as a Tauri external binary (sidecar) named for the host Rust target triple
 build-gui-sidecar:
     mkdir -p {{ GUI_TAURI_DIR }}/src-tauri/binaries
-    go build -C apps/packwand -o gui/tauri/src-tauri/binaries/packwand-{{ TRIPLE }}{{ EXE_EXT }} .
+    go build -C apps/packwand -o gui/tauri/src-tauri/binaries/packwand-$(rustc -vV | awk '/^host:/ {print $2}'){{ EXE_EXT }} .
 
 # Build the native Packwand GUI app (Tauri v2). Requires cargo tauri-cli; see docs/packwand/docs/development/gui-build.md
 [working-directory: 'apps/packwand/gui/tauri']
@@ -186,6 +203,10 @@ build-gui: build-gui-sidecar
 gen-nix:
     go run -C apps/packwand . nix gen --all
 
+# Build the Packwand CLI and Cursor API through Nix without creating result symlinks
+build-nix:
+    nix build --no-link --no-update-lock-file --print-build-logs .#packwand .#cursorapi
+
 # Regenerate the webview third-party licenses page (embedded at build time)
 [working-directory: 'apps/mod-browser-webview']
 gen-licenses:
@@ -195,7 +216,7 @@ gen-licenses:
 # Typecheck + bundle smoke-test the Discord bot (requires bun; Bun runs the TS sources directly in production)
 [working-directory: 'apps/bot']
 build-bot:
-    bun install --frozen-lockfile
+    bun install --cwd ../.. --frozen-lockfile --filter @reverie/pineapple
     bun run typecheck
     bun build src/index.ts --target=bun --outdir=dist
 
@@ -206,21 +227,25 @@ build-hashutil:
     {{ CC }} -O2 -Wall -Wextra -std=c2x -o hashutil{{ EXE_EXT }} hashutil.c
 
 # Build everything (CLI, installer, webview, bootstrap, bot, hashutil)
-build: build-packwand build-cursorapi build-installer build-webview build-bootstrap build-bot build-hashutil
+build: build-packwand build-cursorapi build-installer build-mods build-webview build-bootstrap build-bot build-hashutil
 
 # — Docs —
 
-# Type-check the .mts/.ts scripts and VitePress configs of all three docs sites
+# Type-check all docs sites with their own compiler configuration
 docs-typecheck:
-    for d in {{ DOCS_SITES }}; do (cd "$d" && npm ci && npm run typecheck) || exit 1; done
+    bun install --frozen-lockfile
+    for d in {{ DOCS_SITES }}; do (cd "$d" && bun run typecheck) || exit 1; done
+    cd {{ HANDBOOK_DIR }} && bun run check
 
-# Build all three docs sites (main, packwand, packwiz)
+# Build all three VitePress sites and the Svelte handbook
 docs-build:
-    for d in {{ DOCS_SITES }}; do (cd "$d" && npm ci && npm run docs:build) || exit 1; done
+    bun install --frozen-lockfile
+    for d in {{ DOCS_SITES }}; do (cd "$d" && bun run docs:build) || exit 1; done
+    cd {{ HANDBOOK_DIR }} && bun run build
 
 # Check cross-site links across all three docs sites against their built dist/ output (run after docs-build)
 docs-lint-links:
-    node docs/link-lint.mts
+    bun docs/link-lint.mts
 
 # — Frontend —
 

@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/core"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/manifest"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/workspace"
 	"github.com/spf13/cobra"
@@ -62,8 +63,8 @@ type PlanResult struct {
 }
 
 var (
-	planManifestRe = regexp.MustCompile(`^(modpacks|datapacks)/[^/]+/manifest\.json$`)
-	planPackDirRe  = regexp.MustCompile(`^(modpacks|datapacks)/[^/]+/`)
+	planManifestRe = regexp.MustCompile(`^(modpacks|datapacks|mods)/[^/]+/manifest\.json$`)
+	planPackDirRe  = regexp.MustCompile(`^(modpacks|datapacks|mods)/[^/]+/`)
 )
 
 func pubPlan(from, to, pack string, validate bool) {
@@ -92,16 +93,26 @@ func pubPlan(from, to, pack string, validate bool) {
 	var included []inclusion
 	seen := map[string]bool{}
 
+	var manifestFiles []string
 	for _, f := range changed {
-		if !planManifestRe.MatchString(f) {
-			continue
+		if planManifestRe.MatchString(f) {
+			manifestFiles = append(manifestFiles, f)
 		}
-		newVer := planVersionAt(to, f)
+	}
+	// Each version read spawns a `git show` subprocess; for a bulk cross-pack
+	// change that is 2n spawns, so run them concurrently.
+	type verPair struct{ oldVer, newVer string }
+	vers := make([]verPair, len(manifestFiles))
+	core.ParallelFor(manifestFiles, core.MaxConcurrent(), func(i int, f string) {
+		vers[i] = verPair{oldVer: planVersionAt(from, f), newVer: planVersionAt(to, f)}
+	})
+	for i, f := range manifestFiles {
+		newVer := vers[i].newVer
 		if newVer == "" {
 			res.Skipped = append(res.Skipped, PlanSkip{Manifest: f, Reason: fmt.Sprintf("no version at %s (manifest removed or empty)", to)})
 			continue
 		}
-		oldVer := planVersionAt(from, f)
+		oldVer := vers[i].oldVer
 		if newVer == oldVer {
 			res.Skipped = append(res.Skipped, PlanSkip{Manifest: f, Reason: fmt.Sprintf("version unchanged ('%s')", newVer)})
 			continue
@@ -135,13 +146,24 @@ func pubPlan(from, to, pack string, validate bool) {
 		}
 	}
 
-	// Validate and expand each included manifest into matrix entries.
-	for _, inc := range included {
-		if validate {
+	// Validate all included manifests concurrently (each is a `packwand
+	// validate` subprocess), then expand them into matrix entries in order.
+	invalidReason := make([]string, len(included))
+	if validate {
+		core.ParallelFor(included, core.MaxConcurrent(), func(i int, inc inclusion) {
 			if out, err := exec.Command(workspace.SelfBin(), "validate", inc.manifest).CombinedOutput(); err != nil {
-				res.Invalid = append(res.Invalid, PlanSkip{Manifest: inc.manifest, Reason: planLastLine(string(out))})
-				continue
+				reason := planLastLine(string(out))
+				if reason == "" {
+					reason = "validation failed"
+				}
+				invalidReason[i] = reason
 			}
+		})
+	}
+	for i, inc := range included {
+		if invalidReason[i] != "" {
+			res.Invalid = append(res.Invalid, PlanSkip{Manifest: inc.manifest, Reason: invalidReason[i]})
+			continue
 		}
 		m, err := manifest.Read(inc.manifest)
 		if err != nil {

@@ -1,4 +1,4 @@
-name: "Update Packwand flake.lock"
+name: "Update Nix flake locks"
 
 on:
   workflow_dispatch:
@@ -12,20 +12,19 @@ jobs:
           token: ${{ secrets.FORGEJO_TOKEN }}
           fetch-depth: 1
 
-      - name: Install Nix
-        uses: https://github.com/cachix/install-nix-action@v30
-        with:
-          extra_nix_config: |
-            experimental-features = nix-command flakes
+      - uses: ./.forgejo/actions/setup-nix
 
-      - name: Update flake.lock
+      - name: Update Packwand flake.lock
         run: nix flake update
         working-directory: apps/packwand
+
+      - name: Update root flake.lock
+        run: nix flake update
 
       - name: Commit
         uses: https://github.com/EndBug/add-and-commit@v9
         with:
           author_name: forgejo-actions[bot]
           author_email: omo50@noreply.nostalgica.net
-          message: 'chore(packwand): update flake.lock'
-          add: 'apps/packwand/flake.lock'
+          message: 'chore(nix): update flake locks'
+          add: 'flake.lock apps/packwand/flake.lock'

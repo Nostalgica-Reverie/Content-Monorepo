@@ -13,16 +13,25 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/cmd"
+	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/core"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/manifest"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/workspace"
 	"github.com/spf13/cobra"
 )
 
+// buildAPIClient serves metadata GETs; buildUploadClient serves release
+// uploads, which carry their own retry loop (postWithRetry) and larger bodies.
+var (
+	buildAPIClient    = core.NewClient()
+	buildUploadClient = core.NewUploadClient()
+)
+
 func init() {
-	buildCmd.Flags().StringP("pack", "p", "", "Build a specific pack by name (skip git diff detection)")
+	buildCmd.Flags().StringP("pack", "p", "", "Build a specific project by name (skip git diff detection)")
 	cmd.AddToGroup(buildCmd, cmd.GroupBuildExport)
 
 	cmd.AddToGroup(exportCmd, cmd.GroupBuildExport)
@@ -78,7 +87,7 @@ type queuedJob struct {
 
 var buildCmd = &cobra.Command{
 	Use:   "build [sha]",
-	Short: "Build modpack exports and zip packs from git-changed targets (CI mode)",
+	Short: "Build mod jars, modpack exports, and zip packs from git-changed targets (CI mode)",
 	Args:  cobra.RangeArgs(0, 1),
 	Run: func(c *cobra.Command, args []string) {
 		targetedPack, _ := c.Flags().GetString("pack")
@@ -115,10 +124,6 @@ func runBuild(targetedPack, shortSHA string) {
 		cmd.Fail(fmt.Sprintf("failed to create %s: %v", artifactsDir, err))
 	}
 
-	if err := workspace.RunBuildSync(); err != nil {
-		cmd.Fail(fmt.Sprintf("build-time sync failed: %v", err))
-	}
-
 	var changed []buildTarget
 	if targetedPack != "" {
 		t, err := resolvePack(targetedPack)
@@ -132,8 +137,21 @@ func runBuild(targetedPack, shortSHA string) {
 			cmd.Fail(fmt.Sprintf("failed to detect changed targets: %v", err))
 		}
 		if len(changed) == 0 {
-			fmt.Println("no packs detected in git diff.")
+			fmt.Println("no publishable projects detected in git diff.")
 			return
+		}
+	}
+
+	needsSync := false
+	for _, target := range changed {
+		if target.category == "modpacks" {
+			needsSync = true
+			break
+		}
+	}
+	if needsSync {
+		if err := workspace.RunBuildSync(); err != nil {
+			cmd.Fail(fmt.Sprintf("build-time sync failed: %v", err))
 		}
 	}
 
@@ -162,6 +180,14 @@ func runBuild(targetedPack, shortSHA string) {
 				cmd.Fail(fmt.Sprintf("%s '%s' failed to enqueue: %v", t.category, t.pack, err))
 			}
 			jobs = append(jobs, pending{label: p.label, done: p.done})
+		case "mods":
+			ps, err := queueModBuilds(sched, t.pack, shortSHA, artifactsDir)
+			if err != nil {
+				cmd.Fail(fmt.Sprintf("mod '%s' failed to enqueue: %v", t.pack, err))
+			}
+			for _, p := range ps {
+				jobs = append(jobs, pending{label: p.label, done: p.done})
+			}
 		default:
 			fmt.Printf("category '%s' does not require a build.\n", t.category)
 		}
@@ -182,12 +208,12 @@ func runBuild(targetedPack, shortSHA string) {
 }
 
 func resolvePack(name string) (buildTarget, error) {
-	for _, category := range []string{"modpacks", "datapacks", "resourcepacks"} {
+	for _, category := range []string{"mods", "modpacks", "datapacks", "resourcepacks"} {
 		if info, err := os.Stat(filepath.Join(category, name)); err == nil && info.IsDir() {
 			return buildTarget{category: category, pack: name}, nil
 		}
 	}
-	return buildTarget{}, fmt.Errorf("pack '%s' not found in modpacks/, datapacks/, or resourcepacks/", name)
+	return buildTarget{}, fmt.Errorf("project '%s' not found in mods/, modpacks/, datapacks/, or resourcepacks/", name)
 }
 
 func detectChangedTargets() ([]buildTarget, error) {
@@ -377,6 +403,19 @@ func squashContents(bin, packDir, src, dest string) error {
 }
 
 func findSingleVersionDir(packDir string) (dir string, version string, err error) {
+	if _, err := os.Stat(filepath.Join(packDir, "pack.mcmeta")); err == nil {
+		m, err := manifest.Read(filepath.Join(packDir, "manifest.json"))
+		if err != nil {
+			return "", "", fmt.Errorf("failed to read resourcepack manifest in %s: %w", packDir, err)
+		}
+		if m.Version == "" {
+			return "", "", fmt.Errorf("resourcepack manifest in %s has no version", packDir)
+		}
+		return packDir, m.Version, nil
+	} else if !os.IsNotExist(err) {
+		return "", "", fmt.Errorf("failed to inspect %s: %w", packDir, err)
+	}
+
 	entries, err := os.ReadDir(packDir)
 	if err != nil {
 		return "", "", fmt.Errorf("failed to read %s: %w", packDir, err)
@@ -441,7 +480,7 @@ func zipContents(src, dest string) error {
 
 var publishCmd = &cobra.Command{
 	Use:   "publish",
-	Short: "Build, upload, verify, or list publish targets for a pack",
+	Short: "Build, upload, verify, or list publish targets for a project",
 }
 
 var publishListCmd = &cobra.Command{
@@ -456,7 +495,7 @@ var publishListCmd = &cobra.Command{
 
 var publishBuildCmd = &cobra.Command{
 	Use:   "build <manifest.json> [variant]",
-	Short: "Export the pack artifact(s) for publishing",
+	Short: "Build the project artifact(s) for publishing",
 	Args:  cobra.RangeArgs(1, 2),
 	Run: func(c *cobra.Command, args []string) {
 		manifestPath := cmd.Abs(args[0])
@@ -514,6 +553,7 @@ func init() {
 type pubResolved struct {
 	pName, rawName, pType, loader, releaseType string
 	mrID, cfID, subdirKey, mcVer, pVer         string
+	gradleProject                              string
 	displayName, packID                        string
 	isExperimental                             bool
 	builtMR, builtCF                           bool
@@ -555,7 +595,7 @@ func pubResolve(manifestPath, variant string) pubResolved {
 	}
 
 	packLoader := m.Loader
-	var variantName, variantVersion, variantLoader string
+	var variantName, variantVersion, variantLoader, variantGradleProject string
 
 	if variant != "" {
 		if len(m.Variants) == 0 {
@@ -584,6 +624,7 @@ func pubResolve(manifestPath, variant string) pubResolved {
 		variantName = found.Name
 		variantVersion = found.Version
 		variantLoader = found.Loader
+		variantGradleProject = found.GradleProject
 	} else {
 		if m.MCVersion == nil || *m.MCVersion == "" {
 			cmd.Fail(fmt.Sprintf("missing 'mc_version' in %s", manifestPath))
@@ -593,11 +634,15 @@ func pubResolve(manifestPath, variant string) pubResolved {
 	}
 
 	r.loader = variantLoader
+	r.gradleProject = variantGradleProject
 	if r.loader == "" {
 		r.loader = packLoader
 	}
-	if r.pType == "modpack" && r.loader == "" {
+	if (r.pType == "mod" || r.pType == "modpack") && r.loader == "" {
 		cmd.Fail(fmt.Sprintf("no loader resolved for '%s': set a pack-level 'loader' or a variant 'loader'", r.subdirKey))
+	}
+	if r.pType == "mod" && r.gradleProject == "" {
+		cmd.Fail(fmt.Sprintf("mod variant '%s' is missing gradle_project", r.subdirKey))
 	}
 
 	if isExperimental {
@@ -674,21 +719,19 @@ func pubList(manifestPaths []string) {
 }
 
 func pubBuild(manifestPath, variant string) {
-	if err := workspace.RunBuildSync(); err != nil {
-		cmd.Fail(fmt.Sprintf("publish-time sync failed: %v", err))
-	}
 	pDir := filepath.Dir(manifestPath)
 	m, err := manifest.Read(manifestPath)
 	if err != nil {
 		cmd.Fail(fmt.Sprintf("failed to read %s: %v", manifestPath, err))
 	}
+	if m.Type == "modpack" {
+		if err := workspace.RunBuildSync(); err != nil {
+			cmd.Fail(fmt.Sprintf("publish-time sync failed: %v", err))
+		}
+	}
 	r := pubResolve(manifestPath, variant)
 
-	ghWorkspace := os.Getenv("GITHUB_WORKSPACE")
-	if ghWorkspace == "" {
-		ghWorkspace = "."
-	}
-	artifactsDir := filepath.Join(ghWorkspace, pDir, "artifacts")
+	artifactsDir := filepath.Join(pDir, "artifacts")
 	if err := os.RemoveAll(artifactsDir); err != nil {
 		cmd.Fail(fmt.Sprintf("failed to clear %s: %v", artifactsDir, err))
 	}
@@ -710,6 +753,8 @@ func pubBuild(manifestPath, variant string) {
 	fmt.Printf("::group::Building %s\n", label)
 
 	switch r.pType {
+	case "mod":
+		pubBuildMod(pDir, artifactsDir, &r)
 	case "modpack":
 		pubBuildModpack(pDir, artifactsDir, &r)
 	case "datapack":
@@ -772,9 +817,17 @@ func pubBuildModpack(pDir, artifactsDir string, r *pubResolved) {
 				workspace.CacheSlot(p.targetPath, slots),
 			},
 			Run: func() error {
+				refresh := exec.Command(workspace.SelfBin(), "refresh", "--build")
+				refresh.Dir = p.targetPath
+				workspace.ConfigureSubprocess(refresh)
+				if out, err := refresh.CombinedOutput(); err != nil {
+					return fmt.Errorf("packwand distribution refresh failed for %s: %v\n%s", p.targetPath, err, workspace.Indent(string(out), "    "))
+				}
+
 				c := exec.Command(workspace.SelfBin(), p.plat.cli, "export", "--output", p.outFile)
 				c.Dir = p.targetPath
 				workspace.ConfigureSubprocess(c)
+				c.Env = append(c.Environ(), "PACKWAND_NO_INTERNAL_HASHES=false")
 				if out, err := c.CombinedOutput(); err != nil {
 					return fmt.Errorf("packwand export failed for %s: %v\n%s", p.targetPath, err, workspace.Indent(string(out), "    "))
 				}
@@ -849,8 +902,8 @@ func pubUpload(manifestPath, variant string, live bool, changelogFile string) {
 	pDir := filepath.Dir(manifestPath)
 	r := pubResolve(manifestPath, variant)
 
-	if r.pType != "modpack" && r.pType != "datapack" {
-		cmd.Fail(fmt.Sprintf("upload supports modpacks and datapacks (got '%s')", r.pType))
+	if r.pType != "mod" && r.pType != "modpack" && r.pType != "datapack" {
+		cmd.Fail(fmt.Sprintf("upload supports mods, modpacks, and datapacks (got '%s')", r.pType))
 	}
 
 	changelog := fmt.Sprintf("Update for %s", r.rawName)
@@ -864,11 +917,7 @@ func pubUpload(manifestPath, variant string, live bool, changelogFile string) {
 		changelog = string(data)
 	}
 
-	ghWorkspace := os.Getenv("GITHUB_WORKSPACE")
-	if ghWorkspace == "" {
-		ghWorkspace = "."
-	}
-	artifactsDir := filepath.Join(ghWorkspace, pDir, "artifacts")
+	artifactsDir := filepath.Join(pDir, "artifacts")
 
 	if !live {
 		fmt.Println("[DRY RUN] publish upload — nothing will be sent (pass --live to upload)")
@@ -913,8 +962,11 @@ func pubUpload(manifestPath, variant string, live bool, changelogFile string) {
 	fmt.Printf("%d artifact(s) %s for %s\n", uploaded, mode, r.displayName)
 }
 
-// pubArtifactName mirrors the naming used by pubBuildModpack / pubBuildDatapack.
+// pubArtifactName mirrors the naming used by the type-specific publish builders.
 func pubArtifactName(r pubResolved, pl platform) string {
+	if r.pType == "mod" {
+		return fmt.Sprintf("%s-%s.jar", r.pName, r.pVer)
+	}
 	if r.pType == "datapack" {
 		return fmt.Sprintf("%s-%s.zip", r.packID, r.pVer)
 	}
@@ -986,7 +1038,7 @@ func httpGetUA(url string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header.Set("User-Agent", httpUserAgent)
-	return http.DefaultClient.Do(req)
+	return buildAPIClient.Do(req)
 }
 
 // modrinthResolveProjectID resolves a Modrinth project slug or ID to its
@@ -1028,7 +1080,8 @@ func uploadCurseforge(r pubResolved, projectID, changelog, fileName string, data
 
 	// Modpacks and datapacks do not accept loader IDs. Submit only the
 	// Minecraft game-version IDs for the project types Packwand publishes.
-	// Keep the loader-bearing variant for any future project types that use it.
+	// Mods require loader IDs. If CurseForge rejects a loader for the project,
+	// retry with only the Minecraft game-version IDs for compatibility.
 	var variants [][]int64
 	if r.pType == "modpack" || r.pType == "datapack" {
 		variants = [][]int64{gameIDs}
@@ -1122,7 +1175,7 @@ func postOnce(url string, headers map[string]string, body []byte) (int, []byte, 
 	for k, v := range headers {
 		req.Header.Set(k, v)
 	}
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := buildUploadClient.Do(req)
 	if err != nil {
 		return 0, nil, err
 	}
@@ -1136,12 +1189,40 @@ func postOnce(url string, headers map[string]string, body []byte) (int, []byte, 
 // their game-version *type* (slug prefix "minecraft" for game versions,
 // "modloader" for loaders) so a loader name can never match a game version
 // entry or vice versa.
-func cfResolveVersionIDs(token, mcVer, loader string) (gameIDs, loaderIDs []int64) {
-	var types []struct {
-		ID   int64  `json:"id"`
-		Slug string `json:"slug"`
+type cfVersionType struct {
+	ID   int64  `json:"id"`
+	Slug string `json:"slug"`
+}
+
+type cfGameVersion struct {
+	ID                int64  `json:"id"`
+	GameVersionTypeID int64  `json:"gameVersionTypeID"`
+	Name              string `json:"name"`
+	Slug              string `json:"slug"`
+}
+
+// The version-type and game-version tables are static reference data; fetch
+// them once per process instead of once per manifest/variant.
+var cfVersionData struct {
+	sync.Mutex
+	types    []cfVersionType
+	versions []cfGameVersion
+	loaded   bool
+}
+
+func cfVersionTables(token string) ([]cfVersionType, []cfGameVersion) {
+	cfVersionData.Lock()
+	defer cfVersionData.Unlock()
+	if !cfVersionData.loaded {
+		cfGetJSON(token, "/game/version-types?cache=true", &cfVersionData.types)
+		cfGetJSON(token, "/game/versions?cache=true", &cfVersionData.versions)
+		cfVersionData.loaded = true
 	}
-	cfGetJSON(token, "/game/version-types?cache=true", &types)
+	return cfVersionData.types, cfVersionData.versions
+}
+
+func cfResolveVersionIDs(token, mcVer, loader string) (gameIDs, loaderIDs []int64) {
+	types, versions := cfVersionTables(token)
 
 	mcTypes := map[int64]bool{}
 	loaderTypes := map[int64]bool{}
@@ -1153,14 +1234,6 @@ func cfResolveVersionIDs(token, mcVer, loader string) (gameIDs, loaderIDs []int6
 			loaderTypes[t.ID] = true
 		}
 	}
-
-	var versions []struct {
-		ID                int64  `json:"id"`
-		GameVersionTypeID int64  `json:"gameVersionTypeID"`
-		Name              string `json:"name"`
-		Slug              string `json:"slug"`
-	}
-	cfGetJSON(token, "/game/versions?cache=true", &versions)
 
 	for _, v := range versions {
 		if mcTypes[v.GameVersionTypeID] &&
@@ -1190,7 +1263,7 @@ func cfGetJSON(token, path string, target any) {
 	req.Header.Set("X-Api-Token", token)
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", httpUserAgent)
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := buildAPIClient.Do(req)
 	if err != nil {
 		cmd.Fail(fmt.Sprintf("CF %s lookup failed: %v", path, err))
 	}

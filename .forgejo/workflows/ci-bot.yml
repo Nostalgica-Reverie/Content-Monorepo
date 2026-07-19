@@ -5,6 +5,8 @@ on:
     branches: ["main"]
     paths:
       - "apps/bot/**"
+      - "package.json"
+      - "bun.lock"
       - ".forgejo/actions/setup-bot/**"
       - ".forgejo/actions/setup-just/**"
       - "justfile"
@@ -13,6 +15,8 @@ on:
     branches: ["main"]
     paths:
       - "apps/bot/**"
+      - "package.json"
+      - "bun.lock"
       - ".forgejo/actions/setup-bot/**"
       - ".forgejo/actions/setup-just/**"
       - "justfile"
@@ -32,11 +36,18 @@ jobs:
         with:
           filter: blob:none
           fetch-depth: 1
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            apps/bot
-            tools
-            justfile
-            .forgejo/actions
+            /apps/bot/
+            /tools/
+            /package.json
+            /bun.lock
+            /justfile
+            /.forgejo/actions/
+            /docs/package.json
+            /docs/modpack-dev-handbook/package.json
+            /docs/packwand/package.json
+            /docs/packwiz/package.json
       - uses: ./.forgejo/actions/setup-bot
       - uses: ./.forgejo/actions/setup-just
       - name: Lint bot

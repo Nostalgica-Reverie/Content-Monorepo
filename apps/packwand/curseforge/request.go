@@ -47,7 +47,7 @@ type cfApiClient struct {
 	httpClient *http.Client
 }
 
-var cfDefaultClient = cfApiClient{&http.Client{}}
+var cfDefaultClient = cfApiClient{core.NewClient()}
 
 // doJSON performs an API request and decodes the JSON response into target,
 // always closing the response body.
@@ -239,20 +239,24 @@ type modFileInfo struct {
 	} `json:"hashes"`
 }
 
-func (i modFileInfo) getBestHash() (hash string, hashFormat string) {
-	// TODO: check if the hash is invalid (e.g. 0)
-	hash = strconv.FormatUint(uint64(i.Fingerprint), 10)
-	hashFormat = "murmur2"
-	hashPreferred := 0
+func (i modFileInfo) getBestHash() (hash string, hashFormat string, err error) {
+	// A zero fingerprint means CurseForge hasn't finished processing the file;
+	// it must not be accepted as a valid murmur2 hash.
+	hashPreferred := -1
+	if i.Fingerprint != 0 {
+		hash = strconv.FormatUint(uint64(i.Fingerprint), 10)
+		hashFormat = "murmur2"
+		hashPreferred = 0
+	}
 
 	// Prefer SHA1, then MD5 if found:
 	for _, v := range i.Hashes {
-		if v.Algorithm == hashAlgoMD5 && hashPreferred < 1 {
+		if v.Algorithm == hashAlgoMD5 && v.Value != "" && hashPreferred < 1 {
 			hashPreferred = 1
 
 			hash = v.Value
 			hashFormat = "md5"
-		} else if v.Algorithm == hashAlgoSHA1 && hashPreferred < 2 {
+		} else if v.Algorithm == hashAlgoSHA1 && v.Value != "" && hashPreferred < 2 {
 			hashPreferred = 2
 
 			hash = v.Value
@@ -260,7 +264,10 @@ func (i modFileInfo) getBestHash() (hash string, hashFormat string) {
 		}
 	}
 
-	return
+	if hashPreferred < 0 {
+		return "", "", fmt.Errorf("file %s (ID %d) has no usable hash — CurseForge may still be processing it; try again shortly", i.FileName, i.ID)
+	}
+	return hash, hashFormat, nil
 }
 
 func (c *cfApiClient) getFileInfo(modID uint32, fileID uint32) (modFileInfo, error) {

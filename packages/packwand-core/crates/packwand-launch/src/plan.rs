@@ -11,11 +11,7 @@ pub const PLAN_SCHEMA_VERSION: u32 = 1;
 
 /// The classpath separator of the host operating system.
 pub fn host_classpath_separator() -> &'static str {
-    if cfg!(windows) {
-        ";"
-    } else {
-        ":"
-    }
+    if cfg!(windows) { ";" } else { ":" }
 }
 
 /// Directories a running game needs, resolved from the instance layout.

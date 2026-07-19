@@ -44,7 +44,9 @@ pub enum MsaError {
     UnexpectedResponse(String, String),
     #[error("Microsoft sign-in was cancelled or denied: {0}")]
     Denied(String),
-    #[error("this Microsoft account has no Xbox Live profile — create one at xbox.com, then try signing in again")]
+    #[error(
+        "this Microsoft account has no Xbox Live profile — create one at xbox.com, then try signing in again"
+    )]
     NoXboxAccount,
     #[error("Xbox Live is not available for this account's country/region")]
     XboxLiveUnavailableInRegion,
@@ -52,9 +54,13 @@ pub enum MsaError {
         "this Xbox Live account needs adult verification (South Korea) — check account.xbox.com"
     )]
     NeedsAdultVerification,
-    #[error("this account is a minor and must be added to a Family by an adult at account.microsoft.com/family before it can sign in here")]
+    #[error(
+        "this account is a minor and must be added to a Family by an adult at account.microsoft.com/family before it can sign in here"
+    )]
     NeedsFamilyGroup,
-    #[error("Minecraft's API returned 403 — this app isn't whitelisted yet. After a first sign-in attempt (this one), submit https://aka.ms/mce-reviewappid with your Azure app's Client ID and Tenant ID, then allow time for Microsoft's review")]
+    #[error(
+        "Minecraft's API returned 403 — this app isn't whitelisted yet. After a first sign-in attempt (this one), submit https://aka.ms/mce-reviewappid with your Azure app's Client ID and Tenant ID, then allow time for Microsoft's review"
+    )]
     NotWhitelisted,
     #[error("this Microsoft account does not own Minecraft")]
     NoEntitlement,

@@ -7,8 +7,8 @@ import (
 )
 
 // checkFunctionDocument verifies that local mcfunction invocations resolve.
-func checkFunctionDocument(dir, rel string, content []byte) []Diagnostic {
-	checker := &docChecker{dir: dir, content: content, diags: []Diagnostic{}}
+func checkFunctionDocument(cache *registryCache, rel string, content []byte) []Diagnostic {
+	checker := &docChecker{registryCache: cache, content: content, diags: []Diagnostic{}}
 	reg := checker.datapackRegistry()
 	known := namespaces(reg)
 	for _, match := range functionRefRE.FindAllStringSubmatch(string(content), -1) {
@@ -26,8 +26,8 @@ var functionRefRE = regexp.MustCompile(`(?m)^\s*(?:execute\s+.*?\s+run\s+)?funct
 // checkKubeJSScript provides the phase-3 baseline without requiring Node:
 // delimiter syntax and curated-event folder discipline. Full type checking can
 // layer on top when ProbeJS dumps are available.
-func checkKubeJSScript(dir, rel string, content []byte) []Diagnostic {
-	checker := &docChecker{dir: dir, content: content, diags: []Diagnostic{}}
+func checkKubeJSScript(cache *registryCache, rel string, content []byte) []Diagnostic {
+	checker := &docChecker{registryCache: cache, content: content, diags: []Diagnostic{}}
 	source := string(content)
 	if !balancedJS(source) {
 		checker.errorf("syntax", "", "unbalanced JavaScript delimiters")
@@ -37,7 +37,7 @@ func checkKubeJSScript(dir, rel string, content []byte) []Diagnostic {
 		checker.warnf("structure", rel, "KubeJS script is outside startup_scripts, server_scripts, or client_scripts")
 		return checker.diags
 	}
-	reg, err := Build(dir, KubeJS)
+	reg, err := checker.kubejsRegistry()
 	if err != nil {
 		return checker.diags
 	}

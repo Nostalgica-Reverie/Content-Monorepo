@@ -15,7 +15,7 @@ use std::time::Duration;
 use clap::{Parser, Subcommand};
 use packwand_devboot::bootstrap;
 use packwand_instance::{FsInstanceRepository, InstanceRepository, InstanceSpec, ListEntry};
-use packwand_launch::{build_launch_plan, launch, LaunchEvent, LaunchOptions};
+use packwand_launch::{LaunchEvent, LaunchOptions, build_launch_plan, launch};
 use packwand_minecraft::MetadataEndpoints;
 
 #[derive(Parser)]
@@ -298,10 +298,10 @@ fn run(cli: Cli) -> Result<ExitCode, String> {
                 }
                 match &event {
                     LaunchEvent::Stdout { line, .. } | LaunchEvent::Stderr { line, .. } => {
-                        if let Some(marker) = &stop_on_line {
-                            if line.contains(marker.as_str()) {
-                                cancel_on_line.cancel();
-                            }
+                        if let Some(marker) = &stop_on_line
+                            && line.contains(marker.as_str())
+                        {
+                            cancel_on_line.cancel();
                         }
                     }
                     LaunchEvent::Exited { code, .. } => {

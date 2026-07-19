@@ -12,8 +12,8 @@ mod plan;
 mod supervisor;
 
 pub use plan::{
-    build_launch_plan, host_classpath_separator, LaunchPaths, LaunchPlan, PLAN_SCHEMA_VERSION,
+    LaunchPaths, LaunchPlan, PLAN_SCHEMA_VERSION, build_launch_plan, host_classpath_separator,
 };
 pub use supervisor::{
-    launch, CancellationToken, LaunchError, LaunchEvent, LaunchHandle, LaunchOptions,
+    CancellationToken, LaunchError, LaunchEvent, LaunchHandle, LaunchOptions, launch,
 };
