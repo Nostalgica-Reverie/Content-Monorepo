@@ -1,0 +1,17 @@
+{
+	"required": true,
+	"package": "claritymod.creepereater.mixin",
+	"compatibilityLevel": "${mixin_compatibility}",
+	"mixins": [
+		"CommandErrorMixin",
+		"CrashReportMixin",
+		"MinecraftServerMixin",
+		"ServerPlayerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

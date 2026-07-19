@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "claritymod.creepereater.client.mixin",
+	"compatibilityLevel": "${mixin_compatibility}",
+	"client": [
+		"CreateWorldScreenWorldTabMixin",
+		"DisconnectedScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

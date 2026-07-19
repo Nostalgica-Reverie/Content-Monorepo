@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="CC0-1.0"
+
+[[mods]]
+modId="claritymod"
+version="${version}"
+displayName="Clarity Mod"
+authors="creepereater"
+description='''
+Support and clarity improvements for the Nostalgic Reverie modpack.
+'''
+logoFile="assets/claritymod/icon.png"
+displayURL="https://discord.com/invite/urgaDHUueu"
+
+[[mixins]]
+config="claritymod.mixins.json"
+
+[[mixins]]
+config="claritymod.client.mixins.json"
+
+[[dependencies.claritymod]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.claritymod]]
+modId="minecraft"
+type="required"
+versionRange="[${minecraft_version}]"
+ordering="NONE"
+side="BOTH"

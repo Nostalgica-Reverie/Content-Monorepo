@@ -1,0 +1,115 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+}
+
+def targetName = stonecutter.current.project
+def minecraftVersion = stonecutter.current.version
+def loader = targetName.substring(targetName.lastIndexOf('-') + 1)
+def javaRelease = minecraftVersion.startsWith('26.') ? 25 : 21
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = "claritymod-${loader}-${minecraftVersion}"
+}
+
+if (loader == 'fabric') {
+	apply plugin: 'net.fabricmc.fabric-loom'
+
+	loom {
+		mods {
+			claritymod {
+				sourceSet sourceSets.main
+			}
+		}
+	}
+
+	dependencies {
+		minecraft "com.mojang:minecraft:${minecraftVersion}"
+		implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+		implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	}
+} else if (loader == 'neoforge') {
+	apply plugin: 'net.neoforged.moddev'
+
+	neoForge {
+		version = project.neo_version
+
+		runs {
+			client {
+				client()
+			}
+			server {
+				server()
+				programArgument '--nogui'
+			}
+		}
+
+		mods {
+			claritymod {
+				sourceSet sourceSets.main
+			}
+		}
+	}
+} else {
+	throw new GradleException("Unsupported Clarity Mod loader target: ${loader}")
+}
+
+processResources {
+	inputs.property 'mod_version', project.version
+	inputs.property 'minecraft_version', minecraftVersion
+	inputs.property 'loader', loader
+	inputs.property 'java_release', javaRelease
+
+	filesMatching('fabric.mod.json') {
+		expand(
+			version: project.version,
+			minecraft_version: minecraftVersion,
+			java_version: javaRelease
+		)
+	}
+
+	filesMatching('META-INF/neoforge.mods.toml') {
+		expand(
+			version: project.version,
+			minecraft_version: minecraftVersion,
+			neo_version: project.findProperty('neo_version') ?: ''
+		)
+	}
+
+	filesMatching(['claritymod.mixins.json', 'claritymod.client.mixins.json']) {
+		expand(mixin_compatibility: "JAVA_${javaRelease}")
+	}
+
+	if (loader == 'fabric') {
+		exclude 'META-INF/neoforge.mods.toml'
+	} else {
+		exclude 'fabric.mod.json'
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8'
+	options.release = javaRelease
+}
+
+java {
+	toolchain.languageVersion = JavaLanguageVersion.of(javaRelease)
+	withSourcesJar()
+}
+
+jar {
+	from(rootProject.file('LICENSE')) {
+		rename { "${it}_claritymod" }
+	}
+}
+
+publishing {
+	publications {
+		create('mavenJava', MavenPublication) {
+			from components.java
+		}
+	}
+}
