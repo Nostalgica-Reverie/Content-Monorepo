@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="CC0-1.0"
+
+[[mods]]
+modId="packstats"
+version="${version}"
+displayName="PackStats"
+authors="Creepereater"
+description='''
+ privacy-first opt-out active-player analytics
+'''
+logoFile="assets/packstats/icon.png"
+
+[[dependencies.packstats]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.packstats]]
+modId="minecraft"
+type="required"
+versionRange="[${minecraft_version}]"
+ordering="NONE"
+side="CLIENT"

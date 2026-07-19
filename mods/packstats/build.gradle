@@ -1,0 +1,65 @@
+plugins {
+	id 'java-library'
+}
+
+def targetName = stonecutter.current.project
+def minecraftVersion = stonecutter.current.version
+def loader = targetName.substring(targetName.lastIndexOf('-') + 1)
+def javaRelease = minecraftVersion.startsWith('26.') ? 25 : 21
+
+version = project.mod_version
+group = project.maven_group
+base.archivesName = "packstats-${loader}-${minecraftVersion}"
+
+if (loader == 'fabric') {
+	apply plugin: 'net.fabricmc.fabric-loom'
+	dependencies {
+		minecraft "com.mojang:minecraft:${minecraftVersion}"
+		implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+		implementation "net.fabricmc.fabric-api:fabric-lifecycle-events-v1:${project.fabric_lifecycle_events_version}"
+	}
+} else if (loader == 'neoforge') {
+	apply plugin: 'net.neoforged.moddev'
+	neoForge {
+		version = project.neo_version
+		runs { client { client() } }
+		mods { packstats { sourceSet sourceSets.main } }
+	}
+} else {
+	throw new GradleException("Unsupported PackStats target: ${loader}")
+}
+
+processResources {
+	inputs.properties(version: project.version, minecraft_version: minecraftVersion, java_version: javaRelease)
+	filesMatching('fabric.mod.json') {
+		expand(version: project.version, minecraft_version: minecraftVersion, java_version: javaRelease)
+	}
+	filesMatching('META-INF/neoforge.mods.toml') {
+		expand(version: project.version, minecraft_version: minecraftVersion)
+	}
+	if (loader == 'fabric') exclude 'META-INF/neoforge.mods.toml'
+	else exclude 'fabric.mod.json'
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8'
+	options.release = javaRelease
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(javaRelease)
+tasks.named('test') { failOnNoDiscoveredTests = false }
+
+if (loader == 'fabric') {
+	tasks.register('integrationTest', JavaExec) {
+		dependsOn testClasses
+		classpath = sourceSets.test.runtimeClasspath
+		mainClass = 'packstats.creepereater.PackStatsIntegrationTest'
+	}
+	tasks.named('check') { dependsOn integrationTest }
+} else {
+	tasks.named('compileTestJava') { enabled = false }
+}
+
+jar {
+	from(rootProject.file('LICENSE')) { rename { "${it}_packstats" } }
+}
