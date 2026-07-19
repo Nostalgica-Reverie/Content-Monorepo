@@ -273,19 +273,12 @@ static void hash_one(const char *path, unsigned algos) {
         hex_encode(digest, sizeof(digest), md5_hex);
     }
     if (algos & HASHUTIL_ALGO_MURMUR2) {
-        uint8_t *stripped = (uint8_t *)malloc(fb.len > 0 ? fb.len : 1);
-        if (!stripped) {
-            free(fb.data);
-            printf("{\"path\":\"%s\",\"sha256\":null,\"sha512\":null,\"md5\":null,\"murmur2\":null,"
-                   "\"error\":\"out of memory\"}\n",
-                   path_escaped);
-            free(path_escaped);
-            return;
-        }
-        size_t stripped_len = murmur2cf_strip(fb.data, fb.len, stripped);
-        uint32_t h = murmurhash2(stripped, stripped_len, 1);
+        /* Strips in place (murmur2cf_strip allows out == data): this block
+         * must stay the LAST consumer of fb.data, since it compacts the
+         * buffer. Saves a second whole-file allocation. */
+        size_t stripped_len = murmur2cf_strip(fb.data, fb.len, fb.data);
+        uint32_t h = murmurhash2(fb.data, stripped_len, 1);
         (void)snprintf(murmur2_dec, sizeof(murmur2_dec), "%u", h);
-        free(stripped);
     }
 
     free(fb.data);

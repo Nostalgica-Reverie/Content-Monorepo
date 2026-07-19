@@ -98,7 +98,10 @@ static void md5_update(md5_ctx *ctx, const uint8_t *data, size_t len) {
 }
 
 static void md5_final(md5_ctx *ctx, uint8_t digest[16]) {
-    uint8_t bits[8];
+    /* Only the first 8 bytes are used; the full-block size stops GCC's -O3
+     * inliner from a false-positive -Wstringop-overread about md5_update's
+     * (unreachable here) direct-block loop. */
+    uint8_t bits[64] = {0};
     for (int i = 0; i < 8; ++i) {
         bits[i] = (uint8_t)(ctx->count >> (8 * i));
     }

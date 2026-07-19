@@ -141,3 +141,33 @@ jobs:
           else
             packwand publish verify "${{ matrix.entry.manifest }}" "$VARIANT"
           fi
+
+  # Nix is a publish surface too: downstream flakes consume the checksum
+  # inventories through legacyPackages, so every release must leave the flake
+  # evaluating and its modpack-inventory check passing. Runs after publish so
+  # a Nix failure can't retroactively block an upload that already succeeded —
+  # it fails loudly on its own.
+  nix-verify:
+    needs: publish
+    runs-on: technocality
+    timeout-minutes: 30
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          filter: blob:none
+          fetch-depth: 1
+          sparse-checkout: |
+            apps/api
+            apps/packwand
+            modpacks
+            packages/packwand2nix
+            flake.nix
+            flake.lock
+            justfile
+            .forgejo/actions
+      - uses: ./.forgejo/actions/setup-nix
+      - uses: ./.forgejo/actions/setup-just
+      - name: Evaluate Nix outputs
+        run: just lint-nix
+      - name: Run Nix checks
+        run: just test-nix

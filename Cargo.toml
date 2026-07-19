@@ -42,6 +42,9 @@ packwand-msa = { path = "packages/packwand-core/crates/packwand-msa" }
 opt-level = "s"
 lto = true
 strip = true
+# Single codegen unit lets LLVM optimize across the whole crate; costs some
+# compile time on release builds only, keeps the size-tuned profile smaller.
+codegen-units = 1
 
 # plist 1.9.0 on crates.io pins the vulnerable quick-xml 0.39 line. This
 # upstream revision keeps the same plist API while moving to quick-xml 0.41.

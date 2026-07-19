@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-19T16:06:59Z",
+  "generated": "2026-07-19T20:32:36Z",
   "projects": [
     {
       "id": "SkyPixel",
@@ -30,7 +30,7 @@
           "path": "modpacks/skypixel/26.1.2-cf",
           "platform": "curseforge",
           "mod_count": 37,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -147,7 +147,7 @@
           "path": "modpacks/legacy4server/26.1.2-mr",
           "platform": "modrinth",
           "mod_count": 25,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -430,7 +430,7 @@
           "key": "1.21.1-mr",
           "path": "modpacks/reimagined/1.21.1-mr",
           "platform": "modrinth",
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -560,7 +560,7 @@
           "path": "modpacks/reminiscence/1.20.1-cf",
           "platform": "curseforge",
           "mod_count": 176,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -568,7 +568,7 @@
           "path": "modpacks/reminiscence/1.20.1-mr",
           "platform": "modrinth",
           "mod_count": 158,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -750,7 +750,7 @@
       "category": "modpack",
       "dir": "modpacks/simply-optimized-forked",
       "manifest_path": "modpacks/simply-optimized-forked/manifest.json",
-      "version": "26.07.1",
+      "version": "26.07.2",
       "release_type": "release",
       "lifecycle": "active",
       "role": "base",
@@ -816,7 +816,7 @@
       "manifest_path": "modpacks/vital/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.07",
+      "version": "26.07.1",
       "release_type": "release",
       "lifecycle": "active",
       "role": "base",
@@ -827,6 +827,14 @@
       },
       "docs_path": "/modpacks/vital/",
       "subdirs": [
+        {
+          "key": "26.1.2-cf",
+          "path": "modpacks/vital/26.1.2-cf",
+          "platform": "curseforge",
+          "mod_count": 62,
+          "has_index": true,
+          "has_pack": true
+        },
         {
           "key": "26.1.2-mr",
           "path": "modpacks/vital/26.1.2-mr",

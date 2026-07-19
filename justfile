@@ -224,7 +224,7 @@ build-bot:
 # Targets C23; -std=c2x is the flag name gcc/clang accept for it (see hashutil.c's header comment).
 [working-directory: 'tools/hashutil']
 build-hashutil:
-    {{ CC }} -O2 -Wall -Wextra -std=c2x -o hashutil{{ EXE_EXT }} hashutil.c
+    {{ CC }} -O3 -funroll-loops -Wall -Wextra -std=c2x -o hashutil{{ EXE_EXT }} hashutil.c
 
 # Build everything (CLI, installer, webview, bootstrap, bot, hashutil)
 build: build-packwand build-cursorapi build-installer build-mods build-webview build-bootstrap build-bot build-hashutil
@@ -237,10 +237,25 @@ docs-typecheck:
     for d in {{ DOCS_SITES }}; do (cd "$d" && bun run typecheck) || exit 1; done
     cd {{ HANDBOOK_DIR }} && bun run check
 
-# Build all three VitePress sites and the Svelte handbook
+# Build all three VitePress sites (in parallel — they're independent) and the Svelte handbook
 docs-build:
+    #!/usr/bin/env sh
+    set -eu
     bun install --frozen-lockfile
-    for d in {{ DOCS_SITES }}; do (cd "$d" && bun run docs:build) || exit 1; done
+    pids=""
+    for d in {{ DOCS_SITES }}; do
+        echo "building $d in the background..."
+        (cd "$d" && bun run docs:build) >"$d/.docs-build.log" 2>&1 &
+        pids="$pids $!"
+    done
+    status=0
+    for p in $pids; do wait "$p" || status=1; done
+    for d in {{ DOCS_SITES }}; do
+        echo "----- $d -----"
+        cat "$d/.docs-build.log"
+        rm -f "$d/.docs-build.log"
+    done
+    [ "$status" -eq 0 ]
     cd {{ HANDBOOK_DIR }} && bun run build
 
 # Check cross-site links across all three docs sites against their built dist/ output (run after docs-build)

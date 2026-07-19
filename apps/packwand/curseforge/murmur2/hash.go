@@ -3,10 +3,11 @@ package murmur2
 import (
 	"encoding/binary"
 	"hash"
+	"slices"
 )
 
 func New() hash.Hash32 {
-	return &Murmur2CF{buf: make([]byte, 0)}
+	return &Murmur2CF{}
 }
 
 type Murmur2CF struct {
@@ -15,6 +16,11 @@ type Murmur2CF struct {
 }
 
 func (m *Murmur2CF) Write(p []byte) (n int, err error) {
+	// Grow once to the upper bound (every byte kept) so the strip loop never
+	// reallocates, while still touching the input only once. A count-first
+	// two-pass variant was benchmarked and loses: the second read pass costs
+	// more than it saves (see core/murmur2_bench_test.go).
+	m.buf = slices.Grow(m.buf, len(p))
 	for _, b := range p {
 		if !isWhitespaceCharacter(b) {
 			m.buf = append(m.buf, b)
@@ -71,7 +77,7 @@ func MurmurHash2(data []byte, seed uint32) uint32 {
 }
 
 func (m *Murmur2CF) Reset() {
-	m.buf = make([]byte, 0)
+	m.buf = m.buf[:0]
 }
 
 func (m *Murmur2CF) Size() int {

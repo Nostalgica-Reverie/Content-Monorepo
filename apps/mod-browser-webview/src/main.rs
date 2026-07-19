@@ -6,10 +6,11 @@ use std::{
     sync::{Arc, Mutex, MutexGuard},
 };
 
+use std::sync::LazyLock;
+
 use anyhow::{Context, bail, ensure};
 use closure::closure;
 use json::{JsonValue, object};
-use lazy_static::lazy_static;
 use regex::Regex;
 use wry::{
     application::{
@@ -49,13 +50,11 @@ impl Provider {
 
     /// Validates a base project page URL for this provider.
     fn project_url_valid(self, url: &str) -> bool {
-        lazy_static! {
-            static ref CF: Regex =
-                Regex::new("^https?://(?:(?:www|beta)\\.)?curseforge\\.com/[^/]+/[^/]+/[^/]+$")
-                    .unwrap();
-            static ref MR: Regex =
-                Regex::new("^https?://(?:www\\.)?modrinth\\.com/[^/]+/[^/]+$").unwrap();
-        }
+        static CF: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new("^https?://(?:(?:www|beta)\\.)?curseforge\\.com/[^/]+/[^/]+/[^/]+$").unwrap()
+        });
+        static MR: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new("^https?://(?:www\\.)?modrinth\\.com/[^/]+/[^/]+$").unwrap());
         match self {
             Provider::CurseForge => CF.is_match(url),
             Provider::Modrinth => MR.is_match(url),
@@ -64,10 +63,8 @@ impl Provider {
 
     /// Validates a file/version identifier for this provider.
     fn id_valid(self, id: &str) -> bool {
-        lazy_static! {
-            static ref CF_ID: Regex = Regex::new("^[0-9]+$").unwrap();
-            static ref MR_ID: Regex = Regex::new("^[a-zA-Z0-9]+$").unwrap();
-        }
+        static CF_ID: LazyLock<Regex> = LazyLock::new(|| Regex::new("^[0-9]+$").unwrap());
+        static MR_ID: LazyLock<Regex> = LazyLock::new(|| Regex::new("^[a-zA-Z0-9]+$").unwrap());
         match self {
             Provider::CurseForge => CF_ID.is_match(id),
             Provider::Modrinth => MR_ID.is_match(id),
@@ -84,12 +81,12 @@ impl Provider {
 
     /// Matches a direct download URL served by the provider's CDN.
     fn download_url_valid(self, uri: &str) -> bool {
-        lazy_static! {
-            static ref CF_DL: Regex =
-                Regex::new("^https?://(?:edge|media)\\.forgecdn\\.net/files/.+$").unwrap();
-            static ref MR_DL: Regex =
-                Regex::new("^https?://cdn\\.modrinth\\.com/data/[^/]+/versions/.+$").unwrap();
-        }
+        static CF_DL: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new("^https?://(?:edge|media)\\.forgecdn\\.net/files/.+$").unwrap()
+        });
+        static MR_DL: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new("^https?://cdn\\.modrinth\\.com/data/[^/]+/versions/.+$").unwrap()
+        });
         match self {
             Provider::CurseForge => CF_DL.is_match(uri),
             Provider::Modrinth => MR_DL.is_match(uri),
@@ -114,17 +111,17 @@ impl Provider {
 
     /// Matches navigation to a *different* file's page (the wrong download).
     fn bad_nav_valid(self, uri: &str) -> bool {
-        lazy_static! {
-            // Note: + after / due to bad path normalisation in beta redirect
-            static ref CF_BAD: Regex = Regex::new(
+        // Note: + after / due to bad path normalisation in beta redirect
+        static CF_BAD: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(
                 "^https?://(?:(?:www|beta)\\.)?curseforge\\.com/+[^/]+/[^/]+/[^/]+/(?:files/[0-9]+|download)"
             )
-            .unwrap();
-            static ref MR_BAD: Regex = Regex::new(
-                "^https?://(?:www\\.)?modrinth\\.com/+[^/]+/[^/]+/version/[a-zA-Z0-9.+-]+"
-            )
-            .unwrap();
-        }
+            .unwrap()
+        });
+        static MR_BAD: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new("^https?://(?:www\\.)?modrinth\\.com/+[^/]+/[^/]+/version/[a-zA-Z0-9.+-]+")
+                .unwrap()
+        });
         match self {
             Provider::CurseForge => CF_BAD.is_match(uri),
             Provider::Modrinth => MR_BAD.is_match(uri),

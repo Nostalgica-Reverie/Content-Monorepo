@@ -29,5 +29,5 @@ packwand automation [flags]
 * [packwand](packwand.md)	 - Minecraft modpack toolchain — packwiz core with multi-pack workspace management
 * [packwand automation get](packwand_automation_get.md)	 - Print the effective automation settings as JSON
 * [packwand automation list-full-auto](packwand_automation_list-full-auto.md)	 - List pack directories opted into automation.full_auto (JSON on stdout)
-* [packwand automation run](packwand_automation_run.md)	 - Run the unattended release pipeline for a full_auto-enabled pack (update, refresh, validate, tests, docs, bump)
+* [packwand automation run](packwand_automation_run.md)	 - Run the unattended release pipeline for a full_auto-enabled pack (update, refresh, nix-gen, validate, tests, docs, bump)
 

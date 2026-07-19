@@ -4,6 +4,7 @@
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import {
+  mkdir,
   mkdtemp,
   readdir,
   readFile,
@@ -34,6 +35,51 @@ function findPackwand(): [string, ...string[]] {
     return [process.env.PACKWAND_BIN];
   }
   return ["go", "run", "-C", packwandSrc, "."];
+}
+
+// The generated pages are a pure function of apps/packwand's source, so when
+// that tree is committed-clean and unchanged since the last run, regeneration
+// is a no-op and can be skipped. This matters because `just docs-build` runs
+// this script twice (docs/packwand's docs:build and the handbook's build);
+// the second invocation then skips. Only used for the `go run` path — an
+// explicit PACKWAND_BIN always regenerates.
+const markerPath = join(
+  here,
+  "..",
+  "..",
+  "node_modules",
+  ".cache",
+  "packwand-commands-tree",
+);
+
+function packwandTreeState(): string | null {
+  try {
+    const dirty = execFileSync(
+      "git",
+      ["status", "--porcelain", "--", packwandSrc],
+      { encoding: "utf-8", cwd: here },
+    ).trim();
+    if (dirty !== "") return null;
+    return execFileSync("git", ["rev-parse", "HEAD:apps/packwand"], {
+      encoding: "utf-8",
+      cwd: here,
+    }).trim();
+  } catch {
+    return null;
+  }
+}
+
+const treeState = process.env.PACKWAND_BIN ? null : packwandTreeState();
+if (
+  treeState &&
+  existsSync(commandsDir) &&
+  existsSync(markerPath) &&
+  (await readFile(markerPath, "utf-8")).trim() === treeState
+) {
+  console.log(
+    "CLI reference up to date (apps/packwand unchanged since last run); skipping regeneration.",
+  );
+  process.exit(0);
 }
 
 const [bin, ...binArgs] = findPackwand();
@@ -76,6 +122,10 @@ try {
   await rm(commandsDir, { recursive: true, force: true });
   await rename(temporaryCommandsDir, commandsDir);
   committed = true;
+  if (treeState) {
+    await mkdir(dirname(markerPath), { recursive: true });
+    await writeFile(markerPath, treeState + "\n");
+  }
   console.log(
     "Regenerated and sanitized CLI reference in the handbook route tree.",
   );

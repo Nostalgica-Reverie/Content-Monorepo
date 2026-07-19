@@ -1,7 +1,4 @@
-import { sql } from 'drizzle-orm'
-
-import { db } from '@/db'
-import { users } from '@/db/schema'
+import { bufferMessageCount } from '@/cron/messageCountFlush'
 import { CreateListener } from '@/types'
 
 export const countMessages: CreateListener = {
@@ -17,13 +14,10 @@ export const countMessages: CreateListener = {
 		if (ctx.message.content.length <= 15) return
 		if (ctx.message.channel.isThread()) return
 
-		await db
-			.insert(users)
-			.values({ id: ctx.message.author.id, messagesSent: 1 })
-			.onConflictDoUpdate({
-				target: users.id,
-				set: { messagesSent: sql`${users.messagesSent} + 1` },
-			})
+		// Buffered in memory and flushed periodically in one batched upsert
+		// (src/cron/messageCountFlush.ts) instead of one DB round-trip per
+		// guild message — this fires on every qualifying message in every guild.
+		bufferMessageCount(ctx.message.author.id)
 
 		// const user = await db
 		// 	.select({

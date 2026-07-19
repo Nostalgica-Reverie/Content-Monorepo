@@ -17,7 +17,8 @@ func isWhitespaceCF(b byte) bool {
 	return b == 9 || b == 10 || b == 13 || b == 32
 }
 
-// naiveMurmur2CF mirrors apps/packwand/curseforge/murmur2's Write(): a
+// naiveMurmur2CF mirrors apps/packwand/curseforge/murmur2's original
+// (pre-fix) Write(): a
 // byte-by-byte append loop that re-grows the backing slice incrementally
 // (Go's append() does amortized-O(1) doubling growth, but still pays a
 // capacity check and possible copy on every growth step, plus a function
@@ -38,7 +39,11 @@ func naiveMurmur2CF(data []byte) uint32 {
 // "genuinely fixable inefficiency" c.md section 1.2 describes -- same
 // algorithm, byte-for-byte identical output (verified by
 // TestCorrectedMurmur2CFMatchesNaive below), just less allocator/bounds-
-// check overhead per byte. True streaming isn't possible here regardless
+// check overhead per byte. Measured on real hardware this variant LOSES to
+// naive at 1KB (~1.7x) and 20MB (~1.3x): the counting pass reads the input
+// a second time, and that extra memory traffic costs more than the saved
+// append growth. Kept as a benchmark baseline; production uses the
+// single-pass presized strategy below. True streaming isn't possible here regardless
 // (see c.md section 1.2): the seed must incorporate the final
 // stripped-byte count before mixing starts.
 func correctedMurmur2CF(data []byte) uint32 {
@@ -54,6 +59,19 @@ func correctedMurmur2CF(data []byte) uint32 {
 		if !isWhitespaceCF(b) {
 			buf[i] = b
 			i++
+		}
+	}
+	return murmur2.MurmurHash2(buf, 1)
+}
+
+// presizedMurmur2CF mirrors the current production Write(): a single pass
+// that grows the buffer once to the upper bound (len(data)) so the append
+// loop never reallocates, without paying for a second counting pass.
+func presizedMurmur2CF(data []byte) uint32 {
+	buf := make([]byte, 0, len(data))
+	for _, b := range data {
+		if !isWhitespaceCF(b) {
+			buf = append(buf, b)
 		}
 	}
 	return murmur2.MurmurHash2(buf, 1)
@@ -98,6 +116,9 @@ func TestCorrectedMurmur2CFMatchesNaive(t *testing.T) {
 		if naive != corrected {
 			t.Errorf("len=%d: naive=%d corrected=%d", n, naive, corrected)
 		}
+		if presized := presizedMurmur2CF(data); presized != naive {
+			t.Errorf("len=%d: naive=%d presized=%d", n, naive, presized)
+		}
 		// Also cross-check against the actual production implementation
 		// (apps/packwand/curseforge/murmur2), not just the two benchmark
 		// variants agreeing with each other.
@@ -133,6 +154,13 @@ func BenchmarkMurmur2CF(b *testing.B) {
 			b.SetBytes(int64(n))
 			for i := 0; i < b.N; i++ {
 				correctedMurmur2CF(data)
+			}
+		})
+
+		b.Run(fmtSize(n)+"/presized", func(b *testing.B) {
+			b.SetBytes(int64(n))
+			for i := 0; i < b.N; i++ {
+				presizedMurmur2CF(data)
 			}
 		})
 	}

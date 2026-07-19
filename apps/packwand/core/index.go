@@ -99,7 +99,10 @@ func computeFileHash(path string, format string) (hashString string, metaFile bo
 			_ = f.Close()
 			return "", false, err
 		}
-		if _, err := io.Copy(h, f); err != nil {
+		// 1 MiB copy buffer instead of io.Copy's 32 KiB default: mod jars run
+		// to tens of MB and this path is the hashing hot loop. The reader is
+		// wrapped so *os.File's WriteTo can't bypass the buffer.
+		if _, err := io.CopyBuffer(h, struct{ io.Reader }{f}, make([]byte, 1<<20)); err != nil {
 			_ = f.Close()
 			return "", false, err
 		}

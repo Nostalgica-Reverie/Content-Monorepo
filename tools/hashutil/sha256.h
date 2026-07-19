@@ -90,15 +90,31 @@ static void sha256_init(sha256_ctx *ctx) {
     ctx->state[7] = 0x5be0cd19;
 }
 
+/* Block-at-a-time (same shape as md5_update): fill a partial block via
+ * memcpy, then transform full 64-byte blocks straight from the input, then
+ * stash the tail. bitlen counts completed blocks only; sha256_final adds the
+ * tail bits, matching the original byte-at-a-time accounting. */
 static void sha256_update(sha256_ctx *ctx, const uint8_t *data, size_t len) {
-    for (size_t i = 0; i < len; ++i) {
-        ctx->data[ctx->datalen++] = data[i];
-        if (ctx->datalen == 64) {
-            sha256_transform(ctx, ctx->data);
-            ctx->bitlen += 512;
-            ctx->datalen = 0;
+    size_t i = 0;
+    if (ctx->datalen > 0) {
+        size_t need = 64 - ctx->datalen;
+        if (len < need) {
+            memcpy(ctx->data + ctx->datalen, data, len);
+            ctx->datalen += (uint32_t)len;
+            return;
         }
+        memcpy(ctx->data + ctx->datalen, data, need);
+        sha256_transform(ctx, ctx->data);
+        ctx->bitlen += 512;
+        ctx->datalen = 0;
+        i = need;
     }
+    for (; i + 64 <= len; i += 64) {
+        sha256_transform(ctx, data + i);
+        ctx->bitlen += 512;
+    }
+    memcpy(ctx->data, data + i, len - i);
+    ctx->datalen = (uint32_t)(len - i);
 }
 
 static void sha256_final(sha256_ctx *ctx, uint8_t hash[32]) {

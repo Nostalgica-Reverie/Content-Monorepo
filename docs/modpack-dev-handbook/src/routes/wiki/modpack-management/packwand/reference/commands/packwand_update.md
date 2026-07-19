@@ -12,6 +12,7 @@ packwand update [name] [flags]
   -a, --all             Update all external files
       --dry-run         Show what would be updated without making any changes
   -h, --help            help for update
+      --json            Print the update report as JSON on stdout
       --report string   Write a machine-readable JSON update report to this file (requires --all)
 ```
 

@@ -10,6 +10,12 @@ import (
 
 const defaultConcurrencyCap = 8
 
+// defaultNetworkConcurrency is deliberately higher than the CPU-bound cap:
+// outbound API calls and downloads are latency-bound, not core-bound, so a
+// worker mostly waits on the wire. Rate-limit pushback is handled by the
+// retry transport's Retry-After support (httpclient.go).
+const defaultNetworkConcurrency = 16
+
 func concurrencyFromEnv(names ...string) int {
 	for _, name := range names {
 		if v := strings.TrimSpace(os.Getenv(name)); v != "" {
@@ -40,7 +46,11 @@ func NetworkConcurrent() int {
 	if n := concurrencyFromEnv("PACKWAND_NETWORK_CONCURRENCY"); n > 0 {
 		return n
 	}
-	return MaxConcurrent()
+	// An explicit global override still wins over the higher network default.
+	if n := concurrencyFromEnv("PACKWAND_CONCURRENCY", "SOMNUS_CONCURRENCY"); n > 0 {
+		return n
+	}
+	return defaultNetworkConcurrency
 }
 
 // HashConcurrent returns the limit for local file reads and hash computation.

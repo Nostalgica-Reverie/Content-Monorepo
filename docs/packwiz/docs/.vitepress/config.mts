@@ -1,65 +1,23 @@
-import { defineConfig } from 'vitepress'
-import lightbox from "vitepress-plugin-lightbox"
-import { generateSidebar } from "vitepress-sidebar";
+import { defineSharedConfig } from '../../../vitepress-shared.mts'
 
-
-// Mirrors docs/packwand/docs/.vitepress/config.mts so all monorepo doc sites
-// share the same UI/UX, while remaining separately built and served.
-export default defineConfig({
-  cleanUrls: true,
-  sitemap: {
-    hostname: "https://packwiz.nostalgica.net/",
-  },
-
+// Shared UI/UX (sidebar, search, social links, markdown/lightbox) comes from
+// docs/vitepress-shared.mts; only this site's identity lives here.
+export default defineSharedConfig({
   title: "Packwiz Components",
-  head: [['link', { rel: 'icon', href: '/favicon.webp' }]],
+  hostname: "https://packwiz.nostalgica.net/",
   description: "Documentation for the packwiz-installer, bootstrap, and mod_browser_webview components maintained in the Lasting Legacy monorepo",
-  themeConfig: {
-    siteTitle: 'Packwiz Components',
-    logo: '/logo.webp',
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Installer', link: '/installer' },
-      { text: 'Bootstrap', link: '/bootstrap' },
-      { text: 'Webview', link: '/webview' },
-      { text: 'Building', link: '/building' },
-      {
-        text: 'Other Docs',
-        items: [
-          { text: 'Lasting Legacy Docs', link: 'https://docs.nostalgica.net/' },
-          { text: 'Packwand', link: 'https://packwand.nostalgica.net/' },
-        ],
-      },
-    ],
-    search: {
-      provider: "local",
-    },
-
-    sidebar: generateSidebar({
-      sortFolderTo: "bottom",
-      documentRootPath: "/docs",
-      useTitleFromFileHeading: true,
-      useTitleFromFrontmatter: true,
-      useFolderTitleFromIndexFile: true,
-      collapsed: true,
-      collapseDepth: 2,
-      capitalizeFirst: true,
-      capitalizeEachWords: false,
-      rootGroupText: "Main",
-      includeEmptyFolder: false,
-    }),
-
-    socialLinks: [
-      { icon: 'forgejo', link: 'https://git.nostalgica.net/Lasting-Legacy' },
-      { icon: 'discord', link: 'https://discord.gg/6pRkrYxbGW'}
+  nav: [
+    { text: 'Home', link: '/' },
+    { text: 'Installer', link: '/installer' },
+    { text: 'Bootstrap', link: '/bootstrap' },
+    { text: 'Webview', link: '/webview' },
+    { text: 'Building', link: '/building' },
+    {
+      text: 'Other Docs',
+      items: [
+        { text: 'Lasting Legacy Docs', link: 'https://docs.nostalgica.net/' },
+        { text: 'Packwand', link: 'https://packwand.nostalgica.net/' },
       ],
     },
-    markdown: {
-      image: {
-        lazyLoading: true,
-    },
-      config: (md) => {
-        md.use(lightbox, {});
-    },
-  }
+  ],
 })

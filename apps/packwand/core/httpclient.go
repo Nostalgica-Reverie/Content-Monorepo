@@ -2,7 +2,9 @@ package core
 
 import (
 	"io"
+	"math/rand/v2"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -22,7 +24,29 @@ const transferTimeout = 10 * time.Minute
 const (
 	retryMaxAttempts    = 3
 	retryInitialBackoff = 500 * time.Millisecond
+	// retryAfterCap bounds how long a server-provided Retry-After header can
+	// stall a worker; a hostile or misconfigured server must not be able to
+	// park a NetworkConcurrent() slot for minutes.
+	retryAfterCap = 60 * time.Second
 )
+
+// retryAfterDelay parses a Retry-After header value (either delta-seconds or
+// an HTTP-date per RFC 9110 §10.2.3). Returns 0 if absent or unparseable.
+func retryAfterDelay(v string) time.Duration {
+	if v == "" {
+		return 0
+	}
+	if secs, err := strconv.Atoi(v); err == nil {
+		if secs <= 0 {
+			return 0
+		}
+		return time.Duration(secs) * time.Second
+	}
+	if t, err := http.ParseTime(v); err == nil {
+		return time.Until(t)
+	}
+	return 0
+}
 
 // NewClient returns the standard client for metadata/API requests: 30s
 // timeout, transparent retry (3 attempts, doubling backoff) on network
@@ -82,14 +106,21 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 			}
 			req.Body = body
 		}
+		// Jitter the backoff to [0.5x, 1.5x] so NetworkConcurrent() workers
+		// that got rate-limited together don't all retry in lockstep. When the
+		// server says how long to wait, believe it (capped).
+		wait := backoff/2 + rand.N(backoff)
 		if resp != nil {
+			if ra := retryAfterDelay(resp.Header.Get("Retry-After")); ra > 0 {
+				wait = min(ra, retryAfterCap)
+			}
 			_, _ = io.Copy(io.Discard, io.LimitReader(resp.Body, 4096))
 			_ = resp.Body.Close()
 		}
 		select {
 		case <-req.Context().Done():
 			return nil, req.Context().Err()
-		case <-time.After(backoff):
+		case <-time.After(wait):
 		}
 		backoff *= 2
 	}

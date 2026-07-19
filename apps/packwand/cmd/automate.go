@@ -50,8 +50,8 @@ type AutomateReport struct {
 
 var llAutomationRunCmd = &cobra.Command{
 	Use:   "run <pack-dir>",
-	Short: "Run the unattended release pipeline for a full_auto-enabled pack (update, refresh, validate, tests, docs, bump)",
-	Long: "Runs update -> refresh -> validate -> tests -> docs -> bump for a single pack that has " +
+	Short: "Run the unattended release pipeline for a full_auto-enabled pack (update, refresh, nix-gen, validate, tests, docs, bump)",
+	Long: "Runs update -> refresh -> nix-gen -> validate -> tests -> docs -> bump for a single pack that has " +
 		"opted in via manifest.json \"automation\": { \"full_auto\": { \"enabled\": true } }. Stops after " +
 		"bumping the manifest in the working tree — it never commits, builds, or publishes. Committing " +
 		"and pushing the result is left to the caller (CI); pushing a version-bumped manifest to main " +
@@ -126,6 +126,30 @@ func runAutomate(packDir string, dryRun bool) *AutomateReport {
 		rep.Steps = append(rep.Steps, AutomateStepResult{Name: "no-op-guard", Status: "ok", Detail: "no changes after update/refresh"})
 		rep.Status = "no_changes"
 		return rep
+	}
+
+	// Regenerate Nix checksum inventories for subdirs that maintain one, so
+	// the flake's view of the pack (checks.modpack-inventory, legacyPackages)
+	// lands in the same commit as the version bump instead of lagging it.
+	// Subdirs without a checksums.json haven't opted into Nix consumption
+	// (e.g. CurseForge metadata-mode packs) and are left alone.
+	regenerated := 0
+	for _, target := range targets {
+		if _, statErr := os.Stat(filepath.Join(target, "checksums.json")); statErr != nil {
+			continue
+		}
+		c := exec.Command(workspace.SelfBin(), "nix", "gen")
+		c.Dir = target
+		workspace.ConfigureSubprocess(c)
+		if out, err := c.CombinedOutput(); err != nil {
+			return rollbackFail(rep, packDir, "nix-gen", lastLines(string(out), 5))
+		}
+		regenerated++
+	}
+	if regenerated > 0 {
+		rep.Steps = append(rep.Steps, AutomateStepResult{Name: "nix-gen", Status: "ok", Detail: fmt.Sprintf("%d checksum inventory(ies) regenerated", regenerated)})
+	} else {
+		rep.Steps = append(rep.Steps, AutomateStepResult{Name: "nix-gen", Status: "skipped", Detail: "no checksums.json maintained in this pack"})
 	}
 
 	if out, err := exec.Command(workspace.SelfBin(), "validate", mfPath).CombinedOutput(); err != nil {

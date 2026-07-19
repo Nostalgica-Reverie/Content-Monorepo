@@ -1,10 +1,10 @@
 ## packwand automation run
 
-Run the unattended release pipeline for a full_auto-enabled pack (update, refresh, validate, tests, docs, bump)
+Run the unattended release pipeline for a full_auto-enabled pack (update, refresh, nix-gen, validate, tests, docs, bump)
 
 ### Synopsis
 
-Runs update -> refresh -> validate -> tests -> docs -> bump for a single pack that has opted in via manifest.json "automation": { "full_auto": { "enabled": true } }. Stops after bumping the manifest in the working tree — it never commits, builds, or publishes. Committing and pushing the result is left to the caller (CI); pushing a version-bumped manifest to main is what the existing 'packwand publish plan' / publish.yml pipeline already reacts to.
+Runs update -> refresh -> nix-gen -> validate -> tests -> docs -> bump for a single pack that has opted in via manifest.json "automation": { "full_auto": { "enabled": true } }. Stops after bumping the manifest in the working tree — it never commits, builds, or publishes. Committing and pushing the result is left to the caller (CI); pushing a version-bumped manifest to main is what the existing 'packwand publish plan' / publish.yml pipeline already reacts to.
 
 ```
 packwand automation run <pack-dir> [flags]

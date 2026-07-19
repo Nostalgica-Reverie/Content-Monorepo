@@ -4,6 +4,7 @@ import { Client, Events, GatewayIntentBits, Partials, TextChannel } from 'discor
 import { eq } from 'drizzle-orm'
 
 import commands from '@/commands'
+import { startMessageCountFlushCron } from '@/cron/messageCountFlush'
 import { startServerPauseDMs } from '@/cron/pauseDMs'
 import { startThreadStaleCheckCron } from '@/cron/threadStaleCheck'
 import listeners from '@/listeners'
@@ -80,11 +81,16 @@ client.once(Events.ClientReady, async (readyClient) => {
 	for (const [, guild] of client.guilds.cache) {
 		try {
 			const active = await guild.channels.fetchActiveThreads()
-			active.threads.forEach(async (thread) => {
-				if (thread.parentId === process.env.COMMUNITY_SUPPORT_FORUM_ID) {
-					await tryJoinThread(thread)
+			const joins = await Promise.allSettled(
+				active.threads
+					.filter((thread) => thread.parentId === process.env.COMMUNITY_SUPPORT_FORUM_ID)
+					.map((thread) => tryJoinThread(thread)),
+			)
+			for (const join of joins) {
+				if (join.status === 'rejected') {
+					console.warn(`[Startup] Failed to join a thread in guild ${guild.id}`, join.reason)
 				}
-			})
+			}
 		} catch {
 			// Ignore failures.
 		}
@@ -93,6 +99,7 @@ client.once(Events.ClientReady, async (readyClient) => {
 	// TODO: Change this to more universal src/cron/index.ts
 	startServerPauseDMs(client)
 	startThreadStaleCheckCron(client)
+	startMessageCountFlushCron()
 })
 
 // Auto-join newly created threads in #community-support

@@ -104,19 +104,40 @@ static void sha512_init(sha512_ctx *ctx) {
     ctx->state[7] = 0x5be0cd19137e2179ULL;
 }
 
-static void sha512_update(sha512_ctx *ctx, const uint8_t *data, size_t len) {
-    for (size_t i = 0; i < len; ++i) {
-        ctx->data[ctx->datalen++] = data[i];
-        if (ctx->datalen == 128) {
-            sha512_transform(ctx, ctx->data);
-            uint64_t old_lo = ctx->bitlen_lo;
-            ctx->bitlen_lo += 1024;
-            if (ctx->bitlen_lo < old_lo) {
-                ctx->bitlen_hi++; /* carry */
-            }
-            ctx->datalen = 0;
-        }
+/* One completed 128-byte block's worth of bits, with 128-bit carry. */
+static void sha512_count_block(sha512_ctx *ctx) {
+    uint64_t old_lo = ctx->bitlen_lo;
+    ctx->bitlen_lo += 1024;
+    if (ctx->bitlen_lo < old_lo) {
+        ctx->bitlen_hi++; /* carry */
     }
+}
+
+/* Block-at-a-time (same shape as md5_update): fill a partial block via
+ * memcpy, then transform full 128-byte blocks straight from the input, then
+ * stash the tail. bitlen counts completed blocks only; sha512_final adds the
+ * tail bits, matching the original byte-at-a-time accounting. */
+static void sha512_update(sha512_ctx *ctx, const uint8_t *data, size_t len) {
+    size_t i = 0;
+    if (ctx->datalen > 0) {
+        size_t need = 128 - ctx->datalen;
+        if (len < need) {
+            memcpy(ctx->data + ctx->datalen, data, len);
+            ctx->datalen += (uint32_t)len;
+            return;
+        }
+        memcpy(ctx->data + ctx->datalen, data, need);
+        sha512_transform(ctx, ctx->data);
+        sha512_count_block(ctx);
+        ctx->datalen = 0;
+        i = need;
+    }
+    for (; i + 128 <= len; i += 128) {
+        sha512_transform(ctx, data + i);
+        sha512_count_block(ctx);
+    }
+    memcpy(ctx->data, data + i, len - i);
+    ctx->datalen = (uint32_t)(len - i);
 }
 
 static void sha512_final(sha512_ctx *ctx, uint8_t hash[64]) {

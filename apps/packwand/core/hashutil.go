@@ -23,17 +23,19 @@ var hashutilAlgos = map[string]bool{
 
 // hashutilBin returns the path to the hashutil binary from the
 // HASHUTIL_BIN env var, or "" if unset. Deliberately does NOT fall back to
-// a bare PATH lookup the way packsquashBin() does: benchmarking (c.md
-// section 1.9) found hashutil measurably slower than Go's own hashing for
-// the actually-default format, DefaultHashFormat = "sha512" -- Go's
-// crypto/sha512 is hardware-accelerated assembly, hashutil's sha512.h is
-// a plain scalar C implementation with no SIMD, and on top of that the
-// subprocess/IPC overhead isn't recouped. Silently activating hashutil
-// for any developer who happens to have it built and on PATH would
-// silently regress their hashing performance, not improve it. Requiring
-// an explicit HASHUTIL_BIN makes this an opt-in benchmarking/comparison
-// tool rather than a default-on fast path -- see c.md section 1.9 for the
-// numbers and section 1.7 for why it isn't shipped to end users regardless.
+// a bare PATH lookup the way packsquashBin() does: benchmarking found
+// hashutil slower than Go's own hashing for the actually-default format,
+// DefaultHashFormat = "sha512" -- Go's crypto/sha512 is hardware-accelerated
+// assembly, hashutil's sha512.h is a plain scalar C implementation with no
+// SIMD, and on top of that the subprocess/IPC overhead isn't recouped.
+// 2026-07 re-measurement after hashutil's block-at-a-time update rewrite
+// (BenchmarkSha512Hashutil/BenchmarkMurmur2CFHashutil, 100x64KB batches):
+// sha512 350 MB/s vs Go's 494 MB/s -- still loses, verdict unchanged.
+// murmur2 is the one format where hashutil now wins (372 MB/s vs 300 MB/s
+// for the best in-process Go loop), so HASHUTIL_BIN is worth setting for
+// murmur2-heavy (CurseForge fingerprint) batches specifically. Silently
+// activating hashutil for any developer who happens to have it built and on
+// PATH would still regress default-format hashing, so it stays opt-in.
 func hashutilBin() string {
 	if b := os.Getenv("HASHUTIL_BIN"); b != "" {
 		return b
