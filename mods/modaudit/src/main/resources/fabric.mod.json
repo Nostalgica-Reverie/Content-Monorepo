@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "modaudit",
+	"version": "${version}",
+	"name": "Mod Audit",
+	"description": "Prompts users to install non-modrinth or non-curseforge mods on install",
+	"authors": [
+		"creepereater"
+	],
+	"contact": {
+		"sources": "https://git.nostalgica.net/Reverie-Projects/modaudit"
+	},
+	"license": "MIT",
+	"icon": "assets/mod-audit/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"modaudit.creepereater.client.ModAuditClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=${loader_version}",
+		"minecraft": "~${minecraft_version}",
+		"java": ">=${java_version}"
+	}
+}
