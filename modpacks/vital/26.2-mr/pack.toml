@@ -1,0 +1,12 @@
+name = "Vital"
+author = "omo50, intergrav, blryface"
+version = "26.05.4"
+pack-format = "packwand:26"
+
+[index]
+file = "index.toml"
+hash-format = "sha512"
+
+[versions]
+fabric = "0.19.3"
+minecraft = "26.2"

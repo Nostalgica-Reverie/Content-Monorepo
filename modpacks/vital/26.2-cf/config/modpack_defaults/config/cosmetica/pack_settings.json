@@ -1,0 +1,43 @@
+{
+  "modpack_id": "vital",
+  "modpack_name": "Vital Modpack",
+  "modpack_settings_enabled": true,
+  "show_accessories": true,
+  "show_lore": true,
+  "show_icons": true,
+  "show_offline_icons": true,
+  "show_special_icons": true,
+  "use_modpack_icons": true,
+  "show_online_activity": true,
+  "visibility_overrides": true,
+  "external_capes": [
+    {
+      "service": "mantle",
+      "enabled": true
+    },
+    {
+      "service": "skinmc",
+      "enabled": true
+    },
+    {
+      "service": "minecraft-capes",
+      "enabled": true
+    },
+    {
+      "service": "cloaks-plus",
+      "enabled": true
+    },
+    {
+      "service": "labymod",
+      "enabled": true
+    },
+    {
+      "service": "optifine",
+      "enabled": true
+    },
+    {
+      "service": "official",
+      "enabled": true
+    }
+  ]
+}
