@@ -1,3 +1,2 @@
-# PackStats 1.0.0
-
-- Initial monorepo release for Fabric 26.1.2 and NeoForge 1.21.1.
+# PackStats 1.0.1
+change license on fabric and nf to mit to better match the actual one
