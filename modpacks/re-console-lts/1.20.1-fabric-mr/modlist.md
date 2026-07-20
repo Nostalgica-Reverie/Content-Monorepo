@@ -55,6 +55,7 @@
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Forge Config API Port](https://modrinth.com/mod/ohNO6lps)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
+- [Jasione](https://modrinth.com/mod/qlDkBPij)
 - [Legacy Skins](https://modrinth.com/mod/4UNJZ4cX)
 - [Legacy4J](https://modrinth.com/mod/gHvKJofA)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)

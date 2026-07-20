@@ -54,6 +54,7 @@
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Forge Config API Port](https://modrinth.com/mod/ohNO6lps)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
+- [Jasione](https://modrinth.com/mod/qlDkBPij)
 - [KryptonFNP Patcher](https://modrinth.com/mod/yzkasIPx)
 - [Legacy Mechanics](https://modrinth.com/mod/sToP3cPO)
 - [Legacy Nether: Extended](https://modrinth.com/mod/l54rfVmm)
