@@ -107,6 +107,14 @@ func runAutomate(packDir string, dryRun bool) *AutomateReport {
 		return failReport(rep, "update", fmt.Sprintf("no pack subdirs (ending -mr/-cf) found under %s", packDir))
 	}
 
+	// Pre-validate before mutating anything: a manifest complaint costs
+	// seconds here versus minutes after update/refresh — which a later
+	// validate failure would then roll back wholesale.
+	if out, err := exec.Command(workspace.SelfBin(), "validate", mfPath).CombinedOutput(); err != nil {
+		return failReport(rep, "pre-validate", lastLines(string(out), 20))
+	}
+	rep.Steps = append(rep.Steps, AutomateStepResult{Name: "pre-validate", Status: "ok"})
+
 	if failures := workspace.WorkPool(targets, workspace.OpUpdate, nil); len(failures) > 0 {
 		return rollbackFail(rep, packDir, "update", fmt.Sprintf("update failed in: %s", strings.Join(failures, ", ")))
 	}
@@ -153,7 +161,7 @@ func runAutomate(packDir string, dryRun bool) *AutomateReport {
 	}
 
 	if out, err := exec.Command(workspace.SelfBin(), "validate", mfPath).CombinedOutput(); err != nil {
-		return rollbackFail(rep, packDir, "validate", lastLines(string(out), 5))
+		return rollbackFail(rep, packDir, "validate", lastLines(string(out), 20))
 	}
 	rep.Steps = append(rep.Steps, AutomateStepResult{Name: "validate", Status: "ok"})
 

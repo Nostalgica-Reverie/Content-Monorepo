@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -984,6 +985,76 @@ func modrinthLoaders(r pubResolved) []string {
 	return []string{"minecraft"}
 }
 
+// modrinthVersionExists reports whether versionNumber is already live on the
+// given Modrinth project. Errors are returned so callers can decide whether
+// absence-of-proof should block (verify) or fall through (upload pre-check).
+func modrinthVersionExists(idOrSlug, versionNumber string) (bool, error) {
+	resp, err := httpGetUA(modrinthAPI + "/project/" + idOrSlug + "/version")
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		detail, _ := io.ReadAll(resp.Body)
+		return false, fmt.Errorf("HTTP %d: %s", resp.StatusCode, string(detail))
+	}
+	var versions []struct {
+		VersionNumber string `json:"version_number"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&versions); err != nil {
+		return false, err
+	}
+	for _, v := range versions {
+		if v.VersionNumber == versionNumber {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
+// cfAlreadyPublished reports whether a file with this display name is already
+// live on the CurseForge project. Needs the public core API (CURSEFORGE_API_KEY)
+// and a numeric project id; when either is unavailable, or the lookup fails,
+// it returns false and the upload proceeds as before.
+func cfAlreadyPublished(projectID, displayName string) bool {
+	apiKey := os.Getenv("CURSEFORGE_API_KEY")
+	if apiKey == "" {
+		return false
+	}
+	if _, err := strconv.ParseInt(projectID, 10, 64); err != nil {
+		return false
+	}
+	req, err := http.NewRequest(http.MethodGet, "https://api.curseforge.com/v1/mods/"+projectID+"/files?pageSize=50", nil)
+	if err != nil {
+		return false
+	}
+	req.Header.Set("x-api-key", apiKey)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", httpUserAgent)
+	resp, err := buildAPIClient.Do(req)
+	if err != nil {
+		return false
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return false
+	}
+	var out struct {
+		Data []struct {
+			DisplayName string `json:"displayName"`
+		} `json:"data"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&out); err != nil {
+		return false
+	}
+	for _, f := range out.Data {
+		if f.DisplayName == displayName {
+			return true
+		}
+	}
+	return false
+}
+
 func uploadModrinth(r pubResolved, projectID, changelog, fileName string, data []byte, live bool) {
 	payload := map[string]any{
 		"project_id":     projectID,
@@ -1007,6 +1078,14 @@ func uploadModrinth(r pubResolved, projectID, changelog, fileName string, data [
 	token := os.Getenv("MODRINTH_TOKEN")
 	if token == "" {
 		cmd.Fail("MODRINTH_TOKEN not set")
+	}
+
+	// Idempotency: a re-run after a partially failed workflow must not die on
+	// entries that already made it out. Skipping an already-live version is
+	// success, not failure.
+	if exists, err := modrinthVersionExists(projectID, r.pVer); err == nil && exists {
+		fmt.Printf("modrinth: version %s is already live on %s — skipping upload (safe re-run)\n", r.pVer, projectID)
+		return
 	}
 
 	// The version-creation endpoint requires the project's base62 ID and,
@@ -1075,6 +1154,14 @@ func uploadCurseforge(r pubResolved, projectID, changelog, fileName string, data
 	token := os.Getenv("CURSEFORGE_TOKEN")
 	if token == "" {
 		cmd.Fail("CURSEFORGE_TOKEN not set")
+	}
+
+	// Idempotency: CurseForge happily accepts duplicate uploads and creates a
+	// second file, so a re-run would double-publish rather than fail. Skip
+	// when the display name is already live (requires CURSEFORGE_API_KEY).
+	if cfAlreadyPublished(projectID, r.displayName) {
+		fmt.Printf("curseforge: %q is already live on project %s — skipping upload (safe re-run)\n", r.displayName, projectID)
+		return
 	}
 
 	gameIDs, loaderIDs := cfResolveVersionIDs(token, r.mcVer, r.loader)
@@ -1278,34 +1365,45 @@ func cfGetJSON(token, path string, target any) {
 	}
 }
 
+const (
+	verifyMaxAttempts = 8
+	verifyRetryDelay  = 15 * time.Second
+)
+
 func pubVerify(manifestPath, variant string) {
 	r := pubResolve(manifestPath, variant)
 	if r.mrID == "" {
-		cmd.Fail("verify currently checks Modrinth only, and this manifest has no modrinth_id")
+		// Not every pack publishes to Modrinth; verify is a no-op for those,
+		// not a failure — CI calls this step unconditionally.
+		fmt.Println("verify: no modrinth_id in manifest — nothing to verify, skipping")
+		return
 	}
-	url := fmt.Sprintf("%s/project/%s/version", modrinthAPI, r.mrID)
-	resp, err := httpGetUA(url)
-	if err != nil {
-		cmd.Fail(fmt.Sprintf("Modrinth version lookup failed: %v", err))
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		detail, _ := io.ReadAll(resp.Body)
-		cmd.Fail(fmt.Sprintf("Modrinth version lookup failed (HTTP %d): %s", resp.StatusCode, string(detail)))
-	}
-	var versions []map[string]any
-	if err := json.NewDecoder(resp.Body).Decode(&versions); err != nil {
-		cmd.Fail(fmt.Sprintf("parsing Modrinth version list: %v", err))
-	}
-	for _, v := range versions {
-		if vn, _ := v["version_number"].(string); vn == r.pVer {
-			vid, _ := v["id"].(string)
-			published, _ := v["date_published"].(string)
-			fmt.Printf("verified: %s %s is live on Modrinth (version id %s, published %s)\n", r.displayName, r.pVer, vid, published)
+	// Modrinth's read API is eventually consistent: a version can take a
+	// little while to appear after a successful upload. Poll before declaring
+	// a just-published release missing — a false negative here fails a
+	// pipeline whose upload actually succeeded.
+	var lastErr error
+	for attempt := 1; attempt <= verifyMaxAttempts; attempt++ {
+		exists, err := modrinthVersionExists(r.mrID, r.pVer)
+		lastErr = err
+		if err == nil && exists {
+			fmt.Printf("verified: %s %s is live on Modrinth\n", r.displayName, r.pVer)
 			return
 		}
+		if attempt < verifyMaxAttempts {
+			detail := "not visible yet"
+			if err != nil {
+				detail = err.Error()
+			}
+			fmt.Printf("verify: attempt %d/%d — %s; retrying in %s\n", attempt, verifyMaxAttempts, detail, verifyRetryDelay)
+			time.Sleep(verifyRetryDelay)
+		}
 	}
-	cmd.Fail(fmt.Sprintf("version '%s' NOT found on Modrinth project '%s' (%d version(s) listed)", r.pVer, r.mrID, len(versions)))
+	if lastErr != nil {
+		cmd.Fail(fmt.Sprintf("Modrinth version lookup failed after %d attempts: %v", verifyMaxAttempts, lastErr))
+	}
+	cmd.Fail(fmt.Sprintf("version '%s' NOT found on Modrinth project '%s' after %d attempts over %s",
+		r.pVer, r.mrID, verifyMaxAttempts, time.Duration(verifyMaxAttempts-1)*verifyRetryDelay))
 }
 
 type mpart struct {

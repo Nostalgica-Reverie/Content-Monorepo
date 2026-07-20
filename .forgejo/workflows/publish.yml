@@ -12,7 +12,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   detect:
@@ -118,6 +118,7 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
           MODRINTH_TOKEN: ${{ secrets.MR }}
           CURSEFORGE_TOKEN: ${{ secrets.CF }}
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
         run: |
           VARIANT='${{ matrix.entry.variant }}'
           if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
@@ -131,11 +132,6 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
         run: |
           VARIANT='${{ matrix.entry.variant }}'
-          MR_ID=$(bun -e "console.log(JSON.parse(require('fs').readFileSync('${{ matrix.entry.manifest }}','utf8')).modrinth_id ?? '')")
-          if [ -z "$MR_ID" ]; then
-            echo "no modrinth_id -> skipping verify"
-            exit 0
-          fi
           if [ "$VARIANT" = "null" ] || [ -z "$VARIANT" ]; then
             packwand publish verify "${{ matrix.entry.manifest }}"
           else
