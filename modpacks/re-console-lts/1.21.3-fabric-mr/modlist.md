@@ -46,6 +46,7 @@
 - [Fast Noise](https://modrinth.com/mod/OnlVIpq5)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Forge Config API Port](https://modrinth.com/mod/ohNO6lps)
+- [Jasione](https://modrinth.com/mod/qlDkBPij)
 - [Legacy Mechanics](https://modrinth.com/mod/sToP3cPO)
 - [Legacy Skins](https://modrinth.com/mod/4UNJZ4cX)
 - [Legacy4J](https://modrinth.com/mod/gHvKJofA)

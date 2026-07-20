@@ -44,6 +44,7 @@
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Forgified Fabric API](https://modrinth.com/mod/Aqlf1Shp)
 - [Global Packs](https://modrinth.com/mod/NRLPy2mk)
+- [Jasione](https://modrinth.com/mod/qlDkBPij)
 - [Legacy Mechanics](https://modrinth.com/mod/sToP3cPO)
 - [Legacy Skins](https://modrinth.com/mod/4UNJZ4cX)
 - [Legacy4J](https://modrinth.com/mod/gHvKJofA)
