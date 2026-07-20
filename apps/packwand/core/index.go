@@ -189,6 +189,7 @@ type RefreshStats struct {
 // Refresh updates the hashes of all the files in the index, and adds new files to the index.
 // It automatically upgrades the index hash-format to DefaultHashFormat when it detects an older format.
 func (in *Index) Refresh() (RefreshStats, error) {
+	defer StartSpan("index: refresh")()
 	var stats RefreshStats
 
 	// Upgrade legacy hash format transparently.

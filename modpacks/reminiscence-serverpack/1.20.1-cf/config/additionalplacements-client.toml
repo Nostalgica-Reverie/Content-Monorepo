@@ -1,0 +1,69 @@
+
+#Client settings
+[client]
+	#Default enabled state for Additional Placement placement logic. Please note that this value takes effect any time you load a world or log in to a server.
+	default_placement_logic_state = true
+	#Whether to display the logic placement enabled state when first initially loading up a world or logging in to a server. This does NOT stop it from showing when toggled via the keybind later.
+	login_placement_logic_state_message = true
+	#Whether to display the logic placement enabled state when toggled with the keybind. This does NOT stop it from showing when you initially load up a world or log in to a server.
+	toggle_placement_logic_state_message = false
+	#The length of time in milliseconds for which the placement toggle key must be held for it to automatically return to the previous state when the key is released. setting to 0 turns the key into hold only, setting it to a high value (such as 1000000) will make it generally behave as always a toggle
+	#Range: 0 ~ 9223372036854775807
+	toggle_quickpress_time = 500
+	#Whether to enable the rendering of the placement grid and/or preview.
+	enable_placement_highlights = false
+	#The color of the placement grid, in AARRGGBB hex format.
+	grid_color = "66000000"
+	#The color of the placement preview (currently used in stairs without mixed placement), in AARRGGBB hex format.
+	preview_color = "66FFFFFF"
+
+	#Options for registered block types for additional placement generation.
+	[client.types]
+
+		[client.types.additionalplacements]
+
+			#Slabs
+			[client.types.additionalplacements.slab]
+				#Blocklist to control which blocks will rotate the textures of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_textures = ["+*", "-minecraft:smooth_stone_slab"]
+				#Blocklist to control which blocks will use "rotated models" of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_models = ["+*", "-minecraft:sandstone_slab", "-minecraft:cut_sandstone_slab", "-minecraft:red_sandstone_slab", "-minecraft:cut_red_sandstone_slab"]
+
+			#Stairs
+			[client.types.additionalplacements.stairs]
+				#Blocklist to control which blocks will rotate the textures of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_textures = ["+*"]
+				#Blocklist to control which blocks will use "rotated models" of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_models = ["+*", "-minecraft:sandstone_stairs", "-minecraft:red_sandstone_stairs"]
+
+			#Carpets
+			[client.types.additionalplacements.carpet]
+				#Blocklist to control which blocks will rotate the textures of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_textures = ["+*"]
+				#Blocklist to control which blocks will use "rotated models" of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_models = ["+*"]
+
+			#Regular pressure plates
+			[client.types.additionalplacements.pressure_plate]
+				#Blocklist to control which blocks will rotate the textures of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_textures = ["+*"]
+				#Blocklist to control which blocks will use "rotated models" of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_models = ["+*"]
+
+			#Weighted pressure plates
+			[client.types.additionalplacements.weighted_pressure_plate]
+				#Blocklist to control which blocks will rotate the textures of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_textures = ["+*"]
+				#Blocklist to control which blocks will use "rotated models" of their original blocks.
+				#See https://github.com/FirEmerald/AdditionalPlacements/wiki/Blocklist-Format for blocklist format
+				rotated_models = ["+*"]
+

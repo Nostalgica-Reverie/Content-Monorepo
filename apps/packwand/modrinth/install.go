@@ -406,8 +406,8 @@ func createFileMeta(project *modrinthApi.Project, version *modrinthApi.Version, 
 		side = core.UniversalSide
 	}
 
-	algorithm, hash := getBestHash(file)
-	if algorithm == "" {
+	download, err := downloadFromFile(file)
+	if err != nil {
 		return errors.New("file doesn't have a hash")
 	}
 
@@ -415,12 +415,8 @@ func createFileMeta(project *modrinthApi.Project, version *modrinthApi.Version, 
 		Name:     *project.Title,
 		FileName: *file.Filename,
 		Side:     side,
-		Download: core.ModDownload{
-			URL:        *file.URL,
-			HashFormat: algorithm,
-			Hash:       hash,
-		},
-		Update: updateMap,
+		Download: download,
+		Update:   updateMap,
 	}
 	var path string
 	folder := viper.GetString("meta-folder")

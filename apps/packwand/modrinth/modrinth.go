@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"net/http"
 	"net/url"
 	"regexp"
 	"slices"
@@ -306,18 +307,60 @@ func findLatestVersion(versions []*modrinthApi.Version, gameVersions []string, u
 	return latestValidVersion
 }
 
-func getLatestVersion(projectID string, name string, pack core.Pack) (*modrinthApi.Version, error) {
-	gameVersions, err := pack.GetSupportedMCVersions()
+// versionSearchParams returns the pack-invariant filters for version lookups
+// (supported game versions and acceptable loaders). Hoisted out of
+// getLatestVersion so bulk update checks compute them once per pack instead
+// of once per mod.
+func versionSearchParams(pack core.Pack) (gameVersions []string, loaders []string, err error) {
+	gameVersions, err = pack.GetSupportedMCVersions()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	var loaders []string
 	if viper.GetString("datapack-folder") != "" {
 		loaders = append(pack.GetCompatibleLoaders(), withDatapackPathMRLoaders...)
 	} else {
 		loaders = append(pack.GetCompatibleLoaders(), defaultMRLoaders...)
 	}
+	return gameVersions, loaders, nil
+}
 
+// latestVersionsByHash resolves the latest matching version for a set of
+// installed file hashes in one request: POST /v2/version_files/update. This
+// is the Modrinth analogue of CurseForge's getModInfoMultiple batch call.
+// Issued directly via NewRequest/Do because go-modrinth v0.6.0's
+// GetLatestVersionsFromHashes posts to the plain version_files route, which
+// returns the versions the hashes belong to, not the latest ones.
+// Hashes absent from the response (unknown to Modrinth, or no version
+// matches the filters) simply have no map entry.
+func latestVersionsByHash(hashes []string, algorithm string, loaders []string, gameVersions []string) (map[string]*modrinthApi.Version, error) {
+	body := struct {
+		Hashes       []string `json:"hashes"`
+		Algorithm    string   `json:"algorithm"`
+		Loaders      []string `json:"loaders"`
+		GameVersions []string `json:"game_versions"`
+	}{hashes, algorithm, loaders, gameVersions}
+	req, err := mrDefaultClient.NewRequest(http.MethodPost, "version_files/update", &body)
+	if err != nil {
+		return nil, err
+	}
+	var resp map[string]*modrinthApi.Version
+	if _, err := mrDefaultClient.Do(req, &resp); err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func getLatestVersion(projectID string, name string, pack core.Pack) (*modrinthApi.Version, error) {
+	gameVersions, loaders, err := versionSearchParams(pack)
+	if err != nil {
+		return nil, err
+	}
+	return getLatestVersionFiltered(projectID, name, gameVersions, loaders)
+}
+
+// getLatestVersionFiltered is getLatestVersion with the pack-invariant
+// filters already computed, for callers iterating many mods of one pack.
+func getLatestVersionFiltered(projectID string, name string, gameVersions []string, loaders []string) (*modrinthApi.Version, error) {
 	result, err := mrDefaultClient.Versions.ListVersions(projectID, modrinthApi.ListVersionsOptions{
 		GameVersions: gameVersions,
 		Loaders:      loaders,
@@ -387,6 +430,36 @@ func getBestHash(v *modrinthApi.File) (string, string) {
 
 	//No hashes were present
 	return "", ""
+}
+
+// downloadFromFile builds the persisted download section for a version file,
+// keeping every provider-supplied hash plus the file size so exports can
+// build platform manifests without re-downloading (see ModDownload.ExtraHashes).
+func downloadFromFile(file *modrinthApi.File) (core.ModDownload, error) {
+	algorithm, hash := getBestHash(file)
+	if algorithm == "" {
+		return core.ModDownload{}, errors.New("file doesn't have a valid hash")
+	}
+	var extra map[string]string
+	for format, value := range file.Hashes {
+		if format != algorithm && value != "" {
+			if extra == nil {
+				extra = make(map[string]string)
+			}
+			extra[format] = value
+		}
+	}
+	var size uint64
+	if file.Size != nil {
+		size = uint64(*file.Size)
+	}
+	return core.ModDownload{
+		URL:         *file.URL,
+		HashFormat:  algorithm,
+		Hash:        hash,
+		ExtraHashes: extra,
+		Size:        size,
+	}, nil
 }
 
 func getInstalledProjectIDs(index *core.Index) []string {

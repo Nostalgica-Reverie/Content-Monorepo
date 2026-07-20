@@ -129,6 +129,15 @@ preflight DIR:
 ci-local DIR:
     go run . ci-local "{{ DIR }}"
 
+# Time Packwand's hot stages (PACKWAND_TIMINGS spans) against a real mr and cf pack subdir
+[working-directory: 'apps/packwand']
+bench-packwand MR_DIR CF_DIR:
+    go build -o packwand{{ EXE_EXT }} .
+    cd "{{ MR_DIR }}" && PACKWAND_TIMINGS=1 "{{ justfile_directory() }}/apps/packwand/packwand{{ EXE_EXT }}" update --all --dry-run
+    cd "{{ MR_DIR }}" && PACKWAND_TIMINGS=1 "{{ justfile_directory() }}/apps/packwand/packwand{{ EXE_EXT }}" refresh
+    cd "{{ MR_DIR }}" && PACKWAND_TIMINGS=1 "{{ justfile_directory() }}/apps/packwand/packwand{{ EXE_EXT }}" mr export -o bench-export.mrpack && rm -f bench-export.mrpack
+    cd "{{ CF_DIR }}" && PACKWAND_TIMINGS=1 "{{ justfile_directory() }}/apps/packwand/packwand{{ EXE_EXT }}" cf export -o bench-export.zip && rm -f bench-export.zip
+
 # Test the cursorapi Go module
 [working-directory: 'apps/api']
 test-cursorapi:

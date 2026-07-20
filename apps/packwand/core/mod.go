@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/BurntSushi/toml"
@@ -37,8 +38,44 @@ type ModDownload struct {
 	URL        string `toml:"url,omitempty"`
 	HashFormat string `toml:"hash-format"`
 	Hash       string `toml:"hash"`
+	// ExtraHashes stores additional provider-supplied hashes of the download,
+	// keyed by format (e.g. "sha1"), beyond the primary Hash used for
+	// verification. Populated at install/update time so platform exports that
+	// need several hashes (.mrpack wants sha1+sha512) can build manifests
+	// without downloading and re-hashing every file. Optional packwand
+	// extension; TOML decoders that don't know the key (packwiz) ignore it.
+	ExtraHashes map[string]string `toml:"extra-hashes,omitempty"`
+	// Size is the byte length of the download when the provider supplied it;
+	// 0 means unknown.
+	Size uint64 `toml:"size,omitempty"`
 	// Mode defaults to modeURL (i.e. use URL when omitted or empty)
 	Mode string `toml:"mode,omitempty"`
+}
+
+// ExportHashes assembles the requested hash formats for this mod purely from
+// persisted metadata (primary hash, extra-hashes, size). ok is false when any
+// requested format is unavailable — callers then fall back to downloading and
+// hashing the file. The internal "length-bytes" format is served from Size.
+func (d ModDownload) ExportHashes(formats []string) (map[string]string, bool) {
+	out := make(map[string]string, len(formats))
+	for _, format := range formats {
+		switch {
+		case format == "length-bytes":
+			if d.Size == 0 {
+				return nil, false
+			}
+			out[format] = strconv.FormatUint(d.Size, 10)
+		case format == d.HashFormat && d.Hash != "":
+			out[format] = d.Hash
+		default:
+			h, ok := d.ExtraHashes[format]
+			if !ok || h == "" {
+				return nil, false
+			}
+			out[format] = h
+		}
+	}
+	return out, true
 }
 
 // ModOption specifies optional metadata for this mod file

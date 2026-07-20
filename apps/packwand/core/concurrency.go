@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+
+	"github.com/spf13/viper"
 )
 
 const defaultConcurrencyCap = 8
@@ -31,10 +33,23 @@ func defaultConcurrency() int {
 	return max(1, min(runtime.NumCPU(), defaultConcurrencyCap))
 }
 
+// jobsFlag returns the value of the --jobs/-j root flag (bound to viper key
+// "jobs" in cmd/root.go), the discoverable way to tune every limit at once.
+// Precedence for all limits: --jobs flag > PACKWAND_* env > default.
+func jobsFlag() int {
+	if n := viper.GetInt("jobs"); n > 0 {
+		return n
+	}
+	return 0
+}
+
 // MaxConcurrent returns the default worker count for packwand operations.
 // PACKWAND_CONCURRENCY is preferred; SOMNUS_CONCURRENCY remains supported for
 // existing workspace automation.
 func MaxConcurrent() int {
+	if n := jobsFlag(); n > 0 {
+		return n
+	}
 	if n := concurrencyFromEnv("PACKWAND_CONCURRENCY", "SOMNUS_CONCURRENCY"); n > 0 {
 		return n
 	}
@@ -43,6 +58,9 @@ func MaxConcurrent() int {
 
 // NetworkConcurrent returns the limit for outbound API and file download work.
 func NetworkConcurrent() int {
+	if n := jobsFlag(); n > 0 {
+		return n
+	}
 	if n := concurrencyFromEnv("PACKWAND_NETWORK_CONCURRENCY"); n > 0 {
 		return n
 	}
@@ -55,6 +73,9 @@ func NetworkConcurrent() int {
 
 // HashConcurrent returns the limit for local file reads and hash computation.
 func HashConcurrent() int {
+	if n := jobsFlag(); n > 0 {
+		return n
+	}
 	if n := concurrencyFromEnv("PACKWAND_HASH_CONCURRENCY"); n > 0 {
 		return n
 	}

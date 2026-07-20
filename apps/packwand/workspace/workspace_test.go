@@ -2,6 +2,7 @@ package workspace
 
 import (
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 )
@@ -78,5 +79,48 @@ func TestCollectTargetsMatchesAbsoluteFilterWithRelativeRoot(t *testing.T) {
 	targets, _ := CollectTargets("modpacks", true, packDir, false)
 	if len(targets) != 1 {
 		t.Fatalf("CollectTargets() = %#v, want one scoped target", targets)
+	}
+}
+
+func TestConfigureSubprocessNonInteractive(t *testing.T) {
+	t.Setenv("PACKWAND_NON_INTERACTIVE", "")
+	os.Unsetenv("PACKWAND_NON_INTERACTIVE")
+
+	c := exec.Command("packwand", "update", "--all")
+	ConfigureSubprocess(c)
+
+	if c.Stdin != nil {
+		t.Error("ConfigureSubprocess must leave stdin detached (nil → null device)")
+	}
+	found := false
+	for _, kv := range c.Env {
+		if kv == "PACKWAND_NON_INTERACTIVE=true" {
+			found = true
+		}
+	}
+	if !found {
+		t.Error("ConfigureSubprocess did not set PACKWAND_NON_INTERACTIVE=true")
+	}
+
+	// An explicit user value must win.
+	t.Setenv("PACKWAND_NON_INTERACTIVE", "false")
+	c2 := exec.Command("packwand", "refresh")
+	ConfigureSubprocess(c2)
+	for _, kv := range c2.Env {
+		if kv == "PACKWAND_NON_INTERACTIVE=true" {
+			t.Error("ConfigureSubprocess overrode an explicit PACKWAND_NON_INTERACTIVE")
+		}
+	}
+}
+
+func TestStreamCommandStreamsAndReportsFailure(t *testing.T) {
+	ok := exec.Command("go", "version")
+	if err := StreamCommand(ok, "test-ok"); err != nil {
+		t.Fatalf("StreamCommand(go version) = %v, want nil", err)
+	}
+
+	bad := exec.Command("go", "definitely-not-a-subcommand")
+	if err := StreamCommand(bad, "test-bad"); err == nil {
+		t.Error("StreamCommand(failing child) = nil, want error")
 	}
 }

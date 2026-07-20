@@ -210,6 +210,11 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&noRefresh, "no-refresh", false,
 		"Skip index and pack.toml refresh after modifications (use 'packwand refresh' to finalize batch operations)")
 	_ = viper.BindPFlag("no-refresh", rootCmd.PersistentFlags().Lookup("no-refresh"))
+
+	var jobs int
+	rootCmd.PersistentFlags().IntVarP(&jobs, "jobs", "j", 0,
+		"Worker count for parallel operations (overrides PACKWAND_CONCURRENCY/PACKWAND_NETWORK_CONCURRENCY/PACKWAND_HASH_CONCURRENCY; 0 = defaults)")
+	_ = viper.BindPFlag("jobs", rootCmd.PersistentFlags().Lookup("jobs"))
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -228,9 +233,13 @@ func initConfig() {
 		viper.SetConfigName(".packwand")
 	}
 
-	// Read in environment variables that match
+	// Read in environment variables that match. Hyphens must map to
+	// underscores too: config keys are kebab-case ("non-interactive",
+	// "no-internal-hashes") but env var names can't contain hyphens, so
+	// without this mapping PACKWAND_NON_INTERACTIVE / PACKWAND_NO_INTERNAL_HASHES
+	// would never be seen.
 	viper.SetEnvPrefix("packwand")
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
 	viper.AutomaticEnv()
 
 	// If a config file is found, read it in.

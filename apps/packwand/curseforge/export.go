@@ -106,16 +106,20 @@ var exportCmd = &cobra.Command{
 			fmt.Printf("Retrieving %v external files to store in the modpack zip...\n", len(nonCfMods))
 			cmdshared.PrintDisclaimer(true)
 
+			endMetaSpan := core.StartSpan("cf-export: metadata")
 			session, err := core.CreateDownloadSession(nonCfMods, []string{})
+			endMetaSpan()
 			if err != nil {
 				return fmt.Errorf("error retrieving external files: %w", err)
 			}
 
 			cmdshared.ListManualDownloads(session)
 
+			endDownloadSpan := core.StartSpan("cf-export: download")
 			for dl := range session.StartDownloads() {
 				_ = cmdshared.AddToZip(dl, exp, "overrides", &index)
 			}
+			endDownloadSpan()
 
 			err = session.SaveIndex()
 			if err != nil {

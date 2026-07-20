@@ -1,0 +1,82 @@
+
+# Client configuration settings
+[client]
+
+	# In-game related options. These can be changed in game instead of config!
+	[client.options]
+		# The sensitivity of the camera's yaw rotation when applying the rotation speed. Setting to 1.0 would mean applying 100% of the rotation speed.
+		# Valid range: 0 to 1 (inclusive)
+		yawSensitivity = 1.0
+		# The speed which the cursor or virtual mouse moves around the screen
+		# Valid range: 0 to 50 (inclusive)
+		mouseSpeed = 15.0
+		# If enabled, shows common actions when displaying available on the screen
+		# Valid values: ALL, MINIMAL, NONE
+		showActions = "MINIMAL"
+		# How much the trigger has to be pressed before it's input is registered. This fixes issues with triggers not being completely released to zero
+		# Valid range: 0 to 1 (inclusive)
+		triggerDeadZone = 0.05
+		# Adjusts the camera sensitivity when looking through a spyglass
+		# Valid range: 0 to 1 (inclusive)
+		spyglassSensitivity = 0.2
+		# The thumbstick that controls moving the cursor
+		# Valid values: LEFT, RIGHT
+		cursorThumbstick = "LEFT"
+		# If enabled, some gameplay elements will cause the controller to rumble
+		# Valid values: true, false
+		rumble = true
+		# The distance you have to move the thumbstick before it's input is registered. This fixes drifting as some thumbsticks don't center to zero.
+		# Valid range: 0 to 1 (inclusive)
+		deadZone = 0.1
+		# Enabling this option will improve polling of controllers when your game FPS is capped. This will not have an effect if your game is already running at a low FPS without a cap.
+		# Valid values: true, false
+		fpsPollingFix = false
+		# The image to use for the cursor. This only applies if virtual mouse is enabled!
+		# Valid values: LIGHT, DARK, CONSOLE, CONSOLE_PLUS, LEGACY_LIGHT, LEGACY_DARK
+		cursorType = "CONSOLE"
+		# If enabled, the player will render in the top left corner likes Bedrock Edition
+		# Valid values: true, false
+		renderMiniPlayer = true
+		# If enabled, the game will use a virtual cursor instead of the real cursor. This must be turned on to be able to run multiple instances!
+		# Valid values: true, false
+		virtualMouse = true
+		# The controller icons to use in game to display actions
+		# Valid values: DEFAULT, PLAYSTATION_5, PLAYSTATION_4, PLAYSTATION_3, XBOX_ONE, XBOX_360, SWITCH_JOYCONS, SWITCH_CONTROLLER, GAMECUBE, STEAM
+		controllerIcons = "DEFAULT"
+		# If enabled, controller will be automatically selected on start up or when plugged in
+		# Valid values: true, false
+		autoSelect = true
+		# The thumbstick to use when scrolling items in the radial menu
+		# Valid values: LEFT, RIGHT
+		radialThumbstick = "RIGHT"
+		# The speed which the camera turns in game
+		# Valid range: 0 to 100 (inclusive)
+		rotationSpeed = 25.0
+		# If enabled, inverts the controls on the X axis for the camera
+		# Valid values: true, false
+		invertRotation = false
+		# The sensitivity of the camera's pitch rotation when applying the rotation speed. Setting to 1.0 would mean applying 100% of the rotation speed.
+		# Valid range: 0 to 1 (inclusive)
+		pitchSensitivity = 0.75
+		# The scale of the mouse speed when hovering a widget or item slot
+		# Valid range: 0.05 to 1 (inclusive)
+		hoverModifier = 0.6
+		# If enabled, hotbar will render closer to the center of the screen like on console.
+		# Valid values: true, false
+		consoleHotbar = false
+		# If enabled, plays a pop sound when you navigate in inventories, menus or scrolling the radial menu
+		# Valid values: true, false
+		uiSounds = true
+		# If enabled, inverts the controls on the Y axis for the camera
+		# Valid values: true, false
+		invertLook = false
+		# If enabled, allows you to craft quickly when clicking an item in the recipe book
+		# Valid values: true, false
+		quickCraft = true
+		# The speed that lists scroll
+		# Valid range: 1 to 30 (inclusive)
+		listScrollSpeed = 10.0
+		# Draws a transparent background behind the text of the button hint
+		# Valid values: true, false
+		hintBackground = true
+

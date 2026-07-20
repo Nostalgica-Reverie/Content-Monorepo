@@ -36,13 +36,15 @@ All concurrency limits and `ParallelFor[T]` (the semaphore-bounded generic used 
 | Function | Env var | Default |
 |---|---|---|
 | `core.MaxConcurrent()` | `PACKWAND_CONCURRENCY` (legacy `SOMNUS_CONCURRENCY`) | `min(runtime.NumCPU(), 8)` |
-| `core.NetworkConcurrent()` | `PACKWAND_NETWORK_CONCURRENCY` | falls back to `MaxConcurrent()` |
+| `core.NetworkConcurrent()` | `PACKWAND_NETWORK_CONCURRENCY` | 16 (latency-bound; explicit `PACKWAND_CONCURRENCY` still wins) |
 | `core.HashConcurrent()` | `PACKWAND_HASH_CONCURRENCY` | falls back to `MaxConcurrent()` |
 | `workspace.CacheSlotCount()` | `PACKWAND_CACHE_SLOTS` | FNV-buckets packs into N `cache-slot-*` resources |
 
+The `--jobs`/`-j` persistent root flag overrides all three `core.*Concurrent()` limits at once (precedence: flag > env > default). `PACKWAND_TIMINGS=1` prints per-stage wall times to stderr (`core/timing.go`); `PACKWAND_MR_BATCH=0` disables the bulk Modrinth update check; `PACKWAND_CHILD_STALL_TIMEOUT` bounds how long a streamed batch child may stay silent before `workspace.StreamCommand` kills it.
+
 **`workspace.Scheduler`** (`workspace/scheduler.go`) is the primitive multi-item operations should use: a resource-keyed scheduler (mutex + `sync.Cond`) running exactly `workers` long-lived goroutines. `Submit(Task)` takes a list of `Resource` keys (e.g. `"subdir:"+dir`, a cache-slot bucket); a task runs only once it holds the head of every resource queue it needs, giving per-resource mutual exclusion without a global lock. `validate --all`, `workspace refresh/update`, and the publish planner all fan out through it (or through `core.ParallelFor` where no resource coordination is needed).
 
-**Subprocess fan-out guard**: `workspace.ConfigureSubprocess` (`workspace/workspace.go`) forces each child `packwand` process's internal concurrency to 1 (`PACKWAND_*_CONCURRENCY=1`) unless explicitly overridden. Without this, a workspace-level `workers=8` fan-out times each child's own `workers=8` would spawn up to 64 concurrent operations. Do not remove it.
+**Subprocess fan-out guard**: `workspace.ConfigureSubprocess` (`workspace/workspace.go`) gives each child `packwand` process an equal share of the parent's budget (`PACKWAND_*_CONCURRENCY = parent limit / workers`, network floored at 2) unless explicitly overridden, keeping the total bounded at ≈ the parent's own limits. Without this, a workspace-level `workers=8` fan-out times each child's own `workers=8` would spawn up to 64 concurrent operations. Do not remove it. It also forces children non-interactive (`PACKWAND_NON_INTERACTIVE=true`, stdin left on the null device) so a prompt can never stall a batch run; long-running children should be driven through `workspace.StreamCommand`, which prefixes their live output and kills them if they stall.
 
 ## HTTP conventions
 
@@ -52,7 +54,7 @@ Every HTTP client comes from `core/httpclient.go` — never construct a bare `&h
 - `core.NewDownloadClient()` — large file transfers: same retry policy, 10-minute timeout.
 - `core.NewUploadClient()` — transfer-scale timeout, no transparent retry, for callers with their own retry/backoff loop (the publish upload path).
 
-A client without a `Timeout` can block a `NetworkConcurrent()` worker slot forever on one hung connection. The retry transport resolves `http.DefaultTransport` per call so `httpmock`-based tests keep working.
+A client without a `Timeout` can block a `NetworkConcurrent()` worker slot forever on one hung connection. The retry transport resolves the base transport per call so `httpmock`-based tests keep working: a swapped `http.DefaultTransport` wins, otherwise requests go through the shared tuned pool (`MaxIdleConnsPerHost` sized to the network fan-out — the stock 2-connection pool forced a TLS handshake per request at 16-wide concurrency). Hosts with documented request budgets are paced client-side by a per-host gate (`hostRateIntervals`; currently `api.modrinth.com` at ~272 req/min) so 429s are the exception, not the pacing mechanism.
 
 ## Error handling conventions
 

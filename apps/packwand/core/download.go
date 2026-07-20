@@ -93,7 +93,11 @@ func (d *downloadSessionInternal) GetManualDownloads() []ManualDownload {
 }
 
 func (d *downloadSessionInternal) StartDownloads() chan CompletedDownload {
-	downloads := make(chan CompletedDownload)
+	// Buffered to the worker count so downloads keep flowing while the single
+	// consumer (typically a zip writer) drains results; unbuffered, every
+	// worker would block handing over its result and the pipeline would run
+	// at consumer speed.
+	downloads := make(chan CompletedDownload, NetworkConcurrent())
 	go func() {
 		for _, found := range d.foundManualDownloads {
 			downloads <- found

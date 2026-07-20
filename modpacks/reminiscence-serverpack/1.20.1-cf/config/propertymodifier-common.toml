@@ -1,0 +1,208 @@
+
+[logging]
+	#Whether to log successful operations or not.
+	log_successful = false
+	#Whether to log failed operations or not.
+	log_errors = true
+
+#Generates a config with all non-default values in propertymodifier-generated.toml.
+[generating]
+	#Generates block state-related entries.
+	block_states = false
+	#Generates block-related entries.
+	blocks = false
+	#Generates item-related entries.
+	items = false
+	#Generates armor-related entries.
+	armor = false
+	#Generates tool-related entries.
+	tools = false
+	#Generates enchantment-related entries.
+	enchantments = false
+	#Generates composting-related entries.
+	composting = false
+	#The default enchantment value used. 0 in vanilla, but mods such as Apotheosis may change this.
+	#Range: 0 ~ 1000000
+	default_enchantment_value = 0
+
+#Set the respective values here by adding lines in the respective groups. Keys can be either a block (e.g. "minecraft:stripped_birch_wood"), a block regex (e.g. "minecraft:.*_block") or a blockstate definition (e.g. "minecraft:grass_block[snowy=true]"). Block regexes cannot contain the [] characters, as their presence will be interpreted as a blockstate definition instead.
+[blocks_and_blockstates]
+
+	#Set the destroy time for a block (state). Dirt has 0.5, stone has 1.5, obsidian has 50. -1 makes the block unbreakable. Examples (without the leading #):
+	#"minecraft:grass_block[snowy=true]" = 100
+	#"minecraft:.*_planks" = 100
+	[blocks_and_blockstates.destroy_time]
+		test = 0.0
+
+	#Set the tool requirement of a block (state). Must be true or false. Examples (without the leading #):
+	#"minecraft:diamond_ore" = false
+	#"minecraft:oak_log" = true
+	[blocks_and_blockstates.requires_tool]
+		test = false
+
+	#Set the light emission of a block (state). Must be an integer between 0 and 15. Examples (without the leading #):
+	#"minecraft:redstone_torch[lit=true]" = 15
+	#"minecraft:.*_bricks" = 7
+	[blocks_and_blockstates.light_emission]
+		test = 0
+
+#Set the respective values here by adding lines in the respective groups. Keys can be either a block (e.g. "minecraft:stripped_birch_wood") or a block regex (e.g. "minecraft:.*_block").
+[blocks]
+
+	#Set the explosion resistance for a block. Dirt has 0.5, stone and has 6, obsidian has 1200. 3600000 or more makes the block completely explosion resistant. Example (without the leading #):
+	#"minecraft:dirt" = 1000
+	[blocks.explosion_resistance]
+		test = 0.0
+
+	#Set the friction for a block. 0.6 for most blocks, 0.8 for slime blocks, 0.98 for ice, packed ice and frosted ice, and 0.989 for blue ice. Example (without the leading #):
+	#"minecraft:.*ice" = 0.6
+	[blocks.friction]
+		test = 0.0
+
+	#Set the speed factor for a block. 1 for most blocks, 0.4 for soul sand and honey blocks. Example (without the leading #):
+	#"minecraft:soul_sand" = 1
+	[blocks.speed_factor]
+		test = 0.0
+
+	#Set the speed factor for a block. 1 for most blocks, 0.5 for honey blocks. Example (without the leading #):
+	#"minecraft:honey_block" = 1
+	[blocks.jump_factor]
+		test = 0.0
+
+#Set the respective values here by adding lines in the respective groups. Keys can be either an item (e.g. "minecraft:stripped_birch_wood") or an item regex (e.g. "minecraft:diamond.*").
+[items]
+
+	#Set the max damage (durability) of an item. Only items that already have durability can have this value altered. Example (without the leading #):
+	#"minecraft:diamond_.*" = 5000
+	[items.max_damage]
+		test = 0
+
+	#Set the max stack size of an item. Only values between 2 and 64 are supported. Items that have durability cannot have this value altered. Example (without the leading #):
+	#"minecraft:ender_pearl" = 64
+	[items.max_stack_size]
+		test = 0
+
+	#Set this value to true to make an item fire resistant (like netherite is), or set it to false to make it burn in fire and lava. Example (without the leading #):
+	#"minecraft:netherite_ingot" = false
+	[items.fire_resistant]
+		test = false
+
+	#Set the rarity (item color) of an item. Must be a valid rarity name. Example (without the leading #):
+	#"minecraft:beacon" = "common"
+	#Default rarities (mods may add more!): "common", "uncommon", "rare", "epic"
+	[items.rarity]
+		test = ""
+
+	#Set the enchantment value of an item. Higher value means better enchantments on average. May not always have a noticeable effect. Example (without the leading #):
+	#"minecraft:.*_hoe" = 40
+	[items.enchantment_value]
+		test = 0
+
+	#Set the repair material of an item. May be an item or a tag containing multiple items, with a # before the tag id. Example (without the leading #):
+	#"minecraft:wooden_.*" = "#minecraft:fishes"
+	[items.repair_material]
+		test = ""
+
+	#Set the values for armor.
+	[items.armor]
+
+		#Set the defense value of an armor item. May not work on modded armors, please file an issue if that's the case. Example (without the leading #):
+		#"minecraft:golden_chestplate" = 10
+		[items.armor.defense]
+			test = 0
+
+		#Set the toughness value of an armor item. May not work on modded armors, please file an issue if that's the case. Example (without the leading #):
+		#"minecraft:golden_boots" = 1
+		[items.armor.toughness]
+			test = 0.0
+
+		#Set the knockback resistance of an armor item. May not work on modded armors, please file an issue if that's the case. Example (without the leading #):
+		#"minecraft:golden_leggings" = 0.1
+		[items.armor.knockback_resistance]
+			test = 0.0
+
+	#Set the values for tools, swords and tridents.
+	[items.tools]
+
+		#Set the efficiency value of a tool. May not work on modded tools, please file an issue if that's the case. Also doesn't work on shears, due to internal problems with that. Example (without the leading #):
+		#"minecraft:iron_pickaxe" = 16
+		[items.tools.efficiency]
+			test = 0.0
+
+		#Set the attack damage of a tool or weapon. May not work on modded tools, please file an issue if that's the case. Example (without the leading #):
+		#"minecraft:netherite_sword" = 12
+		[items.tools.attack_damage]
+			test = 0.0
+
+		#Set the attack speed of a tool or weapon. May not work on modded tools, please file an issue if that's the case. Example (without the leading #):
+		#"minecraft:netherite_pickaxe" = 2.5
+		[items.tools.attack_speed]
+			test = 0.0
+
+#Set the values for enchantments.
+[enchantments]
+
+	#Set the rarity of an enchantment. Must be a valid rarity name. Example (without the leading #):
+	#"minecraft:mending" = "common"
+	#Default rarities (mods may add more!): "common", "uncommon", "rare", "very_rare"
+	[enchantments.rarity]
+		test = ""
+
+#Add or remove compostables.
+[composting]
+	#Whether to remove all predefined compostables or not.
+	clear = false
+
+	#Add new compostables here. Consists of an item or item regex and a float between 0 and 1, representing the chance that the composter level is increased. Example (without the leading #):
+	#"minecraft:netherite_scrap" = 0.8
+	[composting.composting]
+		test = 0.0
+
+#Set the values for axe stripping.
+[stripping]
+	#Whether to remove all predefined stripping values or not.
+	clear = false
+
+	#Add new stripping transitions here. Consists of a block or block regex and a block or block state, representing the output. Example (without the leading #):
+	#"minecraft:.*_planks" = "minecraft:infested_cobblestone"
+	[stripping.stripping]
+		test = ""
+
+#Set the values for shovel flattening.
+[flattening]
+	#Whether to remove all predefined flattening values or not.
+	clear = false
+
+	#Add new flattening transitions here. Consists of a block or block regex and a block or block state, representing the output. Example (without the leading #):
+	#"minecraft:.*_planks" = "minecraft:infested_cobblestone"
+	[flattening.flattening]
+		test = ""
+
+#Set the values for hoe tilling.
+[tilling]
+	#Whether to remove all predefined tilling values or not.
+	clear = false
+
+	#Add new tilling transitions here. Consists of a block or block regex and a block or block state, representing the output. Example (without the leading #):
+	#"minecraft:diamond_block" = "minecraft:emerald_block"
+	[tilling.tilling]
+		test = ""
+
+	#Whether a certain tilling transition needs air above to work. Consists of a block or block regex and a boolean value (true or false). If left unspecified, true is assumed. Example (without the leading #):
+	#"minecraft:diamond_block" = false
+	[tilling.needs_air]
+		test = false
+
+	#The item that is dropped when tilling. Consists of a block or block regex and an item id. If left unspecified, no item is dropped. Example (without the leading #):
+	#"minecraft:diamond_block" = "minecraft:iron_nugget"
+	[tilling.item_drop]
+		test = "minecraft:missingno"
+
+#Set the values for entities.
+[entities]
+
+	#Set the default attributes for entities. Format is "entityid" = "attributeid;value". Cannot add new attributes to mobs, can only alter those that are present by default anyway. Example (without the leading #):
+	#"minecraft:zombie" = "minecraft:generic.attack_damage;10"
+	[entities.default_attributes]
+		test = ""
+

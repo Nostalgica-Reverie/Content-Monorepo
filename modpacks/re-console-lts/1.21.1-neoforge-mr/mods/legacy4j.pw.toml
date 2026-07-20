@@ -1,13 +1,16 @@
 name = "Legacy4J"
-filename = "Legacy4J-1.21.1-1.8.6-lts-neoforge.jar"
+filename = "Legacy4J-1.21.1-1.8.6-lts-forge.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/gHvKJofA/versions/y8nB0FvL/Legacy4J-1.21.1-1.8.6-lts-neoforge.jar"
+url = "https://cdn.modrinth.com/data/gHvKJofA/versions/4KSW8PvG/Legacy4J-1.21.1-1.8.6-lts-forge.jar"
 hash-format = "sha512"
-hash = "92fc0f6eb947b1e72f9c467826c502c437e4be155f079ce11afd4f82b919d9e5f79b6769bd509c9b5de6d73223323e4f4166bb2ff34472355fdaced7936aa947"
+hash = "8abb43015f8fb13f77c797058e76df736af161a7c64be690bf315321b715b54e373877e7dc35dea0109b915d48efd53baf8a833481c7a8898e5a348168d3d2e7"
+size = 19861646
+[download.extra-hashes]
+sha1 = "ff21cca00bd3fe9223764c951c8bb12e30fe1dd2"
 
 [update]
 [update.modrinth]
 mod-id = "gHvKJofA"
-version = "y8nB0FvL"
+version = "4KSW8PvG"

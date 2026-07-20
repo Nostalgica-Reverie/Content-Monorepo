@@ -1,0 +1,101 @@
+# specialmobs:silverfish/fishing_silverfish.toml
+# This config contains options that apply only to the fishing silverfish species.
+
+
+# Category: general
+# Options standard to all mob species (that is, not specific to any particular mob species).
+
+  # The chance for fishing silverfish to succeed at natural spawn attempts. Does not affect Mob Replacement.
+  # Note: Most species do NOT naturally spawn - they must be added by a mod or data pack for this option to do anything.
+  # <Number> Range: 0.0 ~ 1.0, Default: 1.0
+  general.natural_spawn_chance.base = 1.0
+  # The chance for fishing silverfish to succeed at natural spawn attempts when specific environmental conditions are
+  #   met.
+  # <Environment List> Format: [ "value condition1 state1 & condition2 state2 & ...", ... ], Default: []
+  #    Range for Values: 0.0 ~ 1.0
+  general.natural_spawn_chance.exceptions = []
+
+  # When greater than 0, fishing silverfish will have a random render scale applied. This is a visual effect only. If
+  #   this is set to a non-negative value, it overrides the value set for both "master_random_scaling" and
+  #   "family_random_scaling". The priority is species value > family value > master value.
+  # <Number> Range: -1.0 ~ 1.0, Default: -1.0
+  general.random_scaling = -1.0
+
+  # Attribute modifiers for fishing silverfish. If no attribute changes are defined here, fishing silverfish will have
+  #   the exact same attributes as their parent vanilla mob.
+  # <Attribute List> Format: [ "namespace:attribute_name operation value", ... ], Default: [
+  #   "minecraft:generic.max_health + 4.0", "minecraft:generic.movement_speed * 0.8" ]
+  #    Range for Values: Any Value
+  general.attributes = [
+    "minecraft:generic.max_health + 4.0",
+    "minecraft:generic.movement_speed * 0.8"
+  ]
+
+  # Subcategory: special_data
+  # Special Mob Data. These are the values set to each fishing silverfish on spawn (in their NBT).
+
+    # The amount of experience fishing silverfish drop when killed by a player. Multiplied by 2.5 for babies. Extra
+    #   experience may drop based on equipment. Slime-style mobs also drop experience equal to slime size.
+    # <Integer> Range: ≥ 0, Default: 7
+    general.special_data.experience = 7
+    # If greater than 0, fishing silverfish will heal 1 half-heart of health every "heal_time" ticks. (20 ticks = 1
+    #   second)
+    # <Integer> Range: ≥ 0, Default: 0
+    general.special_data.heal_time = 0
+    # Fall damage taken by fishing silverfish is multiplied by this value. 0 is fall damage immunity.
+    # <Number> Range: ≥ 0.0, Default: 1.0
+    general.special_data.fall_damage_multiplier = 1.0
+    # If true, fishing silverfish will take no fire damage. Does not affect spawn restrictions.
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.immune_to_fire = false
+    # If true, fishing silverfish cannot be set on fire (this setting only matters if not immune to fire).
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.immune_to_burning = false
+    # If true, fishing silverfish can breathe in water.
+    # <Boolean> Valid Values: { true, false }, Default: true
+    general.special_data.immune_to_drowning = true
+    # If true, fishing silverfish will ignore forces applied by flowing fluids.
+    # <Boolean> Valid Values: { true, false }, Default: true
+    general.special_data.immune_to_fluid_push = true
+    # If true, fishing silverfish will be continuously damaged while wet.
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.sensitive_to_water = false
+    # If true, fishing silverfish can be leashed. (Note: Leashed mobs can still attack you.)
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.allow_leashing = false
+    # If true, fishing silverfish will not trigger pressure plates.
+    # <Boolean> Valid Values: { true, false }, Default: false
+    general.special_data.immune_to_pressure_plates = false
+    # Fishing silverfish will not be 'trapped' in any blocks specified here (e.g. "cobweb" or "sweet_berry_bush").
+    # <"minecraft:block" Registry List> Format: [ "namespace:entry_name", ... ], Default: []
+    general.special_data.immune_to_sticky_blocks = []
+    # Fishing silverfish cannot be inflicted with any effects specified here (e.g. "instant_damage" or "regeneration").
+    # <"minecraft:mob_effect" Registry List> Format: [ "namespace:entry_name", ... ], Default: []
+    general.special_data.immune_to_effects = []
+
+  # Subcategory: ranged_stats
+  # Like Special Mob Data, these are set to NBT on spawn. Unlike SMD, ranged stats are not all applicable to all mobs.
+
+    # The ranged attack spread (inaccuracy) for fishing silverfish. 0 is perfect accuracy.
+    # <Number> Range: ≥ 0.0, Default: 1.0
+    general.special_data.ranged_attack.spread = 1.0
+    # The delay (in ticks) for fishing silverfish to perform a ranged attack from rest. (20 ticks = 1 second)
+    # <Integer> Range: ≥ 0, Default: 40
+    general.special_data.ranged_attack.charge_time = 40
+    # The maximum distance (in blocks) at which fishing silverfish can use their ranged attacks. 0 disables ranged
+    #   attacks.
+    # <Number> Range: ≥ 0.0, Default: 10.0
+    general.special_data.ranged_attack.max_range = 10.0
+
+
+# Category: silverfish
+# Options standard to all silverfish.
+
+  # Chance for fishing silverfish to spawn already calling for reinforcements. If this is set to a non-negative value,
+  #   it overrides the value set for "family_aggressive_chance".
+  # <Number> Range: -1.0 ~ 1.0, Default: -1.0
+  silverfish.aggressive_chance = -1.0
+
+  # Chance for fishing silverfish to spawn as a 'spitter', which enables their ranged attack (if max range > 0).
+  # <Number> Range: 0.0 ~ 1.0, Default: 1.0
+  silverfish.spitter_chance = 1.0

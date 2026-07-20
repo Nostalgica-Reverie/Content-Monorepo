@@ -164,6 +164,7 @@ var UpdateCmd = &cobra.Command{
 				providerChecks = append(providerChecks, providerCheck{key: k, mods: v})
 			}
 			ch := make(chan checkResult, len(filesWithUpdater))
+			endCheckSpan := core.StartSpan("update: check providers")
 			_ = cmdshared.WithSpinner("Checking for updates", func(update func(string)) error {
 				var checked atomic.Int32
 				core.ParallelFor(providerChecks, core.NetworkConcurrent(), func(_ int, check providerCheck) {
@@ -174,6 +175,7 @@ var UpdateCmd = &cobra.Command{
 				})
 				return nil
 			})
+			endCheckSpan()
 			close(ch)
 			updateStrings := make(map[*core.Mod]string)
 			for r := range ch {
@@ -241,6 +243,7 @@ var UpdateCmd = &cobra.Command{
 				return
 			}
 
+			endApplySpan := core.StartSpan("update: apply")
 			for k, v := range updatableFiles {
 				err := core.Updaters[k].DoUpdate(v, updaterCachedStateMap[k])
 				if err != nil {
@@ -250,14 +253,28 @@ var UpdateCmd = &cobra.Command{
 					}
 					continue
 				}
-				for _, modData := range v {
+				// Metadata files are distinct paths, so writing them fans out
+				// safely; index mutation below stays single-threaded (it is an
+				// in-memory map update — the index file itself is written once
+				// by CommitChanges at the end).
+				type writeResult struct {
+					format string
+					hash   string
+					err    error
+				}
+				writeResults := make([]writeResult, len(v))
+				core.ParallelFor(v, core.MaxConcurrent(), func(i int, modData *core.Mod) {
 					format, hash, err := modData.Write()
-					if err != nil {
-						fmt.Println(err.Error())
-						rep.Failed = append(rep.Failed, updateReportEntry{Name: modData.Name, Change: updateStrings[modData], Error: err.Error()})
+					writeResults[i] = writeResult{format, hash, err}
+				})
+				for i, modData := range v {
+					r := writeResults[i]
+					if r.err != nil {
+						fmt.Println(r.err.Error())
+						rep.Failed = append(rep.Failed, updateReportEntry{Name: modData.Name, Change: updateStrings[modData], Error: r.err.Error()})
 						continue
 					}
-					err = index.RefreshFileWithHash(modData.GetFilePath(), format, hash, true)
+					err = index.RefreshFileWithHash(modData.GetFilePath(), r.format, r.hash, true)
 					if err != nil {
 						fmt.Println(err.Error())
 						rep.Failed = append(rep.Failed, updateReportEntry{Name: modData.Name, Change: updateStrings[modData], Error: err.Error()})
@@ -266,6 +283,7 @@ var UpdateCmd = &cobra.Command{
 					rep.Updated = append(rep.Updated, updateReportEntry{Name: modData.Name, Change: updateStrings[modData]})
 				}
 			}
+			endApplySpan()
 			allReport = rep
 		} else {
 			if len(args) < 1 || len(args[0]) == 0 {

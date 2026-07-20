@@ -1,0 +1,28 @@
+
+[mobs]
+	#Range: -64 to 318
+	"Topmost Y-level at which Cave Mobs can spawn" = 50.0
+	#Range: 0 to 100 (Percent)
+	"Chance Vampires will start flying when hurt" = 20.0
+	#Range: 0 to 100 (Percent)
+	"Chance Vampires will stop flying when hurt" = 30.0
+	#Range: 0 to 100 (Percent)
+	"Chance Vampire will turn into a Biter, regenerating it's health" = 10.0
+	#Range: 0 to 100 (Percent)
+	"Chance Troll will become enraged when hurt" = 20.0
+	#Range: 0 to 100 (Percent)
+	"Chance Troll will calm down from rage when hurt" = 20.0
+
+["extra death conditions"]
+	"Vampires explode from burning" = true
+	"Trolls petrify when hurt under sunlight" = true
+	#Range: 0 to 100 (Percent)
+	"Chance Botflies will spawn from a slain Zombie" = 5.0
+	#Range: 0 to 100 (Percent)
+	"Chance Phantoms drop their Eyes" = 15.0
+	"New Creeper Mobs Survive Their Own Explosions" = true
+
+[experimental]
+	#All hostile mobs get faster the longer they look at you, like Intruders.
+	"Overtime for All" = false
+

@@ -4,6 +4,7 @@
 package workspace
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -113,19 +114,107 @@ func envHasAny(names ...string) bool {
 }
 
 // ConfigureSubprocess keeps workspace-level fanout from multiplying by each
-// child packwand process's internal fanout. Explicit user limits are preserved.
+// child packwand process's internal fanout: each child receives an equal
+// share of the parent's budget (total ≈ workers × share stays bounded)
+// instead of unbounded workers × workers multiplication. Network gets a floor
+// of 2 because it is latency-bound — the per-host rate limiter in
+// core/httpclient.go is the backstop for provider request budgets. Explicit
+// user limits are preserved.
+//
+// Children are also forced non-interactive: stdin stays detached (exec's
+// default null device — never wire a TTY into c.Stdin) and
+// PACKWAND_NON_INTERACTIVE makes every PromptYesNo answer yes, so a prompt
+// can never stall a batch child or silently cancel an operation whose output
+// is being captured by the parent.
 func ConfigureSubprocess(c *exec.Cmd) {
 	env := os.Environ()
+	workers := MaxConcurrent()
 	if !envHasAny("PACKWAND_CONCURRENCY", "SOMNUS_CONCURRENCY") {
-		env = append(env, "PACKWAND_CONCURRENCY=1")
+		env = append(env, fmt.Sprintf("PACKWAND_CONCURRENCY=%d", max(1, core.MaxConcurrent()/workers)))
 	}
 	if !envHasAny("PACKWAND_NETWORK_CONCURRENCY") {
-		env = append(env, "PACKWAND_NETWORK_CONCURRENCY=1")
+		env = append(env, fmt.Sprintf("PACKWAND_NETWORK_CONCURRENCY=%d", max(2, core.NetworkConcurrent()/workers)))
 	}
 	if !envHasAny("PACKWAND_HASH_CONCURRENCY") {
-		env = append(env, "PACKWAND_HASH_CONCURRENCY=1")
+		env = append(env, fmt.Sprintf("PACKWAND_HASH_CONCURRENCY=%d", max(1, core.HashConcurrent()/workers)))
+	}
+	if !envHasAny("PACKWAND_NON_INTERACTIVE") {
+		env = append(env, "PACKWAND_NON_INTERACTIVE=true")
 	}
 	c.Env = env
+}
+
+// childStallTimeout is how long a streamed child may stay silent before
+// StreamCommand kills it. PACKWAND_CHILD_STALL_TIMEOUT accepts a Go duration
+// string ("15m", "1h").
+func childStallTimeout() time.Duration {
+	if v := os.Getenv("PACKWAND_CHILD_STALL_TIMEOUT"); v != "" {
+		if d, err := time.ParseDuration(v); err == nil && d > 0 {
+			return d
+		}
+	}
+	return 15 * time.Minute
+}
+
+// StreamCommand runs c, echoing each output line prefixed with [label] so
+// parallel children stay attributable in interleaved output, and kills the
+// child if it produces nothing for childStallTimeout() — a wedged pack fails
+// loudly with its name instead of hanging the batch. This replaces
+// CombinedOutput for long-running children, whose buffered output reads as a
+// silent hang until the child exits.
+func StreamCommand(c *exec.Cmd, label string) error {
+	pr, pw := io.Pipe()
+	c.Stdout = pw
+	c.Stderr = pw
+	if err := c.Start(); err != nil {
+		_ = pw.Close()
+		return err
+	}
+
+	var lastOutput atomic.Int64
+	lastOutput.Store(time.Now().UnixNano())
+	scanDone := make(chan struct{})
+	go func() {
+		defer close(scanDone)
+		sc := bufio.NewScanner(pr)
+		sc.Buffer(make([]byte, 64*1024), 1024*1024)
+		for sc.Scan() {
+			lastOutput.Store(time.Now().UnixNano())
+			fmt.Printf("[%s] %s\n", label, sc.Text())
+		}
+		if err := sc.Err(); err != nil {
+			fmt.Printf("[%s] (output truncated: %v)\n", label, err)
+		}
+	}()
+
+	stall := childStallTimeout()
+	var stalled atomic.Bool
+	watchStop := make(chan struct{})
+	go func() {
+		ticker := time.NewTicker(min(stall/4, 30*time.Second))
+		defer ticker.Stop()
+		for {
+			select {
+			case <-watchStop:
+				return
+			case <-ticker.C:
+				if time.Since(time.Unix(0, lastOutput.Load())) > stall {
+					stalled.Store(true)
+					_ = c.Process.Kill()
+					return
+				}
+			}
+		}
+	}()
+
+	err := c.Wait()
+	close(watchStop)
+	_ = pw.Close()
+	<-scanDone
+	if stalled.Load() {
+		return fmt.Errorf("%s: killed after %v with no output (stalled)", label, stall)
+	}
+	return err
 }
 
 // WriteJSON writes v as indented JSON to path.

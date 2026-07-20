@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"sort"
@@ -153,16 +152,30 @@ func runNixGenAll() {
 		return
 	}
 	sort.Strings(targets)
-	Header(fmt.Sprintf("Generating Nix checksums for %d pack subdir(s)", len(targets)))
+	Header(fmt.Sprintf("Generating Nix checksums for %d pack subdir(s), up to %d in parallel", len(targets), workspace.MaxConcurrent()))
+	sched := workspace.NewScheduler(workspace.MaxConcurrent())
+	slots := workspace.CacheSlotCount()
+	dones := make([]<-chan error, len(targets))
+	for i, dir := range targets {
+		dones[i] = sched.Submit(workspace.Task{
+			Name: dir,
+			Needs: []workspace.Resource{
+				workspace.Resource("subdir:" + dir),
+				workspace.CacheSlot(dir, slots),
+			},
+			Run: func() error {
+				c := exec.Command(workspace.SelfBin(), "nix", "gen")
+				c.Dir = dir
+				workspace.ConfigureSubprocess(c)
+				return workspace.StreamCommand(c, dir)
+			},
+		})
+	}
+	sched.Close()
 	failed := 0
-	for _, dir := range targets {
-		c := exec.Command(workspace.SelfBin(), "nix", "gen")
-		c.Dir = dir
-		c.Stdout = os.Stdout
-		c.Stderr = os.Stderr
-		workspace.ConfigureSubprocess(c)
-		if err := c.Run(); err != nil {
-			Warn("%s: nix gen failed: %v", dir, err)
+	for i, done := range dones {
+		if err := <-done; err != nil {
+			Warn("%s: nix gen failed: %v", targets[i], err)
 			failed++
 		}
 	}

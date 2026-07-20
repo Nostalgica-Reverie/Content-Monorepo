@@ -20,45 +20,47 @@ func pinMod(args []string, pinned bool) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	modPath, ok := index.FindMod(args[0])
-	if !ok {
-		fmt.Println("Can't find this file; please ensure you have run packwiz refresh and use the name of the .pw.toml file (defaults to the project slug)")
-		os.Exit(1)
+	message := "pinned"
+	if !pinned {
+		message = "unpinned"
 	}
-	modData, err := core.LoadMod(modPath)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	modData.Pin = pinned
-	format, hash, err := modData.Write()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	err = index.RefreshFileWithHash(modPath, format, hash, true)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+	// All pin flips apply against the loaded index, then commit once.
+	for _, name := range args {
+		modPath, ok := index.FindMod(name)
+		if !ok {
+			fmt.Printf("Can't find file %q; please ensure you have run packwiz refresh and use the name of the .pw.toml file (defaults to the project slug)\n", name)
+			os.Exit(1)
+		}
+		modData, err := core.LoadMod(modPath)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		modData.Pin = pinned
+		format, hash, err := modData.Write()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		err = index.RefreshFileWithHash(modPath, format, hash, true)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		fmt.Printf("%s %s successfully!\n", name, message)
 	}
 	if err = core.CommitChanges(&index, &pack); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	message := "pinned"
-	if !pinned {
-		message = "unpinned"
-	}
-	fmt.Printf("%s %s successfully!\n", args[0], message)
 }
 
 // pinCmd represents the pin command
 var pinCmd = &cobra.Command{
-	Use:     "pin",
-	Short:   "Pin a file so it does not get updated automatically",
+	Use:     "pin [name]...",
+	Short:   "Pin one or more files so they do not get updated automatically",
 	Aliases: []string{"hold"},
-	Args:    cobra.ExactArgs(1),
+	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		pinMod(args, true)
 	},
@@ -66,10 +68,10 @@ var pinCmd = &cobra.Command{
 
 // unpinCmd represents the unpin command
 var unpinCmd = &cobra.Command{
-	Use:     "unpin",
-	Short:   "Unpin a file so it receives updates",
+	Use:     "unpin [name]...",
+	Short:   "Unpin one or more files so they receive updates",
 	Aliases: []string{"unhold"},
-	Args:    cobra.ExactArgs(1),
+	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		pinMod(args, false)
 	},

@@ -137,7 +137,8 @@ func runBuild(targetedPack, shortSHA string) {
 			cmd.Fail(fmt.Sprintf("failed to detect changed targets: %v", err))
 		}
 		if len(changed) == 0 {
-			fmt.Println("no publishable projects detected in git diff.")
+			fmt.Println("no publishable projects detected: the latest commit (git diff-tree HEAD) touches no mods/, modpacks/, datapacks/ or resourcepacks/ paths.")
+			fmt.Println("nothing was exported — pass a pack name (e.g. 'packwand export <pack>') to build one regardless of git state.")
 			return
 		}
 	}
@@ -326,8 +327,8 @@ func queueModpackExports(sched *workspace.Scheduler, slots int, packID, sha, art
 				c := exec.Command(workspace.SelfBin(), j.plat.cli, "export", "--output", outputPath)
 				c.Dir = j.dir
 				workspace.ConfigureSubprocess(c)
-				if out, err := c.CombinedOutput(); err != nil {
-					return fmt.Errorf("packwand export failed for %s: %v\n%s", j.dir, err, out)
+				if err := workspace.StreamCommand(c, j.dir); err != nil {
+					return fmt.Errorf("packwand export failed for %s: %w", j.dir, err)
 				}
 				fmt.Printf("exported %s\n", outputName)
 				return nil
@@ -820,16 +821,16 @@ func pubBuildModpack(pDir, artifactsDir string, r *pubResolved) {
 				refresh := exec.Command(workspace.SelfBin(), "refresh", "--build")
 				refresh.Dir = p.targetPath
 				workspace.ConfigureSubprocess(refresh)
-				if out, err := refresh.CombinedOutput(); err != nil {
-					return fmt.Errorf("packwand distribution refresh failed for %s: %v\n%s", p.targetPath, err, workspace.Indent(string(out), "    "))
+				if err := workspace.StreamCommand(refresh, p.targetPath); err != nil {
+					return fmt.Errorf("packwand distribution refresh failed for %s: %w", p.targetPath, err)
 				}
 
 				c := exec.Command(workspace.SelfBin(), p.plat.cli, "export", "--output", p.outFile)
 				c.Dir = p.targetPath
 				workspace.ConfigureSubprocess(c)
 				c.Env = append(c.Environ(), "PACKWAND_NO_INTERNAL_HASHES=false")
-				if out, err := c.CombinedOutput(); err != nil {
-					return fmt.Errorf("packwand export failed for %s: %v\n%s", p.targetPath, err, workspace.Indent(string(out), "    "))
+				if err := workspace.StreamCommand(c, p.targetPath); err != nil {
+					return fmt.Errorf("packwand export failed for %s: %w", p.targetPath, err)
 				}
 				fmt.Printf("exported %s\n", p.outFile)
 				*p.flag = true

@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/core"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/manifest"
 	"git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand/workspace"
 
@@ -52,6 +53,18 @@ func init() {
 	// sync
 	wsSyncCmd.Flags().Bool("dry-run", false, "Show what would be synced without making changes")
 	workspaceCmd.AddCommand(wsSyncCmd)
+
+	// export
+	wsExportCmd.Flags().Bool("all", false, "Run across all packs even when scoped")
+	workspaceCmd.AddCommand(wsExportCmd)
+
+	// mr / cf provider groups
+	wsMrAddCmd.Flags().Bool("all", false, "Run across all packs even when scoped")
+	wsMrCmd.AddCommand(wsMrAddCmd)
+	workspaceCmd.AddCommand(wsMrCmd)
+	wsCfAddCmd.Flags().Bool("all", false, "Run across all packs even when scoped")
+	wsCfCmd.AddCommand(wsCfAddCmd)
+	workspaceCmd.AddCommand(wsCfCmd)
 }
 
 // — status —
@@ -90,15 +103,17 @@ var wsStatusCmd = &cobra.Command{
 			llFail(fmt.Sprintf("failed to read %s: %v", root, err))
 		}
 
-		var statuses []WorkspaceStatus
-		for _, e := range entries {
+		// Read-only scan: manifest reads + mods-dir listings fan out in
+		// process (no subprocess spawns); results keep directory order.
+		results := make([]*WorkspaceStatus, len(entries))
+		core.ParallelFor(entries, core.MaxConcurrent(), func(idx int, e os.DirEntry) {
 			if !e.IsDir() {
-				continue
+				return
 			}
 			packPath := filepath.Join(root, e.Name())
 			m, err := manifest.Read(filepath.Join(packPath, "manifest.json"))
 			if err != nil {
-				continue
+				return
 			}
 
 			auto := manifest.ReadAutomation(packPath)
@@ -142,7 +157,7 @@ var wsStatusCmd = &cobra.Command{
 				mcVersion = *m.MCVersion
 			}
 
-			statuses = append(statuses, WorkspaceStatus{
+			results[idx] = &WorkspaceStatus{
 				ID:         m.ID,
 				Name:       m.Name,
 				Version:    m.Version,
@@ -153,7 +168,13 @@ var wsStatusCmd = &cobra.Command{
 				Subdirs:    subdirs,
 				TotalMods:  totalMods,
 				FrozenMods: totalFrozen,
-			})
+			}
+		})
+		var statuses []WorkspaceStatus
+		for _, r := range results {
+			if r != nil {
+				statuses = append(statuses, *r)
+			}
 		}
 
 		if asJSON {
@@ -208,6 +229,122 @@ var wsStatusCmd = &cobra.Command{
 		}
 		fmt.Printf("\n%d pack(s)\n", len(statuses))
 	},
+}
+
+// — export —
+
+// filterPlatformSubdirs keeps targets whose base name carries a platform
+// suffix. An empty suffix keeps every platform subdir (-mr and -cf).
+func filterPlatformSubdirs(targets []string, suffix string) []string {
+	var out []string
+	for _, t := range targets {
+		base := filepath.Base(t)
+		if suffix != "" {
+			if strings.HasSuffix(base, suffix) {
+				out = append(out, t)
+			}
+		} else if strings.HasSuffix(base, "-mr") || strings.HasSuffix(base, "-cf") {
+			out = append(out, t)
+		}
+	}
+	return out
+}
+
+var wsExportCmd = &cobra.Command{
+	Use:   "export [pack-dir]",
+	Short: "Run mr/cf export in every platform pack subdir (files land in each subdir)",
+	Run: func(cmd *cobra.Command, args []string) {
+		llChdir()
+		all, _ := cmd.Flags().GetBool("all")
+		packFilter, explicit := resolveWorkspaceScope(args, llStartCwd, all)
+		targets, _ := workspace.CollectTargets(workspace.ModpacksDir(), false, packFilter, explicit)
+		targets = filterPlatformSubdirs(targets, "")
+		if len(targets) == 0 {
+			fmt.Println("no platform pack subdirs (-mr/-cf) found")
+			return
+		}
+		op := workspace.Operation{
+			Name:   "export",
+			Gerund: "exporting",
+			// The platform subcommand depends on the subdir's suffix, so the
+			// whole argv is per-target.
+			ExtraArgsFor: func(dir string) []string {
+				if strings.HasSuffix(filepath.Base(dir), "-cf") {
+					return []string{"cf", "export"}
+				}
+				return []string{"mr", "export"}
+			},
+		}
+		fmt.Printf("exporting %d subdir(s), running up to %d in parallel\n", len(targets), workspace.MaxConcurrent())
+		if failures := workspace.WorkPool(targets, op, nil); len(failures) > 0 {
+			llFail(fmt.Sprintf("export failed in %d subdir(s): %s", len(failures), strings.Join(failures, ", ")))
+		}
+		fmt.Printf("exported %d subdir(s)\n", len(targets))
+	},
+}
+
+// — mr/cf add —
+
+var wsMrCmd = &cobra.Command{
+	Use:     "mr",
+	Short:   "Modrinth operations across all packs",
+	Aliases: []string{"modrinth"},
+}
+
+var wsCfCmd = &cobra.Command{
+	Use:     "cf",
+	Short:   "CurseForge operations across all packs",
+	Aliases: []string{"curseforge"},
+}
+
+var wsMrAddCmd = &cobra.Command{
+	Use:     "add <slug-or-url>...",
+	Short:   "Add Modrinth mod(s) to every -mr pack subdir",
+	Aliases: []string{"install"},
+	Args:    cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		all, _ := cmd.Flags().GetBool("all")
+		wsPlatformAdd("mr", "-mr", args, all)
+	},
+}
+
+var wsCfAddCmd = &cobra.Command{
+	Use:     "add <slug-or-url>...",
+	Short:   "Add CurseForge mod(s) to every -cf pack subdir",
+	Aliases: []string{"install"},
+	Args:    cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		all, _ := cmd.Flags().GetBool("all")
+		wsPlatformAdd("cf", "-cf", args, all)
+	},
+}
+
+// wsPlatformAdd installs each slug into every pack subdir of the matching
+// platform. Children run non-interactively (ConfigureSubprocess), so
+// ambiguous search terms resolve to the default choice — prefer exact slugs
+// or URLs here.
+func wsPlatformAdd(cli, suffix string, slugs []string, all bool) {
+	llChdir()
+	packFilter, explicit := resolveWorkspaceScope(nil, llStartCwd, all)
+	targets, _ := workspace.CollectTargets(workspace.ModpacksDir(), false, packFilter, explicit)
+	targets = filterPlatformSubdirs(targets, suffix)
+	if len(targets) == 0 {
+		fmt.Printf("no %s pack subdirs found\n", suffix)
+		return
+	}
+	failedTotal := 0
+	for _, slug := range slugs {
+		op := workspace.Operation{
+			Name:        cli + "-add",
+			Gerund:      "adding " + slug + " in",
+			PackwizArgs: []string{cli, "add", slug},
+		}
+		fmt.Printf("adding %s to %d subdir(s), running up to %d in parallel\n", slug, len(targets), workspace.MaxConcurrent())
+		failedTotal += len(workspace.WorkPool(targets, op, nil))
+	}
+	if failedTotal > 0 {
+		llFail(fmt.Sprintf("%d add operation(s) failed", failedTotal))
+	}
 }
 
 // — update —

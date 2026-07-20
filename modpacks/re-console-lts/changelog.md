@@ -1,2 +1,2 @@
-# Re-Console LTS 26.06.1
-Adds in missing optimizations
+# Re-Console LTS 26.07
+Updates the mods on LTS - adds in Jasione to improve memory usage.

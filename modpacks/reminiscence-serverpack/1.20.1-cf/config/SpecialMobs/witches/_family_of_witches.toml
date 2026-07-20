@@ -1,0 +1,89 @@
+# specialmobs:witches/_family_of_witches.toml
+# This config contains options that apply to the family of witches as a whole; that is, the vanilla replacement and
+#   all special variants.
+
+
+# Category: general
+# Options standard to all mob families (that is, not specific to any particular mob family).
+
+  # Whether this mob family replaces vanilla witches with its vanilla replacement species.
+  # The "master_vanilla_replacement" setting in the mod's main config must also be true for this to work.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  general.vanilla_replacement = true
+
+  # When greater than 0, witches will have a random render scale applied. This is a visual effect only. If this is set
+  #   to a non-negative value, it overrides the value set for "master_random_scaling", though species configs can
+  #   override this value.
+  # <Number> Range: -1.0 ~ 1.0, Default: -1.0
+  general.family_random_scaling = -1.0
+
+  # The chance for witches to spawn as special variants.
+  # NOTE: Some environment check types can cause deadlocks on servers currently, so be careful!
+  # <Number> Range: 0.0 ~ 1.0, Default: 0.25
+  general.special_variant_chance.base = 0.25
+  # The chance for witches to spawn as special variants when specific environmental conditions are met.
+  # <Environment List> Format: [ "value condition1 state1 & condition2 state2 & ...", ... ], Default: [ "0.13
+  #   world_time < 120000", "0.5 moon_phase full", "0.38 moon_phase full" ]
+  #    Range for Values: 0.0 ~ 1.0
+  general.special_variant_chance.exceptions = [
+    "0.13 world_time < 120000",
+    "0.5 moon_phase full",
+    "0.38 moon_phase full"
+  ]
+
+  # The weight of each witch species to be chosen as the replacement when witches spawn as special variants. Higher
+  #   weight is more common.
+  # <Number> Range: ≥ 0.0
+  general.weight.domination.base = 15.0
+  general.weight.ice.base = 15.0
+  general.weight.shadows.base = 60.0
+  general.weight.undead.base = 60.0
+  general.weight.wilds.base = 60.0
+  general.weight.wind.base = 60.0
+
+  # The weight of each witch species to be chosen as the replacement when witches spawn as special variants when
+  #   specific environmental conditions are met. Higher weight is more common.
+  # <Number> Range: ≥ 0.0
+  general.weight.domination.exceptions = []
+  general.weight.ice.exceptions = [
+    "7.5 dimension_property ultrawarm",
+    "300.0 temp freezing",
+    "15.0 temp >= 0.8",
+    "7.5 temp > 1.0",
+    "300.0 biome minecraft:deep_frozen_ocean",
+    "150.0 biome minecraft:cold_ocean",
+    "150.0 biome minecraft:deep_cold_ocean",
+    "15.0 biome minecraft:lukewarm_ocean",
+    "15.0 biome minecraft:deep_lukewarm_ocean",
+    "7.5 biome minecraft:warm_ocean"
+  ]
+  general.weight.shadows.exceptions = [
+    "300.0 biome_category taiga",
+    "300.0 biome_category jungle",
+    "300.0 biome_category forest",
+    "300.0 biome minecraft:crimson_forest",
+    "150.0 moon_phase full"
+  ]
+  general.weight.undead.exceptions = []
+  general.weight.wilds.exceptions = [
+    "300.0 biome_category taiga",
+    "300.0 biome_category jungle",
+    "300.0 biome_category forest",
+    "300.0 biome minecraft:crimson_forest",
+    "150.0 moon_phase full"
+  ]
+  general.weight.wind.exceptions = [
+    "300.0",
+    "300.0 y_from_sea >= 25",
+    "150.0 moon_phase new",
+    "15.0 y_from_sea < 0"
+  ]
+
+
+# Category: witches
+# Options specific to the family of witches.
+
+  # If true, witches will use splash potions of swiftness when trying to keep up, rather than drinking a swiftness
+  #   potion. Helps them keep up just a little better than vanilla.
+  # <Boolean> Valid Values: { true, false }, Default: true
+  witches.use_splash_swiftness = true
