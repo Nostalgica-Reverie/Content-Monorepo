@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-20T00:30:38Z",
+  "generated": "2026-07-22T04:15:39Z",
   "projects": [
     {
       "id": "SkyPixel",
@@ -359,7 +359,7 @@
       "category": "modpack",
       "dir": "modpacks/re-console-main",
       "manifest_path": "modpacks/re-console-main/manifest.json",
-      "version": "26.07.3.main",
+      "version": "26.07.5.main",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
@@ -534,38 +534,6 @@
       ]
     },
     {
-      "id": "reminiscence",
-      "name": "Reminiscence",
-      "type": "modpack",
-      "category": "modpack",
-      "dir": "modpacks/reminiscence-serverpack",
-      "manifest_path": "modpacks/reminiscence-serverpack/manifest.json",
-      "loader": "forge",
-      "mc_version": "1.20.1",
-      "version": "2.0.0-hotfix2",
-      "release_type": "release",
-      "lifecycle": "active",
-      "role": "none",
-      "auto_update": true,
-      "modrinth_id": "reminiscence",
-      "curseforge_id": "1003617",
-      "platforms": {
-        "modrinth": "reminiscence",
-        "curseforge": "1003617"
-      },
-      "docs_path": "/modpacks/reminiscence/",
-      "subdirs": [
-        {
-          "key": "1.20.1-cf",
-          "path": "modpacks/reminiscence-serverpack/1.20.1-cf",
-          "platform": "curseforge",
-          "mod_count": 129,
-          "has_index": false,
-          "has_pack": true
-        }
-      ]
-    },
-    {
       "id": "simply-archaic",
       "name": "Simply Archaic",
       "type": "modpack",
@@ -656,7 +624,7 @@
       "manifest_path": "modpacks/simply-legacy/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.07.5",
+      "version": "26.07.6",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
