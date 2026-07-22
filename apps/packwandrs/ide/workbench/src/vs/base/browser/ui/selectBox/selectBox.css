@@ -1,0 +1,50 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.monaco-select-box {
+	width: 100%;
+	cursor: pointer;
+	border-radius: var(--vscode-cornerRadius-small);
+}
+
+.monaco-select-box-dropdown-container {
+	font-size: 13px;
+	font-weight: normal;
+	text-transform: none;
+}
+
+/** Actions */
+
+.monaco-action-bar .action-item.select-container {
+	cursor: default;
+}
+
+.monaco-action-bar .action-item .monaco-select-box {
+	cursor: pointer;
+	min-width: 100px;
+	min-height: 18px;
+	padding: 2px 23px 2px 8px;
+}
+
+.mac .monaco-action-bar .action-item .monaco-select-box {
+	font-size: 11px;
+	border-radius: var(--vscode-cornerRadius-small);
+	min-height: 24px;
+}
+
+
+
+.monaco-workbench .part.sidebar .monaco-select-box-dropdown-container, .monaco-workbench .part.auxiliarybar .monaco-select-box-dropdown-container {
+    font-size: calc(var(--vscode-workbench-sidebar-font-size) * 1)
+}
+.monaco-workbench .part.sidebar .monaco-action-bar .action-item .monaco-select-box, .monaco-workbench .part.auxiliarybar .monaco-action-bar .action-item .monaco-select-box {
+    min-width: calc(var(--vscode-workbench-sidebar-font-size) * 7.692308);
+    min-height: calc(var(--vscode-workbench-sidebar-font-size) * 1.384615);
+    padding: calc(var(--vscode-workbench-sidebar-font-size) * 0.153846) calc(var(--vscode-workbench-sidebar-font-size) * 1.769231) calc(var(--vscode-workbench-sidebar-font-size) * 0.153846) calc(var(--vscode-workbench-sidebar-font-size) * 0.615385)
+}
+.monaco-workbench.mac .part.sidebar .monaco-action-bar .action-item .monaco-select-box, .monaco-workbench.mac .part.auxiliarybar .monaco-action-bar .action-item .monaco-select-box {
+    font-size: calc(var(--vscode-workbench-sidebar-font-size) * 0.846154);
+    min-height: calc(var(--vscode-workbench-sidebar-font-size) * 1.846154)
+}

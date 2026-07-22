@@ -1,0 +1,48 @@
+[package]
+name = "packwand-gui"
+description = "Packwand desktop application"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+name = "packwand_gui_lib"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[[bin]]
+name = "packwand-gui"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+packwand-build = { path = "../crates/packwand-build" }
+packwand-diagnostics = { path = "../crates/packwand-diagnostics" }
+packwand-ops = { path = "../crates/packwand-ops" }
+packwand-pack = { path = "../crates/packwand-pack" }
+packwand-providers = { path = "../crates/packwand-providers" }
+packwand-workspace = { path = "../crates/packwand-workspace" }
+# Shared packwand-rs launcher core (packages/packwand-core): instance
+# records, Minecraft/loader install, and process supervision. These crates
+# stay Tauri-free; all Tauri glue for them lives in src/commands/instances.rs.
+packwand-devboot = { path = "../../../packages/packwand-core/crates/packwand-devboot" }
+packwand-launch = { path = "../../../packages/packwand-core/crates/packwand-launch" }
+serde.workspace = true
+serde_json.workspace = true
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+thiserror.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+toml.workspace = true
+uuid.workspace = true
+walkdir.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

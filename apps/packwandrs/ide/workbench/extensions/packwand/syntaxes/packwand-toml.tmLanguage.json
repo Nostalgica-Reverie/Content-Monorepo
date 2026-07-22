@@ -1,0 +1,25 @@
+{
+  "name": "Packwand TOML",
+  "scopeName": "source.packwand.toml",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#table" },
+    { "include": "#key" },
+    { "include": "#string" },
+    { "include": "#number" },
+    { "include": "#boolean" }
+  ],
+  "repository": {
+    "comment": { "name": "comment.line.number-sign.packwand.toml", "match": "#.*$" },
+    "table": { "name": "entity.name.section.packwand.toml", "match": "^\\\\s*\\\\[{1,2}[^]#]+\\\\]{1,2}" },
+    "key": { "name": "variable.other.key.packwand.toml", "match": "(?:^|[,\\\\s{])([A-Za-z0-9_.-]+)(?=\\\\s*=)" },
+    "string": {
+      "patterns": [
+        { "name": "string.quoted.double.packwand.toml", "begin": "\"", "end": "\"", "patterns": [{ "name": "constant.character.escape.packwand.toml", "match": "\\\\\\\\." }] },
+        { "name": "string.quoted.single.packwand.toml", "begin": "'", "end": "'" }
+      ]
+    },
+    "number": { "name": "constant.numeric.packwand.toml", "match": "(?<![A-Za-z0-9_])[-+]?(?:0x[0-9A-Fa-f_]+|0o[0-7_]+|0b[01_]+|[0-9][0-9_]*(?:\\\\.[0-9_]+)?)(?![A-Za-z0-9_])" },
+    "boolean": { "name": "constant.language.boolean.packwand.toml", "match": "\\\\b(?:true|false)\\\\b" }
+  }
+}

@@ -109,8 +109,14 @@ lint-nix:
 lint-hashutil:
     clang-format --dry-run --Werror *.c *.h
 
+# fmt + clippy on packeater_cli (own Cargo workspace, not part of the root one; mirrors ci-packeater.yml)
+[working-directory: 'apps/packwandrs/packeater']
+lint-packeater:
+    cargo fmt --package packeater_cli -- --check
+    cargo clippy -p packeater_cli --all-targets -- -D warnings
+
 # All linters/vetters and vulnerability scans
-lint: lint-go lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-hashutil audit-go audit-rust docs-typecheck
+lint: lint-go lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-hashutil lint-packeater audit-go audit-rust docs-typecheck
 
 # — Test —
 

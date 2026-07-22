@@ -1,0 +1,40 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/packwand-cli",
+    "crates/packwand-build",
+    "crates/packwand-diagnostics",
+    "crates/packwand-ops",
+    "crates/packwand-pack",
+    "crates/packwand-providers",
+    "crates/packwand-workspace",
+    "src-tauri",
+]
+exclude = ["packeater"]
+
+[workspace.package]
+version = "26.2.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+repository = "https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo"
+
+[workspace.dependencies]
+clap = { version = "4.6.2", features = ["derive"] }
+clap_complete = "4.6.7"
+fancy-regex = "0.16"
+hex = "0.4.3"
+md-5 = "0.10.6"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha1 = "0.10.7"
+sha2 = "0.10.9"
+thiserror = "2"
+tempfile = "3"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync", "time"] }
+tokio-util = { version = "0.7", features = ["rt"] }
+toml = "0.9.12"
+ureq = { version = "2", features = ["gzip"] }
+url = "2"
+uuid = { version = "1", features = ["serde", "v4"] }
+walkdir = "2"
+zip = { version = "8.6.0", default-features = false, features = ["deflate"] }

@@ -698,7 +698,7 @@ var llDoctorCmd = &cobra.Command{
 		addTool(workspace.SelfBin(), "every pack operation", true)
 		addTool("java", "only needed for 'packwand test'", false)
 		addTool("zip", "datapack/resourcepack builds via the publisher", false)
-		addTool("packsquash", "optimized resource pack builds (plain zip used when absent)", false)
+		addTool("packeater", "optimized resource pack builds (plain zip used when absent)", false)
 
 		root := workspace.FindRepoRoot()
 		if root == "" {

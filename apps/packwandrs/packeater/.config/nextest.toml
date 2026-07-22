@@ -1,0 +1,4 @@
+[profile.ci.junit]
+# Output JUnit test report to target/nextest/ci/junit.xml to let CI jobs
+# consume and display test results in nicer ways
+path = "junit.xml"

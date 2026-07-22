@@ -1,0 +1,27 @@
+name: Setup Packeater
+description: Build and cache the in-tree Packeater binary. Exports PACKEATER_BIN.
+
+runs:
+  using: composite
+  steps:
+    - name: Install Packeater Rust toolchain
+      uses: https://github.com/dtolnay/rust-toolchain@nightly
+
+    - name: Cache Packeater build
+      uses: https://github.com/Swatinem/rust-cache@v2
+      with:
+        workspaces: apps/packwandrs/packeater -> target
+        key: packeater-release
+
+    - name: Build Packeater
+      shell: bash
+      working-directory: apps/packwandrs/packeater
+      run: cargo build --locked --release -p packeater_cli
+
+    - name: Export Packeater
+      shell: bash
+      run: |
+        set -eu
+        PACKEATER_BIN="$GITHUB_WORKSPACE/apps/packwandrs/packeater/target/release/packeater"
+        test -x "$PACKEATER_BIN"
+        echo "PACKEATER_BIN=$PACKEATER_BIN" >> "$GITHUB_ENV"

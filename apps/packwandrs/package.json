@@ -1,0 +1,18 @@
+{
+  "name": "@lasting-legacy/packwand-rs",
+  "private": true,
+  "packageManager": "bun@1.3.14",
+  "workspaces": ["frontend"],
+  "scripts": {
+    "dev": "bun --cwd frontend dev",
+    "build": "bun --cwd frontend build",
+    "check": "bun --cwd frontend check",
+    "test:frontend": "bun --cwd frontend test",
+    "ide:build": "node ide/scripts/build-workbench.mjs",
+    "ide:prune": "powershell -NoProfile -ExecutionPolicy Bypass -File ide/scripts/prune-workbench.ps1 -WorkbenchRoot ide/workbench",
+    "ide:test:smoke": "node ide/scripts/smoke-workbench.mjs",
+    "audit:capabilities": "bun frontend/scripts/audit-capabilities.mjs",
+    "desktop:dev": "cargo tauri dev",
+    "desktop:build": "cargo tauri build"
+  }
+}

@@ -1,0 +1,52 @@
+[workspace]
+resolver = "3"
+members = ["packages/*"]
+
+[workspace.package]
+version = "0.4.1"
+edition = "2024"
+repository = "https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo"
+license = "AGPL-3.0-or-later"
+publish = false
+
+[workspace.lints.clippy]
+# pedantic = "warn" # TODO too pedantic for now, fix the warnings and re-enable this sooner than later
+cargo = { level = "warn", priority = -1 }
+multiple_crate_versions = "allow"  # Introduces much noise, not better than cargo deny
+
+[workspace.lints.rust]
+missing_docs = "deny"
+unsafe_code = "deny"
+
+[workspace.lints.rustdoc]
+broken_intra_doc_links = "deny"
+invalid_html_tags = "deny"
+private_intra_doc_links = "deny"
+
+[patch.crates-io]
+# Use a pull request of ours for compatibility with aes 0.9
+fpe = { git = "https://github.com/str4d/fpe", rev = "refs/pull/49/head" }
+# Use our fork of glsl-lang that allows it to parse #moj_import directives
+glsl-lang = { git = "https://github.com/ComunidadAylas/glsl-lang" }
+glsl-lang-lexer = { git = "https://github.com/ComunidadAylas/glsl-lang" }
+glsl-lang-pp = { git = "https://github.com/ComunidadAylas/glsl-lang" }
+glsl-lang-types = { git = "https://github.com/ComunidadAylas/glsl-lang" }
+# Use our fork of mmap, pulled by development dependencies for benchmarking, to fix its
+# dependency on unmaintained crates and reduce duplicate dependency versions. Some of
+# the changes were authored by jbreitbart.
+# Related PR: https://github.com/rbranson/rust-mmap/pull/13
+mmap = { git = "https://github.com/ComunidadAylas/rust-mmap" }
+# Use a newer spng commit with our PR to add a high-level API for customizing the decoder chunk CRC
+# mismatch action merged. Related PR: https://github.com/aloucks/spng-rs/pull/16
+spng = { git = "https://github.com/aloucks/spng-rs", rev = "d3f69ff" }
+
+[profile.bench]
+inherits = "release"
+debug = true
+strip = "none"
+
+[profile.release]
+opt-level = 3
+strip = "symbols"
+lto = "fat"
+codegen-units = 1

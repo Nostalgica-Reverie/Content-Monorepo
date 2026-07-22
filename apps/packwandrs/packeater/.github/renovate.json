@@ -1,0 +1,44 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:recommended",
+		"docker:pinDigests",
+		"helpers:pinGitHubActionDigests",
+		":configMigration"
+	],
+	"addLabels": ["dependencies"],
+	"reviewers": ["team:packsquash-developers"],
+	"automerge": true,
+	"automergeType": "branch",
+	"minimumReleaseAge": "2 days",
+	"schedule": ["* 0-3 1 * *"],
+	"ignoreDeps": ["criterion"],
+	"customManagers": [
+		{
+			"customType": "regex",
+			"managerFilePatterns": ["^\\.github/workflows/[^/]+\\.ya?ml$"],
+			"matchStrings": [
+				"# renovate: datasource=docker\\s+container: (?<depName>[^:\\s]+):(?<currentValue>[^\\s@]+)@(?<currentDigest>sha256:[a-f0-9]+)"
+			],
+			"datasourceTemplate": "docker"
+		}
+	],
+	"packageRules": [
+		{
+			"matchUpdateTypes": ["major"],
+			"dependencyDashboardApproval": true
+		},
+		{
+			"matchCategories": ["python"],
+			"groupName": "Helper Python scripts"
+		},
+		{
+			"matchCategories": ["rust"],
+			"groupName": "Rust dependencies"
+		},
+		{
+			"matchCategories": ["ci"],
+			"groupName": "CI dependencies"
+		}
+	]
+}

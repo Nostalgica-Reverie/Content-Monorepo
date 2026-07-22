@@ -23,7 +23,7 @@ var hashutilAlgos = map[string]bool{
 
 // hashutilBin returns the path to the hashutil binary from the
 // HASHUTIL_BIN env var, or "" if unset. Deliberately does NOT fall back to
-// a bare PATH lookup the way packsquashBin() does: benchmarking found
+// a bare PATH lookup the way packeaterBin() does: benchmarking found
 // hashutil slower than Go's own hashing for the actually-default format,
 // DefaultHashFormat = "sha512" -- Go's crypto/sha512 is hardware-accelerated
 // assembly, hashutil's sha512.h is a plain scalar C implementation with no

@@ -1,0 +1,587 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - v*
+    paths-ignore:
+      - docs/wiki/**
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths-ignore:
+      - docs/wiki/**
+  merge_group:
+    types:
+      - checks_requested
+
+env:
+  DEBIAN_FRONTEND: noninteractive
+
+  OBFSTR_SEED: ${{ secrets.CONST_RANDOM_SEED }}
+
+jobs:
+  static-analysis:
+    name: Static analysis
+
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: 🧰 Install Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1
+        with:
+          components: rustfmt,clippy
+          rustflags: ""
+
+      - name: 🧰 Install clippy-sarif
+        uses: taiki-e/install-action@ec28e287910af896fd98e04056d31fa68607e7ad # v2
+        with:
+          tool: clippy-sarif
+
+      - name: 🧰 Install sarif-fmt
+        uses: taiki-e/install-action@ec28e287910af896fd98e04056d31fa68607e7ad # v2
+        with:
+          tool: sarif-fmt
+
+      - name: 🧰 Install cargo-deny
+        uses: taiki-e/install-action@ec28e287910af896fd98e04056d31fa68607e7ad # v2
+        with:
+          tool: cargo-deny
+
+      - name: 🔍 Clippy check
+        shell: bash
+        run: >
+          cargo clippy --no-deps --all-targets --message-format=json -- -D warnings
+          | clippy-sarif
+          | tee clippy-results.sarif
+          | sarif-fmt
+
+      - name: 🔍 Run cargo-deny
+        run: cargo deny check
+
+      - name: 🔍 Check Rust source code format
+        run: cargo fmt --all --check
+
+      - name: 📤 Upload analysis results to GitHub
+        if: always()
+        uses: github/codeql-action/upload-sarif@68bde559dea0fdcac2102bfdf6230c5f70eb485e # v4
+        continue-on-error: true
+        with:
+          sarif_file: clippy-results.sarif
+          category: clippy
+
+  build:
+    name: Build
+
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - x86_64-unknown-linux-musl
+          - x86_64-pc-windows-gnu
+          - aarch64-unknown-linux-gnu
+          - aarch64-unknown-linux-musl
+          - universal2-apple-darwin
+
+        include:
+          - target: x86_64-unknown-linux-gnu
+            host-target: x86_64-unknown-linux-gnu
+            runner: blacksmith-4vcpu-ubuntu-2404
+            # renovate: datasource=docker
+            container: debian:trixie-slim@sha256:109e2c65005bf160609e4ba6acf7783752f8502ad218e298253428690b9eaa4b
+
+          - target: x86_64-unknown-linux-musl
+            host-target: x86_64-unknown-linux-musl
+            runner: blacksmith-4vcpu-ubuntu-2404
+            # renovate: datasource=docker
+            container: alpine:3.23@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+
+          - target: aarch64-unknown-linux-gnu
+            host-target: aarch64-unknown-linux-gnu
+            runner: ubuntu-24.04-arm
+            # renovate: datasource=docker
+            container: debian:trixie-slim@sha256:109e2c65005bf160609e4ba6acf7783752f8502ad218e298253428690b9eaa4b
+
+          - target: aarch64-unknown-linux-musl
+            host-target: aarch64-unknown-linux-musl
+            runner: ubuntu-24.04-arm
+            # renovate: datasource=docker
+            container: alpine:3.23@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+
+          - target: x86_64-pc-windows-gnu
+            host-target: x86_64-pc-windows-gnu
+            runner: windows-latest
+            nextest-platform: x86_64-pc-windows-msvc
+
+          - target: universal2-apple-darwin
+            host-target: aarch64-apple-darwin
+            runner: macos-latest
+            nextest-platform: universal-apple-darwin
+
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+
+    container: ${{ matrix.container }}
+
+    permissions:
+      id-token: write
+      attestations: write
+      contents: write
+
+    env:
+      # nextext requires this on Windows to pick the intended GNU toolchain
+      RUSTUP_TOOLCHAIN: nightly-${{ matrix.host-target }}
+
+      # Rust stdlib default backtrace feature doesn't actually work because our
+      # release executables are stripped, so skipping it shaves off quite some KiB.
+      # References:
+      # https://doc.rust-lang.org/cargo/reference/unstable.html#build-std-features
+      # https://github.com/rust-lang/rust/blob/4c8bb79d9f565115637cc6da739f8389e79f3a29/library/std/Cargo.toml#L54-L79
+      OPTIMIZED_RELEASE_BUILD_FLAGS: -Z build-std -Z build-std-features=panic-unwind
+
+    steps:
+      - name: 🩹 Work around https://github.com/actions/runner/issues/801
+        if: endsWith(matrix.target, '-linux-musl') && runner.arch == 'ARM64'
+        uses: laverdet/alpine-arm64@7f0f72ee2f71eb2324e5888e8b6e42b1b53e6160 # v1
+
+      - name: 🧰 Install glibc Linux toolchain packages
+        if: endsWith(matrix.target, '-linux-gnu')
+        run: |
+          apt-get update
+          # curl is required by rustup.
+          # musl-tools is required to build musl binaries for the native architecture
+          # python3-markdown-it is required to generate the Debian package only
+          apt-get install -yq build-essential cmake git curl \
+                              musl-tools \
+                              python3-markdown-it
+
+      - name: 🧰 Install musl Linux toolchain packages
+        if: endsWith(matrix.target, '-linux-musl')
+        run: |
+          apk update
+          # curl is required by rustup
+          apk add --no-cache build-base bash cmake git curl
+
+      # This must go after the previous step so that a Git repository is checked out
+      - name: 📥 Checkout source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0 # Keep the commit history for proper version information
+
+      - name: 🧰 Install Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1
+        with:
+          toolchain: ${{ env.RUSTUP_TOOLCHAIN }}
+          target: ${{ matrix.target == 'universal2-apple-darwin' && 'x86_64-apple-darwin,aarch64-apple-darwin' || matrix.target }}
+          components: rust-src
+          rustflags: ""
+
+      - name: 🧰 Install nextest
+        shell: bash
+        run: >
+          curl -fsSL 'https://get.nexte.st/latest/${{ matrix.nextest-platform || matrix.host-target }}.tar.gz'
+          | tar -xzf - -C ~/.cargo/bin
+
+      - name: 🧰 Install cargo-deb
+        if: endsWith(matrix.target, '-linux-gnu')
+        uses: taiki-e/install-action@ec28e287910af896fd98e04056d31fa68607e7ad # v2
+        with:
+          tool: cargo-deb
+
+      # Our build container is minimal, and it doesn't contain any systemd package.
+      # systemd is responsible for setting up the machine ID files we use for
+      # testing the system ID retrieval code, so copy a dummy one
+      - name: 📏 Set up a dummy D-Bus machine ID for tests
+        if: contains(matrix.runner, 'ubuntu')
+        run: cat /proc/sys/kernel/random/uuid | tr -d '-' > /run/machine-id
+
+      # Required for the build script to be able to gather version information from Git
+      - name: 📏 Allow Git commands to run in the container directory
+        shell: bash
+        run: git config --global --add safe.directory "$PWD"
+
+      - name: ✔️ Run tests
+        env:
+          CARGO_BUILD_TARGET: ${{ matrix.target == 'universal2-apple-darwin' && 'aarch64-apple-darwin' || matrix.target }}
+          NEXTEST_PROFILE: ci
+        run: |
+          cargo nextest run --workspace --status-level all --release --lib --bins --tests --examples --no-fail-fast
+          cargo test --doc --workspace --release
+
+      - name: 🔨 Build with optimized standard library
+        env:
+          # Simulate universal2-apple-darwin target through Cargo's native simultaneous multi-target support
+          TARGET_PARAMS: ${{ matrix.target == 'universal2-apple-darwin' &&
+            '--target x86_64-apple-darwin --target aarch64-apple-darwin' || format('--target {0}', matrix.target) }}
+        run: cargo build ${{ env.TARGET_PARAMS }} --release ${{ env.OPTIMIZED_RELEASE_BUILD_FLAGS }}
+
+      - name: 🔨 Assemble universal macOS binary
+        if: matrix.target == 'universal2-apple-darwin'
+        run: |
+          mkdir -p target/${{ matrix.target }}/release
+          lipo -create -output target/${{ matrix.target }}/release/packsquash \
+            target/x86_64-apple-darwin/release/packsquash target/aarch64-apple-darwin/release/packsquash
+
+      - name: 🔨 Generate CLI Debian package
+        if: endsWith(matrix.target, '-linux-gnu')
+        run: scripts/build_deb.sh --target ${{ matrix.target }} -p packsquash_cli -- ${{ env.OPTIMIZED_RELEASE_BUILD_FLAGS }}
+
+      - name: 📤 Upload CLI binary
+        if: ${{ !contains(matrix.target, '-linux-') || endsWith(matrix.target, '-linux-musl') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: PackSquash CLI executable (${{ matrix.target }})
+          path: |
+            target/${{ matrix.target }}/release/packsquash*
+            !target/${{ matrix.target }}/release/packsquash.d
+
+      - name: 📤 Upload CLI Debian package
+        if: endsWith(matrix.target, '-linux-gnu')
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: PackSquash CLI Debian package (${{ matrix.target }})
+          path: target/${{ matrix.target }}/debian/packsquash_*.deb
+
+      - name: ✒️ Generate SLSA attestation subject data for binaries
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        with:
+          subject-path: |
+            target/${{ matrix.target }}/release/packsquash
+            target/${{ matrix.target }}/release/packsquash.exe
+            target/${{ matrix.target }}/debian/packsquash_*.deb
+
+      - name: 📤 Create draft release and upload release assets
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        if: github.ref_type == 'tag'
+        with:
+          retries: 3
+          script: |
+            const { execFileSync } = require("node:child_process");
+            const { readFile } = require("node:fs/promises");
+            const { createWriteStream, existsSync, readdirSync } = require("node:fs");
+            const { basename, dirname, join } = require("node:path");
+
+            // Portably install npm packages by invoking the `npm` CLI directly with the Node
+            // binary that's running this script, bypassing any shell wrappers or need to set
+            // up the runner environment beforehand.
+            function npmInstall(packageSpecs) {
+              const nodeDir = dirname(process.execPath);
+              let npmCliPath;
+              if (process.platform === "win32") {
+                // Windows, as usual, is more annoying, and for some reason GitHub puts the npm script in the
+                // tool cache, e.g., C:\hostedtoolcache\windows\node\24.x.x\x64\node_modules\npm\...
+
+                const nodeToolDir = join(process.env.RUNNER_TOOL_CACHE, "node");
+                const versions = readdirSync(nodeToolDir)
+                  .filter((v) => /^\d+\./.test(v))
+                  .sort((a, b) => {
+                    const [aMaj] = a.split(".").map(Number),
+                      [bMaj] = b.split(".").map(Number);
+
+                    // Choose the latest major version.
+                    // It's not guaranteed that the running Node version has a folder here
+                    return bMaj - aMaj;
+                  });
+
+                npmCliPath = join(
+                  nodeToolDir,
+                  versions[0], // We can assume there is always at least one version here
+                  "x64",
+                  "node_modules",
+                  "npm",
+                  "bin",
+                  "npm-cli.js"
+                );
+              } else {
+                // Linux/macOS: npm is simply bundled alongside node
+
+                npmCliPath = join(
+                  nodeDir,
+                  "..",
+                  "lib",
+                  "node_modules",
+                  "npm",
+                  "bin",
+                  "npm-cli.js"
+                );
+              }
+
+              execFileSync(process.execPath, [npmCliPath, "install", ...packageSpecs], {
+                stdio: "inherit",
+              });
+            }
+
+            npmInstall(["archiver@>=7.0.0 <8.0.0"]);
+            const archiver = require("archiver");
+
+            const target = "${{ matrix.target }}";
+            const targetAptArch = target.includes("-linux-")
+              ? (
+                  await exec.getExecOutput("dpkg-architecture", ["-q", "DEB_BUILD_ARCH"], {
+                    silent: true,
+                  })
+                ).stdout.trim()
+              : null;
+
+            const firstGlobMatch = async (expr) =>
+              (await (await glob.create(expr)).glob())[0];
+
+            const artifacts = [
+              [
+                `PackSquash CLI executable (${target})`,
+                true,
+                await firstGlobMatch(
+                  [
+                    `target/${target}/release/packsquash*`,
+                    `!target/${target}/release/packsquash.d`,
+                  ].join("\n")
+                ),
+              ],
+            ].concat([
+              [
+                `PackSquash CLI Debian package (${targetAptArch})`,
+                false,
+                await firstGlobMatch(`target/${target}/debian/packsquash_*.deb`),
+              ],
+            ]);
+
+            // Get or create a draft release for the pushed tag. We use draft tags to
+            // allow the final release to be immutable, and provide maintainers with a way
+            // to finish up the release notes and testing before it goes live
+
+            let releaseId;
+            const tagName = context.ref.replace(/^refs\/tags\//, "");
+
+            const existingDraftRelease = (
+              await github.paginate(github.rest.repos.listReleases, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100,
+              })
+            ).find((r) => r.draft && r.tag_name === tagName);
+
+            if (existingDraftRelease) {
+              releaseId = existingDraft.id;
+            } else {
+              const newRelease = await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: tagName,
+                draft: true,
+                generate_release_notes: true,
+              });
+              releaseId = newRelease.id;
+            }
+
+            for (const [artifactLabel, wrapInZip, artifactPath] of artifacts) {
+              if (!artifactPath) {
+                continue;
+              }
+
+              let assetName, assetPath;
+              if (wrapInZip) {
+                assetName = assetPath = `${basename(artifactPath)}-${target}.zip`;
+
+                const assetArchive = archiver("zip", {
+                  comment:
+                    "Thank you for downloading PackSquash!\n\nIf you liked it, please consider supporting the project at https://packsquash.aylas.org",
+                  zlib: { level: 9 },
+                });
+                assetArchive.pipe(createWriteStream(assetName, "binary"));
+                assetArchive.file(artifactPath, { name: basename(artifactPath) });
+                await assetArchive.finalize();
+              } else {
+                assetName = basename(artifactPath);
+                assetPath = artifactPath;
+              }
+
+              await github.rest.repos.uploadReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: releaseId,
+                // The name must be unique among assets within a release, and sets the file name of the asset
+                // when downloaded (the unique name requirement is why we wrap executables in ZIP files, as
+                // otherwise we'd have several assets named "packsquash", which is not possible)
+                name: assetName,
+                // GitHub displays this as the user-friendly name for the release asset in the web UI. It can
+                // be non-unique or missing. If missing, GitHub shows the asset name as a label
+                label: artifactLabel,
+                // Using a file buffer in here works: https://github.com/octokit/octokit.js/discussions/2087
+                data: await readFile(assetPath),
+              });
+            }
+
+  build-docker-images:
+    name: Build Docker images
+
+    runs-on: ubuntu-latest
+
+    env:
+      # Defaults to docker.io (Docker Hub)
+      REGISTRY: ghcr.io
+      # github.repository as <account>/<repo>
+      IMAGE_NAME: ${{ github.repository }}
+
+    needs: build
+
+    steps:
+      - name: 📥 Checkout source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: 🧰 Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: ⚙️ Generate Docker image metadata
+        id: meta
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
+        env:
+          # GitHub Packages requires annotations metadata in at least the index descriptor to show them
+          # up properly in its UI it seems, but it's not clear about it, because the docs refer to the
+          # image manifest only. See:
+          # https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#adding-a-description-to-multi-arch-images
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          # Tag the image as "edge" for every commit on master.
+          # Tag the image by its ref for every commit on non-master branches.
+          # Maintain the "latest", full and major and minor semver tags for each semver tag push
+          tags: |
+            type=edge,branch=master
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=ref,event=branch
+
+      - name: 📥 Download PackSquash CLI x64 musl executable
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: PackSquash CLI executable (x86_64-unknown-linux-musl)
+
+      - name: 📁 Rename PackSquash CLI x64 musl executable
+        run: mv packsquash packsquash-amd64
+
+      - name: 📥 Download PackSquash CLI ARM64 musl executable
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: PackSquash CLI executable (aarch64-unknown-linux-musl)
+
+      - name: 📁 Rename PackSquash CLI ARM64 musl executable
+        run: mv packsquash packsquash-arm64
+
+      - name: 🔍 Check workflow package write permission
+        id: check_write_permission
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          result-encoding: string
+          script: |
+            const permission = (await github.rest.repos.getCollaboratorPermissionLevel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              username: context.actor,
+            })).data.permission;
+            return permission == "write" || permission == "admin" ? "1" : "";
+
+      # The GitHub token needs the package:write permission for the push to work.
+      # This permission is not given to PRs from forked repositories to external contributors.
+      # See: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+      - name: ⚙️ Login to ${{ env.REGISTRY }}
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        if: steps.check_write_permission.outputs.result
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔨 Build and push Docker image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' && steps.check_write_permission.outputs.result == '1' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
+
+  benchmark:
+    name: Run and upload benchmarks
+
+    runs-on: ubuntu-latest
+
+    container: debian:trixie-slim@sha256:109e2c65005bf160609e4ba6acf7783752f8502ad218e298253428690b9eaa4b
+
+    # Benchmark failure is not critical enough to fail the whole workflow.
+    # We will keep an eye on them anyway, though
+    continue-on-error: true
+
+    # Make sure that benchmarks stay quick, and handle them being stuck promptly
+    timeout-minutes: 30
+
+    # Only benchmark code that passes all the checks
+    needs:
+      - static-analysis
+      - build
+
+    # Ignore runs that don't have the secret needed to decrypt packs (this happens for PRs outside
+    # the repository). First-time would-be contributors need to have their workflows approved
+    # anyway, but at best it might be confusing to see commits of PRs mixed with the mainline.
+    # Workflows triggered by PRs don't have access to secrets either. We also ignore temporary
+    # Renovate branches and merge groups to reduce noise
+    if: success() &&
+      github.event_name != 'pull_request' &&
+      github.event_name != 'merge_group' &&
+      !startsWith(github.ref_name, 'renovate/')
+
+    steps:
+      - name: 🧰 Install development packages and benchmark script packages
+        run: |
+          apt-get update
+          # curl is required by rustup
+          apt-get install -yq build-essential git curl cmake \
+                              python3-venv gpg
+
+      - name: 📥 Checkout source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      # Necessary for steps that invoke Git commands to work properly on workflows run on containers.
+      # See: https://github.com/actions/checkout/issues/766
+      - name: 📥 Set source ownership to current user
+        run: chown -R "$(id -u):$(id -g)" "$GITHUB_WORKSPACE"
+
+      - name: 🧰 Install Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1
+
+      - name: 📥 Download test packs dataset
+        run: scripts/test-packs/download.sh
+
+      - name: 🔑 Decrypt private test packs in dataset
+        env:
+          PRIVATE_TEST_PACKS_PASSWORD: ${{ secrets.PRIVATE_TEST_PACKS_PASSWORD }}
+        run: scripts/test-packs/decrypt.sh
+
+      # GitHub-hosted runners restrict access to the perf_event_open syscall for some event types we
+      # are interested in, so we can't run benchmarks that measure the troublesome performance counters.
+      # See: https://github.com/actions/virtual-environments/issues/4974
+      - name: 🔍 Run quick benchmarks
+        run: cargo bench -- --output-format=bencher 'wall_time' | tee /run/bench_results.txt
+
+      - name: 📤 Publish quick benchmarks results
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: PackSquash library quick benchmarks
+          tool: cargo
+          output-file-path: /run/bench_results.txt
+          benchmark-data-dir-path: dev/benches
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          comment-on-alert: true
+          alert-threshold: 150%
+          fail-on-alert: false
+          max-items-in-chart: 50

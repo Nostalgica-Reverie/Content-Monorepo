@@ -1,0 +1,28 @@
+{
+  "name": "@lasting-legacy/packwand-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
+    "build": "vue-tsc --noEmit && vite build",
+    "check": "vue-tsc --noEmit",
+    "test": "bun test tests"
+  },
+  "dependencies": {
+    "@tanstack/vue-query": "^5.90.7",
+    "@tauri-apps/api": "^2.9.1",
+    "pinia": "^3.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@tailwindcss/vite": "^4.1.18",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2",
+    "vue-tsc": "^3.1.5"
+  }
+}

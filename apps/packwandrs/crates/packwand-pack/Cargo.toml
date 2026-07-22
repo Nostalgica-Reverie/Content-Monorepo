@@ -1,0 +1,16 @@
+[package]
+name = "packwand-pack"
+description = "Packwand and Packwiz pack models, serialization, and hashing"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+hex.workspace = true
+md-5.workspace = true
+serde.workspace = true
+sha1.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+toml.workspace = true

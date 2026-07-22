@@ -1,0 +1,66 @@
+name: Wiki sync
+
+on:
+  push:
+    paths:
+      - docs/wiki/**
+      - .github/workflows/wiki-sync.yml
+    branches:
+      - master
+
+env:
+  CLICOLOR: 1 # Enables pretty color output for typos
+
+jobs:
+  run:
+    name: Run
+
+    runs-on: ubuntu-slim
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Checkout source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          sparse-checkout: docs
+          path: src
+
+      - name: 📥 Checkout ancillary wiki repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+
+      - name: 🔄 Sync wiki files
+        run: rsync -av --delete --exclude=.git src/docs/wiki/ wiki
+
+      - name: "🔍 Lint: check typos"
+        uses: crate-ci/typos@5374cbf686e897b15713110e233094e2874de7ef # v1
+        with:
+          files: wiki
+
+      - name: 📝 Extract source commit metadata
+        working-directory: src
+        shell: bash
+        run: |
+          echo "WIKI_SYNC_REF_AUTHOR=$(git show -s --format='%an <%ae>' HEAD)" >> "$GITHUB_ENV"
+          echo "WIKI_SYNC_REF_AUTHOR_DATE=$(git show -s --format='%ad' HEAD)" >> "$GITHUB_ENV"
+          git show -s --format='${{ github.repository }}@%h: %s' HEAD > /tmp/wiki_sync_commit_message
+
+      - name: 💾 Commit wiki file changes to wiki repository
+        working-directory: wiki
+        run: |
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'github-actions[bot]'
+
+          git add .
+          if git diff --cached --quiet; then
+            echo 'No changes staged, skipping commit'
+          else
+            git commit \
+              --author="$WIKI_SYNC_REF_AUTHOR" --date="$WIKI_SYNC_REF_AUTHOR_DATE" \
+              --message="$(cat /tmp/wiki_sync_commit_message)"
+            git push
+          fi

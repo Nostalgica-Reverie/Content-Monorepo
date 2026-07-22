@@ -1,0 +1,482 @@
+use std::collections::BTreeMap;
+
+use serde::Deserialize;
+use url::Url;
+
+use crate::{
+    HttpRequest, ProjectType, ProviderError, ProviderKind, ProviderResolver, ReleaseChannel,
+    ResolveRequest, ResolvedFile, ResolvedProject, ResolvedVersion, Transport,
+};
+
+const DEFAULT_API: &str = "https://api.curseforge.com/v1/";
+
+// PackWand's client key. Runtime environment variables take precedence so
+// releases can rotate it without requiring a new binary.
+//
+// Fallback if this one is ever revoked/rate-limited:
+// $2a$10$sAYXjnU57A3JjsrbX3rUvOvQi64pKKpgCeilg5MC5PcJ/DXNiFYla
+const DEFAULT_API_KEY: &str = "$2a$10$S2u1vjuHt8ITKW7df0D3ie0ualMc0UznUX/PYxzB8s90yIDRgU78S";
+
+pub fn configured_api_key() -> String {
+    [
+        "PACKWAND_CURSEFORGE_API_KEY",
+        "CURSEFORGE_API_KEY",
+        "CF_API_KEY",
+    ]
+    .into_iter()
+    .filter_map(|name| std::env::var(name).ok())
+    .map(|value| value.trim().to_owned())
+    .find(|value| !value.is_empty())
+    .unwrap_or_else(|| DEFAULT_API_KEY.to_owned())
+}
+
+/// Reports whether `key` is missing the "$<algo>$<cost>$" bcrypt-style prefix
+/// CurseForge API keys always have. Both PowerShell and bash treat unescaped
+/// $digits/$name inside double-quoted strings as variable interpolation,
+/// which silently truncates a real key (e.g. "$2a$10$sAYX..." becomes
+/// "a0/DXNiFYla") into something that will always be rejected.
+fn looks_shell_mangled(key: &str) -> bool {
+    !key.starts_with("$2")
+}
+
+fn auth_error(status: u16, api_key: &str, body_snippet: Option<&str>) -> ProviderError {
+    // CurseForge's real API always answers with a JSON error payload. A
+    // response that isn't JSON (typically an HTML page) never reached the
+    // API at all — it was stopped at the edge by a CDN/WAF (e.g. CloudFront's
+    // static "Request blocked" page), which returns the same status code
+    // regardless of whether the key is valid.
+    let looks_like_cdn_block = body_snippet.is_some_and(|body| !body.trim_start().starts_with('{'));
+
+    let hint = if looks_like_cdn_block {
+        format!(
+            "the response body isn't JSON, which means the request never reached CurseForge's \
+             API — it was blocked at the edge (CDN/WAF, e.g. CloudFront's \"Request blocked\" \
+             page). This is unrelated to the key's validity; it usually means the network this \
+             request came from is flagged (cloud/datacenter IP ranges, some VPNs). Body: {}",
+            body_snippet
+                .map(|body| body.chars().take(200).collect::<String>())
+                .unwrap_or_default()
+        )
+    } else if looks_shell_mangled(api_key) {
+        "the key does not start with the expected \"$2a$10$\"-style prefix, which usually \
+         means it was set with double quotes and the shell/PowerShell interpolated the $ \
+         characters — re-set it with single quotes instead"
+            .to_owned()
+    } else {
+        let body = body_snippet.map(|body| format!(" CurseForge said: {body}")).unwrap_or_default();
+        format!(
+            "set PACKWAND_CURSEFORGE_API_KEY, CURSEFORGE_API_KEY, or CF_API_KEY to override \
+             it.{body}"
+        )
+    };
+    ProviderError::CurseForgeAuthRejected { status, hint }
+}
+
+pub struct CurseForgeClient<T> {
+    transport: T,
+    api_base: Url,
+    api_key: String,
+}
+
+impl<T> CurseForgeClient<T> {
+    pub fn new(transport: T, api_key: impl Into<String>) -> Self {
+        Self {
+            transport,
+            api_base: Url::parse(DEFAULT_API).expect("valid CurseForge API URL"),
+            api_key: api_key.into(),
+        }
+    }
+
+    pub fn with_api_base(
+        transport: T,
+        api_key: impl Into<String>,
+        api_base: &str,
+    ) -> Result<Self, ProviderError> {
+        let api_base =
+            Url::parse(api_base).map_err(|error| ProviderError::InvalidUrl(error.to_string()))?;
+        Ok(Self {
+            transport,
+            api_base,
+            api_key: api_key.into(),
+        })
+    }
+
+    fn endpoint(&self, segments: &[&str]) -> Result<Url, ProviderError> {
+        let mut url = self.api_base.clone();
+        url.path_segments_mut()
+            .map_err(|_| ProviderError::InvalidUrl(self.api_base.to_string()))?
+            .pop_if_empty()
+            .extend(segments);
+        Ok(url)
+    }
+
+    fn get_json<R: for<'de> Deserialize<'de>>(&self, url: Url) -> Result<R, ProviderError>
+    where
+        T: Transport,
+    {
+        let request = HttpRequest::get(url.to_string())
+            .header("Accept", "application/json")
+            .header("X-API-Key", &self.api_key);
+        let bytes = self.transport.get(request).map_err(|error| match error.status {
+            Some(status @ (401 | 403)) => {
+                auth_error(status, &self.api_key, error.body_snippet.as_deref())
+            }
+            _ => ProviderError::Transport(error),
+        })?;
+        serde_json::from_slice(&bytes).map_err(|error| ProviderError::Decode {
+            provider: "CurseForge",
+            message: error.to_string(),
+        })
+    }
+}
+
+impl<T: Transport> ProviderResolver for CurseForgeClient<T> {
+    fn resolve(&self, request: &ResolveRequest) -> Result<ResolvedProject, ProviderError> {
+        let project = match request.project.parse::<u32>() {
+            Ok(project_id) => {
+                let response: ProjectEnvelope =
+                    self.get_json(self.endpoint(&["mods", &project_id.to_string()])?)?;
+                if response.data.id != project_id {
+                    return Err(ProviderError::InvalidResponse(format!(
+                        "expected project {project_id}, got {}",
+                        response.data.id
+                    )));
+                }
+                response.data
+            }
+            Err(_) => {
+                let slug = curseforge_slug(&request.project)?;
+                let mut url = self.endpoint(&["mods", "search"])?;
+                url.query_pairs_mut()
+                    .append_pair("gameId", "432")
+                    .append_pair("slug", &slug);
+                let response: SearchEnvelope = self.get_json(url)?;
+                response
+                    .data
+                    .into_iter()
+                    .find(|project| project.slug.eq_ignore_ascii_case(&slug))
+                    .ok_or(ProviderError::InvalidCurseForgeProject)?
+            }
+        };
+        let file = if let Some(file_id) = &request.version_id {
+            let file_id = file_id.parse::<u32>().map_err(|_| {
+                ProviderError::InvalidResponse(format!("invalid CurseForge file id {file_id:?}"))
+            })?;
+            let response: FileEnvelope = self.get_json(self.endpoint(&[
+                "mods",
+                &project.id.to_string(),
+                "files",
+                &file_id.to_string(),
+            ])?)?;
+            response.data
+        } else if let Some(file) = project.latest_files.iter().find(|file| file.compatible(request)) {
+            file.clone()
+        } else {
+            let index_entry = project
+                .latest_files_indexes
+                .iter()
+                .find(|entry| entry.compatible(request))
+                .ok_or(ProviderError::NoCompatibleVersion)?;
+            let response: FileEnvelope = self.get_json(self.endpoint(&[
+                "mods",
+                &project.id.to_string(),
+                "files",
+                &index_entry.file_id.to_string(),
+            ])?)?;
+            response.data
+        };
+        let hashes = file.hashes();
+        if hashes.is_empty() {
+            return Err(ProviderError::NoUsableHash);
+        }
+        Ok(ResolvedProject {
+            provider: ProviderKind::CurseForge,
+            id: project.id.to_string(),
+            slug: project.slug,
+            title: project.name,
+            project_type: class_to_project_type(project.class_id),
+            side: "both".to_string(),
+            repository_release: None,
+            version: ResolvedVersion {
+                id: file.id.to_string(),
+                name: file.display_name.clone(),
+                number: file.display_name.clone(),
+                channel: file.channel(),
+                file: ResolvedFile {
+                    filename: file.file_name.clone(),
+                    // CurseForge API terms prohibit persisting the temporary URL.
+                    url: None,
+                    // The Go metadata contract currently omits CF file length.
+                    size: 0,
+                    hashes,
+                },
+            },
+        })
+    }
+}
+
+impl<T: Transport> CurseForgeClient<T> {
+    /// Match CurseForge's whitespace-normalized Murmur2 fingerprints to exact
+    /// project/file pairs. Partial and unmatched fingerprints are retained so
+    /// callers can report every local file without guessing.
+    pub fn match_fingerprints(
+        &self,
+        fingerprints: &[u32],
+    ) -> Result<FingerprintMatches, ProviderError> {
+        let url = self.endpoint(&["fingerprints"])?;
+        let request = HttpRequest::get(url.to_string())
+            .header("Accept", "application/json")
+            .header("X-API-Key", &self.api_key);
+        let body = serde_json::to_vec(&serde_json::json!({
+            "fingerprints": fingerprints,
+        }))
+        .map_err(|error| ProviderError::InvalidResponse(error.to_string()))?;
+        let bytes = self
+            .transport
+            .post_json(request, &body)
+            .map_err(|error| match error.status {
+                Some(status @ (401 | 403)) => {
+                    auth_error(status, &self.api_key, error.body_snippet.as_deref())
+                }
+                _ => ProviderError::Transport(error),
+            })?;
+        let response: FingerprintEnvelope =
+            serde_json::from_slice(&bytes).map_err(|error| ProviderError::Decode {
+                provider: "CurseForge",
+                message: error.to_string(),
+            })?;
+        Ok(FingerprintMatches {
+            exact: response
+                .data
+                .exact_matches
+                .into_iter()
+                .map(|item| FingerprintMatch {
+                    fingerprint: item.file.file_fingerprint,
+                    project_id: item.id,
+                    file_id: item.file.id,
+                })
+                .collect(),
+            partial: response.data.partial_matches,
+            unmatched: response.data.unmatched_fingerprints,
+        })
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct FingerprintMatches {
+    pub exact: Vec<FingerprintMatch>,
+    pub partial: Vec<u32>,
+    pub unmatched: Vec<u32>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct FingerprintMatch {
+    pub fingerprint: u32,
+    pub project_id: u32,
+    pub file_id: u32,
+}
+
+#[derive(Deserialize)]
+struct FingerprintEnvelope {
+    data: FingerprintResponse,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct FingerprintResponse {
+    #[serde(default)]
+    exact_matches: Vec<FingerprintResponseMatch>,
+    #[serde(default)]
+    partial_matches: Vec<u32>,
+    #[serde(default)]
+    unmatched_fingerprints: Vec<u32>,
+}
+
+#[derive(Deserialize)]
+struct FingerprintResponseMatch {
+    id: u32,
+    file: FileResponse,
+}
+
+fn class_to_project_type(class_id: u32) -> ProjectType {
+    match class_id {
+        5 => ProjectType::Plugin,
+        6 => ProjectType::Mod,
+        12 => ProjectType::ResourcePack,
+        6552 => ProjectType::Shader,
+        6945 => ProjectType::DataPack,
+        _ => ProjectType::Other,
+    }
+}
+
+#[derive(Deserialize)]
+struct ProjectEnvelope {
+    data: ProjectResponse,
+}
+
+#[derive(Deserialize)]
+struct SearchEnvelope {
+    data: Vec<ProjectResponse>,
+}
+
+#[derive(Deserialize)]
+struct FileEnvelope {
+    data: FileResponse,
+}
+
+fn curseforge_slug(value: &str) -> Result<String, ProviderError> {
+    let slug = if let Ok(url) = Url::parse(value) {
+        url.path_segments()
+            .and_then(|mut segments| segments.rfind(|part| !part.is_empty()))
+            .unwrap_or("")
+            .to_owned()
+    } else {
+        value.to_owned()
+    };
+    if slug.is_empty()
+        || !slug
+            .bytes()
+            .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_'))
+    {
+        Err(ProviderError::InvalidCurseForgeProject)
+    } else {
+        Ok(slug)
+    }
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct ProjectResponse {
+    id: u32,
+    name: String,
+    slug: String,
+    #[serde(default)]
+    class_id: u32,
+    #[serde(default)]
+    latest_files: Vec<FileResponse>,
+    // `latestFiles` is a short, arbitrarily-picked recent-uploads list, not
+    // guaranteed to contain an entry for every supported (game version,
+    // loader) pair — popular mods that publish simultaneous multi-loader
+    // builds routinely have the wanted loader's file missing from it even
+    // though it exists. `latestFilesIndexes` is CurseForge's purpose-built
+    // index with exactly one entry per (gameVersion, modLoader, releaseType)
+    // combination and is the reliable source for this lookup.
+    #[serde(default)]
+    latest_files_indexes: Vec<FileIndexEntry>,
+}
+
+#[derive(Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct FileIndexEntry {
+    file_id: u32,
+    #[serde(default)]
+    game_version: String,
+    #[serde(default)]
+    mod_loader: Option<u8>,
+    #[serde(default)]
+    release_type: u8,
+}
+
+impl FileIndexEntry {
+    fn channel(&self) -> ReleaseChannel {
+        match self.release_type {
+            2 => ReleaseChannel::Beta,
+            3 => ReleaseChannel::Alpha,
+            _ => ReleaseChannel::Release,
+        }
+    }
+
+    fn compatible(&self, request: &ResolveRequest) -> bool {
+        let channel_matches =
+            request.channels.is_empty() || request.channels.contains(&self.channel());
+        let game_matches = request.game_versions.iter().any(|wanted| wanted == &self.game_version);
+        let loader_matches = request.loaders.is_empty()
+            || request
+                .loaders
+                .iter()
+                .any(|wanted| mod_loader_id(wanted) == self.mod_loader);
+        channel_matches && game_matches && loader_matches
+    }
+}
+
+/// Maps a loader name (as used in pack.toml/CLI flags) to CurseForge's
+/// numeric modLoaderType, matching the values CurseForge's own API expects
+/// (see https://docs.curseforge.com/rest-api/#tocS_ModLoaderType).
+fn mod_loader_id(name: &str) -> Option<u8> {
+    match name.to_ascii_lowercase().as_str() {
+        "forge" => Some(1),
+        "cauldron" => Some(2),
+        "liteloader" => Some(3),
+        "fabric" => Some(4),
+        "quilt" => Some(5),
+        "neoforge" => Some(6),
+        _ => None,
+    }
+}
+
+#[derive(Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct FileResponse {
+    id: u32,
+    file_name: String,
+    display_name: String,
+    release_type: u8,
+    #[serde(default)]
+    game_versions: Vec<String>,
+    #[serde(default)]
+    file_fingerprint: u32,
+    #[serde(default)]
+    hashes: Vec<FileHash>,
+}
+
+impl FileResponse {
+    fn channel(&self) -> ReleaseChannel {
+        match self.release_type {
+            2 => ReleaseChannel::Beta,
+            3 => ReleaseChannel::Alpha,
+            _ => ReleaseChannel::Release,
+        }
+    }
+
+    fn compatible(&self, request: &ResolveRequest) -> bool {
+        let channel_matches =
+            request.channels.is_empty() || request.channels.contains(&self.channel());
+        let game_matches = request.game_versions.is_empty()
+            || request
+                .game_versions
+                .iter()
+                .any(|wanted| self.game_versions.iter().any(|found| found == wanted));
+        let loader_matches = request.loaders.is_empty()
+            || request.loaders.iter().any(|wanted| {
+                self.game_versions
+                    .iter()
+                    .any(|found| found.eq_ignore_ascii_case(wanted))
+            });
+        channel_matches && game_matches && loader_matches
+    }
+
+    fn hashes(&self) -> BTreeMap<String, String> {
+        let mut hashes = BTreeMap::new();
+        if self.file_fingerprint != 0 {
+            hashes.insert("murmur2".to_string(), self.file_fingerprint.to_string());
+        }
+        for hash in &self.hashes {
+            let algorithm = match hash.algorithm {
+                1 => "sha1",
+                2 => "md5",
+                _ => continue,
+            };
+            if !hash.value.is_empty() {
+                hashes.insert(algorithm.to_string(), hash.value.clone());
+            }
+        }
+        hashes
+    }
+}
+
+#[derive(Clone, Deserialize)]
+struct FileHash {
+    value: String,
+    #[serde(rename = "algo")]
+    algorithm: u8,
+}

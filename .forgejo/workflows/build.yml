@@ -7,12 +7,18 @@ on:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
+      - 'apps/packwandrs/packeater/**'
+      - '.forgejo/actions/setup-packeater/**'
+      - '.forgejo/workflows/build.yml'
   pull_request:
     branches: ["main"]
     paths:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
+      - 'apps/packwandrs/packeater/**'
+      - '.forgejo/actions/setup-packeater/**'
+      - '.forgejo/workflows/build.yml'
   workflow_dispatch:
 
 concurrency:
@@ -33,6 +39,7 @@ jobs:
             datapacks
             resourcepacks
             apps/packwand
+            apps/packwandrs/packeater
             .forgejo/actions
 
       - name: Meta
@@ -49,8 +56,8 @@ jobs:
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
 
-      - name: Setup PackSquash
-        uses: ./.forgejo/actions/setup-packsquash
+      - name: Setup Packeater
+        uses: ./.forgejo/actions/setup-packeater
 
       - name: Lint changed files (syntax)
         run: packwand lint

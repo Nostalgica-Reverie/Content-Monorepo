@@ -356,11 +356,11 @@ func queueZipPackBuild(sched *workspace.Scheduler, category, packID, sha, artifa
 		Needs: []workspace.Resource{workspace.Resource("zip:" + packDir)},
 		Run: func() error {
 			if category == "resourcepacks" {
-				if bin := packsquashBin(); bin != "" {
-					fmt.Printf("squashing %s: %s (PackSquash)\n", category, packID)
+				if bin := packeaterBin(); bin != "" {
+					fmt.Printf("squashing %s: %s (Packeater)\n", category, packID)
 					return squashContents(bin, packDir, versionDir, dest)
 				}
-				fmt.Printf("zipping %s: %s (packsquash not found; plain zip)\n", category, packID)
+				fmt.Printf("zipping %s: %s (packeater not found; plain zip)\n", category, packID)
 			} else {
 				fmt.Printf("zipping %s: %s\n", category, packID)
 			}
@@ -370,11 +370,15 @@ func queueZipPackBuild(sched *workspace.Scheduler, category, packID, sha, artifa
 	return queuedJob{label: label, done: done}, nil
 }
 
-func packsquashBin() string {
-	if b := os.Getenv("PACKSQUASH_BIN"); b != "" {
+// packeaterBin resolves the Packeater binary: the PACKEATER_BIN env var
+// (set by CI's setup-packeater action) takes priority, falling back to a
+// bare PATH lookup for local/unmigrated environments. Absence is not an
+// error -- callers fall back to a plain zip when this returns "".
+func packeaterBin() string {
+	if b := os.Getenv("PACKEATER_BIN"); b != "" {
 		return b
 	}
-	if p, err := exec.LookPath("packsquash"); err == nil {
+	if p, err := exec.LookPath("packeater"); err == nil {
 		return p
 	}
 	return ""
@@ -382,23 +386,23 @@ func packsquashBin() string {
 
 func squashContents(bin, packDir, src, dest string) error {
 	opts := fmt.Sprintf("pack_directory = %q\noutput_file_path = %q\nzip_spec_conformance_level = \"high\"\n", src, dest)
-	if extra, err := os.ReadFile(filepath.Join(packDir, "packsquash.toml")); err == nil {
-		fmt.Printf("  applying pack-level packsquash.toml\n")
+	if extra, err := os.ReadFile(filepath.Join(packDir, "packeater.toml")); err == nil {
+		fmt.Printf("  applying pack-level packeater.toml\n")
 		opts += "\n" + string(extra)
 	}
-	optFile, err := os.CreateTemp("", "packwand-packsquash-*.toml")
+	optFile, err := os.CreateTemp("", "packwand-packeater-*.toml")
 	if err != nil {
-		return fmt.Errorf("failed to create packsquash options file: %w", err)
+		return fmt.Errorf("failed to create packeater options file: %w", err)
 	}
 	defer os.Remove(optFile.Name())
 	if _, err := optFile.WriteString(opts); err != nil {
-		return fmt.Errorf("failed to write packsquash options: %w", err)
+		return fmt.Errorf("failed to write packeater options: %w", err)
 	}
 	optFile.Close()
 
 	c := exec.Command(bin, optFile.Name())
 	if out, err := c.CombinedOutput(); err != nil {
-		return fmt.Errorf("packsquash failed for %s: %v\n%s", src, err, workspace.Indent(string(out), "    "))
+		return fmt.Errorf("packeater failed for %s: %v\n%s", src, err, workspace.Indent(string(out), "    "))
 	}
 	fmt.Printf("squashed %s\n", filepath.Base(dest))
 	return nil

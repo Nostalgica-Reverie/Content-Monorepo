@@ -323,7 +323,7 @@ func (in *Index) Refresh() (RefreshStats, error) {
 	// installed, when the index's hash format is one hashutil doesn't
 	// implement (e.g. sha1), or when -no-internal-hashes is set (computeFileHash
 	// short-circuits to an empty hash in that mode; going through hashutil
-	// would defeat the point of the flag). Mirrors packsquashBin()'s
+	// would defeat the point of the flag). Mirrors packeaterBin()'s
 	// PATH-or-env-var, absence-is-not-an-error pattern in build/build.go.
 	usedHashutil := false
 	if bin := hashutilBin(); bin != "" && hashutilAlgos[in.HashFormat] && len(needPaths) > 0 &&

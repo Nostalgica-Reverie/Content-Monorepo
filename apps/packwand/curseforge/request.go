@@ -20,7 +20,7 @@ const cfApiServer = "api.curseforge.com"
 // This is a client identifier distributed with PackWand, matching packwiz's
 // CurseForge integration model. Environment variables can override it so the
 // key can be rotated without rebuilding PackWand.
-const cfAPIKeyDefault = "$2a$10$xOGBgtaSrq1idVZ3lOWfueL5n16U5fyNMZqTExBL3vq1v7zyjvJty"
+const cfAPIKeyDefault = "$2a$10$KjTzZ1Qvb8zE0ArZC4qB.OrUnuxyhmKfFd0pDETVqf9xlcVPlBTVC"
 
 const cfAPIKeyInstructions = "set CURSEFORGE_API_KEY to override PackWand's embedded client key"
 
