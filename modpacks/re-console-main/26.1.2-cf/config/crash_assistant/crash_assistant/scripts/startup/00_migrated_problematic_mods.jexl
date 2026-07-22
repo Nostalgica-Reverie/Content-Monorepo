@@ -7,19 +7,6 @@ if (m_embeddium != null) {
     Startup.markForCrash();
 }
 
-var m_essential_container = mods.get("essential-container");
-if (m_essential_container != null) {
-    var warn = Startup.addCrashWarning("⚠️ <strong>Essential Mod Not Supported</strong>\n\nEssential is in absolutely no way supported by Re-Console+. It introduces long-standing GUI issues, in-game issues, performance problems and a lot more. If you would like to play multiplayer for free, open to LAN and you will recieve a link you can use for your friends to play with you! We also object heavily to Essentials usage of in-game microtransactions, in an otherwise completely free and open source modding community.");
-    warn.withModActions(m_essential_container);
-    Startup.markForCrash();
-}
-
-var m_faster_random = mods.get("faster-random");
-if (m_faster_random != null) {
-    var warn = Startup.addBootWarning("⚠️ <strong>Faster Random installed</strong>\n\nFaster Random is not supported.");
-    warn.withModActions(m_faster_random);
-}
-
 var m_legacy_mipmaps = mods.get("legacy-mipmaps");
 if (m_legacy_mipmaps != null) {
     var warn = Startup.addBootWarning("⚠️ <strong>Legacy Mipmaps installed</strong>\n\nLegacy Mipmaps is abandoned and is not supported!");
@@ -28,7 +15,7 @@ if (m_legacy_mipmaps != null) {
 
 var m_nochatreports = mods.get("nochatreports");
 if (m_nochatreports != null) {
-    var warn = Startup.addCrashWarning("⚠️ <strong>No Chat Reports installed</strong>\n\nNo Chat Reports is superseded by No Prying Eyes, and adding it will just introduce compatibility and performance issues.");
+    var warn = Startup.addCrashWarning("⚠️ <strong>No Chat Reports installed</strong>\n\nNo Chat Reports is superseded by No Prying Eyes, and adding it will introduce compatibility and performance issues.");
     warn.withModActions(m_nochatreports);
     Startup.markForCrash();
 }
@@ -46,11 +33,3 @@ if (m_notenoughcrashes != null) {
     warn.withModActions(m_notenoughcrashes);
     Startup.markForCrash();
 }
-
-var m_zume = mods.get("zume");
-if (m_zume != null) {
-    var warn = Startup.addCrashWarning("⚠️ <strong>Zume installed</strong>\n\nZume is not supported.");
-    warn.withModActions(m_zume);
-    Startup.markForCrash();
-}
-
