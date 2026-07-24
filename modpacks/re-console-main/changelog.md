@@ -8,6 +8,13 @@ A utility mod that will assist in debugging certain problems
 - Programmer Art textures for Battle and Glide UI elements
 - See the full changelog [here](https://modrinth.com/mod/minimega/version/6.5.20)
 
+### Fixed default keybinds post-Amecs
+- Picture Mode is now set to the Grave/Tilde key ("~") by default
+- Next Music Track is now set to the Period key by default
+- Toggle Music is now set to the Comma key by default
+- RenderScale Options is now set to the Equals key by default
+- Simple Voice Chat group management is now set to B by default, matching Simply Legacy
+
 ### Fixed a few broken Resource Albums
 Some albums did not have their resource packs applied broken due to some having changed file names.
 
