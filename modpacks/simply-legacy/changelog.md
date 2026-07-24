@@ -1,7 +1,12 @@
-# Simply Legacy 26.07.5 / 26.07.6
+# Simply Legacy 26.07.7
 
 ### Notable Updates
-- Added Jasione
-  - Optimizes memory usage by reducing garbage collector pressure
-- Updated Simple Voice Chat
-- **From 26.07.5**: Re-updated Bobby to 5.2.13.1
+- **Modrinth**: Updated Minimega to 6.5.20
+  - Various interface fixes
+  - Programmer Art textures for Battle and Glide UI elements
+  - See the full changelog [here](https://modrinth.com/mod/minimega/version/6.5.20)
+- **Modrinth**: Updated mods
+  - Updated Async Logger to 2.2.0
+  - Updated Jasione to 1.0.6
+  - Updated Mod Menu to 18.0.0 (stable)
+  - Updated YetAnotherConfigLib to 3.9.6

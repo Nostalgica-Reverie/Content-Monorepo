@@ -1,7 +1,7 @@
-# Re-Console Main 26.07.3 / 26.07.4
-### Added Jasione
-Optimizes memory usage by reducing garbage collector pressure
-
-### Updated mods and shader packs
-- Updated Fast Server Pings, Gnetum, Iris, Simple Voice Chat, and (from 26.07.3 to .4) re-applied the Bobby 5.1.13.1 update.
-- Updated Noble Shaders
+# Re-Console Main 26.07.6
+### Updated Minimega to 6.5.20
+- Various interface fixes
+- Programmer Art textures for Battle and Glide UI elements
+- See the full changelog [here](https://modrinth.com/mod/minimega/version/6.5.20)
+### Updated all content
+All mods, resource packs and shader packs with available updates (excluding Sodium and Iris) have been updated.
