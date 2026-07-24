@@ -1,2 +1,2 @@
 # MinigameClient
-Initial Release
+Bump mods and add in decce's mods
