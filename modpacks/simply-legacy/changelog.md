@@ -5,6 +5,8 @@
 - Legacy Skins compatible resource packs are no longer pre-enabled in Global Resource Packs, since Legacy Skins has not been ported for 26.1.2 or Legacy4J 1.9.
 
 ### Notable Updates
+- Added Clarity
+  - A utility mod that will assist in debugging certain problems
 - **Modrinth**: Updated Minimega to 6.5.20
   - Various interface fixes
   - Programmer Art textures for Battle and Glide UI elements

@@ -1,4 +1,8 @@
 # Re-Console Main 26.07.6
+
+### Added Clarity
+A utility mod that will assist in debugging certain problems
+
 ### Updated Minimega to 6.5.20
 - Various interface fixes
 - Programmer Art textures for Battle and Glide UI elements
