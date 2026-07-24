@@ -1,5 +1,9 @@
 # Simply Legacy 26.07.7
 
+### Configuration Changes
+- **Modrinth**: The Transparency Fix resource pack has now been properly applied to all Resource Albums.
+- Legacy Skins compatible resource packs are no longer pre-enabled in Global Resource Packs, since Legacy Skins has not been ported for 26.1.2 or Legacy4J 1.9.
+
 ### Notable Updates
 - **Modrinth**: Updated Minimega to 6.5.20
   - Various interface fixes
