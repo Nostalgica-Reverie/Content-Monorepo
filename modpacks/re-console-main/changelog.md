@@ -3,6 +3,10 @@
 ### Added Clarity
 A utility mod that will assist in debugging certain problems
 
+### Removed C2ME OpenCL
+- The fallback mode was not working, barring anyone with incompatible hardware from loading worlds
+- Moderner Beta worlds broke with OpenCL enabled
+
 ### Updated Minimega to 6.5.20
 - Various interface fixes
 - Programmer Art textures for Battle and Glide UI elements
