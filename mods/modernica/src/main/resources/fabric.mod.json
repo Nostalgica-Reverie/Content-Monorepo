@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "modernica",
+  "version": "${version}",
+  "name": "Modernica",
+  "description": "Fork of ModernFix with hot reloading and over 10 new features for Fabric 26.x",
+  "authors": [
+    "omo50",
+    "embeddedt",
+    "jellysquid3"
+  ],
+  "contact": {
+    "sources": "https://git.nostalgica.net/Reverie-Projects/monorepo"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.nostalgica.modernica.ModernicaFabric"
+    ],
+    "client": [
+      "net.nostalgica.modernica.ModernicaClientFabric"
+    ],
+    "preLaunch": [
+      "net.nostalgica.modernica.ModernicaPreLaunchFabric"
+    ]
+  },
+  "mixins": [
+    "modernica-fabric.mixins.json",
+    "modernica-common.mixins.json"
+  ],
+  "accessWidener": "modernica.accesswidener",
+  "depends": {
+    "minecraft": "${minecraft}",
+    "fabricloader": ">=0.19.3",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*",
+    "fzzy_config": "*"
+  },
+  "breaks": {
+    "dashloader": "<5.0.0-beta.1",
+    "optifabric": "*",
+    "modernfix": "*"
+  }
+}

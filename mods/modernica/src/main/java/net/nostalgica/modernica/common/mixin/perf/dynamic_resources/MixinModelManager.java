@@ -1,0 +1,74 @@
+package net.nostalgica.modernica.common.mixin.perf.dynamic_resources;
+
+import com.google.common.collect.Maps;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.resources.model.BlockStateModelLoader;
+import net.minecraft.client.resources.model.ClientItemInfoLoader;
+import net.minecraft.client.resources.model.ModelManager;
+import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.world.level.block.state.BlockState;
+import net.nostalgica.modernica.annotation.ClientOnlyMixin;
+import net.nostalgica.modernica.dynresources.BlockStateModelMap;
+import net.nostalgica.modernica.dynresources.DynamicModelSystem;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.function.Function;
+
+@Mixin(value = ModelManager.class, priority = 500)
+@ClientOnlyMixin
+public class MixinModelManager {
+    /**
+     * @author embeddedt
+     * @reason Instead of loading all unbaked models from the resource packs at once, create a dynamic map backed by
+     * a cache that loads them on demand
+     */
+    @ModifyArg(method = "loadBlockModels", at = @At(value = "INVOKE", target = "Ljava/util/concurrent/CompletableFuture;thenCompose(Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;"))
+    private static Function<Map<Identifier, Resource>, ? extends CompletionStage<Map<Identifier, UnbakedModel>>> skipAOTUnbakedModelLoad(Function<Map<Identifier, Resource>, ? extends CompletionStage<Map<Identifier, UnbakedModel>>> original) {
+        return resourceMap -> CompletableFuture.completedFuture(DynamicModelSystem.createDynamicUnbakedModelMap(resourceMap));
+    }
+
+    /**
+     * Use @Inject instead of @Overwrite to remain compatible with Fabric API's model loading hooks.
+     * Lower priority (500) ensures we run before Fabric API (1000) can inject.
+     */
+    @Inject(method = "discoverModelDependencies", at = @At("HEAD"), cancellable = true)
+    private static void mfix$discoverModelDependencies(
+            Map<Identifier, UnbakedModel> inputModels, BlockStateModelLoader.LoadedModels loadedModels, ClientItemInfoLoader.LoadedClientInfos loadedClientInfos,
+            CallbackInfoReturnable<ModelManager.ResolvedModels> cir
+    ) {
+        cir.setReturnValue(new DynamicModelSystem.DynamicResolver(inputModels, loadedModels, loadedClientInfos).resolvedModels());
+    }
+
+    /**
+     * @author embeddedt
+     * @reason Build the model groups dynamically
+     */
+    @Overwrite
+    private static Object2IntMap<BlockState> buildModelGroups(BlockColors blockColors, BlockStateModelLoader.LoadedModels loadedModels) {
+        return new DynamicModelSystem.BlockGroupingMap(blockColors, loadedModels);
+    }
+
+    /**
+     * @author embeddedt
+     * @reason avoid copying inner map
+     */
+    @Overwrite
+    private static Map<BlockState, BlockStateModel> createBlockStateToModelDispatch(Map<BlockState, BlockStateModel> blockStateModels, BlockStateModel missingModel) {
+        BlockStateModelMap.resetCache();
+        Objects.requireNonNull(missingModel);
+        return new BlockStateModelMap(blockStateModels, missingModel);
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.nostalgica.modernica.fabric.mixin",
+  "plugin": "net.nostalgica.modernica.core.ModernicaMixinPlugin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "perf.faster_command_suggestions.SuggestionsBuilderMixin",
+    "core.MinecraftServerMixin"
+  ],
+  "client": [
+    "core.ClientCommonPacketListenerImplMixin",
+    "core.ClientMinecraftServerMixin",
+    "core.MCMixin_Fabric",
+    "feature.measure_time.MinecraftMixin_Fabric",
+    "feature.fast_ip_ping.ServerAddressResolverMixin",
+    "feature.force_close_loading_screen.GuiMixin",
+    "feature.force_close_loading_screen.LoadingOverlayMixin",
+    "feature.force_close_loading_screen.LevelLoadingScreenMixin",
+    "feature.force_close_loading_screen.MinecraftMixin",
+    "feature.force_close_loading_screen.ClientPacketListenerMixin",
+    "feature.force_close_loading_screen.MouseHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "conformVisibility": true
+  }
+}

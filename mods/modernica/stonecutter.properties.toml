@@ -1,0 +1,20 @@
+# centralized properties - see https://stonecutter.kikugie.dev/wiki/config/properties
+mod.id = "modernica"
+mod.name = "Modernica"
+mod.group = "net.nostalgica"
+mod.version = "26.07"
+mod.archives_base_name = "modernica"
+
+deps.fabric_loader = "0.19.3"
+deps.fabric_language_kotlin = "1.13.11+kotlin.2.3.21"
+deps.mixinextras = "0.5.4"
+deps.modmenu = "20.0.0-alpha.1"
+deps.spark = "1.10.156-fabric"
+
+["26.1.2"]
+deps.fabric_api = "0.155.2+26.1.2"
+deps.fzzy_config = "0.7.6+26.1"
+
+["26.2"]
+deps.fabric_api = "0.155.2+26.2"
+deps.fzzy_config = "0.7.6+26.2"
