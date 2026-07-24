@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-19T21:21:39Z",
+  "generated": "2026-07-24T20:17:25Z",
   "projects": [
     {
       "id": "SkyPixel",
@@ -138,7 +138,7 @@
           "path": "modpacks/legacy4server/26.1.2-cf",
           "platform": "curseforge",
           "mod_count": 20,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -160,14 +160,14 @@
       "manifest_path": "modpacks/minigameclient/manifest.json",
       "loader": "fabric",
       "mc_version": "1.20.4",
-      "version": "26.05",
+      "version": "26.07",
       "release_type": "release",
       "lifecycle": "active",
       "role": "none",
       "auto_update": true,
-      "modrinth_id": "minigameclient",
+      "modrinth_id": "XgbUJwPq",
       "platforms": {
-        "modrinth": "minigameclient"
+        "modrinth": "XgbUJwPq"
       },
       "docs_path": "/modpacks/minigameclient/",
       "subdirs": [
@@ -175,8 +175,8 @@
           "key": "1.20.4-mr",
           "path": "modpacks/minigameclient/1.20.4-mr",
           "platform": "modrinth",
-          "mod_count": 23,
-          "has_index": true,
+          "mod_count": 26,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -219,7 +219,7 @@
       "category": "modpack",
       "dir": "modpacks/re-console-lts",
       "manifest_path": "modpacks/re-console-lts/manifest.json",
-      "version": "26.06.1+LTS",
+      "version": "26.07+LTS",
       "release_type": "release",
       "lifecycle": "active",
       "role": "none",
@@ -281,72 +281,72 @@
           "key": "1.20.1-fabric-mr",
           "path": "modpacks/re-console-lts/1.20.1-fabric-mr",
           "platform": "modrinth",
-          "mod_count": 72,
-          "has_index": true,
+          "mod_count": 73,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "1.20.4-fabric-mr",
           "path": "modpacks/re-console-lts/1.20.4-fabric-mr",
           "platform": "modrinth",
-          "mod_count": 71,
-          "has_index": true,
+          "mod_count": 72,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "1.21.1-fabric-mr",
           "path": "modpacks/re-console-lts/1.21.1-fabric-mr",
           "platform": "modrinth",
-          "mod_count": 71,
-          "has_index": true,
+          "mod_count": 72,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "1.21.1-neoforge-mr",
           "path": "modpacks/re-console-lts/1.21.1-neoforge-mr",
           "platform": "modrinth",
-          "mod_count": 55,
-          "has_index": true,
+          "mod_count": 56,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "1.21.10-fabric-mr",
           "path": "modpacks/re-console-lts/1.21.10-fabric-mr",
           "platform": "modrinth",
-          "mod_count": 75,
-          "has_index": true,
+          "mod_count": 76,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "1.21.3-fabric-mr",
           "path": "modpacks/re-console-lts/1.21.3-fabric-mr",
           "platform": "modrinth",
-          "mod_count": 56,
-          "has_index": true,
+          "mod_count": 57,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "1.21.4-fabric-mr",
           "path": "modpacks/re-console-lts/1.21.4-fabric-mr",
           "platform": "modrinth",
-          "mod_count": 76,
-          "has_index": true,
+          "mod_count": 77,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "1.21.5-fabric-mr",
           "path": "modpacks/re-console-lts/1.21.5-fabric-mr",
           "platform": "modrinth",
-          "mod_count": 69,
-          "has_index": true,
+          "mod_count": 70,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "1.21.8-fabric-mr",
           "path": "modpacks/re-console-lts/1.21.8-fabric-mr",
           "platform": "modrinth",
-          "mod_count": 72,
-          "has_index": true,
+          "mod_count": 73,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -358,7 +358,7 @@
       "category": "modpack",
       "dir": "modpacks/re-console-main",
       "manifest_path": "modpacks/re-console-main/manifest.json",
-      "version": "26.07.2.main",
+      "version": "26.07.5.main",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
@@ -521,7 +521,7 @@
           "path": "modpacks/rekindled-common/26.1.2-mr",
           "platform": "modrinth",
           "mod_count": 30,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -529,46 +529,6 @@
           "path": "modpacks/rekindled-common/global_packs",
           "has_index": false,
           "has_pack": false
-        }
-      ]
-    },
-    {
-      "id": "reminiscence",
-      "name": "Reminiscence",
-      "type": "modpack",
-      "category": "modpack",
-      "dir": "modpacks/reminiscence",
-      "manifest_path": "modpacks/reminiscence/manifest.json",
-      "loader": "forge",
-      "mc_version": "1.20.1",
-      "version": "2.0.0-hotfix2",
-      "release_type": "release",
-      "lifecycle": "active",
-      "role": "none",
-      "auto_update": true,
-      "modrinth_id": "reminiscence",
-      "curseforge_id": "1003617",
-      "platforms": {
-        "modrinth": "reminiscence",
-        "curseforge": "1003617"
-      },
-      "docs_path": "/modpacks/reminiscence/",
-      "subdirs": [
-        {
-          "key": "1.20.1-cf",
-          "path": "modpacks/reminiscence/1.20.1-cf",
-          "platform": "curseforge",
-          "mod_count": 176,
-          "has_index": false,
-          "has_pack": true
-        },
-        {
-          "key": "1.20.1-mr",
-          "path": "modpacks/reminiscence/1.20.1-mr",
-          "platform": "modrinth",
-          "mod_count": 158,
-          "has_index": false,
-          "has_pack": true
         }
       ]
     },
@@ -617,7 +577,7 @@
           "path": "modpacks/simply-archaic/1.12.2-mr",
           "platform": "modrinth",
           "mod_count": 11,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -625,7 +585,7 @@
           "path": "modpacks/simply-archaic/1.16.5-mr",
           "platform": "modrinth",
           "mod_count": 10,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -633,7 +593,7 @@
           "path": "modpacks/simply-archaic/1.18.2-mr",
           "platform": "modrinth",
           "mod_count": 11,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -641,7 +601,7 @@
           "path": "modpacks/simply-archaic/1.7.10-mr",
           "platform": "modrinth",
           "mod_count": 12,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -649,7 +609,7 @@
           "path": "modpacks/simply-archaic/1.8.9-mr",
           "platform": "modrinth",
           "mod_count": 10,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -663,7 +623,7 @@
       "manifest_path": "modpacks/simply-legacy/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.07.4",
+      "version": "26.07.6",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
@@ -692,6 +652,12 @@
           "mod_count": 49,
           "has_index": true,
           "has_pack": true
+        },
+        {
+          "key": "artifacts",
+          "path": "modpacks/simply-legacy/artifacts",
+          "has_index": false,
+          "has_pack": false
         }
       ]
     },
@@ -749,7 +715,7 @@
       "category": "modpack",
       "dir": "modpacks/simply-optimized-forked",
       "manifest_path": "modpacks/simply-optimized-forked/manifest.json",
-      "version": "26.07.2",
+      "version": "26.07.3",
       "release_type": "release",
       "lifecycle": "active",
       "role": "base",
@@ -777,7 +743,7 @@
           "path": "modpacks/simply-optimized-forked/26.1.2-cf",
           "platform": "curseforge",
           "mod_count": 30,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -785,7 +751,7 @@
           "path": "modpacks/simply-optimized-forked/26.1.2-mr",
           "platform": "modrinth",
           "mod_count": 31,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -793,7 +759,7 @@
           "path": "modpacks/simply-optimized-forked/26.2-cf",
           "platform": "curseforge",
           "mod_count": 26,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
@@ -801,7 +767,7 @@
           "path": "modpacks/simply-optimized-forked/26.2-mr",
           "platform": "modrinth",
           "mod_count": 29,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -815,7 +781,7 @@
       "manifest_path": "modpacks/vital/manifest.json",
       "loader": "fabric",
       "mc_version": "26.1.2",
-      "version": "26.07.1",
+      "version": "26.07.2",
       "release_type": "release",
       "lifecycle": "active",
       "role": "base",
@@ -832,16 +798,32 @@
           "key": "26.1.2-cf",
           "path": "modpacks/vital/26.1.2-cf",
           "platform": "curseforge",
-          "mod_count": 63,
-          "has_index": true,
+          "mod_count": 66,
+          "has_index": false,
           "has_pack": true
         },
         {
           "key": "26.1.2-mr",
           "path": "modpacks/vital/26.1.2-mr",
           "platform": "modrinth",
-          "mod_count": 68,
-          "has_index": true,
+          "mod_count": 71,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "26.2-cf",
+          "path": "modpacks/vital/26.2-cf",
+          "platform": "curseforge",
+          "mod_count": 66,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "26.2-mr",
+          "path": "modpacks/vital/26.2-mr",
+          "platform": "modrinth",
+          "mod_count": 71,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -1253,13 +1235,18 @@
       "category": "resourcepack",
       "dir": "resourcepacks/ore4j",
       "manifest_path": "resourcepacks/ore4j/manifest.json",
-      "mc_version": "1.21.1",
-      "version": "1.0.0",
+      "mc_version": "26.1.2",
+      "version": "4.0.0",
       "release_type": "release",
       "lifecycle": "active",
       "role": "none",
       "auto_update": true,
-      "platforms": {},
+      "modrinth_id": "ore4j",
+      "curseforge_id": "1481313",
+      "platforms": {
+        "modrinth": "ore4j",
+        "curseforge": "1481313"
+      },
       "docs_path": "/resource-packs/ore4j/",
       "subdirs": [
         {
@@ -1485,24 +1472,6 @@
       ],
       "subdirs": [
         {
-          "key": ".gradle",
-          "path": "mods/claritymod/.gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "artifacts",
-          "path": "mods/claritymod/artifacts",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "build",
-          "path": "mods/claritymod/build",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
           "key": "gradle",
           "path": "mods/claritymod/gradle",
           "has_index": false,
@@ -1554,12 +1523,6 @@
       ],
       "subdirs": [
         {
-          "key": ".gradle",
-          "path": "mods/modaudit/.gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
           "key": "gradle",
           "path": "mods/modaudit/gradle",
           "has_index": false,
@@ -1574,6 +1537,51 @@
         {
           "key": "versions",
           "path": "mods/modaudit/versions",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
+    },
+    {
+      "id": "modernica",
+      "name": "Modernica",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/modernica",
+      "manifest_path": "mods/modernica/manifest.json",
+      "version": "26.07",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "modernica-fabric",
+      "curseforge_id": "1622990",
+      "platforms": {
+        "modrinth": "modernica-fabric",
+        "curseforge": "1622990"
+      },
+      "variants": [
+        {
+          "id": "26.1.2",
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        },
+        {
+          "id": "26.2",
+          "mc_version": "26.2",
+          "loader": "fabric"
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "gradle",
+          "path": "mods/modernica/gradle",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "src",
+          "path": "mods/modernica/src",
           "has_index": false,
           "has_pack": false
         }
@@ -1610,18 +1618,6 @@
         }
       ],
       "subdirs": [
-        {
-          "key": ".gradle",
-          "path": "mods/packstats/.gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "build",
-          "path": "mods/packstats/build",
-          "has_index": false,
-          "has_pack": false
-        },
         {
           "key": "gradle",
           "path": "mods/packstats/gradle",

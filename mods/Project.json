@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-19T21:21:39Z",
+  "generated": "2026-07-24T20:17:25Z",
   "projects": [
     {
       "id": "claritymod",
@@ -33,24 +33,6 @@
         }
       ],
       "subdirs": [
-        {
-          "key": ".gradle",
-          "path": "mods/claritymod/.gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "artifacts",
-          "path": "mods/claritymod/artifacts",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "build",
-          "path": "mods/claritymod/build",
-          "has_index": false,
-          "has_pack": false
-        },
         {
           "key": "gradle",
           "path": "mods/claritymod/gradle",
@@ -103,12 +85,6 @@
       ],
       "subdirs": [
         {
-          "key": ".gradle",
-          "path": "mods/modaudit/.gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
           "key": "gradle",
           "path": "mods/modaudit/gradle",
           "has_index": false,
@@ -123,6 +99,51 @@
         {
           "key": "versions",
           "path": "mods/modaudit/versions",
+          "has_index": false,
+          "has_pack": false
+        }
+      ]
+    },
+    {
+      "id": "modernica",
+      "name": "Modernica",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/modernica",
+      "manifest_path": "mods/modernica/manifest.json",
+      "version": "26.07",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "modernica-fabric",
+      "curseforge_id": "1622990",
+      "platforms": {
+        "modrinth": "modernica-fabric",
+        "curseforge": "1622990"
+      },
+      "variants": [
+        {
+          "id": "26.1.2",
+          "mc_version": "26.1.2",
+          "loader": "fabric"
+        },
+        {
+          "id": "26.2",
+          "mc_version": "26.2",
+          "loader": "fabric"
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "gradle",
+          "path": "mods/modernica/gradle",
+          "has_index": false,
+          "has_pack": false
+        },
+        {
+          "key": "src",
+          "path": "mods/modernica/src",
           "has_index": false,
           "has_pack": false
         }
@@ -159,18 +180,6 @@
         }
       ],
       "subdirs": [
-        {
-          "key": ".gradle",
-          "path": "mods/packstats/.gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "build",
-          "path": "mods/packstats/build",
-          "has_index": false,
-          "has_pack": false
-        },
         {
           "key": "gradle",
           "path": "mods/packstats/gradle",
