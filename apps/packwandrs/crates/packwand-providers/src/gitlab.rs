@@ -97,7 +97,7 @@ impl<T> GitLabClient<T> {
     where
         T: Transport,
     {
-        let bytes = self.transport.get(self.api_request(url))?;
+        let bytes = self.transport.get_large(self.api_request(url))?;
         serde_json::from_slice(&bytes).map_err(|error| ProviderError::Decode {
             provider: "GitLab",
             message: error.to_string(),

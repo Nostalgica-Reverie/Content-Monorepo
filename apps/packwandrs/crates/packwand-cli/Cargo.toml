@@ -15,6 +15,7 @@ clap_complete.workspace = true
 packwand-build = { path = "../packwand-build" }
 packwand-diagnostics = { path = "../packwand-diagnostics" }
 packwand-ops = { path = "../packwand-ops" }
+packwand-parallel.workspace = true
 packwand-pack = { path = "../packwand-pack" }
 packwand-providers = { path = "../packwand-providers" }
 packwand-workspace = { path = "../packwand-workspace" }

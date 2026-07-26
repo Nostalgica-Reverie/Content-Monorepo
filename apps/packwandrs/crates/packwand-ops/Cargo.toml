@@ -7,6 +7,7 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
+packwand-parallel.workspace = true
 packwand-pack = { path = "../packwand-pack" }
 packwand-providers = { path = "../packwand-providers" }
 serde.workspace = true

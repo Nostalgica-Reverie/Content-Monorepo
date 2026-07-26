@@ -9,7 +9,7 @@
     "check": "bun --cwd frontend check",
     "test:frontend": "bun --cwd frontend test",
     "ide:build": "node ide/scripts/build-workbench.mjs",
-    "ide:prune": "powershell -NoProfile -ExecutionPolicy Bypass -File ide/scripts/prune-workbench.ps1 -WorkbenchRoot ide/workbench",
+    "ide:prune": "powershell -NoProfile -ExecutionPolicy Bypass -File ide/scripts/prune-workbench.ps1 -WorkbenchRoot ide/workbench && powershell -NoProfile -ExecutionPolicy Bypass -File ide/scripts/prune-electron.ps1 -WorkbenchRoot ide/workbench",
     "ide:test:smoke": "node ide/scripts/smoke-workbench.mjs",
     "audit:capabilities": "bun frontend/scripts/audit-capabilities.mjs",
     "desktop:dev": "cargo tauri dev",

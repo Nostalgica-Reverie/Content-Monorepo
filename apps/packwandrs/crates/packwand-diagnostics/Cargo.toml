@@ -7,7 +7,9 @@ repository.workspace = true
 
 [dependencies]
 packwand-pack = { path = "../packwand-pack" }
+packwand-parallel.workspace = true
 packwand-workspace = { path = "../packwand-workspace" }
+jsonschema.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 sha2.workspace = true

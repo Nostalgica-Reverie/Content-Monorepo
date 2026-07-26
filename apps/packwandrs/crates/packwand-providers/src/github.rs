@@ -103,7 +103,7 @@ impl<T: Transport> ProviderResolver for GitHubClient<T> {
             &pattern,
         )?;
         let asset = &release.assets[index];
-        let bytes = self.transport.get(
+        let bytes = self.transport.get_large(
             self.request(
                 Url::parse(&asset.browser_download_url)
                     .map_err(|error| ProviderError::InvalidUrl(error.to_string()))?,

@@ -4,13 +4,13 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "apps/packwandrs/packeater/**"
+      - "apps/packwandrs/**"
       - ".forgejo/actions/setup-packeater/**"
       - ".forgejo/workflows/ci-packeater.yml"
   pull_request:
     branches: ["main"]
     paths:
-      - "apps/packwandrs/packeater/**"
+      - "apps/packwandrs/**"
       - ".forgejo/actions/setup-packeater/**"
       - ".forgejo/workflows/ci-packeater.yml"
   workflow_dispatch:
@@ -23,14 +23,14 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
       - name: Format
-        working-directory: apps/packwandrs/packeater
+        working-directory: apps/packwandrs
         run: cargo fmt --package packeater_cli -- --check
       - name: Lint
-        working-directory: apps/packwandrs/packeater
+        working-directory: apps/packwandrs
         run: cargo clippy -p packeater_cli --all-targets -- -D warnings
       - name: Test
-        working-directory: apps/packwandrs/packeater
+        working-directory: apps/packwandrs
         run: cargo test -p packeater_cli
       - name: Build
-        working-directory: apps/packwandrs/packeater
+        working-directory: apps/packwandrs
         run: cargo build --release -p packeater_cli

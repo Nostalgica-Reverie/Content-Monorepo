@@ -1,5 +1,6 @@
 [workspace]
-resolver = "2"
+# Resolver 3 comes from the merged Packeater tree, which requires it.
+resolver = "3"
 members = [
     "crates/packwand-cli",
     "crates/packwand-build",
@@ -8,22 +9,57 @@ members = [
     "crates/packwand-pack",
     "crates/packwand-providers",
     "crates/packwand-workspace",
+    "crates/packwand-parallel",
+    # Launcher core, merged in from packages/packwand-core.
+    "crates/packwand-auth",
+    "crates/packwand-core-probe",
+    "crates/packwand-devboot",
+    "crates/packwand-instance",
+    "crates/packwand-launch",
+    "crates/packwand-minecraft",
+    "crates/packwand-msa",
+    "crates/packwand-runtime",
+    # Packeater: a PackSquash fork, merged in from apps/packwandrs/packeater.
+    # See crates/packsquash/README.md for its provenance and AGPL notices.
+    "crates/packsquash",
+    "crates/packsquash_cli",
+    "crates/packeater_cli",
     "src-tauri",
 ]
-exclude = ["packeater"]
 
 [workspace.package]
 version = "26.2.0"
 edition = "2024"
 license = "AGPL-3.0-or-later"
+publish = false
 repository = "https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo"
+
+# Inherited from the Packeater tree. Only crates that opt in with
+# `[lints] workspace = true` are affected, which today is the three Packeater
+# crates — packwand's own crates are unchanged.
+[workspace.lints.clippy]
+cargo = { level = "warn", priority = -1 }
+multiple_crate_versions = "allow"  # Introduces much noise, not better than cargo deny
+
+[workspace.lints.rust]
+missing_docs = "deny"
+unsafe_code = "deny"
+
+[workspace.lints.rustdoc]
+broken_intra_doc_links = "deny"
+invalid_html_tags = "deny"
+private_intra_doc_links = "deny"
 
 [workspace.dependencies]
 clap = { version = "4.6.2", features = ["derive"] }
 clap_complete = "4.6.7"
 fancy-regex = "0.16"
 hex = "0.4.3"
+# Local-only schema validation: default features pull in reqwest + TLS for
+# remote $ref resolution, which the manifest schema does not use.
+jsonschema = { version = "0.48", default-features = false }
 md-5 = "0.10.6"
+regex-lite = "0.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha1 = "0.10.7"
@@ -38,3 +74,45 @@ url = "2"
 uuid = { version = "1", features = ["serde", "v4"] }
 walkdir = "2"
 zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
+
+# Launcher core crates, referenced by name so member crates can keep using
+# `<crate>.workspace = true`.
+packwand-parallel = { path = "crates/packwand-parallel" }
+packwand-auth = { path = "crates/packwand-auth" }
+packwand-devboot = { path = "crates/packwand-devboot" }
+packwand-instance = { path = "crates/packwand-instance" }
+packwand-launch = { path = "crates/packwand-launch" }
+packwand-minecraft = { path = "crates/packwand-minecraft" }
+packwand-msa = { path = "crates/packwand-msa" }
+packwand-runtime = { path = "crates/packwand-runtime" }
+
+# Required by the merged Packeater crates. `[patch.crates-io]` is only honored
+# in a workspace root, so these necessarily apply to the whole workspace.
+[patch.crates-io]
+# Use a pull request of ours for compatibility with aes 0.9
+fpe = { git = "https://github.com/str4d/fpe", rev = "refs/pull/49/head" }
+# Use our fork of glsl-lang that allows it to parse #moj_import directives
+glsl-lang = { git = "https://github.com/ComunidadAylas/glsl-lang" }
+glsl-lang-lexer = { git = "https://github.com/ComunidadAylas/glsl-lang" }
+glsl-lang-pp = { git = "https://github.com/ComunidadAylas/glsl-lang" }
+glsl-lang-types = { git = "https://github.com/ComunidadAylas/glsl-lang" }
+# Use our fork of mmap, pulled by development dependencies for benchmarking, to fix its
+# dependency on unmaintained crates and reduce duplicate dependency versions. Some of
+# the changes were authored by jbreitbart.
+# Related PR: https://github.com/rbranson/rust-mmap/pull/13
+mmap = { git = "https://github.com/ComunidadAylas/rust-mmap" }
+# Use a newer spng commit with our PR to add a high-level API for customizing the decoder chunk CRC
+# mismatch action merged. Related PR: https://github.com/aloucks/spng-rs/pull/16
+spng = { git = "https://github.com/aloucks/spng-rs", rev = "d3f69ff" }
+
+# Packeater's optimizer is compute-bound, so it ships fully optimized.
+[profile.release]
+opt-level = 3
+strip = "symbols"
+lto = "fat"
+codegen-units = 1
+
+[profile.bench]
+inherits = "release"
+debug = true
+strip = "none"

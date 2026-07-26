@@ -48,12 +48,12 @@ const options = {
 	manglePrivates: process.argv.includes('--mangle-privates'),
 	excludeTests: process.argv.includes('--exclude-tests'),
 	out: getArgValue('--out'),
-	target: getArgValue('--target') ?? 'desktop', // 'desktop' | 'server' | 'server-web' | 'web'
+	target: getArgValue('--target') ?? 'web', // 'server' | 'server-web' | 'web'
 	sourceMapBaseUrl: getArgValue('--source-map-base-url'),
 };
 
 // Build targets
-type BuildTarget = 'desktop' | 'server' | 'server-web' | 'web';
+type BuildTarget = 'server' | 'server-web' | 'web';
 
 const SRC_DIR = 'src';
 const OUT_DIR = 'out';
@@ -89,30 +89,6 @@ const workerEntryPoints = [
 	'vs/workbench/services/textMate/browser/backgroundTokenization/worker/textMateTokenizationWorker.workerMain',
 ];
 
-// Desktop-only workers (use electron-browser)
-const desktopWorkerEntryPoints = [
-	'vs/platform/profiling/electron-browser/profileAnalysisWorkerMain',
-];
-
-// Desktop workbench and code entry points
-const desktopEntryPoints = [
-	'vs/workbench/workbench.desktop.main',
-	'vs/sessions/sessions.desktop.main',
-	'vs/workbench/contrib/debug/node/telemetryApp',
-	'vs/platform/files/node/watcher/watcherMain',
-	'vs/platform/terminal/node/ptyHostMain',
-	'vs/platform/agentHost/node/agentHostMain',
-	'vs/platform/agentHost/node/diffWorkerMain',
-	'vs/workbench/api/node/extensionHostProcess',
-];
-
-const codeEntryPoints = [
-	'vs/code/node/cliProcessMain',
-	'vs/code/electron-utility/sharedProcess/sharedProcessMain',
-	'vs/code/electron-browser/workbench/workbench',
-	'vs/sessions/electron-browser/sessions',
-];
-
 // Web entry points (used in server-web and vscode-web)
 const webEntryPoints = [
 	'vs/workbench/workbench.web.main.internal',
@@ -140,12 +116,6 @@ const serverEntryPoints = [
 ];
 
 // Bootstrap files per target
-const bootstrapEntryPointsDesktop = [
-	'main',
-	'cli',
-	'bootstrap-fork',
-];
-
 const bootstrapEntryPointsServer = [
 	'server-main',
 	'server-cli',
@@ -157,13 +127,6 @@ const bootstrapEntryPointsServer = [
  */
 function getEntryPointsForTarget(target: BuildTarget): string[] {
 	switch (target) {
-		case 'desktop':
-			return [
-				...workerEntryPoints,
-				...desktopWorkerEntryPoints,
-				...desktopEntryPoints,
-				...codeEntryPoints,
-			];
 		case 'server':
 			return [
 				...serverEntryPoints,
@@ -192,8 +155,6 @@ function getEntryPointsForTarget(target: BuildTarget): string[] {
  */
 function getBootstrapEntryPointsForTarget(target: BuildTarget): string[] {
 	switch (target) {
-		case 'desktop':
-			return bootstrapEntryPointsDesktop;
 		case 'server':
 		case 'server-web':
 			return bootstrapEntryPointsServer;
@@ -209,13 +170,6 @@ function getBootstrapEntryPointsForTarget(target: BuildTarget): string[] {
  */
 function getCssBundleEntryPointsForTarget(target: BuildTarget): Set<string> {
 	switch (target) {
-		case 'desktop':
-			return new Set([
-				'vs/workbench/workbench.desktop.main',
-				'vs/code/electron-browser/workbench/workbench',
-				'vs/sessions/sessions.desktop.main',
-				'vs/sessions/electron-browser/sessions',
-			]);
 		case 'server':
 			return new Set(); // Server has no UI
 		case 'server-web':
@@ -249,54 +203,6 @@ const commonResourcePatterns = [
 	'vs/workbench/browser/parts/editor/media/letterpress*.svg',
 	'vs/sessions/contrib/chat/browser/media/*.svg',
 	'vs/sessions/contrib/welcome/browser/media/themePreviews/*.svg'
-];
-
-// Resources for desktop target
-const desktopResourcePatterns = [
-	...commonResourcePatterns,
-
-	// HTML
-	'vs/code/electron-browser/workbench/workbench.html',
-	'vs/code/electron-browser/workbench/workbench-dev.html',
-	'vs/sessions/electron-browser/sessions.html',
-	'vs/sessions/electron-browser/sessions-dev.html',
-	'vs/workbench/services/extensions/worker/webWorkerExtensionHostIframe.html',
-	'vs/workbench/contrib/webview/browser/pre/*.html',
-
-	// Webview pre scripts
-	'vs/workbench/contrib/webview/browser/pre/*.js',
-
-	// Shell scripts
-	'vs/base/node/*.sh',
-	'vs/workbench/contrib/terminal/common/scripts/*.sh',
-	'vs/workbench/contrib/terminal/common/scripts/*.ps1',
-	'vs/workbench/contrib/terminal/common/scripts/*.psm1',
-	'vs/workbench/contrib/terminal/common/scripts/*.fish',
-	'vs/workbench/contrib/terminal/common/scripts/*.zsh',
-	'vs/workbench/contrib/terminal/common/scripts/psreadline/*.psd1',
-	'vs/workbench/contrib/terminal/common/scripts/psreadline/*.psm1',
-	'vs/workbench/contrib/terminal/common/scripts/psreadline/*.dll',
-	'vs/workbench/contrib/terminal/common/scripts/psreadline/*.ps1xml',
-	'vs/workbench/contrib/terminal/common/scripts/psreadline/net6plus/*.dll',
-	'vs/workbench/contrib/terminal/common/scripts/psreadline/netstd/*.dll',
-	'vs/workbench/contrib/externalTerminal/**/*.scpt',
-
-	// Media - audio
-	'vs/platform/accessibilitySignal/browser/media/*.mp3',
-
-	// Media - images
-	'vs/workbench/contrib/welcomeGettingStarted/common/media/**/*.svg',
-	'vs/workbench/contrib/welcomeGettingStarted/common/media/**/*.png',
-	'vs/workbench/contrib/welcomeOnboarding/browser/media/*.svg',
-	'vs/workbench/contrib/extensions/browser/media/{theme-icon.png,language-icon.svg}',
-	'vs/workbench/services/extensionManagement/common/media/*.svg',
-	'vs/workbench/services/extensionManagement/common/media/*.png',
-	'vs/workbench/browser/parts/editor/media/*.png',
-	'vs/workbench/contrib/debug/browser/media/*.png',
-
-	// Sessions - built-in prompts and skills
-	'vs/sessions/prompts/*.prompt.md',
-	'vs/sessions/skills/**/SKILL.md',
 ];
 
 // Resources for server target (minimal - no UI)
@@ -386,8 +292,6 @@ const webResourcePatterns = [
  */
 function getResourcePatternsForTarget(target: BuildTarget): string[] {
 	switch (target) {
-		case 'desktop':
-			return desktopResourcePatterns;
 		case 'server':
 			return serverResourcePatterns;
 		case 'server-web':
@@ -483,51 +387,6 @@ async function copyFile(srcPath: string, destPath: string): Promise<void> {
 		}
 	}
 	await fs.promises.copyFile(srcPath, destPath);
-}
-
-/**
- * Standalone TypeScript files that need to be compiled separately (not bundled).
- * These run in special contexts (e.g., Electron preload) where bundling isn't appropriate.
- * Only needed for desktop target.
- */
-const desktopStandaloneFiles = [
-	'vs/base/parts/sandbox/electron-browser/preload.ts',
-	'vs/base/parts/sandbox/electron-browser/preload-aux.ts',
-	'vs/platform/browserView/electron-browser/preload-browserView.ts',
-];
-
-async function compileStandaloneFiles(outDir: string, doMinify: boolean, target: BuildTarget): Promise<void> {
-	// Only desktop needs preload scripts
-	if (target !== 'desktop') {
-		return;
-	}
-
-	console.log(`[standalone] Compiling ${desktopStandaloneFiles.length} standalone files...`);
-
-	const banner = `/*!--------------------------------------------------------
- * Copyright (C) Microsoft Corporation. All rights reserved.
- *--------------------------------------------------------*/`;
-
-	await Promise.all(desktopStandaloneFiles.map(async (file) => {
-		const entryPath = path.join(REPO_ROOT, SRC_DIR, file);
-		const outPath = path.join(REPO_ROOT, outDir, file.replace(/\.ts$/, '.js'));
-
-		await esbuild.build({
-			entryPoints: [entryPath],
-			outfile: outPath,
-			bundle: false, // Don't bundle - these are standalone scripts
-			format: 'cjs', // CommonJS for Electron preload
-			platform: 'node',
-			target: ['es2024'],
-			sourcemap: 'linked',
-			sourcesContent: false,
-			minify: doMinify,
-			banner: { js: banner },
-			logLevel: 'warning',
-		});
-	}));
-
-	console.log(`[standalone] Done`);
 }
 
 /**
@@ -1072,9 +931,6 @@ ${tslib}`,
 	// Copy resources (curated per-target patterns for production)
 	await copyResources(outDir, target);
 
-	// Compile standalone TypeScript files (like Electron preload scripts) that cannot be bundled
-	await compileStandaloneFiles(outDir, doMinify, target);
-
 	console.log(`[bundle] Done in ${Date.now() - t1}ms (${bundled} bundles)`);
 }
 
@@ -1204,7 +1060,7 @@ Options for 'bundle':
 	--nls              Process NLS (localization) strings
 	--mangle-privates  Convert native #private fields to regular properties
 	--out <dir>        Output directory (default: out-vscode)
-	--target <target>  Build target: desktop (default), server, server-web, web
+	--target <target>  Build target: web (default), server, server-web
 	--source-map-base-url <url>  Rewrite sourceMappingURL to CDN URL
 
 Examples:

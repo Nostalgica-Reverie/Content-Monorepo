@@ -19,7 +19,7 @@ pub use curseforge::{CurseForgeClient, FingerprintMatch, FingerprintMatches, con
 pub use forgejo::ForgejoClient;
 pub use github::GitHubClient;
 pub use gitlab::GitLabClient;
-pub use modrinth::ModrinthClient;
+pub use modrinth::{ModrinthClient, search_loaders as modrinth_search_loaders};
 pub use repository::DEFAULT_ASSET_PATTERN;
 pub use transport::{HttpRequest, Transport, TransportError, UreqTransport};
 

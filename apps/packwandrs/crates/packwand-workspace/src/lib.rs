@@ -61,11 +61,28 @@ pub struct Variant {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub loader: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub environment: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub version: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub gradle_project: Option<String>,
     #[serde(flatten)]
     pub extra: BTreeMap<String, Value>,
+}
+
+impl Variant {
+    /// How this variant names its subdirs, before the `-mr`/`-cf` suffix.
+    #[must_use]
+    pub fn key(&self) -> Option<&str> {
+        non_empty(self.id.as_deref()).or_else(|| non_empty(self.mc_version.as_deref()))
+    }
+}
+
+/// Environments a project or variant may declare.
+pub const ENVIRONMENTS: [&str; 3] = ["client", "server", "both"];
+
+fn non_empty(value: Option<&str>) -> Option<&str> {
+    value.map(str::trim).filter(|value| !value.is_empty())
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -76,6 +93,8 @@ pub struct Automation {
     pub server_promo: Option<bool>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub sync_exclude: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub environment_exempt: Vec<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub sync_on_build: Option<bool>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -101,6 +120,8 @@ pub struct Manifest {
     pub loader: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub mc_version: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub environment: Option<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub variants: Vec<Variant>,
     #[serde(default)]
@@ -142,6 +163,26 @@ impl Manifest {
 
     pub fn lifecycle(&self) -> &str {
         self.lifecycle.as_deref().unwrap_or("active")
+    }
+
+    /// The environment this project ships into. `both` when undeclared, which
+    /// keeps every existing manifest meaning exactly what it meant before the
+    /// field existed.
+    #[must_use]
+    pub fn environment(&self) -> &str {
+        non_empty(self.environment.as_deref()).unwrap_or("both")
+    }
+
+    /// The environment for one variant, falling back to the project-level
+    /// declaration. `key` is a subdir name with its `-mr`/`-cf` suffix
+    /// removed, which is how variants name themselves on disk.
+    #[must_use]
+    pub fn environment_for(&self, key: &str) -> &str {
+        self.variants
+            .iter()
+            .find(|variant| variant.key() == Some(key))
+            .and_then(|variant| non_empty(variant.environment.as_deref()))
+            .unwrap_or_else(|| self.environment())
     }
 
     pub fn automation(&self) -> Automation {
@@ -481,8 +522,17 @@ fn slash_path(path: &Path) -> String {
 }
 
 pub fn read_project(workspace_root: &Path, project_root: &Path) -> Result<Project> {
-    let manifest: Manifest =
-        serde_json::from_slice(&fs::read(project_root.join("manifest.json"))?)?;
+    // Name the file that is missing: a bare io::Error surfaces as "The system
+    // cannot find the file specified. (os error 2)", which tells the caller
+    // nothing about which path failed.
+    let manifest_path = project_root.join("manifest.json");
+    let manifest: Manifest = match fs::read(&manifest_path) {
+        Ok(bytes) => serde_json::from_slice(&bytes)?,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            return Err(Error::NotFound(manifest_path.display().to_string()));
+        }
+        Err(error) => return Err(error.into()),
+    };
     let category = project_root
         .parent()
         .and_then(Path::file_name)

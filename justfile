@@ -25,11 +25,6 @@ HANDBOOK_DIR := "docs/modpack-dev-handbook"
 # just has no built-in equivalent of Task's `{{exeExt}}`; define it explicitly.
 EXE_EXT := if os() == "windows" { ".exe" } else { "" }
 
-# C compiler for tools/hashutil. Override with `CC=clang just build-hashutil`
-# if you don't have a `cc`/`gcc` on PATH under that name (this repo's own
-# Windows dev environment has `gcc`/`clang` from MinGW but no `cc` alias).
-CC := env("CC", "gcc")
-
 default:
     @just --list
 
@@ -76,7 +71,8 @@ lint-mods: (_mod_gradlew_all "check")
 audit-go:
     go run golang.org/x/vuln/cmd/govulncheck@latest ./...
 
-# fmt + clippy on the root Cargo workspace (packwand-rs launcher core and packwand-gui)
+# fmt + clippy on the packwandrs workspace (CLI, launcher core, desktop shell)
+[working-directory: 'apps/packwandrs']
 lint-rust-core:
     cargo fmt --all --check
     cargo clippy --workspace --all-targets -- -D warnings
@@ -84,6 +80,7 @@ lint-rust-core:
 # Scan Rust lockfiles for RUSTSEC advisories (requires cargo-audit)
 audit-rust:
     cargo audit --file {{ WEBVIEW_DIR }}/Cargo.lock
+    cargo audit --file apps/packwandrs/Cargo.lock
     cargo audit --file Cargo.lock
 
 # ESLint + Prettier check on the Discord bot (requires bun)
@@ -96,6 +93,19 @@ lint-bot:
 lint-typos:
     typos .
 
+# Run one of the scripts in scripts/ by name, e.g. `just scripts lint-changelogs --json`
+scripts NAME *ARGS:
+    bun scripts/run.ts {{ NAME }} {{ ARGS }}
+
+# Not part of `just lint` yet -- the resourcepacks have no changelogs today.
+# Check every changelog.md names its manifest's version and says something
+lint-changelogs:
+    bun scripts/run.ts lint-changelogs
+
+# Build release notes for a project, folding in its performance base's changelog
+release-notes MANIFEST *ARGS:
+    bun scripts/run.ts build-release-notes "{{ MANIFEST }}" {{ ARGS }}
+
 # Lint Forgejo workflows incl. shellcheck of run blocks (requires actionlint)
 lint-actions:
     actionlint -config-file .forgejo/actionlint.yaml -ignore 'in invalid format because owner and repo' .forgejo/workflows/*.yml
@@ -104,19 +114,14 @@ lint-actions:
 lint-nix:
     nix flake check --no-build --no-update-lock-file
 
-# clang-format check on tools/hashutil (requires clang-format)
-[working-directory: 'tools/hashutil']
-lint-hashutil:
-    clang-format --dry-run --Werror *.c *.h
-
-# fmt + clippy on packeater_cli (own Cargo workspace, not part of the root one; mirrors ci-packeater.yml)
-[working-directory: 'apps/packwandrs/packeater']
+# fmt + clippy on packeater_cli (now a packwandrs workspace member; mirrors ci-packeater.yml)
+[working-directory: 'apps/packwandrs']
 lint-packeater:
     cargo fmt --package packeater_cli -- --check
     cargo clippy -p packeater_cli --all-targets -- -D warnings
 
 # All linters/vetters and vulnerability scans
-lint: lint-go lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-hashutil lint-packeater audit-go audit-rust docs-typecheck
+lint: lint-go lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-packeater audit-go audit-rust docs-typecheck
 
 # — Test —
 
@@ -160,21 +165,17 @@ test-mods: (_mod_gradlew_all "test")
 test-webview:
     cargo test
 
-# Cargo tests for the root Cargo workspace (excludes #[ignore]'d real-boot tests needing Java/network)
+# Cargo tests for the packwandrs workspace (excludes #[ignore]'d real-boot tests needing Java/network)
+[working-directory: 'apps/packwandrs']
 test-rust-core:
     cargo test --workspace
-
-# Build + run tools/hashutil's self-test against known hash vectors
-[working-directory: 'tools/hashutil']
-test-hashutil: build-hashutil
-    ./hashutil{{ EXE_EXT }} --selftest
 
 # Build all flake checks, including Packwand and the generated modpack inventory
 test-nix:
     nix flake check --no-update-lock-file --print-build-logs
 
 # All tests
-test: test-go test-cursorapi test-installer test-mods test-webview test-rust-core test-hashutil
+test: test-go test-cursorapi test-installer test-mods test-webview test-rust-core
 
 # — Build —
 
@@ -235,14 +236,8 @@ build-bot:
     bun run typecheck
     bun build src/index.ts --target=bun --outdir=dist
 
-# Build tools/hashutil (single .c file, no separate build system -- see c.md section 1.5)
-# Targets C23; -std=c2x is the flag name gcc/clang accept for it (see hashutil.c's header comment).
-[working-directory: 'tools/hashutil']
-build-hashutil:
-    {{ CC }} -O3 -funroll-loops -Wall -Wextra -std=c2x -o hashutil{{ EXE_EXT }} hashutil.c
-
-# Build everything (CLI, installer, webview, bootstrap, bot, hashutil)
-build: build-packwand build-cursorapi build-installer build-mods build-webview build-bootstrap build-bot build-hashutil
+# Build everything (CLI, installer, webview, bootstrap, bot)
+build: build-packwand build-cursorapi build-installer build-mods build-webview build-bootstrap build-bot
 
 # — Docs —
 

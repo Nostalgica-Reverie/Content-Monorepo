@@ -24,11 +24,11 @@ packwand-ops = { path = "../crates/packwand-ops" }
 packwand-pack = { path = "../crates/packwand-pack" }
 packwand-providers = { path = "../crates/packwand-providers" }
 packwand-workspace = { path = "../crates/packwand-workspace" }
-# Shared packwand-rs launcher core (packages/packwand-core): instance
-# records, Minecraft/loader install, and process supervision. These crates
-# stay Tauri-free; all Tauri glue for them lives in src/commands/instances.rs.
-packwand-devboot = { path = "../../../packages/packwand-core/crates/packwand-devboot" }
-packwand-launch = { path = "../../../packages/packwand-core/crates/packwand-launch" }
+# Launcher core: instance records, Minecraft/loader install, and process
+# supervision. These crates stay Tauri-free; all Tauri glue for them lives in
+# src/commands/instances.rs.
+packwand-devboot.workspace = true
+packwand-launch.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 tauri = { version = "2", features = [] }

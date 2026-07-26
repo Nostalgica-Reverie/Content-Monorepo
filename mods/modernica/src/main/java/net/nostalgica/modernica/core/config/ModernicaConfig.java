@@ -10,6 +10,7 @@ import me.fzzyhmstrs.fzzy_config.util.EnumTranslatable;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.Identifier;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 /** Most fields gate a Mixin transform, so changes always require a restart. */
@@ -31,13 +32,29 @@ public class ModernicaConfig extends Config {
     public TroubleshootingSection troubleshooting = new TroubleshootingSection();
     public ExpertOnlySection expertOnly = new ExpertOnlySection();
 
+    /** {@link EarlyStabilityLevel} mirrors {@link StabilityLevel} and is parsed out of the raw TOML by name,
+     * so the two must declare the same constants in the same order. Lives here rather than in
+     * {@link MixinGate} so that class never mentions {@link StabilityLevel} in a position the verifier
+     * would resolve while Mixin is still selecting configs. Only call once the real config has loaded. */
+    static void verifyEarlyStabilityLevelInSync(Logger logger) {
+        StabilityLevel[] real = StabilityLevel.values();
+        EarlyStabilityLevel[] early = EarlyStabilityLevel.values();
+        boolean matches = real.length == early.length;
+        for (int i = 0; matches && i < real.length; i++) {
+            matches = real[i].name().equals(early[i].name());
+        }
+        if (!matches) {
+            logger.error("EarlyStabilityLevel has drifted from ModernicaConfig.StabilityLevel; early mixin " +
+                    "gating will not honour the configured stability level until the two are re-synced");
+        }
+    }
+
+    /** Mirrored by {@link EarlyStabilityLevel} for mixin gating - keep the constants in sync. Reading a
+     * constant of this enum initializes fzzy-config's {@code Translatable} hierarchy, so it must never be
+     * touched before mod init. */
     public enum StabilityLevel implements EnumTranslatable {
         GA,
         BETA;
-
-        public boolean isAtLeast(StabilityLevel required) {
-            return this.ordinal() >= required.ordinal();
-        }
 
         @NotNull
         @Override

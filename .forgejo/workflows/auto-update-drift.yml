@@ -40,7 +40,7 @@ jobs:
         continue-on-error: true
         env:
           CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
-        run: packwand workspace update --check --json --ignored-only > "$RUNNER_TEMP/drift.json"
+        run: packwand batch update --check --json --ignored-only > "$RUNNER_TEMP/drift.json"
 
       - name: Write job summary
         shell: bash

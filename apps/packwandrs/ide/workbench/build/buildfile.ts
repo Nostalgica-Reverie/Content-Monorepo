@@ -16,20 +16,8 @@ export const workerExtensionHost = createModuleDescription('vs/workbench/api/wor
 export const workerNotebook = createModuleDescription('vs/workbench/contrib/notebook/common/services/notebookWebWorkerMain');
 export const workerLanguageDetection = createModuleDescription('vs/workbench/services/languageDetection/browser/languageDetectionWebWorkerMain');
 export const workerLocalFileSearch = createModuleDescription('vs/workbench/services/search/worker/localFileSearchMain');
-export const workerProfileAnalysis = createModuleDescription('vs/platform/profiling/electron-browser/profileAnalysisWorkerMain');
 export const workerOutputLinks = createModuleDescription('vs/workbench/contrib/output/common/outputLinkComputerMain');
 export const workerBackgroundTokenization = createModuleDescription('vs/workbench/services/textMate/browser/backgroundTokenization/worker/textMateTokenizationWorker.workerMain');
-
-export const workbenchDesktop = [
-	createModuleDescription('vs/workbench/contrib/debug/node/telemetryApp'),
-	createModuleDescription('vs/platform/files/node/watcher/watcherMain'),
-	createModuleDescription('vs/platform/terminal/node/ptyHostMain'),
-	createModuleDescription('vs/platform/agentHost/node/agentHostMain'),
-	createModuleDescription('vs/platform/agentHost/node/diffWorkerMain'),
-	createModuleDescription('vs/workbench/api/node/extensionHostProcess'),
-	createModuleDescription('vs/workbench/workbench.desktop.main'),
-	createModuleDescription('vs/sessions/sessions.desktop.main')
-];
 
 export const workbenchWeb = createModuleDescription('vs/workbench/workbench.web.main.internal');
 
@@ -39,15 +27,6 @@ export const keyboardMaps = [
 	createModuleDescription('vs/workbench/services/keybinding/browser/keyboardLayouts/layout.contribution.linux'),
 	createModuleDescription('vs/workbench/services/keybinding/browser/keyboardLayouts/layout.contribution.darwin'),
 	createModuleDescription('vs/workbench/services/keybinding/browser/keyboardLayouts/layout.contribution.win')
-];
-
-export const code = [
-	// 'vs/code/electron-main/main' is not included here because it comes in via ./src/main.js
-	// 'vs/code/node/cli' is not included here because it comes in via ./src/cli.js
-	createModuleDescription('vs/code/node/cliProcessMain'),
-	createModuleDescription('vs/code/electron-utility/sharedProcess/sharedProcessMain'),
-	createModuleDescription('vs/code/electron-browser/workbench/workbench'),
-	createModuleDescription('vs/sessions/electron-browser/sessions'),
 ];
 
 export const codeWeb = createModuleDescription('vs/code/browser/workbench/workbench');
@@ -70,14 +49,11 @@ const buildfile = {
 	workerNotebook,
 	workerLanguageDetection,
 	workerLocalFileSearch,
-	workerProfileAnalysis,
 	workerOutputLinks,
 	workerBackgroundTokenization,
-	workbenchDesktop,
 	workbenchWeb,
 	sessionsWeb,
 	keyboardMaps,
-	code,
 	codeWeb,
 	codeServer,
 	entrypoint: createModuleDescription

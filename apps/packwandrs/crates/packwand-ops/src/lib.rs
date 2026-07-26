@@ -11,8 +11,8 @@ use std::path::{Component, Path, PathBuf};
 use packwand_pack::{HashFormat, Index, IndexFile, Mod, Pack, hash_bytes};
 use packwand_providers::{
     CurseForgeClient, ForgejoClient, GitHubClient, GitLabClient, HttpRequest, ModrinthClient,
-    ProviderError, ProviderKind, ProviderResolver, ReleaseChannel, ResolveRequest, ResolvedProject,
-    Transport, TransportError, UreqTransport,
+    ProjectType, ProviderError, ProviderKind, ProviderResolver, ReleaseChannel, ResolveRequest,
+    ResolvedProject, ResolvedVersion, Transport, TransportError, UreqTransport,
 };
 use serde::{Deserialize, Serialize};
 use transaction::{FileMutation, FileTransaction};
@@ -54,7 +54,94 @@ pub fn update_latest(
     all: bool,
     dry_run: bool,
 ) -> Result<Vec<UpdateRecord>, OpsError> {
-    update_latest_with(root, selected, all, dry_run, resolve_provider)
+    let root = root.into();
+    // Ask Modrinth about every installed file at once before falling back to
+    // per-mod lookups. Modrinth's budget is 300 requests/minute, so a
+    // workspace with thousands of mods is bound by request count: batching is
+    // what makes the difference, not concurrency.
+    let prefetched = prefetch_modrinth(&root, selected, all).unwrap_or_default();
+    update_latest_with_prefetch(root, selected, all, dry_run, resolve_provider, &prefetched)
+}
+
+/// Latest versions keyed by the installed file's hash, resolved in bulk.
+type PrefetchedVersions = BTreeMap<String, ResolvedVersion>;
+
+/// Collects the sha512/sha1 hashes of every Modrinth-backed file in scope and
+/// resolves their latest versions in a handful of requests.
+///
+/// Best-effort: any failure returns nothing, and the caller falls back to
+/// per-mod resolution, which is slower but always correct.
+fn prefetch_modrinth(
+    root: &Path,
+    selected: Option<&str>,
+    all: bool,
+) -> Result<PrefetchedVersions, OpsError> {
+    if !all {
+        return Ok(BTreeMap::new());
+    }
+    let _ = selected;
+    let workspace = Workspace::open(root.to_path_buf())?;
+    let pack = workspace.pack().clone();
+    let paths = workspace
+        .index()
+        .files
+        .iter()
+        .filter(|entry| entry.metafile && entry.alias.is_none())
+        .map(|entry| entry.file.clone())
+        .collect::<Vec<_>>();
+
+    // Modrinth matches on one algorithm per call, so group by hash format and
+    // ask once per group.
+    let mut by_algorithm: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    for path in &paths {
+        let Ok((_, source)) = safe_relative_path(root, path) else {
+            continue;
+        };
+        let Ok(metadata) = read_toml::<Mod>(&source) else {
+            continue;
+        };
+        if metadata.pin || !metadata.update.contains_key("modrinth") {
+            continue;
+        }
+        let algorithm = metadata.download.hash_format.as_str();
+        if !matches!(algorithm, "sha1" | "sha512") || metadata.download.hash.is_empty() {
+            continue;
+        }
+        by_algorithm
+            .entry(algorithm.to_owned())
+            .or_default()
+            .push(metadata.download.hash.clone());
+    }
+    if by_algorithm.is_empty() {
+        return Ok(BTreeMap::new());
+    }
+
+    // Same derivation the per-mod path uses, so batched and fallback lookups
+    // filter identically.
+    let game_versions = pack.supported_game_versions();
+    let loaders = packwand_providers::modrinth_search_loaders(&pack.compatible_loaders(), false);
+    let channels = [
+        ReleaseChannel::Release,
+        ReleaseChannel::Beta,
+        ReleaseChannel::Alpha,
+    ];
+    let client = ModrinthClient::new(UreqTransport::new());
+    let mut resolved = BTreeMap::new();
+    for (algorithm, hashes) in by_algorithm {
+        match client.latest_versions_by_hash(
+            &hashes,
+            &algorithm,
+            &loaders,
+            &game_versions,
+            &channels,
+        ) {
+            Ok(batch) => resolved.extend(batch),
+            // A failed batch is not fatal: those mods fall through to
+            // per-mod resolution below.
+            Err(_) => continue,
+        }
+    }
+    Ok(resolved)
 }
 
 pub fn update_latest_with<F>(
@@ -62,14 +149,28 @@ pub fn update_latest_with<F>(
     selected: Option<&str>,
     all: bool,
     dry_run: bool,
-    mut resolver: F,
+    resolver: F,
 ) -> Result<Vec<UpdateRecord>, OpsError>
 where
-    F: FnMut(
-        ProviderKind,
-        &ResolveRequest,
-        Option<String>,
-    ) -> Result<ResolvedProject, ProviderError>,
+    // `Fn + Sync` rather than `FnMut`: resolution runs concurrently, so the
+    // resolver is shared across threads rather than called in sequence.
+    F: Fn(ProviderKind, &ResolveRequest, Option<String>) -> Result<ResolvedProject, ProviderError>
+        + Sync,
+{
+    update_latest_with_prefetch(root, selected, all, dry_run, resolver, &BTreeMap::new())
+}
+
+fn update_latest_with_prefetch<F>(
+    root: impl Into<PathBuf>,
+    selected: Option<&str>,
+    all: bool,
+    dry_run: bool,
+    resolver: F,
+    prefetched: &PrefetchedVersions,
+) -> Result<Vec<UpdateRecord>, OpsError>
+where
+    F: Fn(ProviderKind, &ResolveRequest, Option<String>) -> Result<ResolvedProject, ProviderError>
+        + Sync,
 {
     let root = root.into();
     let mut workspace = Workspace::open(root.clone())?;
@@ -86,20 +187,36 @@ where
     } else {
         return Err(OpsError::UpdateSelection);
     };
-    let mut records = Vec::new();
+
+    /// One metadata file that still needs a provider lookup.
+    struct Planned {
+        path: String,
+        name: String,
+        old_filename: String,
+        provider: ProviderKind,
+        request: ResolveRequest,
+        instance: Option<String>,
+        installed: Option<String>,
+        batched: Option<ResolvedProject>,
+    }
+
+    // Decide what each file needs before touching the network, so the lookups
+    // that remain can all be issued at once.
+    let mut decided: Vec<UpdateRecord> = Vec::new();
+    let mut planned: Vec<Planned> = Vec::new();
     for path in paths {
         let (_, source) = safe_relative_path(&root, &path)?;
         let metadata = read_toml::<Mod>(&source)?;
         let name = metadata.name.clone();
         let old_filename = metadata.filename.clone();
         if metadata.pin {
-            records.push(update_error(path, name, old_filename, "pinned"));
+            decided.push(update_error(path, name, old_filename, "pinned"));
             continue;
         }
         let (provider, mut request, instance) = match update_request(&metadata, workspace.pack()) {
             Ok(value) => value,
             Err(error) => {
-                records.push(update_error(path, name, old_filename, &error.to_string()));
+                decided.push(update_error(path, name, old_filename, &error.to_string()));
                 continue;
             }
         };
@@ -108,37 +225,95 @@ where
             ReleaseChannel::Beta,
             ReleaseChannel::Alpha,
         ];
-        match resolver(provider, &request, instance) {
+        // The bulk lookup already answered for this file: no request needed.
+        let batched = (provider == ProviderKind::Modrinth)
+            .then(|| prefetched.get(&metadata.download.hash))
+            .flatten()
+            .map(|version| ResolvedProject {
+                provider,
+                id: request.project.clone(),
+                slug: request.project.clone(),
+                title: metadata.name.clone(),
+                project_type: ProjectType::Mod,
+                side: metadata.side.clone(),
+                repository_release: None,
+                version: version.clone(),
+            });
+        planned.push(Planned {
+            path,
+            name,
+            old_filename,
+            provider,
+            request,
+            instance,
+            installed: installed_version(&metadata, provider),
+            batched,
+        });
+    }
+
+    // Resolve what the bulk lookup did not cover, concurrently. Providers with
+    // a request budget still serialize on the transport's per-host gate, so
+    // this speeds up the providers that have no budget without breaching the
+    // ones that do.
+    let resolved: Vec<Result<ResolvedProject, ProviderError>> = packwand_parallel::map(
+        &planned,
+        packwand_parallel::configured(),
+        |entry| match &entry.batched {
+            Some(project) => Ok(project.clone()),
+            None => resolver(entry.provider, &entry.request, entry.instance.clone()),
+        },
+    );
+
+    // Applying mutates the pack index, so it stays sequential and in order.
+    let mut records = decided;
+    for (entry, outcome) in planned.into_iter().zip(resolved) {
+        match outcome {
             Ok(resolved) => {
                 let new_filename = resolved.version.file.filename.clone();
-                let changed = installed_version(&metadata, provider)
+                let changed = entry
+                    .installed
                     .is_none_or(|current| current != resolved.version.id);
                 let applied = changed && !dry_run;
                 let error = if applied {
                     workspace
-                        .update_resolved(&path, resolved)
+                        .update_resolved(&entry.path, resolved)
                         .err()
                         .map(|error| error.to_string())
                 } else {
                     None
                 };
                 records.push(UpdateRecord {
-                    path,
-                    name,
-                    provider: provider.name().into(),
-                    old_filename,
+                    path: entry.path,
+                    name: entry.name,
+                    provider: entry.provider.name().into(),
+                    old_filename: entry.old_filename,
                     new_filename,
                     changed,
                     applied: applied && error.is_none(),
                     error,
                 });
             }
+            // Finding nothing newer is a successful check, not a failure. It
+            // is the normal answer whenever a project has no release for the
+            // pack's declared Minecraft version — common for resource packs,
+            // which are published per game version. Reporting it as an error
+            // made a healthy workspace look broken and failed the exit code.
+            Err(ProviderError::NoCompatibleVersion) => records.push(UpdateRecord {
+                path: entry.path,
+                name: entry.name,
+                provider: entry.provider.name().into(),
+                old_filename: entry.old_filename.clone(),
+                new_filename: entry.old_filename,
+                changed: false,
+                applied: false,
+                error: None,
+            }),
             Err(error) => records.push(UpdateRecord {
-                path,
-                name,
-                provider: provider.name().into(),
-                old_filename: old_filename.clone(),
-                new_filename: old_filename,
+                path: entry.path,
+                name: entry.name,
+                provider: entry.provider.name().into(),
+                old_filename: entry.old_filename.clone(),
+                new_filename: entry.old_filename,
                 changed: false,
                 applied: false,
                 error: Some(error.to_string()),
@@ -708,7 +883,9 @@ impl Workspace {
                 format.as_str()
             )));
         }
-        let transport = UreqTransport::new();
+        // Rehashing re-downloads each external file to hash it, so this needs
+        // the transfer-scale client rather than the API one.
+        let transport = UreqTransport::for_downloads();
         let mut index = self.index.clone();
         let mut mutations = Vec::new();
         let mut report = RehashReport::default();
@@ -989,18 +1166,15 @@ fn update_request(
         )));
     }
     let mut request = ResolveRequest::new(project);
-    request.game_versions = pack
-        .versions
-        .get("minecraft")
-        .cloned()
-        .into_iter()
-        .collect();
-    request.loaders = pack
-        .versions
-        .keys()
-        .filter(|key| key.as_str() != "minecraft")
-        .cloned()
-        .collect();
+    request.game_versions = pack.supported_game_versions();
+    // Modrinth files resource packs under the "minecraft" loader and shaders
+    // under "vanilla"/"iris"/etc., so a search restricted to the pack's mod
+    // loader alone reports those as having no compatible version.
+    request.loaders = if provider == ProviderKind::Modrinth {
+        packwand_providers::modrinth_search_loaders(&pack.compatible_loaders(), false)
+    } else {
+        pack.compatible_loaders()
+    };
     request.branch = table
         .get("branch")
         .and_then(toml::Value::as_str)

@@ -50,7 +50,7 @@ jobs:
           extra-packages: nsis
           cache-key: ${{ matrix.name }}
           workspaces: |
-            packages/packwand-core
+            apps/packwandrs
             apps/packwand/gui/tauri/src-tauri
 
       - name: Install cargo-xwin (Windows cross-compile only)

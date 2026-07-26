@@ -1,14 +1,10 @@
 [workspace]
 resolver = "2"
+# The launcher-core crates moved into the packwandrs workspace
+# (apps/packwandrs/crates). They are referenced below as plain path
+# dependencies rather than members, so they are built and locked by
+# packwandrs while the deprecated Go GUI below can still consume them.
 members = [
-    "packages/packwand-core/crates/packwand-instance",
-    "packages/packwand-core/crates/packwand-launch",
-    "packages/packwand-core/crates/packwand-runtime",
-    "packages/packwand-core/crates/packwand-minecraft",
-    "packages/packwand-core/crates/packwand-auth",
-    "packages/packwand-core/crates/packwand-devboot",
-    "packages/packwand-core/crates/packwand-msa",
-    "packages/packwand-core/crates/packwand-core-probe",
     "apps/packwand/gui/tauri/src-tauri",
 ]
 exclude = ["apps/mod-browser-webview"]
@@ -30,13 +26,13 @@ md-5 = "0.10"
 regex-lite = "0.1"
 ureq = { version = "2", features = ["gzip"] }
 zip = { version = "6", default-features = false, features = ["deflate"] }
-packwand-instance = { path = "packages/packwand-core/crates/packwand-instance" }
-packwand-launch = { path = "packages/packwand-core/crates/packwand-launch" }
-packwand-runtime = { path = "packages/packwand-core/crates/packwand-runtime" }
-packwand-minecraft = { path = "packages/packwand-core/crates/packwand-minecraft" }
-packwand-auth = { path = "packages/packwand-core/crates/packwand-auth" }
-packwand-devboot = { path = "packages/packwand-core/crates/packwand-devboot" }
-packwand-msa = { path = "packages/packwand-core/crates/packwand-msa" }
+packwand-instance = { path = "apps/packwandrs/crates/packwand-instance" }
+packwand-launch = { path = "apps/packwandrs/crates/packwand-launch" }
+packwand-runtime = { path = "apps/packwandrs/crates/packwand-runtime" }
+packwand-minecraft = { path = "apps/packwandrs/crates/packwand-minecraft" }
+packwand-auth = { path = "apps/packwandrs/crates/packwand-auth" }
+packwand-devboot = { path = "apps/packwandrs/crates/packwand-devboot" }
+packwand-msa = { path = "apps/packwandrs/crates/packwand-msa" }
 
 [profile.release]
 opt-level = "s"

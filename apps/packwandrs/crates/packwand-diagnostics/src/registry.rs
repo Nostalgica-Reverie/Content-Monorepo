@@ -5,6 +5,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
+use packwand_parallel::Jobs;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use walkdir::WalkDir;
@@ -82,18 +83,37 @@ struct Source {
     origin: String,
 }
 
+/// How many files are read ahead of the hasher at once. Bounds peak memory to
+/// roughly one batch of file contents rather than a whole pack.
+const READ_BATCH: usize = 64;
+
 pub fn build_all_registries(
     root: impl AsRef<Path>,
 ) -> Result<Vec<ContentRegistry>, Box<dyn Error>> {
+    build_all_registries_with(root, packwand_parallel::configured())
+}
+
+pub fn build_all_registries_with(
+    root: impl AsRef<Path>,
+    jobs: Jobs,
+) -> Result<Vec<ContentRegistry>, Box<dyn Error>> {
     RegistryKind::ALL
         .into_iter()
-        .map(|kind| build_registry(root.as_ref(), kind))
+        .map(|kind| build_registry_with(root.as_ref(), kind, jobs))
         .collect()
 }
 
 pub fn build_registry(
     root: impl AsRef<Path>,
     kind: RegistryKind,
+) -> Result<ContentRegistry, Box<dyn Error>> {
+    build_registry_with(root, kind, packwand_parallel::configured())
+}
+
+pub fn build_registry_with(
+    root: impl AsRef<Path>,
+    kind: RegistryKind,
+    jobs: Jobs,
 ) -> Result<ContentRegistry, Box<dyn Error>> {
     let root = root.as_ref();
     if !root.is_dir() {
@@ -112,20 +132,34 @@ pub fn build_registry(
             .map(|entry| entry.path().to_path_buf())
             .collect::<Vec<_>>();
         files.sort();
-        for path in files {
-            let relative = slash(path.strip_prefix(&source.root).unwrap_or(&path));
-            hasher.update(source.origin.as_bytes());
-            hasher.update([0]);
-            hasher.update(relative.as_bytes());
-            hasher.update([0]);
-            hasher.update(fs::read(&path)?);
-            if let Some(mut entry) = classify(kind, &relative, &source.origin, &slugs) {
-                entry.origin = source.origin.clone();
-                entries.push(entry);
+        // The registry version is a single hash stream over the sorted files,
+        // so hashing itself has to stay ordered. Only the reads are
+        // parallelized, in bounded batches: the disk work overlaps while the
+        // resulting hash stays byte-identical to a sequential pass, and at
+        // most one batch of file contents is resident at a time.
+        for batch in files.chunks(READ_BATCH) {
+            let contents = packwand_parallel::try_map(batch, jobs, |path| fs::read(path));
+            for (path, content) in batch.iter().zip(contents) {
+                let relative = slash(path.strip_prefix(&source.root).unwrap_or(path));
+                hasher.update(source.origin.as_bytes());
+                hasher.update([0]);
+                hasher.update(relative.as_bytes());
+                hasher.update([0]);
+                hasher.update(content?);
+                if let Some(mut entry) = classify(kind, &relative, &source.origin, &slugs) {
+                    entry.origin = source.origin.clone();
+                    entries.push(entry);
+                }
             }
         }
     }
-    if kind == RegistryKind::Kubejs {
+    let mut source_origins: Vec<String> = sources.into_iter().map(|source| source.origin).collect();
+    // The pack's mod slugs belong to the KubeJS registry because they drive
+    // Platform.isLoaded completion — but only for a pack that actually has a
+    // kubejs/ tree. Without one the registry is empty, rather than a bare
+    // list of every mod in the pack.
+    if kind == RegistryKind::Kubejs && root.join("kubejs").is_dir() && !slugs.is_empty() {
+        source_origins.push("mods".into());
         for slug in &slugs {
             entries.push(RegistryEntry {
                 id: slug.clone(),
@@ -150,7 +184,7 @@ pub fn build_registry(
         scope: slash(root),
         kind,
         version: format!("{:x}", hasher.finalize()),
-        sources: sources.into_iter().map(|source| source.origin).collect(),
+        sources: source_origins,
         entries,
     })
 }

@@ -9,7 +9,6 @@ const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm'
 const environment = {
   ...process.env,
   BUILD_SOURCEVERSION: '7e7950df89d055b5a378379db9ee14290772148a',
-  ELECTRON_SKIP_BINARY_DOWNLOAD: '1',
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1',
   VSCODE_SKIP_NODE_VERSION_CHECK: '1',
 }
@@ -19,6 +18,9 @@ function run(command, args, extraEnvironment = {}) {
     cwd: workbenchRoot,
     env: { ...environment, ...extraEnvironment },
     stdio: 'inherit',
+    // Node refuses to spawn a .cmd shim directly on Windows; every argument
+    // here is a bare token, so shell concatenation is safe.
+    shell: command === npm && process.platform === 'win32',
   })
   if (result.error) throw result.error
   if (result.status !== 0) process.exit(result.status ?? 1)

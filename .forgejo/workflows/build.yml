@@ -7,7 +7,7 @@ on:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
-      - 'apps/packwandrs/packeater/**'
+      - 'apps/packwandrs/**'
       - '.forgejo/actions/setup-packeater/**'
       - '.forgejo/workflows/build.yml'
   pull_request:
@@ -16,7 +16,7 @@ on:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
-      - 'apps/packwandrs/packeater/**'
+      - 'apps/packwandrs/**'
       - '.forgejo/actions/setup-packeater/**'
       - '.forgejo/workflows/build.yml'
   workflow_dispatch:
@@ -39,7 +39,7 @@ jobs:
             datapacks
             resourcepacks
             apps/packwand
-            apps/packwandrs/packeater
+            apps/packwandrs
             .forgejo/actions
 
       - name: Meta

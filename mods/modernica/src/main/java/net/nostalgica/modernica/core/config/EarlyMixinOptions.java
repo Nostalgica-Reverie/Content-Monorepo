@@ -50,7 +50,7 @@ final class EarlyMixinOptions {
         }
     }
 
-    ModernicaConfig.StabilityLevel resolveStabilityLevel(ModernicaConfig.StabilityLevel defaultValue) {
+    EarlyStabilityLevel resolveStabilityLevel(EarlyStabilityLevel defaultValue) {
         if (root == null) {
             return defaultValue;
         }
@@ -59,7 +59,7 @@ final class EarlyMixinOptions {
             if (!(element instanceof TomlLiteral literal)) {
                 return defaultValue;
             }
-            return ModernicaConfig.StabilityLevel.valueOf(literal.getContent());
+            return EarlyStabilityLevel.valueOf(literal.getContent());
         } catch (RuntimeException e) {
             return defaultValue;
         }

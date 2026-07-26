@@ -20,7 +20,9 @@ public final class MixinGate {
 
     private static final Map<String, Toggle> REGISTRY = new LinkedHashMap<>();
     private static Map<String, Boolean> earlyValues = Map.of();
-    private static ModernicaConfig.StabilityLevel earlyStabilityLevel = ModernicaConfig.StabilityLevel.GA;
+    /** Never {@link ModernicaConfig.StabilityLevel} - see {@link EarlyStabilityLevel} for why touching it
+     * from the Mixin plugin's constructor breaks other mods' mixins. */
+    private static EarlyStabilityLevel earlyStabilityLevel = EarlyStabilityLevel.GA;
     private static ModernicaConfig config;
 
     private static void register(String key, String section, String field, boolean defaultValue, BooleanSupplier lateGetter, Consumer<Boolean> lateSetter) {
@@ -121,7 +123,7 @@ public final class MixinGate {
         register("perf.clear_mixin_classinfo", "troubleshooting", "clearMixinClassinfo", false, () -> config.troubleshooting.clearMixinClassinfo, v -> config.troubleshooting.clearMixinClassinfo = v);
 
         EarlyMixinOptions early = EarlyMixinOptions.load(logger);
-        earlyStabilityLevel = early.resolveStabilityLevel(ModernicaConfig.StabilityLevel.GA);
+        earlyStabilityLevel = early.resolveStabilityLevel(EarlyStabilityLevel.GA);
 
         Map<String, Boolean> values = new LinkedHashMap<>();
         for (Map.Entry<String, Toggle> entry : REGISTRY.entrySet()) {
@@ -151,6 +153,7 @@ public final class MixinGate {
         applyModCompat(logger, getter, setter);
         applyJvmPropertyOverrides(logger, getter, setter);
         enforceDependencies(logger, getter, setter);
+        ModernicaConfig.verifyEarlyStabilityLevelInSync(logger);
     }
 
     /** {@code perf.random_ticking}'s fast tick-position lookup only exists because
@@ -267,7 +270,7 @@ public final class MixinGate {
 
     public static boolean meetsFeatureLevel(String mixinGroup) {
         Boolean requiresBeta = REQUIRES_BETA.get(mixinGroup);
-        return requiresBeta == null || earlyStabilityLevel.isAtLeast(ModernicaConfig.StabilityLevel.BETA);
+        return requiresBeta == null || earlyStabilityLevel.isAtLeast(EarlyStabilityLevel.BETA);
     }
 
     /** spark_profile_world_join entries: spark is compileOnly, and SparkLaunchProfiler's statics

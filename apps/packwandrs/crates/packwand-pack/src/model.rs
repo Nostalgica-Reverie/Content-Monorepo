@@ -119,6 +119,69 @@ pub struct Pack {
 }
 
 impl Pack {
+    /// Reads a `[options]` key as a list of strings.
+    fn option_list(&self, key: &str) -> Vec<String> {
+        self.options
+            .get(key)
+            .and_then(toml::Value::as_array)
+            .map(|values| {
+                values
+                    .iter()
+                    .filter_map(toml::Value::as_str)
+                    .map(str::to_owned)
+                    .collect()
+            })
+            .unwrap_or_default()
+    }
+
+    /// Loaders a provider search should accept for this pack.
+    ///
+    /// Quilt packs also accept Fabric mods and NeoForge packs also accept
+    /// Forge mods, so those expand: searching for only the declared loader
+    /// would miss most of what actually runs. `acceptable-game-loaders` from
+    /// `[options]` is appended for anything else the pack tolerates.
+    #[must_use]
+    pub fn compatible_loaders(&self) -> Vec<String> {
+        let mut loaders = Vec::new();
+        if self.versions.contains_key("quilt") {
+            loaders.push("quilt".to_owned());
+            loaders.push("fabric".to_owned());
+        } else if self.versions.contains_key("fabric") {
+            loaders.push("fabric".to_owned());
+        }
+        if self.versions.contains_key("neoforge") {
+            loaders.push("neoforge".to_owned());
+            loaders.push("forge".to_owned());
+        } else if self.versions.contains_key("forge") {
+            loaders.push("forge".to_owned());
+        }
+        for extra in self.option_list("acceptable-game-loaders") {
+            if !loaders.contains(&extra) {
+                loaders.push(extra);
+            }
+        }
+        loaders
+    }
+
+    /// Minecraft versions a provider search should accept, from
+    /// `acceptable-game-versions` plus the pack's own version. The pack's own
+    /// version is last, matching packwiz, so it wins ties.
+    #[must_use]
+    pub fn supported_game_versions(&self) -> Vec<String> {
+        let mut versions = self.option_list("acceptable-game-versions");
+        if let Some(current) = self.versions.get("minecraft") {
+            versions.push(current.clone());
+        }
+        // Prefer the later copy, so the pack's own version stays last.
+        let mut deduped: Vec<String> = Vec::with_capacity(versions.len());
+        for (index, version) in versions.iter().enumerate() {
+            if !versions[index + 1..].contains(version) {
+                deduped.push(version.clone());
+            }
+        }
+        deduped
+    }
+
     pub fn format(&self) -> Result<PackFormat, PackFormatError> {
         let format = if self.pack_format.is_empty() {
             "packwiz:1.1.0"

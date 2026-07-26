@@ -63,7 +63,9 @@ fn auth_error(status: u16, api_key: &str, body_snippet: Option<&str>) -> Provide
          characters — re-set it with single quotes instead"
             .to_owned()
     } else {
-        let body = body_snippet.map(|body| format!(" CurseForge said: {body}")).unwrap_or_default();
+        let body = body_snippet
+            .map(|body| format!(" CurseForge said: {body}"))
+            .unwrap_or_default();
         format!(
             "set PACKWAND_CURSEFORGE_API_KEY, CURSEFORGE_API_KEY, or CF_API_KEY to override \
              it.{body}"
@@ -117,12 +119,15 @@ impl<T> CurseForgeClient<T> {
         let request = HttpRequest::get(url.to_string())
             .header("Accept", "application/json")
             .header("X-API-Key", &self.api_key);
-        let bytes = self.transport.get(request).map_err(|error| match error.status {
-            Some(status @ (401 | 403)) => {
-                auth_error(status, &self.api_key, error.body_snippet.as_deref())
-            }
-            _ => ProviderError::Transport(error),
-        })?;
+        let bytes = self
+            .transport
+            .get(request)
+            .map_err(|error| match error.status {
+                Some(status @ (401 | 403)) => {
+                    auth_error(status, &self.api_key, error.body_snippet.as_deref())
+                }
+                _ => ProviderError::Transport(error),
+            })?;
         serde_json::from_slice(&bytes).map_err(|error| ProviderError::Decode {
             provider: "CurseForge",
             message: error.to_string(),
@@ -169,7 +174,11 @@ impl<T: Transport> ProviderResolver for CurseForgeClient<T> {
                 &file_id.to_string(),
             ])?)?;
             response.data
-        } else if let Some(file) = project.latest_files.iter().find(|file| file.compatible(request)) {
+        } else if let Some(file) = project
+            .latest_files
+            .iter()
+            .find(|file| file.compatible(request))
+        {
             file.clone()
         } else {
             let index_entry = project
@@ -231,15 +240,15 @@ impl<T: Transport> CurseForgeClient<T> {
             "fingerprints": fingerprints,
         }))
         .map_err(|error| ProviderError::InvalidResponse(error.to_string()))?;
-        let bytes = self
-            .transport
-            .post_json(request, &body)
-            .map_err(|error| match error.status {
-                Some(status @ (401 | 403)) => {
-                    auth_error(status, &self.api_key, error.body_snippet.as_deref())
-                }
-                _ => ProviderError::Transport(error),
-            })?;
+        let bytes =
+            self.transport
+                .post_json(request, &body)
+                .map_err(|error| match error.status {
+                    Some(status @ (401 | 403)) => {
+                        auth_error(status, &self.api_key, error.body_snippet.as_deref())
+                    }
+                    _ => ProviderError::Transport(error),
+                })?;
         let response: FingerprintEnvelope =
             serde_json::from_slice(&bytes).map_err(|error| ProviderError::Decode {
                 provider: "CurseForge",
@@ -389,7 +398,10 @@ impl FileIndexEntry {
     fn compatible(&self, request: &ResolveRequest) -> bool {
         let channel_matches =
             request.channels.is_empty() || request.channels.contains(&self.channel());
-        let game_matches = request.game_versions.iter().any(|wanted| wanted == &self.game_version);
+        let game_matches = request
+            .game_versions
+            .iter()
+            .any(|wanted| wanted == &self.game_version);
         let loader_matches = request.loaders.is_empty()
             || request
                 .loaders

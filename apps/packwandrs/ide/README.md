@@ -34,5 +34,10 @@ path-confined Vite middleware.
 
 `scripts/apply-vscodium.ps1` verifies and patches a pristine external Code OSS
 checkout when auditing the patch provenance. `scripts/prune-workbench.ps1`
-reapplies the extension allowlist to a prepared fork. The original
+reapplies the extension allowlist to a prepared fork, and
+`scripts/prune-electron.ps1` removes the vendored Electron runtime and
+packaging surface — the `electron-main`, `electron-browser`, and
+`electron-utility` process layers, the desktop entry points, and the Electron
+gulp tasks — which the web-only distribution never loads. Both run together via
+`bun run ide:prune` and are re-runnable after an upstream resync. The original
 `vscode-main/` and `vscodium-master/` source drops are not modified.

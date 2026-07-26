@@ -39,7 +39,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /apps/bot/
-            /tools/
+            /scripts/
             /package.json
             /bun.lock
             /justfile

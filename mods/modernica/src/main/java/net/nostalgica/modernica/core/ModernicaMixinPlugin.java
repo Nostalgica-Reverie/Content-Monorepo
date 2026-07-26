@@ -70,8 +70,11 @@ public class ModernicaMixinPlugin implements IMixinConfigPlugin {
         }
     }
 
-    /** Loads the real, GUI-facing config. Must only be called once it's safe to construct an Identifier -
-     * i.e. from normal mod init, never from this plugin's constructor. Idempotent. */
+    /** Loads the real, GUI-facing config. Must only be called once it's safe to touch Minecraft classes -
+     * i.e. from normal mod init, never from this plugin's constructor, which runs while Mixin is still
+     * selecting configs. Anything classloaded from there (an Identifier, or the Component/Style graph that
+     * fzzy-config's Translatable hierarchy builds in its static initializer) is loaded untransformed and
+     * breaks every mod that mixes into it. Idempotent. */
     public void loadRealConfig() {
         if (this.config != null) {
             return;

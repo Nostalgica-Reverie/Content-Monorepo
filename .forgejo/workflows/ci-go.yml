@@ -5,7 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "apps/packwand/**"
-      - "tools/**"
+      - "scripts/**"
       - "justfile"
       - ".forgejo/actions/setup-go/**"
       - ".forgejo/actions/setup-just/**"
@@ -14,7 +14,7 @@ on:
     branches: ["main"]
     paths:
       - "apps/packwand/**"
-      - "tools/**"
+      - "scripts/**"
       - "justfile"
       - ".forgejo/actions/setup-go/**"
       - ".forgejo/actions/setup-just/**"

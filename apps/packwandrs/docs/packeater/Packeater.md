@@ -88,13 +88,13 @@ Packwand executable, from the in-tree debug/release build, and finally from
 `PATH`. A missing executable is a hard error for a marked folder, preventing CI
 from silently publishing a much larger, unoptimized archive.
 
-## Monorepo history maintenance
+## Monorepo layout
 
-Packeater lives directly at `apps/packwandrs/packeater`; it is not a nested Git
-repository or submodule. The monorepo commit that introduces it must retain the
-PackSquash upstream head as a second parent so all upstream commits stay
-reachable. During initial integration that parent is available as
-`refs/packeater/upstream`.
+Packeater is merged into the packwandrs Cargo workspace: the engine is
+`apps/packwandrs/crates/packsquash`, with `packsquash_cli` and `packeater_cli`
+beside it. It is not a nested Git repository, submodule, or separate workspace.
+Upstream PackSquash is no longer tracked; the AGPL notices, upstream changelog
+and contributor list are kept alongside the engine crate.
 
 Future upstream updates should be imported with the same subtree prefix and a
 real merge parent. Do not squash or replace Packeater with a source snapshot,

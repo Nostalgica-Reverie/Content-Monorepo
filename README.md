@@ -82,7 +82,7 @@ The repository makes usage of Forgejo actions, for CI/CD and general QoL improve
 ### Using Auto Publish
 Every project in the repo must have a manifest.json. This manifest.json specifies stuff that our publish.yml then uses to auto publish. Once it is set up, you may simply bump version in the manifest.json and it will update across platforms.
 
-Please read tools/manifest/schema.json to understand the manifest.json.
+Please read scripts/schema.json to understand the manifest.json.
 
 Whenever Auto Publish is ran, it will be ran through a Validator. The Validator will fail if something is improperly configured; whether that be the lack of a changelog.md, a malformed manifest.json, or other reasons. If a publish run fails, please look to your manifest and set-up to make sure you are properly set up.
 

@@ -9,6 +9,7 @@ removed_surfaces:
   - accounts-and-authentication-extensions
   - copilot
   - debug-extensions
+  # enforced by scripts/prune-electron.ps1
   - electron-runtime
   - marketplace
   - notebooks

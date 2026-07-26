@@ -28,8 +28,9 @@ Required tools:
 - Bun 1.3 or newer.
 - Windows MSVC C++ build tools and WebView2.
 - Java for the installer validation smoke test.
-- Packeater (nightly Rust build from `apps/packwandrs/packeater`) for folders containing
-  `packeater.json`; set `PACKEATER_BIN` if it is not on `PATH`.
+- Packeater for folders containing `packeater.json`. It is a member of the
+  packwandrs workspace, so `cargo build -p packeater_cli` puts the binary in the
+  shared `target/`; set `PACKEATER_BIN` if it is not on `PATH`.
 - The local `apps/packwand-installer/build/dist/packwiz-installer.jar`, which
   the NSIS build packages as a resource.
 

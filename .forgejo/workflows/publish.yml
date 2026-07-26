@@ -63,7 +63,7 @@ jobs:
             datapacks
             mods
             apps/packwand
-            tools/changelog
+            scripts
             .forgejo/actions
 
       - name: Setup Go
@@ -89,7 +89,7 @@ jobs:
         run: packwand json minify "$(dirname '${{ matrix.entry.manifest }}')"
 
       - name: Generate Changelog
-        run: bun tools/changelog/generate-changelog.ts "${{ matrix.entry.manifest }}" "$RUNNER_TEMP/release-notes.md"
+        run: bun scripts/run.ts generate-changelog "${{ matrix.entry.manifest }}" "$RUNNER_TEMP/release-notes.md"
 
       - name: Build artifacts
         env:

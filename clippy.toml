@@ -6,3 +6,5 @@ too-many-arguments-threshold = 8
 # Tests may unwrap/expect freely.
 allow-unwrap-in-tests = true
 allow-expect-in-tests = true
+# PackSquash's shader parsing error type is ~200 bytes and not worth boxing.
+large-error-threshold = 256

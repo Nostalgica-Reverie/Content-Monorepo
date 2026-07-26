@@ -76,16 +76,28 @@ pub fn build() -> Command {
             .short('y')
             .global(true),
     )
-    .subcommands(pack_management())
-    .subcommands(updates())
-    .subcommands(build_export())
-    .subcommands(workspace_commands())
-    .subcommands(diagnostics())
-    .subcommands(other())
-    .subcommand(
+    .subcommands(top_level_alphabetical())
+}
+
+/// Every top-level command, sorted a-z for `--help`. The individual group
+/// functions below still exist to keep related commands (and the crate that
+/// owns their logic) grouped in the source — see the `new-packwand-cmd`
+/// skill — but the tree clap actually builds is a single flattened,
+/// alphabetized list, not the source's thematic grouping.
+fn top_level_alphabetical() -> Vec<Command> {
+    let mut commands = Vec::new();
+    commands.extend(pack_management());
+    commands.extend(updates());
+    commands.extend(build_export());
+    commands.extend(batch_commands());
+    commands.extend(diagnostics());
+    commands.extend(other());
+    commands.push(
         command("completion", "Generate shell completion scripts")
             .arg(positional("shell", "bash, elvish, fish, powershell, or zsh").required(true)),
-    )
+    );
+    commands.sort_by(|a, b| a.get_name().cmp(b.get_name()));
+    commands
 }
 
 fn pack_management() -> Vec<Command> {
@@ -336,7 +348,7 @@ fn publish() -> Command {
         )
 }
 
-fn workspace_commands() -> Vec<Command> {
+fn batch_commands() -> Vec<Command> {
     vec![
         command("packs", "Look up or edit manifest fields by ID")
             .arg(flag("json", "Output JSON").global(true))
@@ -353,12 +365,12 @@ fn workspace_commands() -> Vec<Command> {
                     .arg(positional("value", "New value").required(true)),
             )
             .subcommand(command("index", "Generate the projects index")),
-        workspace(),
+        batch(),
     ]
 }
 
-fn workspace() -> Command {
-    command("workspace", "Multi-pack workspace operations")
+fn batch() -> Command {
+    command("batch", "Multi-pack batch operations")
         .subcommand(command("status", "Report workspace status").arg(flag("json", "Output JSON")))
         .subcommand(
             command("export", "Export pack targets")
@@ -424,8 +436,28 @@ fn diagnostics() -> Vec<Command> {
         .arg(many("pack-dirs", "Pack directories").required(false))
         .arg(flag("all", "Lint all content projects"))
         .arg(flag("json", "Output JSON")),
+        command(
+            "deps",
+            "Report Modrinth required-dependency coverage for a pack subdir",
+        )
+        .alias("graph")
+        .arg(positional(
+            "pack-dir",
+            "Pack subdir (defaults to the current directory)",
+        ))
+        .arg(flag("json", "Output JSON")),
         command("doctor", "Check tools, repository root, and manifests")
             .arg(flag("json", "Output JSON")),
+        command(
+            "explain",
+            "Show everything Packwand knows about one installed mod",
+        )
+        .arg(positional("mod-slug", "Metadata name or slug").required(true))
+        .arg(positional(
+            "pack-dir",
+            "Pack subdir (defaults to the current directory)",
+        ))
+        .arg(flag("json", "Output JSON")),
         command("lint", "Check JSON and .pw.toml files for syntax errors")
             .arg(many("files", "Files to lint").required(false)),
         command("list", "List mods in the current pack")
@@ -556,57 +588,59 @@ mod tests {
 
     const TOP_LEVEL: &[&str] = &[
         "add",
+        "api",
+        "automation",
+        "batch",
+        "build",
+        "bump",
+        "cache",
+        "ci-local",
+        "completion",
+        "content-lint",
         "curseforge",
+        "deps",
+        "diff",
+        "doctor",
+        "explain",
+        "export",
         "forgejo",
         "freeze",
         "github",
         "gitlab",
+        "gui",
         "import",
         "init",
-        "modrinth",
-        "new",
-        "pin",
-        "port",
-        "rehash",
-        "remove",
-        "side",
-        "unfreeze",
-        "unpin",
-        "url",
-        "migrate",
-        "refresh",
-        "update",
-        "build",
-        "bump",
-        "export",
         "json",
-        "publish",
-        "packs",
-        "workspace",
-        "ci-local",
-        "content-lint",
-        "doctor",
         "lint",
         "list",
-        "parity",
-        "preflight",
-        "registry",
-        "test",
-        "validate",
-        "version",
-        "api",
-        "automation",
-        "cache",
-        "diff",
-        "gui",
+        "migrate",
         "modlist",
+        "modrinth",
+        "new",
         "nix",
+        "packs",
         "pages",
+        "parity",
+        "pin",
+        "port",
+        "preflight",
+        "publish",
+        "refresh",
+        "registry",
+        "rehash",
+        "remove",
         "run",
         "serve",
         "settings",
+        "side",
+        "test",
+        "unfreeze",
+        "unpin",
+        "update",
+        "url",
         "utils",
-        "completion",
+        "validate",
+        "version",
     ];
 
     #[test]
@@ -617,13 +651,10 @@ mod tests {
             .get_subcommands()
             .map(clap::Command::get_name)
             .collect::<Vec<_>>();
-        for expected in TOP_LEVEL {
-            assert!(
-                names.contains(expected),
-                "missing top-level command {expected}"
-            );
-        }
-        assert_eq!(names.len(), TOP_LEVEL.len());
+        // TOP_LEVEL is itself kept a-z, so this also pins `--help`'s display
+        // order: exact equality catches both a missing/extra command and a
+        // command landing out of alphabetical order.
+        assert_eq!(names, TOP_LEVEL, "top-level commands must list a-z");
     }
 
     #[test]
@@ -647,9 +678,9 @@ mod tests {
             "packs get",
             "packs set",
             "packs index",
-            "workspace status",
-            "workspace mr add",
-            "workspace cf add",
+            "batch status",
+            "batch mr add",
+            "batch cf add",
             "automation get",
             "automation run",
             "cache prune",

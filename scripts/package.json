@@ -1,0 +1,17 @@
+{
+  "name": "ll-scripts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "scripts": "bun run.ts",
+    "changelog": "bun run.ts generate-changelog",
+    "stats": "bun run.ts stats",
+    "lint-changelogs": "bun run.ts lint-changelogs",
+    "release-notes": "bun run.ts build-release-notes"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.14",
+    "typescript": "^5.9.3"
+  }
+}

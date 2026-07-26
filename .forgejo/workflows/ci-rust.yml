@@ -5,7 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "apps/mod-browser-webview/**"
-      - "packages/packwand-core/**"
+      - "apps/packwandrs/**"
       - "justfile"
       - ".forgejo/actions/setup-rust/**"
       - ".forgejo/actions/setup-just/**"
@@ -14,7 +14,7 @@ on:
     branches: ["main"]
     paths:
       - "apps/mod-browser-webview/**"
-      - "packages/packwand-core/**"
+      - "apps/packwandrs/**"
       - "justfile"
       - ".forgejo/actions/setup-rust/**"
       - ".forgejo/actions/setup-just/**"
@@ -36,8 +36,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             apps/mod-browser-webview
-            packages/packwand-core
-            tools
+            apps/packwandrs
+            scripts
             justfile
             .forgejo/actions
       - uses: ./.forgejo/actions/setup-rust
@@ -46,7 +46,7 @@ jobs:
           linux-deps: "true"
           workspaces: |
             apps/mod-browser-webview
-            packages/packwand-core
+            apps/packwandrs
       - uses: https://github.com/taiki-e/install-action@v2
         with:
           tool: cargo-audit

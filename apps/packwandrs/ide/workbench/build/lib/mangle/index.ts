@@ -316,13 +316,10 @@ const skippedExportMangledFiles = [
 		buildfile.workerNotebook,
 		buildfile.workerLanguageDetection,
 		buildfile.workerLocalFileSearch,
-		buildfile.workerProfileAnalysis,
 		buildfile.workerOutputLinks,
 		buildfile.workerBackgroundTokenization,
-		buildfile.workbenchDesktop,
 		buildfile.workbenchWeb,
 		buildfile.sessionsWeb,
-		buildfile.code,
 		buildfile.codeWeb
 	].flat().map(x => x.name),
 ];
