@@ -58,6 +58,7 @@
 - [Bedrock Skins](https://modrinth.com/mod/76lEgqhs)
 - [BugFixerUpper](https://modrinth.com/mod/gRMQvlnJ)
 - [C2ME OpenCL Acceleration Module](https://modrinth.com/mod/qtPMklut)
+- [ClarityMod](https://modrinth.com/mod/GnCu0CQT)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Collective](https://modrinth.com/mod/e0M1UDsY)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)

@@ -27,6 +27,7 @@
 
 - [Bedrock Skins](https://modrinth.com/mod/76lEgqhs)
 - [BugFixerUpper](https://modrinth.com/mod/gRMQvlnJ)
+- [ClarityMod](https://modrinth.com/mod/GnCu0CQT)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)
 - [Customizable Player Models](https://modrinth.com/mod/h1E7sQNL)

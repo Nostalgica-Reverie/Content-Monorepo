@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-19T21:21:39Z",
+  "generated": "2026-07-24T20:46:40Z",
   "projects": [
     {
       "id": "1080p-kbm",
@@ -409,13 +409,18 @@
       "category": "resourcepack",
       "dir": "resourcepacks/ore4j",
       "manifest_path": "resourcepacks/ore4j/manifest.json",
-      "mc_version": "1.21.1",
-      "version": "1.0.0",
+      "mc_version": "26.1.2",
+      "version": "4.0.0",
       "release_type": "release",
       "lifecycle": "active",
       "role": "none",
       "auto_update": true,
-      "platforms": {},
+      "modrinth_id": "ore4j",
+      "curseforge_id": "1481313",
+      "platforms": {
+        "modrinth": "ore4j",
+        "curseforge": "1481313"
+      },
       "docs_path": "/resource-packs/ore4j/",
       "subdirs": [
         {
