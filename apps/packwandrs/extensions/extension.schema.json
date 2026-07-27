@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://git.nostalgica.net/schema/extension.pw.json",
+  "title": "Packwand extension manifest",
+  "description": "Declares a first-party Packwand extension. Extensions live in apps/packwandrs/extensions/<id>/, are written in TypeScript, and are bundled into the app at build time. Third-party extensions are not supported.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "version", "entry"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Path to this schema, for editor autocomplete."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable identifier. Must match the extension's directory name; used to namespace its command ids."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name. Used as the default palette group heading."
+    },
+    "version": {
+      "type": "string",
+      "description": "Extension version, tracking the Packwand release it ships with."
+    },
+    "description": {
+      "type": "string",
+      "description": "One line on what the extension contributes."
+    },
+    "entry": {
+      "type": "string",
+      "description": "TypeScript entry point relative to the extension directory. Must default-export definePackwandExtension(...).",
+      "default": "src/index.ts"
+    },
+    "when": {
+      "type": "array",
+      "description": "Restricts the whole extension to these project categories. Omit to apply everywhere.",
+      "items": { "enum": ["mods", "modpacks", "datapacks", "resourcepacks"] }
+    }
+  }
+}

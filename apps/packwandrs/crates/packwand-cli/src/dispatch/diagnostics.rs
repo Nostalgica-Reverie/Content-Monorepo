@@ -226,14 +226,17 @@ fn run_preflight(root: &Path) -> PreflightResult {
             .map(|parent| parent.join("manifest.json"))
             .unwrap_or_else(|| root.join("manifest.json"))
     };
+    // Kept after validation: the convention step below needs the parsed
+    // manifest to know which checks the pack opted into.
+    let mut manifest = None;
     let manifest_issues = match fs::read(&manifest_path) {
         Ok(bytes) => match serde_json::from_slice::<Manifest>(&bytes) {
-            Ok(manifest) => {
+            Ok(parsed) => {
                 let mut issues = Vec::new();
                 for (field, value) in [
-                    ("id", manifest.id.as_str()),
-                    ("name", manifest.name.as_str()),
-                    ("type", manifest.project_type.as_str()),
+                    ("id", parsed.id.as_str()),
+                    ("name", parsed.name.as_str()),
+                    ("type", parsed.project_type.as_str()),
                 ] {
                     if value.trim().is_empty() {
                         issues.push(PreflightIssue {
@@ -243,13 +246,14 @@ fn run_preflight(root: &Path) -> PreflightResult {
                         });
                     }
                 }
-                if manifest.version.trim().is_empty() {
+                if parsed.version.trim().is_empty() {
                     issues.push(PreflightIssue {
                         level: "warning",
                         path: manifest_path.to_string_lossy().into_owned(),
                         message: "manifest has no version".into(),
                     });
                 }
+                manifest = Some(parsed);
                 issues
             }
             Err(error) => vec![PreflightIssue {
@@ -266,37 +270,29 @@ fn run_preflight(root: &Path) -> PreflightResult {
     };
     steps.push(preflight_step("manifest", manifest_issues));
 
+    // Opt-in only. A pack that declares no `conventions` runs no checks, and the
+    // step is omitted entirely rather than reported as a vacuous PASS — so this
+    // changes neither the verdict nor the output for packs that never opt in.
+    if let Some(manifest) = &manifest {
+        let conventions = packwand_diagnostics::conventions_lint(root, manifest);
+        if conventions.checked > 0 {
+            steps.push(preflight_step(
+                "conventions",
+                preflight_issues(conventions.issues),
+            ));
+        }
+    }
+
     let syntax = packwand_diagnostics::lint_workspace(root);
     steps.push(preflight_step(
         "syntax",
-        syntax
-            .issues
-            .into_iter()
-            .map(|issue| PreflightIssue {
-                level: match issue.severity {
-                    packwand_diagnostics::Severity::Error => "error",
-                    packwand_diagnostics::Severity::Warning => "warning",
-                },
-                path: issue.path.to_string_lossy().into_owned(),
-                message: issue.message,
-            })
-            .collect(),
+        preflight_issues(syntax.issues),
     ));
 
     // Reference checks only: duplicate-file and charset hygiene belong to
     // `content-lint`, not to a pre-launch gate.
-    let mut reference_issues = packwand_diagnostics::content_lint_with(root, false)
-        .issues
-        .into_iter()
-        .map(|issue| PreflightIssue {
-            level: match issue.severity {
-                packwand_diagnostics::Severity::Error => "error",
-                packwand_diagnostics::Severity::Warning => "warning",
-            },
-            path: issue.path.to_string_lossy().into_owned(),
-            message: issue.message,
-        })
-        .collect::<Vec<_>>();
+    let mut reference_issues =
+        preflight_issues(packwand_diagnostics::content_lint_with(root, false).issues);
     if root.join("pack.toml").is_file() {
         match Workspace::open(root.to_path_buf()) {
             Ok(workspace) => {
@@ -359,6 +355,21 @@ fn run_preflight(root: &Path) -> PreflightResult {
         warnings,
         ok: errors == 0,
     }
+}
+
+/// Maps diagnostics issues onto the preflight report's own issue shape.
+fn preflight_issues(issues: Vec<packwand_diagnostics::Issue>) -> Vec<PreflightIssue> {
+    issues
+        .into_iter()
+        .map(|issue| PreflightIssue {
+            level: match issue.severity {
+                packwand_diagnostics::Severity::Error => "error",
+                packwand_diagnostics::Severity::Warning => "warning",
+            },
+            path: issue.path.to_string_lossy().into_owned(),
+            message: issue.message,
+        })
+        .collect()
 }
 
 fn preflight_step(name: &'static str, issues: Vec<PreflightIssue>) -> PreflightStep {

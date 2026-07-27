@@ -8,7 +8,7 @@ use walkdir::{DirEntry, WalkDir};
 use crate::commands::packs::pack_root;
 use crate::error::{CommandResult, SerializableError};
 use crate::events::emit_packs_changed;
-use crate::fsutil::{atomic_write, safe_join};
+use crate::fsutil::safe_join;
 use crate::state::AppState;
 
 #[derive(Debug, Clone, Serialize)]
@@ -54,6 +54,15 @@ fn file_type(metadata: &fs::Metadata) -> u8 {
     }
 }
 
+fn native_root(root: &std::path::Path) -> CommandResult<String> {
+    root.to_str()
+        .map(str::to_owned)
+        .ok_or_else(|| SerializableError::new("invalid_path", "pack root is not valid UTF-8"))
+}
+
+fn native_error(operation: &str, error: packwandc::Error) -> SerializableError {
+    SerializableError::new("native_fs", format!("{operation}: {error}"))
+}
 fn io_error(operation: &str, error: std::io::Error) -> SerializableError {
     let kind = match error.kind() {
         std::io::ErrorKind::NotFound => "not_found",
@@ -155,7 +164,8 @@ pub fn editor_file_write(
             format!("{} is not an existing file", target.display()),
         ));
     }
-    atomic_write(&target, content.as_bytes())?;
+    packwandc::fs_atomic_write(&native_root(&root)?, &path, content.as_bytes())
+        .map_err(|error| native_error("write file", error))?;
     emit_packs_changed(&app)
 }
 
@@ -178,7 +188,8 @@ pub fn editor_create(
     if directory {
         fs::create_dir_all(target)?;
     } else {
-        atomic_write(&target, b"")?;
+        packwandc::fs_atomic_write(&native_root(&root)?, &path, b"")
+            .map_err(|error| native_error("create file", error))?;
     }
     emit_packs_changed(&app)
 }
@@ -232,8 +243,9 @@ pub fn editor_fs_read_file(
     state: State<'_, AppState>,
 ) -> CommandResult<Vec<u8>> {
     let root = pack_root(&state.workspace()?, &id)?;
-    let target = safe_join(&root, &path)?;
-    fs::read(target).map_err(|error| io_error("read file", error))
+    safe_join(&root, &path)?;
+    packwandc::fs_read(&native_root(&root)?, &path)
+        .map_err(|error| native_error("read file", error))
 }
 
 #[tauri::command]
@@ -267,7 +279,8 @@ pub fn editor_fs_write_file(
             format!("{} already exists", target.display()),
         ));
     }
-    atomic_write(&target, &content)?;
+    packwandc::fs_atomic_write(&native_root(&root)?, &path, &content)
+        .map_err(|error| native_error("write file", error))?;
     emit_packs_changed(&app)
 }
 

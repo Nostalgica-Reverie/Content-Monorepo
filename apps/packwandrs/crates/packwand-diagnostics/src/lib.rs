@@ -2,8 +2,10 @@
 
 #![forbid(unsafe_code)]
 
+mod conventions;
 mod registry;
 
+pub use conventions::{CHECKS, conventions_lint};
 pub use registry::{
     ContentRegistry, RegistryEntry, RegistryKind, build_all_registries, build_all_registries_with,
     build_registry, build_registry_with,
@@ -20,7 +22,7 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use walkdir::WalkDir;
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Severity {
     Error,

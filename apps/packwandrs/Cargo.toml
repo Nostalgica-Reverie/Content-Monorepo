@@ -24,6 +24,12 @@ members = [
     "crates/packsquash",
     "crates/packsquash_cli",
     "crates/packeater_cli",
+    # packwandc: the native core (C kernel + modules, orchestrated from Rust).
+    # See packwandc/packwandc.md. Building these requires CMake and a C
+    # toolchain -- an accepted workspace-wide requirement (packwandc.md 12.2).
+    "packwandc/crates/packwandc-sys",
+    "packwandc/crates/packwandc",
+    "packwandc/crates/packwandc-host",
     "src-tauri",
 ]
 

@@ -1,0 +1,18 @@
+# CMake build trees, one per preset (see CMakePresets.json).
+/build/
+
+# compile_commands.json is generated per build tree; the top-level symlink or
+# copy some editors expect is not checked in.
+/compile_commands.json
+
+# Coverage artifacts.
+*.profraw
+*.profdata
+/coverage/
+
+# Fuzzing artifacts. Corpora ARE checked in (tests/fuzz/corpus/); crashes and
+# timeouts found locally are not.
+crash-*
+timeout-*
+leak-*
+oom-*

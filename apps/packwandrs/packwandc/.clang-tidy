@@ -1,0 +1,91 @@
+# packwandc static analysis gate -- see packwandc.md section 7.7.
+#
+# Starts from the removed tools/hashutil config (recoverable at 403e00aa9) and
+# adds concurrency-* and performance-*, which hashutil did not need because it
+# was single-threaded and I/O bound. packwandc is neither.
+#
+# NOTE: clang-tidy silently skips included headers unless --header-filter is
+# passed. Much of this design lives in headers, so every invocation MUST pass
+# it -- CMakeLists.txt and scripts/gate.sh both do. See packwandc.md 7.7.
+
+Checks: >
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  bugprone-*,
+  cert-*,
+  concurrency-*,
+  misc-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -readability-identifier-length,
+  -readability-magic-numbers,
+  -readability-implicit-bool-conversion,
+  -readability-uppercase-literal-suffix,
+  -readability-avoid-unconditional-preprocessor-if,
+  -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,
+  -bugprone-easily-swappable-parameters
+
+WarningsAsErrors: '*'
+
+CheckOptions:
+  # packwandc.md 7.5 caps function length and cognitive complexity. These are
+  # the machine-checkable half of that rule; the 80-line cap is enforced by
+  # scripts/gate-banned.sh because clang-tidy has no equivalent check.
+  - key: readability-function-cognitive-complexity.Threshold
+    value: '25'
+  - key: readability-function-cognitive-complexity.IgnoreMacros
+    value: 'true'
+  # Public surface is pwc_/PWC_; internals are pwc__ (double underscore).
+  - key: readability-identifier-naming.FunctionCase
+    value: 'lower_case'
+  - key: readability-identifier-naming.StructCase
+    value: 'lower_case'
+  - key: readability-identifier-naming.EnumConstantCase
+    value: 'UPPER_CASE'
+  - key: readability-identifier-naming.MacroDefinitionCase
+    value: 'UPPER_CASE'
+
+# Every suppression above carries its reason. This follows hashutil's precedent
+# exactly: the enabled set was run against this tree, the findings were read,
+# and what was real got fixed. Blanket disabling is not permitted -- if a new
+# check fires, the default answer is to change the code.
+#
+# - readability-identifier-length: flags short, idiomatic names in tight scopes
+#   (i, j, k for indices; h for a handle; ctx for a module context). Requiring
+#   3+ characters would make `for (size_t index = 0; ...)` the house style,
+#   which is noise, not clarity.
+#
+# - readability-magic-numbers: syscall numbers, ABI version components, and
+#   handle-table bit widths are all literals that ARE the specification. Naming
+#   them buys nothing and invites a future maintainer to "tidy" a wire format.
+#   Where a literal genuinely encodes a relationship (buffer sizes tracking a
+#   digest size, say), it gets a named constant regardless of this suppression
+#   -- see the PWC_*_BITS constants in uapi/pwc_handle.h.
+#
+# - readability-implicit-bool-conversion: a C++-idiom check. In C, bool is an
+#   integer type and `if (flags & PWC_RIGHT_READ)` is correct, ordinary code.
+#
+# - readability-uppercase-literal-suffix: `1u` vs `1U` is pure style with no
+#   correctness implication. Lowercase is used consistently across this tree,
+#   as it was across hashutil.
+#
+# - readability-avoid-unconditional-preprocessor-if: fires on the `#if 0`-style
+#   guards used inside the X-macro expansion in syscalls.def. The construct is
+#   deliberate and load-bearing there.
+#
+# - clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling:
+#   flags every memcpy/memset/snprintf for not using C11 Annex K `_s` variants.
+#   glibc does not implement Annex K at all and it remains optional in C23;
+#   depending on it would make the code non-portable to the exact platforms
+#   this layer targets. The banned-construct gate (scripts/gate-banned.sh)
+#   covers the actually-dangerous functions this check conflates with the safe
+#   ones.
+#
+# - bugprone-easily-swappable-parameters: the syscall ABI (packwandc.md 4.2)
+#   passes arguments as a pointer to a size-prefixed struct precisely so that
+#   argument order is not a hazard. Where two same-typed scalars remain
+#   adjacent -- (index, generation) in the handle table -- they are a single
+#   conceptual value that is about to be packed into one word, and splitting
+#   them into wrapper structs would obscure that. hashutil hit this check too
+#   and fixed the one real instance; this suppression covers the residue.

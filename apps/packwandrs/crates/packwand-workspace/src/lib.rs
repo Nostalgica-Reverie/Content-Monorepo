@@ -85,6 +85,95 @@ fn non_empty(value: Option<&str>) -> Option<&str> {
     value.map(str::trim).filter(|value| !value.is_empty())
 }
 
+/// Per-mod convention checks a pack opts into.
+///
+/// Packwand imposes no required files of its own: a check is dormant until the
+/// pack names it here. Keys are check ids (see `packwand_diagnostics::CHECKS`),
+/// so a pack declares exactly the mods whose configuration it wants validated
+/// and nothing else is reported.
+///
+/// ```jsonc
+/// "conventions": {
+///   "bcc": true,                        // enable at its default level
+///   "ftbquests": { "level": "warn" },   // enable, but never block a release
+///   "options": { "path": "config/modpack_defaults/options.txt" }
+/// }
+/// ```
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(transparent)]
+pub struct Conventions {
+    pub checks: BTreeMap<String, ConventionCheck>,
+}
+
+impl Conventions {
+    /// The declared setting for `id`, or `None` when the pack did not opt in
+    /// (or opted in and then disabled it).
+    #[must_use]
+    pub fn check(&self, id: &str) -> Option<&ConventionCheck> {
+        self.checks.get(id).filter(|check| check.enabled())
+    }
+}
+
+/// A single opted-in check. `true`/`false` shorthand is accepted in place of an
+/// object so the common case stays a one-liner.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ConventionCheck {
+    Enabled(bool),
+    Settings(ConventionSettings),
+}
+
+impl ConventionCheck {
+    #[must_use]
+    pub fn enabled(&self) -> bool {
+        match self {
+            Self::Enabled(enabled) => *enabled,
+            Self::Settings(settings) => settings.enabled.unwrap_or(true),
+        }
+    }
+
+    /// Declared severity override, if any.
+    #[must_use]
+    pub fn level(&self) -> Option<&str> {
+        match self {
+            Self::Enabled(_) => None,
+            Self::Settings(settings) => non_empty(settings.level.as_deref()),
+        }
+    }
+
+    /// Explicit path override, for packs whose file sits somewhere unusual.
+    #[must_use]
+    pub fn path(&self) -> Option<&str> {
+        match self {
+            Self::Enabled(_) => None,
+            Self::Settings(settings) => non_empty(settings.path.as_deref()),
+        }
+    }
+
+    /// Expected name, when it should differ from the manifest's own name.
+    #[must_use]
+    pub fn expect_name(&self) -> Option<&str> {
+        match self {
+            Self::Enabled(_) => None,
+            Self::Settings(settings) => non_empty(settings.expect_name.as_deref()),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+pub struct ConventionSettings {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub enabled: Option<bool>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub level: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub path: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub expect_name: Option<String>,
+    #[serde(flatten)]
+    pub extra: BTreeMap<String, Value>,
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct Automation {
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -148,11 +237,20 @@ pub struct Manifest {
     pub lifecycle: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub automation: Option<Automation>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub conventions: Option<Conventions>,
     #[serde(flatten)]
     pub extra: BTreeMap<String, Value>,
 }
 
 impl Manifest {
+    /// Convention checks this pack opted into. Empty when the field is absent,
+    /// which is why adding this never changes an existing manifest's meaning.
+    #[must_use]
+    pub fn conventions(&self) -> Conventions {
+        self.conventions.clone().unwrap_or_default()
+    }
+
     pub fn effective_name(&self) -> &str {
         if self.name.is_empty() {
             &self.id

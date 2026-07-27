@@ -1,7 +1,8 @@
 use std::collections::BTreeMap;
 use std::fs;
 use std::path::PathBuf;
-use std::sync::RwLock;
+use std::sync::{Mutex, RwLock};
+use std::time::Duration;
 
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager};
@@ -42,6 +43,7 @@ pub struct AppState {
     settings: RwLock<AppSettings>,
     pub jobs: JobManager,
     pub instances: InstanceRegistry,
+    watch: Mutex<Option<packwandc::FsWatchCanceller>>,
 }
 
 impl AppState {
@@ -62,6 +64,7 @@ impl AppState {
             settings: RwLock::new(settings),
             jobs: JobManager::default(),
             instances: InstanceRegistry::default(),
+            watch: Mutex::new(None),
         })
     }
 
@@ -82,6 +85,30 @@ impl AppState {
         Ok(settings)
     }
 
+    pub fn restart_watch(&self, app: &AppHandle, root: &std::path::Path) -> CommandResult<()> {
+        let root_text = root
+            .to_str()
+            .ok_or_else(|| SerializableError::new("invalid_path", "workspace path is not UTF-8"))?;
+        let watch = packwandc::FsWatch::open(root_text)
+            .map_err(|error| SerializableError::new("native_watch", error.to_string()))?;
+        let canceller = watch.canceller();
+        let mut active = self
+            .watch
+            .lock()
+            .map_err(|_| SerializableError::new("state", "watch lock was poisoned"))?;
+        if let Some(mut previous) = active.take() {
+            previous.cancel();
+        }
+        *active = Some(canceller);
+        let changed_app = app.clone();
+        std::thread::spawn(move || {
+            while watch.read_changes().is_ok() {
+                std::thread::sleep(Duration::from_millis(75));
+                let _ = crate::events::emit_packs_changed(&changed_app);
+            }
+        });
+        Ok(())
+    }
     pub fn workspace(&self) -> CommandResult<PathBuf> {
         let settings = self.settings()?;
         let path = settings.workspace_path.ok_or_else(|| {

@@ -1,0 +1,24 @@
+# Inherited from the removed tools/hashutil (recoverable at 403e00aa9) so the
+# repo keeps one C style across its lifetime. Additions below that line are
+# packwandc-specific and exist to keep the kernel/module boundary legible.
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 110
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: false
+SortIncludes: false
+
+# packwandc additions.
+# Pointers bind to the name: `pwc_kernel *k`, matching the header prototypes.
+PointerAlignment: Right
+# A function's parameters either all fit on one line or get one line each --
+# ragged wrapping makes long syscall signatures hard to diff.
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackParameters: false
+BinPackArguments: false
+# Keep the X-macro tables in syscalls.def readable as tables.
+AlignConsecutiveMacros: Consecutive
+AlwaysBreakAfterReturnType: None
+IndentCaseLabels: true
+SpaceAfterCStyleCast: true

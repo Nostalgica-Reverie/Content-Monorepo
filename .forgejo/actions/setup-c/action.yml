@@ -1,0 +1,71 @@
+name: "Setup C"
+description: "clang toolchain, CMake, Ninja and the static-analysis tools packwandc's quality gate needs."
+
+inputs:
+  clang-version:
+    description: "Major clang version to install. packwandc requires >= 16; 19 is the reference."
+    required: false
+    default: "19"
+  xwin:
+    description: "Set 'true' to install cargo-xwin for the Windows MSVC-ABI cross build."
+    required: false
+    default: "false"
+  cache-key:
+    description: "Extra ccache key segment (e.g. a matrix leg name)"
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    # clang-format and clang-tidy MUST be the same major version everywhere.
+    # Formatting output changes between releases, so a runner on a different
+    # version than a contributor's machine turns `clang-format --dry-run
+    # --Werror` into a coin flip. Pinning the major version is what keeps the
+    # gate reproducible -- see packwandc.md 7.7.
+    - name: Install clang toolchain
+      shell: bash
+      run: |
+        apt-get update
+        apt-get install -y --no-install-recommends \
+          "clang-${{ inputs.clang-version }}" \
+          "clang-format-${{ inputs.clang-version }}" \
+          "clang-tidy-${{ inputs.clang-version }}" \
+          "llvm-${{ inputs.clang-version }}" \
+          cmake ninja-build ccache shellcheck
+
+        # The gate scripts and CMake presets call plain `clang`/`clang-tidy`.
+        for tool in clang clang++ clang-format clang-tidy llvm-cov llvm-profdata; do
+          if [ -x "/usr/bin/${tool}-${{ inputs.clang-version }}" ]; then
+            update-alternatives --install "/usr/bin/${tool}" "${tool}" \
+              "/usr/bin/${tool}-${{ inputs.clang-version }}" 100
+          fi
+        done
+
+    - name: Verify toolchain versions
+      shell: bash
+      run: |
+        clang --version
+        clang-tidy --version
+        clang-format --version
+        cmake --version
+        ninja --version
+
+        # Fail loudly rather than silently gating with the wrong standard: the
+        # -std=c23 spelling only exists from clang 17 (packwandc.md 7.1).
+        major=$(clang --version | sed -nE 's/.*clang version ([0-9]+).*/\1/p' | head -1)
+        if [ "${major}" -lt 16 ]; then
+          echo "packwandc requires clang >= 16, found ${major}" >&2
+          exit 1
+        fi
+
+    - name: Install cargo-xwin
+      if: inputs.xwin == 'true'
+      uses: https://github.com/taiki-e/install-action@v2
+      with:
+        tool: cargo-xwin
+
+    - name: Cache C builds
+      uses: https://github.com/hendrikmuhs/ccache-action@v1
+      with:
+        key: packwandc-${{ inputs.clang-version }}-${{ inputs.cache-key }}

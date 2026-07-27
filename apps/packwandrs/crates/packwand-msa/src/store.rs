@@ -1,15 +1,12 @@
 //! Secure storage for the Microsoft refresh token, via the OS credential
 //! store (Windows Credential Manager / macOS Keychain / Linux Secret
-//! Service, all via the `keyring` crate). Only the refresh token is
+//! Service, all through packwandc). Only the refresh token is
 //! persisted; access tokens are short-lived (~24h, per Microsoft/Minecraft)
 //! and kept in memory only. One fixed account key for v1 — a single signed
 //! in account at a time, matching `packwand-auth`'s existing
 //! `InMemoryCredentialStore`'s minimal scope.
 
 use packwand_auth::SecretString;
-
-const SERVICE: &str = "packwand";
-const ACCOUNT: &str = "msa-refresh-token";
 
 #[derive(Debug, thiserror::Error)]
 pub enum TokenStoreError {
@@ -23,44 +20,42 @@ pub trait TokenStore: Send + Sync {
     fn clear(&self) -> Result<(), TokenStoreError>;
 }
 
-/// OS-native credential storage — the production implementation.
+/// OS-native credential storage backed by packwandc.
 #[derive(Default)]
-pub struct KeyringTokenStore;
+pub struct PwcKeyStore;
 
-impl KeyringTokenStore {
+impl PwcKeyStore {
     pub fn new() -> Self {
         Self
     }
-
-    fn entry(&self) -> Result<keyring::Entry, TokenStoreError> {
-        keyring::Entry::new(SERVICE, ACCOUNT).map_err(|e| TokenStoreError::Backend(e.to_string()))
-    }
 }
 
-impl TokenStore for KeyringTokenStore {
+impl TokenStore for PwcKeyStore {
     fn save(&self, refresh_token: &SecretString) -> Result<(), TokenStoreError> {
-        self.entry()?
-            .set_password(refresh_token.expose())
-            .map_err(|e| TokenStoreError::Backend(e.to_string()))
+        packwandc::KeyStore
+            .save(refresh_token.expose().as_bytes())
+            .map_err(|error| TokenStoreError::Backend(error.to_string()))
     }
 
     fn load(&self) -> Result<Option<SecretString>, TokenStoreError> {
-        match self.entry()?.get_password() {
-            Ok(value) => Ok(Some(SecretString::new(value))),
-            Err(keyring::Error::NoEntry) => Ok(None),
-            Err(e) => Err(TokenStoreError::Backend(e.to_string())),
-        }
+        let Some(bytes) = packwandc::KeyStore
+            .load()
+            .map_err(|error| TokenStoreError::Backend(error.to_string()))?
+        else {
+            return Ok(None);
+        };
+        let value = String::from_utf8(bytes).map_err(|error| {
+            TokenStoreError::Backend(format!("stored credential is not UTF-8: {error}"))
+        })?;
+        Ok(Some(SecretString::new(value)))
     }
 
     fn clear(&self) -> Result<(), TokenStoreError> {
-        match self.entry()?.delete_credential() {
-            Ok(()) => Ok(()),
-            Err(keyring::Error::NoEntry) => Ok(()),
-            Err(e) => Err(TokenStoreError::Backend(e.to_string())),
-        }
+        packwandc::KeyStore
+            .clear()
+            .map_err(|error| TokenStoreError::Backend(error.to_string()))
     }
 }
-
 /// Process-lifetime store for tests — never touches the real OS credential
 /// manager. Mirrors `packwand_auth::InMemoryCredentialStore`'s role.
 #[derive(Default)]

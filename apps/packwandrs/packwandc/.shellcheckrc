@@ -1,0 +1,7 @@
+# packwandc shell gate -- see packwandc.md section 7.8.
+#
+# No suppressions. If shellcheck complains, the script changes, not this file.
+# Scripts are POSIX sh, so tell shellcheck to hold them to that standard rather
+# than inferring bash from the shebang environment.
+shell=sh
+enable=all

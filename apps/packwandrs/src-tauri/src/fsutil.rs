@@ -6,6 +6,12 @@ use uuid::Uuid;
 use crate::error::{CommandResult, SerializableError};
 
 pub fn safe_join(root: &Path, relative: &str) -> CommandResult<PathBuf> {
+    packwandc::validate_relative_path(relative).map_err(|error| {
+        SerializableError::new(
+            "unsafe_path",
+            format!("path {relative:?} escapes its configured root: {error}"),
+        )
+    })?;
     let path = Path::new(relative);
     if path.as_os_str().is_empty() {
         return Ok(root.to_path_buf());

@@ -4,6 +4,36 @@
   "title": "Manifest",
   "description": "Manifest for a mod, modpack, datapack, or resourcepack. A manifest is either single-version (has 'mc_version') or multi-variant (has 'variants'), never both. Every manifest must declare a 'role'.",
   "type": "object",
+  "definitions": {
+    "conventionCheck": {
+      "description": "true to enable at the default level, false to disable, or an object to configure it.",
+      "oneOf": [
+        { "type": "boolean" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "false disables the check while keeping its configuration."
+            },
+            "level": {
+              "enum": ["error", "warn", "warning"],
+              "description": "Severity of a failure. 'error' (the default) blocks preflight; 'warn' reports without blocking."
+            },
+            "path": {
+              "type": "string",
+              "description": "Pack-relative path override, for a pack whose file is somewhere unusual."
+            },
+            "expect_name": {
+              "type": "string",
+              "description": "Name the config should carry, when the shipped name differs from the manifest's 'name'."
+            }
+          }
+        }
+      ]
+    }
+  },
   "properties": {
     "$schema": {
       "type": "string",
@@ -197,6 +227,18 @@
     "shared_assets": {
       "type": "string",
       "description": "ID of a pack providing shared assets (e.g. 'lce-common'). Must exist. Independent of 'role' \u2014 a pack of any role may also use shared assets."
+    },
+    "conventions": {
+      "type": "object",
+      "description": "Opt-in per-mod convention checks run by 'packwand preflight'. Packwand requires no files of its own — a check is dormant until named here. Most useful for catching drift: a bcc config left at the previous release's version.",
+      "additionalProperties": false,
+      "properties": {
+        "options": { "$ref": "#/definitions/conventionCheck" },
+        "resourcepackoverrides": { "$ref": "#/definitions/conventionCheck" },
+        "modpackupdatechecker": { "$ref": "#/definitions/conventionCheck" },
+        "bcc": { "$ref": "#/definitions/conventionCheck" },
+        "ftbquests": { "$ref": "#/definitions/conventionCheck" }
+      }
     },
     "automation": {
       "type": "object",

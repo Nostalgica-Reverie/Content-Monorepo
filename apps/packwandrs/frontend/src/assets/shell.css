@@ -1,0 +1,823 @@
+/*
+ * The workbench shell: title bar, activity rail, contextual sidebar, tab strip,
+ * editor area, bottom panel, status bar, command palette.
+ *
+ * Structure follows VS Code so the window can be lived in for hours. Finish
+ * follows Claude: the chrome is dim and borderless, and the editor area is the
+ * brightest surface on screen so attention lands on the current task.
+ */
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+body {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ *
+ * Shell frame
+ * ------------------------------------------------------------------ */
+
+.workbench {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  grid-template: var(--titlebar-h) minmax(0, 1fr) var(--statusbar-h) / var(--rail-w) auto minmax(
+      0,
+      1fr
+    );
+  grid-template-areas:
+    "title  title  title"
+    "rail   side   editor"
+    "status status status";
+  background: var(--rail);
+}
+.workbench--side-hidden {
+  grid-template-columns: var(--rail-w) 0 minmax(0, 1fr);
+}
+
+/* --- Title bar ---------------------------------------------------- */
+
+.titlebar {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px 0 10px;
+  grid-area: title;
+  background: var(--rail);
+  -webkit-app-region: drag;
+}
+.titlebar > * {
+  -webkit-app-region: no-drag;
+}
+.titlebar-brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 650;
+}
+.titlebar-brand img {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  opacity: 0.85;
+}
+.titlebar-sep {
+  color: var(--faint);
+}
+.titlebar-workspace {
+  overflow: hidden;
+  color: var(--faint);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Centered palette affordance — the VS Code command centre. */
+.command-centre {
+  display: flex;
+  width: min(440px, 46vw);
+  min-height: 22px;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 5px;
+  background: var(--bg-2);
+  padding: 0 9px;
+  color: var(--faint);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+.command-centre:hover {
+  background: var(--surface-2);
+  color: var(--muted);
+}
+.command-centre span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.command-centre kbd {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--faint);
+  font-size: 10px;
+}
+.titlebar-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 1px;
+}
+
+/* --- Activity rail ------------------------------------------------ *
+ * Icon-only, no boxes, no labels. Active state is a 2px accent edge plus a
+ * lift in icon contrast — nothing louder than that.
+ */
+
+.rail {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0 6px;
+  grid-area: rail;
+  background: var(--rail);
+}
+.rail-group {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.rail-group--end {
+  margin-top: auto;
+  padding-top: 6px;
+}
+.rail-btn {
+  position: relative;
+  display: grid;
+  width: var(--rail-w);
+  height: 42px;
+  flex: none;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  color: #7e7e8c;
+}
+.rail-btn:hover {
+  background: transparent;
+  color: var(--text);
+}
+.rail-btn.active {
+  color: var(--text-strong);
+}
+.rail-btn.active::before {
+  position: absolute;
+  left: 0;
+  width: 2px;
+  height: 22px;
+  border-radius: 0 2px 2px 0;
+  background: var(--accent);
+  content: "";
+}
+.rail-btn__badge {
+  position: absolute;
+  right: 9px;
+  bottom: 8px;
+  display: grid;
+  min-width: 15px;
+  height: 15px;
+  place-items: center;
+  border-radius: 99px;
+  background: var(--accent);
+  padding: 0 4px;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+.rail-btn__badge--danger {
+  background: var(--danger);
+}
+
+/* --- Contextual sidebar ------------------------------------------- */
+
+.side {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  grid-area: side;
+  background: var(--side);
+}
+.workbench--side-hidden .side {
+  display: none;
+}
+.side-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 4px 0 19px;
+  height: 35px;
+}
+.side-body {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+/* Collapsible sections, VS Code explorer style. The sidebar scrolls as one
+ * surface — sections size to their content rather than nesting scrollbars. */
+.side-section {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+}
+.side-section__head {
+  display: flex;
+  width: 100%;
+  min-height: 23px;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0 8px 0 6px;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+.side-section__head:hover {
+  background: transparent;
+  color: var(--text-strong);
+}
+.side-section__chevron {
+  flex: none;
+  color: var(--muted);
+  transition: transform 0.12s ease;
+}
+.side-section__chevron--collapsed {
+  transform: rotate(-90deg);
+}
+.side-section__count {
+  margin-left: auto;
+  color: var(--faint);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+.side-section__body {
+  padding: 2px 0 8px;
+}
+.side-empty {
+  padding: 5px 19px 9px;
+  color: var(--faint);
+  font-size: 11.5px;
+}
+
+/* Tree rows — the single densest, quietest control in the app. */
+.tree-row {
+  display: flex;
+  width: 100%;
+  min-height: 23px;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0 10px 0 19px;
+  color: #c2c2ce;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+.tree-row:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+.tree-row.active {
+  background: var(--selected);
+  color: var(--text-strong);
+}
+.tree-row__icon {
+  flex: none;
+  color: var(--faint);
+}
+.tree-row.active .tree-row__icon {
+  color: var(--accent-2);
+}
+.tree-row__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tree-row__meta {
+  margin-left: auto;
+  flex: none;
+  color: var(--faint);
+  font-size: 10.5px;
+}
+.tree-row--nested {
+  padding-left: 32px;
+  font: 11.5px var(--mono);
+}
+/* A row an extension supplied without an action: informational, so it should not
+ * read as clickable or dim itself the way a disabled control would. */
+.tree-row--static:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.tree-row--static:hover {
+  background: transparent;
+  color: #c2c2ce;
+}
+
+/* Drag handle between sidebar and editor. */
+.side-resize {
+  width: 4px;
+  margin-right: -4px;
+  cursor: col-resize;
+  grid-area: side;
+  justify-self: end;
+  z-index: 5;
+}
+.side-resize:hover,
+.side-resize--active {
+  background: var(--accent-line);
+}
+.workbench--side-hidden .side-resize {
+  display: none;
+}
+
+/* --- Editor area -------------------------------------------------- */
+
+.editor-area {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  grid-area: editor;
+  border-top-left-radius: 8px;
+  background: var(--bg);
+}
+.workbench--side-hidden .editor-area {
+  border-top-left-radius: 0;
+}
+
+/* Tab strip. Open views persist as tabs so several tasks can stay in flight. */
+.tabstrip {
+  display: flex;
+  min-width: 0;
+  flex: none;
+  align-items: stretch;
+  height: var(--tabstrip-h);
+  background: var(--bg-2);
+}
+.tabstrip__scroll {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabstrip__scroll::-webkit-scrollbar {
+  height: 0;
+}
+.tab {
+  display: flex;
+  max-width: 190px;
+  flex: none;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0 8px 0 13px;
+  color: var(--faint);
+  font-size: 12px;
+  font-weight: 500;
+}
+.tab:hover {
+  background: #26262e;
+  color: var(--muted);
+}
+.tab.active {
+  background: var(--bg);
+  color: var(--text-strong);
+  box-shadow: inset 0 1px 0 var(--accent);
+}
+.tab__icon {
+  flex: none;
+  opacity: 0.75;
+}
+.tab.active .tab__icon {
+  opacity: 1;
+}
+.tab__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tab__close {
+  display: grid;
+  width: 17px;
+  min-height: 17px;
+  flex: none;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  opacity: 0;
+}
+.tab:hover .tab__close,
+.tab.active .tab__close {
+  opacity: 0.7;
+}
+.tab__close:hover {
+  background: var(--active);
+  opacity: 1;
+}
+.tabstrip__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 1px;
+  padding: 0 6px;
+}
+
+/* The view surface: a single scroll container, generous margins. */
+.editor-scroll {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow: hidden;
+}
+.editor-header {
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 0;
+}
+.editor-header h1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.editor-header p {
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.project-heading {
+  min-width: 0;
+}
+.top-actions {
+  min-width: 0;
+  flex: none;
+}
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: var(--radius);
+  background: var(--surface-3);
+  padding: 0 10px;
+  color: var(--faint);
+}
+.search-wrap input {
+  min-height: 30px;
+  min-width: 190px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 12px;
+}
+.search-wrap input:focus {
+  outline: none;
+}
+
+/* Secondary command row — quiet by construction, no accent fills. */
+.command-toolbar {
+  flex: none;
+  padding: 14px 24px 0;
+}
+.view-scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 16px 24px 24px;
+}
+.view-grid {
+  align-content: start;
+}
+.editor-area .error-banner {
+  margin: 14px 24px 0;
+}
+
+/* --- Bottom panel ------------------------------------------------- */
+
+.dock {
+  display: flex;
+  min-height: 0;
+  flex: none;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-2);
+  box-shadow: inset 0 1px 0 var(--line);
+}
+.dock__head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+  padding: 0 6px 0 14px;
+}
+.dock__tab {
+  min-height: 26px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0 9px;
+  color: var(--faint);
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.dock__tab:hover {
+  background: transparent;
+  color: var(--muted);
+}
+.dock__tab.active {
+  color: var(--text-strong);
+  box-shadow: inset 0 -1px 0 var(--text-strong);
+}
+.dock__tab-count {
+  display: inline-grid;
+  min-width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  place-items: center;
+  border-radius: 99px;
+  background: var(--surface-2);
+  padding: 0 4px;
+  color: var(--muted);
+  font-size: 9.5px;
+  letter-spacing: 0;
+}
+.dock__actions {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  gap: 1px;
+}
+.dock__body {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+.dock-resize {
+  height: 4px;
+  flex: none;
+  cursor: row-resize;
+}
+.dock-resize:hover,
+.dock-resize--active {
+  background: var(--accent-line);
+}
+
+/* Problems list. */
+.problem-row {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 4px 14px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+.problem-row:hover {
+  background: var(--hover);
+}
+.problem-row__icon {
+  flex: none;
+  margin-top: 2px;
+}
+.problem-row--error .problem-row__icon {
+  color: var(--danger);
+}
+.problem-row--warning .problem-row__icon {
+  color: var(--warning);
+}
+.problem-row__message {
+  overflow-wrap: anywhere;
+}
+.problem-row__path {
+  flex: none;
+  margin-left: auto;
+  color: var(--faint);
+  font: 11px var(--mono);
+}
+.dock-empty {
+  padding: 14px;
+  color: var(--faint);
+  font-size: 12px;
+}
+.dock-output {
+  padding: 8px 14px;
+  color: #cfcfdd;
+  font: 12px/19px var(--mono);
+  white-space: pre-wrap;
+}
+.dock-output__line {
+  overflow-wrap: anywhere;
+}
+.dock-output__line--error {
+  color: #ffa7b4;
+}
+.dock-output__line--success {
+  color: #8fe0b4;
+}
+.dock-output__time {
+  margin-right: 9px;
+  color: var(--faint);
+}
+
+/* --- Status bar --------------------------------------------------- */
+
+.statusbar {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 2px;
+  padding: 0 4px;
+  grid-area: status;
+  background: var(--rail);
+  color: var(--muted);
+  font-size: 11px;
+}
+.statusbar__item {
+  display: flex;
+  min-width: 0;
+  min-height: 20px;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  padding: 0 7px;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 500;
+}
+button.statusbar__item:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+.statusbar__item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.statusbar__spacer {
+  flex: 1 1 auto;
+}
+.statusbar__item--error {
+  color: #ff9fae;
+}
+.connection-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--success);
+}
+.connection-dot--idle {
+  background: var(--faint);
+}
+
+/* ------------------------------------------------------------------ *
+ * Command palette
+ * ------------------------------------------------------------------ */
+
+.palette-backdrop {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  padding-top: 8vh;
+  background: #0000005c;
+}
+.palette {
+  display: flex;
+  width: min(620px, calc(100vw - 40px));
+  max-height: 62vh;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--elevated);
+  box-shadow: 0 26px 80px #000c;
+}
+.palette__input {
+  flex: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 15px 16px;
+  color: var(--text-strong);
+  font-size: 14px;
+  box-shadow: inset 0 -1px 0 var(--line-strong);
+}
+.palette__input:focus {
+  border: 0;
+  outline: none;
+  box-shadow: inset 0 -1px 0 var(--line-strong);
+}
+.palette__list {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+.palette__group {
+  padding: 8px 16px 3px;
+  color: var(--faint);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.palette__item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 7px 16px;
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+}
+.palette__item.active {
+  background: var(--accent-soft);
+  color: var(--text-strong);
+}
+.palette__item-icon {
+  flex: none;
+  color: var(--muted);
+}
+.palette__item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.palette__item-hint {
+  margin-left: auto;
+  flex: none;
+  color: var(--faint);
+  font-size: 11px;
+}
+.palette__empty {
+  padding: 18px 16px;
+  color: var(--faint);
+  font-size: 12.5px;
+}
+
+@media (max-width: 820px) {
+  .command-centre {
+    display: none;
+  }
+  .search-wrap input {
+    min-width: 120px;
+  }
+  .editor-header,
+  .command-toolbar,
+  .view-scroll {
+    padding-inline: 14px;
+  }
+}

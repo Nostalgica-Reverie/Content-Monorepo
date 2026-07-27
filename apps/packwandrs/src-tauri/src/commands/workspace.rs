@@ -20,6 +20,7 @@ fn set_workspace(path: PathBuf, app: &AppHandle, state: &AppState) -> CommandRes
     let mut settings = state.settings()?;
     settings.workspace_path = Some(display.clone());
     let settings = state.update_settings(settings)?;
+    state.restart_watch(app, &canonical)?;
     emit_settings_changed(app, settings)?;
     emit_packs_changed(app)?;
     Ok(display)

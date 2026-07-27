@@ -1,0 +1,9 @@
+{
+  "$schema": "../extension.schema.json",
+  "id": "resourcepack-checker",
+  "name": "Resourcepack Checker",
+  "version": "26.2.0",
+  "description": "Checks pack.mcmeta, asset references, and archive hygiene for resource packs.",
+  "entry": "src/index.ts",
+  "when": ["resourcepacks", "modpacks"]
+}

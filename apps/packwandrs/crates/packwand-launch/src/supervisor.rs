@@ -12,6 +12,7 @@ use std::thread::{self, JoinHandle};
 use std::time::Duration;
 
 use packwand_auth::SecretString;
+use packwandc::ProcessTree;
 use serde::Serialize;
 
 use crate::plan::LaunchPlan;
@@ -301,6 +302,18 @@ fn run_supervised(
         }
     };
     let pid = child.id();
+    let mut process_tree = match ProcessTree::adopt(pid) {
+        Ok(owner) => owner,
+        Err(error) => {
+            let _ = child.kill();
+            let _ = child.wait();
+            let _ = tx.send(LaunchEvent::Failed {
+                instance_id: id,
+                error: format!("failed to adopt process tree: {error}"),
+            });
+            return;
+        }
+    };
     let _ = tx.send(LaunchEvent::Started {
         instance_id: id.clone(),
         pid,
@@ -311,7 +324,7 @@ fn run_supervised(
     let status = loop {
         if cancel.is_cancelled() && !cancelled {
             cancelled = true;
-            kill_process_tree(pid);
+            let _ = process_tree.kill();
         }
         match child.try_wait() {
             Ok(Some(status)) => break Ok(status),
@@ -369,25 +382,6 @@ fn spawn_line_reader<R: Read + Send + 'static>(
             }
         }
     }))
-}
-
-/// Terminates the child and its whole process tree.
-#[cfg(windows)]
-fn kill_process_tree(pid: u32) {
-    let _ = Command::new("taskkill")
-        .args(["/PID", &pid.to_string(), "/T", "/F"])
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .status();
-}
-
-/// Terminates the child and its whole process tree. The child was spawned
-/// as its own process group leader, so its pid doubles as the pgid.
-#[cfg(unix)]
-fn kill_process_tree(pid: u32) {
-    use nix::sys::signal::{Signal, killpg};
-    use nix::unistd::Pid;
-    let _ = killpg(Pid::from_raw(pid as i32), Signal::SIGKILL);
 }
 
 #[cfg(test)]

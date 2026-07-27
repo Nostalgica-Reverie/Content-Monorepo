@@ -16,7 +16,8 @@ url = "2"
 base64 = "0.22"
 sha2 = "0.10"
 rand = "0.8"
-keyring = "3"
+packwandc = { path = "../../packwandc/crates/packwandc" }
 
 [dev-dependencies]
 tempfile.workspace = true
+

@@ -1,0 +1,9 @@
+{
+  "$schema": "../extension.schema.json",
+  "id": "datapack-checker",
+  "name": "Datapack Checker",
+  "version": "26.2.0",
+  "description": "Validates datapack structure, namespaces, and function/tag references.",
+  "entry": "src/index.ts",
+  "when": ["datapacks", "modpacks"]
+}

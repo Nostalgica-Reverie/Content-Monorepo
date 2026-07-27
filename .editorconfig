@@ -19,6 +19,12 @@ indent_size = 4
 [*.rs]
 indent_size = 4
 
+# C, headers, and Objective-C (arch/darwin) for apps/packwandrs/packwandc.
+# Must match IndentWidth in packwandc/.clang-format, or clang-format and the
+# editor will fight over every save.
+[*.{c,h,m}]
+indent_size = 4
+
 [*.py]
 indent_size = 4
 

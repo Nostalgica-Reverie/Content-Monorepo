@@ -9,12 +9,12 @@ repository.workspace = true
 [dependencies]
 packwand-instance.workspace = true
 packwand-auth.workspace = true
+packwandc = { path = "../../packwandc/crates/packwandc" }
 serde.workspace = true
 thiserror.workspace = true
 
-[target.'cfg(unix)'.dependencies]
-nix = { version = "0.29", features = ["signal"] }
 
 [dev-dependencies]
 serde_json.workspace = true
 tempfile.workspace = true
+

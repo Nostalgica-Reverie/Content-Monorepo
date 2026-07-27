@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref, toRaw, watch } from 'vue'
 import Button from '@/components/ui/Button.vue'
 import { automationPlan, automationRun } from '@/helpers/invoke/automation'
 import { projectBump, projectManifestUpdate } from '@/helpers/invoke/projects'
@@ -20,8 +20,11 @@ const manifest = reactive<ProjectManifest>({ id: '', name: '', type: '', variant
 const appForm = reactive<AppSettings>({ workspacePath: null, javaDefaults: {}, memoryMb: 4096, msaClientId: null })
 const automation = ref<AutomationPlan | null>(null)
 
-watch(() => workbench.selectedProject, (project) => { if (project) Object.assign(manifest, structuredClone(project.manifest)) }, { immediate: true })
-watch(() => settings.value, (value) => { if (value) Object.assign(appForm, structuredClone(value)) }, { immediate: true })
+// structuredClone cannot clone Vue's reactive proxies, so unwrap to the raw
+// store object before copying it into the local editing form.
+const detached = <T,>(value: T): T => structuredClone(toRaw(value))
+watch(() => workbench.selectedProject, (project) => { if (project) Object.assign(manifest, detached(project.manifest)) }, { immediate: true })
+watch(() => settings.value, (value) => { if (value) Object.assign(appForm, detached(value)) }, { immediate: true })
 async function saveManifest() {
   busy.value = 'manifest'
   try { await projectManifestUpdate(workbench.selectedProjectId, manifest); await workbench.refresh(); toasts.push('Manifest saved', manifest.id, 'success') }

@@ -1,0 +1,8 @@
+{
+  "$schema": "../extension.schema.json",
+  "id": "packeater",
+  "name": "Packeater",
+  "version": "26.2.0",
+  "description": "Runs Packwand's PackSquash-derived compressor over packeater.json markers.",
+  "entry": "src/index.ts"
+}

@@ -29,6 +29,8 @@ packwand-workspace = { path = "../crates/packwand-workspace" }
 # src/commands/instances.rs.
 packwand-devboot.workspace = true
 packwand-launch.workspace = true
+packwandc-host = { path = "../packwandc/crates/packwandc-host" }
+packwandc = { path = "../packwandc/crates/packwandc" }
 serde.workspace = true
 serde_json.workspace = true
 tauri = { version = "2", features = [] }
@@ -46,3 +48,5 @@ tempfile.workspace = true
 [features]
 default = ["custom-protocol"]
 custom-protocol = ["tauri/custom-protocol"]
+
+

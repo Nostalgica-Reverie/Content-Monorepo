@@ -6,6 +6,7 @@ pub mod exports;
 pub mod instances;
 pub mod jobs;
 pub mod mods;
+pub mod packeater;
 pub mod packs;
 pub mod projects;
 pub mod providers;

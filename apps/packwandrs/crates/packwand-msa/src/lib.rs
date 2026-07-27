@@ -22,7 +22,7 @@ use std::time::Duration;
 use packwand_auth::Session;
 
 pub use chain::MsaError;
-pub use store::{InMemoryTokenStore, KeyringTokenStore, TokenStore, TokenStoreError};
+pub use store::{InMemoryTokenStore, PwcKeyStore, TokenStore, TokenStoreError};
 
 const AUTHORIZE_URL: &str = "https://login.live.com/oauth20_authorize.srf";
 const SCOPE: &str = "XboxLive.signin offline_access";

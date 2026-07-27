@@ -10,8 +10,8 @@ mod fsutil;
 mod state;
 
 use commands::{
-    api, automation, diagnostics, editor, exports, instances, jobs, mods, packs, projects,
-    providers, settings, workspace,
+    api, automation, diagnostics, editor, exports, instances, jobs, mods, packeater, packs,
+    projects, providers, settings, workspace,
 };
 use tauri::Manager;
 
@@ -94,6 +94,8 @@ pub fn run() {
             exports::exports_publish_build,
             exports::exports_publish_upload,
             exports::exports_publish_verify,
+            packeater::packeater_markers,
+            packeater::packeater_run,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Packwand");

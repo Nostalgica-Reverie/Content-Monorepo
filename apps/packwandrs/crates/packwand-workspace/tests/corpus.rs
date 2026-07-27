@@ -8,7 +8,9 @@ fn parses_every_repository_manifest_project() {
         .expect("crate lives below the repository root")
         .to_path_buf();
     let projects = packwand_workspace::discover(&root).unwrap();
-    assert_eq!(projects.len(), 40);
+    // Count drops whenever a pack is retired — `chore(sm): remove sm` took this
+    // from 40 to 39 — so update it alongside the removal.
+    assert_eq!(projects.len(), 39);
     assert!(
         projects
             .iter()
