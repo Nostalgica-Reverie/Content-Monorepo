@@ -11,6 +11,9 @@ import SettingsPage from '@/pages/SettingsPage.vue'
 import SetupPage from '@/pages/SetupPage.vue'
 
 const EditorPage = () => import('@/pages/EditorPage.vue')
+// Pulls in the mcdoc renderer and its schema tables; kept out of the initial
+// bundle since most sessions never open a generator.
+const GeneratorPage = () => import('@/pages/GeneratorPage.vue')
 
 const router = createRouter({ history: createWebHashHistory(), routes: [
   { path: '/setup', name: 'setup', component: SetupPage },
@@ -20,6 +23,7 @@ const router = createRouter({ history: createWebHashHistory(), routes: [
     { path: 'instances', name: 'instances', component: InstancesPage },
     { path: 'exports', name: 'exports', component: ExportsPage },
     { path: 'mods', name: 'mods', component: ModsPage },
+    { path: 'generator', name: 'generator', component: GeneratorPage },
     { path: 'changelog', name: 'changelog', component: ChangelogPage },
     { path: 'logs', name: 'logs', component: JobsPage },
     { path: 'settings', name: 'settings', component: SettingsPage },

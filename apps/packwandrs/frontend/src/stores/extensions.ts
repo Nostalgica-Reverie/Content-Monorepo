@@ -103,6 +103,12 @@ export const useExtensionsStore = defineStore('extensions', () => {
           workbench.requestFile(normalized)
         },
       },
+      generator: {
+        open: (generatorId?: string) => {
+          requireCapability('project.read')
+          shell.requestGenerator(generatorId ?? '')
+        },
+      },
       diagnostics: {
       contentLint: (packId?: string) => {
         requireCapability('project.read')

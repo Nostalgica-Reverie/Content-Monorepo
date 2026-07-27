@@ -7,7 +7,7 @@
   "description": "Unified datapack and resource-pack validation, registries, assets, and recipe tooling.",
   "entry": "src/index.ts",
   "activation": ["project:datapacks", "project:resourcepacks", "project:modpacks"],
-  "commands": ["check", "recipes", "parity"],
+  "commands": ["check", "recipes", "parity", "generate"],
   "views": ["content", "recipes"],
   "validators": ["content", "parity", "recipes"],
   "capabilities": ["project.read", "diagnostics.register"]

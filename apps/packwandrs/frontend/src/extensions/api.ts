@@ -114,6 +114,17 @@ export interface ExtensionContext {
   worldgen: {
     assets: (packId: string) => Promise<WorldgenAsset[]>
   }
+  /**
+   * Opens the shell's schema-driven generator, optionally on a given
+   * generator id.
+   *
+   * Views contribute rows rather than markup, so an extension cannot render a
+   * form itself. Asking the shell to open one keeps that boundary intact: the
+   * extension chooses *what* to author, the shell owns *how* it is drawn.
+   */
+  generator: {
+    open: (generatorId?: string) => void
+  }
   optimizer: {
     markers: (packId: string) => Promise<PackeaterMarker[]>
     preview: (packId: string) => Promise<PackeaterPreview[]>

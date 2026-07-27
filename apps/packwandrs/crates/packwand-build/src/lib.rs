@@ -17,13 +17,14 @@ pub use publish::{
 
 use std::collections::BTreeMap;
 use std::fs;
-use std::io::{Read, Seek, Write};
+use std::io::{Cursor, Read, Seek, Write};
 use std::path::{Path, PathBuf};
 
 use packwand_pack::{HashFormat, Index, Mod, Pack, hash_bytes};
+use packwand_parallel as parallel;
 use serde::{Deserialize, Serialize};
 use zip::write::SimpleFileOptions;
-use zip::{CompressionMethod, ZipWriter};
+use zip::{CompressionMethod, ZipArchive, ZipWriter};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -84,7 +85,15 @@ pub fn archive_directory(
         source,
     })?;
     let mut archive = ZipWriter::new(temporary);
-    write_directory_entries(root, root, &mut archive)?;
+    let mut directories = Vec::new();
+    let mut files = Vec::new();
+    collect_directory_entries(root, root, &mut directories, &mut files)?;
+    for directory in directories {
+        archive
+            .add_directory(directory, zip_options())
+            .map_err(BuildError::Zip)?;
+    }
+    stage_entries(&mut archive, &files)?;
     let temporary = archive.finish().map_err(BuildError::Zip)?.into_temp_path();
     let size = fs::metadata(&temporary)
         .map_err(|source| BuildError::Io {
@@ -99,10 +108,15 @@ pub fn archive_directory(
     Ok(size)
 }
 
-fn write_directory_entries<W: Write + Seek>(
+/// Walk `directory` depth-first, separating the directory entries — which the
+/// writer emits itself — from the files, which are handed to the work queue.
+/// Archive order does not carry meaning, so collecting the two kinds apart is
+/// free; readers locate entries through the central directory.
+fn collect_directory_entries(
     root: &Path,
     directory: &Path,
-    archive: &mut ZipWriter<W>,
+    directories: &mut Vec<String>,
+    files: &mut Vec<(String, PathBuf)>,
 ) -> Result<(), BuildError> {
     let mut entries = fs::read_dir(directory)
         .map_err(|source| BuildError::Io {
@@ -130,12 +144,11 @@ fn write_directory_entries<W: Write + Seek>(
             continue;
         }
         if file_type.is_dir() {
-            archive
-                .add_directory(format!("{relative}/"), zip_options())
-                .map_err(BuildError::Zip)?;
-            write_directory_entries(root, &path, archive)?;
+            directories.push(format!("{relative}/"));
+            collect_directory_entries(root, &path, directories, files)?;
         } else if file_type.is_file() {
-            write_file(archive, &relative, &path)?;
+            validate_archive_path(&relative)?;
+            files.push((relative, path));
         }
     }
     Ok(())
@@ -926,16 +939,120 @@ fn write_bytes<W: Write + Seek>(
     })
 }
 
-fn write_file<W: Write + Seek>(
-    archive: &mut ZipWriter<W>,
-    path: &str,
-    source: &Path,
-) -> Result<(), BuildError> {
-    let bytes = fs::read(source).map_err(|error| BuildError::Io {
-        path: source.to_path_buf(),
-        source: error,
+/// How many files are read and deflated at once.
+///
+/// A [`ZipWriter`] is a single output stream, so appending has to stay
+/// serial — but each entry is an independent deflate stream, which means the
+/// reading and compressing in front of it does not. This batch size is what
+/// bounds peak memory: the pack is never fully resident, only this many
+/// entries and their compressed copies.
+const STAGE_BATCH: usize = 64;
+
+/// How many bytes of mod downloads may be in flight at once. Sizes come from
+/// the metafiles, so a pack of large jars fetches fewer at a time than a pack
+/// of small ones.
+const DOWNLOAD_BUDGET: u64 = 256 * 1024 * 1024;
+
+/// Assumed size for a metafile that does not declare one, so an unsized entry
+/// still counts against [`DOWNLOAD_BUDGET`] instead of being treated as free.
+const UNKNOWN_DOWNLOAD_SIZE: u64 = 8 * 1024 * 1024;
+
+/// A one-entry zip whose deflate stream is copied verbatim into the real
+/// archive. Compressing here rather than inside the destination [`ZipWriter`]
+/// is what lets the work queue deflate concurrently: the writer stays serial
+/// but only ever appends bytes that are already compressed.
+struct StagedEntry(Vec<u8>);
+
+fn compress_entry(path: &str, bytes: &[u8]) -> Result<StagedEntry, BuildError> {
+    validate_archive_path(path)?;
+    let mut staging = ZipWriter::new(Cursor::new(Vec::new()));
+    staging
+        .start_file(path, zip_options())
+        .map_err(BuildError::Zip)?;
+    staging.write_all(bytes).map_err(|source| BuildError::Io {
+        path: PathBuf::from(path),
+        source,
     })?;
-    write_bytes(archive, path, &bytes)
+    Ok(StagedEntry(
+        staging.finish().map_err(BuildError::Zip)?.into_inner(),
+    ))
+}
+
+fn append_staged<W: Write + Seek>(
+    archive: &mut ZipWriter<W>,
+    staged: StagedEntry,
+) -> Result<(), BuildError> {
+    let mut source = ZipArchive::new(Cursor::new(staged.0)).map_err(BuildError::Zip)?;
+    let entry = source.by_index_raw(0).map_err(BuildError::Zip)?;
+    archive.raw_copy_file(entry).map_err(BuildError::Zip)
+}
+
+/// Read and deflate `entries` on the work queue, appending them in input
+/// order.
+///
+/// The reads are the point. A pack is tens of thousands of small files, and
+/// nearly all of an export's wall time is spent waiting on per-file open
+/// latency rather than on the CPU — latency that overlaps almost linearly
+/// across workers.
+fn stage_entries<W: Write + Seek>(
+    archive: &mut ZipWriter<W>,
+    entries: &[(String, PathBuf)],
+) -> Result<(), BuildError> {
+    let jobs = parallel::configured();
+    for batch in entries.chunks(STAGE_BATCH) {
+        let staged = parallel::try_map(batch, jobs, |(path, file)| {
+            let bytes = fs::read(file).map_err(|error| BuildError::Io {
+                path: file.clone(),
+                source: error,
+            })?;
+            compress_entry(path, &bytes)
+        });
+        for entry in staged {
+            append_staged(archive, entry?)?;
+        }
+    }
+    Ok(())
+}
+
+/// A mod the export has to embed rather than reference, because its download
+/// URL is not one a launcher will fetch for us.
+struct EmbedRequest {
+    path: String,
+    url: String,
+    size: u64,
+}
+
+/// Fetch, compress, and append embedded mods a budget's worth at a time.
+///
+/// Downloads used to be issued one at a time from inside the archive loop, so
+/// a slow host stalled every remaining read and write behind it. Batching by
+/// declared size keeps the fetches concurrent without holding a pack's worth
+/// of jars in memory.
+fn stage_downloads<W: Write + Seek>(
+    archive: &mut ZipWriter<W>,
+    requests: &[EmbedRequest],
+) -> Result<(), BuildError> {
+    let jobs = parallel::configured();
+    let mut start = 0;
+    while start < requests.len() {
+        // At least one per batch, so a jar bigger than the whole budget still
+        // makes progress instead of looping forever.
+        let mut end = start + 1;
+        let mut budget = requests[start].size;
+        while end < requests.len() && budget + requests[end].size <= DOWNLOAD_BUDGET {
+            budget += requests[end].size;
+            end += 1;
+        }
+        let staged = parallel::try_map(&requests[start..end], jobs, |request| {
+            let bytes = download(&request.url)?;
+            compress_entry(&request.path, &bytes)
+        });
+        for entry in staged {
+            append_staged(archive, entry?)?;
+        }
+        start = end;
+    }
+    Ok(())
 }
 
 #[derive(Serialize)]
@@ -961,10 +1078,138 @@ struct ModrinthFile {
     file_size: u64,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone, Copy)]
 struct ModrinthEnv {
     client: &'static str,
     server: &'static str,
+}
+
+/// A mod the manifest references by URL for the launcher to fetch.
+struct ReferencedMod {
+    destination: String,
+    url: String,
+    env: ModrinthEnv,
+    sha1: String,
+    sha512: String,
+    size: u64,
+    /// The metafile did not carry both hashes and a size, or the caller asked
+    /// for verification, so the jar has to be fetched to fill these in.
+    needs_fetch: bool,
+}
+
+/// What one `index.toml` entry turns into. Classification reads and parses
+/// metafiles on the work queue, which is also what lets the export discover
+/// every download it needs before issuing the first one.
+enum ModrinthEntry {
+    Override {
+        destination: String,
+        source: PathBuf,
+    },
+    Embed(EmbedRequest),
+    Reference(Box<ReferencedMod>),
+}
+
+fn plan_modrinth_entry(
+    root: &Path,
+    item: &packwand_pack::IndexFile,
+    options: ExportOptions,
+) -> Result<ModrinthEntry, BuildError> {
+    let indexed_path = normalize_index_path(&item.file)?;
+    let source = root.join(indexed_path.replace('/', std::path::MAIN_SEPARATOR_STR));
+    if !item.metafile {
+        return Ok(ModrinthEntry::Override {
+            destination: format!("overrides/{indexed_path}"),
+            source,
+        });
+    }
+    let metadata: Mod = read_toml(&source)?;
+    let destination = metadata_destination(&indexed_path, &metadata.filename)?;
+    let direct =
+        !options.restrict_modrinth_domains || modrinth_host_allowed(&metadata.download.url);
+    if !direct {
+        let prefix = match metadata.side.as_str() {
+            "client" => "client-overrides",
+            "server" => "server-overrides",
+            _ => "overrides",
+        };
+        return Ok(ModrinthEntry::Embed(EmbedRequest {
+            path: format!("{prefix}/{destination}"),
+            url: metadata.download.url,
+            size: match metadata.download.size {
+                0 => UNKNOWN_DOWNLOAD_SIZE,
+                size => size,
+            },
+        }));
+    }
+    let recorded_sha1 = export_hash(&metadata, "sha1").filter(|_| !options.verify_hashes);
+    let recorded_sha512 = export_hash(&metadata, "sha512").filter(|_| !options.verify_hashes);
+    let needs_fetch = options.verify_hashes
+        || metadata.download.size == 0
+        || export_hash(&metadata, "sha1").is_none()
+        || export_hash(&metadata, "sha512").is_none();
+    let installed = if metadata
+        .option
+        .as_ref()
+        .is_some_and(|option| option.optional)
+    {
+        "optional"
+    } else {
+        "required"
+    };
+    let env = match metadata.side.as_str() {
+        "client" => ModrinthEnv {
+            client: installed,
+            server: "unsupported",
+        },
+        "server" => ModrinthEnv {
+            client: "unsupported",
+            server: installed,
+        },
+        _ => ModrinthEnv {
+            client: installed,
+            server: installed,
+        },
+    };
+    Ok(ModrinthEntry::Reference(Box::new(ReferencedMod {
+        destination,
+        sha1: recorded_sha1.unwrap_or_default().to_owned(),
+        sha512: recorded_sha512.unwrap_or_default().to_owned(),
+        size: metadata.download.size,
+        url: metadata.download.url,
+        env,
+        needs_fetch,
+    })))
+}
+
+/// Fetch the jars whose metafiles did not carry everything the manifest
+/// needs, `jobs` at a time. Each worker hashes and drops its download, so
+/// this holds digests rather than a pack's worth of jars.
+fn resolve_referenced_digests(referenced: &mut [ReferencedMod]) -> Result<(), BuildError> {
+    let pending: Vec<usize> = referenced
+        .iter()
+        .enumerate()
+        .filter(|(_, entry)| entry.needs_fetch)
+        .map(|(slot, _)| slot)
+        .collect();
+    if pending.is_empty() {
+        return Ok(());
+    }
+    let fetched = parallel::try_map(&pending, parallel::configured(), |slot| {
+        let bytes = download(&referenced[*slot].url)?;
+        Ok::<_, BuildError>((
+            hash_bytes(HashFormat::Sha1, &bytes),
+            hash_bytes(HashFormat::Sha512, &bytes),
+            bytes.len() as u64,
+        ))
+    });
+    for (slot, result) in pending.into_iter().zip(fetched) {
+        let (sha1, sha512, size) = result?;
+        let entry = &mut referenced[slot];
+        entry.sha1 = sha1;
+        entry.sha512 = sha512;
+        entry.size = size;
+    }
+    Ok(())
 }
 
 fn write_modrinth<W: Write + Seek>(
@@ -977,82 +1222,43 @@ fn write_modrinth<W: Write + Seek>(
     archive
         .add_directory("overrides/", zip_options())
         .map_err(BuildError::Zip)?;
-    let mut manifest_files = Vec::new();
-    let mut archive_files = 1;
-    for item in &index.files {
-        let indexed_path = normalize_index_path(&item.file)?;
-        let source = root.join(indexed_path.replace('/', std::path::MAIN_SEPARATOR_STR));
-        if !item.metafile {
-            write_file(archive, &format!("overrides/{indexed_path}"), &source)?;
-            archive_files += 1;
-            continue;
+
+    // Classify every index entry first, write second. Metafile reads and TOML
+    // parsing run on the work queue, and the pass leaves the export holding a
+    // complete list of downloads before any of them are issued.
+    let planned = parallel::try_map(&index.files, parallel::configured(), |item| {
+        plan_modrinth_entry(root, item, options)
+    });
+
+    let mut overrides = Vec::new();
+    let mut embeds = Vec::new();
+    let mut referenced = Vec::new();
+    for entry in planned {
+        match entry? {
+            ModrinthEntry::Override {
+                destination,
+                source,
+            } => overrides.push((destination, source)),
+            ModrinthEntry::Embed(request) => embeds.push(request),
+            ModrinthEntry::Reference(entry) => referenced.push(*entry),
         }
-        let metadata: Mod = read_toml(&source)?;
-        let destination = metadata_destination(&indexed_path, &metadata.filename)?;
-        let direct =
-            !options.restrict_modrinth_domains || modrinth_host_allowed(&metadata.download.url);
-        if !direct {
-            let bytes = download(&metadata.download.url)?;
-            let prefix = match metadata.side.as_str() {
-                "client" => "client-overrides",
-                "server" => "server-overrides",
-                _ => "overrides",
-            };
-            write_bytes(archive, &format!("{prefix}/{destination}"), &bytes)?;
-            archive_files += 1;
-            continue;
-        }
-        let bytes = (options.verify_hashes
-            || metadata.download.size == 0
-            || export_hash(&metadata, "sha1").is_none()
-            || export_hash(&metadata, "sha512").is_none())
-        .then(|| download(&metadata.download.url))
-        .transpose()?;
-        let sha1 = export_hash(&metadata, "sha1")
-            .filter(|_| !options.verify_hashes)
-            .map(str::to_owned)
-            .unwrap_or_else(|| hash_bytes(HashFormat::Sha1, bytes.as_deref().unwrap_or_default()));
-        let sha512 = export_hash(&metadata, "sha512")
-            .filter(|_| !options.verify_hashes)
-            .map(str::to_owned)
-            .unwrap_or_else(|| {
-                hash_bytes(HashFormat::Sha512, bytes.as_deref().unwrap_or_default())
-            });
-        let size = bytes
-            .as_ref()
-            .map(|value| value.len() as u64)
-            .unwrap_or(metadata.download.size);
-        let installed = if metadata
-            .option
-            .as_ref()
-            .is_some_and(|option| option.optional)
-        {
-            "optional"
-        } else {
-            "required"
-        };
-        let env = match metadata.side.as_str() {
-            "client" => ModrinthEnv {
-                client: installed,
-                server: "unsupported",
-            },
-            "server" => ModrinthEnv {
-                client: "unsupported",
-                server: installed,
-            },
-            _ => ModrinthEnv {
-                client: installed,
-                server: installed,
-            },
-        };
-        manifest_files.push(ModrinthFile {
-            path: destination,
-            hashes: BTreeMap::from([("sha1".into(), sha1), ("sha512".into(), sha512)]),
-            env,
-            downloads: vec![metadata.download.url],
-            file_size: size,
-        });
     }
+
+    let archive_files = 1 + overrides.len() + embeds.len();
+    stage_entries(archive, &overrides)?;
+    stage_downloads(archive, &embeds)?;
+    resolve_referenced_digests(&mut referenced)?;
+
+    let mut manifest_files: Vec<ModrinthFile> = referenced
+        .into_iter()
+        .map(|entry| ModrinthFile {
+            path: entry.destination,
+            hashes: BTreeMap::from([("sha1".into(), entry.sha1), ("sha512".into(), entry.sha512)]),
+            env: entry.env,
+            downloads: vec![entry.url],
+            file_size: entry.size,
+        })
+        .collect();
     manifest_files.sort_by(|left, right| left.path.cmp(&right.path));
     let mut dependencies = BTreeMap::new();
     if let Some(version) = pack.versions.get("minecraft") {
@@ -1122,6 +1328,70 @@ struct CurseForgeFile {
     required: bool,
 }
 
+/// What one `index.toml` entry turns into for a CurseForge export. Mods with
+/// project and file ids are referenced in the manifest; the rest have to ship
+/// inside `overrides/`.
+enum CurseForgeEntry {
+    Override {
+        destination: String,
+        source: PathBuf,
+    },
+    Embed {
+        name: String,
+        request: EmbedRequest,
+    },
+    Reference {
+        name: String,
+        file: CurseForgeFile,
+    },
+}
+
+fn plan_curseforge_entry(
+    root: &Path,
+    item: &packwand_pack::IndexFile,
+) -> Result<CurseForgeEntry, BuildError> {
+    let indexed_path = normalize_index_path(&item.file)?;
+    let source = root.join(indexed_path.replace('/', std::path::MAIN_SEPARATOR_STR));
+    if !item.metafile {
+        return Ok(CurseForgeEntry::Override {
+            destination: format!("overrides/{indexed_path}"),
+            source,
+        });
+    }
+    let metadata: Mod = read_toml(&source)?;
+    let ids = metadata.update.get("curseforge").and_then(|table| {
+        Some((
+            table.get("project-id")?.as_integer()?,
+            table.get("file-id")?.as_integer()?,
+        ))
+    });
+    let Some((project_id, file_id)) = ids else {
+        let destination = metadata_destination(&indexed_path, &metadata.filename)?;
+        return Ok(CurseForgeEntry::Embed {
+            name: metadata.name,
+            request: EmbedRequest {
+                path: format!("overrides/{destination}"),
+                url: metadata.download.url,
+                size: match metadata.download.size {
+                    0 => UNKNOWN_DOWNLOAD_SIZE,
+                    size => size,
+                },
+            },
+        });
+    };
+    Ok(CurseForgeEntry::Reference {
+        file: CurseForgeFile {
+            project_id,
+            file_id,
+            required: !metadata
+                .option
+                .as_ref()
+                .is_some_and(|option| option.optional && !option.default),
+        },
+        name: metadata.name,
+    })
+}
+
 fn write_curseforge<W: Write + Seek>(
     root: &Path,
     pack: &Pack,
@@ -1131,42 +1401,38 @@ fn write_curseforge<W: Write + Seek>(
     archive
         .add_directory("overrides/", zip_options())
         .map_err(BuildError::Zip)?;
+
+    // Same shape as the Modrinth writer: classify on the work queue so the
+    // metafile reads overlap and every jar that has to be embedded is known
+    // before the first fetch goes out.
+    let planned = parallel::try_map(&index.files, parallel::configured(), |item| {
+        plan_curseforge_entry(root, item)
+    });
+
+    let mut overrides = Vec::new();
+    let mut embeds = Vec::new();
     let mut references = Vec::new();
     let mut mod_names = Vec::new();
-    let mut archive_files = 1;
-    for item in &index.files {
-        let indexed_path = normalize_index_path(&item.file)?;
-        let source = root.join(indexed_path.replace('/', std::path::MAIN_SEPARATOR_STR));
-        if !item.metafile {
-            write_file(archive, &format!("overrides/{indexed_path}"), &source)?;
-            archive_files += 1;
-            continue;
-        }
-        let metadata: Mod = read_toml(&source)?;
-        mod_names.push(metadata.name.clone());
-        let cf = metadata.update.get("curseforge");
-        let ids = cf.and_then(|table| {
-            Some((
-                table.get("project-id")?.as_integer()?,
-                table.get("file-id")?.as_integer()?,
-            ))
-        });
-        if let Some((project_id, file_id)) = ids {
-            references.push(CurseForgeFile {
-                project_id,
-                file_id,
-                required: !metadata
-                    .option
-                    .as_ref()
-                    .is_some_and(|option| option.optional && !option.default),
-            });
-        } else {
-            let destination = metadata_destination(&indexed_path, &metadata.filename)?;
-            let bytes = download(&metadata.download.url)?;
-            write_bytes(archive, &format!("overrides/{destination}"), &bytes)?;
-            archive_files += 1;
+    for entry in planned {
+        match entry? {
+            CurseForgeEntry::Override {
+                destination,
+                source,
+            } => overrides.push((destination, source)),
+            CurseForgeEntry::Embed { name, request } => {
+                mod_names.push(name);
+                embeds.push(request);
+            }
+            CurseForgeEntry::Reference { name, file } => {
+                mod_names.push(name);
+                references.push(file);
+            }
         }
     }
+
+    let archive_files = 1 + overrides.len() + embeds.len();
+    stage_entries(archive, &overrides)?;
+    stage_downloads(archive, &embeds)?;
     references.sort_by_key(|entry| (entry.project_id, entry.file_id));
     mod_names.sort_by_key(|name| name.to_lowercase());
     let mod_loaders = ["fabric", "forge", "neoforge", "quilt"]
@@ -1523,6 +1789,82 @@ mod tests {
         assert_eq!(manifest["manifestType"], "minecraftModpack");
         assert_eq!(manifest["files"][0]["projectID"], 10);
         assert_eq!(manifest["files"][0]["fileID"], 20);
+    }
+
+    /// The staging queue hands work out in batches, so a pack has to be
+    /// larger than one batch before the batch seam is exercised at all.
+    #[test]
+    fn stages_more_files_than_fit_in_one_batch() {
+        let directory = sample_pack();
+        let count = super::STAGE_BATCH * 3 + 7;
+        let mut index = String::from("hash-format = \"sha512\"\n");
+        for slot in 0..count {
+            std::fs::write(
+                directory.path().join(format!("config/file{slot}.json")),
+                format!("{{\"slot\": {slot}}}\n"),
+            )
+            .unwrap();
+            index.push_str(&format!(
+                "[[files]]\nfile = \"config/file{slot}.json\"\nhash = \"a\"\n\n"
+            ));
+        }
+        std::fs::write(directory.path().join("index.toml"), index).unwrap();
+
+        let output = directory.path().join("batched.mrpack");
+        let artifact = export_pack(
+            directory.path(),
+            ExportFormat::Modrinth,
+            Some(&output),
+            ExportOptions::default(),
+        )
+        .unwrap();
+        // Every override, the overrides/ directory entry, and the manifest.
+        assert_eq!(artifact.files, count + 2);
+
+        let mut archive = zip::ZipArchive::new(std::fs::File::open(&output).unwrap()).unwrap();
+        for slot in 0..count {
+            let mut contents = String::new();
+            archive
+                .by_name(&format!("overrides/config/file{slot}.json"))
+                .unwrap()
+                .read_to_string(&mut contents)
+                .unwrap();
+            assert_eq!(contents, format!("{{\"slot\": {slot}}}\n"));
+        }
+    }
+
+    /// Directory archives take the same staging path, and nested directories
+    /// are emitted separately from the files inside them.
+    #[test]
+    fn archives_a_nested_directory_across_batches() {
+        let root = tempfile::tempdir().unwrap();
+        let source = root.path().join("resourcepack");
+        let count = super::STAGE_BATCH + 5;
+        std::fs::create_dir_all(source.join("assets/minecraft/textures")).unwrap();
+        std::fs::write(source.join("pack.mcmeta"), b"{}\n").unwrap();
+        for slot in 0..count {
+            std::fs::write(
+                source.join(format!("assets/minecraft/textures/t{slot}.json")),
+                format!("texture {slot}\n"),
+            )
+            .unwrap();
+        }
+
+        let output = root.path().join("pack.zip");
+        super::archive_directory(&source, &output).unwrap();
+
+        let mut archive = zip::ZipArchive::new(std::fs::File::open(&output).unwrap()).unwrap();
+        assert!(archive.by_name("pack.mcmeta").is_ok());
+        assert!(archive.by_name("assets/minecraft/textures/").is_ok());
+        for slot in 0..count {
+            let mut contents = String::new();
+            archive
+                .by_name(&format!("assets/minecraft/textures/t{slot}.json"))
+                .unwrap()
+                .read_to_string(&mut contents)
+                .unwrap();
+            assert_eq!(contents, format!("texture {slot}\n"));
+        }
     }
 
     #[test]

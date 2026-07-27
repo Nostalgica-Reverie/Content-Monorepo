@@ -60,6 +60,13 @@ export const useShellStore = defineStore('shell', () => {
   const paletteSeed = ref('')
   /** Bumped to ask the Overview view to open its create-project dialog. */
   const newProjectRequest = ref(0)
+  /**
+   * The generator an extension asked the shell to open, and a counter so
+   * asking twice for the same one still navigates. Extensions contribute rows
+   * and commands rather than markup, so opening a form-based view has to go
+   * through the shell rather than the extension rendering it itself.
+   */
+  const generatorRequest = ref<{ id: string; nonce: number }>({ id: '', nonce: 0 })
 
   /** pw4shell console transcript. Separate from `output`: the terminal is an
    * interactive session with its own scrollback and history, whereas `output`
@@ -141,6 +148,10 @@ export const useShellStore = defineStore('shell', () => {
     newProjectRequest.value += 1
   }
 
+  function requestGenerator(id = '') {
+    generatorRequest.value = { id, nonce: generatorRequest.value.nonce + 1 }
+  }
+
   function openPalette(seed = '') {
     paletteSeed.value = seed
     paletteOpen.value = true
@@ -206,6 +217,7 @@ export const useShellStore = defineStore('shell', () => {
     paletteOpen,
     paletteSeed,
     newProjectRequest,
+    generatorRequest,
     problems,
     problemsSource,
     output,
@@ -221,6 +233,7 @@ export const useShellStore = defineStore('shell', () => {
     openTab,
     closeTab,
     requestNewProject,
+    requestGenerator,
     openPalette,
     closePalette,
     appendOutput,

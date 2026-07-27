@@ -31,6 +31,12 @@ try {
   const pageErrors = []
   page.on('pageerror', error => pageErrors.push(error.message))
   await page.goto(`${baseUrl}/`)
+
+  // Stand in for the Tauri side of the bridge, and record which provider
+  // methods the workbench actually calls. Asserting on the protocol is what
+  // proves the filesystem provider is live: Code-OSS's own explorer is hidden
+  // by host/bootstrap.css because Packwand supplies the file tree, so there is
+  // no file list in the DOM to read that back from.
   await page.evaluate((pngBytes) => {
     const encoder = new TextEncoder()
     const files = new Map([
@@ -38,10 +44,13 @@ try {
       ['packeater.json', Array.from(encoder.encode('{\n  "preset": "aggressive"\n}\n'))],
       ['sample.png', pngBytes],
     ])
+    window.__packwandBridge = { methods: [], paths: [] }
     window.addEventListener('message', event => {
       const request = event.data
       if (request?.channel !== 'packwand:ide-fs' || request.direction !== 'request') return
       const requestedPath = request.parameters?.path ?? ''
+      window.__packwandBridge.methods.push(request.method)
+      window.__packwandBridge.paths.push(requestedPath)
       let result
       let error
       if (request.method === 'stat') {
@@ -58,17 +67,31 @@ try {
       }
       event.source.postMessage({ channel: request.channel, direction: 'response', id: request.id, result, error }, event.origin)
     })
-    document.body.innerHTML = '<iframe title="Packwand IDE smoke" src="/packwand-ide/index.html" style="width:100%;height:780px;border:0"></iframe>'
+    document.body.innerHTML = '<iframe title="Packwand IDE smoke" style="width:100%;height:780px;border:0"></iframe>'
   }, pngBytes)
-  pageErrors.length = 0
 
-  const ide = page.frameLocator('iframe[title="Packwand IDE smoke"]')
-  const packFile = ide.locator('.explorer-folders-view .monaco-list-row').filter({ hasText: 'pack.toml' }).first()
-  await packFile.waitFor({ timeout: 30_000 })
-  await packFile.dblclick()
-  await ide.locator('.tab').filter({ hasText: 'pack.toml' }).first().waitFor({ timeout: 15_000 })
+  /**
+   * Opens a pack-relative file the way Packwand does.
+   *
+   * An embedded workbench exposes no post-boot API to open an editor, so the
+   * host passes the path as `?open=` and `defaultLayout.editors` seeds it at
+   * load time (see host/bootstrap.js). Opening a second file therefore means
+   * reloading the iframe -- exactly what clicking a file in the Packwand
+   * sidebar does.
+   */
+  async function openInWorkbench(relativePath) {
+    await page.evaluate((target) => {
+      const frame = document.querySelector('iframe[title="Packwand IDE smoke"]')
+      frame.src = `/packwand-ide/index.html?open=${encodeURIComponent(target)}`
+    }, relativePath)
+    const workbench = page.frameLocator('iframe[title="Packwand IDE smoke"]')
+    await workbench.locator('.tab').filter({ hasText: relativePath }).first().waitFor({ timeout: 30_000 })
+    return workbench
+  }
+
+  const ide = await openInWorkbench('pack.toml')
+  pageErrors.length = 0
   await page.waitForTimeout(1_000)
-  const text = await ide.locator('body').innerText()
   const editorText = (await ide.locator('.view-lines').allInnerTexts()).join('\n')
   const normalizedEditorText = editorText.replaceAll('\u00a0', ' ')
 
@@ -80,15 +103,12 @@ try {
   // fires its 'load' event, so waiting for that text is a reliable signal
   // that real image bytes made it all the way into the webview -- not just
   // that the tab opened.
-  const pngFile = ide.locator('.explorer-folders-view .monaco-list-row').filter({ hasText: 'sample.png' }).first()
-  await pngFile.waitFor({ timeout: 15_000 })
-  await pngFile.dblclick()
-  await ide.locator('.tab').filter({ hasText: 'sample.png' }).first().waitFor({ timeout: 15_000 })
+  const imageIde = await openInWorkbench('sample.png')
 
   let imageSizeText = ''
   let hasImagePreview = false
   try {
-    const sizeStatusEntry = ide.getByText(/^\s*\d+\s*x\s*\d+\s*$/).first()
+    const sizeStatusEntry = imageIde.getByText(/^\s*\d+\s*x\s*\d+\s*$/).first()
     await sizeStatusEntry.waitFor({ timeout: 20_000 })
     imageSizeText = (await sizeStatusEntry.innerText()).trim()
     hasImagePreview = /^\d+x\d+$/.test(imageSizeText)
@@ -96,8 +116,13 @@ try {
     hasImagePreview = false
   }
 
+  const bridge = await page.evaluate(() => window.__packwandBridge)
+
   const result = {
-    hasExplorerFile: text.includes('packeater.json'),
+    // The workbench mounted the packwand: root and enumerated it...
+    hasProviderReadDir: bridge.methods.includes('readDir'),
+    // ...and pulled the seeded editor's bytes back over the same bridge.
+    hasProviderReadFile: bridge.paths.includes('pack.toml'),
     hasEditorContent: normalizedEditorText.includes('Smoke Pack'),
     editorSample: normalizedEditorText.slice(0, 160),
     hasImagePreview,
@@ -105,7 +130,13 @@ try {
     pageErrors,
   }
   console.log(JSON.stringify(result))
-  if (!result.hasExplorerFile || !result.hasEditorContent || !result.hasImagePreview || result.pageErrors.length) process.exitCode = 1
+  if (
+    !result.hasProviderReadDir ||
+    !result.hasProviderReadFile ||
+    !result.hasEditorContent ||
+    !result.hasImagePreview ||
+    result.pageErrors.length
+  ) process.exitCode = 1
 } finally {
   await browser.close()
 }

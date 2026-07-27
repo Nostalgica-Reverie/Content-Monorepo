@@ -33,6 +33,18 @@ export default definePackwandExtension({
       },
     },
     {
+      id: 'generate',
+      title: 'New datapack file from a schema',
+      icon: 'package',
+      when: ['datapacks', 'modpacks'],
+      run(context) {
+        // The form is drawn by the shell from mcdoc schemas. GamePW Studio
+        // only decides which one to author, so a new registry becomes a new
+        // schema rather than a new screen here.
+        context.generator.open()
+      },
+    },
+    {
       id: 'parity',
       title: 'Check variant parity',
       icon: 'sync',
@@ -66,7 +78,7 @@ export default definePackwandExtension({
             const editorPath = origin && origin !== '.' ? `${origin}/${path}` : path
             return {
               label: String(entry.id ?? path ?? '(unnamed)'),
-              detail: `${String(entry.kind ?? registry.kind)} · ${path}`,
+              detail: `${String(entry.kind ?? registry.kind)} ï¿½ ${path}`,
               icon: entry.kind === 'texture' ? 'editor' : 'package',
               run: path ? () => context.editor.open(pack.id, editorPath) : undefined,
             }

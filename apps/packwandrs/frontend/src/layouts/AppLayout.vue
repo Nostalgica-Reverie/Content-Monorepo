@@ -89,6 +89,15 @@ watch(
   { immediate: true },
 )
 
+/** An extension asked for a generator: switch to the view that draws them. */
+watch(
+  () => shell.generatorRequest.nonce,
+  (nonce) => {
+    if (!nonce) return
+    if (currentName.value !== 'generator') void router.push({ name: 'generator' })
+  },
+)
+
 /** Sidebar file click: seed the editor with the file and switch to that view. */
 function openFileInEditor(path: string) {
   workbench.requestFile(path)

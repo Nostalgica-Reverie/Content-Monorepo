@@ -10,6 +10,7 @@ repository.workspace = true
 packeater_cli = { path = "../packeater_cli" }
 packwand-pack = { path = "../packwand-pack" }
 packwand-ops = { path = "../packwand-ops" }
+packwand-parallel = { path = "../packwand-parallel" }
 packwand-workspace = { path = "../packwand-workspace" }
 serde.workspace = true
 serde_json.workspace = true
