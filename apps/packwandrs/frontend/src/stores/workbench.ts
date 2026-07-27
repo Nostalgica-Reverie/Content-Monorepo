@@ -14,6 +14,14 @@ export const useWorkbenchStore = defineStore('workbench', () => {
   const packs = ref<PackSummary[]>([])
   const selectedProjectId = ref(localStorage.getItem('packwand:selected-project') ?? '')
   const selectedPackId = ref(localStorage.getItem('packwand:selected-pack') ?? '')
+  /**
+   * Pack-relative path the sidebar file tree asked the editor to open.
+   *
+   * Deliberately not persisted: it seeds the embedded workbench's initial
+   * editor, and restoring it on a cold start would reopen a file the user
+   * clicked once, days ago, instead of whatever they were last editing.
+   */
+  const requestedFile = ref('')
   const search = ref('')
   const loading = ref(false)
   const error = ref('')
@@ -36,7 +44,16 @@ export const useWorkbenchStore = defineStore('workbench', () => {
     selectedPackId.value = projectPacks.value[0]?.id ?? ''
     if (selectedPackId.value) localStorage.setItem('packwand:selected-pack', selectedPackId.value)
   }
-  function selectPack(id: string) { selectedPackId.value = id; localStorage.setItem('packwand:selected-pack', id) }
+  function selectPack(id: string) {
+    selectedPackId.value = id
+    localStorage.setItem('packwand:selected-pack', id)
+    // The path is pack-relative, so it means something different (or nothing)
+    // in a different pack.
+    requestedFile.value = ''
+  }
+
+  /** Ask the editor to open a pack-relative file. */
+  function requestFile(path: string) { requestedFile.value = path }
   async function refresh() {
     loading.value = true; error.value = ''
     try {
@@ -48,5 +65,5 @@ export const useWorkbenchStore = defineStore('workbench', () => {
       if (selectedPackId.value) localStorage.setItem('packwand:selected-pack', selectedPackId.value)
     } catch (caught) { error.value = String(caught); throw caught } finally { loading.value = false }
   }
-  return { projects, packs, selectedProjectId, selectedPackId, selectedProject, projectPacks, selectedPack, title, summary, search, loading, error, selectProject, selectPack, refresh }
+  return { projects, packs, selectedProjectId, selectedPackId, selectedProject, projectPacks, selectedPack, title, summary, search, loading, error, selectProject, selectPack, refresh, requestedFile, requestFile }
 })

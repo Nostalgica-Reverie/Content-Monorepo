@@ -99,6 +99,7 @@ import { IDefaultAccountService } from '../../platform/defaultAccount/common/def
 import { DefaultAccountService } from '../services/accounts/browser/defaultAccount.js';
 import { AccountPolicyService, IAccountPolicyGateService } from '../services/policies/common/accountPolicyService.js';
 import { PackwandFileSystemProvider, PACKWAND_FILE_SYSTEM_SCHEME } from './packwandFileSystemProvider.js';
+import { PackwandLanguageBridge } from './packwandLanguageBridge.js';
 
 export interface IBrowserMainWorkbench {
 	startup(): IInstantiationService;
@@ -142,6 +143,7 @@ export class BrowserMain extends Disposable {
 
 		// Window
 		this._register(instantiationService.createInstance(BrowserWindow));
+		this._register(instantiationService.createInstance(PackwandLanguageBridge));
 
 		// Logging
 		services.logService.trace('workbench#open with configuration', safeStringify(this.configuration));

@@ -13,11 +13,36 @@ PWC_BEGIN_DECLS
 
 typedef int32_t pwc_status;
 
+/* --- the last-error detail record ---------------------------------------
+ *
+ * An errno-shaped integer says what class of thing went wrong and nothing
+ * about which call, where, or why the platform refused. Every failing path
+ * that knows more than its status code records it here (packwandc.md 3.1),
+ * and the Rust SDK folds status + detail into one Error.
+ *
+ * `status` is carried in the record deliberately. A thread-local "last error"
+ * is stale-prone by construction: a caller holding PWC_EIO has no way to know
+ * whether the detail it reads describes that failure or an earlier one. Pairing
+ * the detail with the status it was recorded for lets the reader check, which
+ * is the difference between a diagnostic and a guess.
+ *
+ * `file` is the __FILE__ of the recording site. -ffile-prefix-map (packwandc.md
+ * 7.3) has already rewritten it to a repo-relative path, so it is stable across
+ * machines and safe to log.
+ */
+PWC_ABI_PACKED_BEGIN
 typedef struct pwc_error_detail {
-    const char *module;
-    const char *message;
-    int32_t platform_code;
+    uint32_t struct_size;  /* sizeof(pwc_error_detail); forward compatibility */
+    int32_t status;        /* the status this record was recorded for */
+    int32_t platform_code; /* GetLastError()/errno/D-Bus code, 0 if none */
+    uint32_t line;         /* __LINE__ of the recording site */
+    const char *module;    /* static, never NULL: "core", "pwfs", "arch/win32" */
+    const char *message;   /* static, never NULL */
+    const char *file;      /* static, never NULL */
 } pwc_error_detail;
+PWC_ABI_PACKED_END
+
+static_assert(sizeof(pwc_error_detail) == 40, "pwc_error_detail is part of the wire ABI");
 
 /* The status table is an X-macro so that the enum and the name mapping in
  * kernel/status.c cannot drift -- the same problem syscalls.def solves for the
@@ -68,6 +93,13 @@ PWC_API PWC_NODISCARD const char *pwc_status_name(pwc_status status);
  * For logs and test failure messages -- not user-facing copy. */
 PWC_API PWC_NODISCARD const char *pwc_status_describe(pwc_status status);
 
+/* The calling thread's most recent error detail. Never NULL, and never stale
+ * in the dangerous sense: before any failure is recorded on this thread it
+ * reports status PWC_OK with a "no error recorded" message.
+ *
+ * Read it only after a call returned a failing status, and compare its
+ * `status` field against the one you were handed -- an unequal pair means the
+ * failing call recorded no detail and you are looking at an older record. */
 PWC_API PWC_NODISCARD const pwc_error_detail *pwc_last_error(void);
 
 PWC_END_DECLS

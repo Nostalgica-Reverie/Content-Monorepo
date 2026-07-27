@@ -13,7 +13,9 @@
 
 #include "packwandc/uapi/pwc_abi.h"
 #include "packwandc/uapi/pwc_handle.h"
+#include "packwandc/uapi/pwc_sh.h"
 #include "packwandc/uapi/pwc_status.h"
+#include "packwandc/uapi/pwc_trace.h"
 
 PWC_BEGIN_DECLS
 

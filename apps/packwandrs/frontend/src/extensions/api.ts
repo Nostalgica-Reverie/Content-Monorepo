@@ -16,15 +16,122 @@
  * would leave two sources of truth to drift apart.
  */
 
-import type { DiagnosticIssue } from '@/helpers/types'
+import type { PackeaterMarker, PackeaterPreview } from '@/helpers/invoke/packeater'
+import type { ContentRegistry, DiagnosticIssue, JobRecord, ValidationReport } from '@/helpers/types'
 
 /** Project categories an extension can scope itself to. */
 export type ProjectCategory = 'mods' | 'modpacks' | 'datapacks' | 'resourcepacks'
 
+/** Privileges understood by extension API version 1. */
+export type ExtensionCapability =
+  | 'project.read'
+  | 'project.write'
+  | 'diagnostics.register'
+  | 'external.krita'
+  | 'external.blockbench'
+  | 'process.approved'
+  | 'network.minecraft-metadata'
+  | 'export.transform'
+  | 'credentials.publish'
+  | 'native.optimizer'
+
+export interface ExtensionAsset {
+  path: string
+  name: string
+  kind: string
+}
+
+export interface PackGraphNode {
+  id: string
+  name: string
+  path: string
+  kind: string
+  provider: string
+  side: string
+}
+
+export interface PackGraphEdge {
+  from: string
+  to: string
+  relation: string
+}
+
+export interface PackGraphSnapshot {
+  nodes: PackGraphNode[]
+  edges: PackGraphEdge[]
+}
+
+export interface LanguageFile {
+  locale: string
+  namespace: string
+  path: string
+  keys: number
+}
+
+export interface LanguageGap {
+  locale: string
+  namespace: string
+  key: string
+  referenceLocale: string
+}
+
+export interface LanguageSnapshot {
+  files: LanguageFile[]
+  gaps: LanguageGap[]
+}
+
+export interface RecipeAsset extends ExtensionAsset {
+  namespace: string
+  id: string
+}
+
+export interface WorldgenAsset extends ExtensionAsset {
+  namespace: string
+  id: string
+}
+
 /** What the host passes to every extension entry point. */
 export interface ExtensionContext {
-  /** Invokes a Rust command over the Tauri bridge. */
-  invoke: <T>(command: string, args?: Record<string, unknown>) => Promise<T>
+  editor: {
+    /** Opens a pack-relative file in the embedded Code-OSS workbench. */
+    open: (packId: string, path: string) => void
+  }
+  /** Fixed, typed operations; extensions never receive arbitrary Tauri invoke. */
+  diagnostics: {
+    contentLint: (packId?: string) => Promise<ValidationReport>
+    parity: () => Promise<Array<Record<string, unknown>>>
+    registries: (packId?: string) => Promise<ContentRegistry[]>
+  }
+  game: {
+    recipes: (packId: string) => Promise<RecipeAsset[]>
+  }
+  graph: {
+    snapshot: (packId: string) => Promise<PackGraphSnapshot>
+  }
+  language: {
+    snapshot: (packId: string) => Promise<LanguageSnapshot>
+  }
+  worldgen: {
+    assets: (packId: string) => Promise<WorldgenAsset[]>
+  }
+  optimizer: {
+    markers: (packId: string) => Promise<PackeaterMarker[]>
+    preview: (packId: string) => Promise<PackeaterPreview[]>
+    initialize: (packId: string) => Promise<PackeaterMarker>
+    run: (packId: string) => Promise<JobRecord>
+  }
+  kubejs: {
+    scripts: (packId: string) => Promise<ExtensionAsset[]>
+    validate: (packId: string) => Promise<ValidationReport>
+  }
+  krita: {
+    assets: (packId: string) => Promise<ExtensionAsset[]>
+    open: (packId: string, path: string) => Promise<void>
+  }
+  blockbench: {
+    assets: (packId: string) => Promise<ExtensionAsset[]>
+    open: (packId: string, path: string) => Promise<void>
+  }
   /** Appends a line to the dock's Output tab. */
   output: (text: string, tone?: 'info' | 'error' | 'success') => void
   /** Publishes issues to the dock's Problems tab, replacing this source's set. */
@@ -72,7 +179,7 @@ export interface ExtensionRow {
   detail?: string
   icon?: string
   /** Invoked when the row is activated. */
-  run?: (context: ExtensionContext) => void | Promise<void>
+  run?: () => void | Promise<void>
 }
 
 /** Everything an extension may contribute. */
@@ -81,6 +188,8 @@ export interface ExtensionDefinition {
   views?: ExtensionView[]
   /** Called once when the extension is registered. */
   activate?: (context: ExtensionContext) => void | Promise<void>
+  /** Called when the user uninstalls the extension in this Packwand profile. */
+  deactivate?: (context: ExtensionContext) => void | Promise<void>
 }
 
 /**
@@ -97,11 +206,19 @@ export interface ExtensionManifest {
   id: string
   name: string
   version: string
+  /** Host/SDK contract selected by this extension. Version 1 is current. */
+  apiVersion: 1
   description?: string
   /** Entry point relative to the extension directory. */
   entry: string
-  /** Restricts the whole extension to these project categories. */
-  when?: ProjectCategory[]
+  /** Events which make the extension applicable, for example project:datapacks. */
+  activation: string[]
+  /** Declarative contribution ids, checked against the TypeScript definition. */
+  commands: string[]
+  views: string[]
+  validators: string[]
+  /** Maximum host authority made available to this extension. */
+  capabilities: ExtensionCapability[]
 }
 
 /** A manifest paired with its loaded definition. */

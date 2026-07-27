@@ -1,5 +1,7 @@
 #include "packwandc/kernel/pwc_arch_proc.h"
 #include "packwandc/kernel/pwc_boot_internal.h"
+#include "packwandc/kernel/pwc_error.h"
+#include "packwandc/kernel/pwc_module_registry.h"
 
 pwc_status pwc_proc_adopt(uint32_t pid, pwc_handle_t *out) {
     if (out == nullptr) {
@@ -32,3 +34,29 @@ pwc_status pwc_proc_kill(pwc_handle_t process) {
     return killed != PWC_OK ? killed : closed;
 }
 pwc_status pwc_proc_exists(uint32_t pid, uint32_t *out_alive) { return pwc_arch_proc_exists(pid, out_alive); }
+
+/* --- module descriptor (packwandc.md 3.5) ------------------------------- */
+
+static pwc_status pwc_pwproc_init(pwc_module_ctx *ctx) {
+    /* No state to build: pwproc is stateless, and every object it hands out
+     * lives in the kernel handle table rather than in the module. The
+     * descriptor still earns its place -- it puts pwproc in the boot order and
+     * gives it a teardown hook for when that stops being true. */
+    ctx->state = nullptr;
+    PWC_NOTE(
+        PWC_TRACE_LEVEL_INFO, "pwproc", "module initialised: process-tree adoption and guaranteed teardown");
+    return PWC_OK;
+}
+
+static void pwc_pwproc_exit(pwc_module_ctx *ctx) {
+    ctx->state = nullptr;
+    PWC_NOTE(PWC_TRACE_LEVEL_INFO, "pwproc", "module shut down");
+}
+
+const pwc_module pwc_module_pwproc = {
+    .name = "pwproc",
+    .abi_version = PWC_ABI_VERSION_MAJOR,
+    .depends = nullptr,
+    .init = pwc_pwproc_init,
+    .exit = pwc_pwproc_exit,
+};

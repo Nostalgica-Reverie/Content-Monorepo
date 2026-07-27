@@ -15,6 +15,7 @@ import { apiInspect } from '@/helpers/invoke/api'
 import { diagnosticsContentLint, diagnosticsLint, diagnosticsPreflight, diagnosticsValidate } from '@/helpers/invoke/diagnostics'
 import { modsRefresh } from '@/helpers/invoke/mods'
 import { workspaceSync, workspaceSyncPreview } from '@/helpers/invoke/workspace'
+import { onKernelTrace } from '@/helpers/events'
 import type { NavItem } from '@/helpers/navigation'
 import { endNav, navByName, primaryNav } from '@/helpers/navigation'
 import type { SyncReport, ValidationReport } from '@/helpers/types'
@@ -41,8 +42,27 @@ const currentName = computed(() => String(route.name ?? ''))
 const showHeader = computed(() => !['editor'].includes(currentName.value))
 const showCommandRow = computed(() => ['overview', 'logs', 'settings'].includes(currentName.value))
 
+/** Torn down on unmount so a hot reload does not stack duplicate listeners. */
+let stopKernelTrace: (() => void) | null = null
+
 onMounted(async () => {
   window.addEventListener('keydown', onKeydown)
+
+  // The packwandc kernel records every failure into a fixed ring and never
+  // blocks to do it; src-tauri drains that ring and emits each record here.
+  // Routing them into the existing output dock keeps the UI contract unchanged
+  // (packwandc.md 3.7) rather than inventing a second log surface.
+  try {
+    stopKernelTrace = await onKernelTrace((record) => {
+      const origin = record.platformCode === null ? record.origin : `${record.origin} code ${record.platformCode}`
+      shell.appendOutput(`[${record.module}] ${record.message} (${origin})`, record.tone)
+    })
+  } catch (error) {
+    // A missing native core is not fatal to the workbench, so this is a note
+    // rather than a toast.
+    shell.appendOutput(`Kernel trace unavailable: ${String(error)}`, 'error')
+  }
+
   try {
     await workbench.refresh()
     shell.appendOutput(`Indexed ${workbench.projects.length} projects, ${workbench.packs.length} pack targets.`)
@@ -54,7 +74,10 @@ onMounted(async () => {
   await extensionsStore.activate()
 })
 
-onUnmounted(() => window.removeEventListener('keydown', onKeydown))
+onUnmounted(() => {
+  window.removeEventListener('keydown', onKeydown)
+  stopKernelTrace?.()
+})
 
 /** Every visited view is held as a tab so several tasks can stay in flight. */
 watch(
@@ -65,6 +88,12 @@ watch(
   },
   { immediate: true },
 )
+
+/** Sidebar file click: seed the editor with the file and switch to that view. */
+function openFileInEditor(path: string) {
+  workbench.requestFile(path)
+  if (currentName.value !== 'editor') void router.push({ name: 'editor' })
+}
 
 function onKeydown(event: KeyboardEvent) {
   const meta = event.ctrlKey || event.metaKey
@@ -339,9 +368,20 @@ function startDockDrag(event: PointerEvent) {
       </div>
     </header>
 
-    <ActivityRail :items="primaryNav" :end-items="endNav" :current-name="currentName" @select="go" />
+    <ActivityRail
+      :items="primaryNav"
+      :end-items="endNav"
+      :current-name="currentName"
+      :current-sidebar="shell.sidebarMode"
+      @select="go"
+      @select-sidebar="shell.selectSidebar"
+    />
 
-    <SideBar v-show="shell.sidebarVisible" @new-project="shell.requestNewProject()" />
+    <SideBar
+      v-show="shell.sidebarVisible"
+      @new-project="shell.requestNewProject()"
+      @open-file="openFileInEditor"
+    />
     <div
       class="side-resize"
       :class="{ 'side-resize--active': sidebarDragging }"

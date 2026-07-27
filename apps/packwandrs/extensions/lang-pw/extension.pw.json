@@ -1,0 +1,14 @@
+{
+  "$schema": "../extension.schema.json",
+  "id": "lang-pw",
+  "name": "LangPW",
+  "version": "26.2.0",
+  "apiVersion": 1,
+  "description": "Minecraft language-file indexing and missing translation-key diagnostics.",
+  "entry": "src/index.ts",
+  "activation": ["project:mods", "project:modpacks", "project:resourcepacks"],
+  "commands": ["check"],
+  "views": ["languages"],
+  "validators": ["translations"],
+  "capabilities": ["project.read", "diagnostics.register"]
+}

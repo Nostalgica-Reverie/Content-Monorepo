@@ -79,3 +79,16 @@ docs/packwiz/docs/.vitepress/dist
 apps/packwand/gui/tauri/src-tauri/gen/
 apps/packwand/gui/tauri/src-tauri/binaries/
 apps/packwand/.gocache
+
+# frontend generated files
+apps/frontend/src/generated
+
+.turbo
+target
+generated
+.env
+
+# app testing dir
+app-playground-data/*
+.astro
+.claude/*

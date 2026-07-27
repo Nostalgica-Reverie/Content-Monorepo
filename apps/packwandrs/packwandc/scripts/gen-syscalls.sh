@@ -88,7 +88,18 @@ generate() {
             if (t == "pwc_handle_t")    { uses_handle = 1; return "PwcHandle" }
             if (t == "pwc_handle_t*")   { uses_handle = 1; return "*mut PwcHandle" }
             if (t == "pwc_waitent*") return "*mut core::ffi::c_void"
-            if (t == "constpwc_error_detail*") return "*const core::ffi::c_void"
+            if (t == "constpwc_error_detail*") {
+                uses_error_detail = 1
+                return "*const PwcErrorDetail"
+            }
+            if (t == "pwc_trace_record*") {
+                uses_trace_record = 1
+                return "*mut PwcTraceRecord"
+            }
+            if (t == "pwc_sh_command*") {
+                uses_sh_command = 1
+                return "*mut PwcShCommand"
+            }
 
             fail("unmapped C type \"" c "\" -- add it to rust_type() in gen-syscalls.sh")
         }
@@ -196,6 +207,17 @@ generate() {
             # the first handle syscall lands in phase 1.
             if (uses_handle) {
                 print "use crate::PwcHandle;"
+            }
+            if (uses_error_detail) {
+                print "use crate::PwcErrorDetail;"
+            }
+            if (uses_trace_record) {
+                print "use crate::PwcTraceRecord;"
+            }
+            if (uses_sh_command) {
+                print "use crate::PwcShCommand;"
+            }
+            if (uses_handle || uses_error_detail || uses_trace_record || uses_sh_command) {
                 print ""
             }
             print "/// Syscall numbers. Append-only and frozen: see tests/golden/syscalls.txt."

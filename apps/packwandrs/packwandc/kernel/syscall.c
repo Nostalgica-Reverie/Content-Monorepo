@@ -33,6 +33,29 @@ pwc_status pwc_handle_dup(pwc_handle_t h, uint32_t rights, pwc_handle_t *out) {
 }
 const pwc_error_detail *pwc_last_error_get(void) { return pwc_last_error(); }
 
+pwc_status pwc_ktrace_drain(pwc_trace_record *out) {
+    if (out == nullptr) {
+        return PWC_EINVAL;
+    }
+    pwc_ktrace *const trace = pwc_kernel_ktrace();
+    if (trace == nullptr) {
+        return PWC_ECANCELED;
+    }
+    return pwc_ktrace_read(trace, out);
+}
+
+pwc_status pwc_ktrace_dropped(uint64_t *out) {
+    if (out == nullptr) {
+        return PWC_EINVAL;
+    }
+    pwc_ktrace *const trace = pwc_kernel_ktrace();
+    if (trace == nullptr) {
+        return PWC_ECANCELED;
+    }
+    *out = pwc_ktrace_drops(trace);
+    return PWC_OK;
+}
+
 /* --- compile-time table self-check --------------------------------------
  *
  * Verifies that every syscall number is inside the range reserved for its
@@ -55,6 +78,8 @@ const pwc_error_detail *pwc_last_error_get(void) { return pwc_last_error(); }
 #define PWC_RANGE_pwkeys_HI 63
 #define PWC_RANGE_pwipc_LO  64
 #define PWC_RANGE_pwipc_HI  79
+#define PWC_RANGE_pwsh_LO   192
+#define PWC_RANGE_pwsh_HI   207
 
 #define PWC_SYSCALL(nr, name, module, ret, ...)                                                              \
     static_assert((nr) >= PWC_RANGE_##module##_LO && (nr) <= PWC_RANGE_##module##_HI,                        \

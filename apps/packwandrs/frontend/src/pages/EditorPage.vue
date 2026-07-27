@@ -13,6 +13,8 @@ const workbench = useWorkbenchStore()
 const toasts = useToastsStore()
 const reload = ref(0)
 const packId = computed(() => workbench.selectedPack?.id ?? '')
+/** Set by the sidebar file tree; seeds the workbench's initial editor. */
+const openPath = computed(() => workbench.requestedFile)
 
 async function validate() {
   try {
@@ -38,7 +40,7 @@ async function validate() {
         </div>
       </div>
       <EmptyState v-if="!packId" title="No pack target" message="Select a project with at least one pack.toml target." />
-      <PackwandWorkbench v-else :pack-id="packId" :reload="reload" />
+      <PackwandWorkbench v-else :pack-id="packId" :reload="reload" :open-path="openPath" />
     </div>
   </section>
 </template>

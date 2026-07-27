@@ -3,6 +3,23 @@ window.__packwandIdeMarkStarted?.()
 const core = new URL('./core/', import.meta.url)
 globalThis._VSCODE_FILE_ROOT = new URL('out/', core).href
 
+/**
+ * The editor to open at startup, from the host's `?open=` parameter.
+ *
+ * The path is pack-relative and arrives on the `packwand:` scheme, the same
+ * virtual filesystem `folderUri` is rooted at, so it cannot address anything
+ * outside the pack even if the parameter is tampered with -- the scheme has no
+ * way to express one. Leading slashes are stripped so `/pack.toml` and
+ * `pack.toml` mean the same file rather than one of them resolving oddly.
+ */
+function initialEditors() {
+  const requested = new URL(window.location.href).searchParams.get('open')
+  if (!requested) return []
+  const path = requested.replace(/^\/+/, '')
+  if (!path) return []
+  return [{ uri: { scheme: 'packwand', path: `/${path}` } }]
+}
+
 const configuration = {
   folderUri: { scheme: 'packwand', path: '/' },
   callbackRoute: new URL('out/vs/code/browser/workbench/callback.html', core).pathname,
@@ -20,6 +37,21 @@ const configuration = {
   configurationDefaults: {
     'workbench.colorTheme': 'Packwand Dark',
     'workbench.startupEditor': 'none',
+    // The workbench is embedded as *the editor*, not as a whole IDE. Packwand
+    // already has an activity rail and a sidebar around this iframe, so
+    // Code-OSS showing its own produces two nested navigation surfaces with
+    // two different file trees, two different search boxes, and no clear
+    // answer to which one is authoritative.
+    //
+    // The activity bar is hidden through its supported setting. The sidebar
+    // has no equivalent -- `workbench.sideBar.location` only chooses a side --
+    // so it is closed by the startup layout below and kept closed by CSS in
+    // bootstrap.css. See frontend/src/components/shell/FileTreeSection.vue for
+    // where the explorer went.
+    'workbench.activityBar.location': 'hidden',
+    'workbench.statusBar.visible': false,
+    'workbench.layoutControl.enabled': false,
+    'workbench.editor.showTabs': 'multiple',
     'workbench.enableExperiments': false,
     'workbench.tips.enabled': false,
     'chat.disableAIFeatures': true,
@@ -40,6 +72,20 @@ const configuration = {
       'statusBar.background': '#20232e',
       'titleBar.activeBackground': '#252832',
     },
+  },
+  // Start with the sidebar closed and nothing selected in it. `force` makes
+  // this win over any layout state a previous session persisted, so the
+  // sidebar cannot reappear because someone once opened it.
+  //
+  // `editors` is also how a file gets opened from outside: an embedded
+  // workbench exposes no post-boot API to open one (the browser entry point
+  // self-boots and never hands back the IWorkbench), so the host passes the
+  // path as a query parameter and it is seeded here at load time. That is why
+  // clicking a file in the Packwand sidebar reloads this iframe.
+  defaultLayout: {
+    force: true,
+    views: [],
+    editors: initialEditors(),
   },
   productConfiguration: {
     embedderIdentifier: 'packwand',

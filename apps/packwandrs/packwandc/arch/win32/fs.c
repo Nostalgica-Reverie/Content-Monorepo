@@ -1,4 +1,5 @@
 #include "packwandc/kernel/pwc_arch_fs.h"
+#include "packwandc/kernel/pwc_error.h"
 #include <windows.h>
 #include <wchar.h>
 
@@ -199,5 +200,33 @@ pwc_status pwc_arch_fs_watch_close(uintptr_t native) {
     if (native == 0u) {
         return PWC_EINVAL;
     }
-    return CloseHandle((HANDLE) native) != 0 ? PWC_OK : PWC_EIO;
+
+    /* CancelIoEx BEFORE CloseHandle, and this ordering is load-bearing.
+     *
+     * pwc_arch_fs_watch_read calls ReadDirectoryChangesW synchronously, so a
+     * poller thread is parked inside the kernel on this handle. Closing a
+     * handle with I/O outstanding does not reliably complete that I/O -- the
+     * observed behaviour is that the poller stays blocked, and the join in
+     * pwc_sched_shutdown then waits on it forever. That hangs process exit,
+     * which is the worst possible way for this to fail.
+     *
+     * CancelIoEx with a NULL OVERLAPPED cancels every outstanding request on
+     * the handle regardless of which thread issued it, which is exactly the
+     * cross-thread cancellation needed here.
+     *
+     * ERROR_NOT_FOUND means there was nothing in flight -- the common case when
+     * no stream was ever started -- and is not a failure. */
+    if (CancelIoEx((HANDLE) native, nullptr) == 0) {
+        const DWORD code = GetLastError();
+        if (code != ERROR_NOT_FOUND) {
+            (void) CloseHandle((HANDLE) native);
+            return PWC_FAIL_PLATFORM(PWC_EIO, "arch/win32", "CancelIoEx on the watch handle failed", code);
+        }
+    }
+
+    if (CloseHandle((HANDLE) native) == 0) {
+        return PWC_FAIL_PLATFORM(
+            PWC_EIO, "arch/win32", "CloseHandle on the watch handle failed", GetLastError());
+    }
+    return PWC_OK;
 }

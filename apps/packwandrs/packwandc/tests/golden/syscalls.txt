@@ -4,12 +4,15 @@
 4 pwc_handle_dup core
 5 pwc_wait core
 6 pwc_last_error_get core
+7 pwc_ktrace_drain core
+8 pwc_ktrace_dropped core
 16 pwc_fs_validate_relative pwfs
 17 pwc_fs_read pwfs
 18 pwc_fs_atomic_write pwfs
 19 pwc_fs_watch_open pwfs
 20 pwc_fs_watch_read pwfs
 21 pwc_fs_watch_close pwfs
+22 pwc_fs_watch_stream pwfs
 32 pwc_proc_adopt pwproc
 33 pwc_proc_kill pwproc
 34 pwc_proc_exists pwproc
@@ -17,3 +20,8 @@
 49 pwc_keys_load pwkeys
 50 pwc_keys_clear pwkeys
 64 pwc_ipc_port_create pwipc
+65 pwc_ipc_send pwipc
+66 pwc_ipc_recv pwipc
+67 pwc_ipc_port_close pwipc
+192 pwc_sh_parse pwsh
+193 pwc_sh_exec pwsh

@@ -10,6 +10,13 @@ use std::ffi::CStr;
 
 use packwandc_sys as sys;
 
+/// The kernel is a single process-wide instance, so any test that boots it has
+/// to be serialised against every other one. Cargo runs the tests in this
+/// binary on parallel threads, and a second pwc_boot returns PWC_EAGAIN rather
+/// than quietly sharing — which showed up as an unrelated-looking -4 the moment
+/// a third booting test was added.
+static KERNEL_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
 /// Ask C for a status code's name. Safe because `pwc_sys_status_name` is
 /// documented never to return NULL and to return a pointer to a string
 /// literal with static lifetime.
@@ -114,6 +121,163 @@ fn handle_layout_matches_the_wire_abi() {
     let zeroed = sys::PwcHandle::default();
     assert_eq!(zeroed.index, 0);
     assert_eq!(zeroed.generation, 0);
+}
+
+#[test]
+fn error_detail_layout_matches_the_wire_abi() {
+    // The C side static_asserts this same 40. Both sides asserting it is the
+    // point: the struct is read field-by-field across the FFI boundary, so a
+    // silent layout drift would not fail to compile — it would hand Rust a
+    // pointer read out of the middle of another field.
+    assert_eq!(core::mem::size_of::<sys::PwcErrorDetail>(), 40);
+    assert_eq!(core::mem::align_of::<sys::PwcErrorDetail>(), 8);
+}
+
+#[test]
+fn last_error_is_recorded_and_readable() {
+    let _guard = KERNEL_LOCK.lock().expect("kernel test lock");
+    // Guards against the failure mode this feature actually had: a getter
+    // returning a static that nothing ever wrote. That version compiled,
+    // linked, and read plausibly at every call site.
+    let config = sys::PwcBootConfig {
+        handle_capacity: 8,
+        worker_count: 1,
+    };
+    assert_eq!(sys::safe::boot(config.handle_capacity, config.worker_count), sys::PWC_OK);
+
+    let mut port = sys::PwcHandle::default();
+    assert_eq!(sys::safe::port_create(&mut port), sys::PWC_OK);
+    assert_eq!(sys::safe::handle_close(port), sys::PWC_OK);
+
+    // Closing a stale handle must report the generation mismatch, not succeed.
+    let status = sys::safe::handle_close(port);
+    assert_eq!(status, sys::PWC_ESTALE);
+
+    let detail = sys::safe::last_error().expect("the core must record a detail for ESTALE");
+    assert_eq!(detail.status, sys::PWC_ESTALE);
+    assert_eq!(detail.module, "core");
+    assert!(detail.line > 0, "line was {}", detail.line);
+    // -ffile-prefix-map rewrites __FILE__ to a repo-relative path, so this is
+    // stable across machines rather than an absolute build path.
+    assert!(
+        detail.file.contains("handle.c"),
+        "unexpected file {:?}",
+        detail.file
+    );
+    assert!(!detail.message.is_empty());
+
+    sys::safe::shutdown();
+}
+
+#[test]
+fn trace_record_layout_matches_the_wire_abi() {
+    // The C side static_asserts the same 56. Both sides assert it because the
+    // struct is read field-by-field across FFI: a layout drift would not fail
+    // to compile, it would hand Rust a pointer read from the middle of another
+    // field.
+    assert_eq!(core::mem::size_of::<sys::PwcTraceRecord>(), 56);
+    assert_eq!(core::mem::align_of::<sys::PwcTraceRecord>(), 8);
+}
+
+#[test]
+fn ktrace_drains_recorded_failures() {
+    let _guard = KERNEL_LOCK.lock().expect("kernel test lock");
+    assert_eq!(sys::safe::boot(8, 1), sys::PWC_OK);
+
+    // Boot is not silent: each module's init and the kernel itself emit INFO
+    // notes, so those are cleared before this test's own record is observed.
+    // Asserting a non-zero count keeps module bring-up observable rather than
+    // letting it quietly stop happening.
+    let mut boot_notes = 0usize;
+    while sys::safe::ktrace_drain()
+        .expect("drain must not error on a booted core")
+        .is_some()
+    {
+        boot_notes += 1;
+    }
+    assert!(boot_notes > 0, "boot must trace its own module bring-up");
+
+    // Any recorded failure is also traced — the detail record and the ring
+    // share one choke point in kernel/status.c.
+    let stale = sys::PwcHandle {
+        index: 4000,
+        generation: 7,
+    };
+    assert_eq!(sys::safe::handle_close(stale), sys::PWC_EBADF);
+
+    let record = sys::safe::ktrace_drain()
+        .expect("drain must not error")
+        .expect("the failure above must have been traced");
+    assert_eq!(record.status, sys::PWC_EBADF);
+    assert_eq!(record.level, sys::trace_level::ERROR);
+    assert_eq!(record.module, "core");
+    assert!(record.line > 0, "line was {}", record.line);
+    assert!(
+        record.file.contains("handle.c"),
+        "unexpected file {:?}",
+        record.file
+    );
+
+    // Drained back to empty, and nothing was dropped at this volume.
+    assert_eq!(sys::safe::ktrace_drain().expect("drain must not error"), None);
+    assert_eq!(sys::safe::ktrace_dropped().expect("drop count readable"), 0);
+
+    sys::safe::shutdown();
+}
+
+#[test]
+fn sh_command_layout_matches_the_wire_abi() {
+    // 8 header bytes, PWC_SH_MAX_ARGS lengths, then the word array. Asserted on
+    // both sides because the struct is read field-by-field across FFI.
+    let expected = 8 + (4 * sys::PWC_SH_MAX_ARGS) + (sys::PWC_SH_MAX_ARGS * sys::PWC_SH_MAX_ARG);
+    assert_eq!(core::mem::size_of::<sys::PwcShCommand>(), expected);
+}
+
+#[test]
+fn sh_parse_applies_the_kernels_quoting_rules() {
+    // The point of exposing the parser: the UI must not reimplement quoting.
+    let words = sys::safe::sh_parse(b"echo \"hello world\" --flag")
+        .expect("a well-formed line must parse");
+    assert_eq!(words.argc, 3);
+    assert_eq!(&words.argv[1][..words.arglen[1] as usize], b"hello world");
+
+    // Malformed input is rejected rather than silently truncated.
+    assert!(sys::safe::sh_parse(b"echo \"unterminated").is_err());
+    assert!(sys::safe::sh_parse(b"echo \"bad \\q\"").is_err());
+}
+
+#[test]
+fn sh_exec_runs_builtins_and_defers_the_rest() {
+    let _guard = KERNEL_LOCK.lock().expect("kernel test lock");
+    assert_eq!(sys::safe::boot(8, 1), sys::PWC_OK);
+
+    let mut port = sys::PwcHandle::default();
+    assert_eq!(sys::safe::port_create(&mut port), sys::PWC_OK);
+
+    // A built-in runs in the kernel and writes its output to the port.
+    let (status, _) = sys::safe::sh_exec(port, b"echo hello");
+    assert_eq!(status, sys::PWC_OK);
+
+    let mut buffer = [0u8; 256];
+    let mut len = 0usize;
+    assert_eq!(
+        sys::safe::ipc_recv(port, &mut buffer, &mut len),
+        sys::PWC_OK
+    );
+    assert_eq!(&buffer[..len], b"hello");
+
+    // A host verb parses cleanly and is handed back rather than run.
+    let (status, command) = sys::safe::sh_exec(port, b"pack list --side client");
+    assert_eq!(status, sys::PWC_ENOSYS);
+    assert_eq!(command.argc, 4);
+    assert_eq!(&command.argv[0][..command.arglen[0] as usize], b"pack");
+
+    // There is no path to process execution: an external-looking command is
+    // simply not a built-in, not an attempt to spawn anything.
+    let (status, _) = sys::safe::sh_exec(port, b"/bin/sh -c whoami");
+    assert_eq!(status, sys::PWC_ENOSYS);
+
+    sys::safe::shutdown();
 }
 
 #[test]

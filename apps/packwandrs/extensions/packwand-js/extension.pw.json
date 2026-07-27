@@ -1,0 +1,14 @@
+{
+  "$schema": "../extension.schema.json",
+  "id": "packwand-js",
+  "name": "PackwandJS",
+  "version": "26.2.0",
+  "apiVersion": 1,
+  "description": "KubeJS script discovery, validation, diagnostics, and project integration.",
+  "entry": "src/index.ts",
+  "activation": ["project:modpacks"],
+  "commands": ["validate"],
+  "views": ["scripts"],
+  "validators": ["kubejs-syntax"],
+  "capabilities": ["project.read", "diagnostics.register"]
+}

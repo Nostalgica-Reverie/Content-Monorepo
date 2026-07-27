@@ -2,15 +2,14 @@
 
 #![forbid(unsafe_code)]
 
-mod config;
 mod discovery;
 
 use std::env;
 use std::fs;
-use std::path::{Component, Path, PathBuf};
+use std::path::PathBuf;
 use std::process::ExitCode;
 
-use config::{MARKER_NAME, PackeaterConfig};
+use packeater_cli::{MARKER_NAME, run_marker};
 use packsquash::{PackSquasher, config::SquashOptions, vfs::os_fs::OsFilesystem};
 
 #[derive(Debug)]
@@ -52,11 +51,22 @@ fn run() -> Result<(), String> {
 				return Ok(());
 			}
 			for marker in markers {
-				run_marker(&marker, None, arguments.dry_run)?;
+				if arguments.dry_run {
+					println!("Would eat {}", marker.display());
+				} else {
+					run_marker(&marker, None)?;
+				}
 			}
 			Ok(())
 		}
-		Mode::Config(marker) => run_marker(&marker, arguments.output.as_deref(), arguments.dry_run),
+		Mode::Config(marker) => {
+			if arguments.dry_run {
+				println!("Would eat {}", marker.display());
+				Ok(())
+			} else {
+				run_marker(&marker, arguments.output.as_deref()).map(|_| ())
+			}
+		}
 		Mode::LegacyToml(path) => {
 			if arguments.dry_run {
 				println!(
@@ -75,84 +85,6 @@ fn run() -> Result<(), String> {
 			optimize(options)
 		}
 	}
-}
-
-fn run_marker(marker: &Path, output: Option<&Path>, dry_run: bool) -> Result<(), String> {
-	if marker.file_name().and_then(|name| name.to_str()) != Some(MARKER_NAME) {
-		return Err(format!(
-			"JSON marker must be named {MARKER_NAME}: {}",
-			marker.display()
-		));
-	}
-	let pack_directory = marker
-		.parent()
-		.ok_or_else(|| format!("{} has no parent folder", marker.display()))?;
-	let config = PackeaterConfig::read(marker)?;
-	if !config.enabled {
-		println!("Skipping disabled pack {}", pack_directory.display());
-		return Ok(());
-	}
-	let output = output
-		.map(Path::to_path_buf)
-		.unwrap_or_else(|| config.output_path(pack_directory));
-	let normalized_pack_directory = absolute_lexical(pack_directory)?;
-	let output = absolute_lexical(&output)?;
-	if output.starts_with(&normalized_pack_directory) {
-		return Err(format!(
-			"output {} must be outside the source pack folder {}",
-			output.display(),
-			pack_directory.display()
-		));
-	}
-	if dry_run {
-		println!(
-			"Would eat {} -> {} (aggressive compression, lossy PNG={}, lossy audio={})",
-			pack_directory.display(),
-			output.display(),
-			config.lossy.png,
-			config.lossy.audio
-		);
-		return Ok(());
-	}
-	if let Some(parent) = output.parent() {
-		fs::create_dir_all(parent)
-			.map_err(|error| format!("could not create {}: {error}", parent.display()))?;
-	}
-	println!(
-		"Eating {} -> {}",
-		pack_directory.display(),
-		output.display()
-	);
-	let options = config.squash_options(&normalized_pack_directory, &output)?;
-	optimize(options)?;
-	let bytes = fs::metadata(&output)
-		.map_err(|error| format!("could not inspect {}: {error}", output.display()))?
-		.len();
-	println!("Packed {} bytes into {}", bytes, output.display());
-	Ok(())
-}
-
-fn absolute_lexical(path: &Path) -> Result<PathBuf, String> {
-	let path = if path.is_absolute() {
-		path.to_path_buf()
-	} else {
-		env::current_dir()
-			.map_err(|error| format!("could not resolve current directory: {error}"))?
-			.join(path)
-	};
-	let mut normalized = PathBuf::new();
-	for component in path.components() {
-		match component {
-			Component::CurDir => {}
-			Component::ParentDir => {
-				normalized.pop();
-			}
-			Component::Prefix(_) | Component::RootDir | Component::Normal(_) => {
-				normalized.push(component.as_os_str());
-			}
-		}
-	}
-	Ok(normalized)
 }
 
 fn optimize(options: SquashOptions) -> Result<(), String> {
@@ -240,12 +172,5 @@ mod tests {
 			.unwrap()
 			.unwrap();
 		assert!(matches!(arguments.mode, Mode::Config(_)));
-	}
-
-	#[test]
-	fn parent_output_is_normalized_outside_the_pack() {
-		let pack = absolute_lexical(Path::new("packs/example")).unwrap();
-		let output = absolute_lexical(Path::new("packs/example/../dist/result.zip")).unwrap();
-		assert!(!output.starts_with(pack));
 	}
 }

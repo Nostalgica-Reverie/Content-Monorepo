@@ -1,0 +1,14 @@
+{
+  "$schema": "../extension.schema.json",
+  "id": "game-studio",
+  "name": "GamePW Studio",
+  "version": "26.2.0",
+  "apiVersion": 1,
+  "description": "Unified datapack and resource-pack validation, registries, assets, and recipe tooling.",
+  "entry": "src/index.ts",
+  "activation": ["project:datapacks", "project:resourcepacks", "project:modpacks"],
+  "commands": ["check", "recipes", "parity"],
+  "views": ["content", "recipes"],
+  "validators": ["content", "parity", "recipes"],
+  "capabilities": ["project.read", "diagnostics.register"]
+}

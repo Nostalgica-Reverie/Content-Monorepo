@@ -2,7 +2,7 @@ use std::path::{Path, PathBuf};
 
 use walkdir::{DirEntry, WalkDir};
 
-use crate::config::MARKER_NAME;
+use packeater_cli::MARKER_NAME;
 
 fn descend(entry: &DirEntry) -> bool {
 	entry.depth() == 0

@@ -43,19 +43,49 @@ impl fmt::Display for AbiVersion {
 /// Wraps the raw [`pwc_status`](sys::PWC_OK) integer and pairs it with the
 /// stable identifier the kernel reports for it, so log output names the code
 /// rather than printing a bare negative number.
+///
+/// Where the failing path recorded one, it also carries the kernel's detail
+/// record — the recording module, source location, and the platform error code
+/// the OS actually returned. That last field is the one that matters in
+/// practice: without it a `PWC_EIO` out of the credential store or a job object
+/// is indistinguishable from any other, and the OS's own reason is destroyed by
+/// the next call.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Error {
     status: i32,
+    detail: Option<sys::safe::ErrorDetail>,
 }
 
 impl Error {
-    /// Wrap a raw status code.
+    /// Wrap a raw status code, capturing the core's detail record for it.
     ///
     /// Returns `None` for [`PWC_OK`](sys::PWC_OK) and any other non-negative
     /// value, since those are not failures.
+    ///
+    /// Call this immediately after the failing call. The detail lives in a
+    /// thread-local that the next failure on this thread overwrites, so a
+    /// record whose own `status` disagrees with `status` is treated as a
+    /// leftover from an earlier call and dropped rather than misreported.
     #[must_use]
     pub fn from_status(status: i32) -> Option<Self> {
-        (status < sys::PWC_OK).then_some(Self { status })
+        if status >= sys::PWC_OK {
+            return None;
+        }
+        let detail = sys::safe::last_error().filter(|detail| detail.status == status);
+        Some(Self { status, detail })
+    }
+
+    /// An error this crate decided on without the core being called.
+    ///
+    /// Deliberately carries no detail record. The thread-local one belongs to
+    /// whatever C path last failed, which for these cases is an unrelated
+    /// earlier call — attaching it would point a reader at the wrong source
+    /// line with full confidence.
+    const fn without_detail(status: i32) -> Self {
+        Self {
+            status,
+            detail: None,
+        }
     }
 
     /// The raw status code.
@@ -74,11 +104,44 @@ impl Error {
     pub fn name(self) -> &'static str {
         sys::safe::status_name(self.status)
     }
+
+    /// What the failing path in the C tree reported, if it recorded anything.
+    ///
+    /// `None` means the path returned a bare status without a detail — common
+    /// for plain argument-validation rejections, where the status is already
+    /// the whole story.
+    #[must_use]
+    pub const fn detail(self) -> Option<sys::safe::ErrorDetail> {
+        self.detail
+    }
+
+    /// The OS error code behind this failure, if there was one.
+    ///
+    /// `GetLastError()` on Windows, `errno` on Linux. `None` when the failure
+    /// originated in packwandc's own logic rather than in a platform call.
+    #[must_use]
+    pub fn platform_code(self) -> Option<i32> {
+        self.detail
+            .filter(|detail| detail.platform_code != 0)
+            .map(|detail| detail.platform_code)
+    }
 }
 
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{} ({})", self.name(), self.status)
+        write!(f, "{} ({})", self.name(), self.status)?;
+        let Some(detail) = self.detail else {
+            return Ok(());
+        };
+        write!(
+            f,
+            ": {} [{} at {}:{}]",
+            detail.message, detail.module, detail.file, detail.line
+        )?;
+        if detail.platform_code != 0 {
+            write!(f, " (platform code {})", detail.platform_code)?;
+        }
+        Ok(())
     }
 }
 
@@ -86,6 +149,124 @@ impl core::error::Error for Error {}
 
 /// Result alias for packwandc operations.
 pub type Result<T> = core::result::Result<T, Error>;
+
+/// One record drained from the core's trace ring — the `dmesg` analogue.
+pub use sys::safe::TraceRecord;
+
+/// Trace severity constants, mirroring `PWC_TRACE_LEVEL_*` in the C headers.
+pub use sys::trace_level;
+
+/// The outcome of running one pw4shell line.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum ShellOutcome {
+    /// A kernel built-in ran it. Any output was written to the port.
+    Handled,
+    /// The line parsed cleanly but names no kernel built-in.
+    ///
+    /// Not an error: `pack`, `mod` and `diag` verbs live in the Rust crates and
+    /// cannot be reached from C. The caller dispatches the words itself, having
+    /// been spared reimplementing the quoting rules.
+    ForHost(Vec<String>),
+    /// A blank or comment-only line. A no-op, not a failure — a console that
+    /// complains when you press enter on an empty prompt is hostile.
+    Empty,
+}
+
+/// Copy the parsed words out of a native command as owned Strings.
+///
+/// `arglen` is authoritative over the NUL terminator, and clamped: the kernel
+/// guarantees the two agree, but this side must not index past the fixed array
+/// on the strength of a length field if that ever stops being true.
+fn shell_words(command: &sys::PwcShCommand) -> Vec<String> {
+    let argc = (command.argc as usize).min(sys::PWC_SH_MAX_ARGS);
+    (0..argc)
+        .map(|i| {
+            let len = (command.arglen[i] as usize).min(sys::PWC_SH_MAX_ARG - 1);
+            String::from_utf8_lossy(&command.argv[i][..len]).into_owned()
+        })
+        .collect()
+}
+
+/// Tokenise a pw4shell line without running it.
+///
+/// Use this rather than splitting on whitespace in the UI: quoting, escapes and
+/// comments are defined once, in the kernel, and a console that disagrees with
+/// its own backend about what `"a b"` means is worse than one with no
+/// completion at all.
+///
+/// # Errors
+///
+/// Returns [`Error`] if the line is malformed — an unterminated quote, an
+/// unknown escape, an over-long word, or more than one line.
+pub fn shell_parse(line: &str) -> Result<Vec<String>> {
+    match sys::safe::sh_parse(line.as_bytes()) {
+        Ok(command) => Ok(shell_words(&command)),
+        Err(status) => Err(Error::from_status(status)
+            .unwrap_or_else(|| Error::without_detail(sys::PWC_EINVAL))),
+    }
+}
+
+/// Parse and run one pw4shell line.
+///
+/// Output lines are written to `port` as individual framed messages, so a
+/// reader taking one frame gets one line. Pass `None` to discard output.
+///
+/// # Errors
+///
+/// Returns [`Error`] only for a malformed line or a failing built-in. A line
+/// the kernel does not implement is [`ShellOutcome::ForHost`], not an error.
+pub fn shell_exec(line: &str, port: Option<&Port>) -> Result<ShellOutcome> {
+    let raw = port.map_or_else(sys::PwcHandle::default, Port::handle);
+    let (status, command) = sys::safe::sh_exec(raw, line.as_bytes());
+
+    if status == sys::PWC_ENOSYS {
+        return Ok(ShellOutcome::ForHost(shell_words(&command)));
+    }
+    if let Some(error) = Error::from_status(status) {
+        return Err(error);
+    }
+    if command.argc == 0 {
+        return Ok(ShellOutcome::Empty);
+    }
+    Ok(ShellOutcome::Handled)
+}
+
+/// Drain one trace record from the core, oldest first.
+///
+/// Returns `Ok(None)` when the ring is empty. Intended to be called in a loop
+/// until it yields `None`.
+///
+/// **Single consumer.** The ring has one read cursor, so two callers draining
+/// concurrently split the stream between them rather than each seeing all of
+/// it. [`packwandc_host`] owns the drain for the desktop process; nothing else
+/// should call this.
+///
+/// # Errors
+///
+/// Returns [`Error`] if the core is not booted, or if it reports a record
+/// layout this build does not understand.
+///
+/// [`packwandc_host`]: https://docs.rs/packwandc-host
+pub fn trace_drain() -> Result<Option<TraceRecord>> {
+    sys::safe::ktrace_drain().map_err(|status| {
+        Error::from_status(status).unwrap_or_else(|| Error::without_detail(sys::PWC_EIO))
+    })
+}
+
+/// How many trace records the core has discarded because the ring was full.
+///
+/// Cumulative since boot. A drop leaves nothing behind in the stream, so a
+/// consumer that never checks this cannot tell a quiet period from an
+/// overflowing one.
+///
+/// # Errors
+///
+/// Returns [`Error`] if the core is not booted.
+pub fn trace_dropped() -> Result<u64> {
+    sys::safe::ktrace_dropped().map_err(|status| {
+        Error::from_status(status).unwrap_or_else(|| Error::without_detail(sys::PWC_EIO))
+    })
+}
 
 /// Convert a raw status into a `Result`, discarding the success value.
 fn check(status: i32) -> Result<()> {
@@ -142,9 +323,7 @@ pub fn check_abi_compatibility() -> Result<AbiVersion> {
     if version.major == sys::PWC_ABI_VERSION_MAJOR {
         Ok(version)
     } else {
-        Err(Error {
-            status: sys::PWC_ENOSYS,
-        })
+        Err(Error::without_detail(sys::PWC_ENOSYS))
     }
 }
 
@@ -194,10 +373,20 @@ pub struct Handle {
 impl Handle {
     /// Creates a new IPC port handle.
     ///
+    /// # Deprecated
+    ///
+    /// Use [`Port`] instead. A port owns two resources — a handle table slot
+    /// and a ring slot from the fixed pool of
+    /// [`PWC_IPC_MAX_PORTS`](sys::PWC_IPC_MAX_PORTS) — and `Handle`'s `Drop`
+    /// releases only the first. Dropping a port opened this way therefore
+    /// leaks a ring slot, and after enough of them port creation fails
+    /// permanently with `PWC_ENOMEM`.
+    ///
     /// # Errors
     ///
     /// Returns the native status when the core is not booted or its fixed
     /// handle table is full.
+    #[deprecated(note = "use Port::open: Handle's Drop leaks the port's ring slot")]
     pub fn port() -> Result<Self> {
         let mut raw = sys::PwcHandle::default();
         check(sys::safe::port_create(&mut raw))?;
@@ -205,6 +394,12 @@ impl Handle {
     }
 
     /// Wait for this handle and return the reported event bits.
+    ///
+    /// Note that the core has no readiness source wired up yet, so this
+    /// currently always sleeps out its timeout and then reports
+    /// [`PWC_ETIMEDOUT`](sys::PWC_ETIMEDOUT) — see the header comment on
+    /// `kernel/wait.c` for what an epoll/IOCP-backed answer requires. Invalid
+    /// handles are still rejected up front rather than after the timeout.
     ///
     /// # Errors
     ///
@@ -218,9 +413,7 @@ impl Handle {
         let mut ready = 0usize;
         check(sys::safe::wait(&mut entries, timeout_ms, &mut ready))?;
         if ready != 1 {
-            return Err(Error {
-                status: sys::PWC_EAGAIN,
-            });
+            return Err(Error::without_detail(sys::PWC_EAGAIN));
         }
         Ok(entries[0].revents)
     }
@@ -255,6 +448,93 @@ impl Drop for Handle {
     }
 }
 
+/// An owned pwipc port: a framed-message channel with a fixed-size ring.
+///
+/// A port owns *two* resources — a handle table slot and one of the
+/// [`PWC_IPC_MAX_PORTS`](sys::PWC_IPC_MAX_PORTS) ring slots — and both are
+/// released on drop. That is the whole reason this type exists rather than a
+/// bare [`Handle`]: closing only the handle leaks the ring slot, and the pool
+/// is small enough that a leak per command exhausts it quickly.
+#[derive(Debug)]
+pub struct Port {
+    raw: Option<sys::PwcHandle>,
+}
+
+impl Port {
+    /// Open a port.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error`] if the core is not booted, the handle table is full,
+    /// or every ring slot is already in use.
+    pub fn open() -> Result<Self> {
+        let mut raw = sys::PwcHandle::default();
+        check(sys::safe::port_create(&mut raw))?;
+        Ok(Self { raw: Some(raw) })
+    }
+
+    /// The underlying handle, for passing to calls that take one.
+    #[must_use]
+    pub fn handle(&self) -> sys::PwcHandle {
+        self.raw.unwrap_or_default()
+    }
+
+    /// Append one framed message.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error`] with `PWC_EOVERFLOW` when the ring is full. The
+    /// message is not queued — a partial frame is never published.
+    pub fn send(&self, data: &[u8]) -> Result<()> {
+        check(sys::safe::ipc_send(self.handle(), data))
+    }
+
+    /// Pop the oldest framed message, or `None` when the port is empty.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error`] if the port is closed or the message is larger than
+    /// [`PWC_IPC_MAX_MESSAGE`](sys::PWC_IPC_MAX_MESSAGE).
+    pub fn recv(&self) -> Result<Option<Vec<u8>>> {
+        let mut buffer = vec![0u8; sys::PWC_IPC_MAX_MESSAGE];
+        let mut length = 0usize;
+        let status = sys::safe::ipc_recv(self.handle(), &mut buffer, &mut length);
+        if status == sys::PWC_EAGAIN {
+            return Ok(None);
+        }
+        check(status)?;
+        buffer.truncate(length);
+        Ok(Some(buffer))
+    }
+
+    /// Drain every queued message, lossily decoding each as UTF-8.
+    ///
+    /// Lossy because the messages are shell output destined for a log view:
+    /// mangling one byte is better than dropping a whole line of diagnostics
+    /// over an encoding question nobody can act on.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error`] if a receive fails for a reason other than emptiness.
+    pub fn drain_lines(&self) -> Result<Vec<String>> {
+        let mut lines = Vec::new();
+        while let Some(bytes) = self.recv()? {
+            lines.push(String::from_utf8_lossy(&bytes).into_owned());
+        }
+        Ok(lines)
+    }
+}
+
+impl Drop for Port {
+    fn drop(&mut self) {
+        if let Some(raw) = self.raw.take() {
+            // Releases the ring slot as well as the handle. A plain
+            // handle_close here would leak the slot for the process lifetime.
+            let _ = sys::safe::ipc_port_close(raw);
+        }
+    }
+}
+
 /// Native ownership of a launched process tree.
 #[derive(Debug)]
 pub struct ProcessTree {
@@ -279,9 +559,7 @@ impl ProcessTree {
     ///
     /// Returns the translated platform or stale-handle error.
     pub fn kill(&mut self) -> Result<()> {
-        let raw = self.raw.take().ok_or(Error {
-            status: sys::PWC_EBADF,
-        })?;
+        let raw = self.raw.take().ok_or(Error::without_detail(sys::PWC_EBADF))?;
         check(sys::safe::proc_kill(raw))
     }
 }
@@ -428,6 +706,53 @@ mod windows_native_tests {
         sys::safe::shutdown();
         std::fs::remove_dir_all(root).expect("remove watch root");
     }
+    /// The phase 2 criterion: a change on disk reaches the consumer with no
+    /// polling loop anywhere in this test.
+    ///
+    /// The distinction from `recursive_watch_observes_external_change` is the
+    /// whole point. That test calls `read_changes`, which *blocks* — it works
+    /// only because it dedicates this thread to waiting. Here the kernel owns
+    /// the blocking thread and the consumer just drains a port, which is what
+    /// the UI needed in order to stop polling.
+    #[test]
+    fn watch_streams_changes_to_a_port_without_polling() {
+        let _guard = KERNEL_LOCK.lock().expect("kernel test lock");
+        let root = std::env::temp_dir().join(format!("packwandc-stream-{}", std::process::id()));
+        std::fs::create_dir_all(&root).expect("create watch root");
+        assert_eq!(sys::safe::boot(64, 2), sys::PWC_OK);
+
+        let port = Port::open().expect("open port");
+        let watch = FsWatch::open(root.to_str().expect("Windows temp path is UTF-8"))
+            .expect("open recursive watch");
+        watch.stream_to(&port).expect("start the watch poller");
+
+        let changed = root.join("streamed.txt");
+        std::fs::write(&changed, b"changed outside editor").expect("write watched file");
+
+        // Waiting for the message to arrive is not polling the *filesystem* —
+        // nothing here asks the OS whether anything changed. The kernel's
+        // poller is blocked in the platform call and pushes when it returns.
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
+        let mut batches = 0usize;
+        while std::time::Instant::now() < deadline {
+            if let Some(message) = port.recv().expect("drain the watch port") {
+                assert_eq!(message.len(), 4, "each batch is a little-endian u32 count");
+                batches += 1;
+                break;
+            }
+            std::thread::sleep(std::time::Duration::from_millis(20));
+        }
+        assert!(batches > 0, "no change batch arrived on the port");
+
+        // Closing the watch is the only cancellation there is: it unblocks the
+        // poller from inside the OS. Shutdown joins it, so a failure here hangs
+        // rather than failing — which is itself the signal.
+        drop(watch);
+        drop(port);
+        sys::safe::shutdown();
+        let _ = std::fs::remove_dir_all(root);
+    }
+
     #[test]
     fn job_object_kills_spawned_grandchild() {
         use std::io::{BufRead, BufReader};
@@ -490,15 +815,32 @@ impl FsWatch {
     pub fn canceller(&self) -> FsWatchCanceller {
         FsWatchCanceller { raw: self.raw }
     }
+    /// Stream change batches to `port` on a kernel-owned thread.
+    ///
+    /// This is the non-polling path. [`read_changes`](Self::read_changes)
+    /// blocks the calling thread; this hands the blocking to the kernel and
+    /// leaves the caller draining a port at its own pace. Each batch is a
+    /// little-endian `u32` change count.
+    ///
+    /// Dropping the watch stops the stream — that is the only cancellation
+    /// available, because the kernel's thread is blocked inside the OS.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error`] if the watch or port handle is invalid, the port is
+    /// not writable, or no stream slots are free.
+    pub fn stream_to(&self, port: &Port) -> Result<()> {
+        let raw = self.raw.ok_or(Error::without_detail(sys::PWC_EBADF))?;
+        check(sys::safe::fs_watch_stream(raw, port.handle()))
+    }
+
     /// Block until a coalesced batch of filesystem changes is available.
     ///
     /// # Errors
     ///
     /// Returns a native watcher or stale-handle error.
     pub fn read_changes(&self) -> Result<usize> {
-        let raw = self.raw.ok_or(Error {
-            status: sys::PWC_EBADF,
-        })?;
+        let raw = self.raw.ok_or(Error::without_detail(sys::PWC_EBADF))?;
         let mut events = 0usize;
         check(sys::safe::fs_watch_read(raw, &mut events))?;
         Ok(events)

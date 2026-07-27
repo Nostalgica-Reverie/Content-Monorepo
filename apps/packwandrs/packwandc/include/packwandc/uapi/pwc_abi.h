@@ -13,8 +13,9 @@
 
 /* Bumped only on a breaking change. The host refuses to boot on a mismatch. */
 #define PWC_ABI_VERSION_MAJOR 0u
-/* Bumped on backward-compatible additions, e.g. appending a syscall. */
-#define PWC_ABI_VERSION_MINOR 1u
+/* Bumped on backward-compatible additions, e.g. appending a syscall.
+ * 2: appended pwc_ktrace_drain and pwc_ktrace_dropped (syscalls 7 and 8). */
+#define PWC_ABI_VERSION_MINOR 2u
 
 /* --- linkage ----------------------------------------------------------- */
 

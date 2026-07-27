@@ -6,6 +6,9 @@
 // the C ABI. See packwandc.md 4.1.
 
 use crate::PwcHandle;
+use crate::PwcErrorDetail;
+use crate::PwcTraceRecord;
+use crate::PwcShCommand;
 
 /// Syscall numbers. Append-only and frozen: see tests/golden/syscalls.txt.
 #[repr(i32)]
@@ -23,6 +26,10 @@ pub enum SyscallNr {
     PwcWait = 5,
     /// `pwc_last_error_get`, provided by the core module.
     PwcLastErrorGet = 6,
+    /// `pwc_ktrace_drain`, provided by the core module.
+    PwcKtraceDrain = 7,
+    /// `pwc_ktrace_dropped`, provided by the core module.
+    PwcKtraceDropped = 8,
     /// `pwc_fs_validate_relative`, provided by the pwfs module.
     PwcFsValidateRelative = 16,
     /// `pwc_fs_read`, provided by the pwfs module.
@@ -35,6 +42,8 @@ pub enum SyscallNr {
     PwcFsWatchRead = 20,
     /// `pwc_fs_watch_close`, provided by the pwfs module.
     PwcFsWatchClose = 21,
+    /// `pwc_fs_watch_stream`, provided by the pwfs module.
+    PwcFsWatchStream = 22,
     /// `pwc_proc_adopt`, provided by the pwproc module.
     PwcProcAdopt = 32,
     /// `pwc_proc_kill`, provided by the pwproc module.
@@ -49,10 +58,20 @@ pub enum SyscallNr {
     PwcKeysClear = 50,
     /// `pwc_ipc_port_create`, provided by the pwipc module.
     PwcIpcPortCreate = 64,
+    /// `pwc_ipc_send`, provided by the pwipc module.
+    PwcIpcSend = 65,
+    /// `pwc_ipc_recv`, provided by the pwipc module.
+    PwcIpcRecv = 66,
+    /// `pwc_ipc_port_close`, provided by the pwipc module.
+    PwcIpcPortClose = 67,
+    /// `pwc_sh_parse`, provided by the pwsh module.
+    PwcShParse = 192,
+    /// `pwc_sh_exec`, provided by the pwsh module.
+    PwcShExec = 193,
 }
 
 /// Number of live syscalls. Must equal `PWC_SYSCALL_COUNT` in C.
-pub const SYSCALL_COUNT: usize = 19;
+pub const SYSCALL_COUNT: usize = 27;
 
 unsafe extern "C" {
     /// Syscall 1, `pwc_sys_version` (core module).
@@ -66,7 +85,11 @@ unsafe extern "C" {
     /// Syscall 5, `pwc_wait` (core module).
     pub fn pwc_wait(ents: *mut core::ffi::c_void, n: usize, timeout_ms: i64, out_ready: *mut usize) -> i32;
     /// Syscall 6, `pwc_last_error_get` (core module).
-    pub fn pwc_last_error_get() -> *const core::ffi::c_void;
+    pub fn pwc_last_error_get() -> *const PwcErrorDetail;
+    /// Syscall 7, `pwc_ktrace_drain` (core module).
+    pub fn pwc_ktrace_drain(out: *mut PwcTraceRecord) -> i32;
+    /// Syscall 8, `pwc_ktrace_dropped` (core module).
+    pub fn pwc_ktrace_dropped(out: *mut u64) -> i32;
     /// Syscall 16, `pwc_fs_validate_relative` (pwfs module).
     pub fn pwc_fs_validate_relative(path: *const u8, path_len: usize) -> i32;
     /// Syscall 17, `pwc_fs_read` (pwfs module).
@@ -79,6 +102,8 @@ unsafe extern "C" {
     pub fn pwc_fs_watch_read(watch: PwcHandle, out_events: *mut usize) -> i32;
     /// Syscall 21, `pwc_fs_watch_close` (pwfs module).
     pub fn pwc_fs_watch_close(watch: PwcHandle) -> i32;
+    /// Syscall 22, `pwc_fs_watch_stream` (pwfs module).
+    pub fn pwc_fs_watch_stream(watch: PwcHandle, port: PwcHandle) -> i32;
     /// Syscall 32, `pwc_proc_adopt` (pwproc module).
     pub fn pwc_proc_adopt(pid: u32, out: *mut PwcHandle) -> i32;
     /// Syscall 33, `pwc_proc_kill` (pwproc module).
@@ -93,4 +118,14 @@ unsafe extern "C" {
     pub fn pwc_keys_clear() -> i32;
     /// Syscall 64, `pwc_ipc_port_create` (pwipc module).
     pub fn pwc_ipc_port_create(out: *mut PwcHandle) -> i32;
+    /// Syscall 65, `pwc_ipc_send` (pwipc module).
+    pub fn pwc_ipc_send(port: PwcHandle, data: *const u8, length: usize) -> i32;
+    /// Syscall 66, `pwc_ipc_recv` (pwipc module).
+    pub fn pwc_ipc_recv(port: PwcHandle, buffer: *mut u8, capacity: usize, out_len: *mut usize) -> i32;
+    /// Syscall 67, `pwc_ipc_port_close` (pwipc module).
+    pub fn pwc_ipc_port_close(port: PwcHandle) -> i32;
+    /// Syscall 192, `pwc_sh_parse` (pwsh module).
+    pub fn pwc_sh_parse(line: *const u8, length: usize, out: *mut PwcShCommand) -> i32;
+    /// Syscall 193, `pwc_sh_exec` (pwsh module).
+    pub fn pwc_sh_exec(port: PwcHandle, line: *const u8, length: usize, out: *mut PwcShCommand) -> i32;
 }

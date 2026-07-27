@@ -1,0 +1,14 @@
+{
+  "$schema": "../extension.schema.json",
+  "id": "krita-pw",
+  "name": "KritaPW",
+  "version": "26.2.0",
+  "apiVersion": 1,
+  "description": "Approved Krita launch integration for textures and Krita source files.",
+  "entry": "src/index.ts",
+  "activation": ["project:resourcepacks", "project:modpacks"],
+  "commands": ["scan-assets"],
+  "views": ["assets"],
+  "validators": [],
+  "capabilities": ["project.read", "external.krita"]
+}

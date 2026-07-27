@@ -104,6 +104,46 @@ impl Host {
     pub const fn abi(&self) -> AbiVersion {
         self.abi
     }
+
+    /// Drain the core's trace ring, handing each record to `sink`.
+    ///
+    /// Returns the number of records drained. Call this periodically — the
+    /// ring holds a bounded number of records and discards the newest once
+    /// full rather than blocking the kernel thread that produced them, so a
+    /// slow drain loses trace, never correctness.
+    ///
+    /// The host owns this drain because the ring has a single read cursor
+    /// (see [`packwandc::trace_drain`]). Two drains racing would split the
+    /// stream rather than duplicating it, which is the more confusing failure.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`packwandc::Error`] if the core rejects a drain call. Records
+    /// already passed to `sink` stay passed — this does not roll back.
+    pub fn drain_trace<F>(&self, mut sink: F) -> Result<usize, packwandc::Error>
+    where
+        F: FnMut(&packwandc::TraceRecord),
+    {
+        let mut drained = 0usize;
+        while let Some(record) = packwandc::trace_drain()? {
+            sink(&record);
+            drained += 1;
+        }
+        Ok(drained)
+    }
+
+    /// Trace records the core discarded because its ring was full.
+    ///
+    /// Cumulative since boot. Worth surfacing alongside drained records: a
+    /// rising count means the drain is not keeping up and the log has holes,
+    /// which is otherwise invisible.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`packwandc::Error`] if the core is not booted.
+    pub fn trace_dropped(&self) -> Result<u64, packwandc::Error> {
+        packwandc::trace_dropped()
+    }
 }
 
 impl Drop for Host {

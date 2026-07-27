@@ -45,6 +45,126 @@ pub struct PwcHandle {
     pub generation: u32,
 }
 
+/// The kernel's detail record for the calling thread's most recent failure.
+///
+/// An errno-shaped status says what class of thing went wrong; this says which
+/// call, where in the C tree, and what the platform actually reported. See
+/// packwandc.md 3.1.
+///
+/// `status` is carried in the record so a reader can tell whether the detail
+/// belongs to the failure it is holding or to an earlier one on the same
+/// thread — a thread-local "last error" is stale-prone without it.
+///
+/// Layout is part of the wire ABI and is asserted in C (`uapi/pwc_status.h`)
+/// and in this crate's tests.
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct PwcErrorDetail {
+    /// `size_of::<PwcErrorDetail>()` as the core saw it, for forward compat.
+    pub struct_size: u32,
+    /// The status this record was recorded for.
+    pub status: i32,
+    /// `GetLastError()`/`errno`/D-Bus code, or 0 when there was none.
+    pub platform_code: i32,
+    /// `__LINE__` of the recording site.
+    pub line: u32,
+    /// Static, never NULL: `"core"`, `"pwfs"`, `"arch/win32"`.
+    pub module: *const core::ffi::c_char,
+    /// Static, never NULL.
+    pub message: *const core::ffi::c_char,
+    /// Static, never NULL. Already repo-relative via `-ffile-prefix-map`.
+    pub file: *const core::ffi::c_char,
+}
+
+/// One record drained from the kernel's ktrace ring.
+///
+/// The `dmesg` analogue: a fixed-size structured record the host pulls out and
+/// feeds to the frontend log paths. See packwandc.md 3.7.
+///
+/// Layout is part of the wire ABI and is asserted in C (`uapi/pwc_trace.h`)
+/// and in this crate's tests.
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct PwcTraceRecord {
+    /// `size_of::<PwcTraceRecord>()` as the core saw it, for forward compat.
+    pub struct_size: u32,
+    /// One of the `PWC_TRACE_LEVEL_*` constants.
+    pub level: u32,
+    /// Monotonic across the ring's lifetime; a gap means records were dropped.
+    pub sequence: u64,
+    /// The status being reported, or `PWC_OK`.
+    pub status: i32,
+    /// `GetLastError()`/`errno`/D-Bus code, or 0 when there was none.
+    pub platform_code: i32,
+    /// Source line of the emitting site.
+    pub line: u32,
+    /// Padding, so the pointers below are not silently aligned.
+    pub reserved: u32,
+    /// Static, never NULL.
+    pub module: *const core::ffi::c_char,
+    /// Static, never NULL.
+    pub message: *const core::ffi::c_char,
+    /// Static, never NULL. Already repo-relative via `-ffile-prefix-map`.
+    pub file: *const core::ffi::c_char,
+}
+
+/// Trace severity, mirroring the `PWC_TRACE_LEVEL_*` enum in `uapi/pwc_trace.h`.
+///
+/// Ordered, so a consumer can filter with a single `>=`.
+pub mod trace_level {
+    /// Verbose detail.
+    pub const DEBUG: u32 = 0;
+    /// Normal operation.
+    pub const INFO: u32 = 1;
+    /// Something recoverable.
+    pub const WARN: u32 = 2;
+    /// A recorded failure.
+    pub const ERROR: u32 = 3;
+}
+
+/// Largest single pwipc message, in bytes. Mirrors `PWC_IPC_MAX_MESSAGE`.
+pub const PWC_IPC_MAX_MESSAGE: usize = 4096;
+/// Concurrent pwipc ports. Mirrors `PWC_IPC_MAX_PORTS`.
+pub const PWC_IPC_MAX_PORTS: usize = 8;
+
+/// Maximum words in one parsed pw4shell command.
+pub const PWC_SH_MAX_ARGS: usize = 16;
+/// Maximum bytes in one pw4shell word, NUL included.
+pub const PWC_SH_MAX_ARG: usize = 128;
+/// Maximum bytes in one pw4shell input line.
+pub const PWC_SH_MAX_LINE: usize = 1024;
+
+/// One tokenised pw4shell command.
+///
+/// Fixed-size because the kernel has no allocator (packwandc.md 3.4). Every
+/// word is both length-carrying and NUL-terminated: the length is
+/// authoritative, and the terminator is there so a C consumer treating a word
+/// as a plain string cannot read off the end.
+///
+/// Layout is part of the wire ABI and is asserted in C (`uapi/pwc_sh.h`) and
+/// in this crate's tests.
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct PwcShCommand {
+    /// `size_of::<PwcShCommand>()` as the core saw it, for forward compat.
+    pub struct_size: u32,
+    /// Words present. 0 for a blank or comment-only line.
+    pub argc: u32,
+    /// Byte length of each word, excluding the NUL.
+    pub arglen: [u32; PWC_SH_MAX_ARGS],
+    /// The words themselves.
+    pub argv: [[u8; PWC_SH_MAX_ARG]; PWC_SH_MAX_ARGS],
+}
+
+impl core::fmt::Debug for PwcShCommand {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        // The default derive would dump 2 KiB of mostly-zero bytes.
+        f.debug_struct("PwcShCommand")
+            .field("argc", &self.argc)
+            .finish_non_exhaustive()
+    }
+}
+
 /// One entry in a native wait request.
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
@@ -97,7 +217,10 @@ pub use status::*;
 /// Checked against the running kernel at boot; a mismatch is fatal.
 pub const PWC_ABI_VERSION_MAJOR: u32 = 0;
 /// ABI minor version this binding was generated against.
-pub const PWC_ABI_VERSION_MINOR: u32 = 1;
+///
+/// Mirrors `PWC_ABI_VERSION_MINOR` in `uapi/pwc_abi.h` and must be bumped with
+/// it; `abi_parity.rs` compares the two against the linked core.
+pub const PWC_ABI_VERSION_MINOR: u32 = 2;
 
 /// Configuration consumed once by [`pwc_boot`].
 #[repr(C)]
@@ -183,6 +306,24 @@ pub mod safe {
     pub fn port_create(out: &mut crate::PwcHandle) -> i32 {
         // SAFETY: out is valid, aligned, writable, and not retained by C.
         unsafe { crate::pwc_ipc_port_create(out) }
+    }
+
+    /// Append one framed message to a port from caller-owned bytes.
+    pub fn ipc_send(port: crate::PwcHandle, data: &[u8]) -> i32 {
+        // SAFETY: the slice is readable for the call and is not retained.
+        unsafe { crate::pwc_ipc_send(port, data.as_ptr(), data.len()) }
+    }
+
+    /// Pop the oldest framed message into caller-owned memory.
+    pub fn ipc_recv(port: crate::PwcHandle, buffer: &mut [u8], out_len: &mut usize) -> i32 {
+        // SAFETY: the slice is writable and neither pointer is retained.
+        unsafe { crate::pwc_ipc_recv(port, buffer.as_mut_ptr(), buffer.len(), out_len) }
+    }
+
+    /// Close a port and release its ring slot.
+    pub fn ipc_port_close(port: crate::PwcHandle) -> i32 {
+        // SAFETY: the handle is passed by value with no pointer invariants.
+        unsafe { crate::pwc_ipc_port_close(port) }
     }
 
     /// Close a by-value native handle.
@@ -279,6 +420,12 @@ pub mod safe {
         unsafe { crate::pwc_fs_watch_read(watch, out_events) }
     }
 
+    /// Stream a watch's change batches to a port on a kernel-owned thread.
+    pub fn fs_watch_stream(watch: crate::PwcHandle, port: crate::PwcHandle) -> i32 {
+        // SAFETY: both handles are by value with no pointer invariants.
+        unsafe { crate::pwc_fs_watch_stream(watch, port) }
+    }
+
     /// Close a recursive native filesystem watch.
     pub fn fs_watch_close(watch: crate::PwcHandle) -> i32 {
         // SAFETY: the handle is passed by value with no pointer invariants.
@@ -294,4 +441,217 @@ pub mod safe {
         // SAFETY: out is valid, aligned, writable, and not retained by C.
         unsafe { crate::pwc_handle_dup(handle, rights, out) }
     }
+
+    /// Copy the calling thread's last-error detail record out of the core.
+    ///
+    /// Returns `None` when the thread has recorded no failure yet, or when the
+    /// core hands back a record this build cannot interpret.
+    ///
+    /// This is the one shim that returns something other than a raw status,
+    /// and the copy is the reason it can exist at all rather than an
+    /// ergonomic flourish. `pwc_last_error` points at a *mutable* thread-local:
+    /// the next failing call on this thread overwrites it, so handing out a
+    /// `&'static PwcErrorDetail` would be a lie the borrow checker could not
+    /// catch. Snapshotting at the boundary is what discharges that obligation,
+    /// and it cannot happen in `packwandc`, which is `#![forbid(unsafe_code)]`
+    /// and so cannot dereference the pointer.
+    #[must_use]
+    pub fn last_error() -> Option<ErrorDetail> {
+        // SAFETY: pwc_last_error_get returns a non-NULL pointer to a
+        // thread-local with static storage duration, initialised before first
+        // use, for every possible call. It is valid for reads for as long as
+        // this thread is alive, and the read below completes before any other
+        // packwandc call on this thread can overwrite it.
+        let ptr = unsafe { crate::pwc_last_error_get() };
+        debug_assert!(!ptr.is_null(), "pwc_last_error_get returned NULL");
+        if ptr.is_null() {
+            return None;
+        }
+        // SAFETY: as above — a valid, aligned, initialised PwcErrorDetail.
+        let raw = unsafe { *ptr };
+
+        // A record whose struct_size is not the one this build compiled
+        // against came from a core built from different headers. Reading its
+        // string pointers would be guesswork, so refuse rather than guess.
+        if raw.struct_size as usize != core::mem::size_of::<PwcErrorDetail>() {
+            return None;
+        }
+        // status >= 0 is the "nothing has failed on this thread" sentinel.
+        if raw.status >= crate::PWC_OK {
+            return None;
+        }
+
+        Some(ErrorDetail {
+            status: raw.status,
+            platform_code: raw.platform_code,
+            line: raw.line,
+            module: static_str(raw.module)?,
+            message: static_str(raw.message)?,
+            file: static_str(raw.file)?,
+        })
+    }
+
+    /// Borrow a never-NULL, static, NUL-terminated C string as `&'static str`.
+    ///
+    /// Every string in a detail record is a string literal compiled into the
+    /// core, so `'static` is accurate rather than assumed. Non-UTF-8 or NULL
+    /// yields `None` instead of panicking across the FFI boundary.
+    fn static_str(ptr: *const core::ffi::c_char) -> Option<&'static str> {
+        if ptr.is_null() {
+            return None;
+        }
+        // SAFETY: the C side documents every detail-record string as a
+        // never-NULL pointer to a NUL-terminated literal with static storage
+        // duration (kernel/pwc_error.h); pwc_error_record substitutes a literal
+        // placeholder rather than storing a NULL.
+        let cstr = unsafe { CStr::from_ptr(ptr) };
+        cstr.to_str().ok()
+    }
+
+    /// Drain one record from the kernel's trace ring, oldest first.
+    ///
+    /// `Ok(None)` means the ring is empty; `Err` carries the raw status.
+    ///
+    /// Copied out for the same reason as [`last_error`]: the record lives in a
+    /// ring slot that is released back to writers the moment the drain
+    /// advances, so a borrow would dangle by design.
+    ///
+    /// Single-consumer. Two callers draining concurrently silently split the
+    /// stream between them rather than each seeing all of it.
+    pub fn ktrace_drain() -> Result<Option<TraceRecord>, i32> {
+        let mut raw = PwcTraceRecord {
+            struct_size: 0,
+            level: 0,
+            sequence: 0,
+            status: 0,
+            platform_code: 0,
+            line: 0,
+            reserved: 0,
+            module: core::ptr::null(),
+            message: core::ptr::null(),
+            file: core::ptr::null(),
+        };
+        // SAFETY: `raw` is a live, aligned, writable PwcTraceRecord for the
+        // duration of the call, which is all the C signature requires. The
+        // callee writes it only on success and does not retain the pointer.
+        let status = unsafe { crate::pwc_ktrace_drain(&mut raw) };
+        if status == crate::PWC_EAGAIN {
+            return Ok(None);
+        }
+        if status < crate::PWC_OK {
+            return Err(status);
+        }
+        if raw.struct_size as usize != core::mem::size_of::<PwcTraceRecord>() {
+            // A core built from different headers. Reading its string pointers
+            // would be guesswork.
+            return Err(crate::PWC_ENOSYS);
+        }
+        Ok(Some(TraceRecord {
+            sequence: raw.sequence,
+            level: raw.level,
+            status: raw.status,
+            platform_code: raw.platform_code,
+            line: raw.line,
+            module: static_str(raw.module).unwrap_or("?"),
+            message: static_str(raw.message).unwrap_or("(no message)"),
+            file: static_str(raw.file).unwrap_or("?"),
+        }))
+    }
+
+    /// Records discarded because the ring was full, cumulative since boot.
+    ///
+    /// A drop leaves no record behind, so a consumer that never reads this
+    /// cannot distinguish a quiet period from an overflowing one.
+    pub fn ktrace_dropped() -> Result<u64, i32> {
+        let mut dropped = 0u64;
+        // SAFETY: `dropped` is a live, writable u64 for the call and is not retained.
+        let status = unsafe { crate::pwc_ktrace_dropped(&mut dropped) };
+        if status < crate::PWC_OK {
+            return Err(status);
+        }
+        Ok(dropped)
+    }
+
+    /// An owned snapshot of one ktrace record.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct TraceRecord {
+        /// Monotonic; a gap since the previous record means drops occurred.
+        pub sequence: u64,
+        /// One of the [`trace_level`](crate::trace_level) constants.
+        pub level: u32,
+        /// The status being reported.
+        pub status: i32,
+        /// OS error code, or 0.
+        pub platform_code: i32,
+        /// Source line of the emitting site.
+        pub line: u32,
+        /// Emitting subsystem.
+        pub module: &'static str,
+        /// What the emitting site said.
+        pub message: &'static str,
+        /// Repo-relative source file of the emitting site.
+        pub file: &'static str,
+    }
+
+    /// Parse and run one pw4shell line.
+    ///
+    /// Output lines are sent as individual framed messages on `port`. Pass a
+    /// default (invalid) handle to discard them.
+    ///
+    /// Returns the raw status alongside the parsed command. `PWC_ENOSYS` means
+    /// the line parsed cleanly but names no kernel built-in — the caller is
+    /// expected to dispatch `words` itself. A parse failure returns the parse
+    /// error and an empty word list.
+    pub fn sh_exec(port: crate::PwcHandle, line: &[u8]) -> (i32, PwcShCommand) {
+        let mut command = new_sh_command();
+        // SAFETY: `line` is readable for the call and not retained; `command`
+        // is a live, writable PwcShCommand the callee fully initialises.
+        let status = unsafe { crate::pwc_sh_exec(port, line.as_ptr(), line.len(), &mut command) };
+        (status, command)
+    }
+
+    /// Tokenise one pw4shell line without running it.
+    ///
+    /// Exposed so a UI can use the kernel's quoting rules rather than
+    /// reimplementing them — a console that disagrees with its own backend
+    /// about what `"a b"` means is worse than one with no completion at all.
+    pub fn sh_parse(line: &[u8]) -> Result<PwcShCommand, i32> {
+        let mut command = new_sh_command();
+        // SAFETY: as above.
+        let status = unsafe { crate::pwc_sh_parse(line.as_ptr(), line.len(), &mut command) };
+        if status < crate::PWC_OK {
+            return Err(status);
+        }
+        Ok(command)
+    }
+
+    fn new_sh_command() -> PwcShCommand {
+        PwcShCommand {
+            struct_size: 0,
+            argc: 0,
+            arglen: [0; crate::PWC_SH_MAX_ARGS],
+            argv: [[0; crate::PWC_SH_MAX_ARG]; crate::PWC_SH_MAX_ARGS],
+        }
+    }
+
+    /// An owned snapshot of the core's last-error detail record.
+    ///
+    /// See [`last_error`] for why this is copied rather than borrowed.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct ErrorDetail {
+        /// The status this record was recorded for.
+        pub status: i32,
+        /// `GetLastError()`/`errno`/D-Bus code, or 0 when there was none.
+        pub platform_code: i32,
+        /// Source line of the recording site in the C tree.
+        pub line: u32,
+        /// Recording subsystem: `"core"`, `"pwfs"`, `"arch/win32"`.
+        pub module: &'static str,
+        /// What the recording site said went wrong.
+        pub message: &'static str,
+        /// Repo-relative source file of the recording site.
+        pub file: &'static str,
+    }
+
+    use super::{PwcErrorDetail, PwcShCommand, PwcTraceRecord};
 }

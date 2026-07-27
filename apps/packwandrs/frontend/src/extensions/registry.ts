@@ -28,7 +28,8 @@ export interface ExtensionLoadError {
   message: string
 }
 
-const REQUIRED_FIELDS = ['id', 'name', 'version', 'entry'] as const
+const REQUIRED_STRING_FIELDS = ['id', 'name', 'version', 'entry'] as const
+const REQUIRED_ARRAY_FIELDS = ['activation', 'commands', 'views', 'validators', 'capabilities'] as const
 
 /**
  * The extension directory a glob result belongs to — the segment right after
@@ -45,10 +46,12 @@ function directoryOf(path: string): string {
 function validate(directory: string, manifest: unknown): string | null {
   if (!manifest || typeof manifest !== 'object') return 'extension.pw.json is not an object'
   const record = manifest as Record<string, unknown>
-  const missing = REQUIRED_FIELDS.filter(
+  const missing: string[] = REQUIRED_STRING_FIELDS.filter(
     (field) => typeof record[field] !== 'string' || !(record[field] as string).trim(),
   )
+  missing.push(...REQUIRED_ARRAY_FIELDS.filter((field) => !Array.isArray(record[field])))
   if (missing.length) return `extension.pw.json is missing ${missing.join(', ')}`
+  if (record.apiVersion !== 1) return `unsupported extension apiVersion ${String(record.apiVersion)}`
   if (record.id !== directory) {
     return `extension.pw.json id "${String(record.id)}" does not match its directory "${directory}"`
   }
@@ -81,12 +84,33 @@ function load(): { extensions: LoadedExtension[]; errors: ExtensionLoadError[] }
       })
       continue
     }
+    const contributionError = validateContributions(manifest, module.default)
+    if (contributionError) {
+      errors.push({ directory, message: contributionError })
+      continue
+    }
     extensions.push({ manifest, definition: module.default })
   }
 
   // Stable order so the palette and sidebar do not reshuffle between builds.
   extensions.sort((left, right) => left.manifest.id.localeCompare(right.manifest.id))
   return { extensions, errors }
+}
+
+function validateContributions(
+  manifest: ExtensionManifest,
+  definition: ExtensionDefinition,
+): string | null {
+  const checks: Array<[string, string[], string[]]> = [
+    ['commands', manifest.commands, (definition.commands ?? []).map((entry) => entry.id)],
+    ['views', manifest.views, (definition.views ?? []).map((entry) => entry.id)],
+  ]
+  for (const [kind, declared, implemented] of checks) {
+    const left = [...declared].sort().join(',')
+    const right = [...implemented].sort().join(',')
+    if (left !== right) return `${kind} declaration does not match src/index.ts`
+  }
+  return null
 }
 
 const loaded = load()

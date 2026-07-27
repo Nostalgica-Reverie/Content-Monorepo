@@ -11,11 +11,31 @@ import {
   editorFsStat,
   editorFsWriteFile,
 } from '@/helpers/invoke/editor'
+import { extensionLanguageSnapshot } from '@/helpers/invoke/language'
+import { onPacksChanged } from '@/helpers/events'
+import { useExtensionsStore } from '@/stores/extensions'
 
-const props = defineProps<{ packId: string; reload: number }>()
+const props = defineProps<{ packId: string; reload: number; openPath?: string }>()
+const extensions = useExtensionsStore()
 const frame = ref<HTMLIFrameElement | null>(null)
 const loaded = ref(false)
-const source = computed(() => `/packwand-ide/index.html?pack=${encodeURIComponent(props.packId)}&reload=${props.reload}`)
+let languageRefresh: ReturnType<typeof setTimeout> | undefined
+let stopWatching: (() => void) | undefined
+/**
+ * The `open` parameter seeds `defaultLayout.editors` in the workbench
+ * bootstrap, which is the only supported way to open a file in an embedded
+ * Code-OSS without an extension to receive a command. It is therefore a
+ * *load-time* input: changing it reloads the iframe.
+ *
+ * That reload is the deliberate trade. The alternative -- applying it only on
+ * first mount -- makes every subsequent click in the sidebar silently do
+ * nothing, and a control that appears dead is worse than one that is slow.
+ */
+const source = computed(() => {
+  const parameters = new URLSearchParams({ pack: props.packId, reload: String(props.reload) })
+  if (props.openPath) parameters.set('open', props.openPath)
+  return `/packwand-ide/index.html?${parameters.toString()}`
+})
 
 interface BridgeRequest {
   channel: 'packwand:ide-fs'
@@ -55,6 +75,30 @@ async function dispatch(request: BridgeRequest): Promise<unknown> {
   }
 }
 
+async function refreshLanguageSnapshot() {
+  const target = frame.value?.contentWindow
+  if (!target) return
+  try {
+    const snapshot = await extensionLanguageSnapshot(props.packId, extensions.installedIds)
+    target.postMessage(
+      { channel: 'packwand:ide-language', direction: 'update', snapshot },
+      window.location.origin === 'null' ? '*' : window.location.origin,
+    )
+  } catch (error) {
+    console.warn('Packwand language snapshot could not be refreshed.', error)
+  }
+}
+
+function scheduleLanguageRefresh() {
+  if (languageRefresh) clearTimeout(languageRefresh)
+  languageRefresh = setTimeout(() => void refreshLanguageSnapshot(), 150)
+}
+
+function onFrameLoad() {
+  loaded.value = true
+  scheduleLanguageRefresh()
+}
+
 async function onMessage(event: MessageEvent<BridgeRequest>) {
   const request = event.data
   const expectedOrigin = window.location.origin
@@ -64,14 +108,23 @@ async function onMessage(event: MessageEvent<BridgeRequest>) {
   try {
     const result = await dispatch(request)
     target.postMessage({ channel: request.channel, direction: 'response', id: request.id, result }, targetOrigin)
+    if (['writeFile', 'createDir', 'delete', 'rename'].includes(request.method)) scheduleLanguageRefresh()
   } catch (error) {
     target.postMessage({ channel: request.channel, direction: 'response', id: request.id, error: normalizeBridgeError(error) }, targetOrigin)
   }
 }
 
 watch(source, () => { loaded.value = false })
-onMounted(() => window.addEventListener('message', onMessage))
-onBeforeUnmount(() => window.removeEventListener('message', onMessage))
+watch(() => extensions.installedIds.join(','), scheduleLanguageRefresh)
+onMounted(async () => {
+  window.addEventListener('message', onMessage)
+  stopWatching = await onPacksChanged(scheduleLanguageRefresh)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('message', onMessage)
+  if (languageRefresh) clearTimeout(languageRefresh)
+  stopWatching?.()
+})
 </script>
 
 <template>
@@ -83,7 +136,7 @@ onBeforeUnmount(() => window.removeEventListener('message', onMessage))
       :src="source"
       title="Packwand IDE"
       class="packwand-workbench-frame"
-      @load="loaded = true"
+      @load="onFrameLoad"
     />
   </div>
 </template>

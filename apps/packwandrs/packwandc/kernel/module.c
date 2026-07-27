@@ -1,5 +1,23 @@
 #include "packwandc/kernel/pwc_module.h"
+#include "packwandc/kernel/pwc_module_registry.h"
 #include <string.h>
+
+/* The registry. Deliberately not in dependency order -- pwc_modules_init
+ * resolves that from each descriptor's `depends`, and listing them
+ * pre-sorted here would mask a missing dependency edge by accident. */
+static const pwc_module *const pwc_modules[] = {
+    &pwc_module_pwproc,
+    &pwc_module_pwkeys,
+    &pwc_module_pwfs,
+    &pwc_module_pwsh,
+};
+
+const pwc_module *const *pwc_module_registry(size_t *out_count) {
+    if (out_count != nullptr) {
+        *out_count = sizeof(pwc_modules) / sizeof(pwc_modules[0]);
+    }
+    return pwc_modules;
+}
 
 static bool pwc_module_named(const pwc_module *module, const char *name) {
     return module != nullptr && module->name != nullptr && strcmp(module->name, name) == 0;

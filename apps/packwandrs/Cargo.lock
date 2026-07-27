@@ -3639,6 +3639,7 @@ dependencies = [
 name = "packwand-build"
 version = "26.2.0"
 dependencies = [
+ "packeater_cli",
  "packwand-ops",
  "packwand-pack",
  "packwand-workspace",

@@ -1352,6 +1352,8 @@ pub enum BuildError {
     },
     #[error("external tool {program} failed: {message}")]
     ExternalTool { program: PathBuf, message: String },
+    #[error("optimizer failed: {0}")]
+    Optimizer(String),
 }
 
 #[cfg(test)]

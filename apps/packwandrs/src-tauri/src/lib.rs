@@ -7,11 +7,12 @@ mod commands;
 mod error;
 mod events;
 mod fsutil;
+mod kernel;
 mod state;
 
 use commands::{
-    api, automation, diagnostics, editor, exports, instances, jobs, mods, packeater, packs,
-    projects, providers, settings, workspace,
+    api, automation, diagnostics, editor, exports, extensions, git, instances, jobs, mods,
+    packeater, packs, projects, providers, settings, shell, workspace,
 };
 use tauri::Manager;
 
@@ -22,6 +23,11 @@ pub fn run() {
         .setup(|app| {
             let state = state::AppState::load(app.handle())?;
             app.manage(state);
+            // Brings up the packwandc native core and starts draining its
+            // trace ring into the output dock. Deliberately infallible: the
+            // workbench is useful without the C layer, so a failed native boot
+            // degrades rather than aborting startup (see kernel.rs).
+            kernel::start(app.handle());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -36,6 +42,26 @@ pub fn run() {
             automation::automation_run,
             api::api_contract,
             api::api_inspect,
+            shell::shell_exec,
+            shell::shell_parse,
+            git::git_status,
+            git::git_stage,
+            git::git_unstage,
+            git::git_diff,
+            git::git_commit,
+            extensions::extension_kubejs_scripts,
+            extensions::extension_kubejs_validate,
+            extensions::extension_language_snapshot,
+            extensions::extension_recipes,
+            extensions::extension_pack_graph,
+            extensions::extension_language_files,
+            extensions::extension_worldgen_assets,
+            extensions::extension_content_lint,
+            extensions::extension_registries,
+            extensions::extension_krita_assets,
+            extensions::extension_krita_open,
+            extensions::extension_blockbench_assets,
+            extensions::extension_blockbench_open,
             settings::settings_get,
             settings::settings_update,
             packs::packs_list,
@@ -95,6 +121,8 @@ pub fn run() {
             exports::exports_publish_upload,
             exports::exports_publish_verify,
             packeater::packeater_markers,
+            packeater::packeater_preview,
+            packeater::packeater_initialize,
             packeater::packeater_run,
         ])
         .run(tauri::generate_context!())

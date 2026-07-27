@@ -1,1 +1,28 @@
 html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #1f222a; }
+
+/* The workbench is embedded as *the editor*, not as a whole IDE: Packwand
+   supplies the activity rail, the sidebar and the file tree around this iframe
+   (frontend/src/components/shell/FileTreeSection.vue). Code-OSS rendering its
+   own gives two nested navigation surfaces, with two file trees and no clear
+   answer to which is authoritative.
+
+   The activity bar and status bar are hidden through supported settings in
+   bootstrap.js. The sidebar has no "hidden" setting -- `sideBar.location` only
+   chooses a side -- so `defaultLayout.force` closes it at startup and the rule
+   below keeps it closed if a command or keybinding reopens it.
+
+   `display: none` rather than `width: 0`: the workbench grid measures its
+   parts, and a zero-width-but-present part still leaves a draggable sash and a
+   focus stop for a pane nobody can see. */
+.monaco-workbench .part.sidebar,
+.monaco-workbench .part.activitybar {
+  display: none !important;
+}
+
+/* The grid positions parts absolutely from measured offsets, so removing them
+   from flow does not reclaim their space on its own -- without this the editor
+   keeps a gutter where the sidebar used to be. */
+.monaco-workbench .part.editor {
+  left: 0 !important;
+  width: 100% !important;
+}

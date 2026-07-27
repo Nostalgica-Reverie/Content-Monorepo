@@ -10,6 +10,16 @@ export interface LauncherState { session: string; phase: string; detail?: string
 export interface LauncherLog { session: string; stream: string; line: string }
 export interface AuthState { state: string; profile?: unknown }
 export interface WebviewEvent { kind: string; payload: unknown }
+/** One record drained from the packwandc kernel's trace ring (packwandc.md 3.7). */
+export interface KernelTracePayload {
+  sequence: number
+  tone: 'info' | 'error' | 'success'
+  module: string
+  message: string
+  /** `file:line` in the C tree, already repo-relative. */
+  origin: string
+  platformCode: number | null
+}
 
 const on = <T>(name: string, handler: (payload: T) => void): Promise<UnlistenFn> =>
   listen<T>(name, (event: Event<T>) => handler(event.payload))
@@ -30,3 +40,5 @@ export const onLauncherLog = (handler: (payload: LauncherLog) => void) => on('la
 export const onAuthStatus = (handler: (payload: AuthState) => void) => on('auth:status', handler)
 export const onWebviewEvent = (handler: (payload: WebviewEvent) => void) => on('webview:event', handler)
 export const onWebviewClosed = (handler: (payload: string) => void) => on('webview:closed', handler)
+export const onKernelTrace = (handler: (payload: KernelTracePayload) => void) =>
+  on('kernel:trace', handler)

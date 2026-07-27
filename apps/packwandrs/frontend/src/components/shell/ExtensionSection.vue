@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import SideSection from '@/components/shell/SideSection.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import type { ExtensionRow } from '@/extensions/api'
 import { useExtensionsStore } from '@/stores/extensions'
 import type { RegisteredView } from '@/stores/extensions'
 import { useWorkbenchStore } from '@/stores/workbench'
+import { onPacksChanged } from '@/helpers/events'
 
 const props = defineProps<{ entry: RegisteredView }>()
 
@@ -13,6 +14,7 @@ const extensionsStore = useExtensionsStore()
 const workbench = useWorkbenchStore()
 const rows = ref<ExtensionRow[]>([])
 const loading = ref(false)
+let stopWatching: (() => void) | undefined
 
 async function load() {
   loading.value = true
@@ -29,6 +31,9 @@ watch(
   () => void load(),
   { immediate: true },
 )
+
+onMounted(async () => { stopWatching = await onPacksChanged(() => void load()) })
+onBeforeUnmount(() => stopWatching?.())
 </script>
 
 <template>

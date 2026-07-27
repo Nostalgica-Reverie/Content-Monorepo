@@ -1,7 +1,5 @@
-use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use walkdir::{DirEntry, WalkDir};
 
@@ -59,67 +57,7 @@ pub fn run_packeater(
         path: parent.to_path_buf(),
         source,
     })?;
-    let program = packeater_program();
-    let result = Command::new(&program)
-        .arg(marker)
-        .arg("--output")
-        .arg(output)
-        .output()
-        .map_err(|source| BuildError::ExternalTool {
-            program: program.clone(),
-            message: if source.kind() == std::io::ErrorKind::NotFound {
-                "not found; set PACKEATER_BIN or add packeater to PATH".into()
-            } else {
-                source.to_string()
-            },
-        })?;
-    if !result.status.success() {
-        let stderr = String::from_utf8_lossy(&result.stderr).trim().to_owned();
-        let stdout = String::from_utf8_lossy(&result.stdout).trim().to_owned();
-        return Err(BuildError::ExternalTool {
-            program,
-            message: if stderr.is_empty() { stdout } else { stderr },
-        });
-    }
-    fs::metadata(output)
-        .map(|metadata| metadata.len())
-        .map_err(|source| BuildError::Io {
-            path: output.to_path_buf(),
-            source,
-        })
-}
-
-fn packeater_program() -> PathBuf {
-    if let Some(configured) = env::var_os("PACKEATER_BIN").filter(|value| !value.is_empty()) {
-        return configured.into();
-    }
-    let executable_name = if cfg!(windows) {
-        "packeater.exe"
-    } else {
-        "packeater"
-    };
-    if let Ok(current_executable) = env::current_exe()
-        && let Some(directory) = current_executable.parent()
-    {
-        let bundled = directory.join(executable_name);
-        if bundled.is_file() {
-            return bundled;
-        }
-    }
-    if let Ok(current_directory) = env::current_dir() {
-        for relative in [
-            "packeater/target/release",
-            "packeater/target/debug",
-            "apps/packwandrs/packeater/target/release",
-            "apps/packwandrs/packeater/target/debug",
-        ] {
-            let in_tree = current_directory.join(relative).join(executable_name);
-            if in_tree.is_file() {
-                return in_tree;
-            }
-        }
-    }
-    executable_name.into()
+    packeater_cli::run_marker(marker, Some(output)).map_err(BuildError::Optimizer)
 }
 
 /// Archive a content folder, selecting Packeater whenever it opts in with a marker.

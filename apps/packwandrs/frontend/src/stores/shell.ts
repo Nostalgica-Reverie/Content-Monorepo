@@ -3,7 +3,8 @@ import { computed, ref } from 'vue'
 
 import type { DiagnosticIssue } from '@/helpers/types'
 
-export type DockTab = 'problems' | 'output' | 'logs'
+export type DockTab = 'problems' | 'output' | 'logs' | 'terminal'
+export type SidebarMode = 'explorer' | 'source-control' | 'extensions'
 export type OutputTone = 'info' | 'error' | 'success'
 
 export interface ShellTab {
@@ -25,6 +26,7 @@ const SIDEBAR_MAX = 460
 const DOCK_MIN = 120
 const DOCK_MAX = 620
 const OUTPUT_LIMIT = 500
+const HISTORY_LIMIT = 100
 
 function stored(key: string, fallback: number) {
   const raw = Number(localStorage.getItem(key))
@@ -48,6 +50,7 @@ function clamp(value: number, min: number, max: number) {
 export const useShellStore = defineStore('shell', () => {
   const sidebarVisible = ref(storedFlag('packwand:sidebar', true))
   const sidebarWidth = ref(stored('packwand:sidebar-width', 268))
+  const sidebarMode = ref<SidebarMode>((localStorage.getItem('packwand:sidebar-mode') as SidebarMode) || 'explorer')
   const dockVisible = ref(storedFlag('packwand:dock', false))
   const dockHeight = ref(stored('packwand:dock-height', 210))
   const dockTab = ref<DockTab>((localStorage.getItem('packwand:dock-tab') as DockTab) || 'problems')
@@ -57,6 +60,15 @@ export const useShellStore = defineStore('shell', () => {
   const paletteSeed = ref('')
   /** Bumped to ask the Overview view to open its create-project dialog. */
   const newProjectRequest = ref(0)
+
+  /** pw4shell console transcript. Separate from `output`: the terminal is an
+   * interactive session with its own scrollback and history, whereas `output`
+   * is a log other views append to. Mixing them would make clearing one
+   * destroy the other. */
+  const terminal = ref<OutputLine[]>([])
+  let terminalSeq = 0
+  /** Most-recent-first command history, for arrow-key recall. */
+  const history = ref<string[]>([])
 
   const problems = ref<DiagnosticIssue[]>([])
   const problemsSource = ref('')
@@ -69,6 +81,16 @@ export const useShellStore = defineStore('shell', () => {
   function toggleSidebar(force?: boolean) {
     sidebarVisible.value = force ?? !sidebarVisible.value
     localStorage.setItem('packwand:sidebar', sidebarVisible.value ? '1' : '0')
+  }
+
+  function selectSidebar(mode: SidebarMode) {
+    if (sidebarVisible.value && sidebarMode.value === mode) {
+      toggleSidebar(false)
+      return
+    }
+    sidebarMode.value = mode
+    localStorage.setItem('packwand:sidebar-mode', mode)
+    toggleSidebar(true)
   }
 
   function setSidebarWidth(width: number) {
@@ -140,6 +162,28 @@ export const useShellStore = defineStore('shell', () => {
     output.value = []
   }
 
+  function appendTerminal(text: string, tone: OutputTone = 'info') {
+    const time = new Date().toLocaleTimeString(undefined, { hour12: false })
+    for (const line of text.split('\n')) {
+      terminal.value.push({ id: ++terminalSeq, time, text: line, tone })
+    }
+    if (terminal.value.length > OUTPUT_LIMIT) {
+      terminal.value.splice(0, terminal.value.length - OUTPUT_LIMIT)
+    }
+  }
+
+  function clearTerminal() {
+    terminal.value = []
+  }
+
+  /** Records a command for recall. Repeating the last one does not duplicate it. */
+  function rememberCommand(line: string) {
+    const trimmed = line.trim()
+    if (!trimmed || history.value[0] === trimmed) return
+    history.value.unshift(trimmed)
+    if (history.value.length > HISTORY_LIMIT) history.value.length = HISTORY_LIMIT
+  }
+
   /** Publishes a diagnostics run into the Problems tab. */
   function setProblems(source: string, issues: DiagnosticIssue[]) {
     problemsSource.value = source
@@ -154,6 +198,7 @@ export const useShellStore = defineStore('shell', () => {
   return {
     sidebarVisible,
     sidebarWidth,
+    sidebarMode,
     dockVisible,
     dockHeight,
     dockTab,
@@ -167,6 +212,7 @@ export const useShellStore = defineStore('shell', () => {
     errorCount,
     warningCount,
     toggleSidebar,
+    selectSidebar,
     setSidebarWidth,
     toggleDock,
     setDockHeight,
@@ -179,6 +225,11 @@ export const useShellStore = defineStore('shell', () => {
     closePalette,
     appendOutput,
     clearOutput,
+    terminal,
+    history,
+    appendTerminal,
+    clearTerminal,
+    rememberCommand,
     setProblems,
     clearProblems,
   }

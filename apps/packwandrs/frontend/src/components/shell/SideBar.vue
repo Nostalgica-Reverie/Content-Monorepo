@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import ExtensionSection from '@/components/shell/ExtensionSection.vue'
+import ExtensionsSidebar from '@/components/shell/ExtensionsSidebar.vue'
+import FileTreeSection from '@/components/shell/FileTreeSection.vue'
 import SideSection from '@/components/shell/SideSection.vue'
+import SourceControlSidebar from '@/components/shell/SourceControlSidebar.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import { useExtensionsStore } from '@/stores/extensions'
 import { useShellStore } from '@/stores/shell'
@@ -11,7 +14,7 @@ const workbench = useWorkbenchStore()
 const shell = useShellStore()
 const extensionsStore = useExtensionsStore()
 
-const emit = defineEmits<{ newProject: [] }>()
+const emit = defineEmits<{ newProject: []; openFile: [path: string] }>()
 
 /** Only the selected project expands its targets — keeps the tree scannable. */
 const targets = computed(() => workbench.projectPacks)
@@ -22,10 +25,10 @@ function variantLabel(variant: Record<string, unknown>, index: number) {
 </script>
 
 <template>
-  <aside class="side" :style="{ width: shell.sidebarWidth + 'px' }" aria-label="Explorer">
+  <aside class="side" :style="{ width: shell.sidebarWidth + 'px' }" :aria-label="shell.sidebarMode === 'explorer' ? 'Explorer' : shell.sidebarMode === 'source-control' ? 'Source Control' : 'Extensions'">
     <div class="side-head">
-      <span class="eyebrow">Explorer</span>
-      <div class="panel-actions">
+      <span class="eyebrow">{{ shell.sidebarMode === 'explorer' ? 'Explorer' : shell.sidebarMode === 'source-control' ? 'Source Control' : 'Extensions' }}</span>
+      <div v-if="shell.sidebarMode === 'explorer'" class="panel-actions">
         <button class="icon-btn" title="New project" aria-label="New project" @click="emit('newProject')">
           <AppIcon name="plus" :size="15" />
         </button>
@@ -41,7 +44,7 @@ function variantLabel(variant: Record<string, unknown>, index: number) {
       </div>
     </div>
 
-    <div class="side-body">
+    <div v-if="shell.sidebarMode === 'explorer'" class="side-body">
       <SideSection title="Projects" :count="workbench.projects.length">
         <p v-if="!workbench.projects.length" class="side-empty">
           {{ workbench.loading ? 'Indexing…' : 'No projects indexed yet.' }}
@@ -94,8 +97,23 @@ function variantLabel(variant: Record<string, unknown>, index: number) {
         </div>
       </SideSection>
 
+      <!-- The pack's own files. This is Code-OSS's explorer, moved out here:
+           the workbench iframe runs with its sidebar hidden so there is one
+           navigation surface rather than two nested ones. -->
+      <FileTreeSection
+        v-if="workbench.selectedPack"
+        :pack-id="workbench.selectedPack.id"
+        @open="emit('openFile', $event)"
+      />
+
       <!-- Extension-contributed views sit below the built-in tree. -->
       <ExtensionSection v-for="entry in extensionsStore.views" :key="entry.id" :entry="entry" />
+    </div>
+    <div v-else-if="shell.sidebarMode === 'source-control'" class="side-body">
+      <SourceControlSidebar />
+    </div>
+    <div v-else class="side-body side-body--extensions">
+      <ExtensionsSidebar />
     </div>
   </aside>
 </template>
