@@ -985,6 +985,11 @@ fn update_command(args: &ArgMatches) -> Result {
     if args.get_flag("json") {
         println!("{}", String::from_utf8(json)?);
     } else {
+        if records.is_empty() && args.get_flag("all") {
+            eprintln!(
+                "warning: no mod metadata found in index — if mods exist on disk, run `packwand refresh` first"
+            );
+        }
         print_update_records(&records);
     }
     if failures > 0 {

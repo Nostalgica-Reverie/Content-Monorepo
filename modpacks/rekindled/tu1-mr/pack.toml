@@ -1,12 +1,13 @@
 name = "Rekindled Legacy Common"
 author = "omo50, Panduino, Agari, hzsa, Cjnator38, AzaleaCatgirl99"
-version = "26.05"
+version = "26.07"
 pack-format = "packwand:26"
 
 [index]
 file = "index.toml"
 hash-format = "sha512"
+hash = "3175c4f237c59daf9acad53ca1c64a85da30ecf80a55bcdacc5b9189d09b1a48d64eba08fbcf8bc35a994b6364adbe5682177719f159404d99b73b2e84750a4d"
 
 [versions]
-fabric = "0.19.3"
 minecraft = "26.1.2"
+neoforge = "26.1.2.87"

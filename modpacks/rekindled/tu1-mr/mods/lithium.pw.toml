@@ -1,13 +1,17 @@
 name = "Lithium"
-filename = "lithium-fabric-0.24.6+mc26.1.2.jar"
+filename = "lithium-neoforge-0.24.6+mc26.1.2.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/fQBdPR1m/lithium-fabric-0.24.6%2Bmc26.1.2.jar"
+url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/RDS7tsC9/lithium-neoforge-0.24.6%2Bmc26.1.2.jar"
 hash-format = "sha512"
-hash = "fac351f5b6150889b9355a01889c35b5798147d4bedb291594a590a2d41909eb8dc494ef0051317bf55886f2fc7fe134abbe2e755098df38473edb2bf43357e9"
+hash = "bf1e4e27eab510f4ad8f253e7c289b4cf127325476049edd3d21fc83177b9151584f8bf3e105f0f8fd57513b867542cd8098baeecbe1c691b927187dd27b16af"
+size = 902635
+
+[download.extra-hashes]
+sha1 = "b0cdfdefdb879f73d022cdb0d01dd94994b510fa"
 
 [update]
 [update.modrinth]
 mod-id = "gvQqBUqZ"
-version = "fQBdPR1m"
+version = "RDS7tsC9"

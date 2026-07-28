@@ -147,11 +147,19 @@ fn neoforge_version_prefix(minecraft: &str) -> Option<String> {
     let minor = parts.next()?;
     let patch = parts.next();
     if major == "1" {
+        // NeoForge drops the vanilla "1." epoch prefix: 1.21.1 -> 21.1.x.
         Some(match patch {
             Some(patch) => format!("{minor}.{patch}."),
             None => format!("{minor}."),
         })
     } else {
-        Some(format!("{major}."))
+        // Post-epoch versioning (e.g. 26.1.2) is mirrored verbatim by
+        // NeoForge, so the full major.minor.patch must be kept — matching
+        // on major alone conflates unrelated Minecraft releases sharing a
+        // year, e.g. 26.1.2.x and 26.2.0.x both start with "26.".
+        Some(match patch {
+            Some(patch) => format!("{major}.{minor}.{patch}."),
+            None => format!("{major}.{minor}."),
+        })
     }
 }

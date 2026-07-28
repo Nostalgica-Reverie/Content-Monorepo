@@ -1,13 +1,17 @@
 name = "Config Manager"
-filename = "ConfigManager-fabric-26.1_26.2-1.1.3.jar"
+filename = "ConfigManager-neoforge-26.1_26.2-1.1.3.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/jlNms3Jp/versions/W4C08wBC/ConfigManager-fabric-26.1_26.2-1.1.3.jar"
+url = "https://cdn.modrinth.com/data/jlNms3Jp/versions/xvw1oVz5/ConfigManager-neoforge-26.1_26.2-1.1.3.jar"
 hash-format = "sha512"
-hash = "bfa70defff2530780f0f0aa0de1845dc256d9cab244123e4847a6b24db1f812c47585ed1ddc80b2de91671aada421027b72d44e8b748e2a70ae405af54d94de0"
+hash = "8eb2547c3eb2bb9c2993d2262259fd8b2b581c748e0281464989d90d7b940ba444c556fb1698d8ae9f8fca81e135df562973162a596d614e3d2f9a4347822023"
+size = 151283
+
+[download.extra-hashes]
+sha1 = "a8777a9272effaf6a31f62cb37dcce9cbd96646a"
 
 [update]
 [update.modrinth]
 mod-id = "jlNms3Jp"
-version = "W4C08wBC"
+version = "xvw1oVz5"

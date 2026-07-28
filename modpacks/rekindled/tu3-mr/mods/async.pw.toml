@@ -1,13 +1,17 @@
 name = "Async"
-filename = "async-fabric-0.2.4+alpha-26.1.2.jar"
+filename = "async-neoforge-0.2.0+alpha-1.21.1.jar"
 side = "server"
 
 [download]
-url = "https://cdn.modrinth.com/data/vEC2jm6I/versions/pv07EqRS/async-fabric-0.2.4%2Balpha-26.1.2.jar"
+url = "https://cdn.modrinth.com/data/vEC2jm6I/versions/pP8zrgTu/async-neoforge-0.2.0%2Balpha-1.21.1.jar"
 hash-format = "sha512"
-hash = "049f19cf9a7af413fd71b052208ffe1937691003834f3a15ea2ae633452903943539d33dbfec491fb5f1efd30e5c0a0019c16f55fa378dcd2f4eb816cc688d93"
+hash = "73ebe65ddc0ef6e2a6cbbaeee91b7beada7e70f45f334cde8fad9f6fe88b1489244747577c31d1ebb804cf5383e0b87e845ad153e50362f9b74c1d3941c42161"
+size = 339507
+
+[download.extra-hashes]
+sha1 = "2fd84ae873d8fb6263fa86417b9cede2baa3c58b"
 
 [update]
 [update.modrinth]
 mod-id = "vEC2jm6I"
-version = "pv07EqRS"
+version = "pP8zrgTu"
