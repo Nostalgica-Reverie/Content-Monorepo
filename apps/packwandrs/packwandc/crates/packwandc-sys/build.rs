@@ -65,6 +65,10 @@ fn main() {
         // shell is needed. See packwandc.md 8.1.
         let toolchain = c_root.join("scripts").join("toolchain-windows-msvc.cmake");
         configure.arg(format!("-DCMAKE_TOOLCHAIN_FILE={}", toolchain.display()));
+        // CMake retains this internal compiler subcommand only when it is a
+        // configure argument; setting it solely in a toolchain file is lost
+        // during the compiler-identification probe on Windows.
+        configure.arg("-DCMAKE_C_COMPILER_ARG1=cc");
         println!("cargo:rerun-if-changed={}", toolchain.display());
     }
 
@@ -82,6 +86,7 @@ fn main() {
     println!("cargo:rustc-link-lib=static=packwandc");
     if is_windows {
         println!("cargo:rustc-link-lib=Advapi32");
+        println!("cargo:rustc-link-lib=User32");
     }
 
     for path in ["CMakeLists.txt", "kernel", "include", "modules", "arch"] {

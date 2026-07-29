@@ -21,6 +21,8 @@ pub struct AppSettings {
     #[serde(default = "default_memory")]
     pub memory_mb: u32,
     pub msa_client_id: Option<String>,
+    #[serde(default)]
+    pub raw_input_enabled: bool,
 }
 
 const fn default_memory() -> u32 {
@@ -34,6 +36,7 @@ impl Default for AppSettings {
             java_defaults: BTreeMap::new(),
             memory_mb: default_memory(),
             msa_client_id: None,
+            raw_input_enabled: false,
         }
     }
 }

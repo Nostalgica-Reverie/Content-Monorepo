@@ -284,10 +284,7 @@ fn run_preflight(root: &Path) -> PreflightResult {
     }
 
     let syntax = packwand_diagnostics::lint_workspace(root);
-    steps.push(preflight_step(
-        "syntax",
-        preflight_issues(syntax.issues),
-    ));
+    steps.push(preflight_step("syntax", preflight_issues(syntax.issues)));
 
     // Reference checks only: duplicate-file and charset hygiene belong to
     // `content-lint`, not to a pre-launch gate.

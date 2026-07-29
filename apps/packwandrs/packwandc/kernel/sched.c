@@ -157,26 +157,17 @@ pwc_status pwc_sched_spawn_poller(pwc_sched *sched, pwc_work_fn fn, void *arg) {
                    : PWC_FAIL_PLATFORM(PWC_ENOMEM, "core", "no free poller slots", PWC_SCHED_MAX_POLLERS);
     }
     const uint32_t index = sched->poller_count;
-    /* Reserved before the thread starts so two concurrent spawns cannot take
-     * the same slot. */
+    /* Keep the lock through start and handle publication. Otherwise shutdown
+     * can observe a reserved slot containing zero, skip its join, destroy the
+     * scheduler, and let the just-created poller run against dead state. */
     ++sched->poller_count;
-    pwc_arch_mutex_unlock(&sched->lock);
-
     uintptr_t handle = 0u;
     const pwc_status started = pwc_arch_thread_start(fn, arg, &handle);
     if (started != PWC_OK) {
-        pwc_arch_mutex_lock(&sched->lock);
-        /* Only safe to give the slot back if nobody claimed one after us;
-         * otherwise it stays reserved and unused, which costs a slot but never
-         * corrupts the join list. */
-        if (sched->poller_count == index + 1u) {
-            sched->poller_count = index;
-        }
+        sched->poller_count = index;
         pwc_arch_mutex_unlock(&sched->lock);
         return started;
     }
-
-    pwc_arch_mutex_lock(&sched->lock);
     sched->pollers[index] = handle;
     pwc_arch_mutex_unlock(&sched->lock);
     return PWC_OK;

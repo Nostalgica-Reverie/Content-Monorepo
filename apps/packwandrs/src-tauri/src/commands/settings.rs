@@ -15,7 +15,15 @@ pub fn settings_update(
     app: AppHandle,
     state: State<'_, AppState>,
 ) -> CommandResult<AppSettings> {
-    let settings = state.update_settings(settings)?;
+    let previous = state.settings()?.raw_input_enabled;
+    crate::raw_input::set_enabled(&app, settings.raw_input_enabled)?;
+    let settings = match state.update_settings(settings) {
+        Ok(settings) => settings,
+        Err(error) => {
+            let _ = crate::raw_input::set_enabled(&app, previous);
+            return Err(error);
+        }
+    };
     emit_settings_changed(&app, settings.clone())?;
     Ok(settings)
 }

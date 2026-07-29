@@ -580,6 +580,31 @@ button:disabled {
 .compound-field input {
   flex: 1;
 }
+.raw-input-setting {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 13px 0;
+  color: var(--text);
+  cursor: pointer;
+}
+.raw-input-setting input[type="checkbox"] {
+  width: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  margin-top: 2px;
+  padding: 0;
+  accent-color: var(--accent);
+}
+.raw-input-setting > span {
+  display: grid;
+  gap: 3px;
+}
+.raw-input-setting small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
 .form-actions {
   grid-column: 1 / -1;
   margin-top: 4px;

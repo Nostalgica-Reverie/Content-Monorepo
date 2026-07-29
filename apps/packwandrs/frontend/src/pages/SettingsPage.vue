@@ -17,7 +17,7 @@ const settings = useSettingsStore()
 const toasts = useToastsStore()
 const busy = ref('')
 const manifest = reactive<ProjectManifest>({ id: '', name: '', type: '', variants: [], version: '' })
-const appForm = reactive<AppSettings>({ workspacePath: null, javaDefaults: {}, memoryMb: 4096, msaClientId: null })
+const appForm = reactive<AppSettings>({ workspacePath: null, javaDefaults: {}, memoryMb: 4096, msaClientId: null, rawInputEnabled: false })
 const automation = ref<AutomationPlan | null>(null)
 
 // structuredClone cannot clone Vue's reactive proxies, so unwrap to the raw
@@ -80,6 +80,7 @@ async function runAutomation(dryRun: boolean) {
       <label class="field-stack"><span>Workspace</span><div class="compound-field"><input :value="workspace.path ?? ''" readonly /><Button variant="quiet" @click="chooseWorkspace">Change</Button></div></label>
       <label class="field-stack"><span>Default memory (MB)</span><input v-model.number="appForm.memoryMb" type="number" min="1024" step="512" /></label>
       <label class="field-stack"><span>Microsoft client ID override</span><input v-model="appForm.msaClientId" placeholder="Environment-gated when blank" /></label>
+      <label class="raw-input-setting"><input v-model="appForm.rawInputEnabled" type="checkbox" /><span><strong>Raw keyboard and mouse input</strong><small>Use unaccelerated Windows Raw Input inside the IDE. This is app-scoped and does not change system pointer settings.</small></span></label>
       <Button :busy="busy === 'app'" @click="saveApp">Save application settings</Button>
     </article>
     <article class="panel span-6">

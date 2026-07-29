@@ -787,6 +787,36 @@ impl Workspace {
         })
     }
 
+    /// Replace one metadata entry with an explicitly selected provider file.
+    ///
+    /// Unlike ordinary update this intentionally permits changing providers,
+    /// e.g. when a release is available on CurseForge before Modrinth.
+    pub fn replace_with_resolved(
+        &mut self,
+        relative: &str,
+        resolved: ResolvedProject,
+    ) -> Result<UpdateOutcome, OpsError> {
+        let (relative, source) = safe_relative_path(&self.root, relative)?;
+        let existing = read_toml::<Mod>(&source)?;
+        let old_filename = existing.filename.clone();
+        let mut updated = resolved.into_mod()?;
+        updated.name = existing.name;
+        updated.side = existing.side;
+        updated.pin = existing.pin;
+        updated.option = existing.option;
+        let new_filename = updated.filename.clone();
+        let changed = old_filename != new_filename || existing.update != updated.update;
+        if changed {
+            self.add_metadata(&relative, updated, true)?;
+        }
+        Ok(UpdateOutcome {
+            metadata_path: relative,
+            old_filename,
+            new_filename,
+            changed,
+        })
+    }
+
     /// Re-hashes one edited `.pw.toml` and updates its generated index entry.
     pub fn refresh_metadata(&mut self, relative: &str) -> Result<String, OpsError> {
         let (relative, metadata_path) = safe_relative_path(&self.root, relative)?;

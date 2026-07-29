@@ -35,6 +35,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h> /* realpath, mkstemp */
+#include <stdio.h>  /* rename */
 #include <string.h>
 #include <sys/inotify.h>
 #include <sys/stat.h>

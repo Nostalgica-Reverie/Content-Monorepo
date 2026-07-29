@@ -11,7 +11,7 @@
 //! [`safe`] exists because calling an `extern "C"` function is itself an
 //! `unsafe` operation. Without it the safe SDK could not be
 //! `#![forbid(unsafe_code)]` and the `unsafe` surface would be split across
-//! two crates instead of concentrated in one — which is the entire point of
+//! two crates instead of concentrated in one â€” which is the entire point of
 //! this layering.
 //!
 //! Nothing else belongs here. No error handling, no owned types, no
@@ -29,7 +29,7 @@ pub use bindings::*;
 ///
 /// The generation counter is why this is two fields rather than one integer.
 /// Closing a slot increments its generation, so a handle held across a close
-/// resolves to [`PWC_ESTALE`] rather than to whatever now occupies the slot —
+/// resolves to [`PWC_ESTALE`] rather than to whatever now occupies the slot â€”
 /// turning use-after-free and ABA into a returned error instead of memory
 /// corruption. See packwandc.md 3.2.
 ///
@@ -53,7 +53,7 @@ pub struct PwcHandle {
 ///
 /// `status` is carried in the record so a reader can tell whether the detail
 /// belongs to the failure it is holding or to an earlier one on the same
-/// thread — a thread-local "last error" is stale-prone without it.
+/// thread â€” a thread-local "last error" is stale-prone without it.
 ///
 /// Layout is part of the wire ABI and is asserted in C (`uapi/pwc_status.h`)
 /// and in this crate's tests.
@@ -232,16 +232,56 @@ pub struct PwcBootConfig {
     pub worker_count: u32,
 }
 
+/// One keyboard or mouse packet from the native Raw Input queue.
+#[repr(C)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct PwcRawInputEvent {
+    /// ABI size of this record.
+    pub struct_size: u32,
+    /// Packet kind (`PWC_RAW_INPUT_KEYBOARD` or `PWC_RAW_INPUT_MOUSE`).
+    pub kind: u32,
+    /// Windows message timestamp in milliseconds.
+    pub timestamp_ms: u32,
+    /// Hardware keyboard scan code.
+    pub make_code: u16,
+    /// Native keyboard or mouse flags.
+    pub flags: u16,
+    /// Keyboard virtual-key code.
+    pub virtual_key: u16,
+    /// Native mouse button flags.
+    pub button_flags: u16,
+    /// Unaccelerated relative mouse X delta.
+    pub delta_x: i32,
+    /// Unaccelerated relative mouse Y delta.
+    pub delta_y: i32,
+    /// Signed mouse-wheel delta.
+    pub wheel_delta: i16,
+    /// Reserved for ABI-compatible expansion.
+    pub reserved: u16,
+}
+
+/// Keyboard Raw Input packet.
+pub const PWC_RAW_INPUT_KEYBOARD: u32 = 1;
+/// Mouse Raw Input packet.
+pub const PWC_RAW_INPUT_MOUSE: u32 = 2;
 unsafe extern "C" {
     /// Boot the native core.
     pub fn pwc_boot(config: *const PwcBootConfig) -> i32;
     /// Tear down the native core.
     pub fn pwc_shutdown();
+    /// Register keyboard and mouse Raw Input for one application window.
+    pub fn pwc_raw_input_start(native_window: usize) -> i32;
+    /// Stop Raw Input and detach the window subclass.
+    pub fn pwc_raw_input_stop();
+    /// Pop one packet from the bounded native queue.
+    pub fn pwc_raw_input_read(out: *mut PwcRawInputEvent) -> i32;
+    /// Read the cumulative queue-overflow counter.
+    pub fn pwc_raw_input_dropped(out: *mut u64) -> i32;
 }
 /// The only `unsafe` blocks in the repository.
 ///
 /// Each function here wraps exactly one C call whose safety obligations are
-/// discharged by its Rust signature alone — a `&mut u32` is always a valid
+/// discharged by its Rust signature alone â€” a `&mut u32` is always a valid
 /// pointer, a returned `const char *` documented as a never-NULL static
 /// string is always a valid `&'static CStr`. Anything whose safety depends on
 /// caller-supplied invariants does **not** get a shim; it stays raw and is
@@ -300,6 +340,29 @@ pub mod safe {
     pub fn shutdown() {
         // SAFETY: shutdown takes no pointers and the C core retains no Rust state.
         unsafe { crate::pwc_shutdown() }
+    }
+    /// Start focused-window Raw Input capture.
+    pub fn raw_input_start(native_window: usize) -> i32 {
+        // SAFETY: the native side validates the by-value platform handle.
+        unsafe { crate::pwc_raw_input_start(native_window) }
+    }
+
+    /// Stop focused-window Raw Input capture.
+    pub fn raw_input_stop() {
+        // SAFETY: this entry point takes no pointers and is idempotent.
+        unsafe { crate::pwc_raw_input_stop() }
+    }
+
+    /// Pop one Raw Input packet into Rust-owned storage.
+    pub fn raw_input_read(out: &mut crate::PwcRawInputEvent) -> i32 {
+        // SAFETY: `out` is writable for the call and is not retained.
+        unsafe { crate::pwc_raw_input_read(out) }
+    }
+
+    /// Read the cumulative number of queue overflows.
+    pub fn raw_input_dropped(out: &mut u64) -> i32 {
+        // SAFETY: `out` is writable for the call and is not retained.
+        unsafe { crate::pwc_raw_input_dropped(out) }
     }
 
     /// Create a port into Rust-owned output storage.
@@ -467,7 +530,7 @@ pub mod safe {
         if ptr.is_null() {
             return None;
         }
-        // SAFETY: as above — a valid, aligned, initialised PwcErrorDetail.
+        // SAFETY: as above â€” a valid, aligned, initialised PwcErrorDetail.
         let raw = unsafe { *ptr };
 
         // A record whose struct_size is not the one this build compiled
@@ -599,7 +662,7 @@ pub mod safe {
     /// default (invalid) handle to discard them.
     ///
     /// Returns the raw status alongside the parsed command. `PWC_ENOSYS` means
-    /// the line parsed cleanly but names no kernel built-in — the caller is
+    /// the line parsed cleanly but names no kernel built-in â€” the caller is
     /// expected to dispatch `words` itself. A parse failure returns the parse
     /// error and an empty word list.
     pub fn sh_exec(port: crate::PwcHandle, line: &[u8]) -> (i32, PwcShCommand) {
@@ -613,7 +676,7 @@ pub mod safe {
     /// Tokenise one pw4shell line without running it.
     ///
     /// Exposed so a UI can use the kernel's quoting rules rather than
-    /// reimplementing them — a console that disagrees with its own backend
+    /// reimplementing them â€” a console that disagrees with its own backend
     /// about what `"a b"` means is worse than one with no completion at all.
     pub fn sh_parse(line: &[u8]) -> Result<PwcShCommand, i32> {
         let mut command = new_sh_command();

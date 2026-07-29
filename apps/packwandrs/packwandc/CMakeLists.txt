@@ -6,11 +6,26 @@
 
 cmake_minimum_required(VERSION 3.27)
 
+# Select Zig before project() performs its compiler probe. Windows supplies the
+# same values through its ABI toolchain file; this is the native fallback for
+# direct CMake and Cargo builds on other platforms.
+if(NOT DEFINED CMAKE_C_COMPILER)
+    find_program(PWC_ZIG NAMES zig zig.exe REQUIRED)
+    set(CMAKE_C_COMPILER "${PWC_ZIG}" CACHE FILEPATH "packwandc C compiler")
+    set(CMAKE_C_COMPILER_ARG1 cc CACHE STRING "packwandc C compiler argument")
+endif()
+
 project(
     packwandc
     VERSION 0.1.0
     DESCRIPTION "Packwand native core: OS-level kernel, modules and bindings"
     LANGUAGES C)
+
+# Zig compiles both the remaining C translation units (through `zig cc`) and
+# the progressively ported implementation objects.  C headers remain the ABI
+# boundary, so dependent Rust and C code does not need to change as internals
+# move to Zig.
+find_program(PWC_ZIG NAMES zig zig.exe REQUIRED)
 
 # C23. CMake emits the right flag spelling per compiler version, which matters
 # because -std=c23 only exists from clang 17 / gcc 14 (packwandc.md 7.1).
@@ -165,7 +180,32 @@ endif()
 
 # --- the library ------------------------------------------------------------
 
-set(PWC_KERNEL_SOURCES kernel/status.c kernel/syscall.c kernel/boot.c kernel/handle.c kernel/ipc.c kernel/wait.c kernel/arena.c kernel/slab.c kernel/sched.c kernel/module.c kernel/ktrace.c kernel/lockdep.c modules/pwproc/pwproc.c modules/pwkeys/pwkeys.c modules/pwfs/pwfs.c modules/pwsh/pwsh.c modules/pwsh/lexer.c)
+set(PWC_KERNEL_SOURCES kernel/status.c kernel/syscall.c kernel/boot.c kernel/handle.c kernel/ipc.c kernel/wait.c kernel/sched.c kernel/module.c kernel/ktrace.c kernel/lockdep.c modules/pwproc/pwproc.c modules/pwkeys/pwkeys.c modules/pwfs/pwfs.c modules/pwsh/pwsh.c modules/pwsh/lexer.c)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(PWC_ZIG_OPTIMIZE Debug)
+else()
+    # ReleaseSafe retains Zig's runtime overflow checks while matching the
+    # core's existing hardening-oriented release profile.
+    set(PWC_ZIG_OPTIMIZE ReleaseSafe)
+endif()
+
+# CMake has no first-class Zig language support.  Build Zig sources into
+# objects explicitly and add them to the ordinary static library; this keeps
+# CMake authoritative for the C ABI, tests, and platform link dependencies.
+set(PWC_ZIG_MEMORY_OBJECT "${CMAKE_CURRENT_BINARY_DIR}/pwc_memory${CMAKE_C_OUTPUT_EXTENSION}")
+add_custom_command(
+    OUTPUT "${PWC_ZIG_MEMORY_OBJECT}"
+    COMMAND "${PWC_ZIG}" build-obj "-O${PWC_ZIG_OPTIMIZE}"
+            "-femit-bin=${PWC_ZIG_MEMORY_OBJECT}"
+            -I "${CMAKE_CURRENT_SOURCE_DIR}/include"
+            "${CMAKE_CURRENT_SOURCE_DIR}/zig/memory.zig"
+    DEPENDS zig/memory.zig
+            include/packwandc/kernel/pwc_arena.h
+            include/packwandc/kernel/pwc_slab.h
+            include/packwandc/uapi/pwc_status.h
+    VERBATIM)
+set_source_files_properties("${PWC_ZIG_MEMORY_OBJECT}" PROPERTIES GENERATED TRUE EXTERNAL_OBJECT TRUE)
 
 # Exactly one arch backend is linked per build. arch/common is the portable
 # fallback: it satisfies the link and returns PWC_ENOSYS, which is the honest
@@ -177,17 +217,17 @@ set(PWC_KERNEL_SOURCES kernel/status.c kernel/syscall.c kernel/boot.c kernel/han
 # Both directories arrive in phase 1, not phase 2 as packwandc.md 10 originally
 # said: pwc_wait needs an arch backend before any subsystem exists.
 if(WIN32)
-    list(APPEND PWC_KERNEL_SOURCES arch/win32/wait.c arch/win32/proc.c arch/win32/keys.c arch/win32/fs.c arch/win32/thread.c)
+    list(APPEND PWC_KERNEL_SOURCES arch/win32/wait.c arch/win32/proc.c arch/win32/keys.c arch/win32/fs.c arch/win32/thread.c arch/win32/raw_input.c)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    list(APPEND PWC_KERNEL_SOURCES arch/linux/wait.c arch/linux/proc.c arch/linux/keys.c arch/linux/fs.c arch/linux/thread.c)
+    list(APPEND PWC_KERNEL_SOURCES arch/linux/wait.c arch/linux/proc.c arch/linux/keys.c arch/linux/fs.c arch/linux/thread.c arch/common/raw_input.c)
 else()
     # macOS lands here deliberately. packwandc.md 8.2: arch/darwin cannot be
     # verified by CI or on the reference machine, and the spec's rule is that
     # it should not be written until someone can actually run it.
-    list(APPEND PWC_KERNEL_SOURCES arch/common/wait.c arch/common/proc.c arch/common/keys.c arch/common/fs.c arch/common/thread.c)
+    list(APPEND PWC_KERNEL_SOURCES arch/common/wait.c arch/common/proc.c arch/common/keys.c arch/common/fs.c arch/common/thread.c arch/common/raw_input.c)
 endif()
 
-add_library(packwandc STATIC ${PWC_KERNEL_SOURCES})
+add_library(packwandc STATIC ${PWC_KERNEL_SOURCES} "${PWC_ZIG_MEMORY_OBJECT}")
 add_library(packwandc::packwandc ALIAS packwandc)
 
 target_include_directories(
@@ -197,7 +237,7 @@ target_include_directories(
 
 target_link_libraries(packwandc PRIVATE pwc_gate)
 if(WIN32)
-    target_link_libraries(packwandc PRIVATE Advapi32)
+    target_link_libraries(packwandc PRIVATE Advapi32 User32)
 else()
     # pthreads. glibc 2.34+ folds libpthread into libc, but older ones and musl
     # still need the explicit link, and Threads::Threads resolves both.

@@ -169,6 +169,11 @@ fn curseforge() -> Command {
                 .arg(option("category", "Category slug"))
                 .arg(option("release-channel", "release, beta, or alpha")),
         )
+        .subcommand(
+            command("update", "Replace a mod with a specific CurseForge file")
+                .arg(positional("name", "Existing metadata name").required(true))
+                .arg(positional("file", "CurseForge file URL").required(true)),
+        )
         .subcommand(command(
             "detect",
             "Detect CurseForge metadata from indexed files",
@@ -524,6 +529,31 @@ fn other() -> Vec<Command> {
             .arg(flag("json", "Output JSON")),
         command("run", "Execute a user-defined pack script")
             .arg(positional("script", "Script name").required(true)),
+        command(
+            "script",
+            "Generate a context-aware .pw4 script under the repository pw4 folder",
+        )
+        .arg(option("name", "Output filename, with or without .pw4").default_value("workspace"))
+        .arg(
+            option("preset", "build, ci, or project")
+                .default_value("build")
+                .value_parser(["build", "ci", "project"]),
+        )
+        .arg(option(
+            "project",
+            "Project ID; inferred from the current directory when possible",
+        ))
+        .arg(
+            option("kind", "modpack, datapack, resourcepack, or mod")
+                .default_value("modpack")
+                .value_parser(["modpack", "datapack", "resourcepack", "mod"]),
+        )
+        .arg(
+            option("loader", "fabric, forge, neoforge, or quilt")
+                .value_parser(["fabric", "forge", "neoforge", "quilt"]),
+        )
+        .arg(flag("force", "Replace an existing generated script"))
+        .arg(flag("json", "Output the generated script report as JSON")),
         command("serve", "Run a local development server")
             .alias("server")
             .arg(option("port", "Port").short('p').default_value("8080"))
@@ -630,6 +660,7 @@ mod tests {
         "rehash",
         "remove",
         "run",
+        "script",
         "serve",
         "settings",
         "side",

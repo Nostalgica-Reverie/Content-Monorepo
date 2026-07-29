@@ -10,6 +10,17 @@ export interface LauncherState { session: string; phase: string; detail?: string
 export interface LauncherLog { session: string; stream: string; line: string }
 export interface AuthState { state: string; profile?: unknown }
 export interface WebviewEvent { kind: string; payload: unknown }
+export interface RawInputEvent {
+  kind: 'keyboard' | 'mouse'
+  timestampMs: number
+  makeCode: number
+  flags: number
+  virtualKey: number
+  buttonFlags: number
+  deltaX: number
+  deltaY: number
+  wheelDelta: number
+}
 /** One record drained from the packwandc kernel's trace ring (packwandc.md 3.7). */
 export interface KernelTracePayload {
   sequence: number
@@ -40,5 +51,7 @@ export const onLauncherLog = (handler: (payload: LauncherLog) => void) => on('la
 export const onAuthStatus = (handler: (payload: AuthState) => void) => on('auth:status', handler)
 export const onWebviewEvent = (handler: (payload: WebviewEvent) => void) => on('webview:event', handler)
 export const onWebviewClosed = (handler: (payload: string) => void) => on('webview:closed', handler)
+export const onRawInputBatch = (handler: (payload: RawInputEvent[]) => void) => on('raw-input:batch', handler)
+export const onRawInputDropped = (handler: (payload: number) => void) => on('raw-input:dropped', handler)
 export const onKernelTrace = (handler: (payload: KernelTracePayload) => void) =>
   on('kernel:trace', handler)

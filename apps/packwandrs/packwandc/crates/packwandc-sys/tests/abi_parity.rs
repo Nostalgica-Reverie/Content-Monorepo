@@ -124,6 +124,14 @@ fn handle_layout_matches_the_wire_abi() {
 }
 
 #[test]
+fn raw_input_layout_matches_the_wire_abi() {
+    // pwc_raw_input.h static-asserts 32 bytes on the C side.
+    assert_eq!(core::mem::size_of::<sys::PwcRawInputEvent>(), 32);
+    assert_eq!(core::mem::align_of::<sys::PwcRawInputEvent>(), 4);
+    assert_eq!(sys::PWC_RAW_INPUT_KEYBOARD, 1);
+    assert_eq!(sys::PWC_RAW_INPUT_MOUSE, 2);
+}
+#[test]
 fn error_detail_layout_matches_the_wire_abi() {
     // The C side static_asserts this same 40. Both sides asserting it is the
     // point: the struct is read field-by-field across the FFI boundary, so a
@@ -143,7 +151,10 @@ fn last_error_is_recorded_and_readable() {
         handle_capacity: 8,
         worker_count: 1,
     };
-    assert_eq!(sys::safe::boot(config.handle_capacity, config.worker_count), sys::PWC_OK);
+    assert_eq!(
+        sys::safe::boot(config.handle_capacity, config.worker_count),
+        sys::PWC_OK
+    );
 
     let mut port = sys::PwcHandle::default();
     assert_eq!(sys::safe::port_create(&mut port), sys::PWC_OK);
@@ -219,7 +230,10 @@ fn ktrace_drains_recorded_failures() {
     );
 
     // Drained back to empty, and nothing was dropped at this volume.
-    assert_eq!(sys::safe::ktrace_drain().expect("drain must not error"), None);
+    assert_eq!(
+        sys::safe::ktrace_drain().expect("drain must not error"),
+        None
+    );
     assert_eq!(sys::safe::ktrace_dropped().expect("drop count readable"), 0);
 
     sys::safe::shutdown();
@@ -236,8 +250,8 @@ fn sh_command_layout_matches_the_wire_abi() {
 #[test]
 fn sh_parse_applies_the_kernels_quoting_rules() {
     // The point of exposing the parser: the UI must not reimplement quoting.
-    let words = sys::safe::sh_parse(b"echo \"hello world\" --flag")
-        .expect("a well-formed line must parse");
+    let words =
+        sys::safe::sh_parse(b"echo \"hello world\" --flag").expect("a well-formed line must parse");
     assert_eq!(words.argc, 3);
     assert_eq!(&words.argv[1][..words.arglen[1] as usize], b"hello world");
 

@@ -11,15 +11,25 @@ pwc_status pwc_arena_alloc(pwc_arena *arena, size_t size, size_t alignment, void
         (alignment & (alignment - 1u)) != 0u) {
         return PWC_EINVAL;
     }
-    const size_t mask = alignment - 1u;
-    if (arena->used > SIZE_MAX - mask) {
+    const uintptr_t base = (uintptr_t) arena->memory;
+    const uintptr_t mask = (uintptr_t) alignment - 1u;
+    if (arena->used > UINTPTR_MAX - base) {
         return PWC_EOVERFLOW;
     }
-    const size_t offset = (arena->used + mask) & ~mask;
+    const uintptr_t current = base + arena->used;
+    if (current > UINTPTR_MAX - mask) {
+        return PWC_EOVERFLOW;
+    }
+    const uintptr_t aligned = (current + mask) & ~mask;
+    const uintptr_t displacement = aligned - base;
+    if (displacement > SIZE_MAX) {
+        return PWC_EOVERFLOW;
+    }
+    const size_t offset = (size_t) displacement;
     if (offset > arena->capacity || size > arena->capacity - offset) {
         return PWC_ENOMEM;
     }
-    *out = &arena->memory[offset];
+    *out = (void *) aligned;
     arena->used = offset + size;
     return PWC_OK;
 }

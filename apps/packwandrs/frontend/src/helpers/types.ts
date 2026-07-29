@@ -8,6 +8,7 @@ export interface AppSettings {
   javaDefaults: Record<string, string>
   memoryMb: number
   msaClientId: string | null
+  rawInputEnabled: boolean
 }
 
 export interface PackSummary {

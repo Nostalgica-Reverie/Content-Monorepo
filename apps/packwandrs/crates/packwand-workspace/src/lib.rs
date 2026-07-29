@@ -11,6 +11,10 @@ use packwand_pack::{CURRENT_PACK_FORMAT, Index, Pack, PackIndex};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+mod script;
+
+pub use script::{GeneratedScript, ScriptPreset, ScriptRequest, generate_script};
+
 const CATEGORIES: [&str; 4] = ["mods", "modpacks", "datapacks", "resourcepacks"];
 const DEFAULT_MC_VERSION: &str = "26.1.2";
 const DEFAULT_VERSION: &str = "26.x";
@@ -46,6 +50,14 @@ pub enum Error {
     ConflictingRole,
     #[error("workspace sync failed: {0}")]
     Sync(String),
+    #[error("could not find a repository root above {0}")]
+    WorkspaceRootNotFound(PathBuf),
+    #[error("invalid .pw4 script name {0:?}")]
+    InvalidScriptName(String),
+    #[error("{0} requires --project")]
+    MissingScriptProject(String),
+    #[error("script {0} already exists; pass --force to replace it")]
+    ScriptAlreadyExists(PathBuf),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
@@ -927,7 +939,7 @@ fn category_type(category: &str) -> &str {
     }
 }
 
-fn atomic_write(path: &Path, bytes: &[u8]) -> Result<()> {
+pub(crate) fn atomic_write(path: &Path, bytes: &[u8]) -> Result<()> {
     let parent = path
         .parent()
         .ok_or_else(|| Error::InvalidId(path.display().to_string()))?;

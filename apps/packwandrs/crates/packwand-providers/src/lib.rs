@@ -15,7 +15,9 @@ use std::collections::BTreeMap;
 use packwand_pack::{Download, Mod};
 use serde::{Deserialize, Serialize};
 
-pub use curseforge::{CurseForgeClient, FingerprintMatch, FingerprintMatches, configured_api_key};
+pub use curseforge::{
+    CurseForgeClient, FingerprintMatch, FingerprintMatches, configured_api_key, parse_file_url,
+};
 pub use forgejo::ForgejoClient;
 pub use github::GitHubClient;
 pub use gitlab::GitLabClient;

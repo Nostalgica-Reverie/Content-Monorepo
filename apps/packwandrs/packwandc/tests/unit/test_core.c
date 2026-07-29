@@ -9,13 +9,40 @@
 
 #include "packwandc/kernel/pwc_kernel.h"
 #include "packwandc/kernel/pwc_arch_thread.h"
+#include "packwandc/kernel/pwc_arena.h"
 #include "packwandc/kernel/pwc_arch_wait.h"
 #include "packwandc/kernel/pwc_ktrace.h"
 #include "packwandc/kernel/pwc_sched.h"
+#include "packwandc/kernel/pwc_slab.h"
 #include "packwandc/uapi/pwc_handle.h"
 #include "packwandc/uapi/pwc_status.h"
 #include "packwandc/uapi/pwc_syscall.h"
 
+static void test_arena_aligns_the_absolute_pointer(void) {
+    _Alignas(16) uint8_t memory[64] = {0u};
+    pwc_arena arena = {0};
+    pwc_arena_init(&arena, &memory[1], sizeof(memory) - 1u);
+    void *allocated = nullptr;
+    PWC_CHECK_EQ_I(pwc_arena_alloc(&arena, 1u, 16u, &allocated), PWC_OK);
+    PWC_CHECK_EQ_U((uintptr_t) allocated % 16u, 0u);
+}
+static void test_slab_rejects_double_free_and_foreign_pointers(void) {
+    uint32_t memory[2] = {0u};
+    uint32_t next[2] = {0u};
+    uint32_t foreign = 0u;
+    pwc_slab slab = {0};
+    pwc_slab_init(&slab, memory, next, 2u, sizeof(memory[0]));
+
+    void *first = nullptr;
+    void *second = nullptr;
+    PWC_CHECK_EQ_I(pwc_slab_alloc(&slab, &first), PWC_OK);
+    PWC_CHECK_EQ_I(pwc_slab_free(&slab, first), PWC_OK);
+    PWC_CHECK_EQ_I(pwc_slab_free(&slab, first), PWC_EINVAL);
+    PWC_CHECK_EQ_I(pwc_slab_free(&slab, &foreign), PWC_EINVAL);
+    PWC_CHECK_EQ_I(pwc_slab_alloc(&slab, &first), PWC_OK);
+    PWC_CHECK_EQ_I(pwc_slab_alloc(&slab, &second), PWC_OK);
+    PWC_CHECK(first != second);
+}
 static void test_version_syscall(void) {
     uint32_t major = 0xffffffffu;
     uint32_t minor = 0xffffffffu;
@@ -712,6 +739,8 @@ static void test_sched_joins_dedicated_pollers(void) {
 }
 
 int main(void) {
+    PWC_RUN(test_arena_aligns_the_absolute_pointer);
+    PWC_RUN(test_slab_rejects_double_free_and_foreign_pointers);
     PWC_RUN(test_version_syscall);
     PWC_RUN(test_version_rejects_null);
     PWC_RUN(test_status_names);

@@ -30,6 +30,33 @@ pub fn configured_api_key() -> String {
     .unwrap_or_else(|| DEFAULT_API_KEY.to_owned())
 }
 
+/// Extracts the project slug and numeric file id from a CurseForge file page.
+///
+/// Project pages and file pages have different last path segments. Treating a
+/// file page as a project URL used to search for a project named after the file
+/// id, so a perfectly valid release URL could never be installed explicitly.
+pub fn parse_file_url(value: &str) -> Option<(String, String)> {
+    let url = Url::parse(value).ok()?;
+    if !matches!(url.host_str()?, "curseforge.com" | "www.curseforge.com") {
+        return None;
+    }
+    let segments = url
+        .path_segments()?
+        .filter(|segment| !segment.is_empty())
+        .collect::<Vec<_>>();
+    let files = segments.iter().position(|segment| *segment == "files")?;
+    let slug = segments.get(files.checked_sub(1)?)?;
+    let file_id = segments.get(files + 1)?;
+    if file_id.parse::<u32>().is_err()
+        || !slug
+            .bytes()
+            .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_'))
+    {
+        return None;
+    }
+    Some(((*slug).to_owned(), (*file_id).to_owned()))
+}
+
 /// Reports whether `key` is missing the "$<algo>$<cost>$" bcrypt-style prefix
 /// CurseForge API keys always have. Both PowerShell and bash treat unescaped
 /// $digits/$name inside double-quoted strings as variable interpolation,
@@ -174,25 +201,39 @@ impl<T: Transport> ProviderResolver for CurseForgeClient<T> {
                 &file_id.to_string(),
             ])?)?;
             response.data
-        } else if let Some(file) = project
-            .latest_files
-            .iter()
-            .find(|file| file.compatible(request))
-        {
-            file.clone()
         } else {
-            let index_entry = project
+            let latest_index = project
                 .latest_files_indexes
                 .iter()
-                .find(|entry| entry.compatible(request))
-                .ok_or(ProviderError::NoCompatibleVersion)?;
-            let response: FileEnvelope = self.get_json(self.endpoint(&[
-                "mods",
-                &project.id.to_string(),
-                "files",
-                &index_entry.file_id.to_string(),
-            ])?)?;
-            response.data
+                .filter(|entry| entry.compatible(request))
+                // The API can return one compatible entry per release channel.
+                // File IDs are monotonic upload IDs, so choose the newest allowed
+                // file rather than depending on the response order.
+                .max_by_key(|entry| entry.file_id);
+            let latest_file = project
+                .latest_files
+                .iter()
+                .filter(|file| file.compatible(request))
+                .max_by_key(|file| file.id);
+            if let Some(index_entry) =
+                latest_index.filter(|entry| latest_file.is_none_or(|file| entry.file_id >= file.id))
+            {
+                // `latestFiles` is only a short recent-upload list. It can retain
+                // an older compatible file while its newer replacement is absent;
+                // the indexes are CurseForge's authoritative latest-file mapping
+                // for each game-version/loader/release-type combination.
+                let response: FileEnvelope = self.get_json(self.endpoint(&[
+                    "mods",
+                    &project.id.to_string(),
+                    "files",
+                    &index_entry.file_id.to_string(),
+                ])?)?;
+                response.data
+            } else if let Some(file) = latest_file {
+                file.clone()
+            } else {
+                return Err(ProviderError::NoCompatibleVersion);
+            }
         };
         let hashes = file.hashes();
         if hashes.is_empty() {

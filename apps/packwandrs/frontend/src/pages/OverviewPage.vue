@@ -34,6 +34,9 @@ const filteredPacks = computed(() => {
   )
 })
 const manifest = computed(() => workbench.selectedProject?.manifest)
+const totalIndexedFiles = computed(() => workbench.projectPacks.reduce((total, pack) => total + pack.indexedFiles, 0))
+const totalMetadataFiles = computed(() => workbench.projectPacks.reduce((total, pack) => total + pack.metadataFiles, 0))
+const projectLoaders = computed(() => [...new Set(workbench.projectPacks.flatMap((pack) => pack.loaders))].sort())
 
 /** The rail, sidebar, and palette all route "New project…" through the store. */
 watch(
@@ -113,6 +116,37 @@ const actions = [
   <section v-else class="overview">
     <!-- Primary column: the pack targets are what the user actually acts on. -->
     <div class="overview__main">
+      <div class="overview-metrics" aria-label="Project summary">
+        <div class="overview-metric">
+          <span>Pack targets</span>
+          <strong>{{ workbench.projectPacks.length }}</strong>
+          <small>{{ manifest?.variants.length || 0 }} declared variants</small>
+        </div>
+        <div class="overview-metric">
+          <span>Indexed files</span>
+          <strong>{{ totalIndexedFiles.toLocaleString() }}</strong>
+          <small>{{ totalMetadataFiles.toLocaleString() }} metadata files</small>
+        </div>
+        <div class="overview-metric">
+          <span>Loaders</span>
+          <strong>{{ projectLoaders.length || (manifest?.loader ? 1 : 0) }}</strong>
+          <small>{{ projectLoaders.join(', ') || manifest?.loader || 'Not specified' }}</small>
+        </div>
+      </div>
+
+      <div v-if="workbench.selectedPack" class="selected-target">
+        <div>
+          <span class="eyebrow">Selected target</span>
+          <h2>{{ workbench.selectedPack.name }}</h2>
+          <p>{{ workbench.selectedPack.path }}</p>
+        </div>
+        <dl>
+          <div><dt>Minecraft</dt><dd>{{ workbench.selectedPack.minecraftVersion || 'unset' }}</dd></div>
+          <div><dt>Loader</dt><dd>{{ workbench.selectedPack.loaders.join(', ') || 'unset' }}</dd></div>
+          <div><dt>Version</dt><dd>{{ workbench.selectedPack.version || 'unset' }}</dd></div>
+        </dl>
+      </div>
+
       <div class="section-head">
         <h2>Pack targets</h2>
         <span class="pill">{{ filteredPacks.length }} of {{ workbench.projectPacks.length }}</span>

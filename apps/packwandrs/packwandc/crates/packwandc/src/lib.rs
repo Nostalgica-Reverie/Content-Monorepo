@@ -15,7 +15,7 @@
 //! # Phase 0
 //!
 //! Only the version and status surface exists so far. Handles, waiting, and
-//! the subsystem modules arrive in phases 1 and 2 — see `packwandc.md` §10.
+//! the subsystem modules arrive in phases 1 and 2 â€” see `packwandc.md` Â§10.
 
 #![forbid(unsafe_code)]
 
@@ -45,7 +45,7 @@ impl fmt::Display for AbiVersion {
 /// rather than printing a bare negative number.
 ///
 /// Where the failing path recorded one, it also carries the kernel's detail
-/// record — the recording module, source location, and the platform error code
+/// record â€” the recording module, source location, and the platform error code
 /// the OS actually returned. That last field is the one that matters in
 /// practice: without it a `PWC_EIO` out of the credential store or a job object
 /// is indistinguishable from any other, and the OS's own reason is destroyed by
@@ -79,7 +79,7 @@ impl Error {
     ///
     /// Deliberately carries no detail record. The thread-local one belongs to
     /// whatever C path last failed, which for these cases is an unrelated
-    /// earlier call — attaching it would point a reader at the wrong source
+    /// earlier call â€” attaching it would point a reader at the wrong source
     /// line with full confidence.
     const fn without_detail(status: i32) -> Self {
         Self {
@@ -107,7 +107,7 @@ impl Error {
 
     /// What the failing path in the C tree reported, if it recorded anything.
     ///
-    /// `None` means the path returned a bare status without a detail — common
+    /// `None` means the path returned a bare status without a detail â€” common
     /// for plain argument-validation rejections, where the status is already
     /// the whole story.
     #[must_use]
@@ -150,7 +150,7 @@ impl core::error::Error for Error {}
 /// Result alias for packwandc operations.
 pub type Result<T> = core::result::Result<T, Error>;
 
-/// One record drained from the core's trace ring — the `dmesg` analogue.
+/// One record drained from the core's trace ring â€” the `dmesg` analogue.
 pub use sys::safe::TraceRecord;
 
 /// Trace severity constants, mirroring `PWC_TRACE_LEVEL_*` in the C headers.
@@ -167,7 +167,7 @@ pub enum ShellOutcome {
     /// cannot be reached from C. The caller dispatches the words itself, having
     /// been spared reimplementing the quoting rules.
     ForHost(Vec<String>),
-    /// A blank or comment-only line. A no-op, not a failure — a console that
+    /// A blank or comment-only line. A no-op, not a failure â€” a console that
     /// complains when you press enter on an empty prompt is hostile.
     Empty,
 }
@@ -196,13 +196,15 @@ fn shell_words(command: &sys::PwcShCommand) -> Vec<String> {
 ///
 /// # Errors
 ///
-/// Returns [`Error`] if the line is malformed — an unterminated quote, an
+/// Returns [`Error`] if the line is malformed â€” an unterminated quote, an
 /// unknown escape, an over-long word, or more than one line.
 pub fn shell_parse(line: &str) -> Result<Vec<String>> {
     match sys::safe::sh_parse(line.as_bytes()) {
         Ok(command) => Ok(shell_words(&command)),
-        Err(status) => Err(Error::from_status(status)
-            .unwrap_or_else(|| Error::without_detail(sys::PWC_EINVAL))),
+        Err(status) => {
+            Err(Error::from_status(status)
+                .unwrap_or_else(|| Error::without_detail(sys::PWC_EINVAL)))
+        }
     }
 }
 
@@ -297,7 +299,7 @@ pub const fn expected_abi_minor() -> u32 {
 ///
 /// Returns [`Error`] if the native call fails, which for this syscall can only
 /// happen on an argument validation failure that this wrapper makes
-/// impossible — so in practice it does not fail.
+/// impossible â€” so in practice it does not fail.
 pub fn abi_version() -> Result<AbiVersion> {
     let mut major = 0u32;
     let mut minor = 0u32;
@@ -375,9 +377,9 @@ impl Handle {
     ///
     /// # Deprecated
     ///
-    /// Use [`Port`] instead. A port owns two resources — a handle table slot
+    /// Use [`Port`] instead. A port owns two resources â€” a handle table slot
     /// and a ring slot from the fixed pool of
-    /// [`PWC_IPC_MAX_PORTS`](sys::PWC_IPC_MAX_PORTS) — and `Handle`'s `Drop`
+    /// [`PWC_IPC_MAX_PORTS`](sys::PWC_IPC_MAX_PORTS) â€” and `Handle`'s `Drop`
     /// releases only the first. Dropping a port opened this way therefore
     /// leaks a ring slot, and after enough of them port creation fails
     /// permanently with `PWC_ENOMEM`.
@@ -397,7 +399,7 @@ impl Handle {
     ///
     /// Note that the core has no readiness source wired up yet, so this
     /// currently always sleeps out its timeout and then reports
-    /// [`PWC_ETIMEDOUT`](sys::PWC_ETIMEDOUT) — see the header comment on
+    /// [`PWC_ETIMEDOUT`](sys::PWC_ETIMEDOUT) â€” see the header comment on
     /// `kernel/wait.c` for what an epoll/IOCP-backed answer requires. Invalid
     /// handles are still rejected up front rather than after the timeout.
     ///
@@ -450,8 +452,8 @@ impl Drop for Handle {
 
 /// An owned pwipc port: a framed-message channel with a fixed-size ring.
 ///
-/// A port owns *two* resources — a handle table slot and one of the
-/// [`PWC_IPC_MAX_PORTS`](sys::PWC_IPC_MAX_PORTS) ring slots — and both are
+/// A port owns *two* resources â€” a handle table slot and one of the
+/// [`PWC_IPC_MAX_PORTS`](sys::PWC_IPC_MAX_PORTS) ring slots â€” and both are
 /// released on drop. That is the whole reason this type exists rather than a
 /// bare [`Handle`]: closing only the handle leaks the ring slot, and the pool
 /// is small enough that a leak per command exhausts it quickly.
@@ -484,7 +486,7 @@ impl Port {
     /// # Errors
     ///
     /// Returns [`Error`] with `PWC_EOVERFLOW` when the ring is full. The
-    /// message is not queued — a partial frame is never published.
+    /// message is not queued â€” a partial frame is never published.
     pub fn send(&self, data: &[u8]) -> Result<()> {
         check(sys::safe::ipc_send(self.handle(), data))
     }
@@ -559,7 +561,10 @@ impl ProcessTree {
     ///
     /// Returns the translated platform or stale-handle error.
     pub fn kill(&mut self) -> Result<()> {
-        let raw = self.raw.take().ok_or(Error::without_detail(sys::PWC_EBADF))?;
+        let raw = self
+            .raw
+            .take()
+            .ok_or(Error::without_detail(sys::PWC_EBADF))?;
         check(sys::safe::proc_kill(raw))
     }
 }
@@ -663,6 +668,95 @@ pub fn fs_atomic_write(root: &str, path: &str, content: &[u8]) -> Result<()> {
     ))
 }
 
+/// Device-level input packet captured for the focused Packwand window.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct RawInputEvent {
+    /// Native packet category.
+    pub kind: RawInputKind,
+    /// Windows message timestamp in milliseconds.
+    pub timestamp_ms: u32,
+    /// Keyboard scan code.
+    pub make_code: u16,
+    /// Native keyboard flags.
+    pub flags: u16,
+    /// Keyboard virtual-key code.
+    pub virtual_key: u16,
+    /// Native mouse button flags.
+    pub button_flags: u16,
+    /// Unaccelerated relative mouse X movement.
+    pub delta_x: i32,
+    /// Unaccelerated relative mouse Y movement.
+    pub delta_y: i32,
+    /// Mouse wheel movement.
+    pub wheel_delta: i16,
+}
+
+/// Native Raw Input packet category.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum RawInputKind {
+    /// Keyboard scan-code packet.
+    Keyboard,
+    /// Mouse delta/button packet.
+    Mouse,
+}
+
+/// Start Raw Input capture for one platform window.
+///
+/// # Errors
+///
+/// Returns a native argument/platform error, or `PWC_ENOSYS` off Windows.
+pub fn raw_input_start(native_window: usize) -> Result<()> {
+    check(sys::safe::raw_input_start(native_window))
+}
+
+/// Stop Raw Input capture. Safe when capture is already stopped.
+pub fn raw_input_stop() {
+    sys::safe::raw_input_stop();
+}
+
+/// Pop one packet without blocking.
+///
+/// # Errors
+///
+/// Returns a native error when capture is unavailable or its ABI differs.
+pub fn raw_input_read() -> Result<Option<RawInputEvent>> {
+    let mut raw = sys::PwcRawInputEvent::default();
+    let status = sys::safe::raw_input_read(&mut raw);
+    if status == sys::PWC_EAGAIN {
+        return Ok(None);
+    }
+    check(status)?;
+    if raw.struct_size as usize != core::mem::size_of::<sys::PwcRawInputEvent>() {
+        return Err(Error::without_detail(sys::PWC_ENOSYS));
+    }
+    let kind = match raw.kind {
+        sys::PWC_RAW_INPUT_KEYBOARD => RawInputKind::Keyboard,
+        sys::PWC_RAW_INPUT_MOUSE => RawInputKind::Mouse,
+        _ => return Err(Error::without_detail(sys::PWC_EINVAL)),
+    };
+    Ok(Some(RawInputEvent {
+        kind,
+        timestamp_ms: raw.timestamp_ms,
+        make_code: raw.make_code,
+        flags: raw.flags,
+        virtual_key: raw.virtual_key,
+        button_flags: raw.button_flags,
+        delta_x: raw.delta_x,
+        delta_y: raw.delta_y,
+        wheel_delta: raw.wheel_delta,
+    }))
+}
+
+/// Return the cumulative number of packets dropped by the bounded queue.
+///
+/// # Errors
+///
+/// Returns a native status when the counter cannot be read.
+pub fn raw_input_dropped() -> Result<u64> {
+    let mut dropped = 0;
+    check(sys::safe::raw_input_dropped(&mut dropped))?;
+    Ok(dropped)
+}
 #[cfg(all(test, windows))]
 mod windows_native_tests {
     use super::*;
@@ -710,7 +804,7 @@ mod windows_native_tests {
     /// polling loop anywhere in this test.
     ///
     /// The distinction from `recursive_watch_observes_external_change` is the
-    /// whole point. That test calls `read_changes`, which *blocks* — it works
+    /// whole point. That test calls `read_changes`, which *blocks* â€” it works
     /// only because it dedicates this thread to waiting. Here the kernel owns
     /// the blocking thread and the consumer just drains a port, which is what
     /// the UI needed in order to stop polling.
@@ -729,7 +823,7 @@ mod windows_native_tests {
         let changed = root.join("streamed.txt");
         std::fs::write(&changed, b"changed outside editor").expect("write watched file");
 
-        // Waiting for the message to arrive is not polling the *filesystem* —
+        // Waiting for the message to arrive is not polling the *filesystem* â€”
         // nothing here asks the OS whether anything changed. The kernel's
         // poller is blocked in the platform call and pushes when it returns.
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
@@ -746,7 +840,7 @@ mod windows_native_tests {
 
         // Closing the watch is the only cancellation there is: it unblocks the
         // poller from inside the OS. Shutdown joins it, so a failure here hangs
-        // rather than failing — which is itself the signal.
+        // rather than failing â€” which is itself the signal.
         drop(watch);
         drop(port);
         sys::safe::shutdown();
@@ -822,7 +916,7 @@ impl FsWatch {
     /// leaves the caller draining a port at its own pace. Each batch is a
     /// little-endian `u32` change count.
     ///
-    /// Dropping the watch stops the stream — that is the only cancellation
+    /// Dropping the watch stops the stream â€” that is the only cancellation
     /// available, because the kernel's thread is blocked inside the OS.
     ///
     /// # Errors

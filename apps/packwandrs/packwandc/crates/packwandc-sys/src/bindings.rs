@@ -5,10 +5,10 @@
 // run, so an edit here fails the build rather than silently diverging from
 // the C ABI. See packwandc.md 4.1.
 
-use crate::PwcHandle;
 use crate::PwcErrorDetail;
-use crate::PwcTraceRecord;
+use crate::PwcHandle;
 use crate::PwcShCommand;
+use crate::PwcTraceRecord;
 
 /// Syscall numbers. Append-only and frozen: see tests/golden/syscalls.txt.
 #[repr(i32)]
@@ -83,7 +83,12 @@ unsafe extern "C" {
     /// Syscall 4, `pwc_handle_dup` (core module).
     pub fn pwc_handle_dup(h: PwcHandle, rights: u32, out: *mut PwcHandle) -> i32;
     /// Syscall 5, `pwc_wait` (core module).
-    pub fn pwc_wait(ents: *mut core::ffi::c_void, n: usize, timeout_ms: i64, out_ready: *mut usize) -> i32;
+    pub fn pwc_wait(
+        ents: *mut core::ffi::c_void,
+        n: usize,
+        timeout_ms: i64,
+        out_ready: *mut usize,
+    ) -> i32;
     /// Syscall 6, `pwc_last_error_get` (core module).
     pub fn pwc_last_error_get() -> *const PwcErrorDetail;
     /// Syscall 7, `pwc_ktrace_drain` (core module).
@@ -93,9 +98,24 @@ unsafe extern "C" {
     /// Syscall 16, `pwc_fs_validate_relative` (pwfs module).
     pub fn pwc_fs_validate_relative(path: *const u8, path_len: usize) -> i32;
     /// Syscall 17, `pwc_fs_read` (pwfs module).
-    pub fn pwc_fs_read(root: *const u8, root_len: usize, path: *const u8, path_len: usize, buffer: *mut u8, capacity: usize, out_len: *mut usize) -> i32;
+    pub fn pwc_fs_read(
+        root: *const u8,
+        root_len: usize,
+        path: *const u8,
+        path_len: usize,
+        buffer: *mut u8,
+        capacity: usize,
+        out_len: *mut usize,
+    ) -> i32;
     /// Syscall 18, `pwc_fs_atomic_write` (pwfs module).
-    pub fn pwc_fs_atomic_write(root: *const u8, root_len: usize, path: *const u8, path_len: usize, content: *const u8, content_len: usize) -> i32;
+    pub fn pwc_fs_atomic_write(
+        root: *const u8,
+        root_len: usize,
+        path: *const u8,
+        path_len: usize,
+        content: *const u8,
+        content_len: usize,
+    ) -> i32;
     /// Syscall 19, `pwc_fs_watch_open` (pwfs module).
     pub fn pwc_fs_watch_open(root: *const u8, root_len: usize, out: *mut PwcHandle) -> i32;
     /// Syscall 20, `pwc_fs_watch_read` (pwfs module).
@@ -121,11 +141,21 @@ unsafe extern "C" {
     /// Syscall 65, `pwc_ipc_send` (pwipc module).
     pub fn pwc_ipc_send(port: PwcHandle, data: *const u8, length: usize) -> i32;
     /// Syscall 66, `pwc_ipc_recv` (pwipc module).
-    pub fn pwc_ipc_recv(port: PwcHandle, buffer: *mut u8, capacity: usize, out_len: *mut usize) -> i32;
+    pub fn pwc_ipc_recv(
+        port: PwcHandle,
+        buffer: *mut u8,
+        capacity: usize,
+        out_len: *mut usize,
+    ) -> i32;
     /// Syscall 67, `pwc_ipc_port_close` (pwipc module).
     pub fn pwc_ipc_port_close(port: PwcHandle) -> i32;
     /// Syscall 192, `pwc_sh_parse` (pwsh module).
     pub fn pwc_sh_parse(line: *const u8, length: usize, out: *mut PwcShCommand) -> i32;
     /// Syscall 193, `pwc_sh_exec` (pwsh module).
-    pub fn pwc_sh_exec(port: PwcHandle, line: *const u8, length: usize, out: *mut PwcShCommand) -> i32;
+    pub fn pwc_sh_exec(
+        port: PwcHandle,
+        line: *const u8,
+        length: usize,
+        out: *mut PwcShCommand,
+    ) -> i32;
 }

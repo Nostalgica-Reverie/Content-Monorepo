@@ -1,4 +1,4 @@
-# CMake toolchain: build packwandc for the MSVC ABI using clang.
+# CMake toolchain: build packwandc for the MSVC ABI using Zig's clang frontend.
 #
 # WHY THIS EXISTS (packwandc.md 8.1)
 #
@@ -55,14 +55,15 @@ message(STATUS "packwandc: Windows SDK   ${PWC_WINSDK_ROOT} (${PWC_WINSDK_VERSIO
 
 # --- compiler ---------------------------------------------------------------
 
-find_program(PWC_CLANG NAMES clang clang.exe REQUIRED)
 find_program(PWC_LLD_LINK NAMES lld-link lld-link.exe REQUIRED)
 # NOTE: llvm-lib, not `lib` or `ar`. GNU ar produces archives MSVC's linker
 # will not accept, and plain `link.exe` on PATH under Git Bash resolves to
 # coreutils' `link` (packwandc.md 8.1).
 find_program(PWC_LLVM_LIB NAMES llvm-lib llvm-lib.exe REQUIRED)
 
-set(CMAKE_C_COMPILER "${PWC_CLANG}")
+find_program(PWC_ZIG NAMES zig zig.exe REQUIRED)
+set(CMAKE_C_COMPILER "${PWC_ZIG}" CACHE FILEPATH "packwandc C compiler" FORCE)
+set(CMAKE_C_COMPILER_ARG1 cc CACHE STRING "packwandc C compiler argument" FORCE)
 set(CMAKE_C_COMPILER_TARGET x86_64-pc-windows-msvc)
 set(CMAKE_LINKER "${PWC_LLD_LINK}")
 set(CMAKE_AR "${PWC_LLVM_LIB}")

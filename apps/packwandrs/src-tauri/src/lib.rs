@@ -8,6 +8,7 @@ mod error;
 mod events;
 mod fsutil;
 mod kernel;
+mod raw_input;
 mod state;
 
 use commands::{
@@ -28,6 +29,12 @@ pub fn run() {
             // workbench is useful without the C layer, so a failed native boot
             // degrades rather than aborting startup (see kernel.rs).
             kernel::start(app.handle());
+            raw_input::start(app.handle())?;
+            if app.state::<state::AppState>().settings()?.raw_input_enabled {
+                if let Err(error) = raw_input::set_enabled(app.handle(), true) {
+                    eprintln!("could not restore Raw Input: {error}");
+                }
+            }
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -64,6 +71,7 @@ pub fn run() {
             extensions::extension_blockbench_open,
             settings::settings_get,
             settings::settings_update,
+            raw_input::raw_input_set_enabled,
             packs::packs_list,
             packs::packs_get,
             packs::packs_manifest_get,

@@ -164,7 +164,9 @@ static pwc_status pwsh_cmd_trace(const pwc_sh_command *cmd, const pwsh_sink *out
     return PWC_FAIL(PWC_EINVAL, "pwsh", "unknown trace subcommand");
 }
 
-static const pwsh_builtin pwsh_builtins[];
+/* Zig's Clang 21 frontend rejects an incomplete tentative array definition;
+ * keep the forward declaration complete. The trailing sentinel is included. */
+static const pwsh_builtin pwsh_builtins[6];
 
 static pwc_status pwsh_cmd_help(const pwc_sh_command *cmd, const pwsh_sink *out) {
     (void) cmd;

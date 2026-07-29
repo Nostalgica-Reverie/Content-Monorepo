@@ -90,14 +90,19 @@ export const useShellStore = defineStore('shell', () => {
     localStorage.setItem('packwand:sidebar', sidebarVisible.value ? '1' : '0')
   }
 
+  /** Shows a sidebar without applying the activity-button toggle behavior. */
+  function showSidebar(mode: SidebarMode = 'explorer') {
+    sidebarMode.value = mode
+    localStorage.setItem('packwand:sidebar-mode', mode)
+    toggleSidebar(true)
+  }
+
   function selectSidebar(mode: SidebarMode) {
     if (sidebarVisible.value && sidebarMode.value === mode) {
       toggleSidebar(false)
       return
     }
-    sidebarMode.value = mode
-    localStorage.setItem('packwand:sidebar-mode', mode)
-    toggleSidebar(true)
+    showSidebar(mode)
   }
 
   function setSidebarWidth(width: number) {
@@ -224,6 +229,7 @@ export const useShellStore = defineStore('shell', () => {
     errorCount,
     warningCount,
     toggleSidebar,
+    showSidebar,
     selectSidebar,
     setSidebarWidth,
     toggleDock,

@@ -4,9 +4,19 @@
 use super::*;
 
 pub(super) fn provider_command(provider: ProviderKind, args: &ArgMatches) -> Result {
-    let Some(("add", sub)) = args.subcommand() else {
-        return Err(format!("{} requires the add subcommand", provider.name()).into());
+    let Some((action, sub)) = args.subcommand() else {
+        return Err(format!("{} requires a subcommand", provider.name()).into());
     };
+    if provider == ProviderKind::CurseForge && action == "update" {
+        return curseforge_update(sub);
+    }
+    if action != "add" {
+        return Err(format!(
+            "{} does not support the {action} subcommand",
+            provider.name()
+        )
+        .into());
+    }
     let root = std::env::current_dir()?;
     let workspace = Workspace::open(&root)?;
     let project = match provider {
@@ -20,6 +30,11 @@ pub(super) fn provider_command(provider: ProviderKind, args: &ArgMatches) -> Res
     }
     .ok_or("provide a project ID, slug, or URL")?
     .clone();
+    let (project, inferred_file_id) = if provider == ProviderKind::CurseForge {
+        packwand_providers::parse_file_url(&project).unwrap_or((project, String::new()))
+    } else {
+        (project, String::new())
+    };
     let mut request = ResolveRequest::new(project);
     request.game_versions = workspace
         .pack()
@@ -42,13 +57,42 @@ pub(super) fn provider_command(provider: ProviderKind, args: &ArgMatches) -> Res
     request.version_id = sub
         .get_one::<String>("version-id")
         .or_else(|| sub.get_one::<String>("file-id"))
-        .cloned();
+        .cloned()
+        .or_else(|| (!inferred_file_id.is_empty()).then_some(inferred_file_id));
     request.version_filename = sub.get_one::<String>("version-filename").cloned();
     let instance = sub.get_one::<String>("instance").cloned();
     let resolved = resolve_provider(provider, &request, instance)?;
     let path = resolved.metadata_path();
     Workspace::open(root)?.add_resolved(resolved, false)?;
     println!("added {path}");
+    Ok(())
+}
+
+fn curseforge_update(args: &ArgMatches) -> Result {
+    let root = std::env::current_dir()?;
+    let mut workspace = Workspace::open(&root)?;
+    let name = required(args, "name")?;
+    let file_url = required(args, "file")?;
+    let (project, file_id) = packwand_providers::parse_file_url(file_url).ok_or(
+        "provide a CurseForge file URL such as https://www.curseforge.com/minecraft/mc-mods/sodium/files/8396428",
+    )?;
+
+    let mut request = ResolveRequest::new(project);
+    request.version_id = Some(file_id);
+    let resolved = resolve_provider(ProviderKind::CurseForge, &request, None)?;
+    let path = metadata_path(&workspace, name)?;
+    let outcome = workspace.replace_with_resolved(&path, resolved)?;
+    if outcome.changed {
+        println!(
+            "updated {} -> {}",
+            outcome.old_filename, outcome.new_filename
+        );
+    } else {
+        println!(
+            "{} is already on that CurseForge file",
+            outcome.metadata_path
+        );
+    }
     Ok(())
 }
 

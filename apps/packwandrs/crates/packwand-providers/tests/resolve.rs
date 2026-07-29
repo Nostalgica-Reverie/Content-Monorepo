@@ -3,7 +3,7 @@ use std::sync::Mutex;
 
 use packwand_providers::{
     CurseForgeClient, ForgejoClient, GitHubClient, GitLabClient, HttpRequest, ModrinthClient,
-    ProviderResolver, ReleaseChannel, ResolveRequest, Transport, TransportError,
+    ProviderResolver, ReleaseChannel, ResolveRequest, Transport, TransportError, parse_file_url,
 };
 
 struct FixtureTransport {
@@ -69,6 +69,19 @@ fn request(project: &str) -> ResolveRequest {
         branch: None,
         asset_pattern: None,
     }
+}
+
+#[test]
+fn curseforge_file_url_preserves_the_project_and_exact_file() {
+    assert_eq!(
+        parse_file_url("https://www.curseforge.com/minecraft/mc-mods/sodium/files/8396428"),
+        Some(("sodium".into(), "8396428".into()))
+    );
+    assert_eq!(parse_file_url("https://example.test/files/8396428"), None);
+    assert_eq!(
+        parse_file_url("https://www.curseforge.com/minecraft/mc-mods/sodium"),
+        None
+    );
 }
 
 #[test]
@@ -243,6 +256,88 @@ fn curseforge_falls_back_to_latest_files_indexes_when_latest_files_lacks_the_loa
     let requests = transport.requests.lock().unwrap();
     assert_eq!(requests.len(), 2);
     assert!(requests[1].url.ends_with("/mods/455508/files/77"));
+}
+
+#[test]
+fn curseforge_uses_the_newest_compatible_file_index() {
+    // CurseForge's short `latestFiles` list can contain a stale compatible
+    // build. The index is the authoritative latest selection for the exact
+    // Minecraft version and loader, and its newest ID wins across channels.
+    let transport = FixtureTransport::new([
+        r#"{
+      "data": {
+        "id": 394468, "name": "Sodium", "slug": "sodium", "classId": 6,
+        "latestFiles": [
+          {"id": 8378327, "fileName":"sodium-fabric-0.9.1-beta.4+mc26.2.jar",
+           "displayName":"Sodium 0.9.1", "releaseType":2,
+           "gameVersions":["26.2","Fabric"], "fileFingerprint":111, "hashes":[]}
+        ],
+        "latestFilesIndexes": [
+          {"fileId": 8378327, "gameVersion": "26.2", "modLoader": 4, "releaseType": 2},
+          {"fileId": 9000000, "gameVersion": "26.2", "modLoader": 4, "releaseType": 1}
+        ]
+      }
+    }"#,
+        r#"{
+      "data": {"id": 9000000, "fileName":"sodium-fabric-newer+mc26.2.jar",
+       "displayName":"Sodium newer", "releaseType":2,
+       "gameVersions":["26.2","Fabric"], "fileFingerprint":222, "hashes":[]}
+    }"#,
+    ]);
+    let client =
+        CurseForgeClient::with_api_base(&transport, "test-key", "https://example.test/v1/")
+            .unwrap();
+    let mut req = request("394468");
+    req.game_versions = vec!["26.2".into()];
+    req.channels = vec![
+        ReleaseChannel::Release,
+        ReleaseChannel::Beta,
+        ReleaseChannel::Alpha,
+    ];
+
+    let resolved = client.resolve(&req).unwrap();
+
+    assert_eq!(resolved.version.id, "9000000");
+    assert_eq!(
+        resolved.version.file.filename,
+        "sodium-fabric-newer+mc26.2.jar"
+    );
+    let requests = transport.requests.lock().unwrap();
+    assert_eq!(requests.len(), 2);
+    assert!(requests[1].url.ends_with("/mods/394468/files/9000000"));
+}
+
+#[test]
+fn curseforge_uses_a_newer_compatible_latest_file_when_the_index_is_stale() {
+    let transport = FixtureTransport::new([r#"{
+      "data": {
+        "id": 1460602, "name": "Fast Noise", "slug": "zfastnoise", "classId": 6,
+        "latestFiles": [
+          {"id":9000000, "fileName":"zfastnoise-1.0.40+26.2.jar",
+           "displayName":"Fast Noise 1.0.40", "releaseType":1,
+           "gameVersions":["26.2","Fabric"], "fileFingerprint":222, "hashes":[]}
+        ],
+        "latestFilesIndexes": [
+          {"fileId": 8378327, "gameVersion": "26.2", "modLoader": 4, "releaseType": 2}
+        ]
+      }
+    }"#]);
+    let client =
+        CurseForgeClient::with_api_base(&transport, "test-key", "https://example.test/v1/")
+            .unwrap();
+    let mut req = request("1460602");
+    req.game_versions = vec!["26.2".into()];
+    req.channels = vec![
+        ReleaseChannel::Release,
+        ReleaseChannel::Beta,
+        ReleaseChannel::Alpha,
+    ];
+
+    let resolved = client.resolve(&req).unwrap();
+
+    assert_eq!(resolved.version.id, "9000000");
+    assert_eq!(resolved.version.file.filename, "zfastnoise-1.0.40+26.2.jar");
+    assert_eq!(transport.requests.lock().unwrap().len(), 1);
 }
 
 #[test]

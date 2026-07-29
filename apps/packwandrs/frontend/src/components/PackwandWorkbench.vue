@@ -12,7 +12,7 @@ import {
   editorFsWriteFile,
 } from '@/helpers/invoke/editor'
 import { extensionLanguageSnapshot } from '@/helpers/invoke/language'
-import { onPacksChanged } from '@/helpers/events'
+import { onPacksChanged, onRawInputBatch } from '@/helpers/events'
 import { useExtensionsStore } from '@/stores/extensions'
 
 const props = defineProps<{ packId: string; reload: number; openPath?: string }>()
@@ -21,6 +21,7 @@ const frame = ref<HTMLIFrameElement | null>(null)
 const loaded = ref(false)
 let languageRefresh: ReturnType<typeof setTimeout> | undefined
 let stopWatching: (() => void) | undefined
+let stopRawInput: (() => void) | undefined
 /**
  * The `open` parameter seeds `defaultLayout.editors` in the workbench
  * bootstrap, which is the only supported way to open a file in an embedded
@@ -94,6 +95,15 @@ function scheduleLanguageRefresh() {
   languageRefresh = setTimeout(() => void refreshLanguageSnapshot(), 150)
 }
 
+function forwardRawInput(events: import('@/helpers/events').RawInputEvent[]) {
+  const target = frame.value?.contentWindow
+  if (!target || !events.length) return
+  target.postMessage(
+    { channel: 'packwand:ide-raw-input', direction: 'batch', events },
+    window.location.origin === 'null' ? '*' : window.location.origin,
+  )
+}
+
 function onFrameLoad() {
   loaded.value = true
   scheduleLanguageRefresh()
@@ -118,12 +128,16 @@ watch(source, () => { loaded.value = false })
 watch(() => extensions.installedIds.join(','), scheduleLanguageRefresh)
 onMounted(async () => {
   window.addEventListener('message', onMessage)
-  stopWatching = await onPacksChanged(scheduleLanguageRefresh)
+  ;[stopWatching, stopRawInput] = await Promise.all([
+    onPacksChanged(scheduleLanguageRefresh),
+    onRawInputBatch(forwardRawInput),
+  ])
 })
 onBeforeUnmount(() => {
   window.removeEventListener('message', onMessage)
   if (languageRefresh) clearTimeout(languageRefresh)
   stopWatching?.()
+  stopRawInput?.()
 })
 </script>
 

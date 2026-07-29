@@ -5,6 +5,7 @@ mod build_cmd;
 mod cli;
 mod dispatch;
 mod pages;
+mod script_cmd;
 mod serve;
 mod test_cmd;
 

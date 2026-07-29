@@ -114,6 +114,7 @@ pub fn run() -> Result {
         Some(("pages", args)) => crate::pages::run(args),
         Some(("settings", args)) => settings_command(args),
         Some(("run", args)) => run_script(args),
+        Some(("script", args)) => crate::script_cmd::run(args),
         Some(("serve", args)) => crate::serve::run(args),
         Some(("test", args)) => crate::test_cmd::run(args),
         Some(("modrinth", args)) => platform_command(ProviderKind::Modrinth, args),

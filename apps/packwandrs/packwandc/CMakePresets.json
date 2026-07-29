@@ -24,7 +24,10 @@
       "hidden": true,
       "inherits": "base",
       "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" },
-      "cacheVariables": { "CMAKE_C_COMPILER": "clang" }
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "zig",
+        "CMAKE_C_COMPILER_ARG1": "cc"
+      }
     },
 
     {

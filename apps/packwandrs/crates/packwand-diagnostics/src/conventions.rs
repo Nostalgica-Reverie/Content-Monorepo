@@ -206,10 +206,15 @@ fn check_named_config(
 ) {
     let located = match check.path() {
         Some(explicit) => locate(root, explicit),
-        None => candidates.iter().find_map(|candidate| locate(root, candidate)),
+        None => candidates
+            .iter()
+            .find_map(|candidate| locate(root, candidate)),
     };
     let Some(path) = located else {
-        let expected = check.path().map(str::to_owned).unwrap_or_else(|| candidates.join(", "));
+        let expected = check
+            .path()
+            .map(str::to_owned)
+            .unwrap_or_else(|| candidates.join(", "));
         issues.push(issue(
             level,
             &root.join(candidates.first().copied().unwrap_or(label)),
@@ -225,7 +230,9 @@ fn check_named_config(
         }
     };
 
-    let expected_name = check.expect_name().unwrap_or_else(|| manifest.effective_name());
+    let expected_name = check
+        .expect_name()
+        .unwrap_or_else(|| manifest.effective_name());
     match find_string(&value, &["modpackName", "modpack_name", "name", "packName"]) {
         Some(found) if found.trim().eq_ignore_ascii_case(expected_name.trim()) => {}
         Some(found) => issues.push(issue(
@@ -413,7 +420,12 @@ mod tests {
                 "conventions":{"bcc":true}}"#,
         );
         let report = conventions_lint(root.path(), &manifest);
-        assert!(report.issues.iter().all(|i| i.severity == Severity::Warning));
+        assert!(
+            report
+                .issues
+                .iter()
+                .all(|i| i.severity == Severity::Warning)
+        );
     }
 
     #[test]

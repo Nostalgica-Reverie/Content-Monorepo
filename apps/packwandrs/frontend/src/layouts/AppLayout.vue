@@ -101,6 +101,7 @@ watch(
 /** Sidebar file click: seed the editor with the file and switch to that view. */
 function openFileInEditor(path: string) {
   workbench.requestFile(path)
+  shell.showSidebar('explorer')
   if (currentName.value !== 'editor') void router.push({ name: 'editor' })
 }
 
@@ -127,10 +128,14 @@ function onKeydown(event: KeyboardEvent) {
 }
 
 function go(item: NavItem) {
+  // Task views operate on the selected project. Restore its projects, targets,
+  // and files whenever the user leaves a dedicated sidebar such as Extensions.
+  shell.showSidebar('explorer')
   void router.push(item.path)
 }
 
 function selectTab(tab: ShellTab) {
+  shell.showSidebar('explorer')
   void router.push(tab.path)
 }
 

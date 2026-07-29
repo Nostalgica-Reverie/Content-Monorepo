@@ -1,2 +1,2 @@
-# Simply Optimized Forked 26.07.3
-updates
+# Simply Optimized Forked 26.07.4
+updates and add back immersive opt. and jasione
