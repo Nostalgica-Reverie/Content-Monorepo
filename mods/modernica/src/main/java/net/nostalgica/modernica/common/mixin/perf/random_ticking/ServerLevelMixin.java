@@ -32,8 +32,9 @@ import net.nostalgica.modernica.util.FastIndexRandom;
  * blocks in a typical section aren't. {@link BlockCountingChunkSection#mfh$getTickingBlockPositions}
  * (kept up to date incrementally, see its owner class) already knows exactly which positions qualify, so
  * this rolls an index into that list instead: a miss (index past the list's current size) is a cheap
- * bounds check instead of a wasted palette lookup, and a hit skips straight to a known-good position.
- * The block/fluid random-tick pair vanilla runs per hit is otherwise unchanged.
+ * bounds check instead of a wasted palette lookup, and a hit skips straight to a position with a
+ * randomly-tickable block or fluid. The block/fluid random-tick pair vanilla runs per hit is otherwise
+ * unchanged.
  */
 @Mixin(ServerLevel.class)
 abstract class ServerLevelMixin extends Level implements WorldGenLevel {
@@ -69,13 +70,12 @@ abstract class ServerLevelMixin extends Level implements WorldGenLevel {
 
         for (int sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
             LevelChunkSection section = sections[sectionIndex];
-            if (!section.isRandomlyTickingBlocks()) {
-                continue;
-            }
-
             int offsetY = (sectionIndex + minSection) << 4;
             PalettedContainerGetInvoker<BlockState> states = mfh$states(section);
             ShortArrayList tickPositions = ((BlockCountingChunkSection) section).mfh$getTickingBlockPositions();
+            if (tickPositions.isEmpty()) {
+                continue;
+            }
 
             for (int i = 0; i < tickSpeed; i++) {
                 int candidateCount = tickPositions.size();
@@ -88,7 +88,9 @@ abstract class ServerLevelMixin extends Level implements WorldGenLevel {
                 BlockState state = states.mfh$get(packed);
                 BlockPos blockPos = new BlockPos((packed & 15) | offsetX, ((packed >>> 8) & 15) | offsetY, ((packed >>> 4) & 15) | offsetZ);
 
-                state.randomTick((ServerLevel) (Object) this, blockPos, random);
+                if (state.isRandomlyTicking()) {
+                    state.randomTick((ServerLevel) (Object) this, blockPos, random);
+                }
 
                 FluidState fluidState = state.getFluidState();
                 if (fluidState.isRandomlyTicking()) {

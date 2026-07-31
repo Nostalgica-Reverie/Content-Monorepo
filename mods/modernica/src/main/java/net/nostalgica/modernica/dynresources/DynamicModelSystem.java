@@ -25,7 +25,9 @@ import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.nostalgica.modernica.Modernica;
 import net.nostalgica.modernica.common.mixin.perf.dynamic_resources.BlockStateDefinitionsAccessor;
 import net.nostalgica.modernica.common.mixin.perf.dynamic_resources.IdMapperAccessor;
@@ -59,7 +61,9 @@ public class DynamicModelSystem {
             FileToIdConverter converter,
             String debugName,
             ResultLoader<RESOURCE, RESULT> loader) {
-        LoadingCache<Identifier, Optional<RESULT>> resultCache = CacheBuilder.newBuilder().softValues().maximumSize(1000).build(new CacheLoader<>() {
+        // These maps are scoped to one resource reload. Retaining a loaded entry for that reload avoids
+        // parsing the same model again on the render thread after an arbitrary soft-reference collection.
+        LoadingCache<Identifier, Optional<RESULT>> resultCache = CacheBuilder.newBuilder().build(new CacheLoader<>() {
             @Override
             public Optional<RESULT> load(Identifier id) throws Exception {
                 var file = converter.idToFile(id);
@@ -175,7 +179,7 @@ public class DynamicModelSystem {
 
         public ModelManager.ResolvedModels resolvedModels() {
             var resolvedMissingModel = new ModelDiscovery(inputModels, MissingCuboidModel.missingModel()).missingModel();
-            LoadingCache<Identifier, ResolvedModel> resolvedModelCache = CacheBuilder.newBuilder().softValues().maximumSize(1000).build(new CacheLoader<>() {
+            LoadingCache<Identifier, ResolvedModel> resolvedModelCache = CacheBuilder.newBuilder().build(new CacheLoader<>() {
                 @Override
                 public ResolvedModel load(Identifier key) {
                     return resolveModel(key);
@@ -197,6 +201,7 @@ public class DynamicModelSystem {
             this.blockColors = blockColors;
             this.loadedModels = loadedModels;
             this.groupKeyToId = new Object2IntOpenHashMap<>();
+            this.groupKeyToId.defaultReturnValue(-1);
         }
 
         @Override
@@ -211,16 +216,35 @@ public class DynamicModelSystem {
 
         @Override
         public int getInt(Object key) {
-            // TODO: Implement
-            return -1;
+            if (!(key instanceof BlockState state)) {
+                return -1;
+            }
+            if (state.getRenderShape() != RenderShape.MODEL) {
+                return 0;
+            }
+
+            var root = this.loadedModels.models().get(state);
+            if (root == null) {
+                return -1;
+            }
+            List<Property<?>> coloringProperties = List.copyOf(this.blockColors.getColoringProperties(state.getBlock()));
+            List<Object> coloringValues = coloringProperties.stream().map(state::getValue).map(value -> (Object) value).toList();
+            GroupKey keyData = new GroupKey(root.visualEqualityGroup(state), coloringValues);
+            int group = this.groupKeyToId.getInt(keyData);
+            if (group == -1) {
+                group = this.groupKeyToId.size() + 1;
+                this.groupKeyToId.put(keyData, group);
+            }
+            return group;
         }
     }
 
     private static final Object NULL_BAKED = new Object();
 
     public static <K, U, V> Map<K, V> createDynamicBakedRegistry(Map<K, U> input, BiFunction<K, U, V> baker) {
-        // TODO: support persistence of overrides
-        LoadingCache<K, Object> bakedCache = CacheBuilder.newBuilder().softValues().maximumSize(1000).build(new CacheLoader<>() {
+        // The registry and its cache are discarded as a unit on reload. Strong entries prevent an
+        // already-baked model from being evicted and rebuilt during rendering.
+        LoadingCache<K, Object> bakedCache = CacheBuilder.newBuilder().build(new CacheLoader<>() {
             @Override
             public Object load(K key) throws Exception {
                 var unbaked = input.get(key);

@@ -6,12 +6,9 @@ import me.fzzyhmstrs.fzzy_config.annotations.TomlHeaderComment;
 import me.fzzyhmstrs.fzzy_config.annotations.Translation;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
-import me.fzzyhmstrs.fzzy_config.util.EnumTranslatable;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.Identifier;
-import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 /** Most fields gate a Mixin transform, so changes always require a restart. */
 @RequiresAction(action = Action.RESTART)
@@ -25,46 +22,14 @@ public class ModernicaConfig extends Config {
         super(Identifier.fromNamespaceAndPath("modernica", "config"), "modernica");
     }
 
-    public StabilityLevel stabilityLevel = StabilityLevel.GA;
     public boolean devEnvironmentMixins = FabricLoader.getInstance().isDevelopmentEnvironment();
 
     public PerformanceSection performance = new PerformanceSection();
     public TroubleshootingSection troubleshooting = new TroubleshootingSection();
     public ExpertOnlySection expertOnly = new ExpertOnlySection();
 
-    /** {@link EarlyStabilityLevel} mirrors {@link StabilityLevel} and is parsed out of the raw TOML by name,
-     * so the two must declare the same constants in the same order. Lives here rather than in
-     * {@link MixinGate} so that class never mentions {@link StabilityLevel} in a position the verifier
-     * would resolve while Mixin is still selecting configs. Only call once the real config has loaded. */
-    static void verifyEarlyStabilityLevelInSync(Logger logger) {
-        StabilityLevel[] real = StabilityLevel.values();
-        EarlyStabilityLevel[] early = EarlyStabilityLevel.values();
-        boolean matches = real.length == early.length;
-        for (int i = 0; matches && i < real.length; i++) {
-            matches = real[i].name().equals(early[i].name());
-        }
-        if (!matches) {
-            logger.error("EarlyStabilityLevel has drifted from ModernicaConfig.StabilityLevel; early mixin " +
-                    "gating will not honour the configured stability level until the two are re-synced");
-        }
-    }
-
-    /** Mirrored by {@link EarlyStabilityLevel} for mixin gating - keep the constants in sync. Reading a
-     * constant of this enum initializes fzzy-config's {@code Translatable} hierarchy, so it must never be
-     * touched before mod init. */
-    public enum StabilityLevel implements EnumTranslatable {
-        GA,
-        BETA;
-
-        @NotNull
-        @Override
-        public String prefix() {
-            return "modernica.config.stability_level";
-        }
-    }
-
     public static class PerformanceSection extends ConfigSection {
-        public boolean perfDynamicResources = false; // perf.dynamic_resources
+        public boolean perfDynamicResources = true; // perf.dynamic_resources
         public boolean perfReleaseProtochunks = true; // perf.release_protochunks
 
         public boolean perfNetworkOptimizations = true; // perf.network_optimizations (from Krypton)
@@ -106,6 +71,11 @@ public class ModernicaConfig extends Config {
 
         public static class Perf extends ConfigSection {
             public boolean perfAttributeSupplierDedup = true; // perf.attribute_supplier_dedup
+            public boolean perfBadOptimizationsDebugRendererCulling = true; // perf.bad_optimizations.debug_renderer_culling
+            public boolean perfBadOptimizationsParticleCulling = true; // perf.bad_optimizations.particle_culling
+            public boolean perfBadOptimizationsSkipNonDemoTutorial = true; // perf.bad_optimizations.skip_non_demo_tutorial
+            public boolean perfBadOptimizationsToastCulling = true; // perf.bad_optimizations.toast_culling
+            public boolean perfBadOptimizationsZeroFovCalculation = true; // perf.bad_optimizations.zero_fov_calculation
             public boolean perfBlockCounting = true; // perf.block_counting
             public boolean perfBlockstatePropertyaccess = true; // perf.blockstate_propertyaccess
             public boolean perfCacheBlockstateCacheArrays = true; // perf.cache_blockstate_cache_arrays

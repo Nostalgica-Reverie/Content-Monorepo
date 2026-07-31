@@ -20,9 +20,6 @@ public final class MixinGate {
 
     private static final Map<String, Toggle> REGISTRY = new LinkedHashMap<>();
     private static Map<String, Boolean> earlyValues = Map.of();
-    /** Never {@link ModernicaConfig.StabilityLevel} - see {@link EarlyStabilityLevel} for why touching it
-     * from the Mixin plugin's constructor breaks other mods' mixins. */
-    private static EarlyStabilityLevel earlyStabilityLevel = EarlyStabilityLevel.GA;
     private static ModernicaConfig config;
 
     private static void register(String key, String section, String field, boolean defaultValue, BooleanSupplier lateGetter, Consumer<Boolean> lateSetter) {
@@ -62,6 +59,11 @@ public final class MixinGate {
         register("feature.stalled_chunk_load_detection", "expertOnly.misc", "featureStalledChunkLoadDetection", false, () -> config.expertOnly.misc.featureStalledChunkLoadDetection, v -> config.expertOnly.misc.featureStalledChunkLoadDetection = v);
         register("feature.suppress_narrator_stacktrace", "expertOnly.misc", "featureSuppressNarratorStacktrace", true, () -> config.expertOnly.misc.featureSuppressNarratorStacktrace, v -> config.expertOnly.misc.featureSuppressNarratorStacktrace = v);
         register("perf.attribute_supplier_dedup", "expertOnly.perf", "perfAttributeSupplierDedup", true, () -> config.expertOnly.perf.perfAttributeSupplierDedup, v -> config.expertOnly.perf.perfAttributeSupplierDedup = v);
+        register("perf.bad_optimizations.debug_renderer_culling", "expertOnly.perf", "perfBadOptimizationsDebugRendererCulling", true, () -> config.expertOnly.perf.perfBadOptimizationsDebugRendererCulling, v -> config.expertOnly.perf.perfBadOptimizationsDebugRendererCulling = v);
+        register("perf.bad_optimizations.particle_culling", "expertOnly.perf", "perfBadOptimizationsParticleCulling", true, () -> config.expertOnly.perf.perfBadOptimizationsParticleCulling, v -> config.expertOnly.perf.perfBadOptimizationsParticleCulling = v);
+        register("perf.bad_optimizations.skip_non_demo_tutorial", "expertOnly.perf", "perfBadOptimizationsSkipNonDemoTutorial", true, () -> config.expertOnly.perf.perfBadOptimizationsSkipNonDemoTutorial, v -> config.expertOnly.perf.perfBadOptimizationsSkipNonDemoTutorial = v);
+        register("perf.bad_optimizations.toast_culling", "expertOnly.perf", "perfBadOptimizationsToastCulling", true, () -> config.expertOnly.perf.perfBadOptimizationsToastCulling, v -> config.expertOnly.perf.perfBadOptimizationsToastCulling = v);
+        register("perf.bad_optimizations.zero_fov_calculation", "expertOnly.perf", "perfBadOptimizationsZeroFovCalculation", true, () -> config.expertOnly.perf.perfBadOptimizationsZeroFovCalculation, v -> config.expertOnly.perf.perfBadOptimizationsZeroFovCalculation = v);
         register("perf.block_counting", "expertOnly.perf", "perfBlockCounting", true, () -> config.expertOnly.perf.perfBlockCounting, v -> config.expertOnly.perf.perfBlockCounting = v);
         register("perf.blockstate_propertyaccess", "expertOnly.perf", "perfBlockstatePropertyaccess", true, () -> config.expertOnly.perf.perfBlockstatePropertyaccess, v -> config.expertOnly.perf.perfBlockstatePropertyaccess = v);
         register("perf.cache_blockstate_cache_arrays", "expertOnly.perf", "perfCacheBlockstateCacheArrays", true, () -> config.expertOnly.perf.perfCacheBlockstateCacheArrays, v -> config.expertOnly.perf.perfCacheBlockstateCacheArrays = v);
@@ -83,7 +85,7 @@ public final class MixinGate {
         register("perf.dynamic_dfu", "expertOnly.perf", "perfDynamicDfu", true, () -> config.expertOnly.perf.perfDynamicDfu, v -> config.expertOnly.perf.perfDynamicDfu = v);
         register("perf.dynamic_entity_renderers", "expertOnly.perf", "perfDynamicEntityRenderers", false, () -> config.expertOnly.perf.perfDynamicEntityRenderers, v -> config.expertOnly.perf.perfDynamicEntityRenderers = v);
         register("perf.dynamic_languages", "expertOnly.perf", "perfDynamicLanguages", true, () -> config.expertOnly.perf.perfDynamicLanguages, v -> config.expertOnly.perf.perfDynamicLanguages = v);
-        register("perf.dynamic_resources", "performance", "perfDynamicResources", false, () -> config.performance.perfDynamicResources, v -> config.performance.perfDynamicResources = v);
+        register("perf.dynamic_resources", "performance", "perfDynamicResources", true, () -> config.performance.perfDynamicResources, v -> config.performance.perfDynamicResources = v);
         register("perf.dynamic_sounds", "expertOnly.perf", "perfDynamicSounds", true, () -> config.expertOnly.perf.perfDynamicSounds, v -> config.expertOnly.perf.perfDynamicSounds = v);
         register("perf.dynamic_structure_manager", "expertOnly.perf", "perfDynamicStructureManager", true, () -> config.expertOnly.perf.perfDynamicStructureManager, v -> config.expertOnly.perf.perfDynamicStructureManager = v);
         register("perf.encoder_cache_leak", "expertOnly.perf", "perfEncoderCacheLeak", true, () -> config.expertOnly.perf.perfEncoderCacheLeak, v -> config.expertOnly.perf.perfEncoderCacheLeak = v);
@@ -123,8 +125,6 @@ public final class MixinGate {
         register("perf.clear_mixin_classinfo", "troubleshooting", "clearMixinClassinfo", false, () -> config.troubleshooting.clearMixinClassinfo, v -> config.troubleshooting.clearMixinClassinfo = v);
 
         EarlyMixinOptions early = EarlyMixinOptions.load(logger);
-        earlyStabilityLevel = early.resolveStabilityLevel(EarlyStabilityLevel.GA);
-
         Map<String, Boolean> values = new LinkedHashMap<>();
         for (Map.Entry<String, Toggle> entry : REGISTRY.entrySet()) {
             Toggle toggle = entry.getValue();
@@ -153,7 +153,6 @@ public final class MixinGate {
         applyModCompat(logger, getter, setter);
         applyJvmPropertyOverrides(logger, getter, setter);
         enforceDependencies(logger, getter, setter);
-        ModernicaConfig.verifyEarlyStabilityLevelInSync(logger);
     }
 
     /** {@code perf.random_ticking}'s fast tick-position lookup only exists because
@@ -171,6 +170,9 @@ public final class MixinGate {
 
     private static void applyModCompat(Logger logger, Function<String, Boolean> getter, BiConsumer<String, Boolean> setter) {
         disableIfModPresent(logger, getter, setter, "perf.thread_priorities", "smoothboot", "threadtweak");
+        // This is a diagnostic that deliberately rejects block-entity map access from any thread but
+        // the server thread. C2ME's chunk-status workers legitimately construct/access chunks off-thread.
+        disableIfModPresent(logger, getter, setter, "feature.blockentity_incorrect_thread", "c2me");
         disableIfModPresent(logger, getter, setter, "bugfix.chunk_deadlock", "c2me", "dimthread");
         disableIfModPresent(logger, getter, setter, "perf.release_protochunks", "c2me", "moonrise");
         disableIfModPresent(logger, getter, setter, "perf.faster_texture_stitching", "optifine");
@@ -262,17 +264,6 @@ public final class MixinGate {
         return false;
     }
 
-    private static final Map<String, Boolean> REQUIRES_BETA = Map.of(
-            "perf.compact_entity_models", true,
-            "perf.dynamic_languages", true,
-            "perf.faster_item_rendering", true
-    );
-
-    public static boolean meetsFeatureLevel(String mixinGroup) {
-        Boolean requiresBeta = REQUIRES_BETA.get(mixinGroup);
-        return requiresBeta == null || earlyStabilityLevel.isAtLeast(EarlyStabilityLevel.BETA);
-    }
-
     /** spark_profile_world_join entries: spark is compileOnly, and SparkLaunchProfiler's statics
      * eagerly touch it, so without this gate world creation crashes for anyone without Spark. */
     private static final Map<String, String> REQUIRES_MOD = Map.of(
@@ -281,6 +272,7 @@ public final class MixinGate {
             "bugfix.unsafe_modded_shape_caches.ShapeCacheCyclicMixin", "cyclic",
             "bugfix.unsafe_modded_shape_caches.ShapeCacheRSMixin", "refinedstorage",
             "perf.chunk_meshing.RebuildTaskMixin", "!fluidlogged",
+            "perf.mojang_registry_size.StateHolderMixin", "!ferritecore",
             "perf.state_definition_construct.StateDefinitionMixin", "ferritecore",
             "feature.spark_profile_world_join.WorldLoaderMixin", "spark",
             "feature.spark_profile_world_join.MinecraftMixin", "spark"

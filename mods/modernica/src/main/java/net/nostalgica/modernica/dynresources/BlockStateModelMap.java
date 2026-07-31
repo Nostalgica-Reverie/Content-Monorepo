@@ -40,7 +40,7 @@ public record BlockStateModelMap(Map<BlockState, BlockStateModel> modelMap,
 
     @Override
     public boolean containsValue(Object o) {
-        return modelMap.containsValue(o);
+        return modelMap.containsValue(o) || (o == fallbackModel && modelMap.size() < Block.BLOCK_STATE_REGISTRY.size());
     }
 
     @Override
@@ -63,7 +63,7 @@ public record BlockStateModelMap(Map<BlockState, BlockStateModel> modelMap,
     @Override
     public BlockStateModel getOrDefault(Object key, BlockStateModel defaultValue) {
         var value = get(key);
-        return value != fallbackModel ? value : defaultValue;
+        return value != null ? value : defaultValue;
     }
 
     @Override

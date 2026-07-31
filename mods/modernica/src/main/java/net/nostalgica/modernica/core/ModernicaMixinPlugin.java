@@ -1,6 +1,7 @@
 package net.nostalgica.modernica.core;
 
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
+import net.fabricmc.loader.api.FabricLoader;
 import net.nostalgica.modernica.core.config.MixinGate;
 import net.nostalgica.modernica.core.config.ModernicaConfig;
 import net.nostalgica.modernica.platform.ModernicaPlatformHooks;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class ModernicaMixinPlugin implements IMixinConfigPlugin {
     private static final Pattern PLATFORM_PREFIX = Pattern.compile("(fabric|common)\\.");
@@ -80,6 +83,7 @@ public class ModernicaMixinPlugin implements IMixinConfigPlugin {
             return;
         }
         try {
+            migrateRetiredConfigKeys();
             this.config = ConfigApiJava.readOrCreateAndValidate(ModernicaConfig::new);
         } catch (Exception e) {
             throw new RuntimeException("Could not load configuration file for Modernica", e);
@@ -87,9 +91,28 @@ public class ModernicaMixinPlugin implements IMixinConfigPlugin {
         MixinGate.bindRealConfig(this.config, this.logger);
 
         this.logger.info("Loaded configuration for Modernica {}", ModernicaPlatformHooks.INSTANCE.getVersionString());
-        if (this.config.stabilityLevel != ModernicaConfig.StabilityLevel.GA) {
-            this.logger.warn("Modernica stability level is set to {}. Features at this level may be unstable or cause crashes.",
-                    this.config.stabilityLevel);
+    }
+
+    /**
+     * The GA/BETA selector was removed in favour of individual feature toggles. fzzy-config treats an
+     * unknown field as an invalid config, so remove the retired top-level value before validation rather
+     * than discarding the user's entire configuration.
+     */
+    private void migrateRetiredConfigKeys() {
+        Path configPath = FabricLoader.getInstance().getConfigDir()
+                .resolve("modernica").resolve("modernica").resolve("config.toml");
+        if (!Files.isRegularFile(configPath)) {
+            return;
+        }
+        try {
+            String original = Files.readString(configPath);
+            String migrated = original.replaceAll("(?m)^\\s*stabilityLevel\\s*=.*(?:\\R|$)", "");
+            if (!original.equals(migrated)) {
+                Files.writeString(configPath, migrated);
+                this.logger.info("Removed retired 'stabilityLevel' setting from Modernica's config");
+            }
+        } catch (Exception e) {
+            this.logger.warn("Could not migrate Modernica's retired stabilityLevel setting; leaving the config unchanged", e);
         }
     }
 
@@ -126,13 +149,6 @@ public class ModernicaMixinPlugin implements IMixinConfigPlugin {
         String mixin = sanitized.substring(MIXIN_PACKAGE_ROOT.length());
         if (!isOptionEnabled(mixin)) {
             this.logger.debug("Skipping mixin {}: disabled by configuration", mixin);
-            return false;
-        }
-        // strip the trailing ".ClassSimpleName" to get the group key for the feature-level check
-        int lastDot = mixin.lastIndexOf('.');
-        String group = lastDot > 0 ? mixin.substring(0, lastDot) : mixin;
-        if (!MixinGate.meetsFeatureLevel(group)) {
-            this.logger.debug("Skipping mixin {}: requires BETA stability level", mixin);
             return false;
         }
         if (!MixinGate.meetsModRequirement(mixin)) {

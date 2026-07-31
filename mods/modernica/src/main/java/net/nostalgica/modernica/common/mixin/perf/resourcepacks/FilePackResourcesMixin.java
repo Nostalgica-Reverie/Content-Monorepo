@@ -4,8 +4,6 @@ import net.minecraft.server.packs.FilePackResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.nostalgica.modernica.Modernica;
-import net.nostalgica.modernica.annotation.FeatureLevel;
-import net.nostalgica.modernica.annotation.RequiresFeatureLevel;
 import net.nostalgica.modernica.resources.ZipPackIndex;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -22,7 +20,6 @@ import java.util.Set;
 import java.util.zip.ZipFile;
 
 @Mixin(FilePackResources.class)
-@RequiresFeatureLevel(FeatureLevel.BETA)
 public class FilePackResourcesMixin {
     @Shadow
     @Final

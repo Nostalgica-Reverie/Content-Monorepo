@@ -134,7 +134,7 @@ public class StbStitcher {
 
             // Initialize the rectangles that we'll be using in the calculation
             // While that's happening, sum up the area needed to fit all of the images
-            int totalArea = 0;
+            long totalArea = 0;
             int longestWidth = 0, longestHeight = 0;
             for (int j = 0; j < holderSize; ++j) {
                 Stitcher.Holder<T> holder = holders[j];
@@ -147,7 +147,7 @@ public class StbStitcher {
 
                 setWrapper(rect, j, width, height, 0, 0, false);
 
-                totalArea += (width * height);
+                totalArea += (long) width * height;
                 longestWidth = Math.max(longestWidth, width);
                 longestHeight = Math.max(longestHeight, height);
             }
@@ -159,7 +159,7 @@ public class StbStitcher {
              * The atlas needs to be at least this wide and tall to accommodate oddly shaped sprites. If this is
              * not enough, keep doubling the smaller of the two values until it's big enough.
              */
-            while((longestWidth*longestHeight) < totalArea) {
+            while ((long) longestWidth * longestHeight < totalArea) {
                 if(longestWidth <= longestHeight)
                     longestWidth *= 2;
                 else

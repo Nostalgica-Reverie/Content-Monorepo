@@ -12,6 +12,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.util.Objects;
+import java.util.Set;
+import net.minecraft.server.packs.PackResources;
+import net.minecraft.server.packs.PackType;
+import net.nostalgica.modernica.util.PackTypeHelper;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = PathPackResources.class, priority = 1100)
 public abstract class PathPackResourcesMixin implements ICachingResourcePack {
@@ -39,7 +48,10 @@ public abstract class PathPackResourcesMixin implements ICachingResourcePack {
         this.cacheEngine = null;
     }
 
-    /*
+    @Inject(method = "close", at = @At("HEAD"))
+    private void modernica$invalidateCacheOnClose(CallbackInfo ci) {
+        invalidateCache();
+    }
 
     @Inject(method = "getNamespaces", at = @At("HEAD"), cancellable = true)
     private void useCacheForNamespaces(PackType type, CallbackInfoReturnable<Set<String>> cir) {
@@ -69,5 +81,4 @@ public abstract class PathPackResourcesMixin implements ICachingResourcePack {
         this.generateResourceCache().collectResources(type, namespace, path.split("/"), Integer.MAX_VALUE, resourceOutput);
     }
 
-     */
 }

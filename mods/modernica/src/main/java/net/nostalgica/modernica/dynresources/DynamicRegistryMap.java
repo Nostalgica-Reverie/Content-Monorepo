@@ -1,12 +1,13 @@
 package net.nostalgica.modernica.dynresources;
 
-import com.google.common.collect.Collections2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -34,12 +35,12 @@ public final class DynamicRegistryMap<K, V> implements Map<K, V> {
 
     @Override
     public int size() {
-        return originalKeys.size();
+        return visibleKeys().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return originalKeys.isEmpty();
+        return visibleKeys().isEmpty();
     }
 
     @Override
@@ -59,7 +60,15 @@ public final class DynamicRegistryMap<K, V> implements Map<K, V> {
         if (o == null || o == NULL_OVERRIDE) {
             return false;
         }
-        return overrides.containsValue(o);
+        if (overrides.containsValue(o)) {
+            return true;
+        }
+        for (K key : originalKeys) {
+            if (!overrides.containsKey(key) && Objects.equals(fallbackGetter.apply(key), o)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -69,37 +78,46 @@ public final class DynamicRegistryMap<K, V> implements Map<K, V> {
             return null;
         } else if (value != null) {
             return (V) value;
-        } else {
+        } else if (originalKeys.contains(o)) {
             return fallbackGetter.apply((K)o);
         }
+        return null;
     }
 
     @Override
     public V getOrDefault(Object o, V defaultValue) {
         Object value = overrides.get(o);
         if (value == NULL_OVERRIDE) {
-            return null;
+            return defaultValue;
         } else if (value != null) {
             return (V) value;
-        } else {
+        } else if (originalKeys.contains(o)) {
             var fallback = fallbackGetter.apply((K)o);
             return fallback != null ? fallback : defaultValue;
         }
+        return defaultValue;
     }
 
     @Override
     public @Nullable V put(K k, V v) {
+        V oldValue = get(k);
         if (v == null) {
-            return remove(k);
+            remove(k);
+            return oldValue;
         }
         overrides.put(k, v);
-        return null;
+        return oldValue;
     }
 
     @Override
     public V remove(Object o) {
-        overrides.put((K)o, NULL_OVERRIDE);
-        return null;
+        V oldValue = get(o);
+        if (originalKeys.contains(o)) {
+            overrides.put((K)o, NULL_OVERRIDE);
+        } else {
+            overrides.remove(o);
+        }
+        return oldValue;
     }
 
     @Override
@@ -109,17 +127,28 @@ public final class DynamicRegistryMap<K, V> implements Map<K, V> {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        overrides.clear();
+        originalKeys.forEach(key -> overrides.put(key, NULL_OVERRIDE));
     }
 
     @Override
     public @NotNull Set<K> keySet() {
-        return Collections.unmodifiableSet(originalKeys);
+        return Collections.unmodifiableSet(visibleKeys());
     }
 
     @Override
     public @NotNull Collection<V> values() {
-        return Collections2.transform(originalKeys, this::get);
+        return new AbstractCollection<>() {
+            @Override
+            public Iterator<V> iterator() {
+                return visibleKeys().stream().map(DynamicRegistryMap.this::get).iterator();
+            }
+
+            @Override
+            public int size() {
+                return DynamicRegistryMap.this.size();
+            }
+        };
     }
 
     @Override
@@ -153,7 +182,7 @@ public final class DynamicRegistryMap<K, V> implements Map<K, V> {
     private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
         @Override
         public Iterator<Entry<K, V>> iterator() {
-            var iterator = originalKeys.iterator();
+            var iterator = visibleKeys().iterator();
             return new Iterator<>() {
                 @Override
                 public boolean hasNext() {
@@ -171,5 +200,17 @@ public final class DynamicRegistryMap<K, V> implements Map<K, V> {
         public int size() {
             return DynamicRegistryMap.this.size();
         }
+    }
+
+    private Set<K> visibleKeys() {
+        Set<K> keys = new LinkedHashSet<>(originalKeys);
+        for (Map.Entry<K, Object> entry : overrides.entrySet()) {
+            if (entry.getValue() == NULL_OVERRIDE) {
+                keys.remove(entry.getKey());
+            } else {
+                keys.add(entry.getKey());
+            }
+        }
+        return keys;
     }
 }

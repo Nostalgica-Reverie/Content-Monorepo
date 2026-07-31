@@ -34,7 +34,8 @@ import java.util.function.Predicate;
  * and classify each palette entry (there are only as many of these as the palette is large) once.
  * <p>
  * That same histogram also lets random ticking (see {@code perf.random_ticking}) skip straight to the
- * positions worth rolling instead of picking blind - {@link #mfh$getTickingBlockPositions} is
+ * positions worth rolling instead of picking blind. The cache includes positions with either a
+ * randomly-tickable block or fluid, and {@link #mfh$getTickingBlockPositions} is
  * incrementally kept in sync by {@link #mfh$onSetBlockState} rather than being rebuilt every tick.
  */
 @Mixin(LevelChunkSection.class)
@@ -85,8 +86,8 @@ abstract class LevelChunkSectionMixin implements BlockCountingChunkSection {
             return;
         }
 
-        boolean oldTicking = oldState.isRandomlyTicking();
-        boolean newTicking = newState.isRandomlyTicking();
+        boolean oldTicking = oldState.isRandomlyTicking() || oldState.getFluidState().isRandomlyTicking();
+        boolean newTicking = newState.isRandomlyTicking() || newState.getFluidState().isRandomlyTicking();
         if (oldTicking != newTicking) {
             short position = (short) (x | (z << 4) | (y << 8));
             if (oldTicking) {
@@ -133,17 +134,18 @@ abstract class LevelChunkSectionMixin implements BlockCountingChunkSection {
             }
 
             this.nonEmptyBlockCount += (short) count;
+            FluidState fluid = state.getFluidState();
             if (state.isRandomlyTicking()) {
                 this.tickingBlockCount += (short) count;
-                this.mfh$tickingBlocks.addAll(positions);
             }
-
-            FluidState fluid = state.getFluidState();
             if (!fluid.isEmpty()) {
                 this.fluidCount += (short) count;
                 if (fluid.isRandomlyTicking()) {
                     this.tickingFluidCount += (short) count;
                 }
+            }
+            if (state.isRandomlyTicking() || fluid.isRandomlyTicking()) {
+                this.mfh$tickingBlocks.addAll(positions);
             }
         }
     }

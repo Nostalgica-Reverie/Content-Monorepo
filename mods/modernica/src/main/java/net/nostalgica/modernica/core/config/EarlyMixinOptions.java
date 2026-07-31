@@ -4,7 +4,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.peanuuutz.tomlkt.Toml;
 import net.peanuuutz.tomlkt.TomlElement;
 import net.peanuuutz.tomlkt.TomlElementKt;
-import net.peanuuutz.tomlkt.TomlLiteral;
 import net.peanuuutz.tomlkt.TomlTable;
 import org.apache.logging.log4j.Logger;
 
@@ -45,21 +44,6 @@ final class EarlyMixinOptions {
         try {
             Boolean value = TomlElementKt.getBooleanOrNull(scope, field);
             return value != null ? value : defaultValue;
-        } catch (RuntimeException e) {
-            return defaultValue;
-        }
-    }
-
-    EarlyStabilityLevel resolveStabilityLevel(EarlyStabilityLevel defaultValue) {
-        if (root == null) {
-            return defaultValue;
-        }
-        try {
-            TomlElement element = root.get("stabilityLevel");
-            if (!(element instanceof TomlLiteral literal)) {
-                return defaultValue;
-            }
-            return EarlyStabilityLevel.valueOf(literal.getContent());
         } catch (RuntimeException e) {
             return defaultValue;
         }

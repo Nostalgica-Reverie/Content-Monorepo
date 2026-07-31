@@ -5,20 +5,17 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDefinition;
 import net.nostalgica.modernica.annotation.ClientOnlyMixin;
+import net.nostalgica.modernica.perf.CompactEntityModelCache;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Mixin(CubeDefinition.class)
 @ClientOnlyMixin
 public class CubeDefinitionMixin {
-    @Unique
-    private static final ConcurrentHashMap<List<Object>, ModelPart.Cube> MFIX_CUBE_CACHE = new ConcurrentHashMap<>();
-
     /**
      * @author embeddedt
      * @reason deduplicate creation of Cube objects
@@ -29,12 +26,9 @@ public class CubeDefinitionMixin {
                                                      float growY, float growZ, boolean mirror, float texScaleU,
                                                      float texScaleV, Set visibleFaces,
                                                      Operation<ModelPart.Cube> original) {
-        List<Object> cacheKey = List.of(texCoordU, texCoordV, originX, originY, originZ, dimensionX, dimensionY, dimensionZ, gtowX, growY, growZ, mirror, texScaleU, texScaleV, visibleFaces);
-        var cube = MFIX_CUBE_CACHE.get(cacheKey);
-        if (cube == null) {
-            cube = original.call((Object[])cacheKey.toArray());
-            MFIX_CUBE_CACHE.put(cacheKey, cube);
-        }
-        return cube;
+        // CubeDefinition's face set is not part of Modernica's ownership. Snapshot it so a caller cannot
+        // mutate a key after insertion and make the cache entry unreachable.
+        List<Object> cacheKey = List.of(texCoordU, texCoordV, originX, originY, originZ, dimensionX, dimensionY, dimensionZ, gtowX, growY, growZ, mirror, texScaleU, texScaleV, Set.copyOf(visibleFaces));
+        return CompactEntityModelCache.getOrCreate(cacheKey, () -> original.call((Object[]) cacheKey.toArray()));
     }
 }
