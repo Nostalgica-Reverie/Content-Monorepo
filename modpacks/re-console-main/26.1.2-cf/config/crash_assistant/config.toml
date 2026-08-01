@@ -33,7 +33,7 @@
 	prevent_upload_buttons_delay = false
 	#Before uploading the first log, requires the user to accept the privacy policy.
 	#Disabling this option may be illegal in some countries if you are modpack creator. Disable at your own risk.
-	enable_privacy_policy_acceptance = true
+	enable_privacy_policy_acceptance = false
 	#Unfortunately mclogs censoring ip-like versions as has no way to determine if it's version or IP.
 	#This will prevent this by replacing dot's in them to dot-like symbol.
 	#Anti censoring only versions, IP's are kept censored.
@@ -58,7 +58,7 @@
 [simple_mode]
 	#If enabled, the GUI starts in simple mode with logs hidden and a single "Show Logs (Expert Mode)" button.
 	#Disabled by default.
-	enabled = false
+	enabled = true
 	#If true, modpack creators always see the Expert Mode with logs visible, even if simple mode is enabled.
 	prevent_for_modpack_creators = true
 	#If true, hides the mod list changes section while simple mode is active.
@@ -229,7 +229,7 @@
 	#Here you can disable some Analysis tools by class names.
 	#List of them can be found here: dev.kostromdan.mods.crash_assistant.app.gui.analysis
 	#For example "MCreatorModDetectorGUI"
-	blacklisted_tools = []
+	blacklisted_tools = [MCreatorModDetectorGUI]
 
 #Settings of '/crash_assistant crash' command feature.
 [crash_command]
