@@ -6,13 +6,13 @@ engine: microvm
 image: nixos
 clone:
   depth: 0
-dependencies: [bun, cargo, cargo-xwin, curl, gcc, jdk25, jq, just, nsis, pkg-config, rustc, webkitgtk_4_1, xxd]
+dependencies: [bun, cargo-xwin, cmake, curl, gcc, git, gnumake, jdk25, jq, just, ninja, nsis, pkg-config, rustup, webkitgtk_4_1, xxd]
 
 steps:
   - name: Install GUI build tools
     command: |
       bun install --cwd apps/packwandrs --frozen-lockfile
-      cargo install --locked tauri-cli --version '^2'
+      (cd apps/packwandrs && cargo install --locked tauri-cli --version '^2')
   - name: Build bundled installer resource
     command: just build-installer
   - name: Build Linux bundles

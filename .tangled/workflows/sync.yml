@@ -1,13 +1,12 @@
 when:
   - event: ["push"]
     branch: ["main"]
-    path:
-      include: ["modpacks/simply-optimized-forked/**/manifest.json", "modpacks/rekindled-common/**/manifest.json", "modpacks/lce-common/**/manifest.json"]
+    paths: ["modpacks/simply-optimized-forked/**/manifest.json", "modpacks/rekindled-common/**/manifest.json", "modpacks/lce-common/**/manifest.json"]
   - event: ["manual"]
 
 engine: microvm
 image: nixos
-dependencies: [cargo, gcc, git, openssh, rustc]
+dependencies: [cmake, gcc, git, gnumake, ninja, openssh, pkg-config, rustup]
 steps:
   - name: Build Packwand CLI
     command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli

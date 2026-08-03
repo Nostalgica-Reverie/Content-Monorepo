@@ -1,15 +1,14 @@
 when:
   - event: ["push"]
     branch: ["main"]
-    path:
-      include: ["modpacks/**/manifest.json", "datapacks/**/manifest.json", "resourcepacks/**/manifest.json", "mods/**/manifest.json"]
+    paths: ["modpacks/**/manifest.json", "datapacks/**/manifest.json", "resourcepacks/**/manifest.json", "mods/**/manifest.json"]
   - event: ["manual"]
 
 engine: microvm
 image: nixos
 clone:
   depth: 5
-dependencies: [bun, cargo, gcc, jdk25, jq, rustc]
+dependencies: [bun, cmake, gcc, git, gnumake, jdk25, jq, ninja, pkg-config, rustup]
 
 steps:
   - name: Build Packwand CLI

@@ -6,7 +6,7 @@ engine: microvm
 image: nixos
 clone:
   depth: 0
-dependencies: [cargo, curl, gcc, jq, rustc, xxd]
+dependencies: [cmake, curl, gcc, git, gnumake, jq, ninja, pkg-config, rustup, xxd]
 
 steps:
   - name: Package Packwand CLI

@@ -3,22 +3,14 @@ when:
 
 engine: microvm
 image: nixos
-dependencies: [cargo, clippy, rustc, rustfmt]
+dependencies: [cmake, gcc, git, gnumake, ninja, pkg-config, rustup]
 
 steps:
   - name: Format
-    command: cargo fmt --package packeater_cli -- --check
-    environment:
-      CARGO_MANIFEST_PATH: apps/packwandrs/Cargo.toml
+    command: cd apps/packwandrs && cargo fmt --package packeater_cli -- --check
   - name: Lint
-    command: cargo clippy -p packeater_cli --all-targets -- -D warnings
-    environment:
-      CARGO_MANIFEST_PATH: apps/packwandrs/Cargo.toml
+    command: cd apps/packwandrs && cargo clippy -p packeater_cli --all-targets -- -D warnings
   - name: Test
-    command: cargo test -p packeater_cli
-    environment:
-      CARGO_MANIFEST_PATH: apps/packwandrs/Cargo.toml
+    command: cd apps/packwandrs && cargo test -p packeater_cli
   - name: Build
-    command: cargo build --release -p packeater_cli
-    environment:
-      CARGO_MANIFEST_PATH: apps/packwandrs/Cargo.toml
+    command: cd apps/packwandrs && cargo build --release -p packeater_cli

@@ -3,7 +3,7 @@ when:
 
 engine: microvm
 image: nixos
-dependencies: [bun, cargo, gcc, rustc, just]
+dependencies: [bun, cmake, gcc, git, gnumake, just, ninja, pkg-config, rustup]
 
 steps:
   - name: Build Packwand CLI

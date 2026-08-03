@@ -3,17 +3,15 @@
 when:
   - event: ["push"]
     branch: ["main"]
-    path:
-      include: ["modpacks/**", "datapacks/**", "resourcepacks/**"]
+    paths: ["modpacks/**", "datapacks/**", "resourcepacks/**"]
   - event: ["pull_request"]
     branch: ["main"]
-    path:
-      include: ["modpacks/**", "datapacks/**", "resourcepacks/**"]
+    paths: ["modpacks/**", "datapacks/**", "resourcepacks/**"]
   - event: ["manual"]
 
 engine: microvm
 image: nixos
-dependencies: [cargo, gcc, rustc]
+dependencies: [cmake, gcc, git, gnumake, ninja, pkg-config, rustup]
 
 steps:
   - name: Build Packwand CLI

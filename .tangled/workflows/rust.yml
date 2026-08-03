@@ -1,17 +1,15 @@
 when:
   - event: ["push"]
     branch: ["main"]
-    path:
-      include: ["apps/mod-browser-webview/**", "apps/packwandrs/**", "justfile"]
+    paths: ["apps/mod-browser-webview/**", "apps/packwandrs/**", "justfile"]
   - event: ["pull_request"]
     branch: ["main"]
-    path:
-      include: ["apps/mod-browser-webview/**", "apps/packwandrs/**", "justfile"]
+    paths: ["apps/mod-browser-webview/**", "apps/packwandrs/**", "justfile"]
   - event: ["manual"]
 
 engine: microvm
 image: nixos
-dependencies: [cargo, cargo-audit, clippy, gcc, just, pkg-config, rustc, rustfmt, webkitgtk_4_1]
+dependencies: [cargo-audit, cmake, gcc, git, gnumake, just, ninja, pkg-config, rustup, webkitgtk_4_1]
 
 steps:
   - name: Lint Rust webview
