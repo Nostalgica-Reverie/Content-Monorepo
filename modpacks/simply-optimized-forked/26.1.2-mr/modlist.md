@@ -6,6 +6,7 @@
 - [AsyncParticles](https://modrinth.com/mod/c3onkd5k)
 - [BadOptimizations](https://modrinth.com/mod/g96Z4WVZ)
 - [Better Block Entities](https://modrinth.com/mod/ONZm0H7Y)
+- [C2ME OpenCL Acceleration Module](https://modrinth.com/mod/qtPMklut)
 - [Cull Fewer Leaves](https://modrinth.com/mod/alhWWxax)
 - [Dynamic FPS](https://modrinth.com/mod/LQ3K71Q1)
 - [Entity Culling](https://modrinth.com/mod/NNAgCjsB)
@@ -13,13 +14,11 @@
 - [Gnetum](https://modrinth.com/mod/7MoE34WK)
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
 - [Ixeris](https://modrinth.com/mod/p8RJPJIC)
-- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
 - [Sodium](https://modrinth.com/mod/AANobbMI)
 
 ## Shared Mods
 
-- [C2ME OpenCL Acceleration Module](https://modrinth.com/mod/qtPMklut)
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
 - [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)

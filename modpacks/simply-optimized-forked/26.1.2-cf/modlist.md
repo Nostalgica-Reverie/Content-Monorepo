@@ -1,9 +1,5 @@
 # Modlist
 
-## Client Mods
-
-- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
-
 ## Shared Mods
 
 - [Async Logger]()
@@ -26,7 +22,7 @@
 - [Immersive Optimization]()
 - [Ixeris]()
 - [Lithium (Fabric/NeoForge)]()
-- [ModernFix-mVUS]()
+- [Modernica]()
 - [No Chat Reports]()
 - [No Chat Restrictions]()
 - [Particle Core]()

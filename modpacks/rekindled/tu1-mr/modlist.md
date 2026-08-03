@@ -18,23 +18,23 @@
 ## Shared Mods
 
 - [Cloth Config API](https://modrinth.com/mod/9s6osm5g)
-- [Concurrent Chunk Management Engine (Fabric)](https://modrinth.com/mod/VSNURh3q)
+- [Concurrent Chunk Management Engine (NeoForge)](https://modrinth.com/mod/COlSi5iR)
 - [Config Manager](https://modrinth.com/mod/jlNms3Jp)
+- [Connector Extras](https://modrinth.com/mod/FYpiwiBR)
 - [Fabric API](https://modrinth.com/mod/P7dR8mSH)
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [Factory API](https://modrinth.com/mod/nkTZHOLD)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Global Packs](https://modrinth.com/mod/NRLPy2mk)
+- [KubeJS](https://modrinth.com/mod/umyGl7zF)
 - [Legacy Nether](https://modrinth.com/mod/FasxNDY4)
 - [Legacy4J](https://modrinth.com/mod/gHvKJofA)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
-- [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
+- [ModernFix](https://modrinth.com/mod/nmDcB62a)
 - [Moderner Beta](https://modrinth.com/mod/xkrdwmh2)
-- [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
 - [ScalableLux](https://modrinth.com/mod/Ps1zyz6x)
-- [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
+- [Sinytra Connector](https://modrinth.com/mod/u58R1TMW)
 
 ## Server Mods
 
-- [Async](https://modrinth.com/mod/vEC2jm6I)
 - [Preferred Gamerules](https://modrinth.com/mod/kKib77nY)

@@ -1,9 +1,5 @@
 # Modlist
 
-## Client Mods
-
-- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
-
 ## Shared Mods
 
 - [Async Logger]()
@@ -22,9 +18,11 @@
 - [Fzzy Config]()
 - [Gnetum]()
 - [ImmediatelyFast]()
+- [Immersive Optimization]()
 - [Ixeris]()
+- [Jasione]()
 - [Lithium (Fabric/NeoForge)]()
-- [ModernFix-mVUS]()
+- [Modernica]()
 - [Particle Core]()
 - [ScalableLux]()
 - [ServerCore]()

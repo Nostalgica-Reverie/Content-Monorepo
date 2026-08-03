@@ -13,7 +13,6 @@
 - [Gnetum](https://modrinth.com/mod/7MoE34WK)
 - [ImmediatelyFast](https://modrinth.com/mod/5ZwdcRci)
 - [Ixeris](https://modrinth.com/mod/p8RJPJIC)
-- [Nvidium](https://modrinth.com/mod/SfMw2IZN)
 - [Particle Core](https://modrinth.com/mod/RSeLon5O)
 - [Sodium](https://modrinth.com/mod/AANobbMI)
 
@@ -27,6 +26,7 @@
 - [Fabric Language Kotlin](https://modrinth.com/mod/Ha28R6CL)
 - [FerriteCore](https://modrinth.com/mod/uXXizFIs)
 - [Fzzy Config](https://modrinth.com/mod/hYykXjDp)
+- [Jasione](https://modrinth.com/mod/qlDkBPij)
 - [Lithium](https://modrinth.com/mod/gvQqBUqZ)
 - [ModernFix-mVUS](https://modrinth.com/mod/TjSm1wrD)
 - [No Prying Eyes](https://modrinth.com/mod/LoXPgYhm)
@@ -34,3 +34,7 @@
 - [ServerCore](https://modrinth.com/mod/4WWQxlQP)
 - [Very Many Players (Fabric)](https://modrinth.com/mod/wnEe9KBa)
 - [quick pack](https://modrinth.com/mod/pSISfJ4O)
+
+## Server Mods
+
+- [Immersive Optimization](https://modrinth.com/mod/vNZgQmjg)
