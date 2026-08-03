@@ -6,7 +6,7 @@ engine: microvm
 image: nixos
 clone:
   depth: 0
-dependencies: [bun, cargo, cargo-xwin, curl, jdk25, jq, just, nsis, pkg-config, rustc, webkitgtk_4_1, xxd]
+dependencies: [bun, cargo, cargo-xwin, curl, gcc, jdk25, jq, just, nsis, pkg-config, rustc, webkitgtk_4_1, xxd]
 
 steps:
   - name: Install GUI build tools

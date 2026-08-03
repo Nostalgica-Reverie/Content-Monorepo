@@ -6,13 +6,13 @@ engine: microvm
 image: nixos
 clone:
   depth: 0
-dependencies: [cargo, curl, jq, rustc, xxd]
+dependencies: [cargo, curl, gcc, jq, rustc, xxd]
 
 steps:
   - name: Package Packwand CLI
     command: |
       set -euo pipefail
-      cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+      (cd apps/packwandrs && cargo build --locked --release -p packwand-cli)
       mkdir -p release-assets/stage
       cp apps/packwandrs/target/release/packwand release-assets/stage/packwand
       cp LICENSE release-assets/stage/LICENSE

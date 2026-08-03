@@ -3,11 +3,11 @@ when:
 
 engine: microvm
 image: nixos
-dependencies: [bun, cargo, rustc, just]
+dependencies: [bun, cargo, gcc, rustc, just]
 
 steps:
   - name: Build Packwand CLI
-    command: cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+    command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
   - name: Type-check docs scripts
     command: just docs-typecheck
   - name: Build docs sites

@@ -3,10 +3,10 @@ when:
 
 engine: microvm
 image: nixos
-dependencies: [cargo, git, jq, openssh, rustc]
+dependencies: [cargo, gcc, git, jq, openssh, rustc]
 steps:
   - name: Build Packwand CLI
-    command: cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+    command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
   - name: Run full automation and commit version bumps
     command: |
       set -euo pipefail

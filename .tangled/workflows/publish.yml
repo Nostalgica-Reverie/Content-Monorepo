@@ -9,11 +9,11 @@ engine: microvm
 image: nixos
 clone:
   depth: 5
-dependencies: [bun, cargo, jdk25, jq, rustc]
+dependencies: [bun, cargo, gcc, jdk25, jq, rustc]
 
 steps:
   - name: Build Packwand CLI
-    command: cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+    command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
   - name: Publish planned content sequentially
     command: |
       set -euo pipefail

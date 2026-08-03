@@ -11,7 +11,7 @@ when:
 
 engine: microvm
 image: nixos
-dependencies: [cargo, cargo-audit, clippy, just, pkg-config, rustc, rustfmt, webkitgtk_4_1]
+dependencies: [cargo, cargo-audit, clippy, gcc, just, pkg-config, rustc, rustfmt, webkitgtk_4_1]
 
 steps:
   - name: Lint Rust webview
