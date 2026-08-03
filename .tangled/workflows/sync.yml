@@ -1,6 +1,9 @@
 when:
-  - event: ["push", "manual"]
+  - event: ["push"]
     branch: ["main"]
+    path:
+      include: ["modpacks/simply-optimized-forked/**/manifest.json", "modpacks/rekindled-common/**/manifest.json", "modpacks/lce-common/**/manifest.json"]
+  - event: ["manual"]
 
 engine: microvm
 image: nixos

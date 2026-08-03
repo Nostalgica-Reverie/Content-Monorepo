@@ -1,8 +1,13 @@
 when:
-  - event: ["push", "manual"]
+  - event: ["push"]
     branch: ["main"]
+    path:
+      include: ["apps/mod-browser-webview/**", "apps/packwandrs/**", "justfile"]
   - event: ["pull_request"]
     branch: ["main"]
+    path:
+      include: ["apps/mod-browser-webview/**", "apps/packwandrs/**", "justfile"]
+  - event: ["manual"]
 
 engine: microvm
 image: nixos

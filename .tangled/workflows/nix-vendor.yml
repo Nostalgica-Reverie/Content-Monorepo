@@ -1,6 +1,5 @@
 when:
-  - event: ["push", "manual"]
-    branch: ["main"]
+  - event: ["manual"]
 
 engine: microvm
 image: nixos
