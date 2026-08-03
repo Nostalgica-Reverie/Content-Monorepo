@@ -1,9 +1,4 @@
-/* Status code names and descriptions -- see packwandc.md 3.1.
- *
- * Both tables are generated from PWC_STATUS_LIST in uapi/pwc_status.h, so a
- * new status code cannot be added without also getting a name and a
- * description. That is the entire reason the list is an X-macro.
- */
+/* Status names and descriptions are generated from PWC_STATUS_LIST. */
 
 #include "packwandc/kernel/pwc_boot_internal.h"
 #include "packwandc/kernel/pwc_error.h"
@@ -12,7 +7,7 @@
 
 /* Thread-local by design. A shared record would be a data race on every
  * concurrent failure and would hand callers another thread's diagnosis; the
- * kernel runs a worker pool (packwandc.md 3.6), so that is the normal case
+ * kernel runs a worker pool, so that is the normal case
  * rather than an edge one. */
 static thread_local pwc_error_detail pwc_last_detail = {
     .struct_size = (uint32_t) sizeof(pwc_error_detail),
@@ -29,7 +24,7 @@ const pwc_error_detail *pwc_last_error(void) { return &pwc_last_detail; }
 /* The single path onto the trace ring.
  *
  * Only static string pointers are ever copied, never caller data, so nothing
- * that reaches here can carry a secret into the trace (packwandc.md 5.2).
+ * that reaches here can carry a secret into the trace.
  *
  * The write result is deliberately discarded at every call site: a full ring
  * drops this record and counts it, and failing to trace something must never

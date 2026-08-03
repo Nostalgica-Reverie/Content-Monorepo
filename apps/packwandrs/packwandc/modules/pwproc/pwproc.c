@@ -35,7 +35,7 @@ pwc_status pwc_proc_kill(pwc_handle_t process) {
 }
 pwc_status pwc_proc_exists(uint32_t pid, uint32_t *out_alive) { return pwc_arch_proc_exists(pid, out_alive); }
 
-/* --- module descriptor (packwandc.md 3.5) ------------------------------- */
+/* --- module descriptor -------------------------------------------------- */
 
 static pwc_status pwc_pwproc_init(pwc_module_ctx *ctx) {
     /* No state to build: pwproc is stateless, and every object it hands out

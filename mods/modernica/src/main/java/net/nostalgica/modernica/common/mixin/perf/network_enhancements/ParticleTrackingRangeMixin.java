@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.nostalgica.modernica.core.ModernicaMixinPlugin;
+import net.nostalgica.modernica.core.config.MixinGate;
 
 /**
  * See {@link VarLongMixin}'s class doc for the independent-reimplementation context.
@@ -35,7 +35,7 @@ public class ParticleTrackingRangeMixin {
         if (overrideLimiter) {
             return;
         }
-        int rangeBlocks = ModernicaMixinPlugin.instance.config.performance.particleTrackingRangeBlocks.get();
+        int rangeBlocks = MixinGate.particleTrackingRangeBlocks();
         double rangeSq = (double) rangeBlocks * rangeBlocks;
         if (player.distanceToSqr(x, y, z) > rangeSq) {
             cir.setReturnValue(false);

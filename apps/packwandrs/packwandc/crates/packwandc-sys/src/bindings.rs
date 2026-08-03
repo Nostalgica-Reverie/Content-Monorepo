@@ -3,7 +3,7 @@
 // Source: include/packwandc/uapi/syscalls.def
 // Regenerate with `just gen-packwandc`; CI diffs this file against a fresh
 // run, so an edit here fails the build rather than silently diverging from
-// the C ABI. See packwandc.md 4.1.
+// the C ABI.
 
 use crate::PwcErrorDetail;
 use crate::PwcHandle;

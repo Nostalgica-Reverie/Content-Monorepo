@@ -1,4 +1,4 @@
-//! Phase 3 of `packwandrs.md`: boot one disposable, real vanilla instance
+//! Boot one disposable, real vanilla instance
 //! end-to-end, observe its lifecycle, and delete its isolated data.
 //!
 //! Ignored by default: it needs network access to Mojang's metadata and

@@ -25,15 +25,58 @@
       packwand2nixLib = import ./packages/packwand2nix/lib;
       mkPackwand =
         pkgs:
-        pkgs.callPackage ./apps/packwand/nix {
+        pkgs.rustPlatform.buildRustPackage {
+          pname = "packwand";
           version = nixpkgs.lib.substring 0 8 (self.rev or "dirty");
-          vendorHash = nixpkgs.lib.fileContents ./apps/packwand/nix/vendor-hash;
+          src = ./apps/packwandrs;
+          cargoLock.lockFile = ./apps/packwandrs/Cargo.lock;
+          cargoBuildFlags = [ "-p" "packwand-cli" ];
+          doCheck = false;
+          postInstall = ''
+            test -x "$out/bin/packwand"
+          '';
         };
       mkCursorapi =
         pkgs:
-        pkgs.callPackage ./apps/api/nix {
-          version = nixpkgs.lib.substring 0 8 (self.rev or "dirty");
-          vendorHash = nixpkgs.lib.fileContents ./apps/api/nix/vendor-hash;
+        pkgs.writeShellApplication {
+          name = "cursorapi";
+          runtimeInputs = [ (mkPackwand pkgs) ];
+          text = ''
+            root=.
+            bind_set=false
+            args=()
+            while (( $# > 0 )); do
+              case "$1" in
+                --root)
+                  root="$2"
+                  shift 2
+                  ;;
+                --root=*)
+                  root="''${1#--root=}"
+                  shift
+                  ;;
+                --bind|--bind=*)
+                  bind_set=true
+                  args+=("$1")
+                  if [[ "$1" == --bind ]]; then
+                    args+=("$2")
+                    shift 2
+                  else
+                    shift
+                  fi
+                  ;;
+                *)
+                  args+=("$1")
+                  shift
+                  ;;
+              esac
+            done
+            if [[ "$bind_set" == false ]]; then
+              args=(--bind 127.0.0.1:8097 "''${args[@]}")
+            fi
+            cd "$root"
+            exec packwand api serve "''${args[@]}"
+          '';
         };
 
       # Every modpack subdirectory with a generated checksums.json. Packwand
@@ -129,6 +172,8 @@
           packages = [
             pkgs.alejandra
             pkgs.go_1_26
+            pkgs.cargo
+            pkgs.rustc
             pkgs.just
           ];
         };

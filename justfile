@@ -19,11 +19,10 @@ set shell := ["sh", "-cu"]
 
 INSTALLER_DIR := "apps/packwand-installer"
 WEBVIEW_DIR := "apps/mod-browser-webview"
-GUI_TAURI_DIR := "apps/packwand/gui/tauri"
+GUI_TAURI_DIR := "apps/packwandrs"
 BOT_DIR := "apps/bot"
 API_DIR := "apps/api"
 DOCS_SITES := "docs docs/packwand docs/packwiz"
-HANDBOOK_DIR := "docs/modpack-dev-handbook"
 
 # just has no built-in equivalent of Task's `{{exeExt}}`; define it explicitly.
 EXE_EXT := if os() == "windows" { ".exe" } else { "" }
@@ -48,11 +47,6 @@ _mod_gradlew_all ARGS:
 # — Lint —
 
 # Vet the Go module; also guard that os.Exit stays confined to cmd/ and cmdshared/
-[working-directory: 'apps/packwand']
-lint-go:
-    go vet ./...
-    ! grep -rn --include='*.go' 'os\.Exit' core/ content/ registry/ workspace/ manifest/ build/ api/ migrate/ modrinth/ curseforge/ github/ gitlab/ forgejo/ url/ settings/ utils/ clistyle/ nix/ 2>/dev/null | grep -v _test.go || { echo 'os.Exit found outside cmd/ — return an error instead' >&2; exit 1; }
-
 # Vet the cursorapi Go module
 [working-directory: 'apps/api']
 lint-cursorapi:
@@ -70,10 +64,6 @@ lint-installer: (_gradlew INSTALLER_DIR "classes bootstrap:classes")
 lint-mods: (_mod_gradlew_all "check")
 
 # Scan the Go module for known vulnerabilities
-[working-directory: 'apps/packwand']
-audit-go:
-    go run golang.org/x/vuln/cmd/govulncheck@latest ./...
-
 # fmt + clippy on the packwandrs workspace (CLI, launcher core, desktop shell)
 [working-directory: 'apps/packwandrs']
 lint-rust-core:
@@ -137,38 +127,26 @@ lint-packwandc:
 gen-packwandc:
     sh scripts/gen-syscalls.sh
 
-# NOTE: this aggregate is currently BROKEN and has been since the Go tree was
-# deleted in fcb3b8aa7 -- lint-go, audit-go and their siblings target
-# apps/packwand, which no longer exists. lint-packwandc is deliberately not
-# added here until the aggregate is repaired; run it directly meanwhile.
 # All linters/vetters and vulnerability scans
-lint: lint-go lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-packeater audit-go audit-rust docs-typecheck
+lint: lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-packeater audit-rust docs-typecheck
 
 # — Test —
 
-# Go tests
-[working-directory: 'apps/packwand']
-test-go:
-    go test ./...
-
 # Run Packwand's manifest/content/registry gate for a pack or subdir
-[working-directory: 'apps/packwand']
 preflight DIR:
-    go run . preflight "{{ DIR }}"
+    cargo run --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli -- preflight "{{ DIR }}"
 
 # Run the IDE's CI-equivalent Packwand stages for a pack subdir
-[working-directory: 'apps/packwand']
 ci-local DIR:
-    go run . ci-local "{{ DIR }}"
+    cargo run --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli -- ci-local "{{ DIR }}"
 
 # Time Packwand's hot stages (PACKWAND_TIMINGS spans) against a real mr and cf pack subdir
-[working-directory: 'apps/packwand']
 bench-packwand MR_DIR CF_DIR:
-    go build -o packwand{{ EXE_EXT }} .
-    cd "{{ MR_DIR }}" && PACKWAND_TIMINGS=1 "{{ justfile_directory() }}/apps/packwand/packwand{{ EXE_EXT }}" update --all --dry-run
-    cd "{{ MR_DIR }}" && PACKWAND_TIMINGS=1 "{{ justfile_directory() }}/apps/packwand/packwand{{ EXE_EXT }}" refresh
-    cd "{{ MR_DIR }}" && PACKWAND_TIMINGS=1 "{{ justfile_directory() }}/apps/packwand/packwand{{ EXE_EXT }}" mr export -o bench-export.mrpack && rm -f bench-export.mrpack
-    cd "{{ CF_DIR }}" && PACKWAND_TIMINGS=1 "{{ justfile_directory() }}/apps/packwand/packwand{{ EXE_EXT }}" cf export -o bench-export.zip && rm -f bench-export.zip
+    cargo build --release --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli
+    cd "{{ MR_DIR }}" && "{{ justfile_directory() }}/apps/packwandrs/target/release/packwand{{ EXE_EXT }}" update --all --dry-run
+    cd "{{ MR_DIR }}" && "{{ justfile_directory() }}/apps/packwandrs/target/release/packwand{{ EXE_EXT }}" refresh
+    cd "{{ MR_DIR }}" && "{{ justfile_directory() }}/apps/packwandrs/target/release/packwand{{ EXE_EXT }}" modrinth export -o bench-export.mrpack && rm -f bench-export.mrpack
+    cd "{{ CF_DIR }}" && "{{ justfile_directory() }}/apps/packwandrs/target/release/packwand{{ EXE_EXT }}" curseforge export -o bench-export.zip && rm -f bench-export.zip
 
 # Test the cursorapi Go module
 [working-directory: 'apps/api']
@@ -218,17 +196,15 @@ test-packwandc-tsan:
 test-nix:
     nix flake check --no-update-lock-file --print-build-logs
 
-# NOTE: broken alongside `lint` -- test-go targets the deleted apps/packwand.
-# test-packwandc is not wired in until that is repaired; run it directly.
 # All tests
-test: test-go test-cursorapi test-installer test-mods test-webview test-rust-core
+test: test-cursorapi test-installer test-mods test-webview test-rust-core test-packwandc
 
 # — Build —
 
-# Build the packwand CLI
-[working-directory: 'apps/packwand']
+# Build the Rust Packwand CLI
+[working-directory: 'apps/packwandrs']
 build-packwand:
-    go build -o packwand{{ EXE_EXT }} .
+    cargo build --release -p packwand-cli
 
 # Build the cursorapi HTTP server
 [working-directory: 'apps/api']
@@ -253,23 +229,14 @@ build-packwandc:
     cmake --build --preset {{ if os() == "windows" { "release" } else { "linux-release" } }}
 
 # Build the Go packwiz-bootstrap wrapper
-[working-directory: 'apps/packwand']
-build-bootstrap:
-    go build -o packwiz-bootstrap{{ EXE_EXT }} ./cmd/packwiz-bootstrap
-
-# Build the packwand CLI and stage it as a Tauri external binary (sidecar) named for the host Rust target triple
-build-gui-sidecar:
-    mkdir -p {{ GUI_TAURI_DIR }}/src-tauri/binaries
-    go build -C apps/packwand -o gui/tauri/src-tauri/binaries/packwand-$(rustc -vV | awk '/^host:/ {print $2}'){{ EXE_EXT }} .
-
-# Build the native Packwand GUI app (Tauri v2). Requires cargo tauri-cli; see docs/packwand/docs/development/gui-build.md
-[working-directory: 'apps/packwand/gui/tauri']
-build-gui: build-gui-sidecar
+# Build the native Rust/Vue Packwand GUI app (Tauri v2).
+[working-directory: 'apps/packwandrs']
+build-gui: build-packwand
     cargo tauri build
 
 # Generate/update packwiz2nix checksums.json for every modpack subdir via packwand's internal generator
 gen-nix:
-    go run -C apps/packwand . nix gen --all
+    cargo run --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli -- nix gen --all
 
 # Build the Packwand CLI and Cursor API through Nix without creating result symlinks
 build-nix:
@@ -289,7 +256,7 @@ build-bot:
     bun build src/index.ts --target=bun --outdir=dist
 
 # Build everything (CLI, installer, webview, bootstrap, bot)
-build: build-packwand build-cursorapi build-installer build-mods build-webview build-bootstrap build-bot
+build: build-packwand build-cursorapi build-installer build-mods build-webview build-bot
 
 # — Docs —
 
@@ -297,7 +264,6 @@ build: build-packwand build-cursorapi build-installer build-mods build-webview b
 docs-typecheck:
     bun install --frozen-lockfile
     for d in {{ DOCS_SITES }}; do (cd "$d" && bun run typecheck) || exit 1; done
-    cd {{ HANDBOOK_DIR }} && bun run check
 
 # Build all three VitePress sites (in parallel — they're independent) and the Svelte handbook
 docs-build:
@@ -318,7 +284,6 @@ docs-build:
         rm -f "$d/.docs-build.log"
     done
     [ "$status" -eq 0 ]
-    cd {{ HANDBOOK_DIR }} && bun run build
 
 # Check cross-site links across all three docs sites against their built dist/ output (run after docs-build)
 docs-lint-links:
@@ -327,6 +292,6 @@ docs-lint-links:
 # — Frontend —
 
 # Rebuild the Gleam GUI frontend into gui/static
-[working-directory: 'apps/packwand/gui/ui']
+[working-directory: 'apps/packwandrs']
 gui-frontend:
-    node build.mts
+    bun run build

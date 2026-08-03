@@ -1,4 +1,4 @@
-/* pw4shell tokeniser -- the parse boundary (packwandc.md 5.8, 7.4).
+/* pw4shell tokeniser -- the parse boundary.
  *
  * This is the only place in pw4shell that touches untrusted bytes, so it is
  * where the fuzz harness points (tests/fuzz/fuzz_sh_parse.c) and where the

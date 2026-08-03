@@ -8,8 +8,10 @@ import { normalizeBridgeError } from '@/helpers/errors'
 import { diagnosticsPreflight } from '@/helpers/invoke/diagnostics'
 import { useToastsStore } from '@/stores/toasts'
 import { useWorkbenchStore } from '@/stores/workbench'
+import { useThemeStore } from '@/stores/theme'
 
 const workbench = useWorkbenchStore()
+const theme = useThemeStore()
 const toasts = useToastsStore()
 const reload = ref(0)
 const packId = computed(() => workbench.selectedPack?.id ?? '')
@@ -40,7 +42,7 @@ async function validate() {
         </div>
       </div>
       <EmptyState v-if="!packId" title="No pack target" message="Select a project with at least one pack.toml target." />
-      <PackwandWorkbench v-else :pack-id="packId" :reload="reload" :open-path="openPath" />
+          <PackwandWorkbench v-else :pack-id="packId" :reload="reload" :open-path="openPath" :theme="theme.current" />
     </div>
   </section>
 </template>

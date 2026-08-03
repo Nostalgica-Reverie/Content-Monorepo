@@ -15,7 +15,7 @@ import { extensionLanguageSnapshot } from '@/helpers/invoke/language'
 import { onPacksChanged, onRawInputBatch } from '@/helpers/events'
 import { useExtensionsStore } from '@/stores/extensions'
 
-const props = defineProps<{ packId: string; reload: number; openPath?: string }>()
+const props = defineProps<{ packId: string; reload: number; openPath?: string; theme: string }>()
 const extensions = useExtensionsStore()
 const frame = ref<HTMLIFrameElement | null>(null)
 const loaded = ref(false)
@@ -33,7 +33,7 @@ let stopRawInput: (() => void) | undefined
  * nothing, and a control that appears dead is worse than one that is slow.
  */
 const source = computed(() => {
-  const parameters = new URLSearchParams({ pack: props.packId, reload: String(props.reload) })
+  const parameters = new URLSearchParams({ pack: props.packId, reload: String(props.reload), theme: props.theme })
   if (props.openPath) parameters.set('open', props.openPath)
   return `/packwand-ide/index.html?${parameters.toString()}`
 })

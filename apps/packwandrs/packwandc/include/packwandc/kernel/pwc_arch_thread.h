@@ -1,4 +1,4 @@
-/* Threading primitives, per platform (packwandc.md 3.6).
+/* Threading primitives, per platform.
  *
  * WHY THIS EXISTS AT ALL
  *
@@ -11,7 +11,7 @@
  *
  * A mutex is a fixed-size byte buffer that each backend reinterprets as its
  * native type, rather than a pointer to something allocated. That is forced by
- * packwandc.md 3.4: there is no allocator outside kernel/arena.c and
+ * There is no allocator outside kernel/arena.c and
  * kernel/slab.c, so a lock has to be able to live inside whatever struct owns
  * it. Each backend static_asserts that its native type actually fits.
  *

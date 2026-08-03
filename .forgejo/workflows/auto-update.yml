@@ -13,5 +13,5 @@ jobs:
   auto-update:
     uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: workspace update
+      verb: batch update
       commit-message: 'actions: auto-update'

@@ -22,7 +22,7 @@ jobs:
   bulk-refresh:
     uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: ${{ inputs.dry_run && 'workspace refresh --dry-run' || 'workspace refresh' }}
+      verb: ${{ inputs.dry_run && 'batch refresh --dry-run' || 'batch refresh' }}
       scope: ${{ inputs.packs }}
       dry_run: ${{ inputs.dry_run }}
       commit-message: 'actions: bulk refresh'

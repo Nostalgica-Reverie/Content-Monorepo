@@ -1,7 +1,7 @@
 //! Minecraft version metadata, install planning, and transactional
 //! installation.
 //!
-//! Part of the `packwand-rs` shared core (see `packwandrs.md`). This crate
+//! Part of the shared Packwand core. This crate
 //! must stay free of Tauri, clap, and axum dependencies. It follows the
 //! plan/apply split required by the migration spec: metadata is turned
 //! into an inspectable [`plan::InstallPlan`] first, and only

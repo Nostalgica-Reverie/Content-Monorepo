@@ -1,0 +1,23 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+  - event: ["pull_request"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, cargo-audit, clippy, just, pkg-config, rustc, rustfmt, webkitgtk_4_1]
+
+steps:
+  - name: Lint Rust webview
+    command: just lint-webview
+  - name: Lint Packwand core
+    command: just lint-rust-core
+  - name: Audit Rust dependencies
+    command: just audit-rust
+  - name: Test Rust webview
+    command: just test-webview
+  - name: Test Packwand core
+    command: just test-rust-core
+  - name: Build Rust webview
+    command: just build-webview

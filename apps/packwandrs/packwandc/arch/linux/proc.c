@@ -1,4 +1,4 @@
-/* pwproc backend: pidfd + process groups (packwandc.md 5.1).
+/* pwproc backend: pidfd + process groups.
  *
  * WHY NOT A CGROUP v2 SCOPE
  *
@@ -30,7 +30,7 @@
  */
 
 /* Feature-test macros must precede every include or they are silently ignored
- * -- see packwandc.md 7.1. _GNU_SOURCE is what exposes syscall(). */
+ * -- _GNU_SOURCE is what exposes syscall(). */
 #define _GNU_SOURCE 1
 
 #include "packwandc/kernel/pwc_arch_proc.h"

@@ -1,0 +1,11 @@
+when:
+  - event: ["manual"]
+
+engine: microvm
+image: nixos
+dependencies: [git, openssh, oxipng]
+steps:
+  - name: Optimize PNG assets and commit
+    command: |
+      oxipng -r -o 4 -v --strip all resourcepacks modpacks datapacks
+      TANGLED_COMMIT_MESSAGE='chore: bulk png optimization' sh scripts/tangled/commit-and-push.sh resourcepacks modpacks datapacks

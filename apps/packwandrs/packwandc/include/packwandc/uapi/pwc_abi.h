@@ -1,7 +1,7 @@
 /* packwandc ABI fundamentals -- version, linkage, attributes.
  *
  * This is the root uapi header: every other public header includes it, and it
- * includes nothing from include/packwandc/kernel/. See packwandc.md 7.6.
+ * includes nothing from include/packwandc/kernel/.
  */
 #ifndef PACKWANDC_UAPI_PWC_ABI_H
 #define PACKWANDC_UAPI_PWC_ABI_H
@@ -27,7 +27,7 @@
 #define PWC_END_DECLS
 #endif
 
-/* packwandc is always linked statically into the host process (packwandc.md
+/* packwandc is always linked statically into the host process
  * 3.5: no dlopen, no runtime module loading), so there is no dllexport story
  * and no visibility attribute to apply. PWC_API exists to mark the public
  * surface for readers and for scripts/gate-uapi.sh, not to change linkage. */
@@ -35,7 +35,7 @@
 
 /* --- attributes -------------------------------------------------------- */
 
-/* C23 spellings, verified on clang 16 (packwandc.md 7.1). These are wrapped
+/* C23 spellings, verified on clang 16. These are wrapped
  * rather than used bare so that the one place needing a compiler check, if a
  * pre-C23 toolchain ever has to be supported, is this file.
  *
@@ -59,7 +59,7 @@
 /* --- ABI sanity -------------------------------------------------------- */
 
 /* packwandc assumes a flat 64-bit address space and IEEE-754-free kernel code.
- * These hold on every target in packwandc.md 8, and failing loudly here beats
+ * These hold on every target, and failing loudly here beats
  * discovering it in a marshalling bug. */
 static_assert(sizeof(void *) == 8, "packwandc targets 64-bit platforms only");
 static_assert(sizeof(uint32_t) == 4, "uint32_t must be exactly 4 bytes");

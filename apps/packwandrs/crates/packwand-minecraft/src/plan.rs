@@ -1,6 +1,6 @@
 //! Install planning: turning version metadata into an inspectable list of
 //! downloads, extractions, and copies before anything touches the network
-//! or the filesystem (`packwandrs.md`: "Separate acquisition plans from
+//! or the filesystem (acquisition plans are separate from
 //! application").
 
 use std::collections::BTreeSet;

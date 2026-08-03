@@ -1,0 +1,13 @@
+when:
+  - event: ["manual"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, git, openssh, rustc]
+steps:
+  - name: Build Packwand CLI
+    command: cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+  - name: Update loaders to latest and commit
+    command: |
+      apps/packwandrs/target/release/packwand batch loader-update latest
+      TANGLED_COMMIT_MESSAGE='actions: bulk loader update (latest)' sh scripts/tangled/commit-and-push.sh modpacks

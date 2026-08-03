@@ -1,6 +1,6 @@
 //! Account sessions and the credential-store abstraction.
 //!
-//! Part of the `packwand-rs` shared core (see `packwandrs.md`). This crate
+//! Part of the shared Packwand core. This crate
 //! must stay free of Tauri, clap, and axum dependencies.
 //!
 //! Secrets are held in [`SecretString`], which cannot be serialized and
@@ -9,7 +9,7 @@
 //! actually spawns the game may call [`SecretString::expose`].
 //!
 //! Only offline sessions are implemented. Microsoft/Minecraft OAuth is a
-//! separate, threat-modeled subsystem (`packwandrs.md` risk table) and must
+//! separate, threat-modeled subsystem and must
 //! not be bolted onto this crate ad hoc; the [`CredentialStore`] trait is
 //! the seam where an OS-keychain-backed implementation will plug in.
 

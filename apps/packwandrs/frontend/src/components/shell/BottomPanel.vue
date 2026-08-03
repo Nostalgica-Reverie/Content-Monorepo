@@ -15,7 +15,7 @@ const terminalFolder = computed(
   () => workbench.selectedPack?.path ?? workbench.selectedProject?.root,
 )
 
-/* --- pw4shell console (packwandc.md 5.8) --- */
+/* pw4shell console. */
 
 const command = ref('')
 const running = ref(false)

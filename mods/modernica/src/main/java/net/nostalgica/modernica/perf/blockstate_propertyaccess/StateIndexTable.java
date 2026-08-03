@@ -55,7 +55,9 @@ public final class StateIndexTable<O, S> {
     }
 
     private static long digitOf(long index, Indexer indexer) {
-        long afterStride = IntegerUtil.unsignedFloorDiv(index, indexer.strideMagic());
+        long afterStride = indexer.stride() == 1
+                ? index
+                : IntegerUtil.unsignedFloorDiv(index, indexer.strideMagic());
         long strideCount = IntegerUtil.unsignedFloorDiv(afterStride, indexer.totalValuesMagic());
         return afterStride - strideCount * indexer.totalValues();
     }

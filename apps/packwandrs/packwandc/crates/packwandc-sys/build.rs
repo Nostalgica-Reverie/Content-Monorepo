@@ -2,7 +2,7 @@
 //!
 //! This file deliberately contains no compilation logic. CMake owns the source
 //! list, the C standard, the warning set, and the hardening flags
-//! (packwandc.md 6.3); duplicating any of that here would create a second
+//! duplicating any of that here would create a second
 //! source of truth, and the entire value of the quality gate rests on the
 //! gated flags being the shipped flags.
 //!
@@ -62,7 +62,7 @@ fn main() {
         // The C side must be built for the MSVC ABI to link against Rust's
         // x86_64-pc-windows-msvc output. The toolchain file pins clang to that
         // target and locates the MSVC and Windows SDK roots, so no vcvars
-        // shell is needed. See packwandc.md 8.1.
+        // shell is needed.
         let toolchain = c_root.join("scripts").join("toolchain-windows-msvc.cmake");
         configure.arg(format!("-DCMAKE_TOOLCHAIN_FILE={}", toolchain.display()));
         // CMake retains this internal compiler subcommand only when it is a
@@ -102,7 +102,7 @@ fn run(mut command: Command, what: &str) {
         panic!(
             "packwandc-sys: failed to run {what}: {err}\n\
              CMake >= 3.27 and Ninja must be on PATH to build this workspace \
-             (see packwandc.md 6.3 and 12.2)."
+             (see the native build configuration)."
         )
     });
 

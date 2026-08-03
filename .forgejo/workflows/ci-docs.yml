@@ -7,10 +7,11 @@ on:
       - "docs/**"
       - "package.json"
       - "bun.lock"
-      - "apps/packwand/**"
+      - "apps/packwandrs/**"
       - "justfile"
       - ".forgejo/actions/setup-docs-node/**"
-      - ".forgejo/actions/setup-go/**"
+      - ".forgejo/actions/setup-packwand/**"
+      - ".forgejo/actions/setup-rust/**"
       - ".forgejo/actions/setup-just/**"
       - ".forgejo/workflows/ci-docs.yml"
   pull_request:
@@ -19,10 +20,11 @@ on:
       - "docs/**"
       - "package.json"
       - "bun.lock"
-      - "apps/packwand/**"
+      - "apps/packwandrs/**"
       - "justfile"
       - ".forgejo/actions/setup-docs-node/**"
-      - ".forgejo/actions/setup-go/**"
+      - ".forgejo/actions/setup-packwand/**"
+      - ".forgejo/actions/setup-rust/**"
       - ".forgejo/actions/setup-just/**"
       - ".forgejo/workflows/ci-docs.yml"
   workflow_dispatch:
@@ -43,14 +45,14 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /docs/
-            /apps/packwand/
+            /apps/packwandrs/
             /apps/bot/package.json
             /scripts/
             /package.json
             /bun.lock
             /justfile
             /.forgejo/actions/
-      - uses: ./.forgejo/actions/setup-go
+      - uses: ./.forgejo/actions/setup-packwand
       - uses: ./.forgejo/actions/setup-docs-node
       - uses: ./.forgejo/actions/setup-just
       - name: Type-check docs scripts

@@ -1,0 +1,35 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+clone:
+  depth: 5
+dependencies: [bun, cargo, jdk25, jq, rustc]
+
+steps:
+  - name: Build Packwand CLI
+    command: cargo build --locked --release -p packwand-cli
+    environment:
+      CARGO_MANIFEST_PATH: apps/packwandrs/Cargo.toml
+  - name: Publish planned content sequentially
+    command: |
+      set -euo pipefail
+      packwand=apps/packwandrs/target/release/packwand
+      "$packwand" publish plan > plan.json
+      jq -ce '.[]' plan.json | while IFS= read -r entry; do
+        manifest=$(jq -r .manifest <<<"$entry")
+        variant=$(jq -r '.variant // empty' <<<"$entry")
+        dir=$(dirname "$manifest")
+        "$packwand" preflight "$dir"
+        "$packwand" json minify "$dir"
+        bun scripts/run.ts generate-changelog "$manifest" release-notes.md
+        "$packwand" publish build "$manifest" ${variant:+"$variant"}
+        "$packwand" publish upload --live --changelog-file release-notes.md "$manifest" ${variant:+"$variant"}
+        "$packwand" publish verify "$manifest" ${variant:+"$variant"}
+      done
+  - name: Verify Nix publish surface
+    command: |
+      nix flake check --no-build --no-update-lock-file
+      nix flake check --no-update-lock-file --print-build-logs

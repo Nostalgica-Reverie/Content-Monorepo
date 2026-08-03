@@ -6,7 +6,7 @@
 #
 # Both are CHECKED IN. CI regenerates and diffs them, so a syscall cannot be
 # added, renamed, or renumbered without the change showing up in review.
-# See packwandc.md 4.1.
+# The generated bindings mirror the C ABI.
 #
 # The C artifacts are NOT generated: uapi/pwc_syscall.h and kernel/syscall.c
 # include syscalls.def directly as an X-macro, so they cannot drift from it or
@@ -200,7 +200,7 @@ generate() {
             print "// Source: include/packwandc/uapi/syscalls.def"
             print "// Regenerate with `just gen-packwandc`; CI diffs this file against a fresh"
             print "// run, so an edit here fails the build rather than silently diverging from"
-            print "// the C ABI. See packwandc.md 4.1."
+            print "// the C ABI."
             print ""
             # Emitted only when a syscall actually takes or returns a handle;
             # an unconditional import would be an unused-import warning until

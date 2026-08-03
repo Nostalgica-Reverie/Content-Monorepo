@@ -1,10 +1,10 @@
-/* Threading backend: pthreads (packwandc.md 3.6).
+/* Threading backend: pthreads.
  *
  * The mirror of arch/win32/thread.c, including the fixed start-record table:
  * pthread_create takes a single void* and the kernel's entry points take a
  * different shape, so the pair has to be carried through something. A malloc
  * would be the obvious carrier and is forbidden outside the allocators
- * (packwandc.md 3.4), so the records live in a fixed table and a start fails
+ * so the records live in a fixed table and a start fails
  * when it is full rather than allocating.
  */
 

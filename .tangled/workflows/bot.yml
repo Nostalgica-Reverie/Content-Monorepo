@@ -1,0 +1,15 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+  - event: ["pull_request"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+dependencies: [bun, just]
+
+steps:
+  - name: Lint bot
+    command: just lint-bot
+  - name: Build bot
+    command: just build-bot

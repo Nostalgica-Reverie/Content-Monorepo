@@ -72,7 +72,7 @@ pub fn instance_id_for(target: &PackTarget) -> String {
 }
 
 /// The offline session used for dev-testing boots when no account is signed
-/// in. Not a real account — see `packwandrs.md` for the real-auth plan
+/// in. It is not a real account; production authentication is handled
 /// (`packwand-msa`); this remains available unconditionally as the
 /// dev-testing fallback.
 pub fn default_offline_session() -> Result<Session, String> {

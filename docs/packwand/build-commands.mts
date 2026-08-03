@@ -18,26 +18,20 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const commandsDir = join(
   here,
-  "..",
-  "modpack-dev-handbook",
-  "src",
-  "routes",
-  "wiki",
-  "modpack-management",
-  "packwand",
+  "docs",
   "reference",
   "commands",
 );
-const packwandSrc = join(here, "..", "..", "apps", "packwand");
+const packwandSrc = join(here, "..", "..", "apps", "packwandrs");
 
 function findPackwand(): [string, ...string[]] {
   if (process.env.PACKWAND_BIN && existsSync(process.env.PACKWAND_BIN)) {
     return [process.env.PACKWAND_BIN];
   }
-  return ["go", "run", "-C", packwandSrc, "."];
+  return ["cargo", "run", "--manifest-path", join(packwandSrc, "Cargo.toml"), "-p", "packwand-cli", "--"];
 }
 
-// The generated pages are a pure function of apps/packwand's source, so when
+// The generated pages are a pure function of apps/packwandrs's source, so when
 // that tree is committed-clean and unchanged since the last run, regeneration
 // is a no-op and can be skipped. This matters because `just docs-build` runs
 // this script twice (docs/packwand's docs:build and the handbook's build);
@@ -60,7 +54,7 @@ function packwandTreeState(): string | null {
       { encoding: "utf-8", cwd: here },
     ).trim();
     if (dirty !== "") return null;
-    return execFileSync("git", ["rev-parse", "HEAD:apps/packwand"], {
+    return execFileSync("git", ["rev-parse", "HEAD:apps/packwandrs"], {
       encoding: "utf-8",
       cwd: here,
     }).trim();
@@ -77,7 +71,7 @@ if (
   (await readFile(markerPath, "utf-8")).trim() === treeState
 ) {
   console.log(
-    "CLI reference up to date (apps/packwand unchanged since last run); skipping regeneration.",
+    "CLI reference up to date (apps/packwandrs unchanged since last run); skipping regeneration.",
   );
   process.exit(0);
 }
@@ -127,7 +121,7 @@ try {
     await writeFile(markerPath, treeState + "\n");
   }
   console.log(
-    "Regenerated and sanitized CLI reference in the handbook route tree.",
+    "Regenerated and sanitized the Packwand CLI reference.",
   );
 } finally {
   if (!committed) {

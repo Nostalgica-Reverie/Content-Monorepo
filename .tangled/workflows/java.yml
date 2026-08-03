@@ -1,0 +1,24 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+  - event: ["pull_request"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+# Java 25 is also able to run the installer's Gradle build; it is required by mods.
+dependencies: [jdk25, just]
+
+steps:
+  - name: Lint installer
+    command: just lint-installer
+  - name: Test installer
+    command: just test-installer
+  - name: Build installer
+    command: just build-installer
+  - name: Verify mods
+    command: just lint-mods
+  - name: Test mods
+    command: just test-mods
+  - name: Build mods
+    command: just build-mods

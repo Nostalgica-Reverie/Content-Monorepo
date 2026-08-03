@@ -8,10 +8,12 @@ and it does not depend on either supplied source drop at build or runtime.
 
 The fork removes 62 built-in extensions and retains pack-authoring languages,
 JSON/HTML/CSS/Markdown language services, media preview, merge conflict support,
-and the Packwand extension. The Packwand extension provides the branded dark
-theme, TOML and Minecraft function grammars, and `packeater.json` schema
-validation. Product metadata contains no marketplace, account, Copilot,
-onboarding, voice, or telemetry endpoints.
+and the Packwand extension. The Packwand extension provides the branded
+`Packwand Dark` theme, a `Tangled Dark` theme inspired by tangled.org's
+gray-surface/blue-accent UI, TOML and Minecraft function grammars, and
+`packeater.json` schema validation. The theme can be changed through Code OSS's
+`Preferences: Color Theme` command. Product metadata contains no marketplace,
+account, Copilot, onboarding, voice, or telemetry endpoints.
 
 The web workbench is hosted inside the existing Vue route. A `packwand:` Code
 OSS filesystem provider uses a narrow `postMessage` RPC bridge; Vue maps those

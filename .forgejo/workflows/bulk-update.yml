@@ -22,7 +22,7 @@ jobs:
   bulk-update:
     uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: ${{ inputs.dry_run && 'workspace update --check' || 'workspace update' }}
+      verb: ${{ inputs.dry_run && 'batch update --check' || 'batch update' }}
       scope: ${{ inputs.packs }}
       dry_run: ${{ inputs.dry_run }}
       commit-message: 'actions: bulk update'

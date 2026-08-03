@@ -1,4 +1,4 @@
-/* Lock-order verification -- the lockdep analogue (packwandc.md 3.6).
+/* Lock-order verification -- the lockdep analogue.
  *
  * Locks carry a declared level and must be acquired in strictly increasing
  * order. A cycle in lock ordering is the one concurrency bug that cannot be

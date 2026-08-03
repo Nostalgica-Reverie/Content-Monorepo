@@ -1,0 +1,31 @@
+when:
+  - event: ["push"]
+    tag: ["v*"]
+
+engine: microvm
+image: nixos
+clone:
+  depth: 0
+dependencies: [cargo, curl, jq, rustc, xxd]
+
+steps:
+  - name: Package Packwand CLI
+    command: |
+      set -euo pipefail
+      cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+      mkdir -p release-assets/stage
+      cp apps/packwandrs/target/release/packwand release-assets/stage/packwand
+      cp LICENSE release-assets/stage/LICENSE
+      tar -C release-assets/stage -czf "release-assets/packwand-${TANGLED_REF_NAME}-x86_64-unknown-linux-gnu.tar.gz" packwand LICENSE
+      (cd release-assets && sha256sum *.tar.gz > checksums.txt)
+  - name: Publish Tangled artifact records
+    command: |
+      set -euo pipefail
+      session=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.server.createSession" -H 'Content-Type: application/json' -d "{\"identifier\":\"$ATP_IDENTIFIER\",\"password\":\"$ATP_APP_PASSWORD\"}")
+      jwt=$(jq -r .accessJwt <<<"$session"); did=$(jq -r .did <<<"$session")
+      tag_hash=$(git rev-parse "${TANGLED_REF_NAME}^{tag}")
+      tag_bytes=$(printf '%s' "$tag_hash" | xxd -r -p | base64 | tr -d '=')
+      for asset in release-assets/*.tar.gz release-assets/checksums.txt; do
+        blob=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.repo.uploadBlob" -H "Authorization: Bearer $jwt" -H 'Content-Type: application/octet-stream' --data-binary @"$asset")
+        jq -n --arg did "$did" --arg tag "$tag_bytes" --arg name "$(basename "$asset")" --arg repo "$TANGLED_REPO_URL" --arg created "$(date -Iseconds)" --argjson blob "$(jq .blob <<<"$blob")" '{repo:$did,collection:"sh.tangled.repo.artifact",validate:false,record:{"$type":"sh.tangled.repo.artifact",tag:{"$bytes":$tag},name:$name,repo:$repo,artifact:$blob,createdAt:$created}}' | curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.repo.createRecord" -H "Authorization: Bearer $jwt" -H 'Content-Type: application/json' -d @-
+      done

@@ -1,6 +1,6 @@
 /* The kernel scheduler: a fixed worker pool and dedicated pollers.
  *
- * packwandc.md 3.6: modules never create threads. Everything that wants to run
+ * Modules never create threads. Everything that wants to run
  * off the calling thread comes through here, which is what makes the process's
  * thread population knowable rather than emergent.
  *
@@ -9,7 +9,7 @@
  *   - **Queued work** runs on the fixed pool. For short tasks. N threads can
  *     absorb any number of these, because each one finishes.
  *   - **Dedicated pollers** get a thread each, for the life of the kernel. For
- *     blocking platform waits -- the case packwandc.md 3.6 calls out.
+ *     blocking platform waits.
  *
  * The split is not a convenience. A blocking wait submitted to the pool
  * occupies a worker until it returns, which for a filesystem watch is "never";

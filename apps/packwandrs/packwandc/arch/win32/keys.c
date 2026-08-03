@@ -1,4 +1,4 @@
-/* pwkeys backend: Windows Credential Manager (packwandc.md 5.2).
+/* pwkeys backend: Windows Credential Manager.
  *
  * Every failure here records the Win32 error code. A bare PWC_EIO out of a
  * credential call is close to undiagnosable -- "the vault said no" covers a
@@ -28,7 +28,7 @@ pwc_status pwc_arch_keys_save(const uint8_t *secret, size_t secret_len) {
     }
     WCHAR target[] = L"packwand/msa-refresh-token";
     /* Staged through a local because CREDENTIALW takes a non-const blob
-     * pointer. Zeroised below on every path (packwandc.md 5.2). */
+     * pointer. Zeroised below on every path. */
     uint8_t local[PWC_KEYS_MAX_SECRET] = {0};
     memcpy(local, secret, secret_len);
     CREDENTIALW credential = {0};

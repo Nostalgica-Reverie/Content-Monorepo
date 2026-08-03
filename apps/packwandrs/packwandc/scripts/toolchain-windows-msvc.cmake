@@ -1,6 +1,6 @@
 # CMake toolchain: build packwandc for the MSVC ABI using Zig's clang frontend.
 #
-# WHY THIS EXISTS (packwandc.md 8.1)
+# WHY THIS EXISTS
 #
 # Rust's host toolchain on Windows is x86_64-pc-windows-msvc, but the clang
 # typically on PATH here is a MinGW build that defaults to
@@ -58,11 +58,14 @@ message(STATUS "packwandc: Windows SDK   ${PWC_WINSDK_ROOT} (${PWC_WINSDK_VERSIO
 find_program(PWC_LLD_LINK NAMES lld-link lld-link.exe REQUIRED)
 # NOTE: llvm-lib, not `lib` or `ar`. GNU ar produces archives MSVC's linker
 # will not accept, and plain `link.exe` on PATH under Git Bash resolves to
-# coreutils' `link` (packwandc.md 8.1).
+# coreutils' `link`.
 find_program(PWC_LLVM_LIB NAMES llvm-lib llvm-lib.exe REQUIRED)
 
 find_program(PWC_ZIG NAMES zig zig.exe REQUIRED)
-set(CMAKE_C_COMPILER "${PWC_ZIG}" CACHE FILEPATH "packwandc C compiler" FORCE)
+# CMake 3.27 does not consistently carry CMAKE_C_COMPILER_ARG1 through its
+# compiler-identification probe. Keep Zig's `cc` subcommand in the compiler
+# list so every probe and build invocation is `zig cc ...`.
+set(CMAKE_C_COMPILER "${PWC_ZIG};cc" CACHE STRING "packwandc C compiler" FORCE)
 set(CMAKE_C_COMPILER_ARG1 cc CACHE STRING "packwandc C compiler argument" FORCE)
 set(CMAKE_C_COMPILER_TARGET x86_64-pc-windows-msvc)
 set(CMAKE_LINKER "${PWC_LLD_LINK}")

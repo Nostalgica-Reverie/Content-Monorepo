@@ -1,5 +1,4 @@
 name: "Setup Go"
-description: "Go toolchain with the org defaults: version sourced from apps/packwand/go.mod (single source of truth), module cache keyed on its go.sum. Bump Go by bumping go.mod — never in a workflow."
 
 runs:
   using: "composite"
@@ -7,6 +6,5 @@ runs:
     - name: Setup Go
       uses: https://github.com/actions/setup-go@v5
       with:
-        go-version-file: apps/packwand/go.mod
-        cache: true
-        cache-dependency-path: apps/packwand/go.sum
+        go-version: "1.26.0"
+        cache: false

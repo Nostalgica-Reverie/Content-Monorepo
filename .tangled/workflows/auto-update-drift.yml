@@ -1,0 +1,15 @@
+when:
+  - event: ["manual"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, jq, rustc]
+steps:
+  - name: Build Packwand CLI
+    command: cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+  - name: Report update drift and variant parity
+    command: |
+      set -euo pipefail
+      packwand=apps/packwandrs/target/release/packwand
+      "$packwand" batch update --check --json --ignored-only | jq .
+      "$packwand" parity --json | jq .

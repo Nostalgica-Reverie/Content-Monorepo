@@ -1,0 +1,28 @@
+# Validation equivalent of Forgejo's build gate. Publishing/build artifacts remain
+# on Forgejo because Spindle has no artifact upload and this build needs a secret.
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+  - event: ["pull_request"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, rustc]
+
+steps:
+  - name: Build Packwand CLI
+    command: cargo build --locked --release -p packwand-cli
+    environment:
+      CARGO_MANIFEST_PATH: apps/packwandrs/Cargo.toml
+  - name: Lint content syntax
+    command: apps/packwandrs/target/release/packwand lint
+  - name: Preflight changed pack manifests
+    command: |
+      set -eu
+      changed="$(git diff-tree --no-commit-id --name-only -r HEAD || true)"
+      packs="$(printf '%s\n' "$changed" | grep -E '^(modpacks|datapacks|resourcepacks)/[^/]+/' | cut -d/ -f1-2 | sort -u || true)"
+      test -z "$packs" && exit 0
+      printf '%s\n' "$packs" | while IFS= read -r pack; do
+        apps/packwandrs/target/release/packwand preflight "$pack"
+      done

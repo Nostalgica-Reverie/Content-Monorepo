@@ -1,4 +1,4 @@
-/* Lockdep must abort on an out-of-order acquisition (packwandc.md 3.6).
+/* Lockdep must abort on an out-of-order acquisition.
  *
  * THIS TEST USED TO BE UNABLE TO FAIL. It ended in `return 3` and CTest was
  * told WILL_FAIL, so any non-zero exit satisfied it -- including that `return 3`
@@ -23,7 +23,7 @@
  * to do with it, and on an interactive desktop it puts up a modal dialog. Both
  * are intolerable in a test suite. Suppressing that is test-harness business,
  * not the kernel's -- kernel/lockdep.c stays free of platform code, per the
- * arch/ split in packwandc.md 2. */
+ * arch/ split. */
 static void pwc_test_silence_crash_reporting(void) {
 #ifdef _WIN32
     (void) _set_abort_behavior(0u, _WRITE_ABORT_MSG | _CALL_REPORTFAULT);

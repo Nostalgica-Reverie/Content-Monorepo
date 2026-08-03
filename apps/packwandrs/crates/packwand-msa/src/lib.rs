@@ -29,7 +29,7 @@ const SCOPE: &str = "XboxLive.signin offline_access";
 
 /// The Azure AD app registration this build signs in as. `client_id` is not
 /// secret (public/native OAuth clients don't have one) — see
-/// `packwandrs.md` for how to register one and get it whitelisted for
+/// the account registration and whitelist requirements for
 /// Minecraft's API.
 #[derive(Clone)]
 pub struct MsaConfig {

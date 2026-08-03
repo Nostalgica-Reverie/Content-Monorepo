@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# Header-boundary gate -- packwandc.md 7.6.
+# Header-boundary gate.
 #
 # packwandc has no privilege ring: it is a userspace static library, so the
 # kernel/userland split cannot be enforced by hardware. It is enforced here
@@ -41,7 +41,7 @@ fi
 
 # --- rule 2: the Rust FFI crate sees only uapi ------------------------------
 #
-# packwandc-sys is the single unsafe crate (packwandc.md 6.1). If it can see
+# packwandc-sys is the single unsafe crate. If it can see
 # kernel internals, the safe SDK above it is no longer bounded by the public
 # ABI and the whole layering argument collapses.
 

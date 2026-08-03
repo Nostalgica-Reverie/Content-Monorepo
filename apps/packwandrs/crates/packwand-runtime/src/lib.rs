@@ -1,6 +1,6 @@
 //! Java runtime discovery, version parsing, and compatibility selection.
 //!
-//! Part of the `packwand-rs` shared core (see `packwandrs.md`). This crate
+//! Part of the shared Packwand core. This crate
 //! must stay free of Tauri, clap, and axum dependencies. Discovery is split
 //! from the host environment so tests can run against synthetic JDK layouts:
 //! [`DiscoveryConfig::from_host`] captures the real environment, while the

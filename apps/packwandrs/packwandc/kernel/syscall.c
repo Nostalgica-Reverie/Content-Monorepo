@@ -1,10 +1,4 @@
-/* Core syscall implementations -- see packwandc.md 4.
- *
- * PHASE 0 holds only the two `core` syscalls that need no kernel state. Once
- * kernel/handle.c and kernel/module.c exist (phase 1), this file also gains
- * the dispatch metadata table that ktrace and the module loader consume; it is
- * generated from the same syscalls.def included below.
- */
+/* Core syscall implementations. */
 
 #include "packwandc/uapi/pwc_syscall.h"
 #include "packwandc/kernel/pwc_boot_internal.h"

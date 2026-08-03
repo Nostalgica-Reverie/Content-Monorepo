@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# The packwandc quality gate -- packwandc.md 7.
+# The packwandc quality gate.
 #
 # Runs every static check in one place, cheapest first, so a formatting slip
 # fails in a second rather than after a full sanitizer build. CI calls this via
@@ -96,7 +96,7 @@ check_tidy() {
 
     # --header-filter is mandatory: clang-tidy silently skips included headers
     # without it, and most of packwandc's contracts live in headers.
-    # See packwandc.md 7.7.
+    # Keep the gate output concise.
     # shellcheck disable=SC2046 # deliberate word split over the file list
     clang-tidy -p "${db}" --header-filter='.*/packwandc/include/packwandc/.*' \
         --warnings-as-errors='*' $(find kernel -name '*.c' | sort)

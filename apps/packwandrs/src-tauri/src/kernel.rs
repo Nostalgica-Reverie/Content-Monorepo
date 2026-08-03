@@ -1,26 +1,9 @@
 //! Bringing up the packwandc native core and draining its trace ring.
 //!
-//! This is the "userland init" half of packwandc.md 3.7: the kernel records
-//! every failure into a fixed ring and never blocks to do it, so somebody has
-//! to pull records out or the ring silently overwrites itself. That somebody is
-//! here.
+//! The native core records failures in a fixed ring; this module drains it.
 //!
-//! # Why a polling thread rather than a callback
-//!
-//! The ring is deliberately passive — writers on hot paths must not call into
-//! Rust, and pwc_wait has no readiness source wired up for it yet (see the
-//! header comment on `kernel/wait.c`). Polling is therefore the only mechanism
-//! available today, and it is a fine one: the interval bounds how stale the log
-//! can be, and the ring's drop counter reports honestly when the drain has
-//! fallen behind.
-//!
-//! # Why boot failure is not fatal
-//!
-//! The workbench is useful without the native core: packs, mods, diagnostics
-//! and the editor are all pure Rust. Refusing to start the whole application
-//! because the C layer would not boot trades a degraded window for no window,
-//! which is the wrong way round. The failure is reported loudly to the output
-//! dock instead.
+//! The ring is passive, so this module polls it. Boot failures are reported to
+//! the output dock while the rest of the workbench remains usable.
 
 use std::sync::Arc;
 use std::time::Duration;
@@ -43,7 +26,7 @@ const DRAIN_INTERVAL: Duration = Duration::from_millis(250);
 pub struct TracePayload {
     pub sequence: u64,
     /// `info`, `error` or `success` — the dock's existing tones, so the UI
-    /// contract does not change (packwandc.md 3.7).
+    /// contract does not change.
     pub tone: String,
     pub module: String,
     pub message: String,

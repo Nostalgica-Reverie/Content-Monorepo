@@ -1,4 +1,4 @@
-/* pwc_wait -- the epoll analogue (packwandc.md 3.3).
+/* pwc_wait -- the epoll analogue.
  *
  * STATE OF THIS FILE
  *
@@ -21,7 +21,7 @@
  *   - Windows cannot. arch/win32/fs.c calls ReadDirectoryChangesW
  *     synchronously, so it blocks rather than reporting emptiness -- probing it
  *     would hang a worker instead of answering. It has to move to overlapped
- *     I/O against an IOCP first, which is the design packwandc.md 3.3 names and
+ *     I/O against an IOCP first, which the native design requires and
  *     the reason this is not a small change.
  *   - Process exit needs the object to carry something waitable. On Windows the
  *     payload is the job handle, which is not signalled by the last process

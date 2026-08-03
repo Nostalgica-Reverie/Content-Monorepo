@@ -8,6 +8,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::path::{Component, Path, PathBuf};
 
+use globset::{Glob, GlobSet, GlobSetBuilder};
 use packwand_pack::{HashFormat, Index, IndexFile, Mod, Pack, hash_bytes};
 use packwand_providers::{
     CurseForgeClient, ForgejoClient, GitHubClient, GitLabClient, HttpRequest, ModrinthClient,
@@ -844,20 +845,23 @@ impl Workspace {
         Ok(hash)
     }
 
-    /// Rebuilds the generated index entries for every `.pw.toml` below the pack root.
+    /// Rebuilds every generated index entry below the pack root.
     ///
-    /// Non-metafile entries are preserved. Missing metafiles are removed, and all
-    /// discovered metadata is parsed before either generated document is replaced.
+    /// Both ordinary files and `.pw.toml` metadata are discovered from disk, so a
+    /// rename or deletion cannot leave an export pointing at a stale index entry.
+    /// Entries with an alias are preserved because they intentionally do not map
+    /// one-to-one to a file on disk.
     pub fn refresh_metadata_index(&mut self) -> Result<RefreshReport, OpsError> {
+        let ignored = read_ignore_patterns(&self.root)?;
         let mut paths = Vec::new();
-        collect_metadata_paths(&self.root, &mut paths)?;
+        collect_index_paths(&self.root, &self.index_path, &ignored, &mut paths)?;
         paths.sort();
 
         let previous: BTreeMap<String, String> = self
             .index
             .files
             .iter()
-            .filter(|entry| entry.metafile && entry.alias.is_none())
+            .filter(|entry| entry.alias.is_none())
             .map(|entry| (entry.file.clone(), entry.hash.clone()))
             .collect();
         let mut found = BTreeSet::new();
@@ -869,12 +873,6 @@ impl Workspace {
                 path: path.clone(),
                 source,
             })?;
-            let source = std::str::from_utf8(&bytes)
-                .map_err(|_| OpsError::InvalidMetadataPath(format!("{relative} is not UTF-8")))?;
-            toml::from_str::<Mod>(source).map_err(|source| OpsError::Toml {
-                path: path.clone(),
-                source,
-            })?;
             let hash = hash_bytes(HashFormat::Sha512, &bytes);
             match previous.get(&relative) {
                 None => report.added += 1,
@@ -882,7 +880,20 @@ impl Workspace {
                 Some(_) => {}
             }
             found.insert(relative.clone());
-            refreshed.push((relative, hash));
+            let metafile = path
+                .file_name()
+                .and_then(|name| name.to_str())
+                .is_some_and(|name| name.ends_with(".pw.toml"));
+            if metafile {
+                let source = std::str::from_utf8(&bytes).map_err(|_| {
+                    OpsError::InvalidMetadataPath(format!("{relative} is not UTF-8"))
+                })?;
+                toml::from_str::<Mod>(source).map_err(|source| OpsError::Toml {
+                    path: path.clone(),
+                    source,
+                })?;
+            }
+            refreshed.push((relative, hash, metafile));
         }
         report.removed = previous
             .keys()
@@ -890,12 +901,21 @@ impl Workspace {
             .count();
 
         let mut index = self.index.clone();
-        index
-            .files
-            .retain(|entry| !entry.metafile || entry.alias.is_some());
-        for (relative, hash) in refreshed {
-            upsert_index_file(&mut index, &relative, hash);
+        index.files.retain(|entry| entry.alias.is_some());
+        for (relative, hash, metafile) in refreshed {
+            index.files.push(IndexFile {
+                file: relative,
+                hash,
+                metafile,
+                ..IndexFile::default()
+            });
         }
+        index.files.sort_by(|left, right| {
+            left.file
+                .cmp(&right.file)
+                .then_with(|| left.alias.cmp(&right.alias))
+        });
+        index.hash_format = "sha512".to_string();
         let mut pack = self.pack.clone();
         pack.index.hash_format = "sha512".to_string();
         pack.index.hash.clear();
@@ -964,7 +984,12 @@ impl Workspace {
     }
 }
 
-fn collect_metadata_paths(directory: &Path, paths: &mut Vec<PathBuf>) -> Result<(), OpsError> {
+fn collect_index_paths(
+    directory: &Path,
+    index_path: &Path,
+    ignored: &GlobSet,
+    paths: &mut Vec<PathBuf>,
+) -> Result<(), OpsError> {
     let entries = fs::read_dir(directory).map_err(|source| OpsError::Io {
         path: directory.to_path_buf(),
         source,
@@ -981,19 +1006,54 @@ fn collect_metadata_paths(directory: &Path, paths: &mut Vec<PathBuf>) -> Result<
         })?;
         if file_type.is_dir() {
             let name = entry.file_name();
-            if name != ".git" && name != ".packwand-launcher" && name != "target" {
-                collect_metadata_paths(&path, paths)?;
+            if name != ".git"
+                && name != ".packwand-launcher"
+                && name != "target"
+                && !ignored.is_match(&path)
+            {
+                collect_index_paths(&path, index_path, ignored, paths)?;
             }
         } else if file_type.is_file()
+            && path != index_path
             && path
                 .file_name()
-                .and_then(|name| name.to_str())
-                .is_some_and(|name| name.ends_with(".pw.toml"))
+                .is_none_or(|name| name != "pack.toml" && name != ".packwizignore")
+            && !ignored.is_match(&path)
         {
             paths.push(path);
         }
     }
     Ok(())
+}
+
+fn read_ignore_patterns(root: &Path) -> Result<GlobSet, OpsError> {
+    let path = root.join(".packwizignore");
+    let source = match fs::read_to_string(&path) {
+        Ok(source) => source,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => String::new(),
+        Err(source) => return Err(OpsError::Io { path, source }),
+    };
+    let mut builder = GlobSetBuilder::new();
+    for pattern in source.lines().map(str::trim) {
+        if pattern.is_empty() || pattern.starts_with('#') || pattern.starts_with('!') {
+            continue;
+        }
+        let pattern = pattern.trim_start_matches('/').replace('\\', "/");
+        builder.add(
+            Glob::new(&pattern).map_err(|error| OpsError::InvalidIgnorePattern {
+                path: path.clone(),
+                pattern: pattern.clone(),
+                error: error.to_string(),
+            })?,
+        );
+    }
+    builder
+        .build()
+        .map_err(|error| OpsError::InvalidIgnorePattern {
+            path,
+            pattern: String::new(),
+            error: error.to_string(),
+        })
 }
 
 fn pack_relative_path(root: &Path, path: &Path) -> Result<String, OpsError> {
@@ -1286,6 +1346,12 @@ pub enum OpsError {
     Transport(#[from] TransportError),
     #[error("invalid pack format: {0}")]
     PackFormat(String),
+    #[error("invalid .packwizignore pattern {pattern:?} in {path}: {error}")]
+    InvalidIgnorePattern {
+        path: PathBuf,
+        pattern: String,
+        error: String,
+    },
     #[error("unsafe pack-relative path {0:?}")]
     UnsafePath(String),
     #[error("metadata path must end in .pw.toml: {0:?}")]

@@ -1,69 +1,57 @@
 package net.nostalgica.modernica.core.config;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.peanuuutz.tomlkt.Toml;
-import net.peanuuutz.tomlkt.TomlElement;
-import net.peanuuutz.tomlkt.TomlElementKt;
-import net.peanuuutz.tomlkt.TomlTable;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.Properties;
 
-/** Reads the config TOML directly, before it's safe to construct a real {@link ModernicaConfig} (its
- * Identifier would race other mods' mixins during Mixin's prepare phase). Never throws. */
 final class EarlyMixinOptions {
-    private final TomlTable root;
+    private static final String PREFIX = "mixin.";
+    private final Properties values;
 
-    private EarlyMixinOptions(TomlTable root) {
-        this.root = root;
+    private EarlyMixinOptions(Properties values) {
+        this.values = values;
     }
 
-    static EarlyMixinOptions load(Logger logger) {
+    static EarlyMixinOptions load(Logger logger, Map<String, Boolean> defaults) {
+        Properties values = new Properties();
+        Path file = FabricLoader.getInstance().getConfigDir().resolve("modernica-mixins.properties");
         try {
-            Path file = FabricLoader.getInstance().getConfigDir()
-                    .resolve("modernica")
-                    .resolve("modernica")
-                    .resolve("config.toml");
-            if (!Files.isRegularFile(file)) {
-                return new EarlyMixinOptions(null);
+            if (Files.isRegularFile(file)) {
+                try (Reader reader = Files.newBufferedReader(file)) {
+                    values.load(reader);
+                }
+            } else {
+                Files.createDirectories(file.getParent());
+                for (Map.Entry<String, Boolean> entry : defaults.entrySet()) {
+                    values.setProperty(PREFIX + entry.getKey(), entry.getValue().toString());
+                }
+                try (Writer writer = Files.newBufferedWriter(file)) {
+                    values.store(writer, "Modernica mixin configuration. Restart Minecraft after editing.");
+                }
+                logger.info("Created Modernica's mixin configuration at {}", file);
             }
-            String content = Files.readString(file);
-            return new EarlyMixinOptions(Toml.Default.parseToTomlTable(content));
         } catch (Exception e) {
-            logger.warn("Failed to pre-read Modernica's config for early mixin gating; using compiled-in defaults until the real config loads.", e);
-            return new EarlyMixinOptions(null);
+            logger.warn("Failed to load Modernica's mixin configuration; using compiled-in defaults.", e);
         }
+        return new EarlyMixinOptions(values);
     }
 
-    boolean resolveBoolean(String section, String field, boolean defaultValue) {
-        TomlTable scope = scope(section);
-        if (scope == null) {
-            return defaultValue;
-        }
+    boolean resolveBoolean(String key, boolean defaultValue) {
+        String value = values.getProperty(PREFIX + key);
+        return value == null ? defaultValue : Boolean.parseBoolean(value.trim());
+    }
+
+    int resolveInt(String key, int defaultValue) {
         try {
-            Boolean value = TomlElementKt.getBooleanOrNull(scope, field);
-            return value != null ? value : defaultValue;
-        } catch (RuntimeException e) {
+            return Integer.parseInt(values.getProperty(PREFIX + key, Integer.toString(defaultValue)).trim());
+        } catch (NumberFormatException ignored) {
             return defaultValue;
         }
-    }
-
-    private TomlTable scope(String section) {
-        if (root == null) {
-            return null;
-        }
-        if (section.isEmpty()) {
-            return root;
-        }
-        TomlTable current = root;
-        for (String part : section.split("\\.")) {
-            TomlElement element = current.get(part);
-            if (!(element instanceof TomlTable table)) {
-                return null;
-            }
-            current = table;
-        }
-        return current;
     }
 }

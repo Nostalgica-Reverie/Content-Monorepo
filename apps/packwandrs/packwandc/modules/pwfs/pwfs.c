@@ -113,7 +113,7 @@ pwc_status pwc_fs_watch_close(pwc_handle_t watch) {
     return closed_native != PWC_OK ? closed_native : closed_handle;
 }
 
-/* --- watch streaming (packwandc.md 5.3) ---------------------------------
+/* --- watch streaming ----------------------------------------------------
  *
  * This is what removes the UI's polling loop, which is the phase 2 criterion
  * `pwc_fs_watch_read` alone could never meet: that call *blocks* until a change
@@ -122,7 +122,7 @@ pwc_status pwc_fs_watch_close(pwc_handle_t watch) {
  *
  * A dedicated poller thread does the blocking read and publishes each settled
  * batch as a framed message on a port, so the Rust side just drains a port.
- * Pollers exist for exactly this shape of work (packwandc.md 3.6).
+ * Pollers exist for exactly this shape of work.
  *
  * CANCELLATION
  *
@@ -135,7 +135,7 @@ pwc_status pwc_fs_watch_close(pwc_handle_t watch) {
  */
 
 /* One live stream. Fixed table for the same reason as everything else here:
- * there is no allocator (packwandc.md 3.4). */
+ * there is no allocator. */
 typedef struct pwc_fs_stream {
     uintptr_t native;
     pwc_handle_t port;
@@ -171,7 +171,7 @@ static void pwc_fs_stream_poller(void *arg) {
         /* The payload is the coalesced count, little-endian. The arch layer
          * reports how many changes settled, not which files: giving the UI a
          * "something under this root changed, N times" signal is what it acts
-         * on, and per-path reporting needs the wd-to-path map packwandc.md 5.3
+         * on, and per-path reporting needs the wd-to-path map
          * records as outstanding. */
         const uint32_t count = events > UINT32_MAX ? UINT32_MAX : (uint32_t) events;
         const uint8_t message[4] = {
@@ -228,7 +228,7 @@ pwc_status pwc_fs_watch_stream(pwc_handle_t watch, pwc_handle_t port) {
     return PWC_FAIL_PLATFORM(PWC_ENOMEM, "pwfs", "no free watch stream slots", PWC_FS_MAX_STREAMS);
 }
 
-/* --- module descriptor (packwandc.md 3.5) ------------------------------- */
+/* --- module descriptor -------------------------------------------------- */
 
 static pwc_status pwc_pwfs_init(pwc_module_ctx *ctx) {
     /* No state to build: pwfs is stateless, and every object it hands out

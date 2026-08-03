@@ -1,0 +1,17 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+  - event: ["pull_request"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+dependencies: [just]
+
+steps:
+  - name: Evaluate Nix outputs
+    command: just lint-nix
+  - name: Run Nix checks
+    command: just test-nix
+  - name: Build Nix packages
+    command: just build-nix

@@ -1,4 +1,4 @@
-/* Minimal in-repo test harness -- see packwandc.md 7.4.
+/* Minimal in-repo test harness.
  *
  * No external framework, following the precedent set by the removed
  * tools/hashutil, which carried its vectors and its runner in the binary

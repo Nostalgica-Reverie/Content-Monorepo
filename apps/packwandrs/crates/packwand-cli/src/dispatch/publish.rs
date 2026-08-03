@@ -190,7 +190,13 @@ pub(super) fn publish_command(args: &ArgMatches) -> Result {
                 if count > 0 {
                     invalid.push((project.root.clone(), count));
                 } else {
-                    manifests.push(project.root.join("manifest.json"));
+                    let manifest = project.root.join("manifest.json");
+                    manifests.push(
+                        manifest
+                            .strip_prefix(&root)
+                            .unwrap_or(&manifest)
+                            .to_path_buf(),
+                    );
                 }
             }
 

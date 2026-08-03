@@ -1,4 +1,4 @@
-/* packwandc status codes -- see packwandc.md 3.1.
+/* packwandc status codes.
  *
  * Errno-shaped: PWC_OK is zero, every failure is negative, and no function
  * ever returns a positive status. Callers test `< 0`, or better, use the
@@ -17,7 +17,7 @@ typedef int32_t pwc_status;
  *
  * An errno-shaped integer says what class of thing went wrong and nothing
  * about which call, where, or why the platform refused. Every failing path
- * that knows more than its status code records it here (packwandc.md 3.1),
+ * that knows more than its status code records it here,
  * and the Rust SDK folds status + detail into one Error.
  *
  * `status` is carried in the record deliberately. A thread-local "last error"
@@ -26,7 +26,7 @@ typedef int32_t pwc_status;
  * the detail with the status it was recorded for lets the reader check, which
  * is the difference between a diagnostic and a guess.
  *
- * `file` is the __FILE__ of the recording site. -ffile-prefix-map (packwandc.md
+ * `file` is the __FILE__ of the recording site. -ffile-prefix-map
  * 7.3) has already rewritten it to a repo-relative path, so it is stable across
  * machines and safe to log.
  */

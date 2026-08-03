@@ -1,4 +1,4 @@
-/* Blocking primitive backing pwc_wait's timeout (packwandc.md 3.3).
+/* Blocking primitive backing pwc_wait's timeout.
  *
  * The full epoll-backed multiplexer is kernel/wait.c's job; this is the arch
  * side's single responsibility: sleep for a bounded time without burning CPU

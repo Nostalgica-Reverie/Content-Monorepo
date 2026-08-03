@@ -1964,6 +1964,7 @@ checksum = "e47d37d2ae4464254884b60ab7071be2b876a9c35b696bd018ddcc76847309cd"
 dependencies = [
  "aho-corasick",
  "bstr",
+ "log",
  "regex-automata",
  "regex-syntax",
 ]
@@ -3812,6 +3813,7 @@ dependencies = [
 name = "packwand-ops"
 version = "26.2.0"
 dependencies = [
+ "globset",
  "packwand-pack",
  "packwand-parallel",
  "packwand-providers",

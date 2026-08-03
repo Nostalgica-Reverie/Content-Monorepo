@@ -1,31 +1,11 @@
-/* pwfs backend: rooted filesystem access and inotify watching (packwandc.md 5.3).
- *
- * CONFINEMENT
- *
- * Every path this file touches is resolved with realpath and then checked to
- * lie beneath the resolved root. Resolution happens first on purpose: checking
- * the textual path before resolving it is the classic confinement bug, because
- * a symlink inside the root can point anywhere and a purely lexical check
- * cannot see it. Rejecting "..", which modules/pwfs/pwfs.c already does, is not
- * a substitute for this -- it is the cheap first filter in front of it.
- *
- * For writes the target usually does not exist yet, so it is the *parent*
- * directory that gets resolved and checked, and the basename is appended
- * afterwards. That keeps the guarantee without requiring the file to exist.
- *
- * ALLOCATION
- *
- * None. packwandc.md 3.4 confines malloc to kernel/arena.c and kernel/slab.c,
- * and scripts/gate-banned.sh enforces it, so every buffer here is a fixed-size
- * automatic with an explicit bound check in front of it.
- */
+/* Rooted filesystem access and inotify watching. Paths are realpath-checked. */
 
 /* _GNU_SOURCE rather than a bare _POSIX_C_SOURCE, and not out of laziness:
  * glibc guards `struct dirent::d_type` and the DT_* constants behind
  * __USE_MISC, which _POSIX_C_SOURCE alone does not set. Under POSIX-only
  * defines this file would fail to compile on the field the watch walk depends
  * on. Feature-test macros must also precede every include or they are silently
- * ignored -- packwandc.md 7.1. */
+ * ignored. */
 #define _GNU_SOURCE 1
 
 #include "packwandc/kernel/pwc_arch_fs.h"
@@ -43,9 +23,9 @@
 
 enum {
     /* PATH_MAX on Linux. Named rather than repeated so a buffer cannot drift
-     * out of step with the bound checked against it (packwandc.md 7.1). */
+     * out of step with the bound checked against it. */
     PWC_FS_PATH_MAX = 4096,
-    /* Depth cap for the watch walk. Recursion is banned (packwandc.md 7.5), so
+    /* Depth cap for the watch walk. Recursion is banned, so
      * the walk carries an explicit stack and the stack has to be bounded. */
     PWC_FS_WALK_MAX_DEPTH = 32,
     /* Upper bound on inotify watches per handle. A pathological tree must not
@@ -58,7 +38,7 @@ enum {
     PWC_FS_PUBLISH_MODE = 0644,
 };
 
-/* One level of the watch walk. Recursion is banned (packwandc.md 7.5), so the
+/* One level of the watch walk. Recursion is banned, so the
  * traversal carries its own stack of these. */
 typedef struct pwc_fs_walk_frame {
     DIR *dir;
@@ -401,7 +381,7 @@ static bool pwc_fs_append_child(char *path, size_t base, const char *name) {
  * has no allocator for -- it would have to come from a kernel slab wired
  * through boot. ReadDirectoryChangesW gets subtree recursion from the OS and
  * has no equivalent gap, so this is a real platform asymmetry rather than a
- * shared simplification. It is recorded in packwandc.md 5.3. */
+ * shared simplification. */
 static pwc_status pwc_fs_watch_tree(int fd, char *path) {
     pwc_fs_walk_frame stack[PWC_FS_WALK_MAX_DEPTH] = {0};
     uint32_t count = 0u;
@@ -506,7 +486,7 @@ pwc_status pwc_arch_fs_watch_read(uintptr_t native, size_t *out_events) {
         if (got == 0) {
             break;
         }
-        /* Coalescing happens here (packwandc.md 5.3): the caller is told how
+        /* Coalescing happens here: the caller is told how
          * many changes settled, not handed a storm of individual records. */
         size_t offset = 0u;
         while (offset + sizeof(struct inotify_event) <= (size_t) got) {

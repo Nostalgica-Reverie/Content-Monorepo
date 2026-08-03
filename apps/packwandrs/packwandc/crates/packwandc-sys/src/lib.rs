@@ -1,22 +1,11 @@
 //! Raw FFI bindings to the packwandc native core.
 //!
-//! This crate is the single `unsafe` boundary of the whole application
-//! (packwandc.md 6.1). It has two parts and no third:
+//! This is the application's only `unsafe` boundary.
 //!
-//! - the raw `extern "C"` block in [`bindings`], exactly as the C headers
-//!   declare it; and
-//! - [`safe`], a minimal shim holding the *only* `unsafe` blocks in the
-//!   repository.
+//! The generated bindings stay raw; the SDK owns validation and ergonomics.
 //!
-//! [`safe`] exists because calling an `extern "C"` function is itself an
-//! `unsafe` operation. Without it the safe SDK could not be
-//! `#![forbid(unsafe_code)]` and the `unsafe` surface would be split across
-//! two crates instead of concentrated in one â€” which is the entire point of
-//! this layering.
-//!
-//! Nothing else belongs here. No error handling, no owned types, no
-//! convenience: those go one level up, in the `packwandc` crate. A helper in a
-//! `-sys` crate is a helper nobody audits.
+//! The safe SDK keeps the unsafe surface concentrated in this crate.
+//! The raw layer contains no error handling or owned types; those live above it.
 
 #![no_std]
 
@@ -24,17 +13,8 @@ mod bindings;
 
 pub use bindings::*;
 
-/// A kernel object handle: an index into the kernel's table plus a generation
-/// counter.
-///
-/// The generation counter is why this is two fields rather than one integer.
-/// Closing a slot increments its generation, so a handle held across a close
-/// resolves to [`PWC_ESTALE`] rather than to whatever now occupies the slot â€”
-/// turning use-after-free and ABA into a returned error instead of memory
-/// corruption. See packwandc.md 3.2.
-///
-/// Layout is part of the wire ABI and is asserted in C
-/// (`uapi/pwc_handle.h`) and in this crate's tests.
+/// A kernel object handle with a slot index and generation counter.
+/// Stale handles resolve to [`PWC_ESTALE`] after their slot is reused.
 #[repr(C)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub struct PwcHandle {
@@ -45,18 +25,7 @@ pub struct PwcHandle {
     pub generation: u32,
 }
 
-/// The kernel's detail record for the calling thread's most recent failure.
-///
-/// An errno-shaped status says what class of thing went wrong; this says which
-/// call, where in the C tree, and what the platform actually reported. See
-/// packwandc.md 3.1.
-///
-/// `status` is carried in the record so a reader can tell whether the detail
-/// belongs to the failure it is holding or to an earlier one on the same
-/// thread â€” a thread-local "last error" is stale-prone without it.
-///
-/// Layout is part of the wire ABI and is asserted in C (`uapi/pwc_status.h`)
-/// and in this crate's tests.
+/// Details for the calling thread's most recent native failure.
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
 pub struct PwcErrorDetail {
@@ -76,10 +45,7 @@ pub struct PwcErrorDetail {
     pub file: *const core::ffi::c_char,
 }
 
-/// One record drained from the kernel's ktrace ring.
-///
-/// The `dmesg` analogue: a fixed-size structured record the host pulls out and
-/// feeds to the frontend log paths. See packwandc.md 3.7.
+/// One record drained from the kernel trace ring.
 ///
 /// Layout is part of the wire ABI and is asserted in C (`uapi/pwc_trace.h`)
 /// and in this crate's tests.
@@ -134,15 +100,7 @@ pub const PWC_SH_MAX_ARG: usize = 128;
 /// Maximum bytes in one pw4shell input line.
 pub const PWC_SH_MAX_LINE: usize = 1024;
 
-/// One tokenised pw4shell command.
-///
-/// Fixed-size because the kernel has no allocator (packwandc.md 3.4). Every
-/// word is both length-carrying and NUL-terminated: the length is
-/// authoritative, and the terminator is there so a C consumer treating a word
-/// as a plain string cannot read off the end.
-///
-/// Layout is part of the wire ABI and is asserted in C (`uapi/pwc_sh.h`) and
-/// in this crate's tests.
+/// One fixed-size tokenised pw4shell command.
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct PwcShCommand {
@@ -278,19 +236,7 @@ unsafe extern "C" {
     /// Read the cumulative queue-overflow counter.
     pub fn pwc_raw_input_dropped(out: *mut u64) -> i32;
 }
-/// The only `unsafe` blocks in the repository.
-///
-/// Each function here wraps exactly one C call whose safety obligations are
-/// discharged by its Rust signature alone â€” a `&mut u32` is always a valid
-/// pointer, a returned `const char *` documented as a never-NULL static
-/// string is always a valid `&'static CStr`. Anything whose safety depends on
-/// caller-supplied invariants does **not** get a shim; it stays raw and is
-/// wrapped by an owned type in the `packwandc` crate, where the invariant can
-/// be enforced by construction.
-///
-/// Keeping this module tiny is the point. Every function added here is
-/// `unsafe` code that must be audited by hand; the ambition is that it never
-/// grows faster than the syscall table.
+/// Safe wrappers for the raw C calls.
 pub mod safe {
     use core::ffi::CStr;
 

@@ -28,9 +28,6 @@ jobs:
           fetch-depth: 1
           filter: blob:none
 
-      - name: Setup Go
-        uses: ./.forgejo/actions/setup-go
-
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
 

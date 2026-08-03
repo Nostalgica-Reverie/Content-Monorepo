@@ -24,18 +24,34 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            apps/packwand
+            resourcepacks
+            apps/packwandrs
             .forgejo/actions
-
-      - name: Setup Go
-        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
 
       - name: List full_auto-enabled packs
         id: list
-        run: packwand automation list-full-auto
+        shell: bash
+        run: |
+          set -euo pipefail
+          entries='[]'
+          while IFS= read -r id; do
+            [ -n "$id" ] || continue
+            for category in modpacks datapacks resourcepacks; do
+              if [ -f "$category/$id/manifest.json" ]; then
+                entries="$(jq -c --arg path "$category/$id" '. + [$path]' <<< "$entries")"
+                break
+              fi
+            done
+          done < <(packwand automation list-full-auto)
+          echo "entries=$entries" >> "$GITHUB_OUTPUT"
+          if [ "$(jq 'length' <<< "$entries")" -gt 0 ]; then
+            echo "has_entries=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_entries=false" >> "$GITHUB_OUTPUT"
+          fi
 
   automate:
     needs: discover
@@ -59,11 +75,9 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
-            apps/packwand
+            resourcepacks
+            apps/packwandrs
             .forgejo/actions
-
-      - name: Setup Go
-        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
@@ -72,7 +86,14 @@ jobs:
         id: automate
         env:
           CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
-        run: packwand automation run "${{ matrix.entry }}" --report "$RUNNER_TEMP/automate-report.json"
+        shell: bash
+        run: |
+          set -euo pipefail
+          packwand automation run "${{ matrix.entry }}" --report "$RUNNER_TEMP/automate-report.json"
+          report="$RUNNER_TEMP/automate-report.json"
+          echo "changed=$(jq -r '.status == \"ready_to_publish\"' "$report")" >> "$GITHUB_OUTPUT"
+          echo "pack_id=$(jq -r '.pack_id' "$report")" >> "$GITHUB_OUTPUT"
+          echo "new_version=$(jq -r '.new_version' "$report")" >> "$GITHUB_OUTPUT"
 
       - name: Report
         if: ${{ !cancelled() }}

@@ -1,7 +1,7 @@
 /* pwkeys backend for Linux: NOT YET IMPLEMENTED, deliberately.
  *
  * The spec's answer for this platform is the Secret Service API spoken over a
- * hand-rolled D-Bus client (packwandc.md 5.2 and 8.4): no libsecret, because
+ * hand-rolled D-Bus client: no libsecret, because
  * linking a third-party library is exactly what this layer exists to remove,
  * while speaking a wire protocol over a Unix socket is fine.
  *
@@ -27,7 +27,7 @@
  * malformed body, and the reply is either an error that looks like a
  * permissions problem or -- worse -- a successful store of a corrupted secret.
  * This file cannot be compiled, let alone run, on the machine it was written
- * on (packwandc.md 8.2: CI is Linux and cross-builds Windows; the reference
+ * on (CI is Linux and cross-builds Windows; the reference
  * dev machine is Windows and has no Linux toolchain), so a first attempt here
  * would be unreviewable binary-protocol code guarded only by a code review.
  * An honest PWC_ENOSYS that names what is missing is worth more than that.

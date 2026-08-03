@@ -1,0 +1,21 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+  - event: ["pull_request"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+dependencies: [bun, cargo, rustc, just]
+
+steps:
+  - name: Build Packwand CLI
+    command: cargo build --locked --release -p packwand-cli
+    environment:
+      CARGO_MANIFEST_PATH: apps/packwandrs/Cargo.toml
+  - name: Type-check docs scripts
+    command: just docs-typecheck
+  - name: Build docs sites
+    command: just docs-build
+  - name: Check cross-site links
+    command: bun docs/link-lint.mts

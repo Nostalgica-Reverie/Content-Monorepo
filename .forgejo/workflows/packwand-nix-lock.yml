@@ -14,10 +14,6 @@ jobs:
 
       - uses: ./.forgejo/actions/setup-nix
 
-      - name: Update Packwand flake.lock
-        run: nix flake update
-        working-directory: apps/packwand
-
       - name: Update root flake.lock
         run: nix flake update
 
@@ -27,4 +23,4 @@ jobs:
           author_name: forgejo-actions[bot]
           author_email: omo50@noreply.nostalgica.net
           message: 'chore(nix): update flake locks'
-          add: 'flake.lock apps/packwand/flake.lock'
+          add: 'flake.lock'

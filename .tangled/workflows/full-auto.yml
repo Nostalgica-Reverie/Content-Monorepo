@@ -1,0 +1,24 @@
+when:
+  - event: ["manual"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, git, jq, openssh, rustc]
+steps:
+  - name: Build Packwand CLI
+    command: cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+  - name: Run full automation and commit version bumps
+    command: |
+      set -euo pipefail
+      packwand=apps/packwandrs/target/release/packwand
+      "$packwand" automation list-full-auto | while IFS= read -r id; do
+        test -n "$id" || continue
+        for category in modpacks datapacks resourcepacks; do
+          if test -f "$category/$id/manifest.json"; then
+            "$packwand" automation run "$category/$id" --report automate-report.json
+            jq . automate-report.json
+            break
+          fi
+        done
+      done
+      TANGLED_COMMIT_MESSAGE='release: automated version updates' sh scripts/tangled/commit-and-push.sh modpacks datapacks resourcepacks

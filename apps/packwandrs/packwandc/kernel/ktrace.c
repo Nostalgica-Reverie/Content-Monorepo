@@ -1,4 +1,4 @@
-/* Lock-free MPSC trace ring (packwandc.md 3.7).
+/* Lock-free MPSC trace ring.
  *
  * THE TWO RACES THIS LAYOUT REMOVES
  *
@@ -55,7 +55,7 @@ pwc_status pwc_ktrace_write(pwc_ktrace *trace, const pwc_trace_record *record) {
         if (state != sequence) {
             /* The slot still holds an unread record, so the ring is full at
              * this sequence. Drop rather than stall -- a writer on a hot path
-             * must never wait on the drain (packwandc.md 3.7). No sequence is
+             * must never wait on the drain. No sequence is
              * consumed, so this leaves no hole for the reader to trip over. */
             (void) atomic_fetch_add_explicit(&trace->drops, 1u, memory_order_relaxed);
             return PWC_EOVERFLOW;

@@ -1,4 +1,4 @@
-/* pw4shell -- the packwand command language (packwandc.md 5.8).
+/* pw4shell -- the packwand command language.
  *
  * THE LANGUAGE
  *

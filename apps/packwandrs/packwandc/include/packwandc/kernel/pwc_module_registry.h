@@ -1,21 +1,4 @@
-/* The static module registry (packwandc.md 3.5).
- *
- * WHY AN EXPLICIT TABLE AND NOT A LINK-TIME SECTION
- *
- * packwandc.md 3.5 sketches a PWC_MODULE_REGISTER macro that drops each
- * descriptor into a link-time section, the way Linux collects initcalls. That
- * is not used here, and the reason is portability rather than taste: the ELF
- * spelling is __attribute__((section)) plus linker-provided __start_/__stop_
- * symbols, while the MSVC spelling needs #pragma section and
- * __declspec(allocate) with a named segment and lexicographic ordering
- * convention. packwandc builds for both, the two mechanisms share no syntax,
- * and scripts/gate-banned.sh bans #pragma other than `once`.
- *
- * An explicit array costs one line per module and is still *static*
- * registration in the sense that matters (packwandc.md 3.5): no dlopen, no
- * runtime loading, no plugin ABI to defend. The only thing lost is that adding
- * a module means editing this list, which a reviewer sees rather than misses.
- */
+/* Static module registry shared by the native core. */
 #ifndef PACKWANDC_KERNEL_PWC_MODULE_REGISTRY_H
 #define PACKWANDC_KERNEL_PWC_MODULE_REGISTRY_H
 

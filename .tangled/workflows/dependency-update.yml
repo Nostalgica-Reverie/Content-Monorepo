@@ -1,0 +1,13 @@
+when:
+  - event: ["manual"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, git, openssh, rustc]
+steps:
+  - name: Update webview lockfile and commit
+    command: |
+      cd apps/mod-browser-webview
+      cargo update
+      cd ../..
+      TANGLED_COMMIT_MESSAGE='chore(webview): update Cargo.lock' sh scripts/tangled/commit-and-push.sh apps/mod-browser-webview/Cargo.lock

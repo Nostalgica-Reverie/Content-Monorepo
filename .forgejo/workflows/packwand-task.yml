@@ -38,11 +38,8 @@ jobs:
           filter: blob:none
           sparse-checkout: |
             modpacks
-            apps/packwand
+            apps/packwandrs
             .forgejo/actions
-
-      - name: Setup Go
-        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand

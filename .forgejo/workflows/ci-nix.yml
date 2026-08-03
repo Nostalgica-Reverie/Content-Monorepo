@@ -7,7 +7,7 @@ on:
       - "flake.nix"
       - "flake.lock"
       - "apps/api/**"
-      - "apps/packwand/**"
+      - "apps/packwandrs/**"
       - "packages/packwand2nix/**"
       - "modpacks/**/checksums.json"
       - "justfile"
@@ -20,7 +20,7 @@ on:
       - "flake.nix"
       - "flake.lock"
       - "apps/api/**"
-      - "apps/packwand/**"
+      - "apps/packwandrs/**"
       - "packages/packwand2nix/**"
       - "modpacks/**/checksums.json"
       - "justfile"
@@ -44,7 +44,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             apps/api
-            apps/packwand
+            apps/packwandrs
             modpacks
             packages/packwand2nix
             flake.nix

@@ -29,19 +29,26 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
+            resourcepacks
             mods
-            apps/packwand
+            apps/packwandrs
             .forgejo/actions
-
-      - name: Setup Go
-        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
 
       - name: Compute publish plan
         id: plan
-        run: packwand publish plan
+        shell: bash
+        run: |
+          set -euo pipefail
+          entries="$(packwand publish plan | jq -c '.')"
+          echo "entries=$entries" >> "$GITHUB_OUTPUT"
+          if [ "$(jq 'length' <<< "$entries")" -gt 0 ]; then
+            echo "has_entries=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_entries=false" >> "$GITHUB_OUTPUT"
+          fi
 
   publish:
     needs: detect
@@ -61,13 +68,11 @@ jobs:
           sparse-checkout: |
             modpacks
             datapacks
+            resourcepacks
             mods
-            apps/packwand
+            apps/packwandrs
             scripts
             .forgejo/actions
-
-      - name: Setup Go
-        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
@@ -154,7 +159,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             apps/api
-            apps/packwand
+            apps/packwandrs
             modpacks
             packages/packwand2nix
             flake.nix

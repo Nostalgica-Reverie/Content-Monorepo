@@ -1,0 +1,14 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, git, openssh, rustc]
+steps:
+  - name: Build Packwand CLI
+    command: cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+  - name: Synchronize packs and commit
+    command: |
+      apps/packwandrs/target/release/packwand batch sync
+      TANGLED_COMMIT_MESSAGE='actions: sync' sh scripts/tangled/commit-and-push.sh modpacks

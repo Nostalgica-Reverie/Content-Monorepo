@@ -1,0 +1,34 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+  - event: ["pull_request"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, clang_19, cmake, just, llvm_19, ninja, rustc, shellcheck]
+
+steps:
+  - name: Configure C build tree
+    command: |
+      cd apps/packwandrs/packwandc
+      cmake --preset linux-dev
+  - name: Quality gate
+    command: |
+      cd apps/packwandrs/packwandc
+      PWC_GATE_STRICT=1 sh scripts/gate.sh
+  - name: Build and unit test
+    command: just test-packwandc
+  - name: Address and undefined behavior sanitizers
+    command: just test-packwandc-asan
+  - name: Thread sanitizer
+    command: just test-packwandc-tsan
+  - name: Report coverage
+    command: |
+      cd apps/packwandrs/packwandc
+      cmake --preset coverage
+      cmake --build --preset coverage
+      ctest --preset coverage
+      cd build/coverage
+      llvm-profdata merge -sparse default.profraw -o packwandc.profdata
+      llvm-cov report ./pwc_test_core -instr-profile=packwandc.profdata

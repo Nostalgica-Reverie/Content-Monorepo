@@ -1,4 +1,4 @@
-/* libFuzzer harness for the pw4shell tokeniser (packwandc.md 7.4).
+/* libFuzzer harness for the pw4shell tokeniser.
  *
  * pwc_sh_parse is the first genuine parsing boundary in the tree: it is handed
  * bytes a user typed, and everything downstream trusts its output. §7.4 makes
@@ -14,7 +14,7 @@
  * successful parse that yields an over-long or unterminated word is precisely
  * the bug that would let a later consumer read out of bounds.
  *
- * Linux only, like every sanitizer leg (packwandc.md 7.4): clang ships no
+ * Linux only, like every sanitizer leg: clang ships no
  * compiler-rt for the MinGW install and -fsanitize=fuzzer is unavailable for
  * the MSVC target.
  */

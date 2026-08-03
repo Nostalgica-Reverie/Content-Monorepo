@@ -83,6 +83,81 @@ body {
   white-space: nowrap;
 }
 
+/* The IDE theme lives inside the embedded workbench, so keep its selector in
+ * Packwand's title bar where it is available on every view. */
+.theme-menu {
+  position: relative;
+  z-index: 20;
+  flex: none;
+  margin-left: 4px;
+}
+.theme-menu summary {
+  list-style: none;
+}
+.theme-menu summary::-webkit-details-marker {
+  display: none;
+}
+.theme-menu__trigger {
+  display: flex;
+  min-height: 26px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 0 8px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 11px;
+}
+.theme-menu__trigger:hover,
+.theme-menu[open] .theme-menu__trigger {
+  border-color: var(--line);
+  background: var(--surface-2);
+  color: var(--text);
+}
+.theme-menu__popover {
+  position: absolute;
+  top: calc(100% + 7px);
+  right: 0;
+  width: 190px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  background: var(--elevated);
+  box-shadow: 0 18px 44px #000b;
+}
+.theme-menu__label {
+  padding: 10px 12px 6px;
+  color: var(--faint);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.theme-menu__option {
+  display: flex;
+  width: 100%;
+  min-height: 32px;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0 12px;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-align: left;
+}
+.theme-menu__option:hover,
+.theme-menu__option.active {
+  background: var(--accent-soft);
+  color: var(--text-strong);
+}
+.theme-menu__option.active svg {
+  color: var(--accent-2);
+}
+
 /* Centered palette affordance — the VS Code command centre. */
 .command-centre {
   display: flex;

@@ -1,6 +1,6 @@
-# packwandc -- the Packwand native core. See packwandc.md.
+# packwandc -- the Packwand native core.
 #
-# CMake is authoritative for the C build (packwandc.md 6.3): the Rust crate
+# CMake is authoritative for the C build: the Rust crate
 # packwandc-sys drives this file rather than compiling the sources itself, so
 # the flags that ship are exactly the flags the quality gate ran against.
 
@@ -28,7 +28,7 @@ project(
 find_program(PWC_ZIG NAMES zig zig.exe REQUIRED)
 
 # C23. CMake emits the right flag spelling per compiler version, which matters
-# because -std=c23 only exists from clang 17 / gcc 14 (packwandc.md 7.1).
+# because -std=c23 only exists from clang 17 / gcc 14.
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF) # no GNU extensions outside arch/
@@ -43,16 +43,16 @@ include(CTest)
 
 # --- options ----------------------------------------------------------------
 
-option(PWC_ENABLE_WINDOW "Build pwwin/pwgpu (phase 5, not adopted -- packwandc.md 5.7)" OFF)
+option(PWC_ENABLE_WINDOW "Build pwwin/pwgpu (phase 5, not adopted)" OFF)
 option(PWC_WERROR "Treat warnings as errors" ON)
 option(PWC_BUILD_TESTS "Build the unit test suite" ON)
 
 # --- the quality gate, as compile flags -------------------------------------
 #
-# packwandc.md 7.2 and 7.3. Carried on an INTERFACE target so that every
+# The warning and hardening flags are carried on an INTERFACE target so every
 # packwandc target gets an identical flag set and no target can quietly opt
 # out. Third-party code would link the plain library target instead -- there is
-# none, by design (packwandc.md 1.1).
+# none, by design.
 
 add_library(pwc_gate INTERFACE)
 
@@ -106,7 +106,7 @@ if(CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
     endif()
 
     # Reproducible builds: strip the absolute build path out of __FILE__ and
-    # debug info (packwandc.md 7.3).
+    # debug info.
     target_compile_options(pwc_gate INTERFACE "-ffile-prefix-map=${CMAKE_SOURCE_DIR}=packwandc")
 
     # Hardening flags that are not universally supported. -fcf-protection is
@@ -133,12 +133,12 @@ if(CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
         pwc_gate INTERFACE $<$<NOT:$<CONFIG:Debug>>:_FORTIFY_SOURCE=3>)
 else()
     message(WARNING "packwandc: compiler '${CMAKE_C_COMPILER_ID}' is not a gated configuration. "
-                    "The quality gate in packwandc.md 7 assumes clang or gcc.")
+                    "The quality gate assumes clang or gcc.")
 endif()
 
 # --- sanitizers -------------------------------------------------------------
 #
-# Linux only, and not by choice (packwandc.md 7.4): clang rejects
+# Linux only, and not by choice: clang rejects
 # -fsanitize=thread outright for x86_64-pc-windows-msvc, and the MinGW clang
 # install ships no compiler-rt to link ASan against. Windows verification is
 # build + unit tests, never sanitized.
@@ -151,7 +151,7 @@ if(PWC_SANITIZE)
         message(FATAL_ERROR
                 "packwandc: PWC_SANITIZE=${PWC_SANITIZE} is not available on Windows. "
                 "TSan does not exist for the MSVC target and no compiler-rt is installed. "
-                "Run sanitizer legs on Linux -- see packwandc.md 7.4.")
+                "Run sanitizer legs on Linux.")
     endif()
 
     if(PWC_SANITIZE STREQUAL "asan-ubsan")
@@ -169,7 +169,7 @@ endif()
 
 # --- coverage ---------------------------------------------------------------
 #
-# Reported, not enforced, until phase 1 produces real numbers (packwandc.md
+# Reported, not enforced, until phase 1 produces real numbers
 # 7.4 and 12.3).
 
 option(PWC_COVERAGE "Instrument for llvm-cov coverage reporting" OFF)
@@ -214,14 +214,14 @@ set_source_files_properties("${PWC_ZIG_MEMORY_OBJECT}" PROPERTIES GENERATED TRUE
 # nothing. That is what the Linux branch below exists to prevent; before it,
 # CI (which is Linux-only) exercised the ENOSYS stubs and reported success.
 #
-# Both directories arrive in phase 1, not phase 2 as packwandc.md 10 originally
+# Both directories arrive in phase 1, not phase 2 as originally
 # said: pwc_wait needs an arch backend before any subsystem exists.
 if(WIN32)
     list(APPEND PWC_KERNEL_SOURCES arch/win32/wait.c arch/win32/proc.c arch/win32/keys.c arch/win32/fs.c arch/win32/thread.c arch/win32/raw_input.c)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     list(APPEND PWC_KERNEL_SOURCES arch/linux/wait.c arch/linux/proc.c arch/linux/keys.c arch/linux/fs.c arch/linux/thread.c arch/common/raw_input.c)
 else()
-    # macOS lands here deliberately. packwandc.md 8.2: arch/darwin cannot be
+    # macOS lands here deliberately. arch/darwin cannot be
     # verified by CI or on the reference machine, and the spec's rule is that
     # it should not be written until someone can actually run it.
     list(APPEND PWC_KERNEL_SOURCES arch/common/wait.c arch/common/proc.c arch/common/keys.c arch/common/fs.c arch/common/thread.c arch/common/raw_input.c)
@@ -255,7 +255,7 @@ if(PWC_BUILD_TESTS AND BUILD_TESTING)
     target_include_directories(pwc_test_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/tests/unit)
     target_link_libraries(pwc_test_core PRIVATE packwandc pwc_gate)
 add_test(NAME core COMMAND pwc_test_core)
-    # Lockdep aborts only when NDEBUG is absent (packwandc.md 3.6: "debug and
+    # Lockdep aborts only when NDEBUG is absent ("debug and
     # sanitizer builds"), so the test is registered only where the behaviour it
     # checks is compiled in. Registering it unconditionally would make release
     # configurations fail for the wrong reason.
@@ -282,7 +282,7 @@ endif()
 
 # --- fuzzing ----------------------------------------------------------------
 #
-# packwandc.md 7.4 requires a harness at every parsing boundary. pwc_sh_parse
+# The parser requires a harness at every parsing boundary. pwc_sh_parse
 # is the first one in the tree -- it is handed bytes a user typed.
 #
 # Linux and clang only, for the same structural reason as the sanitizer legs:
@@ -297,7 +297,7 @@ if(PWC_FUZZ)
         message(FATAL_ERROR
                 "packwandc: PWC_FUZZ needs clang on a non-Windows host. "
                 "-fsanitize=fuzzer has no MSVC-target support and the MinGW clang "
-                "install has no compiler-rt -- see packwandc.md 7.4.")
+                "install has no compiler-rt.")
     endif()
 
     add_executable(pwc_fuzz_sh_parse tests/fuzz/fuzz_sh_parse.c)
@@ -309,7 +309,7 @@ if(PWC_FUZZ)
     target_link_options(pwc_fuzz_sh_parse PRIVATE -fsanitize=fuzzer,address,undefined)
 
     # A short smoke pass over the committed corpus, for PR CI. The long soak is
-    # a scheduled job and does not run here (packwandc.md 9.2).
+    # a scheduled job and does not run here.
     add_test(NAME fuzz_sh_parse_smoke
              COMMAND pwc_fuzz_sh_parse -runs=20000
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/fuzz/corpus/sh_parse)

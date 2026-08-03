@@ -16,7 +16,7 @@ pwc_status pwc_keys_load(uint8_t *buffer, size_t capacity, size_t *out_len) {
 }
 pwc_status pwc_keys_clear(void) { return pwc_arch_keys_clear(); }
 
-/* --- module descriptor (packwandc.md 3.5) ------------------------------- */
+/* --- module descriptor -------------------------------------------------- */
 
 static pwc_status pwc_pwkeys_init(pwc_module_ctx *ctx) {
     /* No state to build: pwkeys is stateless, and every object it hands out

@@ -37,7 +37,7 @@ pwc_status pwc_handle_validate(const pwc_handle_table *table, pwc_handle_t h, ui
      * handle whose slot has since been reused is the dangerous case -- it names
      * a live object that is not the caller's -- and it must report ESTALE, not
      * succeed and not merely say "bad handle". This ordering is what turns a
-     * use-after-free into a returned error (packwandc.md 3.2). */
+     * use-after-free into a returned error. */
     if (slot->generation != h.generation) {
         return PWC_FAIL_PLATFORM(
             PWC_ESTALE, "core", "handle generation mismatch: the slot was reused", (int32_t) h.index);
@@ -99,7 +99,7 @@ pwc_status pwc_handle_dup_table(pwc_handle_table *table, pwc_handle_t h, uint32_
     if (status != PWC_OK) {
         return status;
     }
-    /* Rights only ever narrow (packwandc.md 3.2). A dup asking for a bit the
+    /* Rights only ever narrow. A dup asking for a bit the
      * source does not hold is refused rather than silently clamped, so a
      * capability handed to a less-trusted consumer cannot be re-widened and a
      * caller cannot believe it got more than it did. */

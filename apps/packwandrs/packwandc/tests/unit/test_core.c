@@ -1,5 +1,5 @@
 /* Phase 0 unit tests: the ABI surface, status mapping, handle encoding, and
- * the two core syscalls. See packwandc.md 11.
+ * the two core syscalls.
  */
 
 #include "pwc_test.h"
@@ -78,7 +78,7 @@ static void test_status_syscall_matches_direct_call(void) {
 }
 
 static void test_status_codes_are_negative(void) {
-    /* The contract in packwandc.md 3.1: PWC_OK is zero and every failure is
+    /* PWC_OK is zero and every failure is
      * negative, so `st < 0` is a complete failure test. */
 #define PWC_CHECK_STATUS_SIGN(name, value, desc) PWC_CHECK((value) <= 0);
     PWC_STATUS_LIST(PWC_CHECK_STATUS_SIGN)
@@ -113,7 +113,7 @@ static void test_invalid_handle(void) {
      *
      * Written {0} rather than {}: C23 allows the empty initialiser, but clang
      * 16 still reports it as a GNU extension under -Wpedantic, and the gate
-     * builds with -Werror (packwandc.md 7.1). Revisit when the floor is 19. */
+     * builds with -Werror. Revisit when the floor is 19. */
     const pwc_handle_t zeroed = {0};
 
     PWC_CHECK(!pwc_handle_is_valid(invalid));
@@ -190,7 +190,7 @@ static void test_port_handle_lifecycle(void) {
     PWC_CHECK_EQ_I(pwc_handle_close(duplicate), PWC_OK);
     pwc_shutdown();
 }
-/* The last-error record (packwandc.md 3.1).
+/* The last-error record.
  *
  * Worth testing precisely because it is the kind of feature that looks present
  * when it is not: a getter returning a never-written static compiles, links,
@@ -262,7 +262,7 @@ static void test_last_error_reports_missing_rights(void) {
     pwc_shutdown();
 }
 
-/* ktrace (packwandc.md 3.7).
+/* ktrace.
  *
  * The property under test is the one the ring used to get wrong: a drop must
  * not consume a sequence number. The old implementation reserved the sequence
@@ -361,7 +361,7 @@ static void test_ktrace_overflow_drops_without_holes(void) {
     pwc_shutdown();
 }
 
-/* Module registration (packwandc.md 3.5).
+/* Module registration.
  *
  * Boot must actually drive kernel/module.c rather than the modules being
  * linked in and hoped for. Each module's init emits an INFO note, so the trace
@@ -406,7 +406,7 @@ static void test_boot_initialises_every_module(void) {
     pwc_shutdown();
 }
 
-/* pwipc framed messages (packwandc.md 5).
+/* pwipc framed messages.
  *
  * The guarantee is that a reader gets back exactly the messages that were
  * sent, with their boundaries intact -- not a byte stream it has to
@@ -513,7 +513,7 @@ static void test_ipc_ring_wraps_cleanly(void) {
     pwc_shutdown();
 }
 
-/* --- pw4shell (packwandc.md 5.8) ---------------------------------------- */
+/* --- pw4shell ----------------------------------------------------------- */
 
 /* Parse `text` and assert it produced exactly the expected words. */
 static void pwsh_expect(const char *text, uint32_t argc, const char *const *words) {
@@ -641,7 +641,7 @@ static void test_sh_executes_builtins(void) {
     pwc_shutdown();
 }
 
-/* --- scheduler (packwandc.md 3.6) --------------------------------------- */
+/* --- scheduler ---------------------------------------------------------- */
 
 /* Shared counter for the pool test. Atomic because the whole point is that
  * several workers touch it at once -- a plain int here would be the exact data

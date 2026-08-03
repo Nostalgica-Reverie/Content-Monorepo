@@ -1,29 +1,4 @@
-/* The worker pool and its dedicated pollers (packwandc.md 3.6).
- *
- * A textbook mutex-plus-condition-variable pool, deliberately: this is the one
- * place in the tree where a clever lock-free scheme would buy nothing (the
- * queue is not on a hot path) and cost the ability to reason about shutdown.
- * The ktrace and ipc rings are lock-free because their writers sit on hot paths
- * and must never block; a work queue has no such constraint.
- *
- * SHUTDOWN IS THE HARD PART
- *
- * Getting a pool to stop is where these go wrong. The ordering here:
- *
- *   1. take the lock, clear `running`, drop the lock;
- *   2. broadcast -- *not* signal. Signalling wakes one worker, which exits,
- *      and the rest sleep forever;
- *   3. join every worker, then every poller.
- *
- * Joining happens outside the lock. Holding it across a join deadlocks
- * instantly: the worker being joined needs that same lock to notice `running`
- * went false.
- *
- * A poller blocked in a platform wait cannot be woken by the broadcast -- it is
- * not waiting on our condition variable, it is inside the OS. Whatever it waits
- * on must be closed first, which is why pwc_sched_spawn_poller documents that
- * as the caller's obligation.
- */
+/* Worker pool and platform wait pollers. Shutdown broadcasts before joining. */
 
 #include "packwandc/kernel/pwc_error.h"
 #include "packwandc/kernel/pwc_sched.h"

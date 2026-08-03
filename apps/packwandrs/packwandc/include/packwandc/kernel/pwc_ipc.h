@@ -1,4 +1,4 @@
-/* pwipc -- ports carrying framed messages over a shared ring (packwandc.md 5).
+/* pwipc -- ports carrying framed messages over a shared ring.
  *
  * A port is a single-producer, single-consumer byte ring with a length prefix
  * in front of every message, so a reader gets back exactly the messages a
@@ -12,7 +12,7 @@
  * port would break that, which is why the contract is one producer per port
  * rather than "it happens to work most of the time".
  *
- * No allocation: ports come from a fixed table sized at boot (packwandc.md
+ * No allocation: ports come from a fixed table sized at boot
  * 3.4), so the whole subsystem is a compile-time amount of memory.
  */
 #ifndef PACKWANDC_KERNEL_PWC_IPC_H

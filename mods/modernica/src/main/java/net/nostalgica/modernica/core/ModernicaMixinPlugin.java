@@ -1,9 +1,6 @@
 package net.nostalgica.modernica.core;
 
-import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
-import net.fabricmc.loader.api.FabricLoader;
 import net.nostalgica.modernica.core.config.MixinGate;
-import net.nostalgica.modernica.core.config.ModernicaConfig;
 import net.nostalgica.modernica.platform.ModernicaPlatformHooks;
 import net.nostalgica.modernica.world.ThreadDumper;
 import org.apache.logging.log4j.LogManager;
@@ -16,15 +13,12 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class ModernicaMixinPlugin implements IMixinConfigPlugin {
     private static final Pattern PLATFORM_PREFIX = Pattern.compile("(fabric|common)\\.");
     private static final String MIXIN_PACKAGE_ROOT = "net.nostalgica.modernica.mixin.";
 
     public final Logger logger = LogManager.getLogger("Modernica");
-    public ModernicaConfig config = null;
     public static ModernicaMixinPlugin instance;
 
     private static String sanitize(String mixinClassName) {
@@ -45,11 +39,9 @@ public class ModernicaMixinPlugin implements IMixinConfigPlugin {
                 properties.setProperty("nashorn.args", properties.getProperty("nashorn.args", "") + " --anonymous-classes=false");
             }
 
-            /* We abuse the constructor of a mixin plugin as a safe location to start modifying the classloader */
             ModernicaPlatformHooks.INSTANCE.injectPlatformSpecificHacks();
 
             if (isOptionEnabled("feature.spam_thread_dump.ThreadDumper")) {
-                // run once to trigger classloading
                 ThreadDumper.obtainThreadDump();
                 Thread t = new Thread() {
                     public void run() {
@@ -73,48 +65,9 @@ public class ModernicaMixinPlugin implements IMixinConfigPlugin {
         }
     }
 
-    /** Loads the real, GUI-facing config. Must only be called once it's safe to touch Minecraft classes -
-     * i.e. from normal mod init, never from this plugin's constructor, which runs while Mixin is still
-     * selecting configs. Anything classloaded from there (an Identifier, or the Component/Style graph that
-     * fzzy-config's Translatable hierarchy builds in its static initializer) is loaded untransformed and
-     * breaks every mod that mixes into it. Idempotent. */
     public void loadRealConfig() {
-        if (this.config != null) {
-            return;
-        }
-        try {
-            migrateRetiredConfigKeys();
-            this.config = ConfigApiJava.readOrCreateAndValidate(ModernicaConfig::new);
-        } catch (Exception e) {
-            throw new RuntimeException("Could not load configuration file for Modernica", e);
-        }
-        MixinGate.bindRealConfig(this.config, this.logger);
-
-        this.logger.info("Loaded configuration for Modernica {}", ModernicaPlatformHooks.INSTANCE.getVersionString());
     }
 
-    /**
-     * The GA/BETA selector was removed in favour of individual feature toggles. fzzy-config treats an
-     * unknown field as an invalid config, so remove the retired top-level value before validation rather
-     * than discarding the user's entire configuration.
-     */
-    private void migrateRetiredConfigKeys() {
-        Path configPath = FabricLoader.getInstance().getConfigDir()
-                .resolve("modernica").resolve("modernica").resolve("config.toml");
-        if (!Files.isRegularFile(configPath)) {
-            return;
-        }
-        try {
-            String original = Files.readString(configPath);
-            String migrated = original.replaceAll("(?m)^\\s*stabilityLevel\\s*=.*(?:\\R|$)", "");
-            if (!original.equals(migrated)) {
-                Files.writeString(configPath, migrated);
-                this.logger.info("Removed retired 'stabilityLevel' setting from Modernica's config");
-            }
-        } catch (Exception e) {
-            this.logger.warn("Could not migrate Modernica's retired stabilityLevel setting; leaving the config unchanged", e);
-        }
-    }
 
     private void computeBetterThreadCount() {
         // Allow user-provided thread count to take precedence

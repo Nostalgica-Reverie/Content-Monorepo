@@ -1,4 +1,4 @@
-/* pwproc backend: Win32 Job Objects (packwandc.md 5.1).
+/* pwproc backend: Win32 Job Objects.
  *
  * This file is the reason pwproc exists. The Rust supervisor used to tear down
  * process trees with `taskkill /T /F /PID <pid>`: a string-formatted subprocess

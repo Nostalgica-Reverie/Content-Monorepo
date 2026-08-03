@@ -1,4 +1,4 @@
-/* packwandc syscall table -- the single source of truth. See packwandc.md 4.
+/* packwandc syscall table -- the single source of truth.
  *
  * DELIBERATELY NO INCLUDE GUARD. This file is included repeatedly, each time
  * with a different PWC_SYSCALL definition, to generate a different artifact:
@@ -18,13 +18,13 @@
  * FORMAT
  *   PWC_SYSCALL(nr, name, module, return_type, parameters...)
  *
- * RULES (packwandc.md 4.2)
+ * RULES
  *   - Numbers are APPEND-ONLY. Never reused, never renumbered.
  *   - Removing a syscall burns its number forever. The mechanism is a
  *     PWC_SYSCALL_RESERVED(nr) entry that expands to nothing in the C
  *     consumers and to a PWC_ENOSYS stub in the Rust binding. It is NOT
  *     implemented yet: nothing has been removed, and defining an unused macro
- *     trips -Wunused-macros (packwandc.md 7.2), which is the gate correctly
+ *     trips -Wunused-macros, which is the gate correctly
  *     refusing speculative machinery. The first removal adds
  *     PWC_SYSCALL_RESERVED handling to all four consumers listed above, in
  *     the same commit as the removal.
@@ -41,7 +41,7 @@
 /* --- core (1-15) ------------------------------------------------------- */
 
 /* Report the ABI version the compiled kernel implements. The host calls this
- * first and refuses to boot on a major mismatch (packwandc.md 4.2). */
+ * first and refuses to boot on a major mismatch. */
 PWC_SYSCALL(1, pwc_sys_version, core, pwc_status, uint32_t *out_major, uint32_t *out_minor)
 
 /* Map a status code to a stable, static, never-NULL identifier such as

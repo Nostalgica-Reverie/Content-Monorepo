@@ -21,7 +21,7 @@ export interface RawInputEvent {
   deltaY: number
   wheelDelta: number
 }
-/** One record drained from the packwandc kernel's trace ring (packwandc.md 3.7). */
+/** One record drained from the packwandc kernel's trace ring. */
 export interface KernelTracePayload {
   sequence: number
   tone: 'info' | 'error' | 'success'

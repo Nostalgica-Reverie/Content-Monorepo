@@ -20,7 +20,32 @@ function initialEditors() {
   return [{ uri: { scheme: 'packwand', path: `/${path}` } }]
 }
 
+function requestedTheme() {
+  return new URL(window.location.href).searchParams.get('theme') === 'Tangled Dark'
+    ? 'Tangled Dark'
+    : 'Packwand Dark'
+}
+
+const activeTheme = requestedTheme()
+const themeProfileName = `Packwand IDE - ${activeTheme}`
+
+// `configurationDefaults` is only a fallback. Code OSS gives a persisted user
+// setting precedence over it, so an earlier IDE session could otherwise keep
+// the old theme even though the Packwand selector and URL had changed. Give
+// each Packwand theme a stable profile and seed its real user settings on the
+// first open of that profile. Subsequent opens keep the selected theme because
+// it is now persisted at the same level as the workbench's normal theme picker.
+const themeProfileContents = JSON.stringify({
+
+  name: themeProfileName,
+  settings: JSON.stringify({ 'workbench.colorTheme': activeTheme }),
+})
+
 const configuration = {
+  profile: {
+    name: themeProfileName,
+    contents: themeProfileContents,
+  },
   folderUri: { scheme: 'packwand', path: '/' },
   callbackRoute: new URL('out/vs/code/browser/workbench/callback.html', core).pathname,
   enableWorkspaceTrust: false,
@@ -35,7 +60,7 @@ const configuration = {
   // page instead (served alongside the rest of vscode-web under `core/`).
   webviewEndpoint: new URL('out/vs/workbench/contrib/webview/browser/pre/', core).href,
   configurationDefaults: {
-    'workbench.colorTheme': 'Packwand Dark',
+    'workbench.colorTheme': activeTheme,
     'workbench.startupEditor': 'none',
     // The workbench is embedded as *the editor*, not as a whole IDE. Packwand
     // already has an activity rail and a sidebar around this iframe, so
@@ -65,12 +90,12 @@ const configuration = {
   initialColorTheme: {
     themeType: 'dark',
     colors: {
-      'activityBar.background': '#252832',
-      'editor.background': '#1f222a',
-      'editor.foreground': '#e8eaf2',
-      'sideBar.background': '#292c36',
-      'statusBar.background': '#20232e',
-      'titleBar.activeBackground': '#252832',
+      'activityBar.background': activeTheme === 'Tangled Dark' ? '#111827' : '#252832',
+      'editor.background': activeTheme === 'Tangled Dark' ? '#111827' : '#1f222a',
+      'editor.foreground': activeTheme === 'Tangled Dark' ? '#f9fafb' : '#e8eaf2',
+      'sideBar.background': activeTheme === 'Tangled Dark' ? '#1f2937' : '#292c36',
+      'statusBar.background': activeTheme === 'Tangled Dark' ? '#111827' : '#20232e',
+      'titleBar.activeBackground': activeTheme === 'Tangled Dark' ? '#111827' : '#252832',
     },
   },
   // Start with the sidebar closed and nothing selected in it. `force` makes

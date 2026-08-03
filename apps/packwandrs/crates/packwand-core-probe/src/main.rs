@@ -1,6 +1,6 @@
 //! Diagnostic CLI over the packwand-rs core crates.
 //!
-//! This is the probe from `packwandrs.md`, not a product CLI. Beyond the
+//! This is a probe, not a product CLI. Beyond the
 //! four Phase 1 commands it exposes the Phase 2 launcher capabilities:
 //! Java runtime discovery (`runtime list`) and real instance
 //! bootstrapping (`instance bootstrap`), plus launch-time controls used

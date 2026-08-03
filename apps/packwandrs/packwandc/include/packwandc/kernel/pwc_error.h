@@ -1,4 +1,4 @@
-/* Recording side of the last-error detail record -- see packwandc.md 3.1.
+/* Recording side of the last-error detail record.
  *
  * The *reading* side (pwc_last_error) is public uapi: Rust and any other
  * consumer may look at the record. Recording is kernel-internal, so that the
@@ -23,7 +23,7 @@ PWC_BEGIN_DECLS
  * `module`, `message` and `file` must be static storage -- the record holds the
  * pointers, it does not copy. Passing a stack buffer is a dangling read, which
  * is why there is no printf-style variant: formatting would need an allocation
- * this layer does not have (packwandc.md 3.4).
+ * this layer does not have.
  *
  * Recording a non-failing status is a no-op: it is never useful and it would
  * let a success quietly overwrite the detail a caller is about to read.

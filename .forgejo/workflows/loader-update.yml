@@ -19,5 +19,5 @@ jobs:
   loader-update:
     uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: workspace loader-update ${{ inputs.target }}
+      verb: batch loader-update ${{ inputs.target }}
       commit-message: 'actions: bulk loader update (${{ inputs.target }})'

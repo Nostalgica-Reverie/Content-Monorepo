@@ -1,4 +1,4 @@
-//! pw4shell: the packwand command console (packwandc.md 5.8).
+//! pw4shell command-console integration.
 //!
 //! The language lives in the C kernel, not here. This module is the seam
 //! between the webview, the kernel parser, and the trusted CLI dispatcher.

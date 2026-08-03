@@ -1,0 +1,13 @@
+when:
+  - event: ["manual"]
+
+engine: microvm
+image: nixos
+dependencies: [cargo, git, openssh, rustc]
+steps:
+  - name: Build Packwand CLI
+    command: cargo build --locked --release -p packwand-cli --manifest-path apps/packwandrs/Cargo.toml
+  - name: Refresh all packs and commit
+    command: |
+      apps/packwandrs/target/release/packwand batch refresh
+      TANGLED_COMMIT_MESSAGE='actions: bulk refresh' sh scripts/tangled/commit-and-push.sh modpacks

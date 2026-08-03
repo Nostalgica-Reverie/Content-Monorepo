@@ -1,7 +1,7 @@
 /* Threading backend: none (the arch/common fallback).
  *
  * Linked only on a platform with no backend of its own -- today that means
- * macOS, which packwandc.md 8.2 says should not be written until someone can
+ * macOS is not supported by this backend yet; keep the fallback explicit.
  * run it. Every entry point reports PWC_ENOSYS.
  *
  * The consequence is deliberate and worth stating: pwc_sched_init fails here,

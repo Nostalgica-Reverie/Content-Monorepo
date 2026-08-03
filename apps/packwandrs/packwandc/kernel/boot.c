@@ -1,17 +1,4 @@
-/* pwc_boot / pwc_shutdown -- the start_kernel analogue (packwandc.md 3).
- *
- * Bring-up order matters and is not arbitrary:
- *
- *   1. the handle table, because every object a module hands out lives in it;
- *   2. the trace ring, before `booted` is set, so a failure recorded by
- *      anything later in boot lands in an initialised ring rather than a
- *      zeroed one;
- *   3. `booted`, which is what makes pwc_kernel_handles/ktrace start answering;
- *   4. the modules, which may already use all of the above.
- *
- * Teardown is the exact reverse, and a module that fails init unwinds every
- * module already initialised before the failure is returned.
- */
+/* pwc_boot / pwc_shutdown. Initialization and teardown are reverse orders. */
 
 #include "packwandc/kernel/pwc_boot_internal.h"
 #include "packwandc/kernel/pwc_error.h"

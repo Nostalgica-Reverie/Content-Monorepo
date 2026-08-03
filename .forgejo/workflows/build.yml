@@ -8,6 +8,8 @@ on:
       - 'datapacks/**'
       - 'resourcepacks/**'
       - 'apps/packwandrs/**'
+      - '.forgejo/actions/setup-packwand/**'
+      - '.forgejo/actions/setup-rust/**'
       - '.forgejo/actions/setup-packeater/**'
       - '.forgejo/workflows/build.yml'
   pull_request:
@@ -17,6 +19,8 @@ on:
       - 'datapacks/**'
       - 'resourcepacks/**'
       - 'apps/packwandrs/**'
+      - '.forgejo/actions/setup-packwand/**'
+      - '.forgejo/actions/setup-rust/**'
       - '.forgejo/actions/setup-packeater/**'
       - '.forgejo/workflows/build.yml'
   workflow_dispatch:
@@ -38,7 +42,6 @@ jobs:
             modpacks
             datapacks
             resourcepacks
-            apps/packwand
             apps/packwandrs
             .forgejo/actions
 
@@ -49,9 +52,6 @@ jobs:
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD)
           echo "$CHANGED" | grep -q '^modpacks/'  && echo "has_modpacks=true"  >> $GITHUB_OUTPUT || echo "has_modpacks=false"  >> $GITHUB_OUTPUT
-
-      - name: Setup Go
-        uses: ./.forgejo/actions/setup-go
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand

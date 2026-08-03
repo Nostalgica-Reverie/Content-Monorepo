@@ -1,15 +1,4 @@
-/* pwipc: ports, framed messages, and the ring behind them (packwandc.md 5).
- *
- * The framing rule is the whole design: a message is a 4-byte little-endian
- * length followed by that many bytes, and `tail` advances only once both are
- * in the buffer. A reader therefore never observes half a frame, without any
- * lock, provided there is exactly one writer per port.
- *
- * The length prefix is written byte by byte rather than by casting into the
- * buffer. Frames start at arbitrary offsets and can wrap the ring, so a cast
- * would be both misaligned and potentially split across the end of the buffer;
- * -Wcast-align would reject it, and rightly.
- */
+/* pwipc: framed messages over a shared ring. */
 
 #include "packwandc/kernel/pwc_boot_internal.h"
 #include "packwandc/kernel/pwc_error.h"

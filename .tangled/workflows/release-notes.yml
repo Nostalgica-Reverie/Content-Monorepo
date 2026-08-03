@@ -1,0 +1,30 @@
+when:
+  - event: ["push"]
+    tag: ["v*", "installer-v*", "gui-v*"]
+
+engine: microvm
+image: nixos
+clone:
+  depth: 0
+dependencies: [curl, git-chglog, jq, xxd]
+
+steps:
+  - name: Generate component changelog
+    command: |
+      set -euo pipefail
+      case "$TANGLED_REF_NAME" in
+        installer-v*) component=installer ;;
+        gui-v*) component=gui ;;
+        v*) component=packwand ;;
+        *) echo 'unrecognised release tag' >&2; exit 1 ;;
+      esac
+      git-chglog --config ".chglog/$component/config.yml" --output release-notes.md "$TANGLED_REF_NAME"
+  - name: Publish release notes artifact
+    command: |
+      set -euo pipefail
+      session=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.server.createSession" -H 'Content-Type: application/json' -d "{\"identifier\":\"$ATP_IDENTIFIER\",\"password\":\"$ATP_APP_PASSWORD\"}")
+      jwt=$(jq -r .accessJwt <<<"$session"); did=$(jq -r .did <<<"$session")
+      tag_hash=$(git rev-parse "${TANGLED_REF_NAME}^{tag}")
+      tag_bytes=$(printf '%s' "$tag_hash" | xxd -r -p | base64 | tr -d '=')
+      blob=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.repo.uploadBlob" -H "Authorization: Bearer $jwt" -H 'Content-Type: text/markdown' --data-binary @release-notes.md)
+      jq -n --arg did "$did" --arg tag "$tag_bytes" --arg name release-notes.md --arg repo "$TANGLED_REPO_URL" --arg created "$(date -Iseconds)" --argjson blob "$(jq .blob <<<"$blob")" '{repo:$did,collection:"sh.tangled.repo.artifact",validate:false,record:{"$type":"sh.tangled.repo.artifact",tag:{"$bytes":$tag},name:$name,repo:$repo,artifact:$blob,createdAt:$created}}' | curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.repo.createRecord" -H "Authorization: Bearer $jwt" -H 'Content-Type: application/json' -d @-

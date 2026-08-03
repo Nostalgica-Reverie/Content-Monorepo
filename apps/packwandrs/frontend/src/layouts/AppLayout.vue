@@ -23,10 +23,12 @@ import { useExtensionsStore } from '@/stores/extensions'
 import { useShellStore } from '@/stores/shell'
 import type { ShellTab } from '@/stores/shell'
 import { useToastsStore } from '@/stores/toasts'
+import { useThemeStore } from '@/stores/theme'
 import { useWorkbenchStore } from '@/stores/workbench'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const workbench = useWorkbenchStore()
+const theme = useThemeStore()
 const workspace = useWorkspaceStore()
 const shell = useShellStore()
 const extensionsStore = useExtensionsStore()
@@ -51,7 +53,7 @@ onMounted(async () => {
   // The packwandc kernel records every failure into a fixed ring and never
   // blocks to do it; src-tauri drains that ring and emits each record here.
   // Routing them into the existing output dock keeps the UI contract unchanged
-  // (packwandc.md 3.7) rather than inventing a second log surface.
+  // Reuse the native trace log rather than adding another log surface.
   try {
     stopKernelTrace = await onKernelTrace((record) => {
       const origin = record.platformCode === null ? record.origin : `${record.origin} code ${record.platformCode}`
@@ -370,6 +372,28 @@ function startDockDrag(event: PointerEvent) {
       </div>
       <span class="titlebar-sep">—</span>
       <span class="titlebar-workspace" :title="workspace.path ?? ''">{{ workspace.path || 'No workspace' }}</span>
+      <details class="theme-menu">
+        <summary class="theme-menu__trigger" title="Choose IDE color theme">
+          <AppIcon name="palette" :size="13" />
+          <span>Theme</span>
+        </summary>
+        <div class="theme-menu__popover" role="menu">
+          <div class="theme-menu__label">IDE color theme</div>
+          <button
+            v-for="option in theme.themes"
+            :key="option"
+            class="theme-menu__option"
+            :class="{ active: theme.current === option }"
+            type="button"
+            role="menuitemradio"
+            :aria-checked="theme.current === option"
+            @click="theme.setTheme(option)"
+          >
+            <span>{{ option }}</span>
+            <AppIcon v-if="theme.current === option" name="check" :size="13" />
+          </button>
+        </div>
+      </details>
       <button class="command-centre" @click="shell.openPalette('')">
         <AppIcon name="search" :size="13" />
         <span>{{ workbench.title }}</span>

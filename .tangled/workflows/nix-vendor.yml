@@ -1,0 +1,14 @@
+when:
+  - event: ["push", "manual"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+dependencies: [git, nix-prefetch, openssh]
+steps:
+  - name: Refresh API vendor hash and commit
+    command: |
+      cd apps/api
+      nix-prefetch ./nix/prefetcher.nix | tee ./nix/vendor-hash
+      cd ../..
+      TANGLED_COMMIT_MESSAGE='chore(nix): update Go vendor hashes' sh scripts/tangled/commit-and-push.sh apps/api/nix/vendor-hash

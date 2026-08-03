@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
-# Banned-construct scanner -- packwandc.md 7.5.
+# Banned-construct scanner.
 #
 # This is the C equivalent of Rust's #![forbid(unsafe_code)]: a mechanical
 # refusal of the constructs that make C unsafe, rather than a convention
 # nobody enforces. It scans kernel/, modules/ and arch/ only. tests/ is exempt
 # (a test may legitimately construct a bad case) and so is scripts/.
 #
-# Every rule here traces to a line in packwandc.md 7.5. If a rule needs an
+# Every rule here traces to a native-core constraint. If a rule needs an
 # exception, the exception goes in this file with a written reason -- the same
 # standard .clang-tidy suppressions are held to.
 
@@ -19,7 +19,7 @@ cd "${root_dir}"
 failures=0
 
 # Directories under the gate. Missing ones are fine: modules/ and arch/ do not
-# exist until phase 2 (packwandc.md 10).
+# exist until phase 2.
 scan_dirs=""
 for d in kernel modules arch; do
     [ -d "$d" ] && scan_dirs="${scan_dirs} $d"
@@ -89,7 +89,7 @@ scan '\b(strcpy|strcat|sprintf|vsprintf|gets|scanf|sscanf|atoi|atol|atof|system|
 
 scan '\balloca[ \t]*\(' \
     'alloca' \
-    'Unbounded stack growth with no failure mode. Use a kernel arena (packwandc.md 3.4).'
+    'Unbounded stack growth with no failure mode. Use a kernel arena.'
 
 # --- allocation -------------------------------------------------------------
 #
@@ -108,7 +108,7 @@ for f in ${sources}; do
 "
 done
 report 'direct allocation outside the kernel allocator' \
-    'Only kernel/arena.c and kernel/slab.c may call these. See packwandc.md 3.4.' \
+    'Only kernel/arena.c and kernel/slab.c may call these.' \
     "${alloc_hits}"
 
 # --- language constructs ----------------------------------------------------
@@ -117,7 +117,7 @@ report 'direct allocation outside the kernel allocator' \
 # that no translation unit happens to include yet.
 scan '\[[ \t]*[a-z_][a-zA-Z0-9_]*[ \t]*\][ \t]*;' \
     'possible variable-length array' \
-    'Array bounds must be constant expressions. See packwandc.md 3.4.'
+    'Array bounds must be constant expressions.'
 
 # NOTE: these two are exclusions, not matches, and grep -E has no negative
 # lookahead -- an ERE like (?!once) matches nothing and would leave the rule
@@ -140,7 +140,7 @@ scan_except() {
 
 scan_except '^[ \t]*goto[ \t]+[a-zA-Z_]' '^[0-9]+:[ \t]*goto[ \t]+(cleanup|fail|done)[ \t]*;' \
     'goto to a label other than cleanup/fail/done' \
-    'Only the forward-jump-to-cleanup idiom is permitted (packwandc.md 7.5).'
+    'Only the forward-jump-to-cleanup idiom is permitted.'
 
 scan_except '^[ \t]*#[ \t]*pragma[ \t]+' '^[0-9]+:[ \t]*#[ \t]*pragma[ \t]+once' \
     'non-once #pragma' \
@@ -160,12 +160,12 @@ for f in ${sources}; do
 "
 done
 report 'floating point in kernel/' \
-    'The kernel is integer-only. See packwandc.md 7.5.' \
+    'The kernel is integer-only.' \
     "${fp_hits}"
 
 # --- third-party includes ---------------------------------------------------
 #
-# The zero-dependency rule (packwandc.md 1.1, 8.4). An #include <...> is only
+# The zero-dependency rule. An #include <...> is only
 # allowed for the C standard library and for platform SDK headers, which live
 # in arch/.
 
@@ -208,7 +208,7 @@ report 'non-static file-scope variable' \
 # --- function length --------------------------------------------------------
 #
 # clang-tidy caps cognitive complexity; it has no line-count check, so the
-# 80-line cap from packwandc.md 7.5 is enforced here.
+# The 80-line cap is enforced here.
 
 len_hits=$(awk '
     /^[a-zA-Z_].*\)[ \t]*\{[ \t]*$/ { infn = 1; start = FNR; name = $0; len = 0 }
@@ -221,7 +221,7 @@ len_hits=$(awk '
     }
 ' ${sources} || true)
 report 'function exceeds the 80-line cap' \
-    'Split it. See packwandc.md 7.5.' \
+    'Split it.' \
     "${len_hits}"
 
 # --- result ------------------------------------------------------------------

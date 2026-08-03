@@ -1,5 +1,5 @@
 /* The ktrace ring -- lock-free MPSC, fixed size, never allocates, drops rather
- * than stalls, and counts its drops (packwandc.md 3.7).
+ * than stalls, and counts its drops.
  *
  * Many threads write; exactly one drains. That asymmetry is the design:
  * writers sit on hot paths and must never wait on the reader, so a full ring

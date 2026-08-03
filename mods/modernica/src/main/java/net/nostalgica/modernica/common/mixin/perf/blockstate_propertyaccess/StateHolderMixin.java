@@ -2,6 +2,7 @@ package net.nostalgica.modernica.common.mixin.perf.blockstate_propertyaccess;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -17,13 +18,7 @@ import net.nostalgica.modernica.perf.blockstate_propertyaccess.StateIndexTable;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-/**
- * Replaces {@code StateHolder}'s per-instance {@code propertyKeys}/{@code propertyValues}/{@code neighbors}
- * arrays (searched linearly on every {@code getValue}/{@code setValue}) with a single {@code long} index
- * into a {@link StateIndexTable} shared by every state in the same family - built once, in
- * {@link #mfh$init}, and pointed at by every sibling state so the table (and the now-redundant vanilla
- * arrays) aren't duplicated per state.
- */
+/** Stores block state properties in a shared lookup table. */
 @Mixin(StateHolder.class)
 abstract class StateHolderMixin<O, S> implements PropertyAccessStateHolder<O, S> {
 
@@ -32,9 +27,13 @@ abstract class StateHolderMixin<O, S> implements PropertyAccessStateHolder<O, S>
     protected O owner;
 
     @Shadow
+    @Final
+    @Mutable
     public Property<?>[] propertyKeys;
 
     @Shadow
+    @Final
+    @Mutable
     public Comparable<?>[] propertyValues;
 
     @Shadow
@@ -64,7 +63,7 @@ abstract class StateHolderMixin<O, S> implements PropertyAccessStateHolder<O, S>
         for (S sibling : states) {
             StateHolderMixin<O, S> mixin = (StateHolderMixin<O, S>) (Object) (StateHolder<O, S>) sibling;
             mixin.mfh$table = this.mfh$table;
-            // the table now owns this data; drop the vanilla arrays instead of keeping two copies
+            // Drop duplicate vanilla data
             mixin.propertyKeys = null;
             mixin.propertyValues = null;
             mixin.neighbors = null;

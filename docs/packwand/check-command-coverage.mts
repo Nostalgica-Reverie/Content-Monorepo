@@ -5,14 +5,14 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const commandsDir = join(here, "..", "modpack-dev-handbook", "src", "routes", "wiki", "modpack-management", "packwand", "reference", "commands");
-const packwandSrc = join(here, "..", "..", "apps", "packwand");
+const commandsDir = join(here, "docs", "reference", "commands");
+const packwandSrc = join(here, "..", "..", "apps", "packwandrs");
 
 function findPackwand(): [string, ...string[]] {
   if (process.env.PACKWAND_BIN && existsSync(process.env.PACKWAND_BIN)) {
     return [process.env.PACKWAND_BIN];
   }
-  return ["go", "run", "-C", packwandSrc, "."];
+  return ["cargo", "run", "--manifest-path", join(packwandSrc, "Cargo.toml"), "-p", "packwand-cli", "--"];
 }
 
 function pathToFilename(commandPath: string): string {

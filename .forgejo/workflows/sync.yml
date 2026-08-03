@@ -16,5 +16,5 @@ jobs:
   sync:
     uses: ./.forgejo/workflows/packwand-task.yml
     with:
-      verb: workspace sync
+      verb: batch sync
       commit-message: 'actions: sync'

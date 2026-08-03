@@ -1,4 +1,4 @@
-/* packwandc handles -- see packwandc.md 3.2.
+/* packwandc handles.
  *
  * Everything a caller can hold is a handle: a watch, a process, a key entry,
  * an IPC port, an input device. A handle is an index into the kernel's table
@@ -48,7 +48,7 @@ static_assert(sizeof(pwc_handle_t) == 8, "pwc_handle_t is part of the wire ABI")
  *
  * Rights only ever narrow. pwc_handle_dup can drop bits, never add them, so a
  * capability handed to a less-trusted consumer cannot be re-widened. pwfs uses
- * this to give the IDE a handle rooted at a pack directory (packwandc.md 5.3).
+ * this to give the IDE a handle rooted at a pack directory.
  */
 enum {
     PWC_RIGHT_NONE = 0u,

@@ -12,7 +12,7 @@
 //! genuinely useful thing: it refuses to run against a native core whose ABI
 //! this build does not understand. Arena sizing, the worker pool, module
 //! initialisation ordering, and the ktrace drain arrive in phase 1 — see
-//! `packwandc.md` §10.
+//! The host-side adapter for the native core.
 
 #![forbid(unsafe_code)]
 

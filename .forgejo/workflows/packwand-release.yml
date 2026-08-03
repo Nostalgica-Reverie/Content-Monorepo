@@ -14,21 +14,36 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
         with:
-          fetch-depth: 0 # goreleaser needs tags + history for the changelog
+          fetch-depth: 0
+          filter: blob:none
 
-      - uses: ./.forgejo/actions/setup-go
+      - uses: ./.forgejo/actions/setup-packwand
 
-      - name: Install Syft for release SBOMs
+      - name: Package Packwand CLI
+        shell: bash
         run: |
-          go install github.com/anchore/syft/cmd/syft@latest
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          set -euo pipefail
+          version="${GITHUB_REF_NAME:-snapshot}"
+          mkdir -p release-assets/stage
+          cp "$PACKWAND_BIN" release-assets/stage/packwand
+          cp LICENSE release-assets/stage/LICENSE
+          tar -C release-assets/stage -czf "release-assets/packwand-${version}-x86_64-unknown-linux-gnu.tar.gz" packwand LICENSE
+          rm -rf release-assets/stage
+          (cd release-assets && sha256sum *.tar.gz > checksums.txt)
 
-      - name: Run GoReleaser
-        uses: https://github.com/goreleaser/goreleaser-action@v6
+      - name: Attach CLI archive to the release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: https://code.forgejo.org/actions/forgejo-release@v2
         with:
-          distribution: goreleaser
-          version: "~> v2"
-          args: release --clean
-          workdir: apps/packwand
-        env:
-          GITEA_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          direction: upload
+          tag: ${{ github.ref_name }}
+          token: ${{ secrets.RELEASE_TOKEN }}
+          release-dir: release-assets
+
+      - name: Upload manual-dispatch artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: packwand-cli-release
+          path: release-assets/*
+          compression-level: 0

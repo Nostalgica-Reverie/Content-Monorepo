@@ -20,6 +20,8 @@ public final class MixinGate {
 
     private static final Map<String, Toggle> REGISTRY = new LinkedHashMap<>();
     private static Map<String, Boolean> earlyValues = Map.of();
+    private static EarlyMixinOptions earlyOptions;
+    @SuppressWarnings("unused")
     private static ModernicaConfig config;
 
     private static void register(String key, String section, String field, boolean defaultValue, BooleanSupplier lateGetter, Consumer<Boolean> lateSetter) {
@@ -85,7 +87,7 @@ public final class MixinGate {
         register("perf.dynamic_dfu", "expertOnly.perf", "perfDynamicDfu", true, () -> config.expertOnly.perf.perfDynamicDfu, v -> config.expertOnly.perf.perfDynamicDfu = v);
         register("perf.dynamic_entity_renderers", "expertOnly.perf", "perfDynamicEntityRenderers", false, () -> config.expertOnly.perf.perfDynamicEntityRenderers, v -> config.expertOnly.perf.perfDynamicEntityRenderers = v);
         register("perf.dynamic_languages", "expertOnly.perf", "perfDynamicLanguages", true, () -> config.expertOnly.perf.perfDynamicLanguages, v -> config.expertOnly.perf.perfDynamicLanguages = v);
-        register("perf.dynamic_resources", "performance", "perfDynamicResources", true, () -> config.performance.perfDynamicResources, v -> config.performance.perfDynamicResources = v);
+        register("perf.dynamic_resources", "performance", "perfDynamicResources", false, () -> config.performance.perfDynamicResources, v -> config.performance.perfDynamicResources = v);
         register("perf.dynamic_sounds", "expertOnly.perf", "perfDynamicSounds", true, () -> config.expertOnly.perf.perfDynamicSounds, v -> config.expertOnly.perf.perfDynamicSounds = v);
         register("perf.dynamic_structure_manager", "expertOnly.perf", "perfDynamicStructureManager", true, () -> config.expertOnly.perf.perfDynamicStructureManager, v -> config.expertOnly.perf.perfDynamicStructureManager = v);
         register("perf.encoder_cache_leak", "expertOnly.perf", "perfEncoderCacheLeak", true, () -> config.expertOnly.perf.perfEncoderCacheLeak, v -> config.expertOnly.perf.perfEncoderCacheLeak = v);
@@ -124,11 +126,16 @@ public final class MixinGate {
         register("feature.integrated_server_watchdog", "troubleshooting", "integratedServerWatchdog", true, () -> config.troubleshooting.integratedServerWatchdog, v -> config.troubleshooting.integratedServerWatchdog = v);
         register("perf.clear_mixin_classinfo", "troubleshooting", "clearMixinClassinfo", false, () -> config.troubleshooting.clearMixinClassinfo, v -> config.troubleshooting.clearMixinClassinfo = v);
 
-        EarlyMixinOptions early = EarlyMixinOptions.load(logger);
+        Map<String, Boolean> defaults = new LinkedHashMap<>();
+        for (Map.Entry<String, Toggle> entry : REGISTRY.entrySet()) {
+            defaults.put(entry.getKey(), entry.getValue().defaultValue());
+        }
+        EarlyMixinOptions early = EarlyMixinOptions.load(logger, defaults);
+        earlyOptions = early;
         Map<String, Boolean> values = new LinkedHashMap<>();
         for (Map.Entry<String, Toggle> entry : REGISTRY.entrySet()) {
             Toggle toggle = entry.getValue();
-            values.put(entry.getKey(), early.resolveBoolean(toggle.section(), toggle.field(), toggle.defaultValue()));
+            values.put(entry.getKey(), early.resolveBoolean(entry.getKey(), toggle.defaultValue()));
         }
         applyModCompat(logger, values::get, values::put);
         applyJvmPropertyOverrides(logger, values::get, values::put);
@@ -136,23 +143,8 @@ public final class MixinGate {
         earlyValues = values;
     }
 
-    /** Called once, later, from normal mod init - rebinds mod-compat/JVM overrides against the real
-     * config so the GUI/save stay consistent. Cannot change which mixins already applied. */
-    public static void bindRealConfig(ModernicaConfig cfg, Logger logger) {
-        config = cfg;
-        Function<String, Boolean> getter = key -> {
-            Toggle toggle = REGISTRY.get(key);
-            return toggle == null ? null : toggle.lateGetter().getAsBoolean();
-        };
-        BiConsumer<String, Boolean> setter = (key, value) -> {
-            Toggle toggle = REGISTRY.get(key);
-            if (toggle != null) {
-                toggle.lateSetter().accept(value);
-            }
-        };
-        applyModCompat(logger, getter, setter);
-        applyJvmPropertyOverrides(logger, getter, setter);
-        enforceDependencies(logger, getter, setter);
+    public static int particleTrackingRangeBlocks() {
+        return earlyOptions == null ? 48 : Math.clamp(earlyOptions.resolveInt("perf.network_enhancements.particle_tracking_range_blocks", 48), 0, 128);
     }
 
     /** {@code perf.random_ticking}'s fast tick-position lookup only exists because
@@ -169,6 +161,7 @@ public final class MixinGate {
     }
 
     private static void applyModCompat(Logger logger, Function<String, Boolean> getter, BiConsumer<String, Boolean> setter) {
+        disableIfModPresent(logger, getter, setter, "perf.network_optimizations", "packetfixer", "viafabricplus");
         disableIfModPresent(logger, getter, setter, "perf.thread_priorities", "smoothboot", "threadtweak");
         // This is a diagnostic that deliberately rejects block-entity map access from any thread but
         // the server thread. C2ME's chunk-status workers legitimately construct/access chunks off-thread.

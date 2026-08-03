@@ -1,21 +1,12 @@
 //! Safe Rust SDK over the packwandc native core.
 //!
-//! This crate re-establishes memory safety immediately above the one `unsafe`
-//! crate in the repository ([`packwandc_sys`]). It is itself
-//! `#![forbid(unsafe_code)]`, which means every `unsafe` block backing this
-//! API lives in exactly one auditable place.
+//! This crate re-establishes memory safety above the raw FFI crate and owns
+//! native handles so they close automatically.
 //!
-//! Two things happen here and nowhere else:
-//!
-//! - **Status codes become [`Result`].** C returns errno-shaped integers;
-//!   callers in this workspace should never see one.
-//! - **Handles become owned types with [`Drop`].** A handle that goes out of
-//!   scope is closed. Forgetting `pwc_close` stops being possible.
-//!
-//! # Phase 0
+//! Status codes become `Result` values and native handles are closed on drop.
 //!
 //! Only the version and status surface exists so far. Handles, waiting, and
-//! the subsystem modules arrive in phases 1 and 2 â€” see `packwandc.md` Â§10.
+//! the subsystem modules arrive in later phases.
 
 #![forbid(unsafe_code)]
 

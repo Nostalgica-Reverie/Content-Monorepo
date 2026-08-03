@@ -1,0 +1,11 @@
+when:
+  - event: ["manual"]
+
+engine: microvm
+image: nixos
+dependencies: [git, openssh]
+steps:
+  - name: Update Nix lockfile and commit
+    command: |
+      nix flake update
+      TANGLED_COMMIT_MESSAGE='chore(nix): update flake locks' sh scripts/tangled/commit-and-push.sh flake.lock

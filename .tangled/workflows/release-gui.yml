@@ -1,0 +1,47 @@
+when:
+  - event: ["push"]
+    tag: ["gui-v*"]
+
+engine: microvm
+image: nixos
+clone:
+  depth: 0
+dependencies: [bun, cargo, cargo-xwin, curl, jdk25, jq, just, nsis, pkg-config, rustc, webkitgtk_4_1, xxd]
+
+steps:
+  - name: Install GUI build tools
+    command: |
+      bun install --cwd apps/packwandrs --frozen-lockfile
+      cargo install --locked tauri-cli --version '^2'
+  - name: Build bundled installer resource
+    command: just build-installer
+  - name: Build Linux bundles
+    command: |
+      set -euo pipefail
+      cd apps/packwandrs
+      cargo build --locked --release -p packwand-cli
+      cp target/release/packwand target/release/packwand.exe
+      cargo tauri build --bundles appimage,deb
+  - name: Build Windows bundle
+    command: |
+      set -euo pipefail
+      cd apps/packwandrs
+      cargo xwin build --locked --release -p packwand-cli --target x86_64-pc-windows-msvc
+      cp target/x86_64-pc-windows-msvc/release/packwand.exe target/release/packwand.exe
+      cargo tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc --bundles nsis
+  - name: Collect bundles
+    command: |
+      mkdir -p release-assets
+      find apps/packwandrs/target -type f \( -name '*.AppImage' -o -name '*.deb' -o -name '*-setup.exe' \) -exec cp {} release-assets/ \;
+      test -n "$(find release-assets -type f -print -quit)"
+  - name: Publish Tangled artifact records
+    command: |
+      set -euo pipefail
+      session=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.server.createSession" -H 'Content-Type: application/json' -d "{\"identifier\":\"$ATP_IDENTIFIER\",\"password\":\"$ATP_APP_PASSWORD\"}")
+      jwt=$(jq -r .accessJwt <<<"$session"); did=$(jq -r .did <<<"$session")
+      tag_hash=$(git rev-parse "${TANGLED_REF_NAME}^{tag}")
+      tag_bytes=$(printf '%s' "$tag_hash" | xxd -r -p | base64 | tr -d '=')
+      for asset in release-assets/*; do
+        blob=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.repo.uploadBlob" -H "Authorization: Bearer $jwt" -H 'Content-Type: application/octet-stream' --data-binary @"$asset")
+        jq -n --arg did "$did" --arg tag "$tag_bytes" --arg name "$(basename "$asset")" --arg repo "$TANGLED_REPO_URL" --arg created "$(date -Iseconds)" --argjson blob "$(jq .blob <<<"$blob")" '{repo:$did,collection:"sh.tangled.repo.artifact",validate:false,record:{"$type":"sh.tangled.repo.artifact",tag:{"$bytes":$tag},name:$name,repo:$repo,artifact:$blob,createdAt:$created}}' | curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.repo.createRecord" -H "Authorization: Bearer $jwt" -H 'Content-Type: application/json' -d @-
+      done

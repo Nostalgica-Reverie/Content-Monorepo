@@ -1083,15 +1083,23 @@ fn utils(args: &ArgMatches) -> Result {
             fs::create_dir_all(&directory)?;
             let mut entries = Vec::new();
             collect_commands(&cli::build(), "", &mut entries);
-            let mut markdown = String::from("# Packwand command reference\n\n");
-            for entry in entries {
-                markdown.push_str(&format!(
-                    "## `packwand {}`\n\n{}\n\n",
-                    entry.path, entry.summary
-                ));
+            fs::write(
+                directory.join("packwand.md"),
+                "# Packwand\n\nMinecraft modpack toolchain with multi-pack workspace management.\n",
+            )?;
+            for entry in &entries {
+                let filename = format!("packwand_{}.md", entry.path.replace(' ', "_"));
+                let markdown = format!(
+                    "# `packwand {}`\n\n{}\n\n```text\npackwand {}\n```\n",
+                    entry.path, entry.summary, entry.path
+                );
+                fs::write(directory.join(filename), markdown)?;
             }
-            fs::write(directory.join("packwand.md"), markdown)?;
-            println!("wrote {}", directory.join("packwand.md").display());
+            println!(
+                "wrote {} command pages to {}",
+                entries.len() + 1,
+                directory.display()
+            );
             Ok(())
         }
         _ => Err("utils requires commands or markdown".into()),

@@ -1,6 +1,6 @@
 //! Versioned instance records and a filesystem-backed repository.
 //!
-//! Part of the `packwand-rs` shared core (see `packwandrs.md`). This crate
+//! Part of the shared Packwand core. This crate
 //! must stay free of Tauri, clap, and axum dependencies: the Tauri adapter,
 //! the probe CLI, and tests all consume the same library API.
 

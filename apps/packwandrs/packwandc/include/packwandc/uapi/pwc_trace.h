@@ -1,20 +1,4 @@
-/* packwandc trace records -- the dmesg analogue (packwandc.md 3.7).
- *
- * The record type is uapi rather than kernel-internal because the host drains
- * the ring across the FFI boundary: packwandc-host pulls records out and feeds
- * them to the existing frontend log paths. The ring itself
- * (include/packwandc/kernel/pwc_ktrace.h) stays internal -- callers get records
- * out of it through a syscall, never a pointer into it.
- *
- * WHAT IS DELIBERATELY NOT HERE
- *
- * No syscall number field, though packwandc.md 3.7 lists one. Nothing
- * currently knows it: records are emitted at the failure choke point in
- * kernel/status.c, which sees a status and a source location but not the
- * dispatch that led there. A field that is always zero is worse than an absent
- * one -- it reads as information. It arrives with the dispatcher that can fill
- * it in.
- */
+/* Trace records crossing the host FFI boundary. */
 #ifndef PACKWANDC_UAPI_PWC_TRACE_H
 #define PACKWANDC_UAPI_PWC_TRACE_H
 

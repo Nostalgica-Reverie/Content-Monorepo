@@ -20,13 +20,12 @@ members = [
     "crates/packwand-msa",
     "crates/packwand-runtime",
     # Packeater: a PackSquash fork, merged in from apps/packwandrs/packeater.
-    # See crates/packsquash/README.md for its provenance and AGPL notices.
+    # Vendored PackSquash code carries its own provenance and license notices.
     "crates/packsquash",
     "crates/packsquash_cli",
     "crates/packeater_cli",
     # packwandc: the native core (C kernel + modules, orchestrated from Rust).
-    # See packwandc/packwandc.md. Building these requires CMake and a C
-    # toolchain -- an accepted workspace-wide requirement (packwandc.md 12.2).
+    # Building these requires CMake and a C toolchain.
     "packwandc/crates/packwandc-sys",
     "packwandc/crates/packwandc",
     "packwandc/crates/packwandc-host",
@@ -60,6 +59,7 @@ private_intra_doc_links = "deny"
 clap = { version = "4.6.2", features = ["derive"] }
 clap_complete = "4.6.7"
 fancy-regex = "0.16"
+globset = "0.4"
 hex = "0.4.3"
 # Local-only schema validation: default features pull in reqwest + TLS for
 # remote $ref resolution, which the manifest schema does not use.

@@ -241,6 +241,47 @@ fn refresh_index_discovers_changes_and_removes_missing_metadata() {
 }
 
 #[test]
+fn refresh_index_reconciles_renamed_ordinary_files() {
+    let directory = fixture();
+    fs::create_dir_all(directory.path().join("config")).unwrap();
+    fs::write(directory.path().join("config/renamed.json"), "new").unwrap();
+    fs::write(
+        directory.path().join("index.toml"),
+        concat!(
+            "hash-format = \"sha512\"\n\n",
+            "[[files]]\n",
+            "file = \"config/old.json\"\n",
+            "hash = \"stale\"\n",
+        ),
+    )
+    .unwrap();
+
+    let mut workspace = Workspace::open(directory.path()).unwrap();
+    let report = workspace.refresh_metadata_index().unwrap();
+
+    assert_eq!(report.added, 1);
+    assert_eq!(report.removed, 1);
+    assert_eq!(workspace.index().files.len(), 1);
+    assert_eq!(workspace.index().files[0].file, "config/renamed.json");
+    assert!(!workspace.index().files[0].metafile);
+}
+
+#[test]
+fn refresh_index_honors_packwizignore_for_ordinary_files() {
+    let directory = fixture();
+    fs::create_dir_all(directory.path().join("config")).unwrap();
+    fs::write(directory.path().join("config/kept.json"), "kept").unwrap();
+    fs::write(directory.path().join("archive.mrpack"), "ignored").unwrap();
+    fs::write(directory.path().join(".packwizignore"), "*.mrpack\n").unwrap();
+
+    let mut workspace = Workspace::open(directory.path()).unwrap();
+    workspace.refresh_metadata_index().unwrap();
+
+    assert_eq!(workspace.index().files.len(), 1);
+    assert_eq!(workspace.index().files[0].file, "config/kept.json");
+}
+
+#[test]
 fn operations_reject_paths_outside_the_pack_root() {
     let directory = fixture();
     let mut workspace = Workspace::open(directory.path()).unwrap();

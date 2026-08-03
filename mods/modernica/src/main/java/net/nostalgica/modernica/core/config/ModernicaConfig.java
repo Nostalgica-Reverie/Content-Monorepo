@@ -10,7 +10,6 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.Identifier;
 
-/** Most fields gate a Mixin transform, so changes always require a restart. */
 @RequiresAction(action = Action.RESTART)
 @TomlHeaderComment(text = "Modernica: merged Modernica + Hydrogen performance/bugfix mixin catalog.")
 @TomlHeaderComment(text = "All settings require a restart to take effect - see the mod's README for why.")
@@ -18,7 +17,6 @@ import net.minecraft.resources.Identifier;
 public class ModernicaConfig extends Config {
 
     public ModernicaConfig() {
-        // namespace must match fabric.mod.json's "id" or ModMenu's config button silently disappears
         super(Identifier.fromNamespaceAndPath("modernica", "config"), "modernica");
     }
 
@@ -29,15 +27,13 @@ public class ModernicaConfig extends Config {
     public ExpertOnlySection expertOnly = new ExpertOnlySection();
 
     public static class PerformanceSection extends ConfigSection {
-        public boolean perfDynamicResources = true; // perf.dynamic_resources
+        public boolean perfDynamicResources = false; // perf.dynamic_resources
         public boolean perfReleaseProtochunks = true; // perf.release_protochunks
 
         public boolean perfNetworkOptimizations = true; // perf.network_optimizations (from Krypton)
         public boolean perfNetworkEnhancements = true; // perf.network_enhancements
-        /** Max particle broadcast distance in blocks; only applies with {@link #perfNetworkEnhancements}. */
         public ValidatedInt particleTrackingRangeBlocks = new ValidatedInt(48, 128, 0);
         public boolean featureFastIpPing = true; // feature.fast_ip_ping
-        /** Off by default: reintroduces a vanilla bug where you can briefly fall through the world on a slow connection. */
         public boolean featureForceCloseLoadingScreen = false; // feature.force_close_loading_screen
     }
 

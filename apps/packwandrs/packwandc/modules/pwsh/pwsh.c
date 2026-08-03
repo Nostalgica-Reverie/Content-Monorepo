@@ -1,15 +1,4 @@
-/* pw4shell dispatch and built-ins (packwandc.md 5.8).
- *
- * Built-ins only, by design. There is no path from a typed line to a spawned
- * process anywhere in this file, and that is what makes the console safe to
- * expose to the webview: the worst a hostile line can do is be rejected.
- *
- * The built-in table below covers what the *kernel* can answer. Pack, mod and
- * diagnostic verbs live in the Rust crates and cannot be reached from C, so
- * they resolve to PWC_ENOSYS with the parsed command handed back for the host
- * to dispatch. A caller therefore never has to parse a line itself -- the
- * quoting rules stay in one place.
- */
+/* pw4shell dispatch and built-ins. C never spawns processes. */
 
 #include "packwandc/kernel/pwc_boot_internal.h"
 #include "packwandc/kernel/pwc_error.h"
@@ -23,7 +12,7 @@
 
 enum {
     /* One rendered output line. Bounded like everything else here: no
-     * allocation is available (packwandc.md 3.4). */
+     * allocation is available. */
     PWSH_LINE_MAX = 512,
 };
 
@@ -44,7 +33,7 @@ void pwsh_emit(const pwsh_sink *sink, const char *text) {
     }
     const size_t length = strlen(text);
     /* Discarded on purpose. A full port drops the line; it must not turn the
-     * command being reported on into a failure (packwandc.md 3.7's
+     * command being reported on into a failure (the trace ring's
      * drop-rather-than-stall rule, applied to output). */
     (void) pwc_ipc_send(sink->port, (const uint8_t *) text, length);
 }
@@ -99,7 +88,7 @@ static pwc_status pwsh_cmd_status(const pwc_sh_command *cmd, const pwsh_sink *ou
         return PWC_FAIL(PWC_EINVAL, "pwsh", "status takes exactly one argument");
     }
     /* Hand-parsed rather than via atoi, which the banned-construct gate
-     * rejects for having no way to report failure (packwandc.md 7.5). */
+     * rejects for having no way to report failure. */
     const uint8_t *const text = cmd->argv[1];
     size_t index = 0u;
     int32_t sign = 1;

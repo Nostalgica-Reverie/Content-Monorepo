@@ -1,4 +1,4 @@
-/* Threading backend: Win32 (packwandc.md 3.6).
+/* Threading backend: Win32.
  *
  * SRWLOCK and CONDITION_VARIABLE rather than CRITICAL_SECTION: they need no
  * destroy call, they are pointer-sized, and they pair directly with
@@ -31,7 +31,7 @@ typedef struct pwc_thread_start {
 } pwc_thread_start;
 
 /* One record per live thread. A heap allocation would be the obvious way to
- * pass the entry point through CreateThread, but packwandc.md 3.4 forbids one
+ * pass the entry point through CreateThread, but the native core forbids one
  * outside the allocators -- so the records live in a fixed table sized to the
  * same ceiling the scheduler uses, and a start fails when the table is full
  * rather than allocating. */

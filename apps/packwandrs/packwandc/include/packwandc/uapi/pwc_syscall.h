@@ -1,4 +1,4 @@
-/* packwandc syscall surface -- see packwandc.md 4.
+/* packwandc syscall surface.
  *
  * NOT A GENERATED FILE. It consumes syscalls.def directly as an X-macro, so
  * the number enum and the prototypes are derived from the same text at compile
