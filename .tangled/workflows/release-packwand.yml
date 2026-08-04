@@ -11,7 +11,7 @@ dependencies: [cmake, curl, gcc, git, gnumake, jq, ninja, pkg-config, rustup, xx
 steps:
   - name: Package Packwand CLI
     command: |
-      set -euo pipefail
+      set -eo pipefail
       (cd apps/packwandrs && cargo build --locked --release -p packwand-cli)
       mkdir -p release-assets/stage
       cp apps/packwandrs/target/release/packwand release-assets/stage/packwand
@@ -20,7 +20,7 @@ steps:
       (cd release-assets && sha256sum *.tar.gz > checksums.txt)
   - name: Publish Tangled artifact records
     command: |
-      set -euo pipefail
+      set -eo pipefail
       session=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.server.createSession" -H 'Content-Type: application/json' -d "{\"identifier\":\"$ATP_IDENTIFIER\",\"password\":\"$ATP_APP_PASSWORD\"}")
       jwt=$(jq -r .accessJwt <<<"$session"); did=$(jq -r .did <<<"$session")
       tag_hash=$(git rev-parse "${TANGLED_REF_NAME}^{tag}")

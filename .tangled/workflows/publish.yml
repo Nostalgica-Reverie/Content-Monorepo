@@ -15,7 +15,7 @@ steps:
     command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
   - name: Publish planned content sequentially
     command: |
-      set -euo pipefail
+      set -eo pipefail
       packwand=apps/packwandrs/target/release/packwand
       "$packwand" publish plan > plan.json
       jq -ce '.[]' plan.json | while IFS= read -r entry; do

@@ -11,7 +11,7 @@ dependencies: [curl, git-chglog, jq, xxd]
 steps:
   - name: Generate component changelog
     command: |
-      set -euo pipefail
+      set -eo pipefail
       case "$TANGLED_REF_NAME" in
         installer-v*) component=installer ;;
         gui-v*) component=gui ;;
@@ -21,7 +21,7 @@ steps:
       git-chglog --config ".chglog/$component/config.yml" --output release-notes.md "$TANGLED_REF_NAME"
   - name: Publish release notes artifact
     command: |
-      set -euo pipefail
+      set -eo pipefail
       session=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.server.createSession" -H 'Content-Type: application/json' -d "{\"identifier\":\"$ATP_IDENTIFIER\",\"password\":\"$ATP_APP_PASSWORD\"}")
       jwt=$(jq -r .accessJwt <<<"$session"); did=$(jq -r .did <<<"$session")
       tag_hash=$(git rev-parse "${TANGLED_REF_NAME}^{tag}")

@@ -17,14 +17,14 @@ steps:
     command: just build-installer
   - name: Build Linux bundles
     command: |
-      set -euo pipefail
+      set -eo pipefail
       cd apps/packwandrs
       cargo build --locked --release -p packwand-cli
       cp target/release/packwand target/release/packwand.exe
       cargo tauri build --bundles appimage,deb
   - name: Build Windows bundle
     command: |
-      set -euo pipefail
+      set -eo pipefail
       cd apps/packwandrs
       cargo xwin build --locked --release -p packwand-cli --target x86_64-pc-windows-msvc
       cp target/x86_64-pc-windows-msvc/release/packwand.exe target/release/packwand.exe
@@ -36,7 +36,7 @@ steps:
       test -n "$(find release-assets -type f -print -quit)"
   - name: Publish Tangled artifact records
     command: |
-      set -euo pipefail
+      set -eo pipefail
       session=$(curl -fsS -X POST "$ATP_PDS/xrpc/com.atproto.server.createSession" -H 'Content-Type: application/json' -d "{\"identifier\":\"$ATP_IDENTIFIER\",\"password\":\"$ATP_APP_PASSWORD\"}")
       jwt=$(jq -r .accessJwt <<<"$session"); did=$(jq -r .did <<<"$session")
       tag_hash=$(git rev-parse "${TANGLED_REF_NAME}^{tag}")

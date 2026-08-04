@@ -20,7 +20,7 @@ steps:
     command: apps/packwandrs/target/release/packwand lint
   - name: Preflight changed pack manifests
     command: |
-      set -eu
+      set -e
       changed="$(git diff-tree --no-commit-id --name-only -r HEAD || true)"
       packs="$(printf '%s\n' "$changed" | grep -E '^(modpacks|datapacks|resourcepacks)/[^/]+/' | cut -d/ -f1-2 | sort -u || true)"
       test -z "$packs" && exit 0

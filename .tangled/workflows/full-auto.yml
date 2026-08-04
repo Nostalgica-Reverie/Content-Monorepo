@@ -9,7 +9,7 @@ steps:
     command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
   - name: Run full automation and commit version bumps
     command: |
-      set -euo pipefail
+      set -eo pipefail
       packwand=apps/packwandrs/target/release/packwand
       "$packwand" automation list-full-auto | while IFS= read -r id; do
         test -n "$id" || continue
