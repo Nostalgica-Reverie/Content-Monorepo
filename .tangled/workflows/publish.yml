@@ -17,6 +17,15 @@ steps:
     command: |
       set -eo pipefail
       packwand=apps/packwandrs/target/release/packwand
+      # generate-changelog.ts invokes Packwand through PACKWAND_BIN. Keep it
+      # pointed at this job's freshly built binary instead of relying on PATH.
+      export PACKWAND_BIN="$packwand"
+      # Tangled exposes the repository credentials under the short names used
+      # by the existing Forgejo setup. Packwand uses descriptive environment
+      # names internally.
+      export MODRINTH_TOKEN="${MR:?MR secret is required}"
+      export CURSEFORGE_TOKEN="${CF:?CF secret is required}"
+      export CURSEFORGE_API_KEY="${CURSEFORGE_API_KEY:-$CF}"
       "$packwand" publish plan > plan.json
       jq -ce '.[]' plan.json | while IFS= read -r entry; do
         manifest=$(jq -r .manifest <<<"$entry")
