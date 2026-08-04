@@ -26,6 +26,9 @@ steps:
       export MODRINTH_TOKEN="${MR:?MR secret is required}"
       export CURSEFORGE_TOKEN="${CF:?CF secret is required}"
       export CURSEFORGE_API_KEY="${CURSEFORGE_API_KEY:-$CF}"
+      # Pack indexes are generated artifacts and are intentionally gitignored;
+      # a clean CI checkout must refresh them before preflight/publish.
+      "$packwand" batch refresh
       "$packwand" publish plan > plan.json
       jq -ce '.[]' plan.json | while IFS= read -r entry; do
         manifest=$(jq -r .manifest <<<"$entry")
