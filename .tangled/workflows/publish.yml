@@ -30,17 +30,24 @@ steps:
       # a clean CI checkout must refresh them before preflight/publish.
       "$packwand" batch refresh
       "$packwand" publish plan > plan.json
-      jq -ce '.[]' plan.json | while IFS= read -r entry; do
+      failed=0
+      while IFS= read -r entry; do
         manifest=$(jq -r .manifest <<<"$entry")
         variant=$(jq -r '.variant // empty' <<<"$entry")
         dir=$(dirname "$manifest")
-        "$packwand" preflight "$dir"
-        "$packwand" json minify "$dir"
-        bun scripts/run.ts generate-changelog "$manifest" release-notes.md
-        "$packwand" publish build "$manifest" ${variant:+"$variant"}
-        "$packwand" publish upload --live --changelog-file release-notes.md "$manifest" ${variant:+"$variant"}
-        "$packwand" publish verify "$manifest" ${variant:+"$variant"}
-      done
+        if "$packwand" preflight "$dir" &&
+          "$packwand" json minify "$dir" &&
+          bun scripts/run.ts generate-changelog "$manifest" release-notes.md &&
+          "$packwand" publish build "$manifest" ${variant:+"$variant"} &&
+          "$packwand" publish upload --live --changelog-file release-notes.md "$manifest" ${variant:+"$variant"} &&
+          "$packwand" publish verify "$manifest" ${variant:+"$variant"}; then
+          echo "published $manifest ${variant:+($variant)}"
+        else
+          echo "publish failed for $manifest ${variant:+($variant)}" >&2
+          failed=1
+        fi
+      done < <(jq -ce '.[]' plan.json)
+      exit "$failed"
   - name: Verify Nix publish surface
     command: |
       nix flake check --no-build --no-update-lock-file

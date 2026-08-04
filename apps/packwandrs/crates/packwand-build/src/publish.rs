@@ -505,9 +505,11 @@ fn upload_curseforge(
     let game_ids = versions
         .iter()
         .filter(|version| {
-            minecraft_types.contains(&version.game_version_type_id)
-                && (version.name.eq_ignore_ascii_case(&target.minecraft_version)
-                    || version.slug.eq_ignore_ascii_case(&target.minecraft_version))
+            version.game_version_type_id.is_some_and(|type_id| {
+                minecraft_types.contains(&type_id)
+                    && (version.name.eq_ignore_ascii_case(&target.minecraft_version)
+                        || version.slug.eq_ignore_ascii_case(&target.minecraft_version))
+            })
         })
         .map(|version| version.id)
         .collect::<Vec<_>>();
@@ -517,9 +519,11 @@ fn upload_curseforge(
     let loader_ids = versions
         .iter()
         .filter(|version| {
-            loader_types.contains(&version.game_version_type_id)
-                && (version.name.eq_ignore_ascii_case(&target.loader)
-                    || version.slug.eq_ignore_ascii_case(&target.loader))
+            version.game_version_type_id.is_some_and(|type_id| {
+                loader_types.contains(&type_id)
+                    && (version.name.eq_ignore_ascii_case(&target.loader)
+                        || version.slug.eq_ignore_ascii_case(&target.loader))
+            })
         })
         .map(|version| version.id)
         .collect::<Vec<_>>();
@@ -656,7 +660,10 @@ struct CfVersionType {
 #[serde(rename_all = "camelCase")]
 struct CfVersion {
     id: i64,
-    game_version_type_id: i64,
+    // CurseForge's versions endpoint currently returns some records without
+    // gameVersionTypeId. Those records are not useful for upload metadata, but
+    // they must not make the entire response fail to deserialize.
+    game_version_type_id: Option<i64>,
     name: String,
     slug: String,
 }
@@ -762,5 +769,12 @@ mod tests {
         assert!(report.dry_run);
         assert_eq!(report.attempted, vec!["modrinth"]);
         assert_eq!(report.uploaded, vec!["modrinth"]);
+    }
+
+    #[test]
+    fn accepts_curseforge_versions_without_a_game_version_type() {
+        let version: CfVersion =
+            serde_json::from_str(r#"{"id":123,"name":"26.1.2","slug":"26.1.2"}"#).unwrap();
+        assert_eq!(version.game_version_type_id, None);
     }
 }
