@@ -660,9 +660,9 @@ struct CfVersionType {
 #[serde(rename_all = "camelCase")]
 struct CfVersion {
     id: i64,
-    // CurseForge's versions endpoint currently returns some records without
-    // gameVersionTypeId. Those records are not useful for upload metadata, but
-    // they must not make the entire response fail to deserialize.
+    // CurseForge's legacy upload API spells this with a capital `ID`. Accept
+    // the Core API spelling too so either response shape remains compatible.
+    #[serde(rename = "gameVersionTypeID", alias = "gameVersionTypeId")]
     game_version_type_id: Option<i64>,
     name: String,
     slug: String,
@@ -776,5 +776,23 @@ mod tests {
         let version: CfVersion =
             serde_json::from_str(r#"{"id":123,"name":"26.1.2","slug":"26.1.2"}"#).unwrap();
         assert_eq!(version.game_version_type_id, None);
+    }
+
+    #[test]
+    fn reads_curseforge_legacy_game_version_type_id_casing() {
+        let version: CfVersion = serde_json::from_str(
+            r#"{"id":123,"gameVersionTypeID":42,"name":"26.2","slug":"26-2"}"#,
+        )
+        .unwrap();
+        assert_eq!(version.game_version_type_id, Some(42));
+    }
+
+    #[test]
+    fn reads_curseforge_core_game_version_type_id_casing() {
+        let version: CfVersion = serde_json::from_str(
+            r#"{"id":123,"gameVersionTypeId":42,"name":"26.2","slug":"26-2"}"#,
+        )
+        .unwrap();
+        assert_eq!(version.game_version_type_id, Some(42));
     }
 }

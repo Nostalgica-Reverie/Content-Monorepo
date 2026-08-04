@@ -29,7 +29,17 @@ steps:
       # Pack indexes are generated artifacts and are intentionally gitignored;
       # a clean CI checkout must refresh them before preflight/publish.
       "$packwand" batch refresh
-      "$packwand" publish plan > plan.json
+      if [ "${TANGLED_PIPELINE_KIND:-push}" = manual ]; then
+        release_commit=$(git log -n 1 --format=%H -- \
+          ':(glob)modpacks/**/manifest.json' \
+          ':(glob)datapacks/**/manifest.json' \
+          ':(glob)resourcepacks/**/manifest.json' \
+          ':(glob)mods/**/manifest.json')
+        : "${release_commit:?manual publish could not find a manifest-changing commit}"
+        "$packwand" publish plan --from "${release_commit}^" --to "$release_commit" > plan.json
+      else
+        "$packwand" publish plan > plan.json
+      fi
       failed=0
       while IFS= read -r entry; do
         manifest=$(jq -r .manifest <<<"$entry")
