@@ -9,6 +9,7 @@ export interface AppSettings {
   memoryMb: number
   msaClientId: string | null
   rawInputEnabled: boolean
+  themeId: string
 }
 
 export interface PackSummary {

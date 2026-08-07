@@ -2,6 +2,7 @@ use std::fs;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use serde::Serialize;
+use sha2::{Digest, Sha256};
 use tauri::{AppHandle, State};
 use walkdir::{DirEntry, WalkDir};
 
@@ -36,6 +37,138 @@ pub struct EditorDirectoryEntry {
     pub file_type: u8,
 }
 
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EditorDocument {
+    pub content: String,
+    pub modified_ms: u64,
+    pub size: u64,
+    pub hash: String,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SearchMatch {
+    pub path: String,
+    pub line: usize,
+    pub column: usize,
+    pub preview: String,
+}
+
+fn document_at(path: &std::path::Path) -> CommandResult<EditorDocument> {
+    let bytes = fs::read(path)?;
+    let content = String::from_utf8(bytes.clone()).map_err(|_| {
+        SerializableError::new(
+            "binary_file",
+            format!("{} is binary and cannot be opened as text", path.display()),
+        )
+    })?;
+    let metadata = fs::metadata(path)?;
+    Ok(EditorDocument {
+        content,
+        modified_ms: timestamp(metadata.modified()),
+        size: metadata.len(),
+        hash: format!("{:x}", Sha256::digest(&bytes)),
+    })
+}
+
+#[tauri::command]
+pub fn editor_document_read(
+    id: String,
+    path: String,
+    state: State<'_, AppState>,
+) -> CommandResult<EditorDocument> {
+    let root = pack_root(&state.workspace()?, &id)?;
+    document_at(&safe_join(&root, &path)?)
+}
+
+#[tauri::command]
+pub fn editor_document_write(
+    id: String,
+    path: String,
+    content: String,
+    expected_hash: String,
+    app: AppHandle,
+    state: State<'_, AppState>,
+) -> CommandResult<EditorDocument> {
+    let root = pack_root(&state.workspace()?, &id)?;
+    let target = safe_join(&root, &path)?;
+    let current = document_at(&target)?;
+    if current.hash != expected_hash {
+        return Err(SerializableError::new(
+            "file_conflict",
+            format!("{} changed outside Packwand", target.display()),
+        ));
+    }
+    crate::fsutil::atomic_write(&target, content.as_bytes())?;
+    emit_packs_changed(&app)?;
+    document_at(&target)
+}
+
+#[tauri::command]
+pub fn editor_search(
+    id: String,
+    query: String,
+    case_sensitive: bool,
+    regex: bool,
+    state: State<'_, AppState>,
+) -> CommandResult<Vec<SearchMatch>> {
+    if query.is_empty() {
+        return Ok(Vec::new());
+    }
+    let root = pack_root(&state.workspace()?, &id)?;
+    let pattern = if regex {
+        query
+    } else {
+        regex_lite::escape(&query)
+    };
+    let expression = regex_lite::RegexBuilder::new(&pattern)
+        .case_insensitive(!case_sensitive)
+        .build()
+        .map_err(|error| SerializableError::new("search_pattern", error.to_string()))?;
+    let mut matches = Vec::new();
+    for entry in ignore::WalkBuilder::new(&root)
+        .hidden(false)
+        .follow_links(false)
+        .build()
+    {
+        let entry =
+            entry.map_err(|error| SerializableError::new("search_walk", error.to_string()))?;
+        if !entry.file_type().is_some_and(|kind| kind.is_file()) {
+            continue;
+        }
+        let Ok(metadata) = entry.metadata() else {
+            continue;
+        };
+        if metadata.len() > 2 * 1024 * 1024 {
+            continue;
+        }
+        let Ok(source) = fs::read_to_string(entry.path()) else {
+            continue;
+        };
+        let relative = entry
+            .path()
+            .strip_prefix(&root)
+            .unwrap_or(entry.path())
+            .to_string_lossy()
+            .replace('\\', "/");
+        for (line_index, line) in source.lines().enumerate() {
+            for found in expression.find_iter(line) {
+                matches.push(SearchMatch {
+                    path: relative.clone(),
+                    line: line_index + 1,
+                    column: found.start() + 1,
+                    preview: line.trim().chars().take(240).collect(),
+                });
+                if matches.len() == 1000 {
+                    return Ok(matches);
+                }
+            }
+        }
+    }
+    Ok(matches)
+}
+
 fn timestamp(value: std::io::Result<SystemTime>) -> u64 {
     value
         .ok()
@@ -54,15 +187,6 @@ fn file_type(metadata: &fs::Metadata) -> u8 {
     }
 }
 
-fn native_root(root: &std::path::Path) -> CommandResult<String> {
-    root.to_str()
-        .map(str::to_owned)
-        .ok_or_else(|| SerializableError::new("invalid_path", "pack root is not valid UTF-8"))
-}
-
-fn native_error(operation: &str, error: packwandc::Error) -> SerializableError {
-    SerializableError::new("native_fs", format!("{operation}: {error}"))
-}
 fn io_error(operation: &str, error: std::io::Error) -> SerializableError {
     let kind = match error.kind() {
         std::io::ErrorKind::NotFound => "not_found",
@@ -164,8 +288,7 @@ pub fn editor_file_write(
             format!("{} is not an existing file", target.display()),
         ));
     }
-    packwandc::fs_atomic_write(&native_root(&root)?, &path, content.as_bytes())
-        .map_err(|error| native_error("write file", error))?;
+    crate::fsutil::atomic_write(&target, content.as_bytes())?;
     emit_packs_changed(&app)
 }
 
@@ -188,8 +311,7 @@ pub fn editor_create(
     if directory {
         fs::create_dir_all(target)?;
     } else {
-        packwandc::fs_atomic_write(&native_root(&root)?, &path, b"")
-            .map_err(|error| native_error("create file", error))?;
+        crate::fsutil::atomic_write(&target, b"")?;
     }
     emit_packs_changed(&app)
 }
@@ -243,9 +365,8 @@ pub fn editor_fs_read_file(
     state: State<'_, AppState>,
 ) -> CommandResult<Vec<u8>> {
     let root = pack_root(&state.workspace()?, &id)?;
-    safe_join(&root, &path)?;
-    packwandc::fs_read(&native_root(&root)?, &path)
-        .map_err(|error| native_error("read file", error))
+    let target = safe_join(&root, &path)?;
+    fs::read(target).map_err(|error| io_error("read file", error))
 }
 
 #[tauri::command]
@@ -279,8 +400,7 @@ pub fn editor_fs_write_file(
             format!("{} already exists", target.display()),
         ));
     }
-    packwandc::fs_atomic_write(&native_root(&root)?, &path, &content)
-        .map_err(|error| native_error("write file", error))?;
+    crate::fsutil::atomic_write(&target, &content)?;
     emit_packs_changed(&app)
 }
 

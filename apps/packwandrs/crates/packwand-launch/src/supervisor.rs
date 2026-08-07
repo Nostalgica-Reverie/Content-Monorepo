@@ -11,8 +11,8 @@ use std::sync::mpsc::{self, Receiver, Sender};
 use std::thread::{self, JoinHandle};
 use std::time::Duration;
 
+use command_group::CommandGroup;
 use packwand_auth::SecretString;
-use packwandc::ProcessTree;
 use serde::Serialize;
 
 use crate::plan::LaunchPlan;
@@ -291,7 +291,7 @@ fn run_supervised(
         const CREATE_NO_WINDOW: u32 = 0x0800_0000;
         command.creation_flags(CREATE_NO_WINDOW);
     }
-    let mut child = match command.spawn() {
+    let mut child = match command.group_spawn() {
         Ok(child) => child,
         Err(e) => {
             let _ = tx.send(LaunchEvent::Failed {
@@ -302,29 +302,19 @@ fn run_supervised(
         }
     };
     let pid = child.id();
-    let mut process_tree = match ProcessTree::adopt(pid) {
-        Ok(owner) => owner,
-        Err(error) => {
-            let _ = child.kill();
-            let _ = child.wait();
-            let _ = tx.send(LaunchEvent::Failed {
-                instance_id: id,
-                error: format!("failed to adopt process tree: {error}"),
-            });
-            return;
-        }
-    };
     let _ = tx.send(LaunchEvent::Started {
         instance_id: id.clone(),
         pid,
     });
-    let stdout_reader = spawn_line_reader(child.stdout.take(), tx.clone(), id.clone(), true);
-    let stderr_reader = spawn_line_reader(child.stderr.take(), tx.clone(), id.clone(), false);
+    let stdout_reader =
+        spawn_line_reader(child.inner().stdout.take(), tx.clone(), id.clone(), true);
+    let stderr_reader =
+        spawn_line_reader(child.inner().stderr.take(), tx.clone(), id.clone(), false);
     let mut cancelled = false;
     let status = loop {
         if cancel.is_cancelled() && !cancelled {
             cancelled = true;
-            let _ = process_tree.kill();
+            let _ = child.kill();
         }
         match child.try_wait() {
             Ok(Some(status)) => break Ok(status),

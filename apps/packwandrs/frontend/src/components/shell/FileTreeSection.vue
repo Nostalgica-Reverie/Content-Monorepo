@@ -2,10 +2,7 @@
 /**
  * Pack file explorer, in the packwand sidebar.
  *
- * This *replaces* Code-OSS's own explorer rather than duplicating it: the
- * workbench iframe now runs with its activity bar and sidebar hidden (see
- * `ide/host/bootstrap.js`), so the application has one navigation surface
- * instead of a packwand sidebar wrapped around a second, nested VS Code one.
+ * Packwand owns this navigation surface and opens files directly in Monaco.
  *
  * Directories expand lazily. A pack can hold thousands of files, and walking
  * the whole tree on selection would stall the sidebar for the common case of

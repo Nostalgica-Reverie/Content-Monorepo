@@ -5,9 +5,6 @@
  * by drawn lines, and let exactly one control per view carry the accent.
  */
 
-@import "./base.css";
-@import "./shell.css";
-
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -244,7 +241,7 @@
 }
 
 /* ------------------------------------------------------------------ *
- * Editor — hosts the embedded Code OSS workbench.
+ * Editor — Packwand's direct Monaco workbench.
  * ------------------------------------------------------------------ */
 
 .ide-editor-panel {

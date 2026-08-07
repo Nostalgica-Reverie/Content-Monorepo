@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://packwand.dev/schemas/theme-v1.schema.json",
+  "title": "Packwand theme",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "name", "appearance", "colors"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^(builtin|user)\\.[a-z0-9]+(?:[.-][a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "author": { "type": "string", "maxLength": 80 },
+    "appearance": { "enum": ["light", "dark", "high-contrast"] },
+    "extends": { "type": "string", "pattern": "^builtin\\.[a-z0-9.-]+$" },
+    "colors": {
+      "type": "object",
+      "propertyNames": { "enum": ["rail", "side", "bg", "bg-2", "surface", "surface-2", "surface-3", "surface-soft", "elevated", "hover", "active", "selected", "line", "line-soft", "line-strong", "text", "text-strong", "muted", "faint", "accent", "accent-2", "accent-dim", "accent-soft", "accent-line", "danger", "danger-bg", "danger-line", "warning", "success", "success-bg"] },
+      "additionalProperties": { "$ref": "#/$defs/color" }
+    },
+    "editor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "colors": { "type": "object", "additionalProperties": { "$ref": "#/$defs/color" } },
+        "rules": { "type": "array", "items": { "$ref": "#/$defs/rule" } }
+      }
+    }
+  },
+  "$defs": {
+    "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$" },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token"],
+      "properties": {
+        "token": { "type": "string", "minLength": 1 },
+        "foreground": { "$ref": "#/$defs/color" },
+        "background": { "$ref": "#/$defs/color" },
+        "fontStyle": { "enum": ["", "bold", "italic", "underline", "strikethrough"] }
+      }
+    }
+  }
+}

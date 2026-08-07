@@ -21,13 +21,13 @@ export interface RawInputEvent {
   deltaY: number
   wheelDelta: number
 }
-/** One record drained from the packwandc kernel's trace ring. */
+/** One record drained from the bounded Rust platform trace ring. */
 export interface KernelTracePayload {
   sequence: number
   tone: 'info' | 'error' | 'success'
   module: string
   message: string
-  /** `file:line` in the C tree, already repo-relative. */
+  /** Repo-relative origin of the record. */
   origin: string
   platformCode: number | null
 }
@@ -41,6 +41,7 @@ export const onJobProgress = (handler: (payload: JobProgressPayload) => void) =>
 export const onJobDone = (handler: (payload: JobFinishedPayload) => void) => on('job:done', handler)
 export const onJobFailed = (handler: (payload: JobFinishedPayload) => void) => on('job:failed', handler)
 export const onPacksChanged = (handler: () => void) => on<void>('packs:changed', handler)
+export const onWorkspaceFilesChanged = (handler: (paths: string[]) => void) => on<string[]>('workspace:files-changed', handler)
 export const onSettingsChanged = (handler: (payload: AppSettings) => void) => on('settings:changed', handler)
 export const onInstancesChanged = (handler: () => void) => on<void>('instances:changed', handler)
 export const onInstanceStatus = (handler: (payload: InstanceStatusPayload) => void) => on('instance:status', handler)

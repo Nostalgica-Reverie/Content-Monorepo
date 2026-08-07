@@ -8,16 +8,19 @@ import { normalizeBridgeError } from '@/helpers/errors'
 import { useInstancesStore } from '@/stores/instances'
 import { useSettingsStore } from '@/stores/settings'
 import { useToastsStore } from '@/stores/toasts'
+import { useThemeStore } from '@/stores/theme'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const workspace = useWorkspaceStore()
 const settings = useSettingsStore()
 const toasts = useToastsStore()
 const instances = useInstancesStore()
+const theme = useThemeStore()
 
 onMounted(async () => {
   try {
     await Promise.all([workspace.load(), settings.load()])
+    await theme.initialize()
   } catch (error) {
     const normalized = normalizeBridgeError(error)
     toasts.push('Could not initialize Packwand', normalized.message, 'danger')
@@ -25,6 +28,7 @@ onMounted(async () => {
   await onSettingsChanged((next) => {
     settings.value = next
     workspace.path = next.workspacePath
+    if (next.themeId !== theme.currentId) theme.applySetting(next.themeId)
   })
   await onJobFailed((job) => {
     toasts.push('Job failed', job.error?.message ?? 'An unknown job error occurred', 'danger')

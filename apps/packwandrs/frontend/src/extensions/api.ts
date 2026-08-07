@@ -6,10 +6,8 @@
  * point. They are first-party and bundled at build time — there is no runtime
  * loader, no sandbox, and no third-party surface.
  *
- * This is deliberately *not* the VS Code extension API. Extensions contribute to
- * Packwand's own shell — the command palette, the left sidebar, and the bottom
- * dock — because the embedded Code-OSS sidebar is being retired in favour of
- * Packwand's own.
+ * This is deliberately not the VS Code extension API. Extensions contribute
+ * to Packwand's command palette, Monaco editor, sidebar, and bottom dock.
  *
  * Analysis belongs in Rust. An extension's job is to invoke a Rust command and
  * present what comes back, never to re-implement a check in TypeScript, which
@@ -93,7 +91,7 @@ export interface WorldgenAsset extends ExtensionAsset {
 /** What the host passes to every extension entry point. */
 export interface ExtensionContext {
   editor: {
-    /** Opens a pack-relative file in the embedded Code-OSS workbench. */
+    /** Opens a pack-relative file in Packwand's Monaco workbench. */
     open: (packId: string, path: string) => void
   }
   /** Fixed, typed operations; extensions never receive arbitrary Tauri invoke. */

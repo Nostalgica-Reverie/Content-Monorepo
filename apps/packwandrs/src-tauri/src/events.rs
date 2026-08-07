@@ -71,6 +71,10 @@ pub fn emit_packs_changed(app: &AppHandle) -> CommandResult<()> {
     emit(app, "packs:changed", ())
 }
 
+pub fn emit_workspace_files_changed(app: &AppHandle, paths: Vec<String>) -> CommandResult<()> {
+    emit(app, "workspace:files-changed", paths)
+}
+
 pub fn emit_instance_status(
     app: &AppHandle,
     payload: crate::commands::instances::InstanceStatusPayload,

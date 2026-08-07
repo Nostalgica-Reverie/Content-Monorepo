@@ -457,7 +457,7 @@ pub fn extension_pack_graph(
     edges.sort_by(|left, right| (&left.from, &left.to).cmp(&(&right.from, &right.to)));
     Ok(PackGraphSnapshot { nodes, edges })
 }
-/// Produces the small, serializable language-service view used by Code-OSS.
+/// Produces the small, serializable language-service view used by Monaco.
 /// The editor receives pack-relative facts, never Rust objects or fs handles.
 #[tauri::command]
 pub fn extension_language_snapshot(

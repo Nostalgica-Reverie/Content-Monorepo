@@ -1,62 +1,26 @@
-import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
-import { cp, readFile, stat } from 'node:fs/promises'
-import path from 'node:path'
+import { execFile } from 'node:child_process'
 import { fileURLToPath, URL } from 'node:url'
+import { promisify } from 'node:util'
 import { defineConfig } from 'vite'
 
-const frontendRoot = fileURLToPath(new URL('.', import.meta.url))
-const ideHostRoot = path.resolve(frontendRoot, '../ide/host')
-const ideCoreRoot = path.resolve(frontendRoot, '../ide/vscode-web')
+const exec = promisify(execFile)
+const coreRoot = fileURLToPath(new URL('./core', import.meta.url))
 
-const contentTypes: Record<string, string> = {
-  '.css': 'text/css; charset=utf-8',
-  '.html': 'text/html; charset=utf-8',
-  '.ico': 'image/x-icon',
-  '.js': 'text/javascript; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.map': 'application/json; charset=utf-8',
-  '.png': 'image/png',
-  '.svg': 'image/svg+xml',
-  '.ttf': 'font/ttf',
-  '.wasm': 'application/wasm',
-  '.woff': 'font/woff',
-  '.woff2': 'font/woff2',
-}
-
-function packwandIdeAssets() {
+function gleamCore() {
   return {
-    name: 'packwand-ide-assets',
-    configureServer(server: import('vite').ViteDevServer) {
-      server.middlewares.use(async (request, response, next) => {
-        const pathname = decodeURIComponent(new URL(request.url ?? '/', 'http://packwand.local').pathname)
-        if (!pathname.startsWith('/packwand-ide/')) return next()
-        const relative = pathname.slice('/packwand-ide/'.length) || 'index.html'
-        const core = relative.startsWith('core/')
-        const root = core ? ideCoreRoot : ideHostRoot
-        const candidate = path.resolve(root, core ? relative.slice(5) : relative)
-        if (path.relative(root, candidate).startsWith('..')) return next()
-        try {
-          const info = await stat(candidate)
-          if (!info.isFile()) return next()
-          response.statusCode = 200
-          response.setHeader('Content-Type', contentTypes[path.extname(candidate)] ?? 'application/octet-stream')
-          response.end(await readFile(candidate))
-        } catch {
-          next()
-        }
-      })
-    },
-    async writeBundle(options: { dir?: string }) {
-      const outputRoot = path.resolve(frontendRoot, options.dir ?? 'dist', 'packwand-ide')
-      await cp(ideHostRoot, outputRoot, { recursive: true })
-      await cp(ideCoreRoot, path.join(outputRoot, 'core'), { recursive: true })
+    name: 'packwand-gleam-core',
+    async handleHotUpdate(context: { file: string; server: { ws: { send(message: { type: string }): void } } }) {
+      if (!context.file.endsWith('.gleam') || !context.file.startsWith(coreRoot)) return
+      await exec('gleam', ['build', '--target', 'javascript'], { cwd: coreRoot })
+      context.server.ws.send({ type: 'full-reload' })
+      return []
     },
   }
 }
 
 export default defineConfig({
-  plugins: [vue(), tailwindcss(), packwandIdeAssets()],
+  plugins: [gleamCore(), vue()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

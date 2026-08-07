@@ -1,0 +1,71 @@
+@use './base.css';
+@use './shell.css';
+@use './theme.css';
+
+.packwand-monaco {
+  min-height: 0;
+  height: calc(100vh - 255px);
+}
+
+.packwand-editor-empty,
+.packwand-editor-error,
+.packwand-media-preview {
+  display: grid;
+  min-height: 320px;
+  place-items: center;
+  color: var(--muted);
+}
+
+.packwand-editor-conflict,
+.packwand-diff-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: color-mix(in srgb, var(--warning) 18%, var(--surface));
+  color: var(--text);
+}
+
+.packwand-editor-conflict span,
+.packwand-diff-heading strong { flex: 1; }
+.packwand-diff { height: calc(100vh - 290px); }
+
+.packwand-media-preview img,
+.packwand-media-preview video {
+  max-width: 100%;
+  max-height: calc(100vh - 290px);
+  object-fit: contain;
+}
+
+.document-tabs {
+  display: flex;
+  overflow-x: auto;
+  background: var(--surface-3);
+}
+
+.document-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+  max-width: 220px;
+  border: 0;
+  border-right: 1px solid var(--line-soft);
+  background: var(--surface);
+  padding: 7px 10px;
+  color: var(--muted);
+}
+
+.document-tab.active { background: var(--surface-3); color: var(--text); }
+.document-tab span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.document-tab__dirty { color: var(--accent-2); }
+.document-tab__close { margin-left: auto; }
+
+.editor-search { display: flex; align-items: center; gap: 6px; padding: 6px; background: var(--surface-2); }
+.editor-search > input { min-width: 180px; flex: 1; }
+.editor-search label { display: flex; align-items: center; gap: 3px; color: var(--muted); font-size: 11px; }
+.editor-search-results { position: absolute; z-index: 5; top: 40px; right: 8px; left: 8px; display: grid; max-height: 45%; overflow: auto; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--elevated); box-shadow: 0 12px 35px #0008; }
+.editor-search-results button { display: grid; gap: 2px; border: 0; border-bottom: 1px solid var(--line-soft); background: transparent; padding: 8px 10px; color: var(--text); text-align: left; }
+.editor-search-results button:hover { background: var(--hover); }
+.editor-search-results span { overflow: hidden; color: var(--muted); font: 11px var(--mono); text-overflow: ellipsis; white-space: nowrap; }
+.editor-search-results p { padding: 12px; color: var(--muted); }

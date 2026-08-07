@@ -1,7 +1,7 @@
 //! Native Packwand desktop host. The webview talks only through Tauri IPC;
 //! no loopback server or Go subprocess participates in the runtime path.
 
-#![forbid(unsafe_code)]
+#![deny(unsafe_code)]
 
 mod commands;
 mod error;
@@ -13,7 +13,7 @@ mod state;
 
 use commands::{
     api, automation, diagnostics, editor, exports, extensions, git, instances, jobs, mods,
-    packeater, packs, projects, providers, settings, shell, workspace,
+    packeater, packs, projects, providers, settings, shell, themes, workspace,
 };
 use tauri::Manager;
 
@@ -24,16 +24,21 @@ pub fn run() {
         .setup(|app| {
             let state = state::AppState::load(app.handle())?;
             app.manage(state);
-            // Brings up the packwandc native core and starts draining its
-            // trace ring into the output dock. Deliberately infallible: the
-            // workbench is useful without the C layer, so a failed native boot
-            // degrades rather than aborting startup (see kernel.rs).
+            // Restore live indexing for a workspace remembered from a previous run.
+            if let Some(root) = app.state::<state::AppState>().settings()?.workspace_path
+                && let Err(error) = app
+                    .state::<state::AppState>()
+                    .restart_watch(app.handle(), std::path::Path::new(&root))
+            {
+                eprintln!("could not restore workspace watcher: {error}");
+            }
+            // Starts the bounded Rust trace drain used by the output dock.
             kernel::start(app.handle());
             raw_input::start(app.handle())?;
-            if app.state::<state::AppState>().settings()?.raw_input_enabled {
-                if let Err(error) = raw_input::set_enabled(app.handle(), true) {
-                    eprintln!("could not restore Raw Input: {error}");
-                }
+            if app.state::<state::AppState>().settings()?.raw_input_enabled
+                && let Err(error) = raw_input::set_enabled(app.handle(), true)
+            {
+                eprintln!("could not restore Raw Input: {error}");
             }
             Ok(())
         })
@@ -55,6 +60,7 @@ pub fn run() {
             git::git_stage,
             git::git_unstage,
             git::git_diff,
+            git::git_diff_document,
             git::git_commit,
             extensions::extension_kubejs_scripts,
             extensions::extension_kubejs_validate,
@@ -71,6 +77,9 @@ pub fn run() {
             extensions::extension_blockbench_open,
             settings::settings_get,
             settings::settings_update,
+            themes::themes_list,
+            themes::themes_save,
+            themes::themes_delete,
             raw_input::raw_input_set_enabled,
             packs::packs_list,
             packs::packs_get,
@@ -96,6 +105,9 @@ pub fn run() {
             mods::mods_side_get,
             mods::mods_side_set,
             editor::editor_tree,
+            editor::editor_document_read,
+            editor::editor_document_write,
+            editor::editor_search,
             editor::editor_file_read,
             editor::editor_file_write,
             editor::editor_create,

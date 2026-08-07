@@ -15,7 +15,7 @@ import { apiInspect } from '@/helpers/invoke/api'
 import { diagnosticsContentLint, diagnosticsLint, diagnosticsPreflight, diagnosticsValidate } from '@/helpers/invoke/diagnostics'
 import { modsRefresh } from '@/helpers/invoke/mods'
 import { workspaceSync, workspaceSyncPreview } from '@/helpers/invoke/workspace'
-import { onKernelTrace } from '@/helpers/events'
+import { onKernelTrace, onPacksChanged } from '@/helpers/events'
 import type { NavItem } from '@/helpers/navigation'
 import { endNav, navByName, primaryNav } from '@/helpers/navigation'
 import type { SyncReport, ValidationReport } from '@/helpers/types'
@@ -46,11 +46,13 @@ const showCommandRow = computed(() => ['overview', 'logs', 'settings'].includes(
 
 /** Torn down on unmount so a hot reload does not stack duplicate listeners. */
 let stopKernelTrace: (() => void) | null = null
+let stopPacksChanged: (() => void) | null = null
+let reindexTimer: ReturnType<typeof setTimeout> | null = null
 
 onMounted(async () => {
   window.addEventListener('keydown', onKeydown)
 
-  // The packwandc kernel records every failure into a fixed ring and never
+  // The Rust platform layer records failures into a fixed ring and never
   // blocks to do it; src-tauri drains that ring and emits each record here.
   // Routing them into the existing output dock keeps the UI contract unchanged
   // Reuse the native trace log rather than adding another log surface.
@@ -72,6 +74,15 @@ onMounted(async () => {
     toasts.push('Could not index workspace', String(error), 'danger')
     shell.appendOutput(`Workspace index failed: ${String(error)}`, 'error')
   }
+  stopPacksChanged = await onPacksChanged(() => {
+    if (reindexTimer) clearTimeout(reindexTimer)
+    reindexTimer = setTimeout(() => {
+      reindexTimer = null
+      void workbench.refresh().catch((error) => {
+        shell.appendOutput(`Automatic workspace reindex failed: ${String(error)}`, 'error')
+      })
+    }, 175)
+  })
   // After the index, so an extension's activate() sees a populated workspace.
   await extensionsStore.activate()
 })
@@ -79,6 +90,8 @@ onMounted(async () => {
 onUnmounted(() => {
   window.removeEventListener('keydown', onKeydown)
   stopKernelTrace?.()
+  stopPacksChanged?.()
+  if (reindexTimer) clearTimeout(reindexTimer)
 })
 
 /** Every visited view is held as a tab so several tasks can stay in flight. */
@@ -378,19 +391,19 @@ function startDockDrag(event: PointerEvent) {
           <span>Theme</span>
         </summary>
         <div class="theme-menu__popover" role="menu">
-          <div class="theme-menu__label">IDE color theme</div>
+          <div class="theme-menu__label">Application theme</div>
           <button
             v-for="option in theme.themes"
-            :key="option"
+            :key="option.id"
             class="theme-menu__option"
-            :class="{ active: theme.current === option }"
+            :class="{ active: theme.currentId === option.id }"
             type="button"
             role="menuitemradio"
-            :aria-checked="theme.current === option"
-            @click="theme.setTheme(option)"
+            :aria-checked="theme.currentId === option.id"
+            @click="theme.setTheme(option.id)"
           >
-            <span>{{ option }}</span>
-            <AppIcon v-if="theme.current === option" name="check" :size="13" />
+            <span>{{ option.name }}</span>
+            <AppIcon v-if="theme.currentId === option.id" name="check" :size="13" />
           </button>
         </div>
       </details>

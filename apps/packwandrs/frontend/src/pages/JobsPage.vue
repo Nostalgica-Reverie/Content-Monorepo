@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query'
 import { computed, ref } from 'vue'
 import Button from '@/components/ui/Button.vue'
 import EmptyState from '@/components/ui/EmptyState.vue'
 import LogViewer from '@/components/ui/LogViewer.vue'
 import ProgressBar from '@/components/ui/ProgressBar.vue'
+import { usePolling } from '@/composables/usePolling'
 import { jobCancel, jobsList } from '@/helpers/invoke/jobs'
 import { useToastsStore } from '@/stores/toasts'
 import { useWorkbenchStore } from '@/stores/workbench'
 
 const workbench = useWorkbenchStore()
 const toasts = useToastsStore()
-const query = useQuery({ queryKey: ['jobs'], queryFn: jobsList, refetchInterval: 750 })
+const query = usePolling(jobsList, 750)
 const selectedId = ref<string | null>(null)
 const filtered = computed(() => {
   const term = workbench.search.trim().toLowerCase()
@@ -21,7 +21,7 @@ const selected = computed(() => filtered.value.find((job) => job.id === selected
 const running = computed(() => query.data.value?.filter((job) => job.status === 'running') ?? [])
 async function cancel() {
   if (!selected.value) return
-  try { await jobCancel(selected.value.id); await query.refetch() }
+  try { await jobCancel(selected.value.id); await query.refresh() }
   catch (error) { toasts.push('Cancellation failed', String(error), 'danger') }
 }
 </script>
@@ -36,13 +36,13 @@ async function cancel() {
       <p v-else class="empty-note">No background operations are currently running.</p>
     </article>
     <article class="panel span-7 compact-panel">
-      <div class="panel-head"><h2>Activity</h2><Button variant="quiet" @click="query.refetch()">Reload</Button></div>
+      <div class="panel-head"><h2>Activity</h2><Button variant="quiet" @click="query.refresh()">Reload</Button></div>
       <p class="panel-copy">Builds, metadata operations, diagnostics, synchronization, and installer tasks appear here.</p>
       <div class="details"><div class="detail"><span>Total</span><strong>{{ query.data.value?.length || 0 }}</strong></div><div class="detail"><span>Running</span><strong>{{ running.length }}</strong></div><div class="detail"><span>Failed</span><strong>{{ query.data.value?.filter((job) => job.status === 'failed').length || 0 }}</strong></div></div>
     </article>
     <article class="panel span-12 logs-panel">
       <div class="panel-head"><h2>Job logs</h2><span v-if="selected" class="pill">{{ selected.status }}</span></div>
-      <EmptyState v-if="!query.isPending.value && !filtered.length" title="No jobs yet" message="Pack changes, exports, diagnostics, and installs will appear here." />
+      <EmptyState v-if="!query.pending.value && !filtered.length" title="No jobs yet" message="Pack changes, exports, diagnostics, and installs will appear here." />
       <div v-else class="logs-workbench">
         <aside class="job-list">
           <button v-for="job in filtered" :key="job.id" :class="{ active: selected?.id === job.id }" @click="selectedId = job.id"><strong>{{ job.label }}</strong><span>{{ job.kind }} · {{ Math.round(job.fraction * 100) }}%</span><i :class="'job-state ' + job.status" /></button>

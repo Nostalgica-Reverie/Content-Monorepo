@@ -14,4 +14,5 @@ pub mod projects;
 pub mod providers;
 pub mod settings;
 pub mod shell;
+pub mod themes;
 pub mod workspace;

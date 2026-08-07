@@ -19,16 +19,12 @@ members = [
     "crates/packwand-minecraft",
     "crates/packwand-msa",
     "crates/packwand-runtime",
+    "crates/packwand-platform",
     # Packeater: a PackSquash fork, merged in from apps/packwandrs/packeater.
     # Vendored PackSquash code carries its own provenance and license notices.
     "crates/packsquash",
     "crates/packsquash_cli",
     "crates/packeater_cli",
-    # packwandc: the native core (C kernel + modules, orchestrated from Rust).
-    # Building these requires CMake and a C toolchain.
-    "packwandc/crates/packwandc-sys",
-    "packwandc/crates/packwandc",
-    "packwandc/crates/packwandc-host",
     "src-tauri",
 ]
 
@@ -91,6 +87,7 @@ packwand-launch = { path = "crates/packwand-launch" }
 packwand-minecraft = { path = "crates/packwand-minecraft" }
 packwand-msa = { path = "crates/packwand-msa" }
 packwand-runtime = { path = "crates/packwand-runtime" }
+packwand-platform = { path = "crates/packwand-platform" }
 
 # Required by the merged Packeater crates. `[patch.crates-io]` is only honored
 # in a workspace root, so these necessarily apply to the whole workspace.

@@ -1,4 +1,3 @@
-import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 
@@ -9,6 +8,6 @@ import router from './router'
 // that lacks it. The variable cut is deliberate — the workbench uses weights
 // 550 and 650, which static cuts would snap to the nearest available.
 import '@fontsource-variable/jetbrains-mono'
-import './assets/theme.css'
+import './assets/app.scss'
 
-createApp(App).use(createPinia()).use(VueQueryPlugin).use(router).mount('#app')
+createApp(App).use(createPinia()).use(router).mount('#app')

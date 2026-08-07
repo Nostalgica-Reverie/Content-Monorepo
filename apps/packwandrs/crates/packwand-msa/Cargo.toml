@@ -16,7 +16,7 @@ url = "2"
 base64 = "0.22"
 sha2 = "0.10"
 rand = "0.8"
-packwandc = { path = "../../packwandc/crates/packwandc" }
+packwand-platform.workspace = true
 
 [dev-dependencies]
 tempfile.workspace = true

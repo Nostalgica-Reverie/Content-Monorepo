@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useQuery, useQueryClient } from '@tanstack/vue-query'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Button from '@/components/ui/Button.vue'
 import EmptyState from '@/components/ui/EmptyState.vue'
 import Modal from '@/components/ui/Modal.vue'
+import { usePolling } from '@/composables/usePolling'
 import { modPin, modRemove, modSideSet, modsList, modsRefresh } from '@/helpers/invoke/mods'
 import { providerAdd } from '@/helpers/invoke/providers'
 import type { ModSummary, ProviderKind } from '@/helpers/types'
@@ -12,13 +12,13 @@ import { useWorkbenchStore } from '@/stores/workbench'
 
 const workbench = useWorkbenchStore()
 const toasts = useToastsStore()
-const client = useQueryClient()
 const id = computed(() => workbench.selectedPack?.id ?? '')
 const working = ref<string | null>(null)
 const addOpen = ref(false)
 const adding = ref(false)
 const addForm = ref({ provider: 'modrinth' as ProviderKind, project: '', gameVersions: '', loaders: '', token: '', instance: '', branch: '', pattern: '' })
-const mods = useQuery({ queryKey: ['mods', id], queryFn: () => modsList(id.value), enabled: () => Boolean(id.value) })
+const mods = usePolling(() => modsList(id.value), 0, () => Boolean(id.value))
+watch(id, () => void mods.refresh().catch(() => undefined))
 const filtered = computed(() => {
   const term = workbench.search.trim().toLowerCase()
   return mods.data.value?.filter((mod) => !term || (mod.name + ' ' + mod.filename + ' ' + mod.metadataPath).toLowerCase().includes(term)) ?? []
@@ -26,7 +26,7 @@ const filtered = computed(() => {
 
 async function mutate(mod: ModSummary, action: () => Promise<unknown>, success: string) {
   working.value = mod.metadataPath
-  try { await action(); await client.invalidateQueries({ queryKey: ['mods', id.value] }); toasts.push(success, mod.name, 'success') }
+  try { await action(); await mods.refresh(); toasts.push(success, mod.name, 'success') }
   catch (error) { toasts.push('Mod operation failed', String(error), 'danger') } finally { working.value = null }
 }
 const pin = (mod: ModSummary) => mutate(mod, () => modPin(id.value, mod.metadataPath, !mod.pinned), mod.pinned ? 'Mod unpinned' : 'Mod pinned')
@@ -41,7 +41,7 @@ async function add() {
       loaders: addForm.value.loaders.split(',').map((value) => value.trim()).filter(Boolean), channels: ['release', 'beta', 'alpha'],
       branch: addForm.value.branch.trim() || null, asset_pattern: addForm.value.pattern.trim() || null,
     }, addForm.value.token || null, addForm.value.instance || null)
-    await client.invalidateQueries({ queryKey: ['mods', id.value] }); toasts.push('Project added', path, 'success'); addOpen.value = false
+    await mods.refresh(); toasts.push('Project added', path, 'success'); addOpen.value = false
   } catch (error) { toasts.push('Provider add failed', String(error), 'danger') } finally { adding.value = false }
 }
 </script>
@@ -54,7 +54,7 @@ async function add() {
         <div class="panel-actions"><span class="pill">{{ filtered.length }} mods</span><Button variant="quiet" :disabled="!id" @click="refresh">Refresh metadata</Button><Button :disabled="!id" @click="addOpen = true">Add project</Button></div>
       </div>
       <EmptyState v-if="!id" title="No pack target" message="Choose a project containing a pack.toml target." />
-      <EmptyState v-else-if="!mods.isPending.value && !filtered.length" title="No mod metadata" message="Add a Modrinth, CurseForge, GitHub, Forgejo, or GitLab project to this target." />
+      <EmptyState v-else-if="!mods.pending.value && !filtered.length" title="No mod metadata" message="Add a Modrinth, CurseForge, GitHub, Forgejo, or GitLab project to this target." />
       <div v-else class="mod-list list">
         <div v-for="mod in filtered" :key="mod.metadataPath" class="row mod-row">
           <div><strong>{{ mod.name }}</strong><span>{{ mod.filename }} · {{ mod.metadataPath }}</span></div>

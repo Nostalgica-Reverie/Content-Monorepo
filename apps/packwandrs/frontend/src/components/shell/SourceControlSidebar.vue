@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import SideSection from '@/components/shell/SideSection.vue'
-import { gitCommit, gitDiff, gitStage, gitStatus, gitUnstage } from '@/helpers/invoke/git'
+import { gitCommit, gitDiffDocument, gitStage, gitStatus, gitUnstage } from '@/helpers/invoke/git'
 import type { GitChange, GitStatus } from '@/helpers/invoke/git'
 import { useShellStore } from '@/stores/shell'
+import { useWorkbenchStore } from '@/stores/workbench'
 
 const shell = useShellStore()
+const workbench = useWorkbenchStore()
+const router = useRouter()
 const status = ref<GitStatus | null>(null)
 const message = ref('')
 const loading = ref(false)
@@ -41,10 +45,9 @@ async function unstage(change: GitChange) {
 
 async function showDiff(change: GitChange, staged: boolean) {
   try {
-    const diff = await gitDiff(change.path, staged)
-    shell.appendOutput(`git diff ${staged ? '--cached ' : ''}-- ${change.path}`)
-    shell.appendOutput(diff || '(no textual diff)')
-    shell.showDock('output')
+    const diff = await gitDiffDocument(change.path, staged)
+    workbench.requestDiff(diff)
+    await router.push({ name: 'editor' })
   } catch (caught) {
     shell.appendOutput(`git diff failed: ${String(caught)}`, 'error')
   }

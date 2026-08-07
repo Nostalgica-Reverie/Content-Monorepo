@@ -8,15 +8,14 @@ import { normalizeBridgeError } from '@/helpers/errors'
 import { diagnosticsPreflight } from '@/helpers/invoke/diagnostics'
 import { useToastsStore } from '@/stores/toasts'
 import { useWorkbenchStore } from '@/stores/workbench'
-import { useThemeStore } from '@/stores/theme'
 
 const workbench = useWorkbenchStore()
-const theme = useThemeStore()
 const toasts = useToastsStore()
 const reload = ref(0)
 const packId = computed(() => workbench.selectedPack?.id ?? '')
 /** Set by the sidebar file tree; seeds the workbench's initial editor. */
 const openPath = computed(() => workbench.requestedFile)
+const diffRequest = computed(() => workbench.requestedDiff)
 
 async function validate() {
   try {
@@ -34,15 +33,15 @@ async function validate() {
       <div class="panel-head">
         <div>
           <h2>Packwand IDE</h2>
-          <p class="panel-copy">The Packwand-focused Code OSS workbench, confined to {{ workbench.selectedPack?.name || 'the active pack' }}.</p>
+          <p class="panel-copy">A fast Packwand-owned editor, confined to {{ workbench.selectedPack?.name || 'the active pack' }}.</p>
         </div>
         <div class="panel-actions">
-          <Button variant="quiet" @click="reload++">Reload IDE</Button>
+          <Button variant="quiet" @click="reload++">Reload file</Button>
           <Button @click="validate">Validate pack</Button>
         </div>
       </div>
       <EmptyState v-if="!packId" title="No pack target" message="Select a project with at least one pack.toml target." />
-          <PackwandWorkbench v-else :pack-id="packId" :reload="reload" :open-path="openPath" :theme="theme.current" />
+      <PackwandWorkbench v-else :pack-id="packId" :pack-root="workbench.selectedPack?.path ?? ''" :reload="reload" :open-path="openPath" :diff-request="diffRequest" />
     </div>
   </section>
 </template>

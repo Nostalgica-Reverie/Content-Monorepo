@@ -23,10 +23,16 @@ pub struct AppSettings {
     pub msa_client_id: Option<String>,
     #[serde(default)]
     pub raw_input_enabled: bool,
+    #[serde(default = "default_theme_id")]
+    pub theme_id: String,
 }
 
 const fn default_memory() -> u32 {
     4096
+}
+
+fn default_theme_id() -> String {
+    "builtin.packwand-dark".to_owned()
 }
 
 impl Default for AppSettings {
@@ -37,16 +43,18 @@ impl Default for AppSettings {
             memory_mb: default_memory(),
             msa_client_id: None,
             raw_input_enabled: false,
+            theme_id: default_theme_id(),
         }
     }
 }
 
 pub struct AppState {
+    config_dir: PathBuf,
     settings_path: PathBuf,
     settings: RwLock<AppSettings>,
     pub jobs: JobManager,
     pub instances: InstanceRegistry,
-    watch: Mutex<Option<packwandc::FsWatchCanceller>>,
+    watch: Mutex<Option<packwand_platform::WorkspaceWatchCanceller>>,
 }
 
 impl AppState {
@@ -63,12 +71,17 @@ impl AppState {
             Err(error) => return Err(error.into()),
         };
         Ok(Self {
+            config_dir,
             settings_path,
             settings: RwLock::new(settings),
             jobs: JobManager::default(),
             instances: InstanceRegistry::default(),
             watch: Mutex::new(None),
         })
+    }
+
+    pub fn config_dir(&self) -> &std::path::Path {
+        &self.config_dir
     }
 
     pub fn settings(&self) -> CommandResult<AppSettings> {
@@ -89,24 +102,35 @@ impl AppState {
     }
 
     pub fn restart_watch(&self, app: &AppHandle, root: &std::path::Path) -> CommandResult<()> {
-        let root_text = root
-            .to_str()
-            .ok_or_else(|| SerializableError::new("invalid_path", "workspace path is not UTF-8"))?;
-        let watch = packwandc::FsWatch::open(root_text)
+        let watch = packwand_platform::WorkspaceWatcher::open(root)
             .map_err(|error| SerializableError::new("native_watch", error.to_string()))?;
         let canceller = watch.canceller();
         let mut active = self
             .watch
             .lock()
             .map_err(|_| SerializableError::new("state", "watch lock was poisoned"))?;
-        if let Some(mut previous) = active.take() {
+        if let Some(previous) = active.take() {
             previous.cancel();
         }
         *active = Some(canceller);
         let changed_app = app.clone();
+        let workspace_root = root.to_path_buf();
         std::thread::spawn(move || {
-            while watch.read_changes().is_ok() {
+            while let Ok(paths) = watch.read_changes() {
+                if paths.is_empty() {
+                    continue;
+                }
                 std::thread::sleep(Duration::from_millis(75));
+                let absolute_paths = paths
+                    .into_iter()
+                    .map(|path| {
+                        workspace_root
+                            .join(path)
+                            .to_string_lossy()
+                            .replace('\\', "/")
+                    })
+                    .collect();
+                let _ = crate::events::emit_workspace_files_changed(&changed_app, absolute_paths);
                 let _ = crate::events::emit_packs_changed(&changed_app);
             }
         });

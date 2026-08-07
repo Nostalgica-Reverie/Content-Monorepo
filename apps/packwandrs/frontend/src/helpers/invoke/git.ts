@@ -15,8 +15,11 @@ export interface GitStatus {
   changes: GitChange[]
 }
 
+export interface GitDiffDocument { path: string; original: string; modified: string }
+
 export const gitStatus = () => call<GitStatus>('git_status')
 export const gitStage = (paths: string[]) => call<void>('git_stage', { paths })
 export const gitUnstage = (paths: string[]) => call<void>('git_unstage', { paths })
 export const gitDiff = (path: string, staged: boolean) => call<string>('git_diff', { path, staged })
+export const gitDiffDocument = (path: string, staged: boolean) => call<GitDiffDocument>('git_diff_document', { path, staged })
 export const gitCommit = (message: string) => call<string>('git_commit', { message })

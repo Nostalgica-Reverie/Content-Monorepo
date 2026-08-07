@@ -1,12 +1,10 @@
 use std::fs;
 use std::path::{Component, Path, PathBuf};
 
-use uuid::Uuid;
-
 use crate::error::{CommandResult, SerializableError};
 
 pub fn safe_join(root: &Path, relative: &str) -> CommandResult<PathBuf> {
-    packwandc::validate_relative_path(relative).map_err(|error| {
+    packwand_platform::validate_relative_path(relative).map_err(|error| {
         SerializableError::new(
             "unsafe_path",
             format!("path {relative:?} escapes its configured root: {error}"),
@@ -43,32 +41,6 @@ pub fn safe_join(root: &Path, relative: &str) -> CommandResult<PathBuf> {
 }
 
 pub fn atomic_write(path: &Path, bytes: &[u8]) -> CommandResult<()> {
-    let parent = path
-        .parent()
-        .ok_or_else(|| SerializableError::new("invalid_path", "file has no parent directory"))?;
-    fs::create_dir_all(parent)?;
-    let id = Uuid::new_v4();
-    let filename = path
-        .file_name()
-        .and_then(|name| name.to_str())
-        .unwrap_or("packwand");
-    let temporary = parent.join(format!(".{filename}.{id}.tmp"));
-    let backup = parent.join(format!(".{filename}.{id}.backup"));
-    fs::write(&temporary, bytes)?;
-    let had_target = path.exists();
-    if had_target && let Err(error) = fs::rename(path, &backup) {
-        let _ = fs::remove_file(&temporary);
-        return Err(error.into());
-    }
-    if let Err(error) = fs::rename(&temporary, path) {
-        if had_target {
-            let _ = fs::rename(&backup, path);
-        }
-        let _ = fs::remove_file(&temporary);
-        return Err(error.into());
-    }
-    if had_target {
-        let _ = fs::remove_file(backup);
-    }
-    Ok(())
+    packwand_platform::atomic_write(path, bytes)
+        .map_err(|error| SerializableError::new("io", error.to_string()))
 }

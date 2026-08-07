@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query'
 import { computed, nextTick, ref, watch } from 'vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import ProgressBar from '@/components/ui/ProgressBar.vue'
+import { usePolling } from '@/composables/usePolling'
 import { jobsList } from '@/helpers/invoke/jobs'
 import { shellExec } from '@/helpers/invoke/shell'
 import { useShellStore } from '@/stores/shell'
@@ -77,11 +77,7 @@ watch(
 )
 
 /** Jobs poll only while the dock is open on its tab. */
-const jobs = useQuery({
-  queryKey: ['dock-jobs'],
-  queryFn: jobsList,
-  refetchInterval: () => (shell.dockVisible && shell.dockTab === 'logs' ? 1000 : false),
-})
+const jobs = usePolling(jobsList, 1000, () => shell.dockVisible && shell.dockTab === 'logs')
 
 const runningJobs = computed(() => jobs.data.value?.filter((job) => job.status === 'running') ?? [])
 const recentJobs = computed(() => (jobs.data.value ?? []).slice(-40).reverse())

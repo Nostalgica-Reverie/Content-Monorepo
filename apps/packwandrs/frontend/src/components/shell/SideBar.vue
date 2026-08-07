@@ -97,9 +97,7 @@ function variantLabel(variant: Record<string, unknown>, index: number) {
         </div>
       </SideSection>
 
-      <!-- The pack's own files. This is Code-OSS's explorer, moved out here:
-           the workbench iframe runs with its sidebar hidden so there is one
-           navigation surface rather than two nested ones. -->
+      <!-- The Packwand-owned explorer is the single file navigation surface. -->
       <FileTreeSection
         v-if="workbench.selectedPack"
         :pack-id="workbench.selectedPack.id"

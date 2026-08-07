@@ -1,6 +1,6 @@
 //! Secure storage for the Microsoft refresh token, via the OS credential
 //! store (Windows Credential Manager / macOS Keychain / Linux Secret
-//! Service, all through packwandc). Only the refresh token is
+//! Service, through Packwand's focused Rust platform layer). Only the refresh token is
 //! persisted; access tokens are short-lived (~24h, per Microsoft/Minecraft)
 //! and kept in memory only. One fixed account key for v1 — a single signed
 //! in account at a time, matching `packwand-auth`'s existing
@@ -20,7 +20,7 @@ pub trait TokenStore: Send + Sync {
     fn clear(&self) -> Result<(), TokenStoreError>;
 }
 
-/// OS-native credential storage backed by packwandc.
+/// OS-native credential storage backed by the Rust platform layer.
 #[derive(Default)]
 pub struct PwcKeyStore;
 
@@ -32,27 +32,24 @@ impl PwcKeyStore {
 
 impl TokenStore for PwcKeyStore {
     fn save(&self, refresh_token: &SecretString) -> Result<(), TokenStoreError> {
-        packwandc::KeyStore
-            .save(refresh_token.expose().as_bytes())
+        packwand_platform::CredentialStore::new()
+            .and_then(|store| store.save(refresh_token.expose()))
             .map_err(|error| TokenStoreError::Backend(error.to_string()))
     }
 
     fn load(&self) -> Result<Option<SecretString>, TokenStoreError> {
-        let Some(bytes) = packwandc::KeyStore
-            .load()
+        let Some(value) = packwand_platform::CredentialStore::new()
+            .and_then(|store| store.load())
             .map_err(|error| TokenStoreError::Backend(error.to_string()))?
         else {
             return Ok(None);
         };
-        let value = String::from_utf8(bytes).map_err(|error| {
-            TokenStoreError::Backend(format!("stored credential is not UTF-8: {error}"))
-        })?;
         Ok(Some(SecretString::new(value)))
     }
 
     fn clear(&self) -> Result<(), TokenStoreError> {
-        packwandc::KeyStore
-            .clear()
+        packwand_platform::CredentialStore::new()
+            .and_then(|store| store.clear())
             .map_err(|error| TokenStoreError::Backend(error.to_string()))
     }
 }

@@ -12,9 +12,6 @@
 # shell that has Git's usr/bin on PATH (a Git Bash shell, or one where
 # it's been added manually) -- not a bare PowerShell/cmd prompt.
 #
-# (This previously cited "c.md section 3.4.1", a design doc that has never
-# existed in this repository. Native/C conventions now live in
-# apps/packwandrs/packwandc/packwandc.md, which is in version control.)
 set shell := ["sh", "-cu"]
 
 INSTALLER_DIR := "apps/packwand-installer"
@@ -113,20 +110,6 @@ lint-packeater:
     cargo fmt --package packeater_cli -- --check
     cargo clippy -p packeater_cli --all-targets -- -D warnings
 
-# Runs clang-format, generated-artifact drift, the uapi boundary and
-# banned-construct gates, shellcheck and clang-tidy. See packwandc.md section 7.
-# The packwandc C quality gate
-[working-directory: 'apps/packwandrs/packwandc']
-lint-packwandc:
-    sh scripts/gate.sh
-
-# Reads include/packwandc/uapi/syscalls.def. Commit the result; lint-packwandc
-# fails if it is stale.
-# Regenerate packwandc's Rust bindings and golden syscall ledger
-[working-directory: 'apps/packwandrs/packwandc']
-gen-packwandc:
-    sh scripts/gen-syscalls.sh
-
 # All linters/vetters and vulnerability scans
 lint: lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-packeater audit-rust docs-typecheck
 
@@ -169,35 +152,12 @@ test-webview:
 test-rust-core:
     cargo test --workspace
 
-# Sanitizer legs are Linux-only: TSan does not exist for the MSVC target and
-# the MinGW clang install ships no compiler-rt. See packwandc.md 7.4 and 8.2.
-# Build packwandc's C core and run its unit suite via CTest
-[working-directory: 'apps/packwandrs/packwandc']
-test-packwandc:
-    cmake --preset {{ if os() == "windows" { "dev" } else { "linux-dev" } }}
-    cmake --build --preset {{ if os() == "windows" { "dev" } else { "linux-dev" } }}
-    ctest --preset {{ if os() == "windows" { "dev" } else { "linux-dev" } }}
-
-# packwandc under AddressSanitizer + UndefinedBehaviorSanitizer (Linux only)
-[working-directory: 'apps/packwandrs/packwandc']
-test-packwandc-asan:
-    cmake --preset asan-ubsan
-    cmake --build --preset asan-ubsan
-    ctest --preset asan-ubsan
-
-# packwandc under ThreadSanitizer (Linux only)
-[working-directory: 'apps/packwandrs/packwandc']
-test-packwandc-tsan:
-    cmake --preset tsan
-    cmake --build --preset tsan
-    ctest --preset tsan
-
 # Build all flake checks, including Packwand and the generated modpack inventory
 test-nix:
     nix flake check --no-update-lock-file --print-build-logs
 
 # All tests
-test: test-cursorapi test-installer test-mods test-webview test-rust-core test-packwandc
+test: test-cursorapi test-installer test-mods test-webview test-rust-core
 
 # — Build —
 
@@ -221,12 +181,6 @@ build-mods: (_mod_gradlew_all "build -x test")
 [working-directory: 'apps/mod-browser-webview']
 build-webview:
     cargo build --release
-
-# Build packwandc's C core (release preset)
-[working-directory: 'apps/packwandrs/packwandc']
-build-packwandc:
-    cmake --preset {{ if os() == "windows" { "release" } else { "linux-release" } }}
-    cmake --build --preset {{ if os() == "windows" { "release" } else { "linux-release" } }}
 
 # Build the Go packwiz-bootstrap wrapper
 # Build the native Rust/Vue Packwand GUI app (Tauri v2).

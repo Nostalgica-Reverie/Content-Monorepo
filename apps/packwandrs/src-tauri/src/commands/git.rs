@@ -1,3 +1,4 @@
+use std::fs;
 use std::path::Path;
 use std::process::{Command, Output};
 
@@ -24,6 +25,14 @@ pub struct GitStatus {
     pub ahead: usize,
     pub behind: usize,
     pub changes: Vec<GitChange>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GitDiffDocument {
+    pub path: String,
+    pub original: String,
+    pub modified: String,
 }
 
 fn git(workspace: &Path, args: &[&str]) -> CommandResult<Output> {
@@ -63,7 +72,7 @@ fn validate_paths(paths: &[String]) -> CommandResult<()> {
         ));
     }
     for path in paths {
-        packwandc::validate_relative_path(path)
+        packwand_platform::validate_relative_path(path)
             .map_err(|error| SerializableError::new("git_path", error.to_string()))?;
     }
     Ok(())
@@ -172,6 +181,47 @@ pub fn git_diff(path: String, staged: bool, state: State<'_, AppState>) -> Comma
     args.extend(["--", path.as_str()]);
     let output = checked(&workspace, &args)?;
     Ok(String::from_utf8_lossy(&output.stdout).into_owned())
+}
+
+fn git_text(workspace: &Path, args: &[&str]) -> String {
+    git(workspace, args)
+        .ok()
+        .filter(|output| output.status.success())
+        .map(|output| String::from_utf8_lossy(&output.stdout).into_owned())
+        .unwrap_or_default()
+}
+
+#[tauri::command]
+pub fn git_diff_document(
+    path: String,
+    staged: bool,
+    state: State<'_, AppState>,
+) -> CommandResult<GitDiffDocument> {
+    validate_paths(std::slice::from_ref(&path))?;
+    let workspace = state.workspace()?;
+    let head_spec = format!("HEAD:{path}");
+    let index_spec = format!(":{path}");
+    let original = if staged {
+        git_text(&workspace, &["show", head_spec.as_str()])
+    } else {
+        git_text(&workspace, &["show", index_spec.as_str()])
+    };
+    let modified = if staged {
+        git_text(&workspace, &["show", index_spec.as_str()])
+    } else {
+        match fs::read(workspace.join(&path)) {
+            Ok(bytes) => String::from_utf8(bytes).map_err(|_| {
+                SerializableError::new("binary_file", "Monaco cannot display this binary diff")
+            })?,
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => String::new(),
+            Err(error) => return Err(error.into()),
+        }
+    };
+    Ok(GitDiffDocument {
+        path,
+        original,
+        modified,
+    })
 }
 
 #[tauri::command]

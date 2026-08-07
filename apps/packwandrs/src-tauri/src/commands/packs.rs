@@ -12,6 +12,8 @@ use crate::events::emit_packs_changed;
 use crate::fsutil::atomic_write;
 use crate::state::AppState;
 
+const PACK_ROOTS: [&str; 4] = ["mods", "modpacks", "datapacks", "resourcepacks"];
+
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PackSummary {
@@ -46,20 +48,33 @@ fn should_descend(entry: &DirEntry) -> bool {
 
 pub(crate) fn discover_packs(workspace: &Path) -> CommandResult<Vec<PackSummary>> {
     let mut packs = Vec::new();
-    for entry in WalkDir::new(workspace)
-        .follow_links(false)
-        .into_iter()
-        .filter_entry(should_descend)
+    if workspace.join("pack.toml").is_file()
+        && let Ok(pack) = read_pack_summary(workspace, workspace)
     {
-        let entry = entry.map_err(|error| SerializableError::new("walk", error.to_string()))?;
-        if !entry.file_type().is_file() || entry.file_name() != "pack.toml" {
+        packs.push(pack);
+    }
+    for category in PACK_ROOTS {
+        let category_root = workspace.join(category);
+        if !category_root.is_dir() {
             continue;
         }
-        let root = entry
-            .path()
-            .parent()
-            .ok_or_else(|| SerializableError::new("invalid_pack", "pack.toml has no parent"))?;
-        packs.push(read_pack_summary(workspace, root)?);
+        for entry in WalkDir::new(category_root)
+            .follow_links(false)
+            .into_iter()
+            .filter_entry(should_descend)
+        {
+            let entry = entry.map_err(|error| SerializableError::new("walk", error.to_string()))?;
+            if !entry.file_type().is_file() || entry.file_name() != "pack.toml" {
+                continue;
+            }
+            let root = entry
+                .path()
+                .parent()
+                .ok_or_else(|| SerializableError::new("invalid_pack", "pack.toml has no parent"))?;
+            if let Ok(pack) = read_pack_summary(workspace, root) {
+                packs.push(pack);
+            }
+        }
     }
     packs.sort_by(|left, right| left.name.cmp(&right.name).then(left.id.cmp(&right.id)));
     Ok(packs)
@@ -71,7 +86,8 @@ fn read_pack_summary(workspace: &Path, root: &Path) -> CommandResult<PackSummary
     pack.format()
         .map_err(|error| SerializableError::new("invalid_pack", error.to_string()))?;
     let index: Index = match fs::read_to_string(root.join(&pack.index.file)) {
-        Ok(source) => toml::from_str(&source)?,
+        // Generated state may be temporarily malformed while being refreshed.
+        Ok(source) => toml::from_str(&source).unwrap_or_default(),
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => Index::default(),
         Err(error) => return Err(error.into()),
     };
@@ -236,6 +252,11 @@ mod tests {
         std::fs::write(root.join("index.toml"), "hash-format = \"sha512\"\n").unwrap();
         let packs = discover_packs(directory.path()).unwrap();
         assert_eq!(packs.len(), 1);
+        std::fs::write(root.join("index.toml"), "broken").unwrap();
+        assert_eq!(
+            discover_packs(directory.path()).unwrap()[0].indexed_files,
+            0
+        );
         assert_eq!(packs[0].id, "modpacks/example/1.21");
         assert_eq!(packs[0].minecraft_version.as_deref(), Some("1.21"));
     }
