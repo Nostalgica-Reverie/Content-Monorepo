@@ -41,6 +41,24 @@ body {
   grid-template-columns: var(--rail-w) 0 minmax(0, 1fr);
 }
 
+/* Sidebar on the right. The grid is named areas, so moving it is a template
+   swap rather than reordering the DOM — which keeps tab order and screen
+   reader order matching the visual order without any extra markup. */
+.workbench--side-right {
+  grid-template-columns: var(--rail-w) minmax(0, 1fr) auto;
+  grid-template-areas:
+    "title  title  title"
+    "rail   editor side"
+    "status status status";
+}
+.workbench--side-right.workbench--side-hidden {
+  grid-template-columns: var(--rail-w) minmax(0, 1fr) 0;
+}
+/* The resize handle sits between editor and sidebar, so it flips sides too. */
+.workbench--side-right .side-resize {
+  order: -1;
+}
+
 /* --- Title bar ---------------------------------------------------- */
 
 .titlebar {
@@ -332,7 +350,7 @@ body {
 .side-section__chevron {
   flex: none;
   color: var(--muted);
-  transition: transform 0.12s ease;
+  transition: transform var(--motion-fast) var(--ease-standard);
 }
 .side-section__chevron--collapsed {
   transform: rotate(-90deg);

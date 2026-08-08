@@ -379,3 +379,200 @@ struct FileResponse {
     #[serde(default)]
     size: u64,
 }
+
+/// Modrinth's `/v2/search`, shaped into [`BrowsePage`].
+///
+/// Facets are Modrinth's filter syntax: an array of OR-groups that are ANDed
+/// together, so `[["categories:fabric"],["versions:1.21.1"]]` means "fabric
+/// AND 1.21.1". Building them here rather than in the UI keeps the encoding —
+/// and the `modrinth_search_loaders` expansion that makes a Quilt pack also
+/// match Fabric mods — in one place.
+impl<T: Transport> crate::ProviderBrowser for ModrinthClient<T> {
+    fn search(&self, query: &crate::BrowseQuery) -> Result<crate::BrowsePage, ProviderError> {
+        let mut url = self.endpoint(&["search"])?;
+        let mut facets: Vec<Vec<String>> = Vec::new();
+        // Expanded, not passed through: a Quilt pack runs Fabric mods and a
+        // NeoForge pack runs Forge mods, so searching for only the declared
+        // loader would hide most of what the pack can actually use.
+        let loaders = search_loaders(&query.loaders, false);
+        if !loaders.is_empty() {
+            facets.push(
+                loaders
+                    .iter()
+                    .map(|loader| format!("categories:{loader}"))
+                    .collect(),
+            );
+        }
+        if !query.game_versions.is_empty() {
+            facets.push(
+                query
+                    .game_versions
+                    .iter()
+                    .map(|version| format!("versions:{version}"))
+                    .collect(),
+            );
+        }
+        facets.push(vec![format!(
+            "project_type:{}",
+            query.project_type.as_deref().unwrap_or("mod")
+        )]);
+        {
+            let mut pairs = url.query_pairs_mut();
+            pairs.append_pair("query", &query.text);
+            pairs.append_pair("offset", &query.offset.to_string());
+            pairs.append_pair("limit", &query.limit_or_default().to_string());
+            pairs.append_pair(
+                "facets",
+                &serde_json::to_string(&facets).expect("facet list serializes"),
+            );
+        }
+        let response: SearchResponse = self.get_json(url)?;
+        Ok(crate::BrowsePage {
+            projects: response.hits.into_iter().map(Into::into).collect(),
+            total: response.total_hits,
+            offset: query.offset,
+        })
+    }
+
+    fn project(&self, id: &str) -> Result<crate::BrowseDetail, ProviderError> {
+        let detail: ProjectDetailResponse = self.get_json(self.endpoint(&["project", id])?)?;
+        Ok(crate::BrowseDetail {
+            project: crate::BrowseProject {
+                page_url: format!("https://modrinth.com/mod/{}", detail.slug),
+                id: detail.id,
+                slug: detail.slug,
+                title: detail.title,
+                summary: detail.description,
+                icon_url: detail.icon_url.filter(|url| !url.is_empty()),
+                // The project endpoint has no author field; the search hit
+                // that led here carries it, so the UI keeps what it had.
+                author: String::new(),
+                downloads: detail.downloads,
+                loaders: detail.loaders,
+                game_versions: detail.game_versions,
+                license: detail.license.map(|license| {
+                    if license.name.is_empty() {
+                        license.id
+                    } else {
+                        license.name
+                    }
+                }),
+                legacy_page_url: None,
+            },
+            body: detail.body,
+            body_format: crate::BodyFormat::Markdown,
+            gallery: detail
+                .gallery
+                .into_iter()
+                .map(|image| crate::GalleryImage {
+                    url: image.url,
+                    title: image.title.unwrap_or_default(),
+                    description: image.description.unwrap_or_default(),
+                })
+                .collect(),
+            source_url: detail.source_url.filter(|url| !url.is_empty()),
+            issues_url: detail.issues_url.filter(|url| !url.is_empty()),
+            wiki_url: detail.wiki_url.filter(|url| !url.is_empty()),
+            discord_url: detail.discord_url.filter(|url| !url.is_empty()),
+        })
+    }
+}
+
+#[derive(Deserialize)]
+struct SearchResponse {
+    #[serde(default)]
+    hits: Vec<SearchHit>,
+    #[serde(default)]
+    total_hits: u64,
+}
+
+#[derive(Deserialize)]
+struct SearchHit {
+    project_id: String,
+    slug: String,
+    title: String,
+    #[serde(default)]
+    description: String,
+    #[serde(default)]
+    icon_url: Option<String>,
+    #[serde(default)]
+    author: String,
+    #[serde(default)]
+    downloads: u64,
+    #[serde(default)]
+    categories: Vec<String>,
+    #[serde(default)]
+    versions: Vec<String>,
+    #[serde(default)]
+    license: Option<String>,
+}
+
+impl From<SearchHit> for crate::BrowseProject {
+    fn from(hit: SearchHit) -> Self {
+        Self {
+            page_url: format!("https://modrinth.com/mod/{}", hit.slug),
+            id: hit.project_id,
+            slug: hit.slug,
+            title: hit.title,
+            summary: hit.description,
+            // Modrinth returns an empty string rather than omitting the field
+            // when a project has no icon.
+            icon_url: hit.icon_url.filter(|url| !url.is_empty()),
+            author: hit.author,
+            downloads: hit.downloads,
+            loaders: hit.categories,
+            game_versions: hit.versions,
+            license: hit.license,
+            legacy_page_url: None,
+        }
+    }
+}
+
+/// One Modrinth project, from `/v2/project/{id}`.
+#[derive(Deserialize)]
+struct ProjectDetailResponse {
+    id: String,
+    slug: String,
+    title: String,
+    #[serde(default)]
+    description: String,
+    #[serde(default)]
+    body: String,
+    #[serde(default)]
+    icon_url: Option<String>,
+    #[serde(default)]
+    downloads: u64,
+    #[serde(default)]
+    loaders: Vec<String>,
+    #[serde(default)]
+    game_versions: Vec<String>,
+    #[serde(default)]
+    license: Option<LicenseResponse>,
+    #[serde(default)]
+    gallery: Vec<GalleryResponse>,
+    #[serde(default)]
+    source_url: Option<String>,
+    #[serde(default)]
+    issues_url: Option<String>,
+    #[serde(default)]
+    wiki_url: Option<String>,
+    #[serde(default)]
+    discord_url: Option<String>,
+}
+
+#[derive(Deserialize)]
+struct LicenseResponse {
+    #[serde(default)]
+    id: String,
+    #[serde(default)]
+    name: String,
+}
+
+#[derive(Deserialize)]
+struct GalleryResponse {
+    url: String,
+    #[serde(default)]
+    title: Option<String>,
+    #[serde(default)]
+    description: Option<String>,
+}

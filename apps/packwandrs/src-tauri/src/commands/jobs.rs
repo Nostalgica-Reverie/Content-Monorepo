@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::future::Future;
 use std::sync::Arc;
 
@@ -30,7 +30,12 @@ pub struct JobRecord {
     pub status: JobStatus,
     pub fraction: f64,
     pub message: Option<String>,
-    pub logs: Vec<String>,
+    /// Bounded ring of the most recent lines. A `VecDeque` rather than a
+    /// `Vec` because trimming to the cap happens on *every* line past it, and
+    /// `Vec::remove(0)` shifts the whole buffer each time — a launch that
+    /// logs the game's stdout does that thousands of times. Serializes as a
+    /// JSON array exactly as the `Vec` did, so the frontend is unaffected.
+    pub logs: VecDeque<String>,
     pub error: Option<SerializableError>,
 }
 
@@ -71,9 +76,9 @@ impl JobContext {
     pub async fn log(&self, line: impl Into<String>) {
         let line = line.into();
         if let Some(entry) = self.manager.entries.write().await.get_mut(&self.id) {
-            entry.record.logs.push(line.clone());
+            entry.record.logs.push_back(line.clone());
             if entry.record.logs.len() > 2_000 {
-                entry.record.logs.remove(0);
+                entry.record.logs.pop_front();
             }
         }
         let _ = emit_job_log(&self.app, self.id.clone(), line);
@@ -111,7 +116,7 @@ impl JobManager {
             status: JobStatus::Running,
             fraction: 0.0,
             message: None,
-            logs: Vec::new(),
+            logs: VecDeque::new(),
             error: None,
         };
         self.entries.write().await.insert(

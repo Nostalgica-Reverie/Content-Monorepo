@@ -409,25 +409,31 @@ onBeforeUnmount(() => {
       <button type="submit">Search</button>
       <button v-if="searchOpen" type="button" @click="searchOpen = false">Close</button>
     </form>
-    <div v-if="searchOpen" class="editor-search-results">
-      <button v-for="result in searchResults" :key="`${result.path}:${result.line}:${result.column}`" type="button" @click="openSearchResult(result)">
-        <strong>{{ result.path }}:{{ result.line }}</strong><span>{{ result.preview }}</span>
-      </button>
-      <p v-if="searchQuery && !searchResults.length && !busy">No matches.</p>
-    </div>
-    <div v-if="tabs.length" class="document-tabs" role="tablist">
+    <Transition name="slide-fade">
+      <div v-if="searchOpen" class="editor-search-results">
+        <button v-for="result in searchResults" :key="`${result.path}:${result.line}:${result.column}`" type="button" @click="openSearchResult(result)">
+          <strong>{{ result.path }}:{{ result.line }}</strong><span>{{ result.preview }}</span>
+        </button>
+        <p v-if="searchQuery && !searchResults.length && !busy">No matches.</p>
+      </div>
+    </Transition>
+    <TransitionGroup v-if="tabs.length" tag="div" name="tab" class="document-tabs" role="tablist">
       <button v-for="path in tabs" :key="path" class="document-tab" :class="{ active: path === activePath }" type="button" @click="switchTo(path)">
         <span>{{ name(path) }}</span>
         <span v-if="documents.get(path) && dirty(documents.get(path)!)" class="document-tab__dirty">*</span>
         <span class="document-tab__close" title="Close" @click.stop="closeDocument(path)">&times;</span>
       </button>
-    </div>
-    <div v-if="error" class="packwand-editor-error">{{ error }}</div>
-    <div v-if="active?.conflicted" class="packwand-editor-conflict">
-      <span>{{ name(active.path) }} changed on disk while you were editing it.</span>
-      <button type="button" @click="reloadActive">Reload from disk</button>
-      <button type="button" @click="active.conflicted = false">Keep my version</button>
-    </div>
+    </TransitionGroup>
+    <Transition name="fade">
+      <div v-if="error" class="packwand-editor-error">{{ error }}</div>
+    </Transition>
+    <Transition name="slide-fade">
+      <div v-if="active?.conflicted" class="packwand-editor-conflict">
+        <span>{{ name(active.path) }} changed on disk while you were editing it.</span>
+        <button type="button" @click="reloadActive">Reload from disk</button>
+        <button type="button" @click="active.conflicted = false">Keep my version</button>
+      </div>
+    </Transition>
     <div v-if="diffOpen" class="packwand-diff-heading"><strong>{{ diffTitle }}</strong><button type="button" @click="closeDiff">Close diff</button></div>
     <div v-show="diffOpen" ref="diffHost" class="packwand-monaco packwand-diff" />
     <div v-show="!diffOpen && active?.kind === 'text' && !error" ref="host" class="packwand-monaco" />

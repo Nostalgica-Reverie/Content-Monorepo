@@ -1,7 +1,22 @@
-import type { InstanceStatusPayload, InstanceSummary, JobRecord } from '../types'
+import type { CreateInstanceSpec, InstanceContent, InstanceExportResult, InstanceFileEntry, InstanceSettings, InstanceStatusPayload, InstanceSummary, JobRecord } from '../types'
 import { call } from './core'
 
 export const instancesList = () => call<InstanceSummary[]>('instances_list')
+export const instancesGet = (id: string) => call<InstanceSummary>('instances_get', { id })
+export const instancesIcon = (id: string) => call<number[] | null>('instances_icon', { id })
+export const instancesImage = (id: string, kind: 'icon' | 'background') => call<number[] | null>('instances_image', { id, kind })
+export const instancesCreate = (spec: CreateInstanceSpec) => call<InstanceSummary>('instances_create', { spec })
+export const instancesImport = (archive: string, format: 'modrinth' | 'curse_forge') => call<InstanceSummary>('instances_import', { archive, format })
+export const instancesExport = (id: string, format: 'modrinth' | 'curse_forge', output?: string) => call<InstanceExportResult>('instances_export', { id, format, output })
+export const instancesEdit = (id: string, patch: { name?: string; icon?: string | null; group?: string | null; settings?: Partial<Record<keyof InstanceSettings, unknown>> }) => call<InstanceSummary>('instances_edit', { id, patch })
+export const instancesDelete = (id: string, deleteFiles = false) => call<void>('instances_delete', { id, deleteFiles })
+export const instancesInstall = (id: string) => call<JobRecord>('instances_install', { id })
+export const instancesContentList = (id: string) => call<InstanceContent[]>('instances_content_list', { id })
+export const instancesContentToggle = (id: string, path: string) => call<string>('instances_content_toggle', { id, path })
+export const instancesContentRemove = (id: string, path: string) => call<void>('instances_content_remove', { id, path })
+export const instancesFilesList = (id: string) => call<InstanceFileEntry[]>('instances_files_list', { id })
+export const instancesFileRead = (id: string, path: string) => call<string>('instances_file_read', { id, path })
+export const instancesFileWrite = (id: string, path: string, content: string) => call<void>('instances_file_write', { id, path, content })
 export const instancesStatusList = () => call<InstanceStatusPayload[]>('instances_status_list')
 export const instancesLaunch = (id: string) => call<JobRecord>('instances_launch', { id })
 export const instancesStop = (id: string) => call<boolean>('instances_stop', { id })

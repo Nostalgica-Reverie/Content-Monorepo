@@ -278,7 +278,7 @@ fn curseforge_open(args: &ArgMatches) -> Result {
     let root = std::env::current_dir()?;
     let workspace = Workspace::open(&root)?;
     let path = metadata_path(&workspace, required(args, "name")?)?;
-    let metadata: Mod = toml::from_str(&fs::read_to_string(
+    let metadata: Mod = serde_json::from_str(&fs::read_to_string(
         root.join(path.replace('/', std::path::MAIN_SEPARATOR_STR)),
     )?)?;
     let project_id = metadata
@@ -287,7 +287,7 @@ fn curseforge_open(args: &ArgMatches) -> Result {
         .and_then(|table| table.get("project-id"))
         .and_then(|value| {
             value
-                .as_integer()
+                .as_i64()
                 .map(|id| id.to_string())
                 .or_else(|| value.as_str().map(str::to_owned))
         })

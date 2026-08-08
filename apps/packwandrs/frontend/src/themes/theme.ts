@@ -1,5 +1,5 @@
 import { builtinThemeMap, builtinThemes } from './builtins'
-import { validateHexColour, validateThemeId } from '@/core/packwand'
+import { contrastRatio, contrastRequirements, validateHexColour, validateThemeId } from '@/core/packwand'
 import { themeTokenNames, type PackwandTheme, type ResolvedTheme, type ThemeTokenName, type ThemeValidation } from './types'
 
 export function validateTheme(value: unknown): ThemeValidation {
@@ -31,25 +31,23 @@ export function validateTheme(value: unknown): ThemeValidation {
   if (theme.id?.startsWith('builtin.')) warnings.push('Bundled theme IDs are reserved; imported themes will be copied to a user.* ID.')
   if (!errors.length) {
     const resolved = resolveTheme(theme as PackwandTheme)
-    for (const [foreground, background, label, minimum] of [
-      ['text', 'bg', 'body text', 4.5], ['text-strong', 'surface', 'strong text', 4.5], ['accent', 'bg', 'accent controls', 3],
-    ] as const) {
-      const ratio = contrast(resolved.colors[foreground], resolved.colors[background])
-      if (ratio < minimum) warnings.push(`${label} contrast is ${ratio.toFixed(2)}:1; target at least ${minimum}:1.`)
+    for (const { foreground, background, label, minimum } of contrastRequirements()) {
+      const ratio = contrastRatio(
+        resolved.colors[foreground as ThemeTokenName],
+        resolved.colors[background as ThemeTokenName],
+      )
+      if (ratio === null) warnings.push(`${label} contrast could not be measured.`)
+      else if (ratio < minimum) warnings.push(`${label} contrast is ${ratio.toFixed(2)}:1; target at least ${minimum}:1.`)
     }
   }
   return { valid: errors.length === 0, errors, warnings }
 }
 
-function contrast(left: string, right: string) {
-  const luminance = (color: string) => {
-    const channels = [1, 3, 5].map(index => Number.parseInt(color.slice(index, index + 2), 16) / 255)
-      .map(value => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4)
-    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]
-  }
-  const values = [luminance(left), luminance(right)].sort((a, b) => b - a)
-  return (values[0] + 0.05) / (values[1] + 0.05)
-}
+// Contrast now lives in `packwand/theme.gleam`. It was reimplemented here in
+// TypeScript, which is exactly the sort of maths that drifts between two
+// copies; the Gleam one is covered by tests pinned to the WCAG anchors
+// (21:1 black-on-white, 1:1 self) and treats an unparseable colour as a
+// failure rather than `NaN`.
 
 export function resolveTheme(theme: PackwandTheme): ResolvedTheme {
   const base = theme.extends ? builtinThemeMap.get(theme.extends) : undefined

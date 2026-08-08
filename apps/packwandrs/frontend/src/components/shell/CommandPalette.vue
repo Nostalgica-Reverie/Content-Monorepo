@@ -63,35 +63,39 @@ async function accept(command = matches.value[cursor.value]) {
 </script>
 
 <template>
-  <div v-if="open" class="palette-backdrop" @click.self="emit('close')">
-    <div class="palette" role="dialog" aria-modal="true" aria-label="Command palette">
-      <input
-        ref="input"
-        v-model="query"
-        class="palette__input"
-        placeholder="Search commands, projects, and pack targets…"
-        spellcheck="false"
-        @keydown.down.prevent="move(1)"
-        @keydown.up.prevent="move(-1)"
-        @keydown.enter.prevent="accept()"
-        @keydown.esc.prevent="emit('close')"
-      />
-      <div class="palette__list">
-        <p v-if="!rows.length" class="palette__empty">No matching commands.</p>
-        <template v-for="(row, index) in rows" :key="row.command.id">
-          <p v-if="row.header" class="palette__group">{{ row.header }}</p>
-          <button
-            class="palette__item"
-            :class="{ active: index === cursor }"
-            @click="accept(row.command)"
-            @mouseenter="cursor = index"
-          >
-            <AppIcon :name="row.command.icon" :size="15" class="palette__item-icon" />
-            <span class="palette__item-label">{{ row.command.label }}</span>
-            <span v-if="row.command.hint" class="palette__item-hint">{{ row.command.hint }}</span>
-          </button>
-        </template>
-      </div>
+  <Transition name="fade">
+    <div v-if="open" class="palette-backdrop" @click.self="emit('close')">
+      <Transition name="scale-fade" appear>
+        <div class="palette" role="dialog" aria-modal="true" aria-label="Command palette">
+          <input
+            ref="input"
+            v-model="query"
+            class="palette__input"
+            placeholder="Search commands, projects, and pack targets…"
+            spellcheck="false"
+            @keydown.down.prevent="move(1)"
+            @keydown.up.prevent="move(-1)"
+            @keydown.enter.prevent="accept()"
+            @keydown.esc.prevent="emit('close')"
+          />
+          <div class="palette__list">
+            <p v-if="!rows.length" class="palette__empty">No matching commands.</p>
+            <template v-for="(row, index) in rows" :key="row.command.id">
+              <p v-if="row.header" class="palette__group">{{ row.header }}</p>
+              <button
+                class="palette__item"
+                :class="{ active: index === cursor }"
+                @click="accept(row.command)"
+                @mouseenter="cursor = index"
+              >
+                <AppIcon :name="row.command.icon" :size="15" class="palette__item-icon" />
+                <span class="palette__item-label">{{ row.command.label }}</span>
+                <span v-if="row.command.hint" class="palette__item-hint">{{ row.command.hint }}</span>
+              </button>
+            </template>
+          </div>
+        </div>
+      </Transition>
     </div>
-  </div>
+  </Transition>
 </template>

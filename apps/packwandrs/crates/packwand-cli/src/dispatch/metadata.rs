@@ -13,7 +13,7 @@ pub(super) fn list(args: &ArgMatches) -> Result {
         .iter()
         .filter(|item| item.metafile && item.alias.is_none())
     {
-        let metadata: Mod = toml::from_str(&fs::read_to_string(
+        let metadata: Mod = serde_json::from_str(&fs::read_to_string(
             item.file.replace('/', std::path::MAIN_SEPARATOR_STR),
         )?)?;
         if side.is_some_and(|side| metadata.side != side && metadata.side != "both") {
@@ -146,11 +146,15 @@ struct ModListEntry {
     platforms: Vec<String>,
 }
 
-pub(super) fn refresh() -> Result {
+pub(super) fn refresh(args: &ArgMatches) -> Result {
     let mut workspace = Workspace::open(std::env::current_dir()?)?;
+    if args.get_flag("no-cache") {
+        workspace.disable_cache();
+    }
     let report = workspace.refresh_metadata_index()?;
+    let (hits, misses) = workspace.cache_stats();
     println!(
-        "refreshed index: {} added, {} updated, {} removed",
+        "refreshed index: {} added, {} updated, {} removed ({misses} read, {hits} cached)",
         report.added, report.updated, report.removed
     );
     Ok(())
@@ -286,7 +290,7 @@ fn metadata_slugs(directory: &Path) -> Result<Vec<String>> {
         let entry = entry?;
         if entry.file_type()?.is_file() {
             let name = entry.file_name().to_string_lossy().into_owned();
-            if let Some(slug) = name.strip_suffix(".pw.toml") {
+            if let Some(slug) = name.strip_suffix(".pw.json") {
                 slugs.push(slug.into());
             }
         }
@@ -330,7 +334,7 @@ pub(super) fn rehash(args: &ArgMatches) -> Result {
 }
 
 pub(super) fn metadata_path(workspace: &Workspace, name: &str) -> Result<String> {
-    let normalized = name.trim_end_matches(".pw.toml");
+    let normalized = name.trim_end_matches(".pw.json");
     let matches = workspace
         .index()
         .files
@@ -338,7 +342,7 @@ pub(super) fn metadata_path(workspace: &Workspace, name: &str) -> Result<String>
         .filter(|item| item.metafile && item.alias.is_none())
         .filter(|item| {
             item.file == name
-                || item.file.trim_end_matches(".pw.toml") == normalized
+                || item.file.trim_end_matches(".pw.json") == normalized
                 || Path::new(&item.file)
                     .file_stem()
                     .and_then(|stem| stem.to_str())

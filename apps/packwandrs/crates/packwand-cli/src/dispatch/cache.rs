@@ -157,12 +157,10 @@ fn referenced_download_hashes(root: PathBuf) -> Result<std::collections::BTreeSe
         })
     {
         let entry = entry?;
-        if !entry.file_type().is_file()
-            || !entry.file_name().to_string_lossy().ends_with(".pw.toml")
-        {
+        if !entry.file_type().is_file() || !packwand_pack::metafile::is_metafile(entry.path()) {
             continue;
         }
-        let metadata: Mod = toml::from_str(&fs::read_to_string(entry.path())?)?;
+        let metadata: Mod = serde_json::from_str(&fs::read_to_string(entry.path())?)?;
         if !metadata.download.hash.is_empty() {
             hashes.insert(metadata.download.hash.to_ascii_lowercase());
         }

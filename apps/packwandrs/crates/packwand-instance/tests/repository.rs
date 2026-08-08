@@ -6,8 +6,9 @@ use std::fs;
 use std::path::PathBuf;
 
 use packwand_instance::{
-    FsInstanceRepository, InstanceError, InstanceRepository, InstanceSpec, ListEntry, MemoryLimits,
-    SCHEMA_VERSION,
+    FsInstanceRepository, FsUserInstanceRepository, InstallStage, Instance, InstanceError,
+    InstanceRepository, InstanceSource, InstanceSpec, ListEntry, MemoryLimits, SCHEMA_VERSION,
+    USER_INSTANCE_SCHEMA_VERSION,
 };
 
 fn spec(id: &str) -> InstanceSpec {
@@ -164,4 +165,51 @@ fn spec_with_unknown_field_is_rejected() {
         "main_class": "Main", "unknown_field": true
     }"#;
     assert!(serde_json::from_str::<InstanceSpec>(json).is_err());
+}
+
+#[test]
+fn user_instance_stage_transitions_round_trip() {
+    let root = tempfile::tempdir().unwrap();
+    let repo = FsUserInstanceRepository::new(root.path().to_path_buf());
+    let mut instance = Instance::new(
+        "test".into(),
+        "Test".into(),
+        InstanceSource::Owned,
+        "1.21.1".into(),
+        "fabric".into(),
+        Some("0.16.0".into()),
+        1,
+    );
+    repo.create(&instance).unwrap();
+    instance.stage = InstallStage::Installing;
+    repo.write(&instance).unwrap();
+    assert_eq!(repo.get("test").unwrap().stage, InstallStage::Installing);
+    instance.stage = InstallStage::Failed {
+        message: "network".into(),
+    };
+    repo.write(&instance).unwrap();
+    assert!(matches!(
+        repo.get("test").unwrap().stage,
+        InstallStage::Failed { .. }
+    ));
+    instance.stage = InstallStage::Ready;
+    repo.write(&instance).unwrap();
+    assert_eq!(repo.get("test").unwrap().stage, InstallStage::Ready);
+}
+
+#[test]
+fn user_instance_refuses_future_schema() {
+    let root = tempfile::tempdir().unwrap();
+    let repo = FsUserInstanceRepository::new(root.path().to_path_buf());
+    let directory = root.path().join("instances/future");
+    fs::create_dir_all(&directory).unwrap();
+    fs::write(
+        directory.join("instance.json"),
+        format!("{{\"schemaVersion\":{}}}", USER_INSTANCE_SCHEMA_VERSION + 1),
+    )
+    .unwrap();
+    assert!(matches!(
+        repo.get("future"),
+        Err(InstanceError::UnsupportedSchemaVersion { .. })
+    ));
 }

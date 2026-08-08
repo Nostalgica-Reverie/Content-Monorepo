@@ -109,9 +109,7 @@ fn write_modlist(root: &Path) -> Result<usize> {
     let mut count = 0usize;
     for entry in fs::read_dir(root.join("mods"))? {
         let entry = entry?;
-        if !entry.file_type()?.is_file()
-            || !entry.file_name().to_string_lossy().ends_with(".pw.toml")
-        {
+        if !entry.file_type()?.is_file() || !packwand_pack::metafile::is_metafile(entry.path()) {
             continue;
         }
         let metadata: Mod = match toml::from_str(&fs::read_to_string(entry.path())?) {
@@ -125,7 +123,7 @@ fn write_modlist(root: &Path) -> Result<usize> {
             .update
             .get("modrinth")
             .and_then(|table| table.get("mod-id"))
-            .and_then(toml::Value::as_str)
+            .and_then(serde_json::Value::as_str)
             .map(|id| format!("https://modrinth.com/mod/{id}"))
             .unwrap_or_else(|| metadata.download.url.clone());
         let line = format!("- [{}]({url})", metadata.name);
@@ -282,7 +280,7 @@ fn subdir_entry(root: &Path, subdir: &Path) -> Result<Value> {
     let mod_count = match fs::read_dir(subdir.join("mods")) {
         Ok(entries) => entries
             .flatten()
-            .filter(|entry| entry.file_name().to_string_lossy().ends_with(".pw.toml"))
+            .filter(|entry| packwand_pack::metafile::is_metafile(entry.path()))
             .count(),
         Err(_) => 0,
     };
@@ -291,7 +289,7 @@ fn subdir_entry(root: &Path, subdir: &Path) -> Result<Value> {
         "path": display_relative(root, subdir),
         "platform": if key.ends_with("-cf") { "curseforge" } else if key.ends_with("-mr") { "modrinth" } else { "" },
         "mod_count": mod_count,
-        "has_index": subdir.join("index.toml").is_file(),
+        "has_index": subdir.join("index.json").is_file(),
         "has_pack": subdir.join("pack.toml").is_file(),
     }))
 }
@@ -416,7 +414,7 @@ mod tests {
         let root = tempfile::tempdir().unwrap();
         fs::create_dir(root.path().join("mods")).unwrap();
         fs::write(
-            root.path().join("mods/example.pw.toml"),
+            root.path().join("mods/example.pw.json"),
             r#"name = "Example"
 filename = "example.jar"
 side = "client"

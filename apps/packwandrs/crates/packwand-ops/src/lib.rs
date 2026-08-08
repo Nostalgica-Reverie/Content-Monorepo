@@ -18,6 +18,14 @@ use packwand_providers::{
 use serde::{Deserialize, Serialize};
 use transaction::{FileMutation, FileTransaction};
 
+/// One metadata file a format migration moves, as pack-relative paths.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MetadataRename {
+    pub from: String,
+    pub to: String,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct AddOutcome {
     pub metadata_path: String,
@@ -98,7 +106,7 @@ fn prefetch_modrinth(
         let Ok((_, source)) = safe_relative_path(root, path) else {
             continue;
         };
-        let Ok(metadata) = read_toml::<Mod>(&source) else {
+        let Ok(metadata) = read_json::<Mod>(&source) else {
             continue;
         };
         if metadata.pin || !metadata.update.contains_key("modrinth") {
@@ -207,7 +215,7 @@ where
     let mut planned: Vec<Planned> = Vec::new();
     for path in paths {
         let (_, source) = safe_relative_path(&root, &path)?;
-        let metadata = read_toml::<Mod>(&source)?;
+        let metadata = read_json::<Mod>(&source)?;
         let name = metadata.name.clone();
         let old_filename = metadata.filename.clone();
         if metadata.pin {
@@ -350,22 +358,59 @@ pub struct Workspace {
     index_path: PathBuf,
     pack: Pack,
     index: Index,
+    /// Per-file facts carried between runs so an unchanged pack is not
+    /// re-read and re-hashed. Always present; `--no-cache` supplies a
+    /// disabled one rather than an `Option`, so there is a single code path.
+    cache: packwand_cache::ContentCache,
 }
 
 impl Workspace {
     pub fn open(root: impl Into<PathBuf>) -> Result<Self, OpsError> {
+        Self::open_with(root, false)
+    }
+
+    /// Opens a pack for a format migration, tolerating an index that will not
+    /// parse.
+    ///
+    /// The index is a generated artifact, and migration rebuilds it from disk
+    /// regardless of what was there before — so refusing to open a pack whose
+    /// index is stale or half-written would block the one operation that fixes
+    /// it. Every other caller keeps the strict behaviour, because a command
+    /// like `export` reading an empty index would silently produce a wrong
+    /// result rather than an error.
+    pub fn open_for_migration(root: impl Into<PathBuf>) -> Result<Self, OpsError> {
+        Self::open_with(root, true)
+    }
+
+    fn open_with(root: impl Into<PathBuf>, tolerate_broken_index: bool) -> Result<Self, OpsError> {
         let root = root.into();
         let pack_path = root.join("pack.toml");
         let pack = read_toml::<Pack>(&pack_path)?;
         pack.format()
             .map_err(|error| OpsError::PackFormat(error.to_string()))?;
         let (_, index_path) = safe_relative_path(&root, &pack.index.file)?;
-        let index = match fs::read_to_string(&index_path) {
-            Ok(source) => toml::from_str(&source).map_err(|source| OpsError::Toml {
+        // A missing index is not an error: it is a generated artifact, so the
+        // first command run in a fresh checkout simply rebuilds it.
+        //
+        // The index is JSON from generation 27 and TOML before it, and which
+        // one is on disk is decided by the pack's own `[index] file`. Reading
+        // both is what lets `migrate format` open a generation-26 pack in
+        // order to convert it — the same reason `MINIMUM_GENERATION` exists.
+        let legacy_index = packwand_pack::metafile::is_legacy_index(&pack.index.file);
+        let parsed = match fs::read(&index_path) {
+            Ok(source) if legacy_index => std::str::from_utf8(&source)
+                .map_err(|_| OpsError::PackFormat(format!("{} is not UTF-8", index_path.display())))
+                .and_then(|source| {
+                    toml::from_str(source).map_err(|source| OpsError::Toml {
+                        path: index_path.clone(),
+                        source,
+                    })
+                }),
+            Ok(source) => serde_json::from_slice(&source).map_err(|source| OpsError::Json {
                 path: index_path.clone(),
                 source,
-            })?,
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Index::default(),
+            }),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(Index::default()),
             Err(source) => {
                 return Err(OpsError::Io {
                     path: index_path,
@@ -373,10 +418,19 @@ impl Workspace {
                 });
             }
         };
+        let index = match parsed {
+            Ok(index) => index,
+            // A corrupt generated index is equivalent to a missing one for a
+            // migration, which rebuilds it either way.
+            Err(_) if tolerate_broken_index => Index::default(),
+            Err(error) => return Err(error),
+        };
+        let cache = packwand_cache::ContentCache::load(&root);
         Ok(Self {
             root,
             pack_path,
             index_path,
+            cache,
             pack,
             index,
         })
@@ -392,27 +446,103 @@ impl Workspace {
 
     /// Migrates the pack format marker without changing indexed content.
     pub fn migrate_format(&mut self) -> Result<(String, String), OpsError> {
+        let (old, new, _) = self.migrate_format_with(false)?;
+        Ok((old, new))
+    }
+
+    /// Plans the conversion to the current pack format, applying it unless
+    /// `dry_run`.
+    ///
+    /// Returns the old format, the new format, and the metadata renames the
+    /// migration performs (or would perform).
+    ///
+    /// Generation 27 moves per-mod metadata from TOML to JSON and renames the
+    /// index, so this is a whole-pack rewrite rather than a version-string
+    /// bump. It runs as a single [`FileTransaction`]: a pack containing
+    /// thousands of metadata files must never be left half-converted by an
+    /// interrupted run, because neither generation's tooling can read a pack
+    /// in that state.
+    pub fn migrate_format_with(
+        &mut self,
+        dry_run: bool,
+    ) -> Result<(String, String, Vec<MetadataRename>), OpsError> {
         let old = if self.pack.pack_format.is_empty() {
             "packwiz:1.1.0".to_owned()
         } else {
             self.pack.pack_format.clone()
         };
         let new = packwand_pack::CURRENT_PACK_FORMAT.to_owned();
-        if old == new {
-            return Ok((old, new));
+
+        let renames = self.plan_metadata_renames()?;
+        if old == new && renames.is_empty() {
+            return Ok((old, new, renames));
         }
+        if dry_run {
+            return Ok((old, new, renames));
+        }
+
+        // Convert each legacy file: parse the TOML, re-encode as JSON, write
+        // the new path, and drop the old one.
+        let mut mutations = Vec::with_capacity(renames.len() * 2);
+        for rename in &renames {
+            let source = self.root.join(&rename.from);
+            let metadata: Mod = read_toml(&source)?;
+            mutations.push(FileMutation::write(
+                self.root.join(&rename.to),
+                metadata.to_json_bytes()?,
+            ));
+            mutations.push(FileMutation::remove(source));
+        }
+
+        // Point the pack at the new index name and drop the stale index hash;
+        // the index itself is rebuilt from disk immediately afterwards.
         let mut pack = self.pack.clone();
         pack.pack_format = new.clone();
+        let previous_index_path = self.index_path.clone();
+        if packwand_pack::metafile::is_legacy_index(&pack.index.file) {
+            pack.index.file = packwand_pack::metafile::INDEX_FILE.to_owned();
+            let (_, index_path) = safe_relative_path(&self.root, &pack.index.file)?;
+            self.index_path = index_path;
+            // The generation-26 index is regenerated under the new name, so
+            // the old file is removed rather than left behind to confuse a
+            // later run into thinking the pack was never migrated.
+            mutations.push(FileMutation::remove(previous_index_path));
+        }
         pack.index.hash.clear();
-        commit_documents(
-            &self.pack_path,
-            &self.index_path,
-            &pack,
-            &self.index,
-            Vec::new(),
-        )?;
+
+        FileTransaction::new(mutations).commit()?;
         self.pack = pack;
-        Ok((old, new))
+        // Rebuild the index from what is now on disk: every metadata path and
+        // hash changed, so the previous entries are all stale.
+        self.refresh_metadata_index()?;
+        Ok((old, new, renames))
+    }
+
+    /// Every generation-26 metadata file in the pack and the path it becomes.
+    fn plan_metadata_renames(&self) -> Result<Vec<MetadataRename>, OpsError> {
+        let ignored = read_ignore_patterns(&self.root)?;
+        let mut paths = Vec::new();
+        collect_index_paths(&self.root, &self.index_path, &ignored, &mut paths)?;
+        paths.sort_by(|left, right| left.path.cmp(&right.path));
+        let mut renames = Vec::new();
+        for ScannedPath { path, .. } in paths {
+            if !packwand_pack::metafile::is_legacy_metafile(&path) {
+                continue;
+            }
+            let Some(target) = packwand_pack::metafile::migrated_path(&path) else {
+                continue;
+            };
+            if target.exists() {
+                return Err(OpsError::AlreadyExists(pack_relative_path(
+                    &self.root, &target,
+                )?));
+            }
+            renames.push(MetadataRename {
+                from: pack_relative_path(&self.root, &path)?,
+                to: pack_relative_path(&self.root, &target)?,
+            });
+        }
+        Ok(renames)
     }
 
     /// Changes a Minecraft or loader version and commits the pack document.
@@ -510,7 +640,7 @@ impl Workspace {
         if metadata_path.exists() {
             return Err(OpsError::AlreadyExists(metadata_relative));
         }
-        let metadata_bytes = metadata.to_toml()?.into_bytes();
+        let metadata_bytes = metadata.to_json_bytes()?;
         let mut index = self.index.clone();
         index.files.retain(|entry| entry.file != local_relative);
         upsert_index_file(
@@ -549,7 +679,7 @@ impl Workspace {
     ) -> Result<ImportMergeReport, OpsError> {
         let imported_root = imported_root.as_ref();
         let imported_pack: Pack = read_toml(&imported_root.join("pack.toml"))?;
-        let imported_index: Index = read_toml(&imported_root.join(&imported_pack.index.file))?;
+        let imported_index: Index = read_json(&imported_root.join(&imported_pack.index.file))?;
         let format = self
             .index
             .hash_format
@@ -603,7 +733,7 @@ impl Workspace {
         metadata: Mod,
         replace: bool,
     ) -> Result<AddOutcome, OpsError> {
-        if !relative.ends_with(".pw.toml") {
+        if !packwand_pack::metafile::is_metafile(relative) {
             return Err(OpsError::InvalidMetadataPath(relative.to_string()));
         }
         let (relative, metadata_path) = safe_relative_path(&self.root, relative)?;
@@ -614,7 +744,7 @@ impl Workspace {
         if replaced && !replace {
             return Err(OpsError::AlreadyExists(relative));
         }
-        let metadata_bytes = metadata.to_toml()?.into_bytes();
+        let metadata_bytes = metadata.to_json_bytes()?;
         let hash = hash_bytes(HashFormat::Sha512, &metadata_bytes);
         let mut index = self.index.clone();
         upsert_index_file(&mut index, &relative, hash);
@@ -643,7 +773,7 @@ impl Workspace {
             return Err(OpsError::NotFound(relative));
         }
         // Validate before staging deletion so corrupt metadata is surfaced.
-        let _: Mod = read_toml(&metadata_path)?;
+        let _: Mod = read_json(&metadata_path)?;
         let mut index = self.index.clone();
         index.files.retain(|entry| entry.file != relative);
         let mut pack = self.pack.clone();
@@ -665,7 +795,7 @@ impl Workspace {
     /// hashes as one transaction.
     pub fn set_pinned(&mut self, relative: &str, pinned: bool) -> Result<bool, OpsError> {
         let (_, metadata_path) = safe_relative_path(&self.root, relative)?;
-        let mut metadata: Mod = read_toml(&metadata_path)?;
+        let mut metadata: Mod = read_json(&metadata_path)?;
         if metadata.pin == pinned {
             return Ok(false);
         }
@@ -682,7 +812,7 @@ impl Workspace {
             )));
         }
         let (_, metadata_path) = safe_relative_path(&self.root, relative)?;
-        let mut metadata: Mod = read_toml(&metadata_path)?;
+        let mut metadata: Mod = read_json(&metadata_path)?;
         if metadata.side == side {
             return Ok(false);
         }
@@ -697,7 +827,7 @@ impl Workspace {
         resolved: ResolvedProject,
     ) -> Result<UpdateOutcome, OpsError> {
         let (relative, metadata_path) = safe_relative_path(&self.root, relative)?;
-        let existing: Mod = read_toml(&metadata_path)?;
+        let existing: Mod = read_json(&metadata_path)?;
         if existing.pin {
             return Err(OpsError::Pinned(relative));
         }
@@ -710,19 +840,23 @@ impl Workspace {
         let installed_project = match provider {
             ProviderKind::Modrinth => provider_data
                 .get("mod-id")
-                .and_then(toml::Value::as_str)
+                .and_then(serde_json::Value::as_str)
                 .map(str::to_string),
             ProviderKind::CurseForge => provider_data
                 .get("project-id")
-                .and_then(toml::Value::as_integer)
+                .and_then(serde_json::Value::as_i64)
                 .map(|id| id.to_string()),
             ProviderKind::GitHub => provider_data
                 .get("slug")
-                .and_then(toml::Value::as_str)
+                .and_then(serde_json::Value::as_str)
                 .map(str::to_string),
             ProviderKind::Forgejo | ProviderKind::GitLab => {
-                let instance = provider_data.get("instance").and_then(toml::Value::as_str);
-                let slug = provider_data.get("slug").and_then(toml::Value::as_str);
+                let instance = provider_data
+                    .get("instance")
+                    .and_then(serde_json::Value::as_str);
+                let slug = provider_data
+                    .get("slug")
+                    .and_then(serde_json::Value::as_str);
                 instance
                     .zip(slug)
                     .map(|(instance, slug)| format!("{instance}/{slug}"))
@@ -745,15 +879,15 @@ impl Workspace {
         let installed_id = match provider {
             ProviderKind::Modrinth => provider_data
                 .get("version")
-                .and_then(toml::Value::as_str)
+                .and_then(serde_json::Value::as_str)
                 .map(str::to_string),
             ProviderKind::CurseForge => provider_data
                 .get("file-id")
-                .and_then(toml::Value::as_integer)
+                .and_then(serde_json::Value::as_i64)
                 .map(|id| id.to_string()),
             ProviderKind::Forgejo | ProviderKind::GitHub | ProviderKind::GitLab => provider_data
                 .get("tag")
-                .and_then(toml::Value::as_str)
+                .and_then(serde_json::Value::as_str)
                 .map(str::to_string),
         };
         if installed_id.as_deref() == Some(resolved.version.id.as_str()) {
@@ -798,7 +932,7 @@ impl Workspace {
         resolved: ResolvedProject,
     ) -> Result<UpdateOutcome, OpsError> {
         let (relative, source) = safe_relative_path(&self.root, relative)?;
-        let existing = read_toml::<Mod>(&source)?;
+        let existing = read_json::<Mod>(&source)?;
         let old_filename = existing.filename.clone();
         let mut updated = resolved.into_mod()?;
         updated.name = existing.name;
@@ -818,18 +952,14 @@ impl Workspace {
         })
     }
 
-    /// Re-hashes one edited `.pw.toml` and updates its generated index entry.
+    /// Re-hashes one edited metadata file and updates its generated index entry.
     pub fn refresh_metadata(&mut self, relative: &str) -> Result<String, OpsError> {
         let (relative, metadata_path) = safe_relative_path(&self.root, relative)?;
         let bytes = fs::read(&metadata_path).map_err(|source| OpsError::Io {
             path: metadata_path.clone(),
             source,
         })?;
-        toml::from_str::<Mod>(
-            std::str::from_utf8(&bytes)
-                .map_err(|_| OpsError::InvalidMetadataPath(format!("{relative} is not UTF-8")))?,
-        )
-        .map_err(|source| OpsError::Toml {
+        serde_json::from_slice::<Mod>(&bytes).map_err(|source| OpsError::Json {
             path: metadata_path,
             source,
         })?;
@@ -847,7 +977,7 @@ impl Workspace {
 
     /// Rebuilds every generated index entry below the pack root.
     ///
-    /// Both ordinary files and `.pw.toml` metadata are discovered from disk, so a
+    /// Both ordinary files and `.pw.json` metadata are discovered from disk, so a
     /// rename or deletion cannot leave an export pointing at a stale index entry.
     /// Entries with an alias are preserved because they intentionally do not map
     /// one-to-one to a file on disk.
@@ -855,7 +985,11 @@ impl Workspace {
         let ignored = read_ignore_patterns(&self.root)?;
         let mut paths = Vec::new();
         collect_index_paths(&self.root, &self.index_path, &ignored, &mut paths)?;
-        paths.sort();
+        paths.sort_by(|left, right| left.path.cmp(&right.path));
+        // Split once, so the rest reads as two aligned lists rather than
+        // repeatedly reaching into a struct.
+        let keys: Vec<Option<(u64, u128)>> = paths.iter().map(|scanned| scanned.key).collect();
+        let paths: Vec<PathBuf> = paths.into_iter().map(|scanned| scanned.path).collect();
 
         let previous: BTreeMap<String, String> = self
             .index
@@ -864,35 +998,106 @@ impl Workspace {
             .filter(|entry| entry.alias.is_none())
             .map(|entry| (entry.file.clone(), entry.hash.clone()))
             .collect();
+        // Look the cache up first. Lookups are only `stat` calls, so they run
+        // in order and cost nothing worth parallelizing; what is expensive is
+        // reading and hashing, and that now happens only for files whose size
+        // or mtime moved since the last run.
+        let relatives = paths
+            .iter()
+            .map(|path| pack_relative_path(&self.root, path))
+            .collect::<Result<Vec<_>, _>>()?;
+        let cached: Vec<Option<packwand_cache::FileFacts>> = relatives
+            .iter()
+            .zip(&keys)
+            .map(|(relative, key)| {
+                let hit = key.and_then(|key| self.cache.lookup(relative, key));
+                if hit.is_some() {
+                    self.cache.note_hit_only();
+                } else {
+                    self.cache.note_miss();
+                }
+                hit
+            })
+            .collect();
+
+        // Only the misses are read and hashed, concurrently. Results stay in
+        // `paths` order — which is already sorted — so the index this writes
+        // is byte-for-byte what a full uncached pass produces.
+        let pending: Vec<usize> = cached
+            .iter()
+            .enumerate()
+            .filter(|(_, hit)| hit.is_none())
+            .map(|(index, _)| index)
+            .collect();
+        let computed = packwand_parallel::try_map(
+            &pending,
+            packwand_parallel::configured(),
+            |index| -> Result<packwand_cache::FileFacts, OpsError> {
+                let path = &paths[*index];
+                let bytes = fs::read(path).map_err(|source| OpsError::Io {
+                    path: path.clone(),
+                    source,
+                })?;
+                let json_parses = if packwand_pack::metafile::is_metafile(path) {
+                    serde_json::from_slice::<Mod>(&bytes).map_err(|source| OpsError::Json {
+                        path: path.clone(),
+                        source,
+                    })?;
+                    Some(true)
+                } else {
+                    None
+                };
+                Ok(packwand_cache::FileFacts {
+                    size: 0,
+                    modified_ns: 0,
+                    sha512: hash_bytes(HashFormat::Sha512, &bytes),
+                    is_utf8: std::str::from_utf8(&bytes).is_ok(),
+                    json_parses,
+                })
+            },
+        );
+
+        // Merge back into `paths` order, recording what was computed so the
+        // next run skips it. Failures surface by path order, not by whichever
+        // worker happened to fail first.
+        let mut facts: Vec<Option<packwand_cache::FileFacts>> = cached;
+        for (index, outcome) in pending.iter().zip(computed) {
+            facts[*index] = Some(outcome?);
+        }
+        let scanned: Vec<Result<(String, String, bool), OpsError>> = relatives
+            .iter()
+            .zip(&keys)
+            .zip(&paths)
+            .zip(facts)
+            .map(|(((relative, key), path), facts)| {
+                let facts = facts.expect("every slot is filled above");
+                // Recorded whether it was a hit or a miss: `store` keeps only
+                // paths seen this run, so an unchanged file must be carried
+                // forward or it would be dropped and rehashed next time.
+                if let Some(key) = *key {
+                    self.cache.record(relative, key, facts.clone());
+                }
+                Ok((
+                    relative.clone(),
+                    facts.sha512,
+                    packwand_pack::metafile::is_metafile(path),
+                ))
+            })
+            .collect();
+
         let mut found = BTreeSet::new();
         let mut refreshed = Vec::with_capacity(paths.len());
         let mut report = RefreshReport::default();
-        for path in paths {
-            let relative = pack_relative_path(&self.root, &path)?;
-            let bytes = fs::read(&path).map_err(|source| OpsError::Io {
-                path: path.clone(),
-                source,
-            })?;
-            let hash = hash_bytes(HashFormat::Sha512, &bytes);
+        // Drained in order, so the first failure reported is the first by
+        // path — not whichever worker happened to fail first.
+        for entry in scanned {
+            let (relative, hash, metafile) = entry?;
             match previous.get(&relative) {
                 None => report.added += 1,
                 Some(old_hash) if old_hash != &hash => report.updated += 1,
                 Some(_) => {}
             }
             found.insert(relative.clone());
-            let metafile = path
-                .file_name()
-                .and_then(|name| name.to_str())
-                .is_some_and(|name| name.ends_with(".pw.toml"));
-            if metafile {
-                let source = std::str::from_utf8(&bytes).map_err(|_| {
-                    OpsError::InvalidMetadataPath(format!("{relative} is not UTF-8"))
-                })?;
-                toml::from_str::<Mod>(source).map_err(|source| OpsError::Toml {
-                    path: path.clone(),
-                    source,
-                })?;
-            }
             refreshed.push((relative, hash, metafile));
         }
         report.removed = previous
@@ -922,7 +1127,25 @@ impl Workspace {
         commit_documents(&self.pack_path, &self.index_path, &pack, &index, Vec::new())?;
         self.pack = pack;
         self.index = index;
+        // Written only after the index commits, so a cache can never claim a
+        // file was processed by a run that then failed.
+        self.cache.store();
         Ok(report)
+    }
+
+    /// Turns the content cache off for this workspace.
+    ///
+    /// Backs `--no-cache`. The cache must never change *results*, only how
+    /// long they take, so this exists to prove that in CI by diffing a cached
+    /// run against an uncached one.
+    pub fn disable_cache(&mut self) {
+        self.cache = packwand_cache::ContentCache::disabled();
+    }
+
+    /// Cache hits and misses from the last scan.
+    #[must_use]
+    pub fn cache_stats(&self) -> (usize, usize) {
+        self.cache.stats()
     }
 
     /// Migrates index and external-download hashes as one transaction.
@@ -942,7 +1165,7 @@ impl Workspace {
         for entry in &mut index.files {
             let (_, source_path) = safe_relative_path(&self.root, &entry.file)?;
             if entry.metafile {
-                let mut metadata: Mod = read_toml(&source_path)?;
+                let mut metadata: Mod = read_json(&source_path)?;
                 if !metadata.download.url.is_empty() {
                     let bytes = transport.get(HttpRequest::get(&metadata.download.url))?;
                     if !metadata.download.hash.is_empty()
@@ -958,7 +1181,7 @@ impl Workspace {
                     metadata.download.size = bytes.len() as u64;
                     report.downloads += 1;
                 }
-                let bytes = metadata.to_toml()?.into_bytes();
+                let bytes = metadata.to_json_bytes()?;
                 entry.hash = hash_bytes(format, &bytes);
                 entry.hash_format = None;
                 mutations.push(FileMutation::write(source_path, bytes));
@@ -984,11 +1207,23 @@ impl Workspace {
     }
 }
 
+/// A file found by the index walk, with the staleness key the directory entry
+/// already carried.
+///
+/// Reading size and mtime from the `DirEntry` rather than a later
+/// `fs::metadata` matters more than it looks: on Windows a separate `metadata`
+/// call opens the file, so re-deriving it would cost one file open per file —
+/// exactly the cost the content cache exists to avoid.
+struct ScannedPath {
+    path: PathBuf,
+    key: Option<(u64, u128)>,
+}
+
 fn collect_index_paths(
     directory: &Path,
     index_path: &Path,
     ignored: &GlobSet,
-    paths: &mut Vec<PathBuf>,
+    paths: &mut Vec<ScannedPath>,
 ) -> Result<(), OpsError> {
     let entries = fs::read_dir(directory).map_err(|source| OpsError::Io {
         path: directory.to_path_buf(),
@@ -1006,7 +1241,12 @@ fn collect_index_paths(
         })?;
         if file_type.is_dir() {
             let name = entry.file_name();
+            // `.packwand` holds the content cache, which this walk writes
+            // after it finishes. Indexing it would make every refresh see a
+            // changed file and rewrite the index, so a pack could never reach
+            // a steady state.
             if name != ".git"
+                && name != ".packwand"
                 && name != ".packwand-launcher"
                 && name != "target"
                 && !ignored.is_match(&path)
@@ -1020,7 +1260,16 @@ fn collect_index_paths(
                 .is_none_or(|name| name != "pack.toml" && name != ".packwizignore")
             && !ignored.is_match(&path)
         {
-            paths.push(path);
+            let key = entry.metadata().ok().and_then(|metadata| {
+                let modified = metadata
+                    .modified()
+                    .ok()?
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .ok()?
+                    .as_nanos();
+                Some((metadata.len(), modified))
+            });
+            paths.push(ScannedPath { path, key });
         }
     }
     Ok(())
@@ -1070,6 +1319,9 @@ fn pack_relative_path(root: &Path, path: &Path) -> Result<String, OpsError> {
     Ok(parts.join("/"))
 }
 
+/// Reads a TOML document. Since generation 27 the only TOML left in a pack is
+/// `pack.toml` itself, which stays hand-authored; mod metadata and the index
+/// are JSON and go through [`read_json`].
 fn read_toml<T: for<'de> serde::Deserialize<'de>>(path: &Path) -> Result<T, OpsError> {
     let source = fs::read_to_string(path).map_err(|source| OpsError::Io {
         path: path.to_path_buf(),
@@ -1079,6 +1331,31 @@ fn read_toml<T: for<'de> serde::Deserialize<'de>>(path: &Path) -> Result<T, OpsE
         path: path.to_path_buf(),
         source,
     })
+}
+
+/// Reads a JSON document — mod metadata (`*.pw.json`) or the generated index.
+fn read_json<T: for<'de> serde::Deserialize<'de>>(path: &Path) -> Result<T, OpsError> {
+    let source = fs::read(path).map_err(|source| OpsError::Io {
+        path: path.to_path_buf(),
+        source,
+    })?;
+    serde_json::from_slice(&source).map_err(|source| OpsError::Json {
+        path: path.to_path_buf(),
+        source,
+    })
+}
+
+/// Serializes a document the way every generated JSON file in a pack is
+/// written: pretty-printed with a trailing newline.
+///
+/// Both matter for a file under version control — pretty-printing keeps a
+/// one-mod change to a few diff lines instead of one enormous line, and the
+/// trailing newline keeps diffs from ending in `\ No newline at end of file`.
+/// This matches how `packs_manifest_put` already writes `manifest.json`.
+fn to_json_bytes<T: serde::Serialize>(value: &T) -> Result<Vec<u8>, OpsError> {
+    let mut bytes = serde_json::to_vec_pretty(value)?;
+    bytes.push(b'\n');
+    Ok(bytes)
 }
 
 fn upsert_index_file(index: &mut Index, relative: &str, hash: String) {
@@ -1113,7 +1390,7 @@ fn commit_documents(
     index: &Index,
     mut mutations: Vec<FileMutation>,
 ) -> Result<(), OpsError> {
-    let index_bytes = toml::to_string(index)?.into_bytes();
+    let index_bytes = to_json_bytes(index)?;
     let format = index
         .hash_format
         .parse::<HashFormat>()
@@ -1153,7 +1430,7 @@ fn safe_relative_path(root: &Path, relative: &str) -> Result<(String, PathBuf), 
 
 fn find_metadata_path(workspace: &Workspace, selected: &str) -> Result<String, OpsError> {
     let normalized = selected.replace('\\', "/");
-    if normalized.ends_with(".pw.toml") {
+    if packwand_pack::metafile::is_metafile(&normalized) {
         return workspace
             .index()
             .files
@@ -1200,7 +1477,7 @@ fn update_request(
             table,
             table
                 .get("mod-id")
-                .and_then(toml::Value::as_str)
+                .and_then(serde_json::Value::as_str)
                 .unwrap_or("")
                 .to_owned(),
         )
@@ -1210,7 +1487,7 @@ fn update_request(
             table,
             table
                 .get("project-id")
-                .and_then(toml::Value::as_integer)
+                .and_then(serde_json::Value::as_i64)
                 .map(|value| value.to_string())
                 .unwrap_or_default(),
         )
@@ -1220,7 +1497,7 @@ fn update_request(
             table,
             table
                 .get("slug")
-                .and_then(toml::Value::as_str)
+                .and_then(serde_json::Value::as_str)
                 .unwrap_or("")
                 .to_owned(),
         )
@@ -1230,7 +1507,7 @@ fn update_request(
             table,
             table
                 .get("slug")
-                .and_then(toml::Value::as_str)
+                .and_then(serde_json::Value::as_str)
                 .unwrap_or("")
                 .to_owned(),
         )
@@ -1240,7 +1517,7 @@ fn update_request(
             table,
             table
                 .get("slug")
-                .and_then(toml::Value::as_str)
+                .and_then(serde_json::Value::as_str)
                 .unwrap_or("")
                 .to_owned(),
         )
@@ -1267,15 +1544,15 @@ fn update_request(
     };
     request.branch = table
         .get("branch")
-        .and_then(toml::Value::as_str)
+        .and_then(serde_json::Value::as_str)
         .map(str::to_owned);
     request.asset_pattern = table
         .get("regex")
-        .and_then(toml::Value::as_str)
+        .and_then(serde_json::Value::as_str)
         .map(str::to_owned);
     let instance = table
         .get("instance")
-        .and_then(toml::Value::as_str)
+        .and_then(serde_json::Value::as_str)
         .filter(|value| !value.is_empty())
         .map(str::to_owned);
     Ok((provider, request, instance))
@@ -1292,7 +1569,7 @@ fn installed_version(metadata: &Mod, provider: ProviderKind) -> Option<String> {
         value
             .as_str()
             .map(str::to_owned)
-            .or_else(|| value.as_integer().map(|value| value.to_string()))
+            .or_else(|| value.as_i64().map(|value| value.to_string()))
     })
 }
 
@@ -1354,7 +1631,7 @@ pub enum OpsError {
     },
     #[error("unsafe pack-relative path {0:?}")]
     UnsafePath(String),
-    #[error("metadata path must end in .pw.toml: {0:?}")]
+    #[error("metadata path must end in .pw.json: {0:?}")]
     InvalidMetadataPath(String),
     #[error("metadata file already exists: {0}")]
     AlreadyExists(String),
@@ -1382,6 +1659,13 @@ pub enum OpsError {
         path: PathBuf,
         source: toml::de::Error,
     },
+    #[error("failed to decode JSON at {path}: {source}")]
+    Json {
+        path: PathBuf,
+        source: serde_json::Error,
+    },
+    #[error(transparent)]
+    SerializeJson(#[from] serde_json::Error),
     #[error(transparent)]
     Serialize(#[from] toml::ser::Error),
     #[error(transparent)]

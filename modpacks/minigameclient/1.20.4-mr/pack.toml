@@ -1,11 +1,12 @@
 name = "MinigameClient"
 author = "omo50"
 version = "26.05"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
+hash = "d04d4b643fdb1fc3ae1a92c3b71aba9bb1db5a3ea7289c98e45a7304a306431b33303289fa0902ac77f75a5d1243edcb8d7ac637c4ca6d081dcda03c4ede870b"
 
 [versions]
 fabric = "0.19.3"

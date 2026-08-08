@@ -1,12 +1,12 @@
 name = "Legacy Console Edition Common Assets"
 author = "omo50, hzsa, Cjnator38"
 version = "26.06"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
-hash = "4812b3ccea798bd3168f77f3cc98504b613fcefd2c805818afce387ae49e7c3e011f18aa36c5a5881b072329b3d23e682038385774ccdb7fa2a5cdfcb279b60d"
+hash = "f2626fedb75feebfafd33f2fb966c03086db6c7dd1e2833980254b8a1b254e454336b02ab5467308931fd6f55754613f780f300c89a0a7dfac18fcb80f4da62c"
 
 [versions]
 fabric = "0.19.3"

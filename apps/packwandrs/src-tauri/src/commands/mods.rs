@@ -7,6 +7,7 @@ use serde::Serialize;
 use tauri::{AppHandle, State};
 
 use crate::commands::jobs::JobRecord;
+use crate::commands::off_thread;
 use crate::commands::packs::pack_root;
 use crate::error::{CommandResult, SerializableError};
 use crate::events::emit_packs_changed;
@@ -25,33 +26,47 @@ pub struct ModSummary {
 }
 
 #[tauri::command]
-pub fn mods_list(id: String, state: State<'_, AppState>) -> CommandResult<Vec<ModSummary>> {
+pub async fn mods_list(id: String, state: State<'_, AppState>) -> CommandResult<Vec<ModSummary>> {
     let root = pack_root(&state.workspace()?, &id)?;
-    let workspace = Workspace::open(&root)?;
-    let mut mods = Vec::new();
-    for entry in workspace
+    tokio::task::spawn_blocking(move || list_mods(&root))
+        .await
+        .map_err(|error| SerializableError::new("task", error.to_string()))?
+}
+
+/// One `.pw.json` read and TOML parse per mod — a large pack has hundreds, so
+/// the reads run concurrently. Results are sorted by name afterwards, so the
+/// order the workers finish in never reaches the frontend.
+fn list_mods(root: &std::path::Path) -> CommandResult<Vec<ModSummary>> {
+    let workspace = Workspace::open(root)?;
+    let entries: Vec<_> = workspace
         .index()
         .files
         .iter()
         .filter(|entry| entry.metafile && entry.alias.is_none())
-    {
-        let path = safe_join(&root, &entry.file)?;
-        let metadata: Mod = toml::from_str(&fs::read_to_string(path)?)?;
-        mods.push(ModSummary {
-            metadata_path: entry.file.clone(),
-            name: metadata.name,
-            filename: metadata.filename,
-            side: metadata.side,
-            pinned: metadata.pin,
-            providers: metadata.update.keys().cloned().collect(),
-        });
-    }
+        .collect();
+    let parsed = packwand_parallel::try_map(
+        &entries,
+        packwand_parallel::configured(),
+        |entry| -> CommandResult<ModSummary> {
+            let path = safe_join(root, &entry.file)?;
+            let metadata: Mod = serde_json::from_str(&fs::read_to_string(path)?)?;
+            Ok(ModSummary {
+                metadata_path: entry.file.clone(),
+                name: metadata.name,
+                filename: metadata.filename,
+                side: metadata.side,
+                pinned: metadata.pin,
+                providers: metadata.update.keys().cloned().collect(),
+            })
+        },
+    );
+    let mut mods = parsed.into_iter().collect::<CommandResult<Vec<_>>>()?;
     mods.sort_by(|left, right| left.name.cmp(&right.name));
     Ok(mods)
 }
 
 #[tauri::command]
-pub fn mods_add(
+pub async fn mods_add(
     id: String,
     metadata_path: String,
     metadata: Mod,
@@ -60,7 +75,12 @@ pub fn mods_add(
     state: State<'_, AppState>,
 ) -> CommandResult<()> {
     let root = pack_root(&state.workspace()?, &id)?;
-    Workspace::open(root)?.add_metadata(&metadata_path, metadata, replace)?;
+    // `Workspace::open` parses the whole index and `add_metadata` rewrites it.
+    off_thread(move || {
+        Workspace::open(root)?.add_metadata(&metadata_path, metadata, replace)?;
+        Ok(())
+    })
+    .await?;
     emit_packs_changed(&app)
 }
 
@@ -148,7 +168,7 @@ pub async fn mods_refresh(
             "mods.refresh",
             "Refresh metadata index",
             move |context| async move {
-                context.log("Scanning .pw.toml metadata").await;
+                context.log("Scanning .pw.json metadata").await;
                 let report = tokio::task::spawn_blocking(move || {
                     Workspace::open(root)?.refresh_metadata_index()
                 })
@@ -174,14 +194,14 @@ fn edit_metadata(
     edit: impl FnOnce(&mut Mod),
 ) -> CommandResult<()> {
     let path = safe_join(root, metadata_path)?;
-    let mut metadata: Mod = toml::from_str(&fs::read_to_string(&path)?)?;
+    let mut metadata: Mod = serde_json::from_str(&fs::read_to_string(&path)?)?;
     edit(&mut metadata);
     Workspace::open(root)?.add_metadata(metadata_path, metadata, true)?;
     Ok(())
 }
 
 #[tauri::command]
-pub fn mods_pin(
+pub async fn mods_pin(
     id: String,
     metadata_path: String,
     pinned: bool,
@@ -189,23 +209,30 @@ pub fn mods_pin(
     state: State<'_, AppState>,
 ) -> CommandResult<()> {
     let root = pack_root(&state.workspace()?, &id)?;
-    edit_metadata(&root, &metadata_path, |metadata| metadata.pin = pinned)?;
+    // `edit_metadata` opens the `Workspace`, which parses the pack's whole
+    // index — tens of thousands of lines on a large pack.
+    off_thread(move || edit_metadata(&root, &metadata_path, |metadata| metadata.pin = pinned))
+        .await?;
     emit_packs_changed(&app)
 }
 
 #[tauri::command]
-pub fn mods_side_get(
+pub async fn mods_side_get(
     id: String,
     metadata_path: String,
     state: State<'_, AppState>,
 ) -> CommandResult<String> {
     let root = pack_root(&state.workspace()?, &id)?;
-    let metadata: Mod = toml::from_str(&fs::read_to_string(safe_join(&root, &metadata_path)?)?)?;
-    Ok(metadata.side)
+    off_thread(move || {
+        let metadata: Mod =
+            toml::from_str(&fs::read_to_string(safe_join(&root, &metadata_path)?)?)?;
+        Ok(metadata.side)
+    })
+    .await
 }
 
 #[tauri::command]
-pub fn mods_side_set(
+pub async fn mods_side_set(
     id: String,
     metadata_path: String,
     side: String,
@@ -219,6 +246,7 @@ pub fn mods_side_set(
         ));
     }
     let root = pack_root(&state.workspace()?, &id)?;
-    edit_metadata(&root, &metadata_path, |metadata| metadata.side = side)?;
+    off_thread(move || edit_metadata(&root, &metadata_path, |metadata| metadata.side = side))
+        .await?;
     emit_packs_changed(&app)
 }

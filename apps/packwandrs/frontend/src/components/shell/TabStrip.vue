@@ -14,7 +14,7 @@ const emit = defineEmits<{
 
 <template>
   <div class="tabstrip" role="tablist">
-    <div class="tabstrip__scroll">
+    <TransitionGroup tag="div" name="tab" class="tabstrip__scroll">
       <div
         v-for="tab in tabs"
         :key="tab.name"
@@ -36,7 +36,7 @@ const emit = defineEmits<{
           <AppIcon name="close" :size="12" />
         </button>
       </div>
-    </div>
+    </TransitionGroup>
     <div class="tabstrip__actions">
       <button class="icon-btn" title="Toggle sidebar (Ctrl+B)" aria-label="Toggle sidebar" @click="emit('toggleSidebar')">
         <AppIcon name="sidebar" :size="15" />

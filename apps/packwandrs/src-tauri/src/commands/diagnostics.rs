@@ -2,47 +2,65 @@ use packwand_diagnostics::{ContentRegistry, ValidationReport, VariantParityRepor
 use tauri::{AppHandle, Manager, State};
 
 use crate::commands::jobs::JobRecord;
+use crate::commands::off_thread;
 use crate::commands::packs::pack_root;
 use crate::error::{CommandResult, SerializableError};
 use crate::state::AppState;
 
 #[tauri::command]
-pub fn diagnostics_lint(state: State<'_, AppState>) -> CommandResult<ValidationReport> {
-    Ok(packwand_diagnostics::lint_workspace(state.workspace()?))
-}
-
-#[tauri::command]
-pub fn diagnostics_validate(state: State<'_, AppState>) -> CommandResult<ValidationReport> {
-    Ok(packwand_diagnostics::validate_projects(state.workspace()?)?)
-}
-
-#[tauri::command]
-pub fn diagnostics_parity(state: State<'_, AppState>) -> CommandResult<Vec<VariantParityReport>> {
-    Ok(packwand_diagnostics::parity_workspace(state.workspace()?)?)
-}
-
-#[tauri::command]
-pub fn diagnostics_content_lint(state: State<'_, AppState>) -> CommandResult<ValidationReport> {
-    Ok(packwand_diagnostics::content_lint(state.workspace()?))
-}
-
-#[tauri::command]
-pub fn diagnostics_preflight(state: State<'_, AppState>) -> CommandResult<ValidationReport> {
+pub async fn diagnostics_lint(state: State<'_, AppState>) -> CommandResult<ValidationReport> {
     let root = state.workspace()?;
-    let mut report = packwand_diagnostics::validate_projects(&root)?;
-    let lint = packwand_diagnostics::lint_workspace(&root);
-    report.checked += lint.checked;
-    report.issues.extend(lint.issues);
-    let content = packwand_diagnostics::content_lint(&root);
-    report.checked += content.checked;
-    report.issues.extend(content.issues);
-    Ok(report)
+    off_thread(move || Ok(packwand_diagnostics::lint_workspace(root))).await
 }
 
 #[tauri::command]
-pub fn diagnostics_registries(state: State<'_, AppState>) -> CommandResult<Vec<ContentRegistry>> {
-    packwand_diagnostics::build_all_registries(state.workspace()?)
-        .map_err(|error| SerializableError::new("registry", error.to_string()))
+pub async fn diagnostics_validate(state: State<'_, AppState>) -> CommandResult<ValidationReport> {
+    let root = state.workspace()?;
+    off_thread(move || Ok(packwand_diagnostics::validate_projects(root)?)).await
+}
+
+#[tauri::command]
+pub async fn diagnostics_parity(
+    state: State<'_, AppState>,
+) -> CommandResult<Vec<VariantParityReport>> {
+    let root = state.workspace()?;
+    off_thread(move || Ok(packwand_diagnostics::parity_workspace(root)?)).await
+}
+
+#[tauri::command]
+pub async fn diagnostics_content_lint(
+    state: State<'_, AppState>,
+) -> CommandResult<ValidationReport> {
+    let root = state.workspace()?;
+    off_thread(move || Ok(packwand_diagnostics::content_lint(root))).await
+}
+
+#[tauri::command]
+pub async fn diagnostics_preflight(state: State<'_, AppState>) -> CommandResult<ValidationReport> {
+    let root = state.workspace()?;
+    off_thread(move || {
+        let mut report = packwand_diagnostics::validate_projects(&root)?;
+        let lint = packwand_diagnostics::lint_workspace(&root);
+        report.checked += lint.checked;
+        report.issues.extend(lint.issues);
+        let content = packwand_diagnostics::content_lint(&root);
+        report.checked += content.checked;
+        report.issues.extend(content.issues);
+        Ok(report)
+    })
+    .await
+}
+
+#[tauri::command]
+pub async fn diagnostics_registries(
+    state: State<'_, AppState>,
+) -> CommandResult<Vec<ContentRegistry>> {
+    let root = state.workspace()?;
+    off_thread(move || {
+        packwand_diagnostics::build_all_registries(root)
+            .map_err(|error| SerializableError::new("registry", error.to_string()))
+    })
+    .await
 }
 
 #[tauri::command]

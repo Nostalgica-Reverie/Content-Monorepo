@@ -70,13 +70,13 @@ pub const fn backend_url() -> Option<String> {
 }
 
 #[tauri::command]
-pub fn workspace_sync_preview(
+pub async fn workspace_sync_preview(
     state: State<'_, AppState>,
 ) -> CommandResult<packwand_workspace::SyncReport> {
-    Ok(packwand_workspace::sync_performance_bases(
-        state.workspace()?,
-        true,
-    )?)
+    // A dry run still walks every base and consumer pack to diff them.
+    let root = state.workspace()?;
+    crate::commands::off_thread(move || Ok(packwand_workspace::sync_performance_bases(root, true)?))
+        .await
 }
 
 #[tauri::command]

@@ -54,7 +54,7 @@ pub(super) fn diff_command(args: &ArgMatches) -> Result {
     let mut changed = String::from_utf8(output.stdout)?
         .lines()
         .map(str::trim)
-        .filter(|path| path.ends_with(".pw.toml"))
+        .filter(|path| packwand_pack::metafile::is_metafile(path))
         .filter(|path| path_prefix.is_empty() || path.starts_with(&path_prefix))
         .map(str::to_owned)
         .collect::<Vec<_>>();
@@ -109,7 +109,7 @@ pub(super) fn diff_command(args: &ArgMatches) -> Result {
                     .file_name()
                     .and_then(|name| name.to_str())
                     .unwrap_or(&path)
-                    .trim_end_matches(".pw.toml")
+                    .trim_end_matches(".pw.json")
                     .into(),
                 path,
                 change,
@@ -122,7 +122,7 @@ pub(super) fn diff_command(args: &ArgMatches) -> Result {
     if args.get_flag("json") {
         println!("{}", serde_json::to_string_pretty(&result)?);
     } else if result.subdirs.is_empty() {
-        println!("no .pw.toml changes between {old_ref} and {new_ref}");
+        println!("no .pw.json changes between {old_ref} and {new_ref}");
     } else {
         for subdir in &result.subdirs {
             println!("{}:", subdir.subdir);

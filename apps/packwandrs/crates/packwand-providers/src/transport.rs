@@ -252,16 +252,39 @@ pub struct UreqTransport {
     download: OnceLock<(ureq::Agent, u64)>,
 }
 
+/// The process-wide API agent.
+///
+/// Callers construct a fresh `UreqTransport` per operation (see the note on
+/// [`HOST_GATES`]), and an agent owns the connection pool — so building one
+/// per transport threw away every keep-alive connection and made each
+/// operation pay a fresh TCP and TLS handshake against the same host.
+/// `ureq::Agent` is a cheap `Arc` handle, so cloning one shared agent gives
+/// every transport the same pool.
+static API_AGENT: LazyLock<ureq::Agent> = LazyLock::new(|| {
+    ureq::AgentBuilder::new()
+        .timeout_connect(Duration::from_secs(15))
+        .timeout_read(API_READ_TIMEOUT)
+        .user_agent(concat!("packwand/", env!("CARGO_PKG_VERSION")))
+        .build()
+});
+
+/// The process-wide transfer agent. Separate from [`API_AGENT`] because it
+/// carries the long read timeout; sharing one agent would apply transfer-scale
+/// timeouts to metadata calls.
+static DOWNLOAD_AGENT: LazyLock<ureq::Agent> = LazyLock::new(|| {
+    ureq::AgentBuilder::new()
+        .timeout_connect(Duration::from_secs(15))
+        .timeout_read(DOWNLOAD_READ_TIMEOUT)
+        .user_agent(concat!("packwand/", env!("CARGO_PKG_VERSION")))
+        .build()
+});
+
 impl UreqTransport {
     /// The client for metadata/API requests: 30s-scale timeouts and a body
     /// ceiling sized for provider JSON.
     pub fn new() -> Self {
         Self {
-            agent: ureq::AgentBuilder::new()
-                .timeout_connect(Duration::from_secs(15))
-                .timeout_read(API_READ_TIMEOUT)
-                .user_agent(concat!("packwand/", env!("CARGO_PKG_VERSION")))
-                .build(),
+            agent: API_AGENT.clone(),
             max_body_bytes: API_MAX_BODY_BYTES,
             download: OnceLock::new(),
         }
@@ -273,11 +296,7 @@ impl UreqTransport {
     /// than 16 MiB, which is an ordinary size for a modpack jar.
     pub fn for_downloads() -> Self {
         Self {
-            agent: ureq::AgentBuilder::new()
-                .timeout_connect(Duration::from_secs(15))
-                .timeout_read(DOWNLOAD_READ_TIMEOUT)
-                .user_agent(concat!("packwand/", env!("CARGO_PKG_VERSION")))
-                .build(),
+            agent: DOWNLOAD_AGENT.clone(),
             max_body_bytes: DOWNLOAD_MAX_BODY_BYTES,
             download: OnceLock::new(),
         }
@@ -363,16 +382,8 @@ impl Default for UreqTransport {
 impl UreqTransport {
     /// The transfer-scale agent, built on first use.
     fn download_agent(&self) -> &(ureq::Agent, u64) {
-        self.download.get_or_init(|| {
-            (
-                ureq::AgentBuilder::new()
-                    .timeout_connect(Duration::from_secs(15))
-                    .timeout_read(DOWNLOAD_READ_TIMEOUT)
-                    .user_agent(concat!("packwand/", env!("CARGO_PKG_VERSION")))
-                    .build(),
-                DOWNLOAD_MAX_BODY_BYTES,
-            )
-        })
+        self.download
+            .get_or_init(|| (DOWNLOAD_AGENT.clone(), DOWNLOAD_MAX_BODY_BYTES))
     }
 }
 

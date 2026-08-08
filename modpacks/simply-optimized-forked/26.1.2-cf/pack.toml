@@ -1,12 +1,12 @@
 name = "Simply Optimized Forked"
 author = "hsza, omo50"
 version = "26.05"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
-hash = "346e541d71f0216f94b2e9fe2f98ba10506612f1dd184434978c68246a934e3d273afbef86eb8b6f4d0635782ec417278ebd41ce419f6ccf86a4910ec6e549d9"
+hash = "441c7548bd6e3db48f46b6355d20fdf606b7d4a961c742f43d9156e9a6b9481c2d6641d8d867ae3cb98bd343fccd4acbc6622beb2145554e5d77916abf4e72a9"
 
 [versions]
 fabric = "0.19.3"

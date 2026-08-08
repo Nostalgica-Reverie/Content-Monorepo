@@ -37,7 +37,7 @@ pub(super) fn explain(args: &ArgMatches) -> Result {
     let slug = required(args, "mod-slug")?;
     let workspace = Workspace::open(root.clone())?;
     let path = mod_metadata_path(&workspace, slug)?;
-    let metadata: Mod = toml::from_str(&fs::read_to_string(
+    let metadata: Mod = serde_json::from_str(&fs::read_to_string(
         root.join(path.replace('/', std::path::MAIN_SEPARATOR_STR)),
     )?)?;
     let modrinth = metadata.update.get("modrinth");
@@ -97,10 +97,10 @@ pub(super) fn explain(args: &ArgMatches) -> Result {
 }
 
 /// Looks up an installed mod's metadata path by slug, matching on the
-/// `.pw.toml` basename regardless of folder (mods/resourcepacks/shaderpacks),
+/// `.pw.json` basename regardless of folder (mods/resourcepacks/shaderpacks),
 /// the same way `side` locates a mod across a subdir's platform folders.
 fn mod_metadata_path(workspace: &Workspace, slug: &str) -> Result<String> {
-    let target = format!("{}.pw.toml", slug.trim_end_matches(".pw.toml"));
+    let target = format!("{}.pw.json", slug.trim_end_matches(".pw.json"));
     workspace
         .index()
         .files
@@ -116,7 +116,7 @@ fn mod_metadata_path(workspace: &Workspace, slug: &str) -> Result<String> {
         .ok_or_else(|| format!("mod {slug:?} was not found in the pack index").into())
 }
 
-fn table_string(table: Option<&toml::Table>, key: &str) -> Option<String> {
+fn table_string(table: Option<&packwand_pack::UpdateTable>, key: &str) -> Option<String> {
     let value = table?.get(key)?;
     Some(match value.as_str() {
         Some(text) => text.to_owned(),
@@ -175,7 +175,7 @@ pub(super) fn deps(args: &ArgMatches) -> Result {
             .unwrap_or(&item.file)
             .trim_end_matches(".pw")
             .to_owned();
-        let metadata: Mod = toml::from_str(&fs::read_to_string(
+        let metadata: Mod = serde_json::from_str(&fs::read_to_string(
             root.join(item.file.replace('/', std::path::MAIN_SEPARATOR_STR)),
         )?)?;
         let modrinth = metadata.update.get("modrinth");

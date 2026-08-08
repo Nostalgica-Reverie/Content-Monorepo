@@ -1,11 +1,12 @@
 name = "Reminiscence"
 author = "bbali, omo50"
 version = "2.0.0-hotfix"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
+hash = "cedbd1a1a5c5f072008452cffe2b4d495bb546b5d3ba759d138c5165dc2a3ff949a93f5afb0b947dcc14140d7a91585a284a645fa3e2b78548b5da06e6a51875"
 
 [versions]
 forge = "47.4.0"

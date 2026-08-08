@@ -1,11 +1,12 @@
 name = "Simply Archaic"
 author = "omo50"
 version = "26.05-mc1.8.9"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
+hash = "85ca998ded923c36265fea7cadd2035dc93f9966fa5efe5e5198f5fc60a5d9dcbe98d8567f7a19ac9c6c11a9239f1ea5c86cd3d6af7bb4c7932442fe3eaeedd9"
 
 [versions]
 forge = "11.15.1.2318"

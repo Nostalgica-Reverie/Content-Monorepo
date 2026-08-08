@@ -4,6 +4,7 @@ resolver = "3"
 members = [
     "crates/packwand-cli",
     "crates/packwand-build",
+    "crates/packwand-cache",
     "crates/packwand-diagnostics",
     "crates/packwand-ops",
     "crates/packwand-pack",
@@ -60,7 +61,10 @@ hex = "0.4.3"
 # Local-only schema validation: default features pull in reqwest + TLS for
 # remote $ref resolution, which the manifest schema does not use.
 jsonschema = { version = "0.48", default-features = false }
+ammonia = "4"
 md-5 = "0.10.6"
+pulldown-cmark = { version = "0.13", default-features = false, features = ["html"] }
+rayon = "1.12"
 regex-lite = "0.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -80,6 +84,7 @@ zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
 # Launcher core crates, referenced by name so member crates can keep using
 # `<crate>.workspace = true`.
 packwand-parallel = { path = "crates/packwand-parallel" }
+packwand-cache = { path = "crates/packwand-cache" }
 packwand-auth = { path = "crates/packwand-auth" }
 packwand-devboot = { path = "crates/packwand-devboot" }
 packwand-instance = { path = "crates/packwand-instance" }

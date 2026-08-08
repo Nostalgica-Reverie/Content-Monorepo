@@ -7,6 +7,7 @@ import com.google.gson.JsonSyntaxException
 import link.infra.packwiz.installer.DownloadTask.Companion.createTasksFromIndex
 import link.infra.packwiz.installer.metadata.DownloadMode
 import link.infra.packwiz.installer.metadata.IndexFile
+import link.infra.packwiz.installer.metadata.JsonDocument
 import link.infra.packwiz.installer.metadata.ManifestFile
 import link.infra.packwiz.installer.metadata.PackFile
 import link.infra.packwiz.installer.metadata.PackFormat
@@ -240,7 +241,18 @@ class UpdateManager internal constructor(private val opts: Options, val ui: IUse
 		}
 
 		val indexFile = try {
-			IndexFile.mapper(indexUri).decode<IndexFile>(indexFileSource.buffer().inputStream())
+			// Generation 27 ships `index.json`, earlier packs `index.toml`.
+			// Read the bytes once and decide by content: the whole stream has
+			// to be consumed anyway for the hash below to be correct, and the
+			// filename does not survive path resolution reliably enough to
+			// dispatch on.
+			val mapper = IndexFile.mapper(indexUri)
+			val indexBytes = indexFileSource.buffer().readByteArray()
+			if (JsonDocument.isJson(indexBytes)) {
+				mapper.decode<IndexFile>(JsonDocument.parse(indexBytes))
+			} else {
+				mapper.decode<IndexFile>(indexBytes.inputStream())
+			}
 		} catch (e: IllegalStateException) {
 			ui.showErrorAndExit("Failed to parse index file", e)
 		}

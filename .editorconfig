@@ -1,5 +1,13 @@
 # EditorConfig — https://editorconfig.org
 # Root settings for the whole platform; matches .gitattributes (LF everywhere).
+#
+# Indentation is tabs by default, per newstandards.md. Tabs are also what
+# Prettier reads from here — it takes indent_style, tab_width, max_line_length,
+# and end_of_line from EditorConfig unless prettier.config.mjs overrides them,
+# so this file and that one are one setting, not two.
+#
+# The exceptions below are not preferences. Each one is a format that cannot
+# take a tab, or a formatter that will not emit one.
 root = true
 
 [*]
@@ -7,12 +15,30 @@ charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
+indent_style = tab
+max_line_length = 100
+
+# YAML forbids tabs for indentation at the spec level, so every workflow under
+# .forgejo/ and every config that ships as YAML stays on spaces.
+[*.{yml,yaml}]
 indent_style = space
 indent_size = 2
 
-[*.go]
-indent_style = tab
+# `gleam format` is opinionated and non-configurable: two spaces, no option to
+# change it. Fighting it would mean the formatter and the editor rewriting each
+# other on every save.
+[*.gleam]
+indent_style = space
+indent_size = 2
 
+# Leading tabs change list nesting and code-block semantics in Markdown.
+[*.md]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Width only — these stay on tabs, they just render wider.
 [*.{kt,kts,java,gradle}]
 indent_size = 4
 
@@ -25,11 +51,11 @@ indent_size = 4
 [*.{c,h,m}]
 indent_size = 4
 
+# PEP 8 mandates spaces, and every Python formatter worth running (black, ruff)
+# emits them unconditionally.
 [*.py]
+indent_style = space
 indent_size = 4
 
-[*.md]
-trim_trailing_whitespace = false
-
-[Makefile]
-indent_style = tab
+[*.{json,jsonc,toml}]
+indent_size = 2

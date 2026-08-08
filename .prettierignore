@@ -1,0 +1,49 @@
+# Build output and dependencies.
+**/node_modules/
+**/dist/
+**/target/
+**/build/
+**/.svelte-kit/
+**/.vitepress/cache/
+**/.vitepress/dist/
+apps/packwandrs/frontend/core/build/
+
+# Lockfiles are owned by their package managers.
+bun.lock
+Cargo.lock
+flake.lock
+**/gradle/wrapper/
+
+# Content directories are data, not code (see newstandards.md). Two separate
+# reasons to keep Prettier out of them:
+#
+#  - Packwand owns `*.pw.json` and `index.json` and rewrites them wholesale on
+#    every refresh, so formatting them produces churn that `packwand refresh`
+#    immediately undoes.
+#  - The rest is Minecraft game data — loot tables, models, lang files,
+#    `.mcmeta` — much of it copied verbatim from upstream mods. Reformatting it
+#    destroys the ability to diff against upstream and gains nothing.
+#
+# The hand-written manifests are re-included below, because those we do own.
+modpacks/
+resourcepacks/
+datapacks/
+!modpacks/*/manifest.json
+!modpacks/*/manifest-experimental.json
+!resourcepacks/*/manifest.json
+!resourcepacks/*/manifest-experimental.json
+!datapacks/*/manifest.json
+!datapacks/*/manifest-experimental.json
+
+# Mod source trees keep their own Gradle/Kotlin formatting; only the manifests
+# are ours to format.
+mods/*/src/
+mods/*/versions/
+
+# Vendored sources that upstream owns.
+packages/packwand2nix/
+
+# Local reference checkouts of Modrinth's launcher, kept untracked for
+# comparison while porting. Not ours to format.
+app/
+app-frontend/

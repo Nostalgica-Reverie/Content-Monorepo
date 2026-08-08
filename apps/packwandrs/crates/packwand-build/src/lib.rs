@@ -188,7 +188,7 @@ pub fn plan_export(root: impl AsRef<Path>) -> Result<ExportPlan, BuildError> {
     pack.format()
         .map_err(|error| BuildError::InvalidPack(error.to_string()))?;
     let index_path = root.join(&pack.index.file);
-    let index: Index = read_toml(&index_path)?;
+    let index: Index = read_json(&index_path)?;
     let name = if pack.name.trim().is_empty() {
         root.file_name()
             .and_then(|name| name.to_str())
@@ -342,16 +342,16 @@ pub fn import_modrinth_archive(
             slug = format!("external-{}", metadata_count + 1);
         }
         let mut metadata_path = if parent_path.is_empty() {
-            format!("{slug}.pw.toml")
+            format!("{slug}.pw.json")
         } else {
-            format!("{parent_path}/{slug}.pw.toml")
+            format!("{parent_path}/{slug}.pw.json")
         };
         let mut suffix = 2;
         while !used_metadata.insert(metadata_path.clone()) {
             metadata_path = if parent_path.is_empty() {
-                format!("{slug}-{suffix}.pw.toml")
+                format!("{slug}-{suffix}.pw.json")
             } else {
-                format!("{parent_path}/{slug}-{suffix}.pw.toml")
+                format!("{parent_path}/{slug}-{suffix}.pw.json")
             };
             suffix += 1;
         }
@@ -391,9 +391,9 @@ pub fn import_modrinth_archive(
             {
                 update.insert(
                     "modrinth".into(),
-                    toml::Table::from_iter([
-                        ("mod-id".into(), toml::Value::String(parts[1].into())),
-                        ("version".into(), toml::Value::String(parts[3].into())),
+                    packwand_pack::UpdateTable::from_iter([
+                        ("mod-id".into(), serde_json::Value::String(parts[1].into())),
+                        ("version".into(), serde_json::Value::String(parts[3].into())),
                     ]),
                 );
             }
@@ -418,10 +418,7 @@ pub fn import_modrinth_archive(
             update,
             ..Mod::default()
         };
-        let bytes = metadata
-            .to_toml()
-            .map_err(BuildError::TomlEncode)?
-            .into_bytes();
+        let bytes = metadata.to_json_bytes().map_err(BuildError::Json)?;
         let target = staging.join(metadata_path.replace('/', std::path::MAIN_SEPARATOR_STR));
         if let Some(parent) = target.parent() {
             fs::create_dir_all(parent).map_err(|source| BuildError::Io {
@@ -513,13 +510,11 @@ pub fn import_modrinth_archive(
         path: staging.join("pack.toml"),
         source,
     })?;
-    fs::write(
-        staging.join("index.toml"),
-        toml::to_string(&index).map_err(BuildError::TomlEncode)?,
-    )
-    .map_err(|source| BuildError::Io {
-        path: staging.join("index.toml"),
-        source,
+    fs::write(staging.join("index.json"), index_json(&index)?).map_err(|source| {
+        BuildError::Io {
+            path: staging.join("index.json"),
+            source,
+        }
     })?;
     fs::write(staging.join(".packwizignore"), "Logs\n*.zip\n*.mrpack\n").map_err(|source| {
         BuildError::Io {
@@ -625,10 +620,7 @@ where
             });
         }
         let path = unique_metadata_path(&suggested_path, metadata_count, &mut used_metadata)?;
-        let bytes = metadata
-            .to_toml()
-            .map_err(BuildError::TomlEncode)?
-            .into_bytes();
+        let bytes = metadata.to_json_bytes().map_err(BuildError::Json)?;
         let target = staging.join(path.replace('/', std::path::MAIN_SEPARATOR_STR));
         if let Some(parent) = target.parent() {
             fs::create_dir_all(parent).map_err(|source| BuildError::Io {
@@ -730,13 +722,11 @@ where
         path: staging.join("pack.toml"),
         source,
     })?;
-    fs::write(
-        staging.join("index.toml"),
-        toml::to_string(&index).map_err(BuildError::TomlEncode)?,
-    )
-    .map_err(|source| BuildError::Io {
-        path: staging.join("index.toml"),
-        source,
+    fs::write(staging.join("index.json"), index_json(&index)?).map_err(|source| {
+        BuildError::Io {
+            path: staging.join("index.json"),
+            source,
+        }
     })?;
     fs::write(staging.join(".packwizignore"), "Logs\n*.zip\n*.mrpack\n").map_err(|source| {
         BuildError::Io {
@@ -770,7 +760,7 @@ fn unique_metadata_path(
         .map_or(("", suggested.as_str()), |(parent, filename)| {
             (parent, filename)
         });
-    let stem = filename.trim_end_matches(".pw.toml");
+    let stem = filename.trim_end_matches(".pw.json");
     let stem = if stem.is_empty() {
         format!("curseforge-{}", index + 1)
     } else {
@@ -779,9 +769,9 @@ fn unique_metadata_path(
     let mut suffix = 1usize;
     loop {
         let filename = if suffix == 1 {
-            format!("{stem}.pw.toml")
+            format!("{stem}.pw.json")
         } else {
-            format!("{stem}-{suffix}.pw.toml")
+            format!("{stem}-{suffix}.pw.json")
         };
         let candidate = if parent.is_empty() {
             filename
@@ -916,7 +906,7 @@ fn load(root: &Path) -> Result<(Pack, Index), BuildError> {
     let pack: Pack = read_toml(&root.join("pack.toml"))?;
     pack.format()
         .map_err(|error| BuildError::InvalidPack(error.to_string()))?;
-    let index = read_toml(&root.join(&pack.index.file))?;
+    let index: Index = read_json(&root.join(&pack.index.file))?;
     Ok((pack, index))
 }
 
@@ -1097,7 +1087,7 @@ struct ReferencedMod {
     needs_fetch: bool,
 }
 
-/// What one `index.toml` entry turns into. Classification reads and parses
+/// What one index entry turns into. Classification reads and parses
 /// metafiles on the work queue, which is also what lets the export discover
 /// every download it needs before issuing the first one.
 enum ModrinthEntry {
@@ -1122,7 +1112,7 @@ fn plan_modrinth_entry(
             source,
         });
     }
-    let metadata: Mod = read_toml(&source)?;
+    let metadata: Mod = read_json(&source)?;
     let destination = metadata_destination(&indexed_path, &metadata.filename)?;
     let direct =
         !options.restrict_modrinth_domains || modrinth_host_allowed(&metadata.download.url);
@@ -1328,7 +1318,7 @@ struct CurseForgeFile {
     required: bool,
 }
 
-/// What one `index.toml` entry turns into for a CurseForge export. Mods with
+/// What one index entry turns into for a CurseForge export. Mods with
 /// project and file ids are referenced in the manifest; the rest have to ship
 /// inside `overrides/`.
 enum CurseForgeEntry {
@@ -1358,11 +1348,11 @@ fn plan_curseforge_entry(
             source,
         });
     }
-    let metadata: Mod = read_toml(&source)?;
+    let metadata: Mod = read_json(&source)?;
     let ids = metadata.update.get("curseforge").and_then(|table| {
         Some((
-            table.get("project-id")?.as_integer()?,
-            table.get("file-id")?.as_integer()?,
+            table.get("project-id")?.as_i64()?,
+            table.get("file-id")?.as_i64()?,
         ))
     });
     let Some((project_id, file_id)) = ids else {
@@ -1477,6 +1467,14 @@ fn write_curseforge<W: Write + Seek>(
     Ok(archive_files + 2)
 }
 
+/// Serializes the generated index the way every JSON file in a pack is
+/// written: pretty-printed with a trailing newline.
+fn index_json(index: &Index) -> Result<Vec<u8>, BuildError> {
+    let mut bytes = serde_json::to_vec_pretty(index).map_err(BuildError::Json)?;
+    bytes.push(b'\n');
+    Ok(bytes)
+}
+
 fn normalize_index_path(value: &str) -> Result<String, BuildError> {
     let normalized = value.replace('\\', "/");
     validate_archive_path(&normalized)?;
@@ -1569,6 +1567,16 @@ fn html_escape(value: &str) -> String {
         .replace('"', "&quot;")
 }
 
+/// Reads a generated JSON document: mod metadata or the index.
+fn read_json<T: for<'de> Deserialize<'de>>(path: &Path) -> Result<T, BuildError> {
+    let source = fs::read(path).map_err(|source| BuildError::Io {
+        path: path.to_path_buf(),
+        source,
+    })?;
+    serde_json::from_slice(&source).map_err(BuildError::Json)
+}
+
+/// Reads `pack.toml`, the one document that is still TOML.
 fn read_toml<T: for<'de> Deserialize<'de>>(path: &Path) -> Result<T, BuildError> {
     let source = fs::read_to_string(path).map_err(|source| BuildError::Io {
         path: path.to_path_buf(),
@@ -1637,17 +1645,17 @@ mod tests {
         std::fs::create_dir_all(directory.path().join("config")).unwrap();
         std::fs::write(
             directory.path().join("pack.toml"),
-            "name = \"Example Pack\"\nauthor = \"Packwand\"\nversion = \"1.0\"\ndescription = \"Example\"\npack-format = \"packwand:26\"\n[index]\nfile = \"index.toml\"\n[versions]\nminecraft = \"1.21.1\"\nfabric = \"0.16.10\"\n",
+            "name = \"Example Pack\"\nauthor = \"Packwand\"\nversion = \"1.0\"\ndescription = \"Example\"\npack-format = \"packwand:26\"\n[index]\nfile = \"index.json\"\n[versions]\nminecraft = \"1.21.1\"\nfabric = \"0.16.10\"\n",
         )
         .unwrap();
         std::fs::write(
-            directory.path().join("index.toml"),
-            "hash-format = \"sha512\"\n[[files]]\nfile = \"config/example.json\"\nhash = \"a\"\n\n[[files]]\nfile = \"mods/a.pw.toml\"\nhash = \"b\"\nmetafile = true\n",
+            directory.path().join("index.json"),
+            "hash-format = \"sha512\"\n[[files]]\nfile = \"config/example.json\"\nhash = \"a\"\n\n[[files]]\nfile = \"mods/a.pw.json\"\nhash = \"b\"\nmetafile = true\n",
         )
         .unwrap();
         std::fs::write(directory.path().join("config/example.json"), b"{}\n").unwrap();
         std::fs::write(
-            directory.path().join("mods/a.pw.toml"),
+            directory.path().join("mods/a.pw.json"),
             "name = \"Example Mod\"\nfilename = \"example.jar\"\nside = \"both\"\n\n[download]\nurl = \"https://cdn.modrinth.com/data/example.jar\"\nhash-format = \"sha512\"\nhash = \"def\"\nsize = 3\n\n[download.extra-hashes]\nsha1 = \"abc\"\n\n[update.curseforge]\nproject-id = 10\nfile-id = 20\n",
         )
         .unwrap();
@@ -1702,13 +1710,13 @@ mod tests {
                 let mut update = std::collections::BTreeMap::new();
                 update.insert(
                     "curseforge".into(),
-                    toml::Table::from_iter([
+                    packwand_pack::UpdateTable::from_iter([
                         ("project-id".into(), project_id.into()),
                         ("file-id".into(), file_id.into()),
                     ]),
                 );
                 Ok((
-                    "mods/example.pw.toml".into(),
+                    "mods/example.pw.json".into(),
                     packwand_pack::Mod {
                         name: "Example".into(),
                         filename: "example.jar".into(),
@@ -1729,7 +1737,7 @@ mod tests {
         assert_eq!(result.metadata_files, 1);
         assert!(destination.join("config/example.json").is_file());
         let metadata: packwand_pack::Mod = toml::from_str(
-            &std::fs::read_to_string(destination.join("mods/example.pw.toml")).unwrap(),
+            &std::fs::read_to_string(destination.join("mods/example.pw.json")).unwrap(),
         )
         .unwrap();
         assert!(
@@ -1808,7 +1816,7 @@ mod tests {
                 "[[files]]\nfile = \"config/file{slot}.json\"\nhash = \"a\"\n\n"
             ));
         }
-        std::fs::write(directory.path().join("index.toml"), index).unwrap();
+        std::fs::write(directory.path().join("index.json"), index).unwrap();
 
         let output = directory.path().join("batched.mrpack");
         let artifact = export_pack(
@@ -1882,7 +1890,7 @@ mod tests {
         let result = import_modrinth_archive(&output, &imported).unwrap();
         assert_eq!(result.name, "Example Pack");
         assert_eq!(result.metadata_files, 1);
-        assert!(imported.join("mods/example.pw.toml").is_file());
+        assert!(imported.join("mods/example.pw.json").is_file());
         assert_eq!(
             std::fs::read(imported.join("config/example.json")).unwrap(),
             b"{}\n"

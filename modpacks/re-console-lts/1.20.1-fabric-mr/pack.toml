@@ -1,11 +1,12 @@
 name = "Re-Console"
 author = "omo50, Technocality, Cjnator38"
 version = "26.1.0"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
+hash = "dd6bd9c80343f5a2474433f12d24ae60b937394a18d35d3559cb5a9bcda4b02157f7d4080cdae942e78e3dd2d1128f091bb0658d4378a5a629d7684a3e901ead"
 
 [versions]
 fabric = "0.19.3"

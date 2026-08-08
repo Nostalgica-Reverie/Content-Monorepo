@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 import type { DiagnosticIssue } from '@/helpers/types'
+import { clampSize, closeTabIn, openTabIn } from '@/core/packwand'
 
 export type DockTab = 'problems' | 'output' | 'logs' | 'terminal'
 export type SidebarMode = 'explorer' | 'source-control' | 'extensions'
@@ -38,9 +39,8 @@ function storedFlag(key: string, fallback: boolean) {
   return raw === null ? fallback : raw === '1'
 }
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, value))
-}
+// Clamping, and the tab ordering rules below, live in `packwand/shell.gleam`.
+const clamp = clampSize
 
 /**
  * Shell chrome state: which panels are open, which views are held as tabs, and
@@ -138,15 +138,14 @@ export const useShellStore = defineStore('shell', () => {
 
   /** Records a view as an open tab. Re-visiting a view does not duplicate it. */
   function openTab(tab: ShellTab) {
-    if (!tabs.value.some((existing) => existing.name === tab.name)) tabs.value.push(tab)
+    tabs.value = openTabIn(tabs.value, tab)
   }
 
   /** Closes a tab and reports the neighbour to navigate to, if any. */
   function closeTab(name: string): ShellTab | null {
-    const index = tabs.value.findIndex((tab) => tab.name === name)
-    if (index === -1) return null
-    tabs.value.splice(index, 1)
-    return tabs.value[index] ?? tabs.value[index - 1] ?? null
+    const { tabs: remaining, focus } = closeTabIn(tabs.value, name)
+    tabs.value = remaining
+    return focus
   }
 
   function requestNewProject() {

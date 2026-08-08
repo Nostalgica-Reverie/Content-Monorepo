@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import Button from '@/components/ui/Button.vue'
 import EmptyState from '@/components/ui/EmptyState.vue'
 import Modal from '@/components/ui/Modal.vue'
 import { diagnosticsPreflight, diagnosticsValidate } from '@/helpers/invoke/diagnostics'
 import { modsRefresh } from '@/helpers/invoke/mods'
+import { instancesLaunch } from '@/helpers/invoke/instances'
 import { projectsCreate } from '@/helpers/invoke/projects'
 import { workspaceSync, workspaceSyncPreview } from '@/helpers/invoke/workspace'
 import type { NewProjectRequest, ValidationReport } from '@/helpers/types'
 import { useShellStore } from '@/stores/shell'
 import { useToastsStore } from '@/stores/toasts'
 import { useWorkbenchStore } from '@/stores/workbench'
+import { useInstancesStore } from '@/stores/instances'
 
 const workbench = useWorkbenchStore()
+const instances = useInstancesStore()
+const router = useRouter()
 const shell = useShellStore()
 const toasts = useToastsStore()
 const busy = ref('')
@@ -94,6 +99,22 @@ async function createProject() {
   }
 }
 
+async function launchSelectedPack() {
+  const pack = workbench.selectedPack
+  if (!pack) return
+  busy.value = 'Launch pack'
+  try {
+    await instances.refresh()
+    let instance = instances.items.find(item => item.source.kind === 'linked' && item.source.packDir.replaceAll('\\', '/').toLowerCase() === pack.path.replaceAll('\\', '/').toLowerCase())
+    if (!instance) {
+      if (!confirm('This pack has no linked instance. Create an isolated test instance now?')) return
+      instance = await instances.create({ name: `${pack.name} Test`, source: 'linked', packId: pack.id })
+    }
+    await instancesLaunch(instance.id)
+    await router.push(`/instances/${instance.id}`)
+  } catch (error) { toasts.push('Launch failed', String(error), 'danger') } finally { busy.value = '' }
+}
+
 const actions = [
   { label: 'Validate', icon: 'shield', hint: 'Manifests, roles, variants, releases', run: () => run('Validate workspace', diagnosticsValidate) },
   { label: 'Preflight', icon: 'check', hint: 'Composite release gate', run: () => run('Preflight', diagnosticsPreflight) },
@@ -145,6 +166,7 @@ const actions = [
           <div><dt>Loader</dt><dd>{{ workbench.selectedPack.loaders.join(', ') || 'unset' }}</dd></div>
           <div><dt>Version</dt><dd>{{ workbench.selectedPack.version || 'unset' }}</dd></div>
         </dl>
+        <Button :busy="busy === 'Launch pack'" @click="launchSelectedPack">Launch</Button>
       </div>
 
       <div class="section-head">

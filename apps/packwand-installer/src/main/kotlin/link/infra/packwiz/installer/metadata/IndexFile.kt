@@ -39,7 +39,16 @@ data class IndexFile(
 			val fileHash = getHashObj(index)
 			val src = file.source(clientHolder)
 			val fileStream = hashFormat(index).source(src)
-			linkedFile = ModFile.mapper(file).decode<ModFile>(fileStream.buffer().inputStream())
+			// Generation 27 metadata is `.pw.json`, earlier packs `.pw.toml`.
+			// Decided by content for the same reason as the index — see
+			// [JsonDocument.isJson].
+			val mapper = ModFile.mapper(file)
+			val metadataBytes = fileStream.buffer().readByteArray()
+			linkedFile = if (JsonDocument.isJson(metadataBytes)) {
+				mapper.decode<ModFile>(JsonDocument.parse(metadataBytes))
+			} else {
+				mapper.decode<ModFile>(metadataBytes.inputStream())
+			}
 			if (fileHash != fileStream.hash) {
 				// TODO: propagate details about hash, and show better error!
 				throw Exception("Invalid mod file hash")

@@ -242,7 +242,7 @@ fn init() -> Command {
         .arg(option("name", "Pack name"))
         .arg(option("author", "Pack author"))
         .arg(option("version", "Pack version"))
-        .arg(option("index-file", "Index filename").default_value("index.toml"))
+        .arg(option("index-file", "Index filename").default_value("index.json"))
         .arg(option("mc-version", "Minecraft version"))
         .arg(flag("latest", "Use latest Minecraft version").short('l'))
         .arg(flag("snapshot", "Allow latest snapshot").short('s'))
@@ -275,7 +275,10 @@ fn updates() -> Vec<Command> {
             "migrate",
             "Migrate Minecraft, loader versions, or pack format",
         )
-        .subcommand(command("format", "Migrate to the current pack format"))
+        .subcommand(
+            command("format", "Migrate to the current pack format")
+                .arg(flag("dry-run", "Show the conversion plan without writing")),
+        )
         .subcommand(
             command("minecraft", "Migrate Minecraft version")
                 .arg(positional("version", "Target version")),
@@ -285,6 +288,10 @@ fn updates() -> Vec<Command> {
                 .arg(positional("version", "Version, latest, or recommended")),
         ),
         command("refresh", "Refresh the index file")
+            .arg(flag(
+                "no-cache",
+                "Ignore the content cache and re-read every file",
+            ))
             .arg(flag("build", "Generate the distribution pack hash")),
         command("update", "Update external files")
             .arg(positional("name", "Metadata name"))
@@ -463,8 +470,11 @@ fn diagnostics() -> Vec<Command> {
             "Pack subdir (defaults to the current directory)",
         ))
         .arg(flag("json", "Output JSON")),
-        command("lint", "Check JSON and .pw.toml files for syntax errors")
-            .arg(many("files", "Files to lint").required(false)),
+        command(
+            "lint",
+            "Check JSON and mod metadata files for syntax errors",
+        )
+        .arg(many("files", "Files to lint").required(false)),
         command("list", "List mods in the current pack")
             .arg(flag("version", "Print name and version").short('v'))
             .arg(option("side", "Filter by side").short('s'))

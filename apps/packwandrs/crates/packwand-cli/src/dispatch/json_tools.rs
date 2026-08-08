@@ -102,24 +102,22 @@ pub(super) fn modlist(args: &ArgMatches) -> Result {
     let mut parsed = 0;
     for entry in fs::read_dir(&mods_dir)? {
         let entry = entry?;
-        if !entry.file_type()?.is_file()
-            || !entry.file_name().to_string_lossy().ends_with(".pw.toml")
-        {
+        if !entry.file_type()?.is_file() || !packwand_pack::metafile::is_metafile(entry.path()) {
             continue;
         }
-        let metadata: Mod = toml::from_str(&fs::read_to_string(entry.path())?)?;
+        let metadata: Mod = serde_json::from_str(&fs::read_to_string(entry.path())?)?;
         parsed += 1;
         let modrinth_id = metadata
             .update
             .get("modrinth")
             .and_then(|table| table.get("mod-id"))
-            .and_then(toml::Value::as_str)
+            .and_then(serde_json::Value::as_str)
             .map(str::to_owned);
         let cf_file = metadata
             .update
             .get("curseforge")
             .and_then(|table| table.get("file-id"))
-            .and_then(toml::Value::as_integer);
+            .and_then(serde_json::Value::as_i64);
         let mr_hash = (modrinth_id.is_some()
             && metadata.download.hash_format == "sha1"
             && !metadata.download.hash.is_empty())

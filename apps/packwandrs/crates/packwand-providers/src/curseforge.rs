@@ -533,3 +533,233 @@ struct FileHash {
     #[serde(rename = "algo")]
     algorithm: u8,
 }
+
+/// CurseForge's `mods/search`, shaped into [`crate::BrowsePage`].
+///
+/// `gameId=432` is Minecraft, and `classId` selects the section — 6 is Mods,
+/// which is the default here. Unlike Modrinth, CurseForge takes one loader and
+/// one game version rather than a filter set, so only the first of each is
+/// sent; narrowing further happens client-side on the returned page.
+impl<T: Transport> crate::ProviderBrowser for CurseForgeClient<T> {
+    fn search(&self, query: &crate::BrowseQuery) -> Result<crate::BrowsePage, ProviderError> {
+        let mut url = self.endpoint(&["mods", "search"])?;
+        {
+            let mut pairs = url.query_pairs_mut();
+            pairs.append_pair("gameId", "432");
+            pairs.append_pair("classId", class_id_for(query.project_type.as_deref()));
+            pairs.append_pair("index", &query.offset.to_string());
+            pairs.append_pair("pageSize", &query.limit_or_default().to_string());
+            if !query.text.trim().is_empty() {
+                pairs.append_pair("searchFilter", query.text.trim());
+            }
+            if let Some(loader) = query.loaders.first()
+                && let Some(id) = mod_loader_id(loader)
+            {
+                pairs.append_pair("modLoaderType", &id.to_string());
+            }
+            if let Some(version) = query.game_versions.first() {
+                pairs.append_pair("gameVersion", version);
+            }
+        }
+        let response: BrowseEnvelope = self.get_json(url)?;
+        Ok(crate::BrowsePage {
+            projects: response.data.into_iter().map(Into::into).collect(),
+            total: response
+                .pagination
+                .map(|page| page.total_count)
+                .unwrap_or(0),
+            offset: query.offset,
+        })
+    }
+
+    fn project(&self, id: &str) -> Result<crate::BrowseDetail, ProviderError> {
+        let envelope: BrowseDetailEnvelope = self.get_json(self.endpoint(&["mods", id])?)?;
+        let links = envelope.data.links.clone();
+        let screenshots = envelope.data.screenshots;
+        let project: crate::BrowseProject = envelope.data.summary.into();
+        // The description is a separate endpoint and arrives as rendered HTML;
+        // CurseForge exposes no markdown source. A failure there is not fatal —
+        // the rest of the page is still worth showing.
+        let body = self
+            .get_json::<DescriptionEnvelope>(self.endpoint(&["mods", id, "description"])?)
+            .map(|envelope| envelope.data)
+            .unwrap_or_default();
+        Ok(crate::BrowseDetail {
+            project,
+            body,
+            body_format: crate::BodyFormat::Html,
+            gallery: screenshots
+                .into_iter()
+                .map(|shot| crate::GalleryImage {
+                    url: shot.url,
+                    title: shot.title.unwrap_or_default(),
+                    description: shot.description.unwrap_or_default(),
+                })
+                .collect(),
+            source_url: links.as_ref().and_then(|links| links.source_url.clone()),
+            issues_url: links.as_ref().and_then(|links| links.issues_url.clone()),
+            wiki_url: links.as_ref().and_then(|links| links.wiki_url.clone()),
+            discord_url: None,
+        })
+    }
+}
+
+#[derive(Deserialize)]
+struct BrowseDetailEnvelope {
+    data: DetailResponse,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct DetailResponse {
+    #[serde(flatten)]
+    summary: BrowseProjectResponse,
+    #[serde(default)]
+    screenshots: Vec<Screenshot>,
+    #[serde(default)]
+    links: Option<DetailLinks>,
+}
+
+#[derive(Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct DetailLinks {
+    #[serde(default)]
+    source_url: Option<String>,
+    #[serde(default)]
+    issues_url: Option<String>,
+    #[serde(default)]
+    wiki_url: Option<String>,
+}
+
+#[derive(Deserialize)]
+struct Screenshot {
+    url: String,
+    #[serde(default)]
+    title: Option<String>,
+    #[serde(default)]
+    description: Option<String>,
+}
+
+#[derive(Default, Deserialize)]
+struct DescriptionEnvelope {
+    #[serde(default)]
+    data: String,
+}
+
+/// CurseForge section ids. 6 is Mods, 12 Resource Packs, 17 Worlds,
+/// 4471 Modpacks, 6552 Shaders.
+fn class_id_for(project_type: Option<&str>) -> &'static str {
+    match project_type {
+        Some("resourcepack") => "12",
+        Some("modpack") => "4471",
+        Some("shader") => "6552",
+        _ => "6",
+    }
+}
+
+#[derive(Deserialize)]
+struct BrowseEnvelope {
+    #[serde(default)]
+    data: Vec<BrowseProjectResponse>,
+    #[serde(default)]
+    pagination: Option<Pagination>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct Pagination {
+    #[serde(default)]
+    total_count: u64,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct BrowseProjectResponse {
+    id: u32,
+    name: String,
+    slug: String,
+    #[serde(default)]
+    summary: String,
+    #[serde(default)]
+    logo: Option<Logo>,
+    #[serde(default)]
+    authors: Vec<Author>,
+    #[serde(default)]
+    download_count: f64,
+    #[serde(default)]
+    latest_files_indexes: Vec<FileIndexEntry>,
+    #[serde(default)]
+    links: Option<Links>,
+}
+
+#[derive(Deserialize)]
+struct Logo {
+    #[serde(default)]
+    url: String,
+}
+
+#[derive(Deserialize)]
+struct Author {
+    #[serde(default)]
+    name: String,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct Links {
+    #[serde(default)]
+    website_url: Option<String>,
+}
+
+impl From<BrowseProjectResponse> for crate::BrowseProject {
+    fn from(project: BrowseProjectResponse) -> Self {
+        let page_url = project
+            .links
+            .and_then(|links| links.website_url)
+            .filter(|url| !url.is_empty())
+            .unwrap_or_else(|| {
+                format!(
+                    "https://www.curseforge.com/minecraft/mc-mods/{}",
+                    project.slug
+                )
+            });
+        // Legacy CurseForge serves the same catalogue from a different host,
+        // so the link is a host swap rather than a second lookup.
+        let legacy_page_url = page_url
+            .replace(
+                "https://www.curseforge.com",
+                "https://legacy.curseforge.com",
+            )
+            .replace("https://curseforge.com", "https://legacy.curseforge.com");
+        let mut game_versions: Vec<String> = project
+            .latest_files_indexes
+            .iter()
+            .map(|entry| entry.game_version.clone())
+            .collect();
+        game_versions.sort();
+        game_versions.dedup();
+        Self {
+            id: project.id.to_string(),
+            slug: project.slug,
+            title: project.name,
+            summary: project.summary,
+            icon_url: project
+                .logo
+                .map(|logo| logo.url)
+                .filter(|url| !url.is_empty()),
+            author: project
+                .authors
+                .into_iter()
+                .next()
+                .map(|author| author.name)
+                .unwrap_or_default(),
+            // CurseForge reports download counts as a float.
+            downloads: project.download_count.max(0.0) as u64,
+            loaders: Vec::new(),
+            game_versions,
+            license: None,
+            legacy_page_url: Some(legacy_page_url),
+            page_url,
+        }
+    }
+}

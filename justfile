@@ -83,6 +83,27 @@ lint-bot:
 lint-typos:
     typos .
 
+# Not in the `lint` aggregate yet: the repo has not been through `just fmt-js`
+# once, so this reports ~460 files and would fail every run. Add it to `lint`
+# in the same commit that lands the reformat.
+
+# Prettier check; config in prettier.config.mjs, indentation from .editorconfig
+lint-fmt:
+    bun install --frozen-lockfile
+    bunx prettier --check .
+
+# Rewrite everything Prettier owns (lint reports, it does not edit)
+fmt-js:
+    bunx prettier --write .
+
+# Turbo is wired underneath just, not beside it: CI calls the recipes, and the
+# recipes call turbo. Telemetry is off by default -- opt in per-machine with
+# `bunx turbo telemetry enable` if you want it.
+
+# Fan a Turborepo task across the JS/TS workspaces, e.g. `just turbo typecheck`
+turbo TASK *ARGS:
+    TURBO_TELEMETRY_DISABLED=1 bunx turbo run {{ TASK }} {{ ARGS }}
+
 # Run one of the scripts in scripts/ by name, e.g. `just scripts lint-changelogs --json`
 scripts NAME *ARGS:
     bun scripts/run.ts {{ NAME }} {{ ARGS }}

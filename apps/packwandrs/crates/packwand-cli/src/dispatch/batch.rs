@@ -300,13 +300,37 @@ pub(super) fn batch_command(args: &ArgMatches) -> Result {
             if migration.is_empty() {
                 return Err("batch migrate requires a migration".into());
             }
+            // One unmigratable pack must not strand the rest: a format
+            // migration across the whole workspace either finishes or leaves
+            // the corpus split across two generations, which is worse than
+            // finishing what it can and naming what it could not.
+            let mut failures: Vec<String> = Vec::new();
             for target in batch_targets(&root, None)? {
-                let mut workspace = Workspace::open(&target)?;
-                match migration[0].as_str() {
-                    "format" => {
-                        let (old, new) = workspace.migrate_format()?;
-                        println!("{}: format {old} -> {new}", target.display());
+                let opened = if migration[0] == "format" {
+                    Workspace::open_for_migration(&target)
+                } else {
+                    Workspace::open(&target)
+                };
+                let mut workspace = match opened {
+                    Ok(workspace) => workspace,
+                    Err(error) => {
+                        eprintln!("{}: skipped ({error})", target.display());
+                        failures.push(target.display().to_string());
+                        continue;
                     }
+                };
+                match migration[0].as_str() {
+                    "format" => match workspace.migrate_format_with(false) {
+                        Ok((old, new, renames)) => println!(
+                            "{}: format {old} -> {new} ({} metadata file(s))",
+                            target.display(),
+                            renames.len()
+                        ),
+                        Err(error) => {
+                            eprintln!("{}: failed ({error})", target.display());
+                            failures.push(target.display().to_string());
+                        }
+                    },
                     "minecraft" => {
                         let version = migration.get(1).ok_or("minecraft requires a version")?;
                         workspace.set_version("minecraft", version)?;
@@ -340,7 +364,16 @@ pub(super) fn batch_command(args: &ArgMatches) -> Result {
                     name => return Err(format!("unknown migration {name:?}").into()),
                 }
             }
-            Ok(())
+            if failures.is_empty() {
+                Ok(())
+            } else {
+                Err(format!(
+                    "{} pack(s) could not be migrated: {}",
+                    failures.len(),
+                    failures.join(", ")
+                )
+                .into())
+            }
         }
         Some(("sync", sub)) => {
             let report =

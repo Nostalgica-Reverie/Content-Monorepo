@@ -4,11 +4,30 @@ use super::*;
 
 pub(super) fn migrate(args: &ArgMatches) -> Result {
     let root = std::env::current_dir()?;
-    let mut workspace = Workspace::open(root)?;
+    // `format` may need to open a pack whose generated index is unreadable;
+    // it rebuilds the index anyway.
+    let mut workspace = if matches!(args.subcommand_name(), Some("format")) {
+        Workspace::open_for_migration(root)?
+    } else {
+        Workspace::open(root)?
+    };
     match args.subcommand() {
-        Some(("format", _)) => {
-            let (old, new) = workspace.migrate_format()?;
-            println!("pack format: {old} -> {new}");
+        Some(("format", sub)) => {
+            let dry_run = sub.get_flag("dry-run");
+            let (old, new, renames) = workspace.migrate_format_with(dry_run)?;
+            if dry_run {
+                println!("pack format: {old} -> {new} (dry run, nothing written)");
+            } else {
+                println!("pack format: {old} -> {new}");
+            }
+            for rename in &renames {
+                println!("  {} -> {}", rename.from, rename.to);
+            }
+            if renames.is_empty() {
+                println!("  no metadata files needed converting");
+            } else {
+                println!("  {} metadata file(s)", renames.len());
+            }
             Ok(())
         }
         Some(("minecraft", sub)) => {

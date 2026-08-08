@@ -3,6 +3,15 @@ export interface SerializableError {
   message: string
 }
 
+export interface ShellLayout {
+  /** Bumped when the shape changes; a mismatch resets to the default. */
+  version: 2
+  /** Which side of the editor the sidebar occupies. */
+  sidebarSide: 'left' | 'right'
+  /** Region sizes in pixels. */
+  sizes?: Partial<Record<'side' | 'bottom', number>>
+}
+
 export interface AppSettings {
   workspacePath: string | null
   javaDefaults: Record<string, string>
@@ -10,6 +19,12 @@ export interface AppSettings {
   msaClientId: string | null
   rawInputEnabled: boolean
   themeId: string
+  /** Collapse UI transitions regardless of the OS `prefers-reduced-motion`. */
+  reduceMotion: boolean
+  /** `null` means the default arrangement. */
+  layout: ShellLayout | null
+  /** Whether the shell may be rearranged. Off by default and unsupported. */
+  layoutEditing: boolean
 }
 
 export interface PackSummary {
@@ -30,13 +45,70 @@ export interface PackDetail {
   index: Record<string, unknown>
 }
 
+export type InstanceSource = { kind: 'linked'; packDir: string } | { kind: 'owned' }
+export type InstallStage =
+  | { state: 'not_installed' }
+  | { state: 'installing' }
+  | { state: 'ready' }
+  | { state: 'failed'; message: string }
+
+export interface InstanceSettings {
+  javaPath?: string
+  memoryMinMb?: number
+  memoryMaxMb?: number
+  extraJvmArgs?: string[]
+  extraGameArgs?: string[]
+  env?: Record<string, string>
+  windowWidth?: number
+  windowHeight?: number
+  fullscreen?: boolean
+}
+
 export interface InstanceSummary {
+  schemaVersion: number
   id: string
   name: string
+  source: InstanceSource
+  gameVersion: string
+  loader: string
+  loaderVersion: string | null
+  stage: InstallStage
+  settings: InstanceSettings
+  createdMs: number
+  lastPlayedMs: number | null
+  icon: string | null
+  group: string | null
+}
+
+export interface InstanceContent {
   path: string
-  minecraftVersion: string | null
-  loaders: string[]
-  kind: 'modpack'
+  name: string
+  enabled: boolean
+  packSourced: boolean
+  bytes: number
+}
+
+export interface CreateInstanceSpec {
+  name: string
+  source: 'linked' | 'owned'
+  packId?: string
+  gameVersion?: string
+  loader?: string
+  loaderVersion?: string
+}
+
+export interface InstanceExportResult {
+  path: string
+  files: number
+  bytes: number
+  excludedHandAdded: number
+}
+
+export interface InstanceFileEntry {
+  path: string
+  name: string
+  directory: boolean
+  size: number
 }
 
 export type InstancePhase = 'idle' | 'starting' | 'running' | 'stopped' | 'error'
@@ -181,4 +253,56 @@ export interface ResolveRequest {
   channels: Array<'release' | 'beta' | 'alpha'>
   branch: string | null
   asset_pattern: string | null
+}
+
+/** What the Browse page asks a provider for. Mirrors `packwand_providers::BrowseQuery`. */
+export interface BrowseQuery {
+  text: string
+  loaders: string[]
+  gameVersions: string[]
+  projectType?: string
+  offset: number
+  limit: number
+}
+
+/** One search result. Mirrors `packwand_providers::BrowseProject`. */
+export interface BrowseProject {
+  id: string
+  slug: string
+  title: string
+  summary: string
+  iconUrl?: string
+  author: string
+  downloads: number
+  loaders: string[]
+  gameVersions: string[]
+  license?: string
+  pageUrl: string
+  /** The same project on Legacy CurseForge, when that provider applies. */
+  legacyPageUrl?: string
+}
+
+export interface BrowsePage {
+  projects: BrowseProject[]
+  total: number
+  offset: number
+}
+
+export interface GalleryImage { url: string; title: string; description: string }
+
+/** One project, with its description already sanitized server-side. */
+export interface ProjectPage {
+  project: BrowseProject
+  body: string
+  bodyFormat: 'markdown' | 'html'
+  gallery: GalleryImage[]
+  sourceUrl?: string
+  issuesUrl?: string
+  wikiUrl?: string
+  discordUrl?: string
+  /**
+   * The description as HTML, sanitized in Rust before it reached the webview.
+   * Safe for `v-html` — that is the whole reason it is rendered there.
+   */
+  bodyHtml: string
 }

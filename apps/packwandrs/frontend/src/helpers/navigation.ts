@@ -10,6 +10,7 @@ export const primaryNav: NavItem[] = [
   { name: 'overview', path: '/', label: 'Overview', icon: 'overview' },
   { name: 'editor', path: '/editor', label: 'Editor', icon: 'editor' },
   { name: 'mods', path: '/mods', label: 'Mods', icon: 'mods' },
+  { name: 'browse', path: '/browse', label: 'Browse', icon: 'package' },
   { name: 'generator', path: '/generator', label: 'Generators', icon: 'package' },
   { name: 'instances', path: '/instances', label: 'Instances', icon: 'instances' },
   { name: 'exports', path: '/exports', label: 'Exports', icon: 'exports' },

@@ -42,8 +42,6 @@ const simplified = computed(() => simplifyType(props.type, props.path, props.sou
 const value = computed(() => props.path.value)
 const registry = computed(() => idRegistry(simplified.value))
 
-/* ---------------------------------------------------------------- structs */
-
 const fields = computed<StructTypePairField[]>(() =>
   simplified.value.kind === 'struct' ? structFields(simplified.value, props.path, props.source) : [],
 )
@@ -80,8 +78,6 @@ function removeKey(key: string) {
   emit('update', rest)
 }
 
-/* ------------------------------------------------------------------ lists */
-
 const items = computed(() => (Array.isArray(value.value) ? value.value : []))
 
 function setItem(index: number, next: unknown) {
@@ -107,8 +103,6 @@ function moveItem(index: number, by: number) {
   emit('update', copy)
 }
 
-/* ----------------------------------------------------------------- unions */
-
 const members = computed(() => (simplified.value.kind === 'union' ? simplified.value.members : []))
 const activeMember = computed(() => selectUnionMember(members.value, props.path, props.source))
 
@@ -116,8 +110,6 @@ function switchMember(index: number) {
   if (index === activeMember.value) return
   emit('update', defaultValue(members.value[index], props.source))
 }
-
-/* ------------------------------------------------------------- primitives */
 
 const enumValues = computed(() => (simplified.value.kind === 'enum' ? simplified.value.values : []))
 

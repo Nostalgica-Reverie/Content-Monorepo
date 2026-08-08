@@ -9,8 +9,12 @@ value class PackFormat(val format: String) {
 		private const val MAX_PACKWIZ_MAJOR = 1
 
 		// Highest packwand generation this installer understands. Mirrors
-		// CurrentPackFormat in packwand's core/pack.go — bump together.
-		private const val MAX_PACKWAND_GENERATION = 26
+		// CURRENT_PACK_FORMAT in apps/packwandrs/crates/packwand-pack/src/model.rs
+		// — bump together.
+		//
+		// Generation 27 moved metadata and the index from TOML to JSON; this
+		// installer reads both, see [JsonDocument].
+		private const val MAX_PACKWAND_GENERATION = 27
 	}
 
 	sealed class Support {

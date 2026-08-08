@@ -1,11 +1,12 @@
 name = "Vital"
 author = "omo50, intergrav, blryface"
 version = "26.05.4"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
+hash = "2e271abedfd5e010f59d4a6e3a090074d1067ea3491d3aff83b0299e62f42d2ad04168464a352a8e65f077c82891a05b594240189567143d9d5cc41b8707f203"
 
 [versions]
 fabric = "0.19.3"

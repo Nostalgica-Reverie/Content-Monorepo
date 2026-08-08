@@ -8,10 +8,12 @@ repository.workspace = true
 
 [dependencies]
 globset.workspace = true
+packwand-cache.workspace = true
 packwand-parallel.workspace = true
 packwand-pack = { path = "../packwand-pack" }
 packwand-providers = { path = "../packwand-providers" }
 serde.workspace = true
+serde_json.workspace = true
 thiserror.workspace = true
 toml.workspace = true
 

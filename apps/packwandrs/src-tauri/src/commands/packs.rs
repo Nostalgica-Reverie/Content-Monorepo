@@ -7,6 +7,7 @@ use serde_json::Value;
 use tauri::{AppHandle, State};
 use walkdir::{DirEntry, WalkDir};
 
+use crate::commands::off_thread;
 use crate::error::{CommandResult, SerializableError};
 use crate::events::emit_packs_changed;
 use crate::fsutil::atomic_write;
@@ -87,10 +88,23 @@ fn read_pack_summary(workspace: &Path, root: &Path) -> CommandResult<PackSummary
         .map_err(|error| SerializableError::new("invalid_pack", error.to_string()))?;
     let index: Index = match fs::read_to_string(root.join(&pack.index.file)) {
         // Generated state may be temporarily malformed while being refreshed.
-        Ok(source) => toml::from_str(&source).unwrap_or_default(),
+        Ok(source) => serde_json::from_str(&source).unwrap_or_default(),
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => Index::default(),
         Err(error) => return Err(error.into()),
     };
+    summarize(workspace, root, &pack, &index)
+}
+
+/// Builds a summary from documents the caller has already parsed.
+///
+/// An index file for a large pack is tens of thousands of lines, so parsing
+/// it twice to serve one request is worth avoiding — see [`packs_get`].
+fn summarize(
+    workspace: &Path,
+    root: &Path,
+    pack: &Pack,
+    index: &Index,
+) -> CommandResult<PackSummary> {
     let relative = root
         .strip_prefix(workspace)
         .map_err(|error| SerializableError::new("invalid_pack", error.to_string()))?;
@@ -153,21 +167,28 @@ pub(crate) fn pack_root(workspace: &Path, id: &str) -> CommandResult<PathBuf> {
 }
 
 #[tauri::command]
-pub fn packs_list(state: State<'_, AppState>) -> CommandResult<Vec<PackSummary>> {
-    discover_packs(&state.workspace()?)
+pub async fn packs_list(state: State<'_, AppState>) -> CommandResult<Vec<PackSummary>> {
+    let workspace = state.workspace()?;
+    off_thread(move || discover_packs(&workspace)).await
 }
 
 #[tauri::command]
-pub fn packs_get(id: String, state: State<'_, AppState>) -> CommandResult<PackDetail> {
+pub async fn packs_get(id: String, state: State<'_, AppState>) -> CommandResult<PackDetail> {
     let workspace = state.workspace()?;
     let root = pack_root(&workspace, &id)?;
-    let pack: Pack = toml::from_str(&fs::read_to_string(root.join("pack.toml"))?)?;
-    let index: Index = toml::from_str(&fs::read_to_string(root.join(&pack.index.file))?)?;
-    Ok(PackDetail {
-        summary: read_pack_summary(&workspace, &root)?,
-        pack,
-        index,
+    off_thread(move || {
+        let pack: Pack = toml::from_str(&fs::read_to_string(root.join("pack.toml"))?)?;
+        let index: Index = serde_json::from_str(&fs::read_to_string(root.join(&pack.index.file))?)?;
+        // Both documents are already in hand; summarizing from them avoids
+        // reading and parsing pack.toml and the index a second time.
+        let summary = summarize(&workspace, &root, &pack, &index)?;
+        Ok(PackDetail {
+            summary,
+            pack,
+            index,
+        })
     })
+    .await
 }
 
 #[tauri::command]
@@ -223,16 +244,19 @@ pub fn packs_changelog_put(
 }
 
 #[tauri::command]
-pub fn packs_icon(id: String, state: State<'_, AppState>) -> CommandResult<Option<Vec<u8>>> {
+pub async fn packs_icon(id: String, state: State<'_, AppState>) -> CommandResult<Option<Vec<u8>>> {
     let root = pack_root(&state.workspace()?, &id)?;
-    for filename in ["icon.png", "icon.jpg", "icon.webp"] {
-        match fs::read(root.join(filename)) {
-            Ok(bytes) => return Ok(Some(bytes)),
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
-            Err(error) => return Err(error.into()),
+    off_thread(move || {
+        for filename in ["icon.png", "icon.jpg", "icon.webp"] {
+            match fs::read(root.join(filename)) {
+                Ok(bytes) => return Ok(Some(bytes)),
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+                Err(error) => return Err(error.into()),
+            }
         }
-    }
-    Ok(None)
+        Ok(None)
+    })
+    .await
 }
 
 #[cfg(test)]
@@ -246,13 +270,13 @@ mod tests {
         std::fs::create_dir_all(&root).unwrap();
         std::fs::write(
             root.join("pack.toml"),
-            "name = \"Example\"\npack-format = \"packwand:26\"\n[index]\nfile = \"index.toml\"\n[versions]\nminecraft = \"1.21\"\nfabric = \"0.16\"\n",
+            "name = \"Example\"\npack-format = \"packwand:26\"\n[index]\nfile = \"index.json\"\n[versions]\nminecraft = \"1.21\"\nfabric = \"0.16\"\n",
         )
         .unwrap();
-        std::fs::write(root.join("index.toml"), "hash-format = \"sha512\"\n").unwrap();
+        std::fs::write(root.join("index.json"), "hash-format = \"sha512\"\n").unwrap();
         let packs = discover_packs(directory.path()).unwrap();
         assert_eq!(packs.len(), 1);
-        std::fs::write(root.join("index.toml"), "broken").unwrap();
+        std::fs::write(root.join("index.json"), "broken").unwrap();
         assert_eq!(
             discover_packs(directory.path()).unwrap()[0].indexed_files,
             0

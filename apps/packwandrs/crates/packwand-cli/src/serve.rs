@@ -240,10 +240,10 @@ mod tests {
     #[test]
     fn decodes_safe_paths_and_rejects_traversal() {
         assert_eq!(
-            decode_path("mods/My%20Mod.pw.toml").unwrap(),
-            "mods/My Mod.pw.toml"
+            decode_path("mods/My%20Mod.pw.json").unwrap(),
+            "mods/My Mod.pw.json"
         );
         assert!(safe_join(Path::new("root"), "../secret").is_err());
-        assert!(safe_join(Path::new("root"), "mods/example.pw.toml").is_ok());
+        assert!(safe_join(Path::new("root"), "mods/example.pw.json").is_ok());
     }
 }

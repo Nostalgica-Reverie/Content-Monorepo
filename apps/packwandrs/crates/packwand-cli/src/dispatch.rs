@@ -80,7 +80,7 @@ pub fn run() -> Result {
         }
         Some(("list", args)) => list(args),
         Some(("add", args)) => add_workspace(args),
-        Some(("refresh", _)) => refresh(),
+        Some(("refresh", args)) => refresh(args),
         Some(("pin", args)) => pin(args, true),
         Some(("port", args)) => port(args),
         Some(("unpin", args)) => pin(args, false),
@@ -266,7 +266,7 @@ fn side(args: &ArgMatches) -> Result {
     let mut found = 0;
     for subdir in project.subdirs {
         for folder in ["mods", "resourcepacks", "shaderpacks"] {
-            let relative = format!("{folder}/{slug}.pw.toml");
+            let relative = format!("{folder}/{slug}.pw.json");
             if !subdir.join(&relative).is_file() {
                 continue;
             }
@@ -280,7 +280,8 @@ fn side(args: &ArgMatches) -> Result {
                     if changed { side } else { "unchanged" }
                 );
             } else {
-                let metadata: Mod = toml::from_str(&fs::read_to_string(subdir.join(relative))?)?;
+                let metadata: Mod =
+                    serde_json::from_str(&fs::read_to_string(subdir.join(relative))?)?;
                 println!(
                     "{}: {}",
                     subdir.display(),
@@ -457,7 +458,7 @@ fn git_show(reference: &str, path: &str) -> Result<Option<String>> {
 }
 
 fn metadata_filename(source: &str) -> String {
-    toml::from_str::<Mod>(source)
+    serde_json::from_str::<Mod>(source)
         .map(|metadata| metadata.filename)
         .unwrap_or_default()
 }
@@ -571,10 +572,10 @@ fn freeze_drift_warnings(project_root: &Path, manifest: &Manifest) -> Vec<String
             let metafile = project_root
                 .join(subdir)
                 .join("mods")
-                .join(format!("{slug}.pw.toml"));
+                .join(format!("{slug}.pw.json"));
             let pinned = fs::read_to_string(&metafile)
                 .ok()
-                .and_then(|text| toml::from_str::<Mod>(&text).ok())
+                .and_then(|text| serde_json::from_str::<Mod>(&text).ok())
                 .is_some_and(|metadata| metadata.pin);
             if !pinned {
                 warnings.push(format!(
@@ -741,7 +742,7 @@ fn write_nix_checksums(root: &Path, output: &str) -> Result<usize> {
                 .and_then(Path::file_name)
                 .is_some_and(|name| name == "mods")
     }) {
-        let metadata: Mod = toml::from_str(&fs::read_to_string(
+        let metadata: Mod = serde_json::from_str(&fs::read_to_string(
             root.join(item.file.replace('/', std::path::MAIN_SEPARATOR_STR)),
         )?)?;
         if !metadata.download.mode.is_empty() && metadata.download.mode != "url" {
@@ -926,7 +927,7 @@ fn url_command(args: &ArgMatches) -> Result {
         },
         ..Mod::default()
     };
-    let path = format!("mods/{}.pw.toml", slug.trim_end_matches(".pw.toml"));
+    let path = format!("mods/{}.pw.json", slug.trim_end_matches(".pw.json"));
     Workspace::open(std::env::current_dir()?)?.add_metadata(&path, metadata, false)?;
     println!("added {path}");
     Ok(())

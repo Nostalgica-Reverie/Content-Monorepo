@@ -23,12 +23,18 @@ import { useExtensionsStore } from '@/stores/extensions'
 import { useShellStore } from '@/stores/shell'
 import type { ShellTab } from '@/stores/shell'
 import { useToastsStore } from '@/stores/toasts'
+import { useLayoutStore } from '@/stores/layout'
 import { useThemeStore } from '@/stores/theme'
 import { useWorkbenchStore } from '@/stores/workbench'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const workbench = useWorkbenchStore()
 const theme = useThemeStore()
+// Instantiated here rather than only in settings: the store's settings watcher
+// is what stamps `data-reduce-motion` onto the document root, so a store that
+// nobody constructs until Settings is opened means the preference silently
+// does nothing for the whole session until then.
+const layout = useLayoutStore()
 const workspace = useWorkspaceStore()
 const shell = useShellStore()
 const extensionsStore = useExtensionsStore()
@@ -377,7 +383,14 @@ function startDockDrag(event: PointerEvent) {
 </script>
 
 <template>
-  <div class="workbench" :class="{ 'workbench--side-hidden': !shell.sidebarVisible }" :data-view="currentName">
+  <div
+    class="workbench"
+    :class="{
+      'workbench--side-hidden': !shell.sidebarVisible,
+      'workbench--side-right': layout.sidebarSide === 'right',
+    }"
+    :data-view="currentName"
+  >
     <header class="titlebar">
       <div class="titlebar-brand">
         <img :src="logoUrl" alt="" />
@@ -481,10 +494,19 @@ function startDockDrag(event: PointerEvent) {
           </Button>
         </section>
 
-        <div v-if="workbench.error" class="error-banner">{{ workbench.error }}</div>
+        <Transition name="slide-fade">
+          <div v-if="workbench.error" class="error-banner">{{ workbench.error }}</div>
+        </Transition>
 
         <div class="view-scroll">
-          <RouterView />
+          <RouterView v-slot="{ Component }">
+            <!-- out-in, not the default simultaneous mode: `.view-scroll` is a
+                 scroll container, and overlapping two pages inside it doubles
+                 its height and jumps the scrollbar mid-transition. -->
+            <Transition name="fade" mode="out-in">
+              <component :is="Component" />
+            </Transition>
+          </RouterView>
         </div>
 
         <div

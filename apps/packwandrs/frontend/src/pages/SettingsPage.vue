@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref, toRaw, watch } from 'vue'
 import Button from '@/components/ui/Button.vue'
-import ThemeWorkshop from '@/components/settings/ThemeWorkshop.vue'
+import LayoutSettings from '@/components/settings/LayoutSettings.vue'
+import ThemeGallery from '@/components/settings/ThemeGallery.vue'
 import { automationPlan, automationRun } from '@/helpers/invoke/automation'
 import { projectBump, projectManifestUpdate } from '@/helpers/invoke/projects'
 import type { AppSettings, AutomationPlan, ProjectManifest } from '@/helpers/types'
@@ -18,7 +19,7 @@ const settings = useSettingsStore()
 const toasts = useToastsStore()
 const busy = ref('')
 const manifest = reactive<ProjectManifest>({ id: '', name: '', type: '', variants: [], version: '' })
-const appForm = reactive<AppSettings>({ workspacePath: null, javaDefaults: {}, memoryMb: 4096, msaClientId: null, rawInputEnabled: false, themeId: 'builtin.packwand-dark' })
+const appForm = reactive<AppSettings>({ workspacePath: null, javaDefaults: {}, memoryMb: 4096, msaClientId: null, rawInputEnabled: false, themeId: 'builtin.packwand-dark', reduceMotion: false, layout: null, layoutEditing: false })
 const automation = ref<AutomationPlan | null>(null)
 
 // structuredClone cannot clone Vue's reactive proxies, so unwrap to the raw
@@ -95,6 +96,7 @@ async function runAutomation(dryRun: boolean) {
       <p class="panel-copy">{{ auth.label }}. Microsoft authentication is still environment-gated in this build and the UI does not pretend otherwise.</p>
       <div class="notice account-notice">Pack management, validation, exports, and publishing do not require a Minecraft account.</div>
     </article>
-    <ThemeWorkshop />
+    <LayoutSettings />
+    <ThemeGallery />
   </section>
 </template>

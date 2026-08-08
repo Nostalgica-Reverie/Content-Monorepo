@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 
 import Toast from '@/components/ui/Toast.vue'
-import { onInstanceStatus, onJobFailed, onSettingsChanged } from '@/helpers/events'
+import { onInstanceStatus, onJobDone, onJobFailed, onSettingsChanged } from '@/helpers/events'
 import { normalizeBridgeError } from '@/helpers/errors'
 import { useInstancesStore } from '@/stores/instances'
 import { useSettingsStore } from '@/stores/settings'
@@ -32,7 +32,9 @@ onMounted(async () => {
   })
   await onJobFailed((job) => {
     toasts.push('Job failed', job.error?.message ?? 'An unknown job error occurred', 'danger')
+    void instances.refresh()
   })
+  await onJobDone(() => { void instances.refresh() })
   await instances.hydrate()
   await onInstanceStatus((payload) => {
     instances.apply(payload)
@@ -42,7 +44,7 @@ onMounted(async () => {
 
 <template>
   <RouterView />
-  <div class="toast-region" aria-live="polite">
+  <TransitionGroup tag="div" name="toast" class="toast-region" aria-live="polite">
     <Toast v-for="toast in toasts.items" :key="toast.id" :toast="toast" @dismiss="toasts.dismiss(toast.id)" />
-  </div>
+  </TransitionGroup>
 </template>

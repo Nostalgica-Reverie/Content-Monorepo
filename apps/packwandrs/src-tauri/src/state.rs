@@ -25,6 +25,25 @@ pub struct AppSettings {
     pub raw_input_enabled: bool,
     #[serde(default = "default_theme_id")]
     pub theme_id: String,
+    /// Collapse every UI transition regardless of the OS preference.
+    ///
+    /// Separate from `prefers-reduced-motion` on purpose: wanting a still
+    /// editor is not the same as wanting a still desktop, and the OS signal
+    /// cannot be overridden per-application.
+    #[serde(default)]
+    pub reduce_motion: bool,
+    /// The user's shell arrangement, when they have opted into rearranging it.
+    ///
+    /// Stored opaquely: the set of regions and how they nest is the
+    /// frontend's business, and pinning a schema here would mean a Rust change
+    /// every time a panel is added. `None` means "the default layout", which
+    /// is also what a broken or unreadable value falls back to.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub layout: Option<serde_json::Value>,
+    /// Whether the shell may be rearranged at all. Off by default; a custom
+    /// arrangement is explicitly unsupported.
+    #[serde(default)]
+    pub layout_editing: bool,
 }
 
 const fn default_memory() -> u32 {
@@ -44,6 +63,9 @@ impl Default for AppSettings {
             msa_client_id: None,
             raw_input_enabled: false,
             theme_id: default_theme_id(),
+            reduce_motion: false,
+            layout: None,
+            layout_editing: false,
         }
     }
 }

@@ -14,9 +14,9 @@ fn fixture() -> tempfile::TempDir {
         directory.path().join("pack.toml"),
         concat!(
             "name = \"Fixture\"\n",
-            "pack-format = \"packwand:26\"\n\n",
+            "pack-format = \"packwand:27\"\n\n",
             "[index]\n",
-            "file = \"index.toml\"\n",
+            "file = \"index.json\"\n",
             "hash-format = \"sha512\"\n",
             "hash = \"stale\"\n\n",
             "[versions]\n",
@@ -26,15 +26,15 @@ fn fixture() -> tempfile::TempDir {
     )
     .unwrap();
     fs::write(
-        directory.path().join("index.toml"),
-        "hash-format = \"sha512\"\n",
+        directory.path().join("index.json"),
+        r#"{"hash-format": "sha512", "files": []}"#,
     )
     .unwrap();
     directory
 }
 
 fn metadata(filename: &str, hash: &str) -> Mod {
-    let mut update = toml::Table::new();
+    let mut update = packwand_pack::UpdateTable::new();
     update.insert("mod-id".into(), "project".into());
     update.insert("version".into(), "version".into());
     Mod {
@@ -77,7 +77,7 @@ fn resolved(version: &str, filename: &str) -> ResolvedProject {
 }
 
 fn github_metadata() -> Mod {
-    let mut update = toml::Table::new();
+    let mut update = packwand_pack::UpdateTable::new();
     update.insert("slug".into(), "owner/example".into());
     update.insert("tag".into(), "v1".into());
     update.insert("branch".into(), "main".into());
@@ -131,19 +131,19 @@ fn add_writes_metadata_and_updates_generated_documents() {
     let mut workspace = Workspace::open(directory.path()).unwrap();
     let outcome = workspace
         .add_metadata(
-            "mods/example.pw.toml",
+            "mods/example.pw.json",
             metadata("example.jar", "download"),
             false,
         )
         .unwrap();
-    assert_eq!(outcome.metadata_path, "mods/example.pw.toml");
+    assert_eq!(outcome.metadata_path, "mods/example.pw.json");
     assert!(!outcome.replaced);
 
-    let metadata_bytes = fs::read(directory.path().join("mods/example.pw.toml")).unwrap();
-    let index_bytes = fs::read(directory.path().join("index.toml")).unwrap();
-    let index: Index = toml::from_str(std::str::from_utf8(&index_bytes).unwrap()).unwrap();
+    let metadata_bytes = fs::read(directory.path().join("mods/example.pw.json")).unwrap();
+    let index_bytes = fs::read(directory.path().join("index.json")).unwrap();
+    let index: Index = serde_json::from_str(std::str::from_utf8(&index_bytes).unwrap()).unwrap();
     assert_eq!(index.files.len(), 1);
-    assert_eq!(index.files[0].file, "mods/example.pw.toml");
+    assert_eq!(index.files[0].file, "mods/example.pw.json");
     assert!(index.files[0].metafile);
     assert_eq!(
         index.files[0].hash,
@@ -163,21 +163,21 @@ fn add_refuses_overwrite_unless_replace_is_explicit() {
     let directory = fixture();
     let mut workspace = Workspace::open(directory.path()).unwrap();
     workspace
-        .add_metadata("mods/example.pw.toml", metadata("one.jar", "one"), false)
+        .add_metadata("mods/example.pw.json", metadata("one.jar", "one"), false)
         .unwrap();
-    let before = fs::read(directory.path().join("mods/example.pw.toml")).unwrap();
+    let before = fs::read(directory.path().join("mods/example.pw.json")).unwrap();
     assert!(
         workspace
-            .add_metadata("mods/example.pw.toml", metadata("two.jar", "two"), false)
+            .add_metadata("mods/example.pw.json", metadata("two.jar", "two"), false)
             .is_err()
     );
     assert_eq!(
-        fs::read(directory.path().join("mods/example.pw.toml")).unwrap(),
+        fs::read(directory.path().join("mods/example.pw.json")).unwrap(),
         before
     );
 
     let outcome = workspace
-        .add_metadata("mods/example.pw.toml", metadata("two.jar", "two"), true)
+        .add_metadata("mods/example.pw.json", metadata("two.jar", "two"), true)
         .unwrap();
     assert!(outcome.replaced);
     assert_eq!(outcome.filename, "two.jar");
@@ -189,13 +189,13 @@ fn remove_deletes_metadata_and_its_index_entry_together() {
     let mut workspace = Workspace::open(directory.path()).unwrap();
     workspace
         .add_metadata(
-            "mods/example.pw.toml",
+            "mods/example.pw.json",
             metadata("example.jar", "hash"),
             false,
         )
         .unwrap();
-    workspace.remove_metadata("mods/example.pw.toml").unwrap();
-    assert!(!directory.path().join("mods/example.pw.toml").exists());
+    workspace.remove_metadata("mods/example.pw.json").unwrap();
+    assert!(!directory.path().join("mods/example.pw.json").exists());
     let reopened = Workspace::open(directory.path()).unwrap();
     assert!(reopened.index().files.is_empty());
 }
@@ -205,12 +205,12 @@ fn refresh_rehashes_an_edited_metadata_file() {
     let directory = fixture();
     let mut workspace = Workspace::open(directory.path()).unwrap();
     workspace
-        .add_metadata("mods/example.pw.toml", metadata("one.jar", "one"), false)
+        .add_metadata("mods/example.pw.json", metadata("one.jar", "one"), false)
         .unwrap();
-    let edited = metadata("two.jar", "two").to_toml().unwrap();
-    fs::write(directory.path().join("mods/example.pw.toml"), &edited).unwrap();
-    let hash = workspace.refresh_metadata("mods/example.pw.toml").unwrap();
-    assert_eq!(hash, hash_bytes(HashFormat::Sha512, edited.as_bytes()));
+    let edited = metadata("two.jar", "two").to_json_bytes().unwrap();
+    fs::write(directory.path().join("mods/example.pw.json"), &edited).unwrap();
+    let hash = workspace.refresh_metadata("mods/example.pw.json").unwrap();
+    assert_eq!(hash, hash_bytes(HashFormat::Sha512, &edited));
     assert_eq!(workspace.index().files[0].hash, hash);
 }
 
@@ -218,26 +218,26 @@ fn refresh_rehashes_an_edited_metadata_file() {
 fn refresh_index_discovers_changes_and_removes_missing_metadata() {
     let directory = fixture();
     let mut workspace = Workspace::open(directory.path()).unwrap();
-    let first = metadata("one.jar", "one").to_toml().unwrap();
-    let second = metadata("two.jar", "two").to_toml().unwrap();
+    let first = metadata("one.jar", "one").to_json_bytes().unwrap();
+    let second = metadata("two.jar", "two").to_json_bytes().unwrap();
     fs::create_dir_all(directory.path().join("mods")).unwrap();
-    fs::write(directory.path().join("mods/first.pw.toml"), first).unwrap();
-    fs::write(directory.path().join("mods/second.pw.toml"), second).unwrap();
+    fs::write(directory.path().join("mods/first.pw.json"), first).unwrap();
+    fs::write(directory.path().join("mods/second.pw.json"), second).unwrap();
 
     let added = workspace.refresh_metadata_index().unwrap();
     assert_eq!(added.added, 2);
     assert_eq!(added.updated, 0);
     assert_eq!(added.removed, 0);
 
-    let edited = metadata("changed.jar", "changed").to_toml().unwrap();
-    fs::write(directory.path().join("mods/first.pw.toml"), edited).unwrap();
-    fs::remove_file(directory.path().join("mods/second.pw.toml")).unwrap();
+    let edited = metadata("changed.jar", "changed").to_json_bytes().unwrap();
+    fs::write(directory.path().join("mods/first.pw.json"), edited).unwrap();
+    fs::remove_file(directory.path().join("mods/second.pw.json")).unwrap();
     let changed = workspace.refresh_metadata_index().unwrap();
     assert_eq!(changed.added, 0);
     assert_eq!(changed.updated, 1);
     assert_eq!(changed.removed, 1);
     assert_eq!(workspace.index().files.len(), 1);
-    assert_eq!(workspace.index().files[0].file, "mods/first.pw.toml");
+    assert_eq!(workspace.index().files[0].file, "mods/first.pw.json");
 }
 
 #[test]
@@ -246,13 +246,10 @@ fn refresh_index_reconciles_renamed_ordinary_files() {
     fs::create_dir_all(directory.path().join("config")).unwrap();
     fs::write(directory.path().join("config/renamed.json"), "new").unwrap();
     fs::write(
-        directory.path().join("index.toml"),
-        concat!(
-            "hash-format = \"sha512\"\n\n",
-            "[[files]]\n",
-            "file = \"config/old.json\"\n",
-            "hash = \"stale\"\n",
-        ),
+        directory.path().join("index.json"),
+        r#"{"hash-format": "sha512", "files": [
+            {"file": "config/old.json", "hash": "stale"}
+        ]}"#,
     )
     .unwrap();
 
@@ -287,7 +284,7 @@ fn operations_reject_paths_outside_the_pack_root() {
     let mut workspace = Workspace::open(directory.path()).unwrap();
     assert!(
         workspace
-            .add_metadata("../escape.pw.toml", metadata("bad.jar", "bad"), false)
+            .add_metadata("../escape.pw.json", metadata("bad.jar", "bad"), false)
             .is_err()
     );
     assert!(
@@ -295,7 +292,7 @@ fn operations_reject_paths_outside_the_pack_root() {
             .path()
             .parent()
             .unwrap()
-            .join("escape.pw.toml")
+            .join("escape.pw.json")
             .exists()
     );
 }
@@ -318,18 +315,19 @@ fn update_preserves_user_fields_and_detects_no_op_versions() {
         .unwrap()
         .insert("custom".into(), "keep".into());
     workspace
-        .add_metadata("mods/example.pw.toml", initial, false)
+        .add_metadata("mods/example.pw.json", initial, false)
         .unwrap();
 
     let outcome = workspace
-        .update_resolved("mods/example.pw.toml", resolved("version-2", "two.jar"))
+        .update_resolved("mods/example.pw.json", resolved("version-2", "two.jar"))
         .unwrap();
     assert!(outcome.changed);
     assert_eq!(outcome.old_filename, "one.jar");
     assert_eq!(outcome.new_filename, "two.jar");
-    let updated: Mod =
-        toml::from_str(&fs::read_to_string(directory.path().join("mods/example.pw.toml")).unwrap())
-            .unwrap();
+    let updated: Mod = serde_json::from_str(
+        &fs::read_to_string(directory.path().join("mods/example.pw.json")).unwrap(),
+    )
+    .unwrap();
     assert_eq!(updated.name, "User Name");
     assert_eq!(updated.side, "client");
     assert_eq!(updated.option.unwrap().description, "User choice");
@@ -340,7 +338,7 @@ fn update_preserves_user_fields_and_detects_no_op_versions() {
     );
 
     let no_op = workspace
-        .update_resolved("mods/example.pw.toml", resolved("version-2", "ignored.jar"))
+        .update_resolved("mods/example.pw.json", resolved("version-2", "ignored.jar"))
         .unwrap();
     assert!(!no_op.changed);
     assert_eq!(no_op.new_filename, "two.jar");
@@ -353,16 +351,16 @@ fn update_honors_pinned_metadata() {
     let mut initial = metadata("one.jar", "one");
     initial.pin = true;
     workspace
-        .add_metadata("mods/example.pw.toml", initial, false)
+        .add_metadata("mods/example.pw.json", initial, false)
         .unwrap();
-    let before = fs::read(directory.path().join("mods/example.pw.toml")).unwrap();
+    let before = fs::read(directory.path().join("mods/example.pw.json")).unwrap();
     assert!(
         workspace
-            .update_resolved("mods/example.pw.toml", resolved("version-2", "two.jar"))
+            .update_resolved("mods/example.pw.json", resolved("version-2", "two.jar"))
             .is_err()
     );
     assert_eq!(
-        fs::read(directory.path().join("mods/example.pw.toml")).unwrap(),
+        fs::read(directory.path().join("mods/example.pw.json")).unwrap(),
         before
     );
 }
@@ -372,19 +370,19 @@ fn update_rejects_a_different_provider_project() {
     let directory = fixture();
     let mut workspace = Workspace::open(directory.path()).unwrap();
     workspace
-        .add_metadata("mods/example.pw.toml", metadata("one.jar", "one"), false)
+        .add_metadata("mods/example.pw.json", metadata("one.jar", "one"), false)
         .unwrap();
-    let before = fs::read(directory.path().join("mods/example.pw.toml")).unwrap();
+    let before = fs::read(directory.path().join("mods/example.pw.json")).unwrap();
     let mut wrong_project = resolved("version-2", "two.jar");
     wrong_project.id = "different-project".into();
 
     assert!(
         workspace
-            .update_resolved("mods/example.pw.toml", wrong_project)
+            .update_resolved("mods/example.pw.json", wrong_project)
             .is_err()
     );
     assert_eq!(
-        fs::read(directory.path().join("mods/example.pw.toml")).unwrap(),
+        fs::read(directory.path().join("mods/example.pw.json")).unwrap(),
         before
     );
 }
@@ -394,16 +392,17 @@ fn update_supports_repository_release_metadata() {
     let directory = fixture();
     let mut workspace = Workspace::open(directory.path()).unwrap();
     workspace
-        .add_metadata("mods/example.pw.toml", github_metadata(), false)
+        .add_metadata("mods/example.pw.json", github_metadata(), false)
         .unwrap();
 
     let outcome = workspace
-        .update_resolved("mods/example.pw.toml", github_resolved("v2", "two.jar"))
+        .update_resolved("mods/example.pw.json", github_resolved("v2", "two.jar"))
         .unwrap();
     assert!(outcome.changed);
-    let updated: Mod =
-        toml::from_str(&fs::read_to_string(directory.path().join("mods/example.pw.toml")).unwrap())
-            .unwrap();
+    let updated: Mod = serde_json::from_str(
+        &fs::read_to_string(directory.path().join("mods/example.pw.json")).unwrap(),
+    )
+    .unwrap();
     assert_eq!(updated.name, "User Repository Name");
     assert_eq!(updated.side, "client");
     assert_eq!(updated.filename, "two.jar");
@@ -411,7 +410,7 @@ fn update_supports_repository_release_metadata() {
     assert_eq!(updated.update["github"]["branch"].as_str(), Some("main"));
 
     let no_op = workspace
-        .update_resolved("mods/example.pw.toml", github_resolved("v2", "ignored.jar"))
+        .update_resolved("mods/example.pw.json", github_resolved("v2", "ignored.jar"))
         .unwrap();
     assert!(!no_op.changed);
 }
@@ -422,13 +421,10 @@ fn fingerprint_replacement_removes_the_local_file_and_index_entry() {
     fs::create_dir_all(directory.path().join("mods")).unwrap();
     fs::write(directory.path().join("mods/local.jar"), b"local jar").unwrap();
     fs::write(
-        directory.path().join("index.toml"),
-        concat!(
-            "hash-format = \"sha512\"\n\n",
-            "[[files]]\n",
-            "file = \"mods/local.jar\"\n",
-            "hash = \"old\"\n",
-        ),
+        directory.path().join("index.json"),
+        r#"{"hash-format": "sha512", "files": [
+            {"file": "mods/local.jar", "hash": "old"}
+        ]}"#,
     )
     .unwrap();
     let mut workspace = Workspace::open(directory.path()).unwrap();
@@ -437,11 +433,12 @@ fn fingerprint_replacement_removes_the_local_file_and_index_entry() {
         .replace_local_with_resolved("mods/local.jar", resolved("v2", "example.jar"))
         .unwrap();
 
-    assert_eq!(outcome.metadata_path, "mods/example.pw.toml");
+    assert_eq!(outcome.metadata_path, "mods/example.pw.json");
     assert!(!directory.path().join("mods/local.jar").exists());
-    assert!(directory.path().join("mods/example.pw.toml").is_file());
+    assert!(directory.path().join("mods/example.pw.json").is_file());
     let index: Index =
-        toml::from_str(&fs::read_to_string(directory.path().join("index.toml")).unwrap()).unwrap();
+        serde_json::from_str(&fs::read_to_string(directory.path().join("index.json")).unwrap())
+            .unwrap();
     assert!(
         !index
             .files
@@ -452,7 +449,7 @@ fn fingerprint_replacement_removes_the_local_file_and_index_entry() {
         index
             .files
             .iter()
-            .any(|entry| entry.file == "mods/example.pw.toml" && entry.metafile)
+            .any(|entry| entry.file == "mods/example.pw.json" && entry.metafile)
     );
 }
 
@@ -477,7 +474,7 @@ fn imported_pack_merge_preserves_identity_and_merges_versions_and_files() {
     Workspace::open(imported.path())
         .unwrap()
         .add_metadata(
-            "mods/example.pw.toml",
+            "mods/example.pw.json",
             metadata("example.jar", "hash"),
             false,
         )
@@ -488,9 +485,179 @@ fn imported_pack_merge_preserves_identity_and_merges_versions_and_files() {
 
     assert_eq!(report.files, 1);
     assert_eq!(report.metadata_files, 1);
-    assert!(destination.path().join("mods/example.pw.toml").is_file());
+    assert!(destination.path().join("mods/example.pw.json").is_file());
     let merged = Workspace::open(destination.path()).unwrap();
     assert_eq!(merged.pack().name, "Fixture");
     assert_eq!(merged.pack().versions["minecraft"], "1.20.1");
     assert_eq!(merged.pack().versions["forge"], "47.3.0");
+}
+
+/// A generation-26 pack on disk: TOML metadata, TOML index, old format string.
+fn legacy_fixture() -> tempfile::TempDir {
+    let directory = tempfile::tempdir().unwrap();
+    fs::write(
+        directory.path().join("pack.toml"),
+        concat!(
+            "name = \"Legacy\"\n",
+            "pack-format = \"packwand:26\"\n\n",
+            "[index]\n",
+            "file = \"index.toml\"\n",
+            "hash-format = \"sha512\"\n\n",
+            "[versions]\n",
+            "minecraft = \"1.21.1\"\n",
+        ),
+    )
+    .unwrap();
+    fs::write(
+        directory.path().join("index.toml"),
+        "hash-format = \"sha512\"\n",
+    )
+    .unwrap();
+    fs::create_dir_all(directory.path().join("mods")).unwrap();
+    for slug in ["alpha", "beta"] {
+        // Written as literal TOML rather than serialized: `Mod` only encodes
+        // JSON now, and this fixture has to be what generation 26 actually
+        // left on disk.
+        fs::write(
+            directory.path().join(format!("mods/{slug}.pw.toml")),
+            format!(
+                concat!(
+                    "name = \"Example\"\n",
+                    "filename = \"{slug}.jar\"\n",
+                    "side = \"both\"\n\n",
+                    "[download]\n",
+                    "url = \"https://example.test/{slug}.jar\"\n",
+                    "hash-format = \"sha512\"\n",
+                    "hash = \"{slug}\"\n\n",
+                    "[update]\n",
+                    "[update.modrinth]\n",
+                    "mod-id = \"project\"\n",
+                    "version = \"version\"\n",
+                ),
+                slug = slug
+            ),
+        )
+        .unwrap();
+    }
+    fs::write(directory.path().join("config.json"), "{}").unwrap();
+    directory
+}
+
+#[test]
+fn migrating_to_generation_27_converts_metadata_and_the_index() {
+    let directory = legacy_fixture();
+    let mut workspace = Workspace::open(directory.path()).unwrap();
+    let (old, new, renames) = workspace.migrate_format_with(false).unwrap();
+
+    assert_eq!(old, "packwand:26");
+    assert_eq!(new, "packwand:27");
+    assert_eq!(renames.len(), 2, "both mods must be renamed");
+
+    // Every legacy file is gone and its JSON replacement parses.
+    for slug in ["alpha", "beta"] {
+        let legacy = directory.path().join(format!("mods/{slug}.pw.toml"));
+        let migrated = directory.path().join(format!("mods/{slug}.pw.json"));
+        assert!(!legacy.exists(), "{slug}: legacy metadata must be removed");
+        assert!(migrated.is_file(), "{slug}: JSON metadata must be written");
+        let parsed: Mod = serde_json::from_str(&fs::read_to_string(&migrated).unwrap()).unwrap();
+        assert_eq!(parsed.filename, format!("{slug}.jar"));
+    }
+
+    // The index moved to JSON and the pack points at it.
+    assert!(!directory.path().join("index.toml").exists());
+    assert!(directory.path().join("index.json").is_file());
+    let pack: Pack =
+        toml::from_str(&fs::read_to_string(directory.path().join("pack.toml")).unwrap()).unwrap();
+    assert_eq!(pack.index.file, "index.json");
+    assert_eq!(pack.pack_format, "packwand:27");
+    assert!(!pack.format().unwrap().needs_migration());
+
+    // The regenerated index describes the new paths, not the old ones.
+    let index: Index =
+        serde_json::from_str(&fs::read_to_string(directory.path().join("index.json")).unwrap())
+            .unwrap();
+    assert!(
+        index
+            .files
+            .iter()
+            .any(|entry| entry.file == "mods/alpha.pw.json" && entry.metafile)
+    );
+    assert!(
+        !index
+            .files
+            .iter()
+            .any(|entry| entry.file.ends_with(".pw.toml")),
+        "no generation-26 path may survive in the index"
+    );
+}
+
+#[test]
+fn a_dry_run_migration_reports_the_plan_and_changes_nothing() {
+    let directory = legacy_fixture();
+    let mut workspace = Workspace::open(directory.path()).unwrap();
+    let before = fs::read(directory.path().join("mods/alpha.pw.toml")).unwrap();
+
+    let (old, new, renames) = workspace.migrate_format_with(true).unwrap();
+    assert_eq!(old, "packwand:26");
+    assert_eq!(new, "packwand:27");
+    assert_eq!(
+        renames,
+        vec![
+            packwand_ops::MetadataRename {
+                from: "mods/alpha.pw.toml".into(),
+                to: "mods/alpha.pw.json".into(),
+            },
+            packwand_ops::MetadataRename {
+                from: "mods/beta.pw.toml".into(),
+                to: "mods/beta.pw.json".into(),
+            },
+        ],
+        "the plan must be reported in sorted path order"
+    );
+
+    // Nothing on disk moved.
+    assert_eq!(
+        fs::read(directory.path().join("mods/alpha.pw.toml")).unwrap(),
+        before
+    );
+    assert!(!directory.path().join("mods/alpha.pw.json").exists());
+    assert!(directory.path().join("index.toml").exists());
+    assert!(!directory.path().join("index.json").exists());
+}
+
+#[test]
+fn migrating_an_already_current_pack_is_a_no_op() {
+    let directory = fixture();
+    let mut workspace = Workspace::open(directory.path()).unwrap();
+    workspace
+        .add_metadata("mods/example.pw.json", metadata("one.jar", "one"), false)
+        .unwrap();
+    let (old, new, renames) = workspace.migrate_format_with(false).unwrap();
+    assert_eq!(old, "packwand:27");
+    assert_eq!(new, "packwand:27");
+    assert!(renames.is_empty());
+    assert!(directory.path().join("mods/example.pw.json").is_file());
+}
+
+/// A pack that already has both generations of one mod is ambiguous: migrating
+/// would have to choose which copy wins. Refusing is the only safe answer.
+#[test]
+fn migration_refuses_when_the_target_metadata_already_exists() {
+    let directory = legacy_fixture();
+    fs::write(
+        directory.path().join("mods/alpha.pw.json"),
+        metadata("conflict.jar", "conflict")
+            .to_json_bytes()
+            .unwrap(),
+    )
+    .unwrap();
+    let mut workspace = Workspace::open(directory.path()).unwrap();
+    let error = workspace.migrate_format_with(false).unwrap_err();
+    assert!(
+        matches!(error, packwand_ops::OpsError::AlreadyExists(ref path) if path.contains("alpha")),
+        "expected an AlreadyExists error naming the conflict, got {error:?}"
+    );
+    // The pack is untouched: the legacy file is still there and still legacy.
+    assert!(directory.path().join("mods/alpha.pw.toml").exists());
+    assert!(directory.path().join("index.toml").exists());
 }

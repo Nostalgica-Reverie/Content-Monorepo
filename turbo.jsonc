@@ -1,0 +1,51 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+
+	// Turborepo covers the JavaScript/TypeScript side of this monorepo only.
+	// It is not a second entry point: the justfile stays the authoritative
+	// command interface (CI drives the same recipes), and the `just` recipes
+	// that touch JS call `turbo run` underneath. Go, Rust, Kotlin, Nix, and C
+	// keep their own tooling and are not modelled here.
+	"ui": "stream",
+
+	"tasks": {
+		// Type-checking never writes anything, so there is nothing to cache
+		// as an artifact — but the log and exit status are worth reusing.
+		"typecheck": {
+			"dependsOn": ["^build"],
+			"outputs": []
+		},
+
+		"check": {
+			"dependsOn": ["^build"],
+			"outputs": []
+		},
+
+		"lint": {
+			"outputs": []
+		},
+
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", ".vitepress/dist/**", "docs/.vitepress/dist/**"]
+		},
+
+		"test": {
+			"dependsOn": ["build"],
+			"outputs": []
+		},
+
+		// VitePress sites build into their own directory rather than dist/.
+		"docs:build": {
+			"dependsOn": ["^build"],
+			"outputs": ["docs/.vitepress/dist/**"]
+		},
+
+		// Long-running and interactive: never cache, never let Turbo think it
+		// has finished.
+		"dev": {
+			"cache": false,
+			"persistent": true
+		}
+	}
+}

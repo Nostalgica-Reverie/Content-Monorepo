@@ -22,13 +22,17 @@
       }
     ],
     "security": {
-      "capabilities": ["default"],
-      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost; img-src 'self' asset: data: blob:; media-src 'self' blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self' blob:"
+      "capabilities": [
+        "default"
+      ],
+      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost; img-src 'self' asset: data: blob: https://cdn.modrinth.com https://media.forgecdn.net https://raw.githubusercontent.com https://user-images.githubusercontent.com; media-src 'self' blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self' blob:"
     }
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
+    "targets": [
+      "nsis"
+    ],
     "category": "Game",
     "resources": {
       "../../packwand-installer/build/dist/packwiz-installer.jar": "resources/packwiz-installer.jar",

@@ -97,9 +97,21 @@ pub fn build_all_registries_with(
     root: impl AsRef<Path>,
     jobs: Jobs,
 ) -> Result<Vec<ContentRegistry>, Box<dyn Error>> {
-    RegistryKind::ALL
+    let root = root.as_ref();
+    let kinds = RegistryKind::ALL;
+    // The four kinds scan disjoint subtrees, so they overlap cleanly. Each
+    // one still hashes its own files in a strict order internally — only the
+    // kinds run side by side, and results stay in `RegistryKind::ALL` order.
+    //
+    // The error is carried as a `String` because `Box<dyn Error>` is not
+    // `Send` and so cannot cross a worker boundary. Every caller renders this
+    // with `to_string()`, so nothing is lost.
+    let built = packwand_parallel::try_map(&kinds, jobs, |kind| {
+        build_registry_with(root, *kind, jobs).map_err(|error| error.to_string())
+    });
+    built
         .into_iter()
-        .map(|kind| build_registry_with(root.as_ref(), kind, jobs))
+        .map(|registry| registry.map_err(Into::into))
         .collect()
 }
 
@@ -414,8 +426,8 @@ fn mod_slugs(root: &Path) -> Result<Vec<String>, Box<dyn Error>> {
     for entry in fs::read_dir(root.join("mods"))? {
         let entry = entry?;
         let name = entry.file_name().to_string_lossy().into_owned();
-        if entry.file_type()?.is_file() && name.ends_with(".pw.toml") {
-            slugs.push(name.trim_end_matches(".pw.toml").into());
+        if entry.file_type()?.is_file() && packwand_pack::metafile::is_metafile(&name) {
+            slugs.push(name.trim_end_matches(".pw.json").into());
         }
     }
     slugs.sort();
@@ -475,7 +487,7 @@ mod tests {
 
         fs::create_dir_all(root.path().join("config")).unwrap();
         fs::create_dir_all(root.path().join("mods")).unwrap();
-        fs::write(root.path().join("mods/example-mod.pw.toml"), "").unwrap();
+        fs::write(root.path().join("mods/example-mod.pw.json"), "").unwrap();
         fs::write(root.path().join("config/example-mod-client.toml"), "").unwrap();
         let registry = build_registry(root.path(), RegistryKind::Config).unwrap();
         assert_eq!(registry.entries[0].owner, "example-mod");

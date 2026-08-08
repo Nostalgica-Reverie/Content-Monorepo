@@ -14,6 +14,17 @@
 :root {
   color-scheme: dark;
 
+  /* Motion. Durations are short on purpose: this is an editor, and anything
+     long enough to notice is long enough to be in the way. Everything that
+     uses these animates opacity or transform only — animating a layout
+     property would make the rearrangeable shell stutter while dragging. */
+  --motion-fast: 120ms;
+  --motion-base: 160ms;
+  --motion-slow: 200ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0.2, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
   /* Surfaces, deepest to lightest. */
   --rail: #15151a;
   --side: #1b1b21;
@@ -804,7 +815,18 @@ label.has-error select {
   }
 }
 
+/* Two independent ways to turn motion off: the OS preference, and the app's
+   own "Reduce motion" setting for people who want a calm editor without
+   changing their whole desktop. Both collapse the tokens themselves, so a
+   component that uses `var(--motion-*)` is quiet automatically and does not
+   need its own media query. */
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+    --motion-slow: 0ms;
+  }
+
   *,
   *::before,
   *::after {
@@ -812,4 +834,18 @@ label.has-error select {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+:root[data-reduce-motion='true'] {
+  --motion-fast: 0ms;
+  --motion-base: 0ms;
+  --motion-slow: 0ms;
+}
+
+:root[data-reduce-motion='true'] *,
+:root[data-reduce-motion='true'] *::before,
+:root[data-reduce-motion='true'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
 }

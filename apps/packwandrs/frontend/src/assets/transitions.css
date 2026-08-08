@@ -1,0 +1,119 @@
+/*
+ * Named transitions for Vue's <Transition> and <TransitionGroup>.
+ *
+ * Every rule here expresses duration and easing as var(--motion-*) and
+ * var(--ease-*) from base.css, and animates only opacity and transform. That
+ * is what makes both kill switches work without any per-component opt-in: the
+ * OS `prefers-reduced-motion` query and the app's own "Reduce motion" setting
+ * collapse those tokens to 0ms, so nothing below needs to know either exists.
+ *
+ * The amplitudes are deliberately small — 4-8px, and 2% of scale. This is an
+ * editor. Motion here is meant to say "that moved, and here is where it went",
+ * not to be noticed on its own.
+ *
+ * Nothing in this file may be applied inside the Monaco host. Monaco measures
+ * and paints its own viewport, and a transition on an ancestor of
+ * `.packwand-monaco` tears while scrolling.
+ */
+
+/* An element on its way out must not accept input. This is not cosmetic: both
+   `.modal-backdrop` and `.palette-backdrop` are `position: fixed; inset: 0`
+   with a high z-index, so without this they keep covering the whole window for
+   the length of their leave and eat the first click after a dismiss. */
+.fade-leave-active,
+.slide-fade-leave-active,
+.scale-fade-leave-active,
+.toast-leave-active,
+.tab-leave-active {
+  pointer-events: none;
+}
+
+/* Plain opacity. The default for anything that appears in place: banners,
+   result panels, and the page area between routes. */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--motion-fast) var(--ease-standard);
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Opacity plus a short vertical travel, for content that expands out of
+   something — a disclosure body, a banner pushing the view down. Enters
+   decelerating so it settles, leaves accelerating so it gets out of the way. */
+.slide-fade-enter-active {
+  transition:
+    opacity var(--motion-base) var(--ease-decelerate),
+    transform var(--motion-base) var(--ease-decelerate);
+}
+.slide-fade-leave-active {
+  transition:
+    opacity var(--motion-fast) var(--ease-accelerate),
+    transform var(--motion-fast) var(--ease-accelerate);
+}
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+/* Dialog panels. The scale starts at 0.98 rather than something smaller
+   because the modal is already centred and backed by a fading scrim; a larger
+   scale reads as a zoom effect instead of an arrival. */
+.scale-fade-enter-active {
+  transition:
+    opacity var(--motion-base) var(--ease-decelerate),
+    transform var(--motion-base) var(--ease-decelerate);
+}
+.scale-fade-leave-active {
+  transition:
+    opacity var(--motion-fast) var(--ease-accelerate),
+    transform var(--motion-fast) var(--ease-accelerate);
+}
+.scale-fade-enter-from,
+.scale-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+/* Toasts, as a <TransitionGroup>. They enter from the right edge they are
+   docked to, and `-move` slides the survivors up as one is dismissed.
+   Leaving toasts keep their space until the transition ends: taking them out
+   of flow would need absolute positioning inside a bottom-anchored grid, and
+   the reflow that costs is smaller than the jump it introduces. */
+.toast-enter-active {
+  transition:
+    opacity var(--motion-base) var(--ease-decelerate),
+    transform var(--motion-base) var(--ease-decelerate);
+}
+.toast-leave-active {
+  transition:
+    opacity var(--motion-fast) var(--ease-accelerate),
+    transform var(--motion-fast) var(--ease-accelerate);
+}
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateX(8px);
+}
+.toast-move {
+  transition: transform var(--motion-base) var(--ease-standard);
+}
+
+/* Tab strips, as a <TransitionGroup>. Reordering slides; opening and closing
+   fade. No scale — a tab that pops draws the eye to the chrome instead of to
+   the document that just opened. Leaving tabs hold their space for the same
+   reason toasts do, and taking them out of flow here would be worse: an
+   absolutely positioned tab collapses to the strip's left edge mid-fade. */
+.tab-enter-active,
+.tab-leave-active {
+  transition: opacity var(--motion-fast) var(--ease-standard);
+}
+.tab-enter-from,
+.tab-leave-to {
+  opacity: 0;
+}
+.tab-move {
+  transition: transform var(--motion-base) var(--ease-standard);
+}

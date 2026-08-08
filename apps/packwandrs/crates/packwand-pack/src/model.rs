@@ -3,18 +3,30 @@ use std::str::FromStr;
 
 use serde::{Deserialize, Serialize};
 
-pub const CURRENT_PACK_FORMAT: &str = "packwand:26";
-const PACKWAND_GENERATION: u32 = 26;
+/// The format packwand writes.
+pub const CURRENT_PACK_FORMAT: &str = "packwand:27";
+
+/// The generation [`CURRENT_PACK_FORMAT`] names.
+const CURRENT_GENERATION: u32 = 27;
+
+/// The oldest generation packwand will still *read*.
+///
+/// Deliberately separate from [`CURRENT_GENERATION`]: these were one constant
+/// until generation 27, which meant raising it would have made packwand reject
+/// every pack written by the previous generation — including the packs
+/// `packwand migrate format` has to open in order to convert them. Reading and
+/// writing are different questions and now have different answers.
+const MINIMUM_GENERATION: u32 = 26;
 
 fn default_index_file() -> String {
-    "index.toml".to_string()
+    crate::metafile::INDEX_FILE.to_string()
 }
 
 fn default_hash_format() -> String {
     "sha512".to_string()
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PackFormat {
     Packwand(u32),
     Packwiz { major: u32, minor: u32, patch: u32 },
@@ -28,7 +40,10 @@ pub enum PackFormatError {
     InvalidGeneration,
     #[error("pack-format field is not valid semver")]
     InvalidVersion,
-    #[error("pack-format packwand:{found} predates the minimum supported generation ({minimum})")]
+    #[error(
+        "pack-format packwand:{found} predates the minimum supported generation ({minimum}); \
+         run `packwand migrate format` to convert it"
+    )]
     OldGeneration { found: u32, minimum: u32 },
     #[error("the modpack is incompatible with this version of packwand")]
     IncompatiblePackwiz,
@@ -42,10 +57,10 @@ impl FromStr for PackFormat {
             let generation = generation
                 .parse::<u32>()
                 .map_err(|_| PackFormatError::InvalidGeneration)?;
-            if generation < PACKWAND_GENERATION {
+            if generation < MINIMUM_GENERATION {
                 return Err(PackFormatError::OldGeneration {
                     found: generation,
-                    minimum: PACKWAND_GENERATION,
+                    minimum: MINIMUM_GENERATION,
                 });
             }
             return Ok(Self::Packwand(generation));
@@ -69,6 +84,33 @@ impl FromStr for PackFormat {
             });
         }
         Err(PackFormatError::Unknown)
+    }
+}
+
+impl PackFormat {
+    /// Whether this pack predates the current generation and must be converted
+    /// before packwand writes to it.
+    ///
+    /// A pack that needs migration can still be *read* — that is the whole
+    /// reason [`MINIMUM_GENERATION`] exists — so this is the check a command
+    /// makes before mutating a pack, not before opening one.
+    #[must_use]
+    pub const fn needs_migration(self) -> bool {
+        match self {
+            Self::Packwand(generation) => generation < CURRENT_GENERATION,
+            // Every packwiz pack predates packwand's own generations.
+            Self::Packwiz { .. } => true,
+        }
+    }
+
+    /// The generation number, for packwiz packs reported as 0 — they are older
+    /// than any packwand generation.
+    #[must_use]
+    pub const fn generation(self) -> u32 {
+        match self {
+            Self::Packwand(generation) => generation,
+            Self::Packwiz { .. } => 0,
+        }
     }
 }
 
@@ -243,23 +285,28 @@ pub struct Mod {
     #[serde(default)]
     pub download: Download,
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
-    pub update: BTreeMap<String, toml::Table>,
+    pub update: BTreeMap<String, UpdateTable>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub option: Option<ModOption>,
 }
 
+/// Per-provider update metadata: whatever fields that provider needs to find
+/// this mod again (`mod-id`, `version`, `file-id`, `slug`, …).
+///
+/// JSON rather than `toml::Table` since generation 27. Metadata files are JSON
+/// now, and round-tripping through TOML's value model would have quietly
+/// changed data on the way: TOML has no null, distinguishes integers from
+/// floats differently, and carries first-class datetimes that JSON has to
+/// render as strings. Storing what the file actually contains avoids all of it.
+pub type UpdateTable = serde_json::Map<String, serde_json::Value>;
+
 impl Mod {
-    /// Encodes with the explicit `[update]` parent table emitted by the Go
-    /// BurntSushi encoder. TOML treats the implicit and explicit forms alike,
-    /// but index hashes require the bytes to stay identical during the port.
-    pub fn to_toml(&self) -> Result<String, toml::ser::Error> {
-        let mut encoded = toml::to_string(self)?;
-        if !self.update.is_empty()
-            && let Some(position) = encoded.find("\n[update.")
-        {
-            encoded.insert_str(position + 1, "[update]\n");
-        }
-        Ok(encoded)
+    /// Serializes as the pretty-printed JSON with a trailing newline that every
+    /// generated JSON file in a pack uses, so metadata stays diff-friendly.
+    pub fn to_json_bytes(&self) -> Result<Vec<u8>, serde_json::Error> {
+        let mut bytes = serde_json::to_vec_pretty(self)?;
+        bytes.push(b'\n');
+        Ok(bytes)
     }
 }
 
@@ -292,4 +339,76 @@ pub struct ModOption {
     pub description: String,
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub default: bool,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// The property that made splitting the constants necessary: `migrate`
+    /// has to open a generation-26 pack in order to convert it, so the
+    /// previous generation must stay *readable* after the bump.
+    #[test]
+    fn the_previous_generation_still_parses() {
+        let format = PackFormat::from_str("packwand:26").expect("gen 26 must remain readable");
+        assert_eq!(format, PackFormat::Packwand(26));
+        assert!(
+            format.needs_migration(),
+            "readable is not the same as current"
+        );
+    }
+
+    #[test]
+    fn the_current_generation_needs_no_migration() {
+        let format = PackFormat::from_str(CURRENT_PACK_FORMAT).unwrap();
+        assert_eq!(format, PackFormat::Packwand(CURRENT_GENERATION));
+        assert!(!format.needs_migration());
+    }
+
+    /// A generation newer than this build is accepted rather than rejected —
+    /// refusing it would strand a pack written by a newer packwand with no way
+    /// back, and the format is additive.
+    #[test]
+    fn a_future_generation_is_not_treated_as_needing_migration() {
+        let format = PackFormat::from_str("packwand:99").unwrap();
+        assert!(!format.needs_migration());
+    }
+
+    #[test]
+    fn generations_below_the_minimum_are_rejected_with_the_fix_named() {
+        let error = PackFormat::from_str("packwand:25").unwrap_err();
+        assert_eq!(
+            error,
+            PackFormatError::OldGeneration {
+                found: 25,
+                minimum: MINIMUM_GENERATION,
+            }
+        );
+        assert!(
+            error.to_string().contains("packwand migrate format"),
+            "the error must name the way out: {error}"
+        );
+    }
+
+    /// packwiz packs predate every packwand generation, so they always need
+    /// migration — but they still parse, which is what lets `migrate` read one.
+    #[test]
+    fn packwiz_packs_parse_and_always_need_migration() {
+        let format = PackFormat::from_str("packwiz:1.1.0").unwrap();
+        assert!(format.needs_migration());
+        assert_eq!(format.generation(), 0);
+        assert!(PackFormat::from_str("packwiz:2.0.0").is_err());
+    }
+
+    /// A pack with no `pack-format` at all is treated as packwiz 1.1.0.
+    #[test]
+    fn an_absent_pack_format_falls_back_to_packwiz() {
+        let pack = Pack::default();
+        assert!(pack.format().unwrap().needs_migration());
+    }
+
+    #[test]
+    fn a_new_index_defaults_to_json() {
+        assert_eq!(PackIndex::default().file, "index.json");
+    }
 }

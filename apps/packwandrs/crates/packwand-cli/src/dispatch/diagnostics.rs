@@ -21,7 +21,7 @@ pub(super) fn lint(args: &ArgMatches) -> Result {
         eprintln!("{}: {}", issue.path.display(), issue.message);
     }
     if report.checked == 0 {
-        println!("no JSON or .pw.toml files to lint.");
+        println!("no JSON or mod metadata files to lint.");
         return Ok(());
     }
     if report.valid() {

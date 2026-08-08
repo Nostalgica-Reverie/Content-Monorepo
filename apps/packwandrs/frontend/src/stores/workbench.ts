@@ -5,10 +5,9 @@ import { packsList } from '@/helpers/invoke/packs'
 import { projectsList } from '@/helpers/invoke/projects'
 import type { PackSummary, WorkspaceProject } from '@/helpers/types'
 import type { GitDiffDocument } from '@/helpers/invoke/git'
-
-function normalized(path: string) {
-  return path.replaceAll('\\', '/').replace(/\/$/, '').toLowerCase()
-}
+// Scoping rules live in `packwand/workbench.gleam`, where the prefix-match and
+// selection-fallback edge cases are tested.
+import { firstPresent, packBelongsTo, selectOrFirst, summaryLine } from '@/core/packwand'
 
 export const useWorkbenchStore = defineStore('workbench', () => {
   const projects = ref<WorkspaceProject[]>([])
@@ -30,15 +29,29 @@ export const useWorkbenchStore = defineStore('workbench', () => {
   const selectedProject = computed(() => projects.value.find((project) => project.manifest.id === selectedProjectId.value) ?? projects.value[0] ?? null)
   const projectPacks = computed(() => {
     if (!selectedProject.value) return packs.value
-    const root = normalized(selectedProject.value.root)
-    return packs.value.filter((pack) => normalized(pack.path) === root || normalized(pack.path).startsWith(root + '/'))
+    const root = selectedProject.value.root
+    return packs.value.filter((pack) => packBelongsTo(pack.path, root))
   })
   const selectedPack = computed(() => projectPacks.value.find((pack) => pack.id === selectedPackId.value) ?? projectPacks.value[0] ?? null)
-  const title = computed(() => selectedProject.value?.manifest.name || selectedProject.value?.manifest.id || selectedPack.value?.name || 'Packwand')
+  const title = computed(() =>
+    firstPresent(
+      [
+        selectedProject.value?.manifest.name ?? '',
+        selectedProject.value?.manifest.id ?? '',
+        selectedPack.value?.name ?? '',
+      ],
+      'Packwand',
+    ),
+  )
   const summary = computed(() => {
     const project = selectedProject.value
     if (!project) return selectedPack.value?.path ?? 'No projects indexed'
-    return [project.category, project.manifest.mc_version, project.manifest.loader, project.manifest.version].filter(Boolean).join(' · ')
+    return summaryLine([
+      project.category,
+      project.manifest.mc_version ?? '',
+      project.manifest.loader ?? '',
+      project.manifest.version,
+    ])
   })
   function selectProject(id: string) {
     selectedProjectId.value = id
@@ -68,8 +81,16 @@ export const useWorkbenchStore = defineStore('workbench', () => {
         .map(result => String(result.reason))
       if (failures.length === 2) throw new Error(failures.join('; '))
       if (failures.length) error.value = `Workspace partially indexed: ${failures.join('; ')}`
-      if (!projects.value.some((project) => project.manifest.id === selectedProjectId.value)) selectedProjectId.value = projects.value[0]?.manifest.id ?? ''
-      if (!projectPacks.value.some((pack) => pack.id === selectedPackId.value)) selectedPackId.value = projectPacks.value[0]?.id ?? ''
+      // Keeps a still-valid selection across a reindex rather than resetting
+      // to the first entry whenever anything in the workspace changes.
+      selectedProjectId.value = selectOrFirst(
+        projects.value.map(project => project.manifest.id),
+        selectedProjectId.value,
+      )
+      selectedPackId.value = selectOrFirst(
+        projectPacks.value.map(pack => pack.id),
+        selectedPackId.value,
+      )
       if (selectedProjectId.value) localStorage.setItem('packwand:selected-project', selectedProjectId.value)
       if (selectedPackId.value) localStorage.setItem('packwand:selected-pack', selectedPackId.value)
     } catch (caught) { error.value = String(caught); throw caught } finally { loading.value = false }

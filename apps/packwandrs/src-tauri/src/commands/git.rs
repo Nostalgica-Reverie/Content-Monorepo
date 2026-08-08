@@ -5,6 +5,7 @@ use std::process::{Command, Output};
 use serde::Serialize;
 use tauri::State;
 
+use crate::commands::off_thread;
 use crate::error::{CommandResult, SerializableError};
 use crate::state::AppState;
 
@@ -35,6 +36,11 @@ pub struct GitDiffDocument {
     pub modified: String,
 }
 
+/// Runs a `git` subprocess to completion.
+///
+/// Every caller reaches this from [`off_thread`], never from the webview
+/// thread: `git status` on a large repository takes long enough that running
+/// it inline froze the window on each Source Control refresh.
 fn git(workspace: &Path, args: &[&str]) -> CommandResult<Output> {
     Command::new("git")
         .args(args)
@@ -79,21 +85,27 @@ fn validate_paths(paths: &[String]) -> CommandResult<()> {
 }
 
 #[tauri::command]
-pub fn git_status(state: State<'_, AppState>) -> CommandResult<GitStatus> {
+pub async fn git_status(state: State<'_, AppState>) -> CommandResult<GitStatus> {
+    // `State` is not `'static`, so the workspace path is resolved here and
+    // only the owned `PathBuf` crosses into the blocking task.
     let workspace = state.workspace()?;
+    off_thread(move || status_inner(&workspace)).await
+}
+
+fn status_inner(workspace: &Path) -> CommandResult<GitStatus> {
     let output = checked(
-        &workspace,
+        workspace,
         &["status", "--porcelain=v1", "-z", "--untracked-files=all"],
     )?;
     let mut changes = parse_changes(&output.stdout);
     changes.sort_by(|left, right| left.path.cmp(&right.path));
 
-    let branch_output = checked(&workspace, &["branch", "--show-current"])?;
+    let branch_output = checked(workspace, &["branch", "--show-current"])?;
     let mut branch = String::from_utf8_lossy(&branch_output.stdout)
         .trim()
         .to_owned();
     if branch.is_empty() {
-        let head = git(&workspace, &["rev-parse", "--short", "HEAD"])?;
+        let head = git(workspace, &["rev-parse", "--short", "HEAD"])?;
         branch = String::from_utf8_lossy(&head.stdout).trim().to_owned();
         if branch.is_empty() {
             branch = "No commits yet".into();
@@ -101,7 +113,7 @@ pub fn git_status(state: State<'_, AppState>) -> CommandResult<GitStatus> {
     }
 
     let (ahead, behind) = git(
-        &workspace,
+        workspace,
         &["rev-list", "--left-right", "--count", "HEAD...@{upstream}"],
     )
     .ok()
@@ -151,36 +163,49 @@ fn parse_changes(bytes: &[u8]) -> Vec<GitChange> {
 }
 
 #[tauri::command]
-pub fn git_stage(paths: Vec<String>, state: State<'_, AppState>) -> CommandResult<()> {
+pub async fn git_stage(paths: Vec<String>, state: State<'_, AppState>) -> CommandResult<()> {
     validate_paths(&paths)?;
     let workspace = state.workspace()?;
-    let mut args = vec!["add", "--"];
-    args.extend(paths.iter().map(String::as_str));
-    checked(&workspace, &args)?;
-    Ok(())
+    off_thread(move || {
+        let mut args = vec!["add", "--"];
+        args.extend(paths.iter().map(String::as_str));
+        checked(&workspace, &args)?;
+        Ok(())
+    })
+    .await
 }
 
 #[tauri::command]
-pub fn git_unstage(paths: Vec<String>, state: State<'_, AppState>) -> CommandResult<()> {
+pub async fn git_unstage(paths: Vec<String>, state: State<'_, AppState>) -> CommandResult<()> {
     validate_paths(&paths)?;
     let workspace = state.workspace()?;
-    let mut args = vec!["restore", "--staged", "--"];
-    args.extend(paths.iter().map(String::as_str));
-    checked(&workspace, &args)?;
-    Ok(())
+    off_thread(move || {
+        let mut args = vec!["restore", "--staged", "--"];
+        args.extend(paths.iter().map(String::as_str));
+        checked(&workspace, &args)?;
+        Ok(())
+    })
+    .await
 }
 
 #[tauri::command]
-pub fn git_diff(path: String, staged: bool, state: State<'_, AppState>) -> CommandResult<String> {
+pub async fn git_diff(
+    path: String,
+    staged: bool,
+    state: State<'_, AppState>,
+) -> CommandResult<String> {
     validate_paths(std::slice::from_ref(&path))?;
     let workspace = state.workspace()?;
-    let mut args = vec!["diff", "--no-ext-diff"];
-    if staged {
-        args.push("--cached");
-    }
-    args.extend(["--", path.as_str()]);
-    let output = checked(&workspace, &args)?;
-    Ok(String::from_utf8_lossy(&output.stdout).into_owned())
+    off_thread(move || {
+        let mut args = vec!["diff", "--no-ext-diff"];
+        if staged {
+            args.push("--cached");
+        }
+        args.extend(["--", path.as_str()]);
+        let output = checked(&workspace, &args)?;
+        Ok(String::from_utf8_lossy(&output.stdout).into_owned())
+    })
+    .await
 }
 
 fn git_text(workspace: &Path, args: &[&str]) -> String {
@@ -192,22 +217,30 @@ fn git_text(workspace: &Path, args: &[&str]) -> String {
 }
 
 #[tauri::command]
-pub fn git_diff_document(
+pub async fn git_diff_document(
     path: String,
     staged: bool,
     state: State<'_, AppState>,
 ) -> CommandResult<GitDiffDocument> {
     validate_paths(std::slice::from_ref(&path))?;
     let workspace = state.workspace()?;
+    off_thread(move || diff_document_inner(&workspace, path, staged)).await
+}
+
+fn diff_document_inner(
+    workspace: &Path,
+    path: String,
+    staged: bool,
+) -> CommandResult<GitDiffDocument> {
     let head_spec = format!("HEAD:{path}");
     let index_spec = format!(":{path}");
     let original = if staged {
-        git_text(&workspace, &["show", head_spec.as_str()])
+        git_text(workspace, &["show", head_spec.as_str()])
     } else {
-        git_text(&workspace, &["show", index_spec.as_str()])
+        git_text(workspace, &["show", index_spec.as_str()])
     };
     let modified = if staged {
-        git_text(&workspace, &["show", index_spec.as_str()])
+        git_text(workspace, &["show", index_spec.as_str()])
     } else {
         match fs::read(workspace.join(&path)) {
             Ok(bytes) => String::from_utf8(bytes).map_err(|_| {
@@ -225,8 +258,8 @@ pub fn git_diff_document(
 }
 
 #[tauri::command]
-pub fn git_commit(message: String, state: State<'_, AppState>) -> CommandResult<String> {
-    let message = message.trim();
+pub async fn git_commit(message: String, state: State<'_, AppState>) -> CommandResult<String> {
+    let message = message.trim().to_owned();
     if message.is_empty() {
         return Err(SerializableError::new(
             "git_commit",
@@ -234,8 +267,11 @@ pub fn git_commit(message: String, state: State<'_, AppState>) -> CommandResult<
         ));
     }
     let workspace = state.workspace()?;
-    let output = checked(&workspace, &["commit", "-m", message])?;
-    Ok(String::from_utf8_lossy(&output.stdout).trim().to_owned())
+    off_thread(move || {
+        let output = checked(&workspace, &["commit", "-m", message.as_str()])?;
+        Ok(String::from_utf8_lossy(&output.stdout).trim().to_owned())
+    })
+    .await
 }
 
 #[cfg(test)]

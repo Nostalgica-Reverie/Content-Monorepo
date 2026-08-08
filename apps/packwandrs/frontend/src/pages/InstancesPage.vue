@@ -1,71 +1,97 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import AppIcon from '@/components/ui/AppIcon.vue'
+import Button from '@/components/ui/Button.vue'
 import EmptyState from '@/components/ui/EmptyState.vue'
 import InstanceCard from '@/components/ui/InstanceCard.vue'
-import Tabs from '@/components/ui/Tabs.vue'
-import { instancesList } from '@/helpers/invoke/instances'
-import type { InstanceSummary } from '@/helpers/types'
+import Modal from '@/components/ui/Modal.vue'
+import { instancesImport } from '@/helpers/invoke/instances'
+import { useInstancesStore } from '@/stores/instances'
 import { useToastsStore } from '@/stores/toasts'
+import { useWorkbenchStore } from '@/stores/workbench'
 
-// Mirrors mrapp's library tabs (`pages/library/Index.vue`'s `NavTabs`
-// links): "All instances" / "Modpacks" / "Servers" / "Custom". Servers and
-// Custom stay empty states — Packwand has no concept for either yet, so
-// this filters real data rather than faking a populated tab.
-const tabs = [
-  { id: 'all', label: 'All instances' },
-  { id: 'modpacks', label: 'Modpacks' },
-  { id: 'servers', label: 'Servers' },
-  { id: 'custom', label: 'Custom' },
-]
-
+const store = useInstancesStore()
+const workbench = useWorkbenchStore()
 const toasts = useToastsStore()
-const activeTab = ref('all')
+const router = useRouter()
 const search = ref('')
-const loading = ref(false)
-const instances = ref<InstanceSummary[]>([])
+const createOpen = ref(false)
+const importOpen = ref(false)
+const saving = ref(false)
+const create = reactive({ name: '', source: 'linked' as 'linked' | 'owned', packId: '', gameVersion: '1.21.1', loader: 'fabric', loaderVersion: '' })
+const importing = reactive({ archive: '', format: 'modrinth' as 'modrinth' | 'curse_forge' })
 
 const filtered = computed(() => {
-  if (activeTab.value === 'servers' || activeTab.value === 'custom') return []
   const term = search.value.trim().toLowerCase()
-  return instances.value.filter((instance) => !term || (instance.name + ' ' + instance.id).toLowerCase().includes(term))
+  return store.items.filter(instance => !term || `${instance.name} ${instance.id} ${instance.loader} ${instance.gameVersion}`.toLowerCase().includes(term))
 })
 
-async function refresh() {
-  loading.value = true
+async function submitCreate() {
+  saving.value = true
   try {
-    instances.value = await instancesList()
-  } catch (error) {
-    toasts.push('Could not load instances', String(error), 'danger')
-  } finally {
-    loading.value = false
-  }
+    const instance = await store.create({
+      name: create.name,
+      source: create.source,
+      packId: create.source === 'linked' ? create.packId : undefined,
+      gameVersion: create.source === 'owned' ? create.gameVersion : undefined,
+      loader: create.source === 'owned' ? create.loader : undefined,
+      loaderVersion: create.source === 'owned' && create.loader !== 'vanilla' ? create.loaderVersion || undefined : undefined,
+    })
+    createOpen.value = false
+    await router.push(`/instances/${instance.id}`)
+  } catch (error) { toasts.push('Could not create instance', String(error), 'danger') } finally { saving.value = false }
 }
 
-onMounted(refresh)
+async function submitImport() {
+  saving.value = true
+  try {
+    const instance = await instancesImport(importing.archive, importing.format)
+    await store.refresh()
+    importOpen.value = false
+    await router.push(`/instances/${instance.id}`)
+  } catch (error) { toasts.push('Could not import archive', String(error), 'danger') } finally { saving.value = false }
+}
+
+onMounted(async () => {
+  await Promise.all([store.refresh(), workbench.packs.length ? Promise.resolve() : workbench.refresh()])
+  create.packId = workbench.selectedPackId || workbench.packs[0]?.id || ''
+})
 </script>
 
 <template>
   <section class="grid view-grid">
     <div class="panel span-12 instances-panel">
       <div class="panel-head">
-        <div>
-          <h2>Instances</h2>
-          <p class="panel-copy">Launch a pack as a real Minecraft instance: installs its mods, resolves the Minecraft version and loader, then boots with an offline session.</p>
-        </div>
-        <span class="pill">{{ filtered.length }} shown</span>
+        <div><h2>Instances</h2><p class="panel-copy">Isolated Minecraft installations backed by a workspace pack or a private standalone pack. Add <code>icon.png</code> and <code>bg.png</code> to a pack to give its instances custom artwork.</p></div>
+        <div class="panel-actions"><Button variant="secondary" @click="importOpen = true">Import</Button><Button @click="createOpen = true">Create instance</Button></div>
       </div>
-
-      <Tabs v-model="activeTab" :items="tabs" />
       <label class="instance-search"><AppIcon name="search" :size="15" /><input v-model="search" type="search" placeholder="Search instances…" /></label>
-
-      <EmptyState v-if="activeTab === 'servers'" title="No servers yet" message="Packwand does not manage server instances yet — this tab will populate once that capability exists." />
-      <EmptyState v-else-if="activeTab === 'custom'" title="No custom instances yet" message="Custom, non-pack instances aren't supported yet — this tab will populate once that capability exists." />
-      <EmptyState v-else-if="!loading && !filtered.length" title="No instances found" message="No pack target matches this search, or this workspace has no discoverable pack.toml yet." />
-      <div v-else class="instance-list">
-        <InstanceCard v-for="instance in filtered" :key="instance.id" :instance="instance" />
-      </div>
+      <EmptyState v-if="!store.loading && !filtered.length" title="No instances found" message="Create a linked test instance or a standalone Minecraft installation." />
+      <div v-else class="instance-list"><InstanceCard v-for="instance in filtered" :key="instance.id" :instance="instance" /></div>
     </div>
   </section>
+
+  <Modal :open="createOpen" title="Create instance" @close="createOpen = false">
+    <form class="form-grid" @submit.prevent="submitCreate">
+      <label><span>Name</span><input v-model="create.name" required /></label>
+      <label><span>Source</span><select v-model="create.source"><option value="linked">Workspace pack</option><option value="owned">Standalone</option></select></label>
+      <label v-if="create.source === 'linked'"><span>Pack</span><select v-model="create.packId" required><option v-for="pack in workbench.packs" :key="pack.id" :value="pack.id">{{ pack.name }} — {{ pack.minecraftVersion }}</option></select></label>
+      <template v-else>
+        <label><span>Minecraft version</span><input v-model="create.gameVersion" required /></label>
+        <label><span>Loader</span><select v-model="create.loader"><option>fabric</option><option>quilt</option><option>forge</option><option>neoforge</option><option>vanilla</option></select></label>
+        <label v-if="create.loader !== 'vanilla'"><span>Loader version</span><input v-model="create.loaderVersion" placeholder="latest" /></label>
+      </template>
+      <div class="form-actions"><Button variant="quiet" @click="createOpen = false">Cancel</Button><Button type="submit" :busy="saving">Create</Button></div>
+    </form>
+  </Modal>
+
+  <Modal :open="importOpen" title="Import instance" @close="importOpen = false">
+    <form class="form-grid" @submit.prevent="submitImport">
+      <label><span>Archive path</span><input v-model="importing.archive" required placeholder="C:\Downloads\pack.mrpack" /></label>
+      <label><span>Format</span><select v-model="importing.format"><option value="modrinth">Modrinth .mrpack</option><option value="curse_forge">CurseForge .zip</option></select></label>
+      <div class="form-actions"><Button variant="quiet" @click="importOpen = false">Cancel</Button><Button type="submit" :busy="saving">Import</Button></div>
+    </form>
+  </Modal>
 </template>

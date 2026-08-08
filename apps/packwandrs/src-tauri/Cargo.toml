@@ -20,7 +20,10 @@ tauri-build = { version = "2", features = [] }
 [dependencies]
 packwand-build = { path = "../crates/packwand-build" }
 packwand-diagnostics = { path = "../crates/packwand-diagnostics" }
+ammonia.workspace = true
 packwand-ops = { path = "../crates/packwand-ops" }
+pulldown-cmark.workspace = true
+packwand-parallel.workspace = true
 packwand-pack = { path = "../crates/packwand-pack" }
 packwand-providers = { path = "../crates/packwand-providers" }
 packwand-workspace = { path = "../crates/packwand-workspace" }
@@ -28,6 +31,7 @@ packwand-workspace = { path = "../crates/packwand-workspace" }
 # supervision. These crates stay Tauri-free; all Tauri glue for them lives in
 # src/commands/instances.rs.
 packwand-devboot.workspace = true
+packwand-instance.workspace = true
 packwand-launch.workspace = true
 packwand-platform.workspace = true
 serde.workspace = true
@@ -39,6 +43,7 @@ thiserror.workspace = true
 tokio.workspace = true
 tokio-util.workspace = true
 toml.workspace = true
+url.workspace = true
 uuid.workspace = true
 walkdir.workspace = true
 ignore = "0.4"

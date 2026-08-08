@@ -11,6 +11,12 @@
  */
 
 import type { ExtensionDefinition, ExtensionManifest, LoadedExtension } from './api'
+import {
+  extensionDirectoryOf,
+  extensionManifestProblem,
+  requiredExtensionArrayFields,
+  requiredExtensionStringFields,
+} from '@/core/packwand'
 
 const manifests = import.meta.glob<ExtensionManifest>('../../../extensions/*/extension.pw.json', {
   eager: true,
@@ -28,34 +34,26 @@ export interface ExtensionLoadError {
   message: string
 }
 
-const REQUIRED_STRING_FIELDS = ['id', 'name', 'version', 'entry'] as const
-const REQUIRED_ARRAY_FIELDS = ['activation', 'commands', 'views', 'validators', 'capabilities'] as const
-
-/**
- * The extension directory a glob result belongs to — the segment right after
- * `extensions/`. Taken from the front rather than the back because manifests and
- * entry points sit at different depths (`<id>/extension.pw.json` versus
- * `<id>/src/index.ts`), and counting from the end yields `src` for the latter.
- */
-function directoryOf(path: string): string {
-  const segments = path.split('/')
-  const anchor = segments.lastIndexOf('extensions')
-  return (anchor === -1 ? segments.at(-2) : segments[anchor + 1]) ?? path
-}
+// The directory rule and the manifest rules live in `packwand/extension.gleam`
+// and are tested there. What stays here is pulling fields out of an untyped
+// glob result, which is the part TypeScript is already holding.
+const directoryOf = extensionDirectoryOf
 
 function validate(directory: string, manifest: unknown): string | null {
   if (!manifest || typeof manifest !== 'object') return 'extension.pw.json is not an object'
   const record = manifest as Record<string, unknown>
-  const missing: string[] = REQUIRED_STRING_FIELDS.filter(
-    (field) => typeof record[field] !== 'string' || !(record[field] as string).trim(),
+  const missing = [
+    ...requiredExtensionStringFields().filter(
+      field => typeof record[field] !== 'string' || !(record[field] as string).trim(),
+    ),
+    ...requiredExtensionArrayFields().filter(field => !Array.isArray(record[field])),
+  ]
+  return extensionManifestProblem(
+    directory,
+    typeof record.id === 'string' ? record.id : String(record.id),
+    missing,
+    typeof record.apiVersion === 'number' ? record.apiVersion : -1,
   )
-  missing.push(...REQUIRED_ARRAY_FIELDS.filter((field) => !Array.isArray(record[field])))
-  if (missing.length) return `extension.pw.json is missing ${missing.join(', ')}`
-  if (record.apiVersion !== 1) return `unsupported extension apiVersion ${String(record.apiVersion)}`
-  if (record.id !== directory) {
-    return `extension.pw.json id "${String(record.id)}" does not match its directory "${directory}"`
-  }
-  return null
 }
 
 function load(): { extensions: LoadedExtension[]; errors: ExtensionLoadError[] } {

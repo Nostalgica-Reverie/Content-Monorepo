@@ -10,9 +10,13 @@ use crate::error::{CommandResult, SerializableError};
 use crate::state::AppState;
 
 #[tauri::command]
-pub fn exports_publish_plan(id: String, state: State<'_, AppState>) -> CommandResult<ExportPlan> {
+pub async fn exports_publish_plan(
+    id: String,
+    state: State<'_, AppState>,
+) -> CommandResult<ExportPlan> {
     let root = pack_root(&state.workspace()?, &id)?;
-    Ok(plan_export(root)?)
+    // `plan_export` reads the index and every metadata file it references.
+    crate::commands::off_thread(move || Ok(plan_export(root)?)).await
 }
 
 #[tauri::command]

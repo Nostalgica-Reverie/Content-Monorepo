@@ -6,6 +6,7 @@ use sha2::{Digest, Sha256};
 use tauri::{AppHandle, State};
 use walkdir::{DirEntry, WalkDir};
 
+use crate::commands::off_thread;
 use crate::commands::packs::pack_root;
 use crate::error::{CommandResult, SerializableError};
 use crate::events::emit_packs_changed;
@@ -46,7 +47,7 @@ pub struct EditorDocument {
     pub hash: String,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SearchMatch {
     pub path: String,
@@ -73,17 +74,17 @@ fn document_at(path: &std::path::Path) -> CommandResult<EditorDocument> {
 }
 
 #[tauri::command]
-pub fn editor_document_read(
+pub async fn editor_document_read(
     id: String,
     path: String,
     state: State<'_, AppState>,
 ) -> CommandResult<EditorDocument> {
     let root = pack_root(&state.workspace()?, &id)?;
-    document_at(&safe_join(&root, &path)?)
+    off_thread(move || document_at(&safe_join(&root, &path)?)).await
 }
 
 #[tauri::command]
-pub fn editor_document_write(
+pub async fn editor_document_write(
     id: String,
     path: String,
     content: String,
@@ -92,21 +93,27 @@ pub fn editor_document_write(
     state: State<'_, AppState>,
 ) -> CommandResult<EditorDocument> {
     let root = pack_root(&state.workspace()?, &id)?;
-    let target = safe_join(&root, &path)?;
-    let current = document_at(&target)?;
-    if current.hash != expected_hash {
-        return Err(SerializableError::new(
-            "file_conflict",
-            format!("{} changed outside Packwand", target.display()),
-        ));
-    }
-    crate::fsutil::atomic_write(&target, content.as_bytes())?;
+    let document = off_thread(move || {
+        let target = safe_join(&root, &path)?;
+        let current = document_at(&target)?;
+        if current.hash != expected_hash {
+            return Err(SerializableError::new(
+                "file_conflict",
+                format!("{} changed outside Packwand", target.display()),
+            ));
+        }
+        crate::fsutil::atomic_write(&target, content.as_bytes())?;
+        document_at(&target)
+    })
+    .await?;
+    // Emitted after the write lands, on the caller's task, so the event
+    // ordering the frontend sees is unchanged by the thread hop.
     emit_packs_changed(&app)?;
-    document_at(&target)
+    Ok(document)
 }
 
 #[tauri::command]
-pub fn editor_search(
+pub async fn editor_search(
     id: String,
     query: String,
     case_sensitive: bool,
@@ -117,6 +124,27 @@ pub fn editor_search(
         return Ok(Vec::new());
     }
     let root = pack_root(&state.workspace()?, &id)?;
+    off_thread(move || search_inner(&root, query, case_sensitive, regex)).await
+}
+
+/// Most matches a search returns. Beyond this the result list stops being
+/// useful and starts being a memory problem.
+const SEARCH_MATCH_LIMIT: usize = 1000;
+
+/// Files scanned per round. Bounds peak memory to one round's matches rather
+/// than the whole pack's, and lets a search that fills up stop early.
+const SEARCH_BATCH: usize = 256;
+
+/// Skip anything larger than this — a jar or a texture atlas is not something
+/// the user is text-searching.
+const SEARCH_MAX_FILE_BYTES: u64 = 2 * 1024 * 1024;
+
+fn search_inner(
+    root: &std::path::Path,
+    query: String,
+    case_sensitive: bool,
+    regex: bool,
+) -> CommandResult<Vec<SearchMatch>> {
     let pattern = if regex {
         query
     } else {
@@ -126,47 +154,85 @@ pub fn editor_search(
         .case_insensitive(!case_sensitive)
         .build()
         .map_err(|error| SerializableError::new("search_pattern", error.to_string()))?;
-    let mut matches = Vec::new();
-    for entry in ignore::WalkBuilder::new(&root)
+
+    // Discovery runs on `ignore`'s parallel walker — ripgrep's own — so the
+    // directory traversal and the `stat` of every entry overlap instead of
+    // running one at a time.
+    let candidates = std::sync::Mutex::new(Vec::new());
+    ignore::WalkBuilder::new(root)
         .hidden(false)
         .follow_links(false)
-        .build()
-    {
-        let entry =
-            entry.map_err(|error| SerializableError::new("search_walk", error.to_string()))?;
-        if !entry.file_type().is_some_and(|kind| kind.is_file()) {
-            continue;
-        }
-        let Ok(metadata) = entry.metadata() else {
-            continue;
-        };
-        if metadata.len() > 2 * 1024 * 1024 {
-            continue;
-        }
-        let Ok(source) = fs::read_to_string(entry.path()) else {
-            continue;
-        };
-        let relative = entry
-            .path()
-            .strip_prefix(&root)
-            .unwrap_or(entry.path())
-            .to_string_lossy()
-            .replace('\\', "/");
-        for (line_index, line) in source.lines().enumerate() {
-            for found in expression.find_iter(line) {
-                matches.push(SearchMatch {
-                    path: relative.clone(),
-                    line: line_index + 1,
-                    column: found.start() + 1,
-                    preview: line.trim().chars().take(240).collect(),
-                });
-                if matches.len() == 1000 {
-                    return Ok(matches);
+        .build_parallel()
+        .run(|| {
+            Box::new(|entry| {
+                if let Ok(entry) = entry
+                    && entry.file_type().is_some_and(|kind| kind.is_file())
+                    && entry
+                        .metadata()
+                        .is_ok_and(|metadata| metadata.len() <= SEARCH_MAX_FILE_BYTES)
+                {
+                    candidates
+                        .lock()
+                        .unwrap_or_else(std::sync::PoisonError::into_inner)
+                        .push(entry.into_path());
                 }
-            }
+                ignore::WalkState::Continue
+            })
+        });
+    let mut candidates = candidates
+        .into_inner()
+        .unwrap_or_else(std::sync::PoisonError::into_inner);
+    // Workers finish in arbitrary order, so the file list is sorted before
+    // anything is scanned. Everything downstream is a pure function of this
+    // order, which is what makes a capped search reproducible: the old
+    // sequential version returned whichever 1000 matches the walk reached
+    // first, and a parallel walk would have made that vary run to run.
+    candidates.sort();
+
+    let jobs = packwand_parallel::configured();
+    let mut matches = Vec::new();
+    for batch in candidates.chunks(SEARCH_BATCH) {
+        let found = packwand_parallel::map(batch, jobs, |path| scan_file(root, path, &expression));
+        for file_matches in found {
+            matches.extend(file_matches);
+        }
+        // Stop as soon as the cap is reachable; the remaining files cannot
+        // affect the first `SEARCH_MATCH_LIMIT` results in this order.
+        if matches.len() >= SEARCH_MATCH_LIMIT {
+            break;
         }
     }
+    matches.truncate(SEARCH_MATCH_LIMIT);
     Ok(matches)
+}
+
+/// Every match in one file, in line then column order. Unreadable or non-UTF-8
+/// files yield nothing rather than failing the whole search.
+fn scan_file(
+    root: &std::path::Path,
+    path: &std::path::Path,
+    expression: &regex_lite::Regex,
+) -> Vec<SearchMatch> {
+    let Ok(source) = fs::read_to_string(path) else {
+        return Vec::new();
+    };
+    let relative = path
+        .strip_prefix(root)
+        .unwrap_or(path)
+        .to_string_lossy()
+        .replace('\\', "/");
+    let mut matches = Vec::new();
+    for (line_index, line) in source.lines().enumerate() {
+        for found in expression.find_iter(line) {
+            matches.push(SearchMatch {
+                path: relative.clone(),
+                line: line_index + 1,
+                column: found.start() + 1,
+                preview: line.trim().chars().take(240).collect(),
+            });
+        }
+    }
+    matches
 }
 
 fn timestamp(value: std::io::Result<SystemTime>) -> u64 {
@@ -218,10 +284,14 @@ fn should_descend(entry: &DirEntry) -> bool {
 }
 
 #[tauri::command]
-pub fn editor_tree(id: String, state: State<'_, AppState>) -> CommandResult<Vec<TreeEntry>> {
+pub async fn editor_tree(id: String, state: State<'_, AppState>) -> CommandResult<Vec<TreeEntry>> {
     let root = pack_root(&state.workspace()?, &id)?;
+    off_thread(move || tree_inner(&root)).await
+}
+
+fn tree_inner(root: &std::path::Path) -> CommandResult<Vec<TreeEntry>> {
     let mut entries = Vec::new();
-    for entry in WalkDir::new(&root)
+    for entry in WalkDir::new(root)
         .min_depth(1)
         .follow_links(false)
         .into_iter()
@@ -230,7 +300,7 @@ pub fn editor_tree(id: String, state: State<'_, AppState>) -> CommandResult<Vec<
         let entry = entry.map_err(|error| SerializableError::new("walk", error.to_string()))?;
         let relative = entry
             .path()
-            .strip_prefix(&root)
+            .strip_prefix(root)
             .map_err(|error| SerializableError::new("unsafe_path", error.to_string()))?
             .components()
             .map(|component| component.as_os_str().to_string_lossy())
@@ -253,27 +323,30 @@ pub fn editor_tree(id: String, state: State<'_, AppState>) -> CommandResult<Vec<
 }
 
 #[tauri::command]
-pub fn editor_file_read(
+pub async fn editor_file_read(
     id: String,
     path: String,
     state: State<'_, AppState>,
 ) -> CommandResult<String> {
     let root = pack_root(&state.workspace()?, &id)?;
-    let target = safe_join(&root, &path)?;
-    let bytes = fs::read(&target)?;
-    String::from_utf8(bytes).map_err(|_| {
-        SerializableError::new(
-            "binary_file",
-            format!(
-                "{} is binary and cannot be opened as text",
-                target.display()
-            ),
-        )
+    off_thread(move || {
+        let target = safe_join(&root, &path)?;
+        let bytes = fs::read(&target)?;
+        String::from_utf8(bytes).map_err(|_| {
+            SerializableError::new(
+                "binary_file",
+                format!(
+                    "{} is binary and cannot be opened as text",
+                    target.display()
+                ),
+            )
+        })
     })
+    .await
 }
 
 #[tauri::command]
-pub fn editor_file_write(
+pub async fn editor_file_write(
     id: String,
     path: String,
     content: String,
@@ -281,14 +354,17 @@ pub fn editor_file_write(
     state: State<'_, AppState>,
 ) -> CommandResult<()> {
     let root = pack_root(&state.workspace()?, &id)?;
-    let target = safe_join(&root, &path)?;
-    if !target.is_file() {
-        return Err(SerializableError::new(
-            "not_found",
-            format!("{} is not an existing file", target.display()),
-        ));
-    }
-    crate::fsutil::atomic_write(&target, content.as_bytes())?;
+    off_thread(move || {
+        let target = safe_join(&root, &path)?;
+        if !target.is_file() {
+            return Err(SerializableError::new(
+                "not_found",
+                format!("{} is not an existing file", target.display()),
+            ));
+        }
+        crate::fsutil::atomic_write(&target, content.as_bytes())
+    })
+    .await?;
     emit_packs_changed(&app)
 }
 
@@ -359,18 +435,21 @@ pub fn editor_fs_read_dir(
 }
 
 #[tauri::command]
-pub fn editor_fs_read_file(
+pub async fn editor_fs_read_file(
     id: String,
     path: String,
     state: State<'_, AppState>,
 ) -> CommandResult<Vec<u8>> {
     let root = pack_root(&state.workspace()?, &id)?;
-    let target = safe_join(&root, &path)?;
-    fs::read(target).map_err(|error| io_error("read file", error))
+    off_thread(move || {
+        let target = safe_join(&root, &path)?;
+        fs::read(target).map_err(|error| io_error("read file", error))
+    })
+    .await
 }
 
 #[tauri::command]
-pub fn editor_fs_write_file(
+pub async fn editor_fs_write_file(
     id: String,
     path: String,
     content: Vec<u8>,
@@ -380,27 +459,30 @@ pub fn editor_fs_write_file(
     state: State<'_, AppState>,
 ) -> CommandResult<()> {
     let root = pack_root(&state.workspace()?, &id)?;
-    let target = safe_join(&root, &path)?;
-    let exists = target.exists();
-    if exists && target.is_dir() {
-        return Err(SerializableError::new(
-            "is_directory",
-            format!("{} is a directory", target.display()),
-        ));
-    }
-    if !exists && !create {
-        return Err(SerializableError::new(
-            "not_found",
-            format!("{} does not exist", target.display()),
-        ));
-    }
-    if exists && !overwrite {
-        return Err(SerializableError::new(
-            "already_exists",
-            format!("{} already exists", target.display()),
-        ));
-    }
-    crate::fsutil::atomic_write(&target, &content)?;
+    off_thread(move || {
+        let target = safe_join(&root, &path)?;
+        let exists = target.exists();
+        if exists && target.is_dir() {
+            return Err(SerializableError::new(
+                "is_directory",
+                format!("{} is a directory", target.display()),
+            ));
+        }
+        if !exists && !create {
+            return Err(SerializableError::new(
+                "not_found",
+                format!("{} does not exist", target.display()),
+            ));
+        }
+        if exists && !overwrite {
+            return Err(SerializableError::new(
+                "already_exists",
+                format!("{} already exists", target.display()),
+            ));
+        }
+        crate::fsutil::atomic_write(&target, &content)
+    })
+    .await?;
     emit_packs_changed(&app)
 }
 
@@ -418,7 +500,7 @@ pub fn editor_fs_create_dir(
 }
 
 #[tauri::command]
-pub fn editor_fs_delete(
+pub async fn editor_fs_delete(
     id: String,
     path: String,
     recursive: bool,
@@ -432,8 +514,14 @@ pub fn editor_fs_delete(
         ));
     }
     let root = pack_root(&state.workspace()?, &id)?;
-    let target = safe_join(&root, &path)?;
-    remove_path(&target, recursive)?;
+    // A recursive delete of a mods/ or config/ tree is thousands of unlink
+    // syscalls, which is exactly the kind of work that must not sit on the
+    // window's thread.
+    off_thread(move || {
+        let target = safe_join(&root, &path)?;
+        remove_path(&target, recursive)
+    })
+    .await?;
     emit_packs_changed(&app)
 }
 
@@ -466,4 +554,82 @@ pub fn editor_fs_rename(
     }
     fs::rename(&source, &target).map_err(|error| io_error("rename", error))?;
     emit_packs_changed(&app)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Writes `count` files each containing `per_file` matching lines.
+    fn seeded_pack(count: usize, per_file: usize) -> tempfile::TempDir {
+        let dir = tempfile::tempdir().unwrap();
+        for file in 0..count {
+            let nested = dir.path().join(format!("ns{}", file % 7));
+            fs::create_dir_all(&nested).unwrap();
+            let body = (0..per_file)
+                .map(|line| format!("needle occurrence {file}-{line}\n"))
+                .collect::<String>();
+            fs::write(nested.join(format!("f{file:03}.txt")), body).unwrap();
+        }
+        dir
+    }
+
+    /// The property the parallel walk had to preserve. A capped search used to
+    /// return whichever matches the sequential walk reached first; sorting the
+    /// file list before scanning is what keeps that reproducible now that
+    /// discovery order is nondeterministic.
+    #[test]
+    fn an_over_cap_search_returns_the_same_matches_every_run() {
+        let pack = seeded_pack(80, 40); // 3200 matches against a 1000 cap
+        let first = search_inner(pack.path(), "needle".into(), false, false).unwrap();
+        assert_eq!(first.len(), SEARCH_MATCH_LIMIT, "the cap must be reached");
+        for _ in 0..6 {
+            let again = search_inner(pack.path(), "needle".into(), false, false).unwrap();
+            assert_eq!(first, again, "results varied between runs");
+        }
+    }
+
+    /// Determinism must not depend on how many workers happen to be available.
+    #[test]
+    fn results_do_not_depend_on_the_worker_count() {
+        let pack = seeded_pack(40, 30);
+        let expected = search_inner(pack.path(), "needle".into(), false, false).unwrap();
+        // `search_inner` reads the process-wide job count, so this exercises
+        // the batching path rather than re-configuring it: a single-threaded
+        // scan of the same sorted list must agree.
+        let mut sequential = Vec::new();
+        let mut files: Vec<_> = walkdir::WalkDir::new(pack.path())
+            .into_iter()
+            .filter_map(Result::ok)
+            .filter(|entry| entry.file_type().is_file())
+            .map(|entry| entry.into_path())
+            .collect();
+        files.sort();
+        let expression = regex_lite::Regex::new("needle").unwrap();
+        for path in &files {
+            sequential.extend(scan_file(pack.path(), path, &expression));
+        }
+        sequential.truncate(SEARCH_MATCH_LIMIT);
+        assert_eq!(expected, sequential);
+    }
+
+    #[test]
+    fn an_under_cap_search_finds_every_match_in_path_order() {
+        let pack = seeded_pack(5, 3);
+        let found = search_inner(pack.path(), "needle".into(), false, false).unwrap();
+        assert_eq!(found.len(), 15);
+        let mut sorted = found.clone();
+        sorted.sort_by(|left, right| (&left.path, left.line).cmp(&(&right.path, right.line)));
+        assert_eq!(found, sorted, "matches must come back in a stable order");
+    }
+
+    #[test]
+    fn a_regex_search_reports_the_matching_column() {
+        let dir = tempfile::tempdir().unwrap();
+        fs::write(dir.path().join("a.txt"), "alpha beta gamma\n").unwrap();
+        let found = search_inner(dir.path(), "b[et]+a".into(), false, true).unwrap();
+        assert_eq!(found.len(), 1);
+        assert_eq!(found[0].line, 1);
+        assert_eq!(found[0].column, 7);
+    }
 }

@@ -1,11 +1,12 @@
 name = "Simply Legacy"
 author = "Cjnator38"
 version = "26.07.4"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
+hash = "67b1a3d7c68a310b21cbc6cbb54309c6775a840dd220151a8834bb8b3cc10c96e5862d2d3d19fe866443e9cde4e9d2394f1e77a7d41ad58133fdbafeba51820b"
 
 [versions]
 fabric = "0.19.3"

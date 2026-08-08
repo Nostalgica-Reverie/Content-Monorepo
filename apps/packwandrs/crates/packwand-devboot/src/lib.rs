@@ -9,9 +9,8 @@
 //! This crate does not implement packwiz's format beyond reading the handful
 //! of `[versions]` fields needed to pick a Minecraft version/loader — mods,
 //! indexes, and hashing remain exclusively Go/packwiz-owned. Pointing the
-//! launch plan's game directory straight at the pack subdir is what makes
-//! that unnecessary: Minecraft/the loader read `mods/`, `config/`, and
-//! `resourcepacks/` relative to the game directory on their own.
+//! pack source and game directory are deliberately separate: content is
+//! resolved from the pack while Minecraft writes only to the instance.
 
 pub mod bootstrap;
 pub mod pack_target;
@@ -154,16 +153,13 @@ pub fn ensure_instance_for_session(
     Ok(record)
 }
 
-/// Builds the launch plan for booting `pack_dir` for dev testing: the game
-/// directory is `pack_dir` itself (so the pack's own `mods/`, `config/`, and
-/// `resourcepacks/` are what gets loaded, live, with no copying), logs go to
-/// a new `.packwand-launcher/logs/` next to the pack for easy crash-log
-/// discovery, and natives/assets/libraries stay in the shared managed root
-/// (pure binary cache, correctly shared across every pack on this
-/// Minecraft version + loader).
+/// Builds a launch plan using `pack_dir` only as the version/loader manifest
+/// and `game_dir` as Minecraft's writable directory. Shared binaries remain
+/// under `managed_root`.
 pub fn boot_pack(
     managed_root: &Path,
     pack_dir: &Path,
+    game_dir: &Path,
     session: &Session,
     java: Option<PathBuf>,
     on_progress: impl Fn(InstallProgress) + Sync,
@@ -174,10 +170,9 @@ pub fn boot_pack(
 
     let managed_paths = FsInstanceRepository::new(managed_root.to_path_buf())
         .instance_paths(&instance_id_for(&target));
-    let launcher_dir = pack_dir.join(".packwand-launcher");
     let paths = InstancePaths {
-        game_dir: pack_dir.to_path_buf(),
-        logs_dir: launcher_dir.join("logs"),
+        game_dir: game_dir.to_path_buf(),
+        logs_dir: game_dir.join("logs"),
         natives_dir: managed_paths.natives_dir,
         assets_dir: managed_paths.assets_dir,
         libraries_dir: managed_paths.libraries_dir,

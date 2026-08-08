@@ -104,6 +104,114 @@ export const builtinThemes: PackwandTheme[] = [
     'accent-line': '#ef7f4566', selected: '#3e2b22', rail: '#171310', side: '#211a16', bg: '#241d19',
     warning: '#ffc36b', success: '#7fd39c',
   }, { colors: { 'editorCursor.foreground': '#ffad6f', 'editor.selectionBackground': '#bd592d66' } }),
+
+  // Themes evoking the sites Packwand talks to. These take their cue from each
+  // provider's palette without reproducing its design system: the token set,
+  // the surface ramp and the editor rules are all Packwand's. Every one clears
+  // `validateTheme` with zero warnings, not merely zero errors — the contrast
+  // pairs are checked in `builtins.test.ts`.
+  variant('builtin.modrinth', 'Modrinth Green', 'dark', {
+    rail: '#101216', side: '#16181c', bg: '#16181c', 'bg-2': '#1c1f24', surface: '#26292f',
+    'surface-2': '#2b2f36', 'surface-3': '#101216', 'surface-soft': '#23262c', elevated: '#30343c',
+    hover: '#2c3037', active: '#363b44', selected: '#1d3a2a', line: '#2f333a',
+    'line-soft': '#282c32', 'line-strong': '#3f444d',
+    accent: '#1bd96a', 'accent-2': '#4ce68e', 'accent-dim': '#14a04e', 'accent-soft': '#1bd96a1f',
+    'accent-line': '#1bd96a66', success: '#1bd96a', 'success-bg': '#12281c',
+  }, {
+    colors: {
+      'editor.background': '#16181c', 'editor.foreground': '#e4e4ea',
+      'editorCursor.foreground': '#1bd96a', 'editor.selectionBackground': '#14a04e59',
+      'editor.lineHighlightBackground': '#1c1f24',
+    },
+    rules: [{ token: 'string', foreground: '#4ce68e' }, { token: 'keyword', foreground: '#1bd96a' }],
+  }),
+  variant('builtin.curseforge', 'CurseForge Ember', 'dark', {
+    rail: '#101013', side: '#16161a', bg: '#16161a', 'bg-2': '#1c1c21', surface: '#232329',
+    'surface-2': '#2a2a31', 'surface-3': '#101013', 'surface-soft': '#212127', elevated: '#2f2f37',
+    hover: '#2b2b32', active: '#35353e', selected: '#3a2620', line: '#2e2e35',
+    'line-soft': '#26262c', 'line-strong': '#3e3e47',
+    accent: '#f16436', 'accent-2': '#ff8b63', 'accent-dim': '#c44a24', 'accent-soft': '#f164361f',
+    'accent-line': '#f1643666', warning: '#f0a53c',
+  }, {
+    colors: {
+      'editor.background': '#16161a', 'editor.foreground': '#e4e4ea',
+      'editorCursor.foreground': '#f16436', 'editor.selectionBackground': '#c44a2459',
+      'editor.lineHighlightBackground': '#1c1c21',
+    },
+    rules: [{ token: 'keyword', foreground: '#f16436' }, { token: 'number', foreground: '#f0a53c' }],
+  }),
+  variant('builtin.github-dark', 'GitHub Dark', 'dark', {
+    rail: '#010409', side: '#0d1117', bg: '#0d1117', 'bg-2': '#131920', surface: '#161b22',
+    'surface-2': '#1c2129', 'surface-3': '#010409', 'surface-soft': '#151a21', elevated: '#21262d',
+    hover: '#1f242c', active: '#282e37', selected: '#132741', line: '#30363d',
+    'line-soft': '#21262d', 'line-strong': '#484f58',
+    accent: '#2f81f7', 'accent-2': '#58a6ff', 'accent-dim': '#1f6feb', 'accent-soft': '#2f81f71f',
+    'accent-line': '#2f81f766', danger: '#f85149', 'danger-bg': '#3d1518', 'danger-line': '#6e2225',
+    warning: '#d29922', success: '#3fb950', 'success-bg': '#12261a',
+  }, {
+    colors: {
+      'editor.background': '#0d1117', 'editor.foreground': '#e6edf3',
+      'editorCursor.foreground': '#2f81f7', 'editor.selectionBackground': '#1f6feb59',
+      'editor.lineHighlightBackground': '#131920',
+    },
+    rules: [
+      { token: 'comment', foreground: '#8b949e', fontStyle: 'italic' },
+      { token: 'string', foreground: '#a5d6ff' }, { token: 'keyword', foreground: '#ff7b72' },
+      { token: 'type', foreground: '#79c0ff' },
+    ],
+  }),
+  variant('builtin.github-light', 'GitHub Light', 'light', {
+    rail: '#f6f8fa', side: '#ffffff', bg: '#ffffff', 'bg-2': '#f6f8fa', surface: '#f6f8fa',
+    'surface-2': '#eaeef2', 'surface-3': '#ffffff', 'surface-soft': '#f0f3f6', elevated: '#ffffff',
+    hover: '#eaeef2', active: '#dde3ea', selected: '#ddf4ff', line: '#d1d9e0',
+    'line-soft': '#e4e8ed', 'line-strong': '#adb5bd', text: '#1f2328', 'text-strong': '#010409',
+    muted: '#59636e', faint: '#6e7781',
+    accent: '#0969da', 'accent-2': '#0550ae', 'accent-dim': '#0550ae', 'accent-soft': '#0969da1f',
+    'accent-line': '#0969da66', danger: '#a40e26', 'danger-bg': '#ffebe9', 'danger-line': '#ff818266',
+    warning: '#7d4e00', success: '#1a7f37', 'success-bg': '#dafbe1',
+  }, {
+    colors: {
+      'editor.background': '#ffffff', 'editor.foreground': '#1f2328',
+      'editorCursor.foreground': '#0969da', 'editor.selectionBackground': '#b6e3ff',
+      'editor.lineHighlightBackground': '#f6f8fa',
+      'editorLineNumber.foreground': '#6e7781', 'editorLineNumber.activeForeground': '#1f2328',
+    },
+    rules: [
+      { token: 'comment', foreground: '#59636e', fontStyle: 'italic' },
+      { token: 'string', foreground: '#0a3069' }, { token: 'keyword', foreground: '#a40e26' },
+      { token: 'type', foreground: '#0550ae' },
+    ],
+  }),
+  variant('builtin.gitlab', 'GitLab Tanuki', 'dark', {
+    rail: '#18171d', side: '#1f1e24', bg: '#1f1e24', 'bg-2': '#25242b', surface: '#28262d',
+    'surface-2': '#2f2d35', 'surface-3': '#18171d', 'surface-soft': '#262429', elevated: '#34323b',
+    hover: '#302e37', active: '#3a3841', selected: '#3a2a20', line: '#33313a',
+    'line-soft': '#2b2932', 'line-strong': '#45434e',
+    accent: '#fc6d26', 'accent-2': '#fca326', 'accent-dim': '#c9541a', 'accent-soft': '#fc6d261f',
+    'accent-line': '#fc6d2666', warning: '#fca326',
+  }, {
+    colors: {
+      'editor.background': '#1f1e24', 'editor.foreground': '#e4e4ea',
+      'editorCursor.foreground': '#fc6d26', 'editor.selectionBackground': '#c9541a59',
+      'editor.lineHighlightBackground': '#25242b',
+    },
+    rules: [{ token: 'keyword', foreground: '#fc6d26' }, { token: 'number', foreground: '#fca326' }],
+  }),
+  variant('builtin.forgejo', 'Forgejo Amber', 'dark', {
+    rail: '#0f1114', side: '#15171a', bg: '#15171a', 'bg-2': '#1b1e22', surface: '#22262b',
+    'surface-2': '#282d33', 'surface-3': '#0f1114', 'surface-soft': '#1f2328', elevated: '#2d3239',
+    hover: '#292e34', active: '#333941', selected: '#3a2a1c', line: '#2d3239',
+    'line-soft': '#252a30', 'line-strong': '#3d434b',
+    accent: '#ff7a2f', 'accent-2': '#ffa066', 'accent-dim': '#cc5c1c', 'accent-soft': '#ff7a2f1f',
+    'accent-line': '#ff7a2f66', warning: '#ffb454',
+  }, {
+    colors: {
+      'editor.background': '#15171a', 'editor.foreground': '#e4e4ea',
+      'editorCursor.foreground': '#ff7a2f', 'editor.selectionBackground': '#cc5c1c59',
+      'editor.lineHighlightBackground': '#1b1e22',
+    },
+    rules: [{ token: 'keyword', foreground: '#ff7a2f' }, { token: 'string', foreground: '#a3d9a5' }],
+  }),
 ]
 
 export const builtinThemeMap = new Map(builtinThemes.map(theme => [theme.id, theme]))

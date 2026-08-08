@@ -1,11 +1,12 @@
 name = "Gold Not Old"
 author = "Cjnator38"
 version = "1.2.0"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
+hash = "39f3e7baffb52320678ed4c286f6c207197a63bb379f6cd26bcf556132a5c2643f73e21f806bcd2855d02bfd28877b3a6b91ef723a4cb80dd414ea7c17ef3695"
 
 [versions]
 fabric = "0.19.3"

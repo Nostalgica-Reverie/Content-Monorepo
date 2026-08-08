@@ -64,6 +64,18 @@ fn sha1_hex(bytes: &[u8]) -> String {
     digest.iter().map(|b| format!("{b:02x}")).collect()
 }
 
+/// SHA-1 of a file's contents, streamed rather than buffered.
+///
+/// An asset index is thousands of files; reading each one whole just to
+/// digest and drop it made peak memory track the largest file for no reason.
+fn sha1_file(path: &Path) -> io::Result<String> {
+    let mut file = fs::File::open(path)?;
+    let mut hasher = Sha1::new();
+    io::copy(&mut file, &mut hasher)?;
+    let digest = hasher.finalize();
+    Ok(digest.iter().map(|b| format!("{b:02x}")).collect())
+}
+
 /// Does an existing file already satisfy this action?
 fn is_satisfied(action: &DownloadAction) -> bool {
     let Ok(metadata) = fs::metadata(&action.target) else {
@@ -73,8 +85,8 @@ fn is_satisfied(action: &DownloadAction) -> bool {
         return false;
     }
     match (&action.sha1, action.size) {
-        (Some(sha1), _) => match fs::read(&action.target) {
-            Ok(bytes) => sha1_hex(&bytes).eq_ignore_ascii_case(sha1),
+        (Some(sha1), _) => match sha1_file(&action.target) {
+            Ok(actual) => actual.eq_ignore_ascii_case(sha1),
             Err(_) => false,
         },
         (None, Some(size)) => metadata.len() == size,

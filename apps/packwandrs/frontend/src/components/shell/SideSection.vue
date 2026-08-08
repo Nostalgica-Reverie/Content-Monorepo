@@ -21,8 +21,10 @@ const expanded = ref(props.open)
       <span>{{ title }}</span>
       <span v-if="count !== undefined" class="side-section__count">{{ count }}</span>
     </button>
-    <div v-if="expanded" class="side-section__body">
-      <slot />
-    </div>
+    <Transition name="slide-fade">
+      <div v-if="expanded" class="side-section__body">
+        <slot />
+      </div>
+    </Transition>
   </section>
 </template>

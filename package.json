@@ -1,13 +1,23 @@
 {
-  "name": "lasting-legacy-monorepo",
-  "private": true,
-  "packageManager": "bun@1.3.14",
-  "workspaces": [
-    "apps/bot",
-    "docs",
-    "docs/modpack-dev-handbook",
-    "docs/packwand",
-    "docs/packwiz",
-    "scripts"
-  ]
+	"name": "lasting-legacy-monorepo",
+	"private": true,
+	"packageManager": "bun@1.3.14",
+	"workspaces": [
+		"apps/bot",
+		"apps/packwandrs",
+		"apps/packwandrs/frontend",
+		"docs",
+		"docs/packwand",
+		"docs/packwiz",
+		"scripts"
+	],
+	"scripts": {
+		"fmt": "prettier --write .",
+		"fmt:check": "prettier --check .",
+		"turbo": "turbo"
+	},
+	"devDependencies": {
+		"prettier": "^3.6.2",
+		"turbo": "^2.5.8"
+	}
 }

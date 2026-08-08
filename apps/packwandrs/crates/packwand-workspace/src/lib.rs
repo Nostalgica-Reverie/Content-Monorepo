@@ -718,7 +718,7 @@ pub fn set_frozen(
     }
     let mut changed = Vec::new();
     for slug in slugs {
-        let metadata_path = format!("mods/{slug}.pw.toml");
+        let metadata_path = format!("mods/{}", packwand_pack::metafile::name_for(slug));
         if !target.join(&metadata_path).is_file() {
             continue;
         }
@@ -781,10 +781,11 @@ pub fn init_pack(root: impl AsRef<Path>, request: &InitPack) -> Result<()> {
         ..Pack::default()
     };
     atomic_write(&root.join("pack.toml"), pack.to_toml()?.as_bytes())?;
-    atomic_write(
-        &root.join("index.toml"),
-        toml::to_string(&Index::default())?.as_bytes(),
-    )?;
+    // The index is a generated JSON artifact; a new pack starts with an empty
+    // one so the first command has something to refresh rather than create.
+    let mut index_bytes = serde_json::to_vec_pretty(&Index::default())?;
+    index_bytes.push(b'\n');
+    atomic_write(&root.join(&pack.index.file), &index_bytes)?;
     atomic_write(&root.join(".packwizignore"), PACKWIZ_IGNORE.as_bytes())
 }
 
@@ -983,10 +984,9 @@ mod tests {
         for subdir in project.subdirs {
             let pack: Pack =
                 toml::from_str(&fs::read_to_string(subdir.join("pack.toml")).unwrap()).unwrap();
-            assert_eq!(
-                pack.format().unwrap(),
-                packwand_pack::PackFormat::Packwand(26)
-            );
+            // A freshly scaffolded pack is written at the current generation,
+            // so it never needs migrating.
+            assert!(!pack.format().unwrap().needs_migration());
         }
     }
 

@@ -4,7 +4,9 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import ChangelogPage from '@/pages/ChangelogPage.vue'
 import ExportsPage from '@/pages/ExportsPage.vue'
 import InstancesPage from '@/pages/InstancesPage.vue'
+import InstanceDetailPage from '@/pages/InstanceDetailPage.vue'
 import JobsPage from '@/pages/JobsPage.vue'
+import BrowsePage from '@/pages/BrowsePage.vue'
 import ModsPage from '@/pages/ModsPage.vue'
 import OverviewPage from '@/pages/OverviewPage.vue'
 import SettingsPage from '@/pages/SettingsPage.vue'
@@ -21,8 +23,10 @@ const router = createRouter({ history: createWebHashHistory(), routes: [
     { path: '', name: 'overview', component: OverviewPage },
     { path: 'editor', name: 'editor', component: EditorPage },
     { path: 'instances', name: 'instances', component: InstancesPage },
+    { path: 'instances/:id', name: 'instance-detail', component: InstanceDetailPage },
     { path: 'exports', name: 'exports', component: ExportsPage },
     { path: 'mods', name: 'mods', component: ModsPage },
+    { path: 'browse', name: 'browse', component: BrowsePage },
     { path: 'generator', name: 'generator', component: GeneratorPage },
     { path: 'changelog', name: 'changelog', component: ChangelogPage },
     { path: 'logs', name: 'logs', component: JobsPage },

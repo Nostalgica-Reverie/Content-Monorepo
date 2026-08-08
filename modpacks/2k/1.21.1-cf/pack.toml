@@ -1,11 +1,12 @@
 name = "2000s-edition"
 author = "NicSonic"
 version = "v1.2"
-pack-format = "packwand:26"
+pack-format = "packwand:27"
 
 [index]
-file = "index.toml"
+file = "index.json"
 hash-format = "sha512"
+hash = "d8f9562c23f0dc6aa574d7220c6bf6353c0638a64f2975108c96ae8ddd8693f5efbb2d25c9446498fe193ce0e3adecbcb9ff1ef15503ec94ede978d98918a074"
 
 [versions]
 fabric = "0.19.3"

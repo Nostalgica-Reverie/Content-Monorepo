@@ -5,6 +5,7 @@ use std::path::Path;
 use tauri::{AppHandle, State};
 
 use crate::commands::jobs::JobRecord;
+use crate::commands::off_thread;
 use crate::commands::packs::pack_root;
 use crate::error::{CommandResult, SerializableError};
 use crate::events::emit_packs_changed;
@@ -32,23 +33,27 @@ pub struct PackeaterPreview {
 /// Lists the Packeater markers under a pack, so the UI can show what would be
 /// compressed before anyone commits to a run.
 #[tauri::command]
-pub fn packeater_markers(
+pub async fn packeater_markers(
     id: String,
     state: State<'_, AppState>,
 ) -> CommandResult<Vec<PackeaterMarker>> {
     let workspace = state.workspace()?;
     let root = pack_root(&workspace, &id)?;
-    let markers = packwand_build::discover_packeater_markers(&root)
+    off_thread(move || markers_inner(&workspace, &root)).await
+}
+
+fn markers_inner(workspace: &Path, root: &Path) -> CommandResult<Vec<PackeaterMarker>> {
+    let markers = packwand_build::discover_packeater_markers(root)
         .map_err(|error| SerializableError::new("packeater", error.to_string()))?;
     Ok(markers
         .into_iter()
         .map(|marker| {
             let directory = marker
                 .parent()
-                .map(|parent| display_relative(&workspace, parent))
+                .map(|parent| display_relative(workspace, parent))
                 .unwrap_or_default();
             PackeaterMarker {
-                path: display_relative(&workspace, &marker),
+                path: display_relative(workspace, &marker),
                 directory,
             }
         })
@@ -58,14 +63,19 @@ pub fn packeater_markers(
 /// Reads and validates marker JSON and reports the exact source footprint that
 /// a Packeater run will consume. This is intentionally read-only.
 #[tauri::command]
-pub fn packeater_preview(
+pub async fn packeater_preview(
     id: String,
     state: State<'_, AppState>,
 ) -> CommandResult<Vec<PackeaterPreview>> {
     let workspace = state.workspace()?;
     let root = pack_root(&workspace, &id)?;
-    let destination = workspace.join("build/packeater").join(&id);
-    let markers = packwand_build::discover_packeater_markers(&root)
+    // `source_footprint` walks and stats every file under each marker.
+    off_thread(move || preview_inner(&workspace, &root, &id)).await
+}
+
+fn preview_inner(workspace: &Path, root: &Path, id: &str) -> CommandResult<Vec<PackeaterPreview>> {
+    let destination = workspace.join("build/packeater").join(id);
+    let markers = packwand_build::discover_packeater_markers(root)
         .map_err(|error| SerializableError::new("packeater", error.to_string()))?;
     markers
         .into_iter()
@@ -91,20 +101,20 @@ pub fn packeater_preview(
                     format!("{} uses an unsupported version", marker.display()),
                 ));
             }
-            let directory = marker.parent().unwrap_or(&root);
+            let directory = marker.parent().unwrap_or(root);
             let (file_count, input_bytes) = source_footprint(directory)?;
             let name = directory
                 .file_name()
                 .and_then(|value| value.to_str())
                 .unwrap_or("pack");
             Ok(PackeaterPreview {
-                path: display_relative(&workspace, &marker),
-                directory: display_relative(&workspace, directory),
+                path: display_relative(workspace, &marker),
+                directory: display_relative(workspace, directory),
                 enabled: object
                     .get("enabled")
                     .and_then(serde_json::Value::as_bool)
                     .unwrap_or(true),
-                output: display_relative(&workspace, &destination.join(format!("{name}.zip"))),
+                output: display_relative(workspace, &destination.join(format!("{name}.zip"))),
                 file_count,
                 input_bytes,
             })
@@ -116,13 +126,19 @@ pub fn packeater_preview(
 /// guarantees an existing, hand-authored optimizer configuration is never
 /// overwritten.
 #[tauri::command]
-pub fn packeater_initialize(
+pub async fn packeater_initialize(
     id: String,
     app: AppHandle,
     state: State<'_, AppState>,
 ) -> CommandResult<PackeaterMarker> {
     let workspace = state.workspace()?;
     let root = pack_root(&workspace, &id)?;
+    let created = off_thread(move || initialize_inner(&workspace, &root)).await?;
+    emit_packs_changed(&app)?;
+    Ok(created)
+}
+
+fn initialize_inner(workspace: &Path, root: &Path) -> CommandResult<PackeaterMarker> {
     let marker = root.join(packwand_build::PACKEATER_MARKER);
     let mut file = OpenOptions::new()
         .write(true)
@@ -145,12 +161,10 @@ pub fn packeater_initialize(
 }
 "#)
         .map_err(|error| SerializableError::new("packeater_config", error.to_string()))?;
-    let created = PackeaterMarker {
-        path: display_relative(&workspace, &marker),
-        directory: display_relative(&workspace, &root),
-    };
-    emit_packs_changed(&app)?;
-    Ok(created)
+    Ok(PackeaterMarker {
+        path: display_relative(workspace, &marker),
+        directory: display_relative(workspace, root),
+    })
 }
 
 fn source_footprint(root: &Path) -> CommandResult<(usize, u64)> {

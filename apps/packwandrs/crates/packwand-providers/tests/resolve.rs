@@ -144,7 +144,7 @@ fn modrinth_resolves_primary_file_and_go_compatible_metadata() {
     ]);
     let client = ModrinthClient::with_api_base(&transport, "https://example.test/v2/").unwrap();
     let resolved = client.resolve(&request("sodium")).unwrap();
-    assert_eq!(resolved.metadata_path(), "mods/sodium.pw.toml");
+    assert_eq!(resolved.metadata_path(), "mods/sodium.pw.json");
     assert_eq!(resolved.side, "client");
     assert_eq!(resolved.version.file.filename, "sodium.jar");
 
@@ -187,7 +187,7 @@ fn curseforge_filters_files_and_preserves_numeric_update_ids() {
         CurseForgeClient::with_api_base(&transport, "test-key", "https://example.test/v1/")
             .unwrap();
     let resolved = client.resolve(&request("238222")).unwrap();
-    assert_eq!(resolved.metadata_path(), "mods/jei.pw.toml");
+    assert_eq!(resolved.metadata_path(), "mods/jei.pw.json");
     assert_eq!(resolved.version.id, "10");
     assert!(resolved.version.file.url.is_none());
 
@@ -198,13 +198,10 @@ fn curseforge_filters_files_and_preserves_numeric_update_ids() {
     assert!(metadata.download.url.is_empty());
     assert!(metadata.download.extra_hashes.is_empty());
     assert_eq!(
-        metadata.update["curseforge"]["project-id"].as_integer(),
+        metadata.update["curseforge"]["project-id"].as_i64(),
         Some(238222)
     );
-    assert_eq!(
-        metadata.update["curseforge"]["file-id"].as_integer(),
-        Some(10)
-    );
+    assert_eq!(metadata.update["curseforge"]["file-id"].as_i64(), Some(10));
 
     let requests = transport.requests.lock().unwrap();
     assert_eq!(requests.len(), 1);
@@ -378,7 +375,7 @@ fn github_resolves_a_branch_release_and_persists_update_options() {
     let mut resolve_request = request("https://github.com/owner/example/releases/latest");
     resolve_request.branch = Some("main".into());
     let resolved = client.resolve(&resolve_request).unwrap();
-    assert_eq!(resolved.metadata_path(), "mods/example-mod.pw.toml");
+    assert_eq!(resolved.metadata_path(), "mods/example-mod.pw.json");
     assert_eq!(resolved.version.file.filename, "example.jar");
 
     let metadata = resolved.into_mod().unwrap();
@@ -431,7 +428,7 @@ fn forgejo_resolves_an_attachment_and_preserves_instance_metadata() {
     let mut resolve_request = request("owner/example");
     resolve_request.branch = Some("main".into());
     let resolved = client.resolve(&resolve_request).unwrap();
-    assert_eq!(resolved.metadata_path(), "mods/example-mod.pw.toml");
+    assert_eq!(resolved.metadata_path(), "mods/example-mod.pw.json");
 
     let metadata = resolved.into_mod().unwrap();
     assert_eq!(

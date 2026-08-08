@@ -2,6 +2,7 @@
 
 #![forbid(unsafe_code)]
 
+mod browse;
 mod curseforge;
 mod forgejo;
 mod github;
@@ -15,6 +16,9 @@ use std::collections::BTreeMap;
 use packwand_pack::{Download, Mod};
 use serde::{Deserialize, Serialize};
 
+pub use browse::{
+    BodyFormat, BrowseDetail, BrowsePage, BrowseProject, BrowseQuery, GalleryImage, ProviderBrowser,
+};
 pub use curseforge::{
     CurseForgeClient, FingerprintMatch, FingerprintMatches, configured_api_key, parse_file_url,
 };
@@ -147,15 +151,15 @@ pub struct ResolvedProject {
 impl ResolvedProject {
     pub fn metadata_path(&self) -> String {
         format!(
-            "{}/{}.pw.toml",
+            "{}/{}",
             self.project_type.default_folder(),
-            self.slug
+            packwand_pack::metafile::name_for(&self.slug)
         )
     }
 
     pub fn into_mod(self) -> Result<Mod, ProviderError> {
         let (hash_format, hash) = strongest_hash(&self.version.file.hashes)?;
-        let mut provider_data = toml::Table::new();
+        let mut provider_data = packwand_pack::UpdateTable::new();
         let (url, extra_hashes, size, mode) = match self.provider {
             ProviderKind::Modrinth => {
                 provider_data.insert("mod-id".into(), self.id.clone().into());

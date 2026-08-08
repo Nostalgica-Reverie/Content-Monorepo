@@ -15,6 +15,12 @@ import type {
   ExtensionView,
   ProjectCategory,
 } from '@/extensions/api'
+import {
+  extensionActivatedBy,
+  extensionApplies,
+  reconcileInstalledExtensions,
+  safeRelativePath,
+} from '@/core/packwand'
 import { extensionErrors, extensions, qualifiedId } from '@/extensions/registry'
 import { call } from '@/helpers/invoke/core'
 import type { PackeaterMarker, PackeaterPreview } from '@/helpers/invoke/packeater'
@@ -66,12 +72,12 @@ export const useExtensionsStore = defineStore('extensions', () => {
       const value = JSON.parse(localStorage.getItem('packwand:installed-extensions') ?? '[]')
       if (!Array.isArray(value)) return []
       const requested = value.filter((id): id is string => typeof id === 'string')
-      if (requested.some(id => id === 'datapack-pw' || id === 'resourcepack-pw')) {
-        requested.push('game-studio')
-      }
-      const installed = [...new Set(requested.filter(id =>
-        extensions.some(entry => entry.manifest.id === id),
-      ))].sort()
+      // Implied extensions, unknown-id filtering, de-duplication and ordering
+      // all live in `packwand/extension_host.gleam`.
+      const installed = reconcileInstalledExtensions(
+        requested,
+        extensions.map(entry => entry.manifest.id),
+      )
       localStorage.setItem('packwand:installed-extensions', JSON.stringify(installed))
       return installed
     } catch {
@@ -98,9 +104,12 @@ export const useExtensionsStore = defineStore('extensions', () => {
         open: (packId: string, path: string) => {
           requireCapability('project.read')
           if (workbench.selectedPack?.id !== packId) throw new Error('The requested pack is not active')
-          const normalized = path.replaceAll('\\', '/').replace(/^\/+/, '')
-          if (!normalized || normalized.split('/').some(part => part === '..')) throw new Error('Invalid pack-relative editor path')
-          workbench.requestFile(normalized)
+          // Security boundary — see `extension_host.safe_relative_path`, which
+          // refuses traversal and absolute paths and is tested against both.
+          // Note it *rejects* a leading slash rather than stripping it: an
+          // extension asking for `/etc/passwd` has made a mistake worth
+          // surfacing, not one worth silently reinterpreting as a relative path.
+          workbench.requestFile(safeRelativePath(path))
         },
       },
       generator: {
@@ -229,14 +238,14 @@ export const useExtensionsStore = defineStore('extensions', () => {
     () => (workbench.selectedProject?.category as ProjectCategory | undefined) ?? null,
   )
 
+  // Activation rules live in `packwand/extension_host.gleam`; `null` category
+  // crosses as an empty string, which those rules treat as "no project open".
   function applies(when: ProjectCategory[] | undefined) {
-    if (!when?.length) return true
-    return category.value !== null && when.includes(category.value)
+    return extensionApplies(when, category.value ?? '')
   }
 
   function activatedBy(events: string[]) {
-    if (events.includes('*')) return true
-    return category.value !== null && events.includes(`project:${category.value}`)
+    return extensionActivatedBy(events, category.value ?? '')
   }
 
   /** Commands whose extension and own `when` clause both admit the current project. */

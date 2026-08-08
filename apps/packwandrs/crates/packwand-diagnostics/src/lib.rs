@@ -86,8 +86,8 @@ pub fn lint_file(path: impl AsRef<Path>) -> Vec<Issue> {
         serde_json::from_str::<serde_json::Value>(&source)
             .map(|_| ())
             .map_err(|error| error.to_string())
-    } else if path.to_string_lossy().ends_with(".pw.toml") {
-        toml::from_str::<Mod>(&source)
+    } else if packwand_pack::metafile::is_metafile(path) {
+        serde_json::from_str::<Mod>(&source)
             .map(|_| ())
             .map_err(|error| error.to_string())
     } else if path
@@ -112,7 +112,7 @@ const LINT_CATEGORIES: [&str; 4] = ["mods", "modpacks", "datapacks", "resourcepa
 fn is_lintable(path: &Path) -> bool {
     path.extension()
         .is_some_and(|extension| extension.eq_ignore_ascii_case("json"))
-        || path.to_string_lossy().ends_with(".pw.toml")
+        || packwand_pack::metafile::is_metafile(path)
 }
 
 /// The directories a workspace lint should walk.
@@ -225,7 +225,11 @@ fn content_lint_inner(root: impl AsRef<Path>, hygiene: bool, jobs: Jobs) -> Vali
     let root = root.as_ref();
     let mut report = ValidationReport::default();
     let mut paths = BTreeMap::<String, PathBuf>::new();
-    let mut json_documents = Vec::new();
+    // Paths of the JSON/mcmeta files, collected during the walk and read and
+    // parsed in one parallel pass afterwards. The walk itself stays
+    // sequential: it maintains the `paths` map that the case-collision check
+    // reads and writes as it goes.
+    let mut json_paths: Vec<(PathBuf, String)> = Vec::new();
     let mut content_files: Vec<(PathBuf, String)> = Vec::new();
     for entry in WalkDir::new(root)
         .follow_links(false)
@@ -264,15 +268,27 @@ fn content_lint_inner(root: impl AsRef<Path>, hygiene: bool, jobs: Jobs) -> Vali
         if entry.path().extension().is_some_and(|extension| {
             extension.eq_ignore_ascii_case("json") || extension.eq_ignore_ascii_case("mcmeta")
         }) {
-            match fs::read_to_string(entry.path())
-                .map_err(|error| error.to_string())
-                .and_then(|source| {
-                    serde_json::from_str::<serde_json::Value>(&source)
-                        .map_err(|error| error.to_string())
-                }) {
-                Ok(value) => json_documents.push((entry.path().to_path_buf(), relative, value)),
-                Err(message) => report.issues.push(error_issue(entry.path(), message)),
-            }
+            json_paths.push((entry.path().to_path_buf(), relative));
+        }
+    }
+
+    // Reading and parsing the JSON is the bulk of a content lint on a real
+    // pack — tens of thousands of small documents — and each one is
+    // independent. Results come back in walk order, so the issue list this
+    // produces is identical to the sequential pass.
+    let parsed = packwand_parallel::map(&json_paths, jobs, |(path, _)| {
+        fs::read_to_string(path)
+            .map_err(|error| error.to_string())
+            .and_then(|source| {
+                serde_json::from_str::<serde_json::Value>(&source)
+                    .map_err(|error| error.to_string())
+            })
+    });
+    let mut json_documents = Vec::with_capacity(json_paths.len());
+    for ((path, relative), outcome) in json_paths.into_iter().zip(parsed) {
+        match outcome {
+            Ok(value) => json_documents.push((path, relative, value)),
+            Err(message) => report.issues.push(error_issue(&path, message)),
         }
     }
     if !root.join("pack.mcmeta").is_file() {
@@ -738,9 +754,9 @@ fn mod_sides(subdir: &Path) -> Vec<(String, PathBuf, String)> {
             let slug = path
                 .file_name()
                 .and_then(|name| name.to_str())?
-                .strip_suffix(".pw.toml")?
+                .strip_suffix(".pw.json")?
                 .to_owned();
-            let metadata: Mod = toml::from_str(&fs::read_to_string(&path).ok()?).ok()?;
+            let metadata: Mod = serde_json::from_str(&fs::read_to_string(&path).ok()?).ok()?;
             Some((slug, path, metadata.side))
         })
         .collect::<Vec<_>>();
@@ -1027,14 +1043,15 @@ fn collect_metadata(root: &Path) -> BTreeMap<String, PwMeta> {
         .into_iter()
         .flatten()
         .filter(|entry| {
-            entry.file_type().is_file() && entry.file_name().to_string_lossy().ends_with(".pw.toml")
+            entry.file_type().is_file() && packwand_pack::metafile::is_metafile(entry.path())
         })
         .filter_map(|entry| {
-            let metadata: Mod = toml::from_str(&fs::read_to_string(entry.path()).ok()?).ok()?;
+            let metadata: Mod =
+                serde_json::from_str(&fs::read_to_string(entry.path()).ok()?).ok()?;
             let slug = entry
                 .file_name()
                 .to_string_lossy()
-                .trim_end_matches(".pw.toml")
+                .trim_end_matches(".pw.json")
                 .to_owned();
             Some((
                 slug,
@@ -1082,7 +1099,8 @@ mod tests {
 
     fn metadata(name: &str, filename: &str) -> String {
         format!(
-            "name = \"{name}\"\nfilename = \"{filename}\"\nside = \"both\"\n\n[download]\nhash-format = \"sha512\"\nhash = \"abc\"\n"
+            r#"{{"name": "{name}", "filename": "{filename}", "side": "both",
+                "download": {{"hash-format": "sha512", "hash": "abc"}}}}"#
         )
     }
 
@@ -1090,7 +1108,7 @@ mod tests {
     fn lint_reports_json_and_metadata_syntax() {
         let root = tempfile::tempdir().unwrap();
         fs::write(root.path().join("bad.json"), "{").unwrap();
-        fs::write(root.path().join("bad.pw.toml"), "not toml").unwrap();
+        fs::write(root.path().join("bad.pw.json"), "not json").unwrap();
         let report = lint_workspace(root.path());
         assert_eq!(report.checked, 2);
         assert_eq!(report.issues.len(), 2);
@@ -1113,9 +1131,10 @@ mod tests {
         let mods = project.root.join(subdir).join("mods");
         fs::create_dir_all(&mods).unwrap();
         fs::write(
-            mods.join(format!("{slug}.pw.toml")),
+            mods.join(format!("{slug}.pw.json")),
             format!(
-                "name = \"{slug}\"\nfilename = \"{slug}.jar\"\nside = \"{side}\"\n\n[download]\nhash-format = \"sha512\"\nhash = \"abc\"\n"
+                r#"{{"name": "{slug}", "filename": "{slug}.jar", "side": "{side}",
+                    "download": {{"hash-format": "sha512", "hash": "abc"}}}}"#
             ),
         )
         .unwrap();
@@ -1266,12 +1285,12 @@ mod tests {
         fs::create_dir_all(&mr).unwrap();
         fs::create_dir_all(&cf).unwrap();
         fs::write(
-            mr.join("ferrite-core.pw.toml"),
+            mr.join("ferrite-core.pw.json"),
             metadata("FerriteCore (Fabric)", "ferrite.jar"),
         )
         .unwrap();
         fs::write(
-            cf.join("ferritecore.pw.toml"),
+            cf.join("ferritecore.pw.json"),
             metadata("FerriteCore", "ferrite.jar"),
         )
         .unwrap();
