@@ -73,14 +73,10 @@ fn xml_error(context: &str, message: impl Into<String>) -> MinecraftError {
 }
 
 fn verify_sha1(url: &str, bytes: &[u8], expected: Option<&str>) -> Result<(), MinecraftError> {
-	use sha1::{Digest, Sha1};
 	let Some(expected) = expected else {
 		return Ok(());
 	};
-	let actual: String = Sha1::digest(bytes)
-		.iter()
-		.map(|b| format!("{b:02x}"))
-		.collect();
+	let actual = packwand_pack::hash_bytes(packwand_pack::HashFormat::Sha1, bytes);
 	if actual.eq_ignore_ascii_case(expected) {
 		Ok(())
 	} else {
@@ -239,7 +235,7 @@ impl<'a> MetadataClient<'a> {
 
 	pub fn fetch_manifest(&self) -> Result<VersionManifest, MinecraftError> {
 		let url = &self.endpoints.version_manifest_url;
-		let bytes = self.http.get(url)?;
+		let bytes = self.http.get_document(url)?;
 		serde_json::from_slice(&bytes).map_err(json_error(url))
 	}
 
@@ -248,7 +244,9 @@ impl<'a> MetadataClient<'a> {
 		&self,
 		entry: &ManifestVersion,
 	) -> Result<Fetched<VersionDoc>, MinecraftError> {
-		let bytes = self.http.get(&entry.url)?;
+		let bytes = self
+			.http
+			.get_child_document(&entry.url, entry.sha1.as_deref())?;
 		verify_sha1(&entry.url, &bytes, entry.sha1.as_deref())?;
 		let value = serde_json::from_slice(&bytes).map_err(json_error(&entry.url))?;
 		Ok(Fetched { value, bytes })
@@ -258,7 +256,9 @@ impl<'a> MetadataClient<'a> {
 		&self,
 		reference: &AssetIndexRef,
 	) -> Result<Fetched<AssetIndex>, MinecraftError> {
-		let bytes = self.http.get(&reference.url)?;
+		let bytes = self
+			.http
+			.get_child_document(&reference.url, reference.sha1.as_deref())?;
 		verify_sha1(&reference.url, &bytes, reference.sha1.as_deref())?;
 		let value = AssetIndex::from_slice(&bytes).map_err(json_error(&reference.url))?;
 		Ok(Fetched { value, bytes })
@@ -271,8 +271,21 @@ impl<'a> MetadataClient<'a> {
 		game_version: &str,
 		loader_version: Option<&str>,
 	) -> Result<String, MinecraftError> {
+		Ok(self
+			.choose_fabric_loader(game_version, loader_version)?
+			.version)
+	}
+
+	/// As [`Self::resolve_fabric_loader`], but reporting whether the answer
+	/// carried Fabric's own endorsement or was merely the newest thing that
+	/// supports this Minecraft version.
+	pub fn choose_fabric_loader(
+		&self,
+		game_version: &str,
+		loader_version: Option<&str>,
+	) -> Result<crate::recommend::Choice, MinecraftError> {
 		if let Some(version) = loader_version {
-			return Ok(version.to_string());
+			return Ok(crate::recommend::Choice::pinned(version));
 		}
 		#[derive(Deserialize)]
 		struct LoaderEntry {
@@ -290,12 +303,12 @@ impl<'a> MetadataClient<'a> {
 		);
 		let bytes = self.http.get(&url)?;
 		let entries: Vec<LoaderEntry> = serde_json::from_slice(&bytes).map_err(json_error(&url))?;
-		entries
-			.iter()
-			.find(|e| e.loader.stable)
-			.or(entries.first())
-			.map(|e| e.loader.version.clone())
-			.ok_or_else(|| MinecraftError::NoLoaderVersion(game_version.to_string()))
+		crate::recommend::recommended_for_parent(
+			&entries,
+			|e| e.loader.stable,
+			|e| e.loader.version.clone(),
+		)
+		.ok_or_else(|| MinecraftError::NoLoaderVersion(game_version.to_string()))
 	}
 
 	/// Fetches the Fabric profile for one game+loader pair. The result

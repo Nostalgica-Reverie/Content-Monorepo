@@ -42,6 +42,7 @@ fn rich_spec(root: &Path) -> InstanceSpec {
 			max_mb: Some(1024),
 		},
 		session_placeholders: vec!["access_token".to_string(), "xuid".to_string()],
+		identity_placeholders: Vec::new(),
 	}
 }
 

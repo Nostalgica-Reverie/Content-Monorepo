@@ -132,6 +132,24 @@ impl Session {
 	pub fn secrets(&self) -> BTreeMap<String, SecretString> {
 		BTreeMap::from([("auth_access_token".to_string(), self.access_token.clone())])
 	}
+
+	/// Non-secret account values, keyed by the `${identity:<name>}`
+	/// placeholders a launch plan may reference.
+	///
+	/// Separate from [`Self::secrets`] because these are not sensitive and
+	/// must stay readable — they end up in a log line the user is expected to
+	/// paste. `auth_xuid` and `clientid` are empty for every account type this
+	/// launcher supports, but the arguments still reference them.
+	pub fn identity(&self) -> BTreeMap<String, String> {
+		BTreeMap::from([
+			("auth_player_name".to_string(), self.username.clone()),
+			("profile_name".to_string(), self.username.clone()),
+			("auth_uuid".to_string(), self.uuid.clone()),
+			("user_type".to_string(), self.user_type.clone()),
+			("auth_xuid".to_string(), String::new()),
+			("clientid".to_string(), String::new()),
+		])
+	}
 }
 
 /// The UUID Mojang's own code derives for offline players:

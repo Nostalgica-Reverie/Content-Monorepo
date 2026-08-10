@@ -59,4 +59,21 @@ impl From<packwand_providers::ProviderError> for SerializableError {
 	}
 }
 
+impl From<packwand_instance::InstanceError> for SerializableError {
+	fn from(error: packwand_instance::InstanceError) -> Self {
+		Self::new("instance", error.to_string())
+	}
+}
+
+impl From<packwand_orchestrator::OrchestratorError> for SerializableError {
+	fn from(error: packwand_orchestrator::OrchestratorError) -> Self {
+		// Field-for-field: the orchestrator already carries the discriminator
+		// the UI branches on, so re-labelling it here would lose information.
+		Self {
+			kind: error.kind,
+			message: error.message,
+		}
+	}
+}
+
 pub type CommandResult<T> = Result<T, SerializableError>;

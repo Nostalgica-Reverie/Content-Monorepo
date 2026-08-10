@@ -10,6 +10,8 @@ members = [
     "crates/packwand-identity-client",
 	"crates/packwand-installer",
     "crates/packwand-vcs",
+    "crates/packwand-net",
+    "crates/packwand-orchestrator",
     "crates/packwand-ops",
     "crates/packwand-pack",
     "crates/packwand-providers",
@@ -18,7 +20,6 @@ members = [
     # Launcher core, merged in from packages/packwand-core.
     "crates/packwand-auth",
     "crates/packwand-core-probe",
-    "crates/packwand-devboot",
     "crates/packwand-instance",
     "crates/packwand-launch",
     "crates/packwand-minecraft",
@@ -98,7 +99,6 @@ packwand-identity-client = { path = "crates/packwand-identity-client" }
 packwand-installer = { path = "crates/packwand-installer" }
 packwand-vcs = { path = "crates/packwand-vcs" }
 packwand-auth = { path = "crates/packwand-auth" }
-packwand-devboot = { path = "crates/packwand-devboot" }
 packwand-instance = { path = "crates/packwand-instance" }
 packwand-launch = { path = "crates/packwand-launch" }
 packwand-minecraft = { path = "crates/packwand-minecraft" }

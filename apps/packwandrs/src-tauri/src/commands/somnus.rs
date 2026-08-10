@@ -15,7 +15,11 @@ use crate::state::AppState;
 /// CLI's copy is private to that crate — duplicating a dozen lines here is
 /// cheaper than exporting it across a crate boundary for one caller.
 fn find_binary(root: &Path) -> CommandResult<PathBuf> {
-	let executable = if cfg!(windows) { "somnus.exe" } else { "somnus" };
+	let executable = if cfg!(windows) {
+		"somnus.exe"
+	} else {
+		"somnus"
+	};
 	let candidates = std::env::var_os("PACKWAND_SOMNUS_BIN")
 		.map(PathBuf::from)
 		.into_iter()
@@ -78,47 +82,54 @@ pub async fn somnus_run(
 		.unwrap_or_else(|| "every matching workflow".to_owned());
 	Ok(state
 		.jobs
-		.spawn(app, "somnus", format!("Somnus: {label}"), move |context| async move {
-			let mut command = Command::new(&binary);
-			command
-				.arg("run")
-				.args(["--root", &root.to_string_lossy()])
-				.args(["--changed-paths", &changed])
-				.stdin(Stdio::null())
-				.stdout(Stdio::piped())
-				.stderr(Stdio::piped());
-			if let Some(workflow) = &workflow {
-				command.arg(workflow);
-			}
-			let mut child = command.spawn()?;
-			let stdout = BufReader::new(child.stdout.take().expect("piped stdout"));
-			let stderr = BufReader::new(child.stderr.take().expect("piped stderr"));
-			let context_out = context.clone();
-			let out_task = tokio::spawn(async move {
-				let mut lines = stdout.lines();
-				while let Ok(Some(line)) = lines.next_line().await {
-					context_out.log(line).await;
+		.spawn(
+			app,
+			"somnus",
+			format!("Somnus: {label}"),
+			move |context| async move {
+				let mut command = Command::new(&binary);
+				command
+					.arg("run")
+					.args(["--root", &root.to_string_lossy()])
+					.args(["--changed-paths", &changed])
+					.stdin(Stdio::null())
+					.stdout(Stdio::piped())
+					.stderr(Stdio::piped());
+				if let Some(workflow) = &workflow {
+					command.arg(workflow);
 				}
-			});
-			let context_err = context.clone();
-			let err_task = tokio::spawn(async move {
-				let mut lines = stderr.lines();
-				while let Ok(Some(line)) = lines.next_line().await {
-					context_err.log(line).await;
+				let mut child = command.spawn()?;
+				let stdout = BufReader::new(child.stdout.take().expect("piped stdout"));
+				let stderr = BufReader::new(child.stderr.take().expect("piped stderr"));
+				let context_out = context.clone();
+				let out_task = tokio::spawn(async move {
+					let mut lines = stdout.lines();
+					while let Ok(Some(line)) = lines.next_line().await {
+						context_out.log(line).await;
+					}
+				});
+				let context_err = context.clone();
+				let err_task = tokio::spawn(async move {
+					let mut lines = stderr.lines();
+					while let Ok(Some(line)) = lines.next_line().await {
+						context_err.log(line).await;
+					}
+				});
+				let _ = out_task.await;
+				let _ = err_task.await;
+				let status = child.wait().await?;
+				if !status.success() {
+					return Err(SerializableError::new(
+						"somnus_failed",
+						format!("somnus exited with {status}"),
+					));
 				}
-			});
-			let _ = out_task.await;
-			let _ = err_task.await;
-			let status = child.wait().await?;
-			if !status.success() {
-				return Err(SerializableError::new(
-					"somnus_failed",
-					format!("somnus exited with {status}"),
-				));
-			}
-			context.progress(1.0, Some("Somnus run complete".into())).await;
-			Ok(())
-		})
+				context
+					.progress(1.0, Some("Somnus run complete".into()))
+					.await;
+				Ok(())
+			},
+		)
 		.await)
 }
 

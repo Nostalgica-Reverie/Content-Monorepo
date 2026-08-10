@@ -3,7 +3,7 @@
 //! or the filesystem (acquisition plans are separate from
 //! application").
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeSet, HashSet};
 use std::path::{Component, Path, PathBuf};
 
 use serde::Serialize;
@@ -71,11 +71,21 @@ pub struct InstallPlan {
 	/// index uses a materialized layout.
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub game_assets_dir: Option<PathBuf>,
+	/// Mirrors the `target` of every entry pushed through [`Self::push_download`],
+	/// so deduplication stays linear. A modern asset index is several thousand
+	/// objects, and rescanning `downloads` per insertion made building one
+	/// quadratic. Crate-visible rather than public only so in-crate fixtures can
+	/// still use `..Default::default()`; nothing outside builds a plan literally.
+	#[serde(skip)]
+	pub(crate) seen_targets: HashSet<PathBuf>,
 }
 
 impl InstallPlan {
-	fn push_download(&mut self, action: DownloadAction) {
-		if !self.downloads.iter().any(|d| d.target == action.target) {
+	/// Adds `action` unless some download already writes to the same target.
+	/// Callers appending to a plan must go through this rather than
+	/// `downloads` directly, which would leave the dedupe index behind.
+	pub fn push_download(&mut self, action: DownloadAction) {
+		if self.seen_targets.insert(action.target.clone()) {
 			self.downloads.push(action);
 		}
 	}
@@ -467,6 +477,36 @@ mod tests {
 		assert!(
 			build_asset_plan("17", &bad, &layout(Path::new("r")), DEFAULT_RESOURCES_URL).is_err()
 		);
+	}
+
+	#[test]
+	fn merging_dedupes_by_target_and_keeps_the_index_usable() {
+		let download = |name: &str| DownloadAction {
+			url: format!("https://example.invalid/{name}"),
+			target: PathBuf::from(format!("objects/{name}")),
+			sha1: None,
+			size: Some(1),
+		};
+		// Large enough that the previous linear rescan per insertion was
+		// millions of comparisons; the assertion is on the result, not timing.
+		let mut base = InstallPlan::default();
+		let mut other = InstallPlan::default();
+		for i in 0..4000 {
+			base.push_download(download(&format!("a{i}")));
+			other.push_download(download(&format!("a{}", i / 2)));
+		}
+		assert_eq!(base.downloads.len(), 4000);
+		assert_eq!(other.downloads.len(), 2000);
+
+		let mut merged = merge_plans(base, other);
+		assert_eq!(merged.downloads.len(), 4000, "overlap collapses");
+
+		// The dedupe index has to survive a merge, or later appends silently
+		// duplicate — which is how a plan grows a second write to one path.
+		merged.push_download(download("a0"));
+		assert_eq!(merged.downloads.len(), 4000);
+		merged.push_download(download("fresh"));
+		assert_eq!(merged.downloads.len(), 4001);
 	}
 
 	#[test]

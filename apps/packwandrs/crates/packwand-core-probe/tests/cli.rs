@@ -56,7 +56,7 @@ fn create_list_plan_run_end_to_end() {
 	);
 	let record: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
 	assert_eq!(record["id"], "cli-e2e");
-	assert_eq!(record["schema_version"], 1);
+	assert_eq!(record["schema_version"], packwand_instance::SCHEMA_VERSION);
 
 	let output = probe(&["instance", "list", "--json"], &root);
 	assert!(output.status.success());

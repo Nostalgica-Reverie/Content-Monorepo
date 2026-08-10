@@ -70,17 +70,6 @@ pub async fn diagnostics_installer_test(
 	state: State<'_, AppState>,
 ) -> CommandResult<JobRecord> {
 	let pack = pack_root(&state.workspace()?, &id)?;
-	let resource_dir = app.path().resource_dir().ok();
-	let installer = resource_dir.as_ref().and_then(|root| {
-		[
-			root.join("resources/packwand-installer.exe"),
-			root.join("resources/packwand-installer"),
-			root.join("packwand-installer.exe"),
-			root.join("packwand-installer"),
-		]
-		.into_iter()
-		.find(|path| path.is_file())
-	});
 	let instance = app
 		.path()
 		.app_cache_dir()
@@ -94,20 +83,19 @@ pub async fn diagnostics_installer_test(
 			"diagnostics.test",
 			format!("Installer test {id}"),
 			move |context| async move {
-				context
-					.log("Starting ephemeral pack server and packwand-installer")
-					.await;
+				context.log("Installing pack content").await;
 				let report = tokio::task::spawn_blocking(move || {
-					packwand_build::test_with_installer(pack, installer.as_deref(), instance)
+					packwand_build::test_with_installer(pack, instance)
 				})
 				.await
 				.map_err(|error| SerializableError::new("task", error.to_string()))?
 				.map_err(|error| SerializableError::new("installer_test", error.to_string()))?;
 				context
 					.log(format!(
-						"validated {} into {}",
+						"validated {} into {} ({} actions)",
 						report.pack.display(),
-						report.instance.display()
+						report.instance.display(),
+						report.actions
 					))
 					.await;
 				context

@@ -53,6 +53,7 @@ const settings = reactive({
 	windowWidth: '',
 	windowHeight: '',
 	fullscreen: false,
+	downloadJobs: '',
 })
 const launch = useInstanceLaunch(id.value)
 const tabs = [
@@ -78,6 +79,7 @@ function populate() {
 	settings.windowWidth = value.windowWidth?.toString() ?? ''
 	settings.windowHeight = value.windowHeight?.toString() ?? ''
 	settings.fullscreen = value.fullscreen ?? false
+	settings.downloadJobs = value.downloadJobs?.toString() ?? ''
 }
 
 function optionalNumber(value: string): number | null {
@@ -117,6 +119,7 @@ async function saveSettings() {
 				windowWidth: optionalNumber(String(settings.windowWidth)),
 				windowHeight: optionalNumber(String(settings.windowHeight)),
 				fullscreen: Boolean(settings.fullscreen),
+				downloadJobs: optionalNumber(String(settings.downloadJobs)),
 			},
 		})
 		toasts.push('Settings saved', 'The next launch will use these settings.', 'success')
@@ -372,6 +375,17 @@ onMounted(async () => {
 				<label
 					><span><input v-model="settings.fullscreen" type="checkbox" /> Fullscreen</span></label
 				>
+				<label
+					><span>Concurrent downloads</span
+					><input
+						v-model="settings.downloadJobs"
+						type="number"
+						min="0"
+						max="32"
+						:placeholder="
+							inheritedPlaceholder('', String(defaults.value?.downloadJobs || 'automatic'))
+						"
+				/></label>
 				<label
 					><span>Extra JVM arguments (one per line)</span
 					><textarea v-model="settings.extraJvmArgs" rows="4" />

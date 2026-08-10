@@ -310,7 +310,8 @@ impl<T: Transport> CurseForgeClient<T> {
 	}
 
 	fn project_page_url(&self, project_id: u32, file_id: u32) -> Result<String, ProviderError> {
-		let response: ProjectEnvelope = self.get_json(self.endpoint(&["mods", &project_id.to_string()])?)?;
+		let response: ProjectEnvelope =
+			self.get_json(self.endpoint(&["mods", &project_id.to_string()])?)?;
 		Ok(format!(
 			"https://www.curseforge.com/minecraft/mc-mods/{}/files/{file_id}",
 			response.data.slug

@@ -7,18 +7,15 @@
 //! present with the right checksum are skipped, which makes installation
 //! resumable and re-runnable.
 
-use std::collections::VecDeque;
 use std::fs;
 use std::io;
 use std::path::Path;
-use std::sync::Mutex;
-use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering};
 
-use sha1::{Digest, Sha1};
+use packwand_net::{Checksum, Client, Download, NetError, Request};
+use packwand_parallel::Jobs;
 
 use crate::MinecraftError;
-use crate::http::HttpClient;
-use crate::plan::{CopyAction, DownloadAction, ExtractAction, InstallPlan};
+use crate::plan::{CopyAction, ExtractAction, InstallPlan};
 
 /// What one [`Installer::execute`] run did.
 #[derive(Debug, Default, Clone, PartialEq, Eq)]
@@ -36,8 +33,6 @@ pub struct InstallProgress {
 	pub total_downloads: usize,
 	pub downloaded_bytes: u64,
 	pub total_bytes: Option<u64>,
-	pub current_download_bytes: u64,
-	pub current_download_total: Option<u64>,
 }
 
 /// Progress callback fired during download streaming and after skip/finish
@@ -46,7 +41,7 @@ pub type ProgressFn<'a> = &'a (dyn Fn(InstallProgress) + Sync);
 
 /// Executes transactional file downloads and extract operations.
 pub struct Installer<'a> {
-	http: &'a dyn HttpClient,
+	http: &'a Client,
 	/// Concurrent download workers. Asset indexes reference thousands of
 	/// small files; a small pool matters, an unbounded one is abusive.
 	workers: usize,
@@ -59,102 +54,12 @@ fn io_error(path: &Path) -> impl FnOnce(io::Error) -> MinecraftError + '_ {
 	}
 }
 
-fn sha1_hex(bytes: &[u8]) -> String {
-	let digest = Sha1::digest(bytes);
-	digest.iter().map(|b| format!("{b:02x}")).collect()
-}
-
-/// SHA-1 of a file's contents, streamed rather than buffered.
+/// Unpacks one native-library archive into its destination directory.
 ///
-/// An asset index is thousands of files; reading each one whole just to
-/// digest and drop it made peak memory track the largest file for no reason.
-fn sha1_file(path: &Path) -> io::Result<String> {
-	let mut file = fs::File::open(path)?;
-	let mut hasher = Sha1::new();
-	io::copy(&mut file, &mut hasher)?;
-	let digest = hasher.finalize();
-	Ok(digest.iter().map(|b| format!("{b:02x}")).collect())
-}
-
-/// Does an existing file already satisfy this action?
-fn is_satisfied(action: &DownloadAction) -> bool {
-	let Ok(metadata) = fs::metadata(&action.target) else {
-		return false;
-	};
-	if !metadata.is_file() {
-		return false;
-	}
-	match (&action.sha1, action.size) {
-		(Some(sha1), _) => match sha1_file(&action.target) {
-			Ok(actual) => actual.eq_ignore_ascii_case(sha1),
-			Err(_) => false,
-		},
-		(None, Some(size)) => metadata.len() == size,
-		// Nothing to verify against: presence is the best available signal.
-		(None, None) => true,
-	}
-}
-
-fn satisfied_bytes(action: &DownloadAction) -> u64 {
-	action.size.unwrap_or_else(|| {
-		fs::metadata(&action.target)
-			.map(|metadata| metadata.len())
-			.unwrap_or(0)
-	})
-}
-
-fn write_staged(target: &Path, bytes: &[u8]) -> Result<(), MinecraftError> {
-	let parent = target
-		.parent()
-		.ok_or_else(|| MinecraftError::UnsafePath(target.display().to_string()))?;
-	fs::create_dir_all(parent).map_err(io_error(parent))?;
-	let staged = target.with_extension("pw-part");
-	fs::write(&staged, bytes).map_err(io_error(&staged))?;
-	// Windows rename fails onto an existing file; the target only exists
-	// here when a previous version failed verification, so replace it.
-	if target.exists() {
-		fs::remove_file(target).map_err(io_error(target))?;
-	}
-	fs::rename(&staged, target).map_err(io_error(target))
-}
-
-fn perform_download(
-	http: &dyn HttpClient,
-	action: &DownloadAction,
-	on_chunk: &mut dyn FnMut(u64, Option<u64>),
-) -> Result<bool, MinecraftError> {
-	if is_satisfied(action) {
-		return Ok(false);
-	}
-	let mut downloaded = 0u64;
-	let bytes = http.get_with_progress(&action.url, &mut |read, total| {
-		downloaded += read as u64;
-		on_chunk(downloaded, total.or(action.size));
-	})?;
-	if let Some(expected) = &action.sha1 {
-		let actual = sha1_hex(&bytes);
-		if !actual.eq_ignore_ascii_case(expected) {
-			return Err(MinecraftError::ChecksumMismatch {
-				url: action.url.clone(),
-				expected: expected.clone(),
-				actual,
-			});
-		}
-	}
-	if let Some(expected) = action.size
-		&& bytes.len() as u64 != expected
-	{
-		return Err(MinecraftError::SizeMismatch {
-			url: action.url.clone(),
-			expected,
-			actual: bytes.len() as u64,
-		});
-	}
-	write_staged(&action.target, &bytes)?;
-	Ok(true)
-}
-
-fn extract_natives(action: &ExtractAction) -> Result<(), MinecraftError> {
+/// Public because extraction is a launch-time concern rather than an
+/// install-time one: the archives are downloaded once and shared, while the
+/// unpacked libraries belong to a single run and are removed when it ends.
+pub fn extract_natives(action: &ExtractAction) -> Result<(), MinecraftError> {
 	let file = fs::File::open(&action.archive).map_err(io_error(&action.archive))?;
 	let mut archive = zip::ZipArchive::new(file).map_err(|e| MinecraftError::Archive {
 		path: action.archive.clone(),
@@ -203,15 +108,33 @@ fn copy_object(action: &CopyAction) -> Result<(), MinecraftError> {
 	Ok(())
 }
 
+/// The default download width, shared with every other batch operation in
+/// Packwand so `--jobs` and the app setting reach this path too.
+fn default_workers() -> usize {
+	packwand_parallel::configured().get()
+}
+
 impl<'a> Installer<'a> {
 	/// Creates a new installer using the given HTTP client.
-	pub fn new(http: &'a dyn HttpClient) -> Self {
-		Self { http, workers: 8 }
+	///
+	/// The default worker count follows the machine, capped the same way
+	/// `--jobs` is elsewhere. Downloads are I/O-bound, so the ceiling is a
+	/// provider's request budget rather than cores.
+	pub fn new(http: &'a Client) -> Self {
+		Self {
+			http,
+			workers: default_workers(),
+		}
 	}
 
-	/// Sets the number of parallel download worker threads.
+	/// Sets the number of parallel download worker threads. `0` restores the
+	/// machine-derived default.
 	pub fn with_workers(mut self, workers: usize) -> Self {
-		self.workers = workers.max(1);
+		self.workers = if workers == 0 {
+			default_workers()
+		} else {
+			workers
+		};
 		self
 	}
 
@@ -223,109 +146,42 @@ impl<'a> Installer<'a> {
 		plan: &InstallPlan,
 		progress: ProgressFn<'_>,
 	) -> Result<InstallReport, MinecraftError> {
-		let total_downloads = plan.downloads.len();
-		let total_bytes = if plan
+		let items: Vec<Download> = plan
 			.downloads
 			.iter()
-			.all(|download| download.size.is_some())
-		{
-			Some(
-				plan.downloads
-					.iter()
-					.map(|download| download.size.unwrap_or(0))
-					.sum(),
-			)
-		} else {
-			None
-		};
-		let queue: Mutex<VecDeque<&DownloadAction>> = Mutex::new(plan.downloads.iter().collect());
-		let failed = AtomicBool::new(false);
-		let errors: Mutex<Vec<MinecraftError>> = Mutex::new(Vec::new());
-		let downloaded = AtomicUsize::new(0);
-		let skipped = AtomicUsize::new(0);
-		let completed = AtomicUsize::new(0);
-		let downloaded_bytes = AtomicU64::new(0);
+			.map(|action| {
+				Ok(Download {
+					request: Request::get(action.url.clone()),
+					target: action.target.clone(),
+					checksum: action
+						.sha1
+						.as_deref()
+						.map(|expected| Checksum::parse("sha1", expected))
+						.transpose()?,
+					size: action.size,
+				})
+			})
+			.collect::<Result<_, NetError>>()?;
 
-		std::thread::scope(|scope| {
-			for _ in 0..self.workers.min(total_downloads.max(1)) {
-				scope.spawn(|| {
-					loop {
-						if failed.load(Ordering::SeqCst) {
-							return;
-						}
-						let action = {
-							let mut queue = queue.lock().expect("download queue poisoned");
-							queue.pop_front()
-						};
-						let Some(action) = action else { return };
-
-						if is_satisfied(action) {
-							skipped.fetch_add(1, Ordering::SeqCst);
-							let satisfied = satisfied_bytes(action);
-							let aggregate =
-								downloaded_bytes.fetch_add(satisfied, Ordering::SeqCst) + satisfied;
-							let finished = completed.fetch_add(1, Ordering::SeqCst) + 1;
-							progress(InstallProgress {
-								finished_downloads: finished,
-								total_downloads,
-								downloaded_bytes: aggregate,
-								total_bytes,
-								current_download_bytes: satisfied,
-								current_download_total: action.size.or(Some(satisfied)),
-							});
-							continue;
-						}
-
-						let mut last_chunk_bytes = 0u64;
-						match perform_download(self.http, action, &mut |current, current_total| {
-							let delta = current.saturating_sub(last_chunk_bytes);
-							last_chunk_bytes = current;
-							let aggregate =
-								downloaded_bytes.fetch_add(delta, Ordering::SeqCst) + delta;
-							progress(InstallProgress {
-								finished_downloads: completed.load(Ordering::SeqCst),
-								total_downloads,
-								downloaded_bytes: aggregate,
-								total_bytes,
-								current_download_bytes: current,
-								current_download_total: current_total,
-							});
-						}) {
-							Ok(true) => {
-								downloaded.fetch_add(1, Ordering::SeqCst);
-								let finished = completed.fetch_add(1, Ordering::SeqCst) + 1;
-								progress(InstallProgress {
-									finished_downloads: finished,
-									total_downloads,
-									downloaded_bytes: downloaded_bytes.load(Ordering::SeqCst),
-									total_bytes,
-									current_download_bytes: last_chunk_bytes,
-									current_download_total: action.size,
-								});
-							}
-							Ok(false) => {
-								unreachable!("satisfied downloads are handled before streaming")
-							}
-							Err(e) => {
-								failed.store(true, Ordering::SeqCst);
-								errors.lock().expect("error list poisoned").push(e);
-								return;
-							}
-						}
-					}
+		let total_downloads = items.len();
+		let report =
+			packwand_net::download_all(self.http, &items, Jobs::new(self.workers), &|update| {
+				progress(InstallProgress {
+					finished_downloads: update.finished,
+					total_downloads: update.total,
+					downloaded_bytes: update.bytes,
+					total_bytes: update.total_bytes,
 				});
-			}
-		});
-
-		if let Some(error) = errors.into_inner().expect("error list poisoned").pop() {
-			return Err(error);
-		}
+			})?;
+		debug_assert!(report.downloaded + report.skipped == total_downloads);
 
 		let mut report = InstallReport {
-			downloaded: downloaded.load(Ordering::SeqCst),
-			skipped: skipped.load(Ordering::SeqCst),
+			downloaded: report.downloaded,
+			skipped: report.skipped,
 			..InstallReport::default()
 		};
+		// After the downloads, because an extraction reads an archive one of
+		// them just produced.
 		for extraction in &plan.extractions {
 			extract_natives(extraction)?;
 			report.extracted += 1;
@@ -341,16 +197,22 @@ impl<'a> Installer<'a> {
 #[cfg(test)]
 mod tests {
 	use std::path::PathBuf;
-	use std::sync::Mutex;
+
+	use packwand_net::testing::{Reply, StubServer};
+	use packwand_pack::HashFormat;
 
 	use super::*;
-	use crate::http::{FixtureHttpClient, HttpError};
+	use crate::plan::DownloadAction;
 
-	fn action(url: &str, target: PathBuf, bytes: &[u8]) -> DownloadAction {
+	fn sha1_of(bytes: &[u8]) -> String {
+		packwand_pack::hash_bytes(HashFormat::Sha1, bytes)
+	}
+
+	fn action(url: String, target: PathBuf, bytes: &[u8]) -> DownloadAction {
 		DownloadAction {
-			url: url.to_string(),
+			url,
 			target,
-			sha1: Some(sha1_hex(bytes)),
+			sha1: Some(sha1_of(bytes)),
 			size: Some(bytes.len() as u64),
 		}
 	}
@@ -359,30 +221,35 @@ mod tests {
 	fn downloads_verify_and_are_resumable() {
 		let dir = tempfile::tempdir().unwrap();
 		let body = b"library bytes".to_vec();
-		let http = FixtureHttpClient::new([("http://x/lib.jar".to_string(), body.clone())]);
+		let server = StubServer::start([("/lib.jar".to_owned(), Reply::body(body.clone()))]);
 		let plan = InstallPlan {
 			downloads: vec![action(
-				"http://x/lib.jar",
+				server.url("/lib.jar"),
 				dir.path().join("lib/lib.jar"),
 				&body,
 			)],
 			..InstallPlan::default()
 		};
-		let installer = Installer::new(&http).with_workers(2);
+		let client = Client::downloads();
+		let installer = Installer::new(&client).with_workers(2);
+
 		let report = installer.execute(&plan, &|_| {}).unwrap();
 		assert_eq!(report.downloaded, 1);
 		assert_eq!(report.skipped, 0);
 		assert_eq!(fs::read(dir.path().join("lib/lib.jar")).unwrap(), body);
 		assert!(
-			!dir.path().join("lib/lib.pw-part").exists(),
+			std::fs::read_dir(dir.path().join("lib"))
+				.unwrap()
+				.filter_map(Result::ok)
+				.all(|entry| !entry.file_name().to_string_lossy().contains("pw-part")),
 			"staging file cleaned"
 		);
 
-		// Second run: file verifies, no network request happens.
+		// Second run: the file verifies, so nothing is requested again.
 		let report = installer.execute(&plan, &|_| {}).unwrap();
 		assert_eq!(report.downloaded, 0);
 		assert_eq!(report.skipped, 1);
-		assert_eq!(http.requests.lock().unwrap().len(), 1);
+		assert_eq!(server.hits("/lib.jar"), 1);
 	}
 
 	#[test]
@@ -391,12 +258,13 @@ mod tests {
 		let body = b"good".to_vec();
 		let target = dir.path().join("f.bin");
 		fs::write(&target, b"corrupt").unwrap();
-		let http = FixtureHttpClient::new([("http://x/f".to_string(), body.clone())]);
+		let server = StubServer::start([("/f".to_owned(), Reply::body(body.clone()))]);
 		let plan = InstallPlan {
-			downloads: vec![action("http://x/f", target.clone(), &body)],
+			downloads: vec![action(server.url("/f"), target.clone(), &body)],
 			..InstallPlan::default()
 		};
-		let report = Installer::new(&http).execute(&plan, &|_| {}).unwrap();
+		let client = Client::downloads();
+		let report = Installer::new(&client).execute(&plan, &|_| {}).unwrap();
 		assert_eq!(report.downloaded, 1);
 		assert_eq!(fs::read(&target).unwrap(), body);
 	}
@@ -405,19 +273,87 @@ mod tests {
 	fn checksum_mismatch_fails_and_leaves_no_file() {
 		let dir = tempfile::tempdir().unwrap();
 		let target = dir.path().join("f.bin");
-		let http = FixtureHttpClient::new([("http://x/f".to_string(), b"tampered".to_vec())]);
+		let server = StubServer::start([("/f".to_owned(), Reply::body(b"tampered".to_vec()))]);
 		let plan = InstallPlan {
 			downloads: vec![DownloadAction {
-				url: "http://x/f".to_string(),
+				url: server.url("/f"),
 				target: target.clone(),
-				sha1: Some(sha1_hex(b"expected")),
+				sha1: Some(sha1_of(b"expected")),
 				size: None,
 			}],
 			..InstallPlan::default()
 		};
-		let err = Installer::new(&http).execute(&plan, &|_| {}).unwrap_err();
-		assert!(err.to_string().contains("checksum"), "{err}");
+		let client = Client::downloads();
+		let error = Installer::new(&client).execute(&plan, &|_| {}).unwrap_err();
+		assert!(error.to_string().contains("checksum"), "{error}");
 		assert!(!target.exists());
+	}
+
+	#[test]
+	fn a_size_that_disagrees_with_the_metadata_is_rejected() {
+		let dir = tempfile::tempdir().unwrap();
+		let target = dir.path().join("f.bin");
+		let server = StubServer::start([("/f".to_owned(), Reply::body(b"four".to_vec()))]);
+		let plan = InstallPlan {
+			downloads: vec![DownloadAction {
+				url: server.url("/f"),
+				target: target.clone(),
+				sha1: None,
+				size: Some(999),
+			}],
+			..InstallPlan::default()
+		};
+		let client = Client::downloads();
+		let error = Installer::new(&client).execute(&plan, &|_| {}).unwrap_err();
+		assert!(error.to_string().contains("999"), "{error}");
+		assert!(!target.exists());
+	}
+
+	#[test]
+	fn progress_reports_a_running_total_and_ends_complete() {
+		let dir = tempfile::tempdir().unwrap();
+		let bodies: Vec<Vec<u8>> = (0..8).map(|i| vec![b'a' + i as u8; 4096]).collect();
+		let routes: Vec<_> = bodies
+			.iter()
+			.enumerate()
+			.map(|(i, body)| (format!("/{i}"), Reply::body(body.clone())))
+			.collect();
+		let server = StubServer::start(routes);
+		let plan = InstallPlan {
+			downloads: bodies
+				.iter()
+				.enumerate()
+				.map(|(i, body)| {
+					action(
+						server.url(&format!("/{i}")),
+						dir.path().join(format!("{i}.bin")),
+						body,
+					)
+				})
+				.collect(),
+			..InstallPlan::default()
+		};
+
+		let seen: std::sync::Mutex<Vec<InstallProgress>> = std::sync::Mutex::new(Vec::new());
+		let client = Client::downloads();
+		Installer::new(&client)
+			.with_workers(4)
+			.execute(&plan, &|update| {
+				seen.lock().unwrap().push(update);
+			})
+			.unwrap();
+
+		let seen = seen.into_inner().unwrap();
+		let last = seen.last().expect("at least one update");
+		assert_eq!(last.finished_downloads, 8);
+		assert_eq!(last.total_downloads, 8);
+		assert_eq!(last.total_bytes, Some(8 * 4096));
+		assert_eq!(last.downloaded_bytes, 8 * 4096);
+		// Bytes only ever accumulate, whichever worker reports them.
+		assert!(
+			seen.windows(2)
+				.all(|pair| pair[1].downloaded_bytes >= pair[0].downloaded_bytes)
+		);
 	}
 
 	#[test]
@@ -426,7 +362,6 @@ mod tests {
 		let object = dir.path().join("objects/aa/aabb");
 		fs::create_dir_all(object.parent().unwrap()).unwrap();
 		fs::write(&object, b"asset").unwrap();
-		let http = FixtureHttpClient::default();
 		let plan = InstallPlan {
 			copies: vec![CopyAction {
 				from: object,
@@ -434,14 +369,14 @@ mod tests {
 			}],
 			..InstallPlan::default()
 		};
-		let report = Installer::new(&http).execute(&plan, &|_| {}).unwrap();
+		let client = Client::downloads();
+		let report = Installer::new(&client).execute(&plan, &|_| {}).unwrap();
 		assert_eq!(report.copied, 1);
 		assert_eq!(
 			fs::read(dir.path().join("virtual/legacy/icons/icon.png")).unwrap(),
 			b"asset"
 		);
 	}
-
 	#[test]
 	fn natives_extraction_respects_excludes_and_traversal() {
 		use std::io::Write;
@@ -457,7 +392,6 @@ mod tests {
 			writer.write_all(b"manifest").unwrap();
 			writer.finish().unwrap();
 		}
-		let http = FixtureHttpClient::default();
 		let dest = dir.path().join("natives");
 		let plan = InstallPlan {
 			extractions: vec![ExtractAction {
@@ -467,100 +401,10 @@ mod tests {
 			}],
 			..InstallPlan::default()
 		};
-		let report = Installer::new(&http).execute(&plan, &|_| {}).unwrap();
+		let client = Client::downloads();
+		let report = Installer::new(&client).execute(&plan, &|_| {}).unwrap();
 		assert_eq!(report.extracted, 1);
 		assert_eq!(fs::read(dest.join("lwjgl.dll")).unwrap(), b"dll bytes");
 		assert!(!dest.join("META-INF").exists());
-	}
-
-	struct ChunkedHttpClient {
-		body: Vec<u8>,
-		total: Option<u64>,
-	}
-
-	impl HttpClient for ChunkedHttpClient {
-		fn get(&self, _url: &str) -> Result<Vec<u8>, HttpError> {
-			Ok(self.body.clone())
-		}
-
-		fn get_with_progress(
-			&self,
-			_url: &str,
-			on_chunk: &mut dyn FnMut(usize, Option<u64>),
-		) -> Result<Vec<u8>, HttpError> {
-			for chunk in self.body.chunks(2) {
-				on_chunk(chunk.len(), self.total);
-			}
-			Ok(self.body.clone())
-		}
-	}
-
-	#[test]
-	fn progress_streams_bytes_with_known_total() {
-		let dir = tempfile::tempdir().unwrap();
-		let body = b"asset-bytes".to_vec();
-		let target = dir.path().join("assets/object.bin");
-		let plan = InstallPlan {
-			downloads: vec![DownloadAction {
-				url: "http://x/object".to_string(),
-				target,
-				sha1: Some(sha1_hex(&body)),
-				size: Some(body.len() as u64),
-			}],
-			..InstallPlan::default()
-		};
-		let events = Mutex::new(Vec::new());
-		let report = Installer::new(&ChunkedHttpClient {
-			body: body.clone(),
-			total: Some(body.len() as u64),
-		})
-		.with_workers(1)
-		.execute(&plan, &|event| {
-			events.lock().unwrap().push(event);
-		})
-		.unwrap();
-		assert_eq!(report.downloaded, 1);
-		let events = events.into_inner().unwrap();
-		assert!(
-			events.len() > 2,
-			"expected streaming updates, got {events:?}"
-		);
-		assert_eq!(events.last().unwrap().finished_downloads, 1);
-		assert_eq!(events.last().unwrap().downloaded_bytes, body.len() as u64);
-		assert_eq!(events.last().unwrap().total_bytes, Some(body.len() as u64));
-	}
-
-	#[test]
-	fn progress_handles_unknown_content_length() {
-		let dir = tempfile::tempdir().unwrap();
-		let body = b"unknown-total".to_vec();
-		let target = dir.path().join("assets/object.bin");
-		let plan = InstallPlan {
-			downloads: vec![DownloadAction {
-				url: "http://x/object".to_string(),
-				target,
-				sha1: Some(sha1_hex(&body)),
-				size: None,
-			}],
-			..InstallPlan::default()
-		};
-		let events = Mutex::new(Vec::new());
-		Installer::new(&ChunkedHttpClient {
-			body: body.clone(),
-			total: None,
-		})
-		.with_workers(1)
-		.execute(&plan, &|event| {
-			events.lock().unwrap().push(event);
-		})
-		.unwrap();
-		let events = events.into_inner().unwrap();
-		assert!(
-			events
-				.iter()
-				.any(|event| event.current_download_total.is_none())
-		);
-		assert!(events.iter().all(|event| event.total_bytes.is_none()));
-		assert_eq!(events.last().unwrap().downloaded_bytes, body.len() as u64);
 	}
 }

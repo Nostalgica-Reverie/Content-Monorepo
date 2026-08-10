@@ -10,11 +10,14 @@ keywords = ["jujutsu", "vcs", "git"]
 categories = ["development-tools"]
 
 [dependencies]
+packwand-providers = { path = "../packwand-providers" }
+flate2.workspace = true
 jj-lib.workspace = true
 pollster.workspace = true
 serde.workspace = true
+tar.workspace = true
 thiserror.workspace = true
+zip.workspace = true
 
 [dev-dependencies]
-packwand-devboot.workspace = true
 tempfile.workspace = true

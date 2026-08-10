@@ -7,13 +7,16 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
+packwand-net = { path = "../packwand-net" }
+packwand-pack = { path = "../packwand-pack" }
+packwand-parallel = { path = "../packwand-parallel" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
-sha1 = { workspace = true }
 regex-lite = { workspace = true }
 ureq = { workspace = true }
 zip = { workspace = true }
 
 [dev-dependencies]
+packwand-net = { path = "../packwand-net", features = ["testing"] }
 tempfile = { workspace = true }

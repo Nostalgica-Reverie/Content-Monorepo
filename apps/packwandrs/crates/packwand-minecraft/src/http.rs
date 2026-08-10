@@ -1,10 +1,15 @@
-//! Minimal HTTP seam: production uses [`UreqClient`]; tests implement
-//! [`HttpClient`] over in-memory fixtures so nothing touches the network.
+//! The metadata seam over [`packwand_net`].
+//!
+//! Only version metadata comes through here — Mojang's manifest, version
+//! documents, asset indexes, loader profiles. File transfers go straight to
+//! [`packwand_net::Client`], which streams and verifies them; this trait
+//! exists so `MetadataClient` can be pointed at fixtures and the test suite
+//! never touches the network.
 
 use std::collections::BTreeMap;
-use std::io::Read;
 use std::sync::Mutex;
-use std::time::Duration;
+
+use packwand_net::{Client, Freshness, MetaCache, NetError, Request};
 
 #[derive(Debug, thiserror::Error)]
 #[error("GET {url} failed: {message}")]
@@ -13,40 +18,81 @@ pub struct HttpError {
 	pub message: String,
 }
 
-/// HTTP client abstraction for downloading files.
-pub trait HttpClient: Send + Sync {
-	fn get(&self, url: &str) -> Result<Vec<u8>, HttpError>;
-
-	fn get_with_progress(
-		&self,
-		url: &str,
-		on_chunk: &mut dyn FnMut(usize, Option<u64>),
-	) -> Result<Vec<u8>, HttpError> {
-		let bytes = self.get(url)?;
-		on_chunk(bytes.len(), Some(bytes.len() as u64));
-		Ok(bytes)
+impl From<NetError> for HttpError {
+	fn from(error: NetError) -> Self {
+		let url = match &error {
+			NetError::Http { url, .. }
+			| NetError::TooLarge { url, .. }
+			| NetError::Checksum { url, .. } => url.clone(),
+			NetError::Io { path, .. } => path.display().to_string(),
+			NetError::HashFormat(format) => format.clone(),
+			NetError::NoUrl => String::new(),
+		};
+		Self {
+			url,
+			message: error.to_string(),
+		}
 	}
 }
 
-/// Real client with connection reuse and timeouts.
+/// Fetches metadata documents.
+pub trait HttpClient: Send + Sync {
+	fn get(&self, url: &str) -> Result<Vec<u8>, HttpError>;
+
+	/// Fetches a document that lives at a stable URL but whose contents
+	/// change — Mojang's version manifest is the one that matters.
+	///
+	/// Revalidated rather than refetched when a cache is configured, so a
+	/// repeated boot pays one conditional request instead of a megabyte. The
+	/// default has no cache and is a plain fetch.
+	fn get_document(&self, url: &str) -> Result<Vec<u8>, HttpError> {
+		self.get(url)
+	}
+
+	/// Fetches a document whose parent has published its digest.
+	///
+	/// The content-addressed half of freshness: a version manifest names the
+	/// sha1 of every version document it points at, so a cached copy matching
+	/// that digest needs no request at all — not a conditional one, none. And
+	/// when the digest differs, the document is known to have changed without
+	/// having to ask. Time-based expiry can express neither.
+	///
+	/// The default has no cache and simply fetches.
+	fn get_child_document(&self, url: &str, sha1: Option<&str>) -> Result<Vec<u8>, HttpError> {
+		let _ = sha1;
+		self.get(url)
+	}
+}
+
+/// Real client: shared connection pool, one retry policy.
 pub struct UreqClient {
-	agent: ureq::Agent,
-	/// Refuse responses larger than this (default 512 MiB) so a
-	/// misbehaving server cannot exhaust memory.
-	max_body_bytes: u64,
+	inner: Client,
+	documents: Option<MetaCache>,
 }
 
 impl UreqClient {
-	/// Creates a new HTTP client with connection reuse and default timeouts.
+	/// Creates a client on the shared transfer-profile agent.
 	pub fn new() -> Self {
 		Self {
-			agent: ureq::AgentBuilder::new()
-				.timeout_connect(Duration::from_secs(15))
-				.timeout_read(Duration::from_secs(120))
-				.user_agent(concat!("packwand-rs/", env!("CARGO_PKG_VERSION")))
-				.build(),
-			max_body_bytes: 512 * 1024 * 1024,
+			inner: Client::downloads(),
+			documents: None,
 		}
+	}
+
+	/// Revalidates mutable metadata documents against `root` instead of
+	/// refetching them.
+	///
+	/// Deliberately narrow. Version documents and asset indexes are immutable
+	/// and already persisted next to what they describe, so caching those
+	/// again would be a third copy of bytes the installer can already skip.
+	pub fn with_document_cache(mut self, root: &std::path::Path) -> Self {
+		self.documents = MetaCache::open(root, "meta").ok();
+		self
+	}
+
+	/// The underlying client, which is what the installer downloads through.
+	pub fn inner(&self) -> &Client {
+		&self.inner
 	}
 }
 
@@ -58,42 +104,37 @@ impl Default for UreqClient {
 
 impl HttpClient for UreqClient {
 	fn get(&self, url: &str) -> Result<Vec<u8>, HttpError> {
-		self.get_with_progress(url, &mut |_, _| {})
+		Ok(self.inner.get(&Request::get(url))?)
 	}
 
-	fn get_with_progress(
-		&self,
-		url: &str,
-		on_chunk: &mut dyn FnMut(usize, Option<u64>),
-	) -> Result<Vec<u8>, HttpError> {
-		let error = |message: String| HttpError {
-			url: url.to_string(),
-			message,
+	fn get_document(&self, url: &str) -> Result<Vec<u8>, HttpError> {
+		let Some(cache) = &self.documents else {
+			return self.get(url);
 		};
-		let response = self
-			.agent
-			.get(url)
-			.call()
-			.map_err(|e| error(e.to_string()))?;
-		let content_total = response
-			.header("Content-Length")
-			.and_then(|value| value.parse::<u64>().ok());
-		let mut reader = response.into_reader();
-		let mut bytes = Vec::new();
-		let mut chunk = [0u8; 64 * 1024];
-		loop {
-			let read = reader.read(&mut chunk).map_err(|e| error(e.to_string()))?;
-			if read == 0 {
-				break;
-			}
-			bytes.extend_from_slice(&chunk[..read]);
-			if bytes.len() as u64 > self.max_body_bytes {
-				return Err(error(format!(
-					"response exceeded the {} byte limit",
-					self.max_body_bytes
-				)));
-			}
-			on_chunk(read, content_total);
+		Ok(self
+			.inner
+			.get_cached_with(&Request::get(url), cache, Freshness::AlwaysRevalidate)?
+			.bytes)
+	}
+
+	fn get_child_document(&self, url: &str, sha1: Option<&str>) -> Result<Vec<u8>, HttpError> {
+		let (Some(cache), Some(sha1)) = (&self.documents, sha1) else {
+			return self.get(url);
+		};
+		// The parent vouched for these exact bytes, so there is nothing left
+		// to confirm with the server.
+		if cache.matches_digest(url, packwand_pack::HashFormat::Sha1, sha1)
+			&& let Some(bytes) = cache.read(url)
+		{
+			return Ok(bytes);
+		}
+		let bytes = self.get(url)?;
+		// Stored only after the caller's own verification would accept it;
+		// storing first would cache a body the digest rejects.
+		if packwand_pack::hash_bytes(packwand_pack::HashFormat::Sha1, &bytes)
+			.eq_ignore_ascii_case(sha1)
+		{
+			let _ = cache.store(url, &bytes, None, None, None);
 		}
 		Ok(bytes)
 	}

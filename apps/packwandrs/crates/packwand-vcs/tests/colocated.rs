@@ -17,9 +17,9 @@ fn colocated_initialization_runs_in_process_without_jj_cli() {
 #[ignore = "downloads the pinned official Jujutsu release"]
 fn managed_jj_runs_colocated_change_lifecycle() {
 	let tools = tempfile::tempdir().expect("tool directory");
-	let request = packwand_devboot::jj_toolchain::JjToolchainRequest::pinned(tools.path().into());
-	let binary = packwand_devboot::jj_toolchain::ensure_jj(&request, |_| {})
-		.expect("download managed Jujutsu");
+	let request = packwand_vcs::jj_toolchain::JjToolchainRequest::pinned(tools.path().into());
+	let binary =
+		packwand_vcs::jj_toolchain::ensure_jj(&request, |_| {}).expect("download managed Jujutsu");
 	packwand_vcs::configure_jj_binary(binary).expect("configure managed Jujutsu");
 
 	let repository = tempfile::tempdir().expect("repository directory");

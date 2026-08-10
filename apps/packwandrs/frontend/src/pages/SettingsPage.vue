@@ -36,6 +36,7 @@ const appForm = reactive<AppSettings>({
 	reduceMotion: false,
 	layout: null,
 	layoutEditing: false,
+	downloadJobs: 0,
 })
 const automation = ref<AutomationPlan | null>(null)
 
@@ -194,6 +195,19 @@ async function runAutomation(dryRun: boolean) {
 				><span>Default memory (MB)</span
 				><input v-model.number="appForm.memoryMb" type="number" min="1024" step="512"
 			/></label>
+			<label class="field-stack"
+				><span>Concurrent downloads</span
+				><input
+					v-model.number="appForm.downloadJobs"
+					type="number"
+					min="0"
+					max="32"
+					placeholder="0 = automatic"
+				/><small
+					>How many files to fetch at once while installing. 0 picks a value from your
+					machine; lower it on a metered or unreliable connection.</small
+				></label
+			>
 			<label class="field-stack"
 				><span>Microsoft client ID override</span
 				><input v-model="appForm.msaClientId" placeholder="Environment-gated when blank"

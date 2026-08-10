@@ -13,13 +13,16 @@ pub fn run(args: &ArgMatches) -> Result {
 	let instance = std::env::var_os("PACKWAND_TEST_INSTANCE")
 		.map(PathBuf::from)
 		.unwrap_or(std::env::current_dir()?.join(".packwand-test-instance"));
-	let report = packwand_build::test_with_installer(&pack, None, &instance)
-		.map_err(|error| error.to_string())?;
+	let report =
+		packwand_build::test_with_installer(&pack, &instance).map_err(|error| error.to_string())?;
 	println!(
-		"validated {} with {}",
+		"validated {} ({} actions)",
 		report.pack.display(),
-		report.installer.display()
+		report.actions
 	);
+	for pending in &report.manual {
+		println!("manual download required: {}", pending.name);
+	}
 	println!("test instance ready at {}", report.instance.display());
 	Ok(())
 }

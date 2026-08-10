@@ -64,6 +64,8 @@ pub enum MsaError {
 	NotWhitelisted,
 	#[error("this Microsoft account does not own Minecraft")]
 	NoEntitlement,
+	#[error("the saved sign-in has expired and needs a new one: {0}")]
+	RefreshRejected(String),
 	#[error("credential store error: {0}")]
 	Store(#[from] crate::store::TokenStoreError),
 	#[error("{0}")]
@@ -152,7 +154,16 @@ fn ms_token_request(config: &MsaConfig, form_body: String) -> Result<TokenPair, 
 	let parsed: MsTokenResponse = serde_json::from_str(&body)
 		.map_err(|e| MsaError::UnexpectedResponse(MS_TOKEN_URL.to_string(), e.to_string()))?;
 	if let Some(error) = parsed.error {
-		return Err(MsaError::Denied(parsed.error_description.unwrap_or(error)));
+		let description = parsed.error_description.unwrap_or_else(|| error.clone());
+		// `invalid_grant` is the one OAuth error that says the stored
+		// credential itself is finished — expired, revoked, or invalidated by
+		// a password change. Every other error leaves it worth keeping, and
+		// collapsing them all into one meant a transient outage discarded a
+		// perfectly good refresh token and forced a browser sign-in.
+		if error == "invalid_grant" {
+			return Err(MsaError::RefreshRejected(description));
+		}
+		return Err(MsaError::Denied(description));
 	}
 	let _ = &config.client_id; // already embedded in form_body by the caller
 	Ok(TokenPair {

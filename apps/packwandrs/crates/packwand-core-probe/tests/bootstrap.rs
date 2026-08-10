@@ -143,7 +143,7 @@ fn bootstrap_plan_and_run_offline_fixture() {
 		.args(["instance", "bootstrap", "--id", "boot-fixture"])
 		.arg("--root")
 		.arg(&root)
-		.args(["--minecraft", "fixture-1.0", "--username", "Tester"])
+		.args(["--minecraft", "fixture-1.0"])
 		.arg("--java")
 		.arg(common::fake_java())
 		.args(["--workers", "2", "--json"])
@@ -167,11 +167,21 @@ fn bootstrap_plan_and_run_offline_fixture() {
 		record["session_placeholders"],
 		serde_json::json!(["auth_access_token"])
 	);
+	assert_eq!(
+		record["identity_placeholders"],
+		serde_json::json!(["auth_player_name", "auth_uuid"])
+	);
 	let game_args = record["game_args"].as_array().unwrap();
-	assert!(game_args.iter().any(|a| a == "Tester"));
 	assert!(game_args.iter().any(|a| a == "${secret:auth_access_token}"));
-	// The raw offline token value must not be baked into the record.
+	// Neither the token nor the account is baked in: this record is shared by
+	// every pack on this version, and by every account.
 	assert!(!game_args.iter().any(|a| a == "offline"));
+	assert!(!game_args.iter().any(|a| a == "Tester"));
+	assert!(
+		game_args
+			.iter()
+			.any(|a| a == "${identity:auth_player_name}")
+	);
 
 	// Installed files exist with verified content.
 	let installed = |rel: &str| root.join(Path::new(rel));

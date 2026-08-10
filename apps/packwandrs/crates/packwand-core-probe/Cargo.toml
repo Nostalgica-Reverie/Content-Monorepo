@@ -20,7 +20,7 @@ packwand-launch.workspace = true
 packwand-runtime.workspace = true
 packwand-minecraft.workspace = true
 packwand-auth.workspace = true
-packwand-devboot.workspace = true
+packwand-orchestrator = { path = "../packwand-orchestrator" }
 clap.workspace = true
 serde_json.workspace = true
 

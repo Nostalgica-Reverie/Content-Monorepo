@@ -9,6 +9,7 @@ repository.workspace = true
 [dependencies]
 packwand-instance.workspace = true
 packwand-auth.workspace = true
+packwand-runtime.workspace = true
 command-group = "5"
 serde.workspace = true
 thiserror.workspace = true

@@ -8,9 +8,13 @@
 
 #![forbid(unsafe_code)]
 
+pub mod censor;
+pub mod log;
 mod plan;
 mod supervisor;
 
+pub use censor::Censor;
+pub use log::{LogBuffer, LogLevel, LogLine, LogParser, latest_crash_report, read_latest_log};
 pub use plan::{
 	LaunchPaths, LaunchPlan, PLAN_SCHEMA_VERSION, build_launch_plan, host_classpath_separator,
 };

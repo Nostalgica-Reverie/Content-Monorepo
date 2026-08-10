@@ -13,10 +13,10 @@ use std::process::ExitCode;
 use std::time::Duration;
 
 use clap::{Parser, Subcommand};
-use packwand_devboot::bootstrap;
 use packwand_instance::{FsInstanceRepository, InstanceRepository, InstanceSpec, ListEntry};
 use packwand_launch::{LaunchEvent, LaunchOptions, build_launch_plan, launch};
 use packwand_minecraft::MetadataEndpoints;
+use packwand_orchestrator::bootstrap;
 
 #[derive(Parser)]
 #[command(
@@ -77,9 +77,6 @@ enum InstanceCommand {
 		/// Loader version; defaults to the newest stable one.
 		#[arg(long)]
 		loader_version: Option<String>,
-		/// Offline player name baked into the instance.
-		#[arg(long, default_value = "Player")]
-		username: String,
 		/// Java executable to record; discovered automatically when absent.
 		#[arg(long)]
 		java: Option<PathBuf>,
@@ -197,7 +194,6 @@ fn run(cli: Cli) -> Result<ExitCode, String> {
 			minecraft,
 			loader,
 			loader_version,
-			username,
 			java,
 			memory_max,
 			workers,
@@ -216,14 +212,12 @@ fn run(cli: Cli) -> Result<ExitCode, String> {
 			if let Some(url) = resources_url {
 				endpoints.resources_url = url;
 			}
-			let session = packwand_auth::offline_session(&username).map_err(|e| e.to_string())?;
 			let record = bootstrap::bootstrap(&bootstrap::BootstrapRequest {
 				root,
 				id,
 				minecraft,
 				loader,
 				loader_version,
-				session,
 				java,
 				memory_max_mb: memory_max,
 				workers,
@@ -268,14 +262,26 @@ fn run(cli: Cli) -> Result<ExitCode, String> {
 			max_runtime_secs,
 			stop_on_line,
 		}) => {
+			let managed_root = root.clone();
 			let repo = FsInstanceRepository::new(root);
 			let record = repo.get(&instance).map_err(|e| e.to_string())?;
-			let plan = build_launch_plan(&record, &repo.instance_paths(&record.id));
+			let paths = repo.instance_paths(&record.id);
+			// Installation downloads the native archives but deliberately
+			// leaves them packed, so whatever is about to launch has to
+			// expand them first.
+			packwand_orchestrator::stages::extract_natives_into(
+				&managed_root,
+				&record.classpath,
+				&paths.natives_dir,
+			)
+			.map_err(|e| e.to_string())?;
+			let plan = build_launch_plan(&record, &paths);
 			let mut options = LaunchOptions::default();
-			if !record.session_placeholders.is_empty() {
+			if !record.session_placeholders.is_empty() || !record.identity_placeholders.is_empty() {
 				let session =
 					packwand_auth::offline_session(&username).map_err(|e| e.to_string())?;
 				options.secrets = session.secrets();
+				options.identity = session.identity();
 			}
 			let handle = launch(&plan, options).map_err(|e| e.to_string())?;
 			if let Some(secs) = max_runtime_secs {

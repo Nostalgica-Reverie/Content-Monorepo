@@ -26,6 +26,7 @@ fn spec(id: &str) -> InstanceSpec {
 			max_mb: Some(2048),
 		},
 		session_placeholders: vec!["access_token".to_string()],
+		identity_placeholders: vec!["auth_player_name".to_string()],
 	}
 }
 

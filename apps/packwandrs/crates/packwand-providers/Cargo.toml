@@ -7,11 +7,11 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
+packwand-net = { path = "../packwand-net" }
 fancy-regex.workspace = true
 packwand-pack = { path = "../packwand-pack" }
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
 toml.workspace = true
-ureq.workspace = true
 url.workspace = true

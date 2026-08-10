@@ -72,8 +72,8 @@ pub async fn changes_squash(
 }
 
 fn ensure_tool(root: std::path::PathBuf) -> CommandResult<()> {
-	let request = packwand_devboot::jj_toolchain::JjToolchainRequest::pinned(root);
-	let binary = packwand_devboot::jj_toolchain::ensure_jj(&request, |_| {})
+	let request = packwand_vcs::jj_toolchain::JjToolchainRequest::pinned(root);
+	let binary = packwand_vcs::jj_toolchain::ensure_jj(&request, |_| {})
 		.map_err(|error| SerializableError::new("vcs_tool", error.to_string()))?;
 	packwand_vcs::configure_jj_binary(binary).map_err(vcs_error)
 }
@@ -81,7 +81,7 @@ fn ensure_tool(root: std::path::PathBuf) -> CommandResult<()> {
 fn vcs_error(error: VcsError) -> SerializableError {
 	let kind = match error {
 		VcsError::NotInitialized(_) => "vcs_not_initialized",
-		VcsError::JjNotFound => "vcs_tool_missing",
+		VcsError::JjNotFound | VcsError::Toolchain(_) => "vcs_tool_missing",
 		VcsError::Concurrent(_) => "vcs_concurrent",
 		VcsError::Divergent { .. } => "vcs_divergent",
 		VcsError::InvalidInput(_) => "vcs_invalid_input",

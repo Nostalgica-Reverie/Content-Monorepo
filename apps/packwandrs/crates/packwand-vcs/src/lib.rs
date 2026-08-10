@@ -3,6 +3,7 @@
 #![forbid(unsafe_code)]
 
 mod change;
+pub mod jj_toolchain;
 mod log;
 mod repo;
 

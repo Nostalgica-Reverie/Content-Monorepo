@@ -23,9 +23,6 @@ pub struct LaunchContext {
 	pub version_id: String,
 	pub version_type: String,
 	pub assets_index_name: String,
-	pub player_name: String,
-	pub player_uuid: String,
-	pub user_type: String,
 	pub launcher_name: String,
 	pub launcher_version: String,
 	/// Absolute `${game_assets}` directory for legacy materialized-asset
@@ -42,6 +39,8 @@ pub struct ResolvedArgs {
 	pub game_args: Vec<String>,
 	/// Names of `${secret:<name>}` placeholders the arguments reference.
 	pub session_placeholders: Vec<String>,
+	/// Names of `${identity:<name>}` placeholders the arguments reference.
+	pub identity_placeholders: Vec<String>,
 }
 
 /// Placeholders `packwand-launch` resolves at plan-build time; they must
@@ -61,32 +60,66 @@ const PLAN_TIME_VARS: &[&str] = &[
 	"instance_id",
 ];
 
-fn substitute(arg: &str, ctx: &LaunchContext, session_placeholders: &mut Vec<String>) -> String {
+/// Placeholder names collected while resolving one version's arguments.
+#[derive(Debug, Default)]
+struct Placeholders {
+	session: Vec<String>,
+	identity: Vec<String>,
+}
+
+/// Account-derived values, deferred to launch time rather than baked.
+///
+/// A managed install is shared by every pack on the same version and loader.
+/// Baking a player name into it meant switching accounts rewrote the whole
+/// record, so two accounts on one Minecraft version thrashed the install
+/// between them. They are not secrets — the access token is — so they get
+/// their own channel rather than riding the redacted one.
+const IDENTITY_VARS: &[&str] = &[
+	"auth_player_name",
+	"auth_uuid",
+	"user_type",
+	"auth_xuid",
+	"clientid",
+	"profile_name",
+];
+
+fn substitute(arg: &str, ctx: &LaunchContext, placeholders: &mut Placeholders) -> String {
 	let mut out = arg.to_string();
-	// Secrets first, so the static pass below can never see them.
+	// Secrets first, so the passes below can never see them.
 	for secret_var in ["auth_access_token", "auth_session"] {
 		let placeholder = format!("${{{secret_var}}}");
 		if out.contains(&placeholder) {
 			out = out.replace(&placeholder, "${secret:auth_access_token}");
-			if !session_placeholders.contains(&"auth_access_token".to_string()) {
-				session_placeholders.push("auth_access_token".to_string());
+			if !placeholders
+				.session
+				.iter()
+				.any(|n| n == "auth_access_token")
+			{
+				placeholders.session.push("auth_access_token".to_string());
 			}
 		}
 	}
-	let statics: [(&str, &str); 12] = [
+	for name in IDENTITY_VARS {
+		let placeholder = format!("${{{name}}}");
+		if out.contains(&placeholder) {
+			out = out.replace(&placeholder, &format!("${{identity:{name}}}"));
+			if !placeholders
+				.identity
+				.iter()
+				.any(|existing| existing == name)
+			{
+				placeholders.identity.push((*name).to_string());
+			}
+		}
+	}
+	let statics: [(&str, &str); 6] = [
 		("version_name", &ctx.version_id),
 		("version_type", &ctx.version_type),
 		("assets_index_name", &ctx.assets_index_name),
-		("auth_player_name", &ctx.player_name),
-		("auth_uuid", &ctx.player_uuid),
-		("user_type", &ctx.user_type),
 		("launcher_name", &ctx.launcher_name),
 		("launcher_version", &ctx.launcher_version),
-		// Legacy placeholders old versions still reference.
+		// A legacy placeholder old versions still reference.
 		("user_properties", "{}"),
-		("auth_xuid", ""),
-		("clientid", ""),
-		("profile_name", &ctx.player_name),
 	];
 	for (name, value) in statics {
 		out = out.replace(&format!("${{{name}}}"), value);
@@ -110,16 +143,16 @@ fn resolve_list(
 	arguments: &[Argument],
 	host: &Host,
 	ctx: &LaunchContext,
-	session_placeholders: &mut Vec<String>,
+	placeholders: &mut Placeholders,
 ) -> Vec<String> {
 	let mut out = Vec::new();
 	for argument in arguments {
 		match argument {
-			Argument::Plain(value) => out.push(substitute(value, ctx, session_placeholders)),
+			Argument::Plain(value) => out.push(substitute(value, ctx, placeholders)),
 			Argument::Conditional { rules, value } => {
 				if rules_allow(rules, host) {
 					for v in value.as_slice() {
-						out.push(substitute(v, ctx, session_placeholders));
+						out.push(substitute(v, ctx, placeholders));
 					}
 				}
 			}
@@ -158,19 +191,20 @@ pub fn resolve_launch_args(
 		.main_class
 		.clone()
 		.ok_or_else(|| MinecraftError::MissingMainClass(doc.id.clone()))?;
-	let mut session_placeholders = Vec::new();
+	let mut placeholders = Placeholders::default();
+	let placeholders_ref = &mut placeholders;
 
 	let (mut jvm_args, game_args) = if let Some(arguments) = &doc.arguments {
 		(
-			resolve_list(&arguments.jvm, host, ctx, &mut session_placeholders),
-			resolve_list(&arguments.game, host, ctx, &mut session_placeholders),
+			resolve_list(&arguments.jvm, host, ctx, placeholders_ref),
+			resolve_list(&arguments.game, host, ctx, placeholders_ref),
 		)
 	} else if let Some(legacy) = &doc.minecraft_arguments {
 		// Pre-1.13: game arguments are one string; the JVM argument list
 		// is implied. Provide the natives path the way modern documents do.
 		let game = legacy
 			.split_whitespace()
-			.map(|arg| substitute(arg, ctx, &mut session_placeholders))
+			.map(|arg| substitute(arg, ctx, placeholders_ref))
 			.collect();
 		(
 			vec!["-Djava.library.path=${natives_directory}".to_string()],
@@ -181,14 +215,15 @@ pub fn resolve_launch_args(
 	};
 
 	if let Some(logging_arg) = logging_argument(doc) {
-		jvm_args.push(substitute(&logging_arg, ctx, &mut session_placeholders));
+		jvm_args.push(substitute(&logging_arg, ctx, placeholders_ref));
 	}
 
 	Ok(ResolvedArgs {
 		main_class,
 		jvm_args: strip_classpath_flag(jvm_args),
 		game_args,
-		session_placeholders,
+		session_placeholders: placeholders.session,
+		identity_placeholders: placeholders.identity,
 	})
 }
 
@@ -202,7 +237,10 @@ pub fn has_unresolved_placeholder(arg: &str) -> bool {
 			return true;
 		};
 		let name = &after[..end];
-		if !name.starts_with("secret:") && !PLAN_TIME_VARS.contains(&name) {
+		if !name.starts_with("secret:")
+			&& !name.starts_with("identity:")
+			&& !PLAN_TIME_VARS.contains(&name)
+		{
 			return true;
 		}
 		rest = &after[end + 1..];
@@ -219,9 +257,6 @@ mod tests {
 			version_id: "fixture-1.0".to_string(),
 			version_type: "release".to_string(),
 			assets_index_name: "17".to_string(),
-			player_name: "Steve".to_string(),
-			player_uuid: "00000000-0000-3000-8000-000000000000".to_string(),
-			user_type: "legacy".to_string(),
 			launcher_name: "packwand".to_string(),
 			launcher_version: "0.1.0".to_string(),
 			game_assets_dir: None,
@@ -244,11 +279,22 @@ mod tests {
 		let resolved = resolve_launch_args(&doc, &windows_host(), &ctx()).unwrap();
 		assert_eq!(resolved.main_class, "net.minecraft.client.main.Main");
 
-		// Identity and static values are baked in.
+		// Version-scoped values are baked; identity is not, because the
+		// install these arguments belong to is shared between accounts.
 		let game = resolved.game_args.join(" ");
-		assert!(game.contains("--username Steve"), "{game}");
 		assert!(game.contains("--version fixture-1.0"), "{game}");
 		assert!(game.contains("--assetIndex 17"), "{game}");
+		assert!(
+			game.contains("--username ${identity:auth_player_name}"),
+			"{game}"
+		);
+		assert!(
+			resolved
+				.identity_placeholders
+				.contains(&"auth_player_name".to_string()),
+			"{:?}",
+			resolved.identity_placeholders
+		);
 		// Secrets are rewritten, never resolved.
 		assert!(
 			game.contains("--accessToken ${secret:auth_access_token}"),
@@ -302,7 +348,10 @@ mod tests {
 		context.game_assets_dir = Some("C:/root/assets/virtual/legacy".to_string());
 		let resolved = resolve_launch_args(&doc, &windows_host(), &context).unwrap();
 		let game = resolved.game_args.join(" ");
-		assert!(game.contains("--username Steve"), "{game}");
+		assert!(
+			game.contains("--username ${identity:auth_player_name}"),
+			"{game}"
+		);
 		assert!(
 			game.contains("--assetsDir C:/root/assets/virtual/legacy"),
 			"{game}"

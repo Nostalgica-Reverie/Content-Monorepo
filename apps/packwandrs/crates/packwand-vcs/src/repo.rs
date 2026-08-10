@@ -29,6 +29,8 @@ pub enum VcsError {
 	InvalidInput(String),
 	#[error("could not open Jujutsu through jj-lib: {0}")]
 	Library(String),
+	#[error("failed to provision the Jujutsu toolchain: {0}")]
+	Toolchain(String),
 	#[error(transparent)]
 	Io(#[from] std::io::Error),
 }

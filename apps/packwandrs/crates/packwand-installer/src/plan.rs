@@ -7,7 +7,7 @@ use packwand_providers::{CurseForgeClient, Transport, configured_api_key};
 use serde::{Deserialize, Serialize};
 
 use crate::InstallerError;
-use crate::index::{self, RemotePack, decode_mod, safe_relative};
+use crate::index::{self, FileSource, PackFiles, decode_mod, safe_relative};
 
 /// Content side selected by the launcher.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -50,9 +50,38 @@ pub enum PlanAction {
 		hash: String,
 		overwrite: OverwriteMode,
 	},
+	/// A file taken from a pack directory on this machine rather than fetched.
+	/// Only produced for a [`crate::index::LocalPack`]; its own overrides
+	/// (configs, scripts, resources) are already on disk.
+	Copy {
+		source: PathBuf,
+		target: PathBuf,
+		hash_format: String,
+		hash: String,
+		overwrite: OverwriteMode,
+	},
 	Remove {
 		target: PathBuf,
 	},
+}
+
+impl PlanAction {
+	/// Where this action writes, for the installed-file manifest.
+	pub fn target(&self) -> &Path {
+		match self {
+			Self::Download { target, .. } | Self::Copy { target, .. } | Self::Remove { target } => {
+				target
+			}
+		}
+	}
+
+	/// This action's existing-file policy, or `None` for a removal.
+	pub fn overwrite(&self) -> Option<OverwriteMode> {
+		match self {
+			Self::Download { overwrite, .. } | Self::Copy { overwrite, .. } => Some(*overwrite),
+			Self::Remove { .. } => None,
+		}
+	}
 }
 
 /// A mod that couldn't be fetched automatically and needs a human to place
@@ -83,18 +112,16 @@ pub struct InstallPlan {
 }
 
 pub fn build(
-	remote: &RemotePack,
+	source: &dyn PackFiles,
 	instance: &Path,
 	side: InstallSide,
 	transport: &dyn Transport,
 ) -> Result<InstallPlan, InstallerError> {
+	let index = source.index();
 	let mut actions = Vec::new();
 	let mut manual = Vec::new();
-	for entry in &remote.index.files {
-		let format = entry
-			.hash_format
-			.as_deref()
-			.unwrap_or(&remote.index.hash_format);
+	for entry in &index.files {
+		let format = entry.hash_format.as_deref().unwrap_or(&index.hash_format);
 		let target = instance.join(safe_relative(
 			entry.alias.as_deref().unwrap_or(&entry.file),
 		)?);
@@ -104,7 +131,7 @@ pub fn build(
 			OverwriteMode::Replace
 		};
 		if entry.metafile {
-			let metadata = remote.entry(&entry.file, format, &entry.hash, transport)?;
+			let metadata = source.entry(&entry.file, format, &entry.hash)?;
 			let metadata = decode_mod(&metadata)?;
 			// `metadata.filename` is a bare name (e.g. "fabric-api.jar"); the
 			// mod lands next to its metafile (e.g. `mods/`), not at the
@@ -141,17 +168,21 @@ pub fn build(
 				Err(error) => return Err(error),
 			}
 		} else {
-			let url = remote
-				.base
-				.join(&entry.file.replace('\\', "/"))
-				.map_err(|error| InstallerError::InvalidUrl(error.to_string()))?
-				.to_string();
-			actions.push(PlanAction::Download {
-				url,
-				target,
-				hash_format: format.into(),
-				hash: entry.hash.clone(),
-				overwrite,
+			actions.push(match source.file_source(&entry.file)? {
+				FileSource::Url(url) => PlanAction::Download {
+					url,
+					target,
+					hash_format: format.into(),
+					hash: entry.hash.clone(),
+					overwrite,
+				},
+				FileSource::Path(from) => PlanAction::Copy {
+					source: from,
+					target,
+					hash_format: format.into(),
+					hash: entry.hash.clone(),
+					overwrite,
+				},
 			});
 		}
 	}
@@ -223,12 +254,10 @@ fn resolve_url(metadata: &Mod, transport: &dyn Transport) -> Result<String, Inst
 	let resolved = client
 		.download_url(project as u32, file as u32)
 		.map_err(|error| InstallerError::Provider(format!("{}: {error}", metadata.name)))?;
-	resolved
-		.url
-		.ok_or(InstallerError::ManualDownloadRequired {
-			name: metadata.name.clone(),
-			page_url: resolved.page_url,
-		})
+	resolved.url.ok_or(InstallerError::ManualDownloadRequired {
+		name: metadata.name.clone(),
+		page_url: resolved.page_url,
+	})
 }
 
 struct TransportRef<'a>(&'a dyn Transport);

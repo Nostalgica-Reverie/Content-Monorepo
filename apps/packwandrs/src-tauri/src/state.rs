@@ -44,6 +44,10 @@ pub struct AppSettings {
 	/// arrangement is explicitly unsupported.
 	#[serde(default)]
 	pub layout_editing: bool,
+	/// Concurrent downloads while installing. `0` follows the machine, capped
+	/// the same way `--jobs` is; lower it on a metered or unreliable link.
+	#[serde(default)]
+	pub download_jobs: usize,
 }
 
 const fn default_memory() -> u32 {
@@ -66,6 +70,7 @@ impl Default for AppSettings {
 			reduce_motion: false,
 			layout: None,
 			layout_editing: false,
+			download_jobs: 0,
 		}
 	}
 }

@@ -3,7 +3,7 @@
 //! Kept separate from `packwand-auth` per that crate's own doc comment:
 //! Microsoft/Minecraft OAuth "must not be bolted onto this crate ad hoc."
 //! This crate's job is only to *produce* a real `packwand_auth::Session` —
-//! everything downstream (`packwand-launch`, `packwand-devboot`) already
+//! everything downstream (`packwand-launch`, `packwand-orchestrator`) already
 //! consumes `Session` generically and needs no changes.
 //!
 //! Flow: Authorization Code + PKCE via the system's default browser and a
@@ -12,16 +12,20 @@
 //! discourages for credential entry). No client secret: this is registered
 //! as a public/native Azure AD app.
 
+pub mod accounts;
 mod chain;
 mod loopback;
 mod pkce;
+pub mod state;
 mod store;
 
 use std::time::Duration;
 
 use packwand_auth::Session;
 
+pub use accounts::{Account, AccountClaim, AccountError, AccountList, Accounts};
 pub use chain::MsaError;
+pub use state::{AuthState, classify};
 pub use store::{InMemoryTokenStore, PwcKeyStore, TokenStore, TokenStoreError};
 
 const AUTHORIZE_URL: &str = "https://login.live.com/oauth20_authorize.srf";
@@ -128,4 +132,63 @@ pub fn refresh(config: &MsaConfig, store: &dyn TokenStore) -> Result<Option<Sess
 /// app from silently reusing it.
 pub fn logout(store: &dyn TokenStore) -> Result<(), MsaError> {
 	Ok(store.clear()?)
+}
+
+/// What a launch got when it asked for an account.
+pub enum SessionOutcome {
+	/// A real Microsoft session.
+	Authenticated(Session),
+	/// No usable account, with the reason. Whether the caller may continue
+	/// is [`AuthState::allows_offline_fallback`].
+	Unavailable {
+		state: AuthState,
+		/// Human-readable explanation, already safe to display.
+		message: String,
+	},
+	/// Nobody has ever signed in.
+	NoAccount,
+}
+
+/// Resolves the session a launch should use, without a browser.
+///
+/// The five-way state is applied here rather than left to callers, because
+/// the consequential decision — whether to delete the stored refresh token —
+/// belongs next to the classification that justifies it. A rejected token is
+/// removed; an unreachable service leaves everything exactly as it was.
+pub fn session_for_launch(config: &MsaConfig, accounts: &Accounts) -> SessionOutcome {
+	let list = match accounts.load() {
+		Ok(list) => list,
+		Err(error) => {
+			return SessionOutcome::Unavailable {
+				state: AuthState::SoftFail,
+				message: error.to_string(),
+			};
+		}
+	};
+	let Some(account) = list.active().cloned() else {
+		return SessionOutcome::NoAccount;
+	};
+	if account.disabled {
+		return SessionOutcome::Unavailable {
+			state: AuthState::Disabled,
+			message: format!("{} is switched off", account.name),
+		};
+	}
+	let store = accounts.token_store(&account.uuid);
+	match refresh(config, &store) {
+		Ok(Some(session)) => SessionOutcome::Authenticated(session),
+		Ok(None) => SessionOutcome::NoAccount,
+		Err(error) => {
+			let state = classify(&error);
+			// The single destructive action in the whole flow, taken only for
+			// the one state that means the credential is finished.
+			if !state.keeps_credentials() {
+				let _ = accounts.forget(&account.uuid);
+			}
+			SessionOutcome::Unavailable {
+				state,
+				message: error.to_string(),
+			}
+		}
+	}
 }

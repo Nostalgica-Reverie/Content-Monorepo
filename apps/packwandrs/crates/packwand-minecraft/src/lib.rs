@@ -16,10 +16,11 @@ pub mod merge;
 pub mod meta;
 pub mod model;
 pub mod plan;
+pub mod recommend;
 pub mod rules;
 
 pub use http::{FixtureHttpClient, HttpClient, HttpError, UreqClient};
-pub use install::{InstallProgress, InstallReport, Installer};
+pub use install::{InstallProgress, InstallReport, Installer, extract_natives};
 pub use meta::{Fetched, InstallerProfile, MetadataClient, MetadataEndpoints};
 pub use rules::Host;
 
@@ -31,17 +32,14 @@ pub enum MinecraftError {
 	Json { context: String, message: String },
 	#[error("invalid XML from {context}: {message}")]
 	Xml { context: String, message: String },
+	/// A transfer failed, or what arrived was not what the metadata promised.
+	#[error(transparent)]
+	Net(#[from] packwand_net::NetError),
 	#[error("checksum mismatch for {url}: expected sha1 {expected}, got {actual}")]
 	ChecksumMismatch {
 		url: String,
 		expected: String,
 		actual: String,
-	},
-	#[error("size mismatch for {url}: expected {expected} bytes, got {actual}")]
-	SizeMismatch {
-		url: String,
-		expected: u64,
-		actual: u64,
 	},
 	#[error("refusing unsafe metadata-supplied path {0:?}")]
 	UnsafePath(String),

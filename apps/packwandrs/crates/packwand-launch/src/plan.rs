@@ -45,6 +45,8 @@ pub struct LaunchPlan {
 	pub env: BTreeMap<String, String>,
 	pub memory: MemoryLimits,
 	pub session: BTreeMap<String, String>,
+	/// `${identity:<name>}` placeholders, resolved at spawn from the account.
+	pub identity: BTreeMap<String, String>,
 	pub paths: LaunchPaths,
 }
 
@@ -144,6 +146,11 @@ pub fn build_launch_plan(record: &InstanceRecord, paths: &InstancePaths) -> Laun
 			.iter()
 			.map(|name| (name.clone(), format!("${{secret:{name}}}")))
 			.collect(),
+		identity: record
+			.identity_placeholders
+			.iter()
+			.map(|name| (name.clone(), format!("${{identity:{name}}}")))
+			.collect(),
 		paths: LaunchPaths {
 			logs: paths.logs_dir.clone(),
 			natives: paths.natives_dir.clone(),
@@ -177,6 +184,7 @@ mod tests {
 			env: BTreeMap::new(),
 			memory: MemoryLimits::default(),
 			session_placeholders: vec![],
+			identity_placeholders: vec![],
 		}
 	}
 

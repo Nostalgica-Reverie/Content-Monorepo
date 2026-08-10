@@ -29,7 +29,8 @@ fn boots_disposable_vanilla_instance_and_cleans_up() {
 		.arg("--root")
 		.arg(&root)
 		.args(["--minecraft", "latest-release"])
-		.args(["--username", "PackwandProbe"])
+		// No account here: the shared install carries `${identity:*}`
+		// placeholders and the player name is supplied at launch instead.
 		.args(["--memory-max", "2048", "--workers", "16", "--json"])
 		.output()
 		.unwrap();

@@ -5235,35 +5235,15 @@ version = "26.2.0"
 dependencies = [
  "clap",
  "packwand-auth",
- "packwand-devboot",
  "packwand-instance",
  "packwand-launch",
  "packwand-minecraft",
+ "packwand-orchestrator",
  "packwand-runtime",
  "serde_json",
  "sha1",
  "tempfile",
  "tiny_http",
-]
-
-[[package]]
-name = "packwand-devboot"
-version = "26.2.0"
-dependencies = [
- "flate2",
- "packwand-auth",
- "packwand-instance",
- "packwand-launch",
- "packwand-minecraft",
- "packwand-providers",
- "packwand-runtime",
- "serde",
- "serde_json",
- "tar",
- "tempfile",
- "thiserror 2.0.18",
- "toml 0.8.2",
- "zip",
 ]
 
 [[package]]
@@ -5291,12 +5271,13 @@ dependencies = [
  "packwand-auth",
  "packwand-build",
  "packwand-collab",
- "packwand-devboot",
  "packwand-diagnostics",
  "packwand-identity-client",
  "packwand-instance",
  "packwand-launch",
+ "packwand-msa",
  "packwand-ops",
+ "packwand-orchestrator",
  "packwand-pack",
  "packwand-parallel",
  "packwand-platform",
@@ -5340,6 +5321,7 @@ version = "26.2.0"
 dependencies = [
  "clap",
  "packwand-pack",
+ "packwand-parallel",
  "packwand-providers",
  "serde",
  "serde_json",
@@ -5366,6 +5348,7 @@ dependencies = [
  "command-group",
  "packwand-auth",
  "packwand-instance",
+ "packwand-runtime",
  "serde",
  "serde_json",
  "tempfile",
@@ -5376,10 +5359,12 @@ dependencies = [
 name = "packwand-minecraft"
 version = "26.2.0"
 dependencies = [
+ "packwand-net",
+ "packwand-pack",
+ "packwand-parallel",
  "regex-lite",
  "serde",
  "serde_json",
- "sha1",
  "tempfile",
  "thiserror 2.0.18",
  "ureq",
@@ -5404,6 +5389,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "packwand-net"
+version = "26.2.0"
+dependencies = [
+ "packwand-net",
+ "packwand-pack",
+ "packwand-parallel",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+ "ureq",
+]
+
+[[package]]
 name = "packwand-ops"
 version = "26.2.0"
 dependencies = [
@@ -5417,6 +5416,29 @@ dependencies = [
  "tempfile",
  "thiserror 2.0.18",
  "toml 0.9.12+spec-1.1.0",
+]
+
+[[package]]
+name = "packwand-orchestrator"
+version = "26.2.0"
+dependencies = [
+ "packwand-auth",
+ "packwand-build",
+ "packwand-instance",
+ "packwand-launch",
+ "packwand-minecraft",
+ "packwand-msa",
+ "packwand-net",
+ "packwand-pack",
+ "packwand-parallel",
+ "packwand-providers",
+ "packwand-runtime",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+ "toml 0.9.12+spec-1.1.0",
+ "walkdir",
 ]
 
 [[package]]
@@ -5458,12 +5480,12 @@ name = "packwand-providers"
 version = "26.2.0"
 dependencies = [
  "fancy-regex 0.16.1",
+ "packwand-net",
  "packwand-pack",
  "serde",
  "serde_json",
  "thiserror 2.0.18",
  "toml 0.9.12+spec-1.1.0",
- "ureq",
  "url",
 ]
 
@@ -5471,7 +5493,11 @@ dependencies = [
 name = "packwand-runtime"
 version = "26.2.0"
 dependencies = [
+ "packwand-net",
+ "packwand-parallel",
+ "regex-lite",
  "serde",
+ "serde_json",
  "tempfile",
  "thiserror 2.0.18",
 ]
@@ -5480,12 +5506,15 @@ dependencies = [
 name = "packwand-vcs"
 version = "26.2.0"
 dependencies = [
+ "flate2",
  "jj-lib",
- "packwand-devboot",
+ "packwand-providers",
  "pollster",
  "serde",
+ "tar",
  "tempfile",
  "thiserror 2.0.18",
+ "zip",
 ]
 
 [[package]]

@@ -1,12 +1,30 @@
+//! Provisioning the standalone Jujutsu CLI.
+//!
+//! The embedded `jj-lib` covers the operations Packwand performs itself; this
+//! fetches the actual binary, which is what the user's own `jj` invocations
+//! and anything needing a colocated working copy go through.
+
 use std::fs;
 use std::io::{Cursor, Read};
 use std::path::{Path, PathBuf};
 
 use flate2::read::GzDecoder;
-use packwand_minecraft::InstallProgress;
 use packwand_providers::{HttpRequest, Transport, UreqTransport};
 
-use crate::DevBootError;
+use crate::VcsError;
+
+/// How far a toolchain download has got.
+///
+/// Deliberately its own type rather than the launcher's install progress:
+/// a VCS tool download has no reason to make this crate depend on Minecraft
+/// metadata.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct ToolchainProgress {
+	/// Bytes received so far.
+	pub downloaded_bytes: u64,
+	/// Total bytes, when the server declared one.
+	pub total_bytes: Option<u64>,
+}
 
 /// Standalone Jujutsu version managed independently from the embedded library.
 pub const PINNED_JJ_VERSION: &str = "0.41.0";
@@ -30,8 +48,8 @@ impl JjToolchainRequest {
 /// Downloads and atomically installs the pinned Jujutsu CLI for this host.
 pub fn ensure_jj(
 	request: &JjToolchainRequest,
-	on_progress: impl Fn(InstallProgress) + Sync,
-) -> Result<PathBuf, DevBootError> {
+	on_progress: impl Fn(ToolchainProgress) + Sync,
+) -> Result<PathBuf, VcsError> {
 	validate_version(&request.version)?;
 	let executable = if cfg!(windows) { "jj.exe" } else { "jj" };
 	let destination = request
@@ -51,20 +69,16 @@ pub fn ensure_jj(
 	);
 	let bytes = UreqTransport::for_downloads()
 		.get_large(HttpRequest::get(url))
-		.map_err(|error| DevBootError::Toolchain(error.to_string()))?;
-	on_progress(InstallProgress {
-		finished_downloads: 1,
-		total_downloads: 1,
+		.map_err(|error| VcsError::Toolchain(error.to_string()))?;
+	on_progress(ToolchainProgress {
 		downloaded_bytes: bytes.len() as u64,
 		total_bytes: Some(bytes.len() as u64),
-		current_download_bytes: bytes.len() as u64,
-		current_download_total: Some(bytes.len() as u64),
 	});
 
 	let binary = extract_binary(&asset, &bytes, executable)?;
 	let parent = destination
 		.parent()
-		.ok_or_else(|| DevBootError::Toolchain("tool destination has no parent".into()))?;
+		.ok_or_else(|| VcsError::Toolchain("tool destination has no parent".into()))?;
 	fs::create_dir_all(parent).map_err(tool_error)?;
 	let staging = destination.with_extension("pw-part");
 	fs::write(&staging, binary).map_err(tool_error)?;
@@ -73,18 +87,18 @@ pub fn ensure_jj(
 	Ok(destination)
 }
 
-fn validate_version(version: &str) -> Result<(), DevBootError> {
+fn validate_version(version: &str) -> Result<(), VcsError> {
 	if version.is_empty()
 		|| !version
 			.chars()
 			.all(|character| character.is_ascii_digit() || character == '.')
 	{
-		return Err(DevBootError::Toolchain("invalid Jujutsu version".into()));
+		return Err(VcsError::Toolchain("invalid Jujutsu version".into()));
 	}
 	Ok(())
 }
 
-fn release_asset(version: &str) -> Result<String, DevBootError> {
+fn release_asset(version: &str) -> Result<String, VcsError> {
 	let triple = match (std::env::consts::OS, std::env::consts::ARCH) {
 		("windows", "x86_64") => "x86_64-pc-windows-msvc.zip",
 		("linux", "x86_64") => "x86_64-unknown-linux-musl.tar.gz",
@@ -92,7 +106,7 @@ fn release_asset(version: &str) -> Result<String, DevBootError> {
 		("macos", "x86_64") => "x86_64-apple-darwin.tar.gz",
 		("macos", "aarch64") => "aarch64-apple-darwin.tar.gz",
 		(os, arch) => {
-			return Err(DevBootError::Toolchain(format!(
+			return Err(VcsError::Toolchain(format!(
 				"Jujutsu has no managed asset for {os}/{arch}"
 			)));
 		}
@@ -100,14 +114,14 @@ fn release_asset(version: &str) -> Result<String, DevBootError> {
 	Ok(format!("jj-v{version}-{triple}"))
 }
 
-fn extract_binary(asset: &str, bytes: &[u8], executable: &str) -> Result<Vec<u8>, DevBootError> {
+fn extract_binary(asset: &str, bytes: &[u8], executable: &str) -> Result<Vec<u8>, VcsError> {
 	if asset.ends_with(".zip") {
 		let mut archive = zip::ZipArchive::new(Cursor::new(bytes))
-			.map_err(|error| DevBootError::Toolchain(error.to_string()))?;
+			.map_err(|error| VcsError::Toolchain(error.to_string()))?;
 		for index in 0..archive.len() {
 			let mut entry = archive
 				.by_index(index)
-				.map_err(|error| DevBootError::Toolchain(error.to_string()))?;
+				.map_err(|error| VcsError::Toolchain(error.to_string()))?;
 			if entry.enclosed_name().as_deref().and_then(Path::file_name)
 				== Some(std::ffi::OsStr::new(executable))
 			{
@@ -121,7 +135,7 @@ fn extract_binary(asset: &str, bytes: &[u8], executable: &str) -> Result<Vec<u8>
 		let mut archive = tar::Archive::new(decoder);
 		let entries = archive
 			.entries()
-			.map_err(|error| DevBootError::Toolchain(error.to_string()))?;
+			.map_err(|error| VcsError::Toolchain(error.to_string()))?;
 		for entry in entries {
 			let mut entry = entry.map_err(tool_error)?;
 			let path = entry.path().map_err(tool_error)?;
@@ -132,13 +146,13 @@ fn extract_binary(asset: &str, bytes: &[u8], executable: &str) -> Result<Vec<u8>
 			}
 		}
 	}
-	Err(DevBootError::Toolchain(format!(
+	Err(VcsError::Toolchain(format!(
 		"release archive did not contain {executable}"
 	)))
 }
 
 #[cfg(unix)]
-fn set_executable(path: &Path) -> Result<(), DevBootError> {
+fn set_executable(path: &Path) -> Result<(), VcsError> {
 	use std::os::unix::fs::PermissionsExt;
 	let mut permissions = fs::metadata(path).map_err(tool_error)?.permissions();
 	permissions.set_mode(0o755);
@@ -146,12 +160,12 @@ fn set_executable(path: &Path) -> Result<(), DevBootError> {
 }
 
 #[cfg(not(unix))]
-fn set_executable(_path: &Path) -> Result<(), DevBootError> {
+fn set_executable(_path: &Path) -> Result<(), VcsError> {
 	Ok(())
 }
 
-fn tool_error(error: std::io::Error) -> DevBootError {
-	DevBootError::Toolchain(error.to_string())
+fn tool_error(error: std::io::Error) -> VcsError {
+	VcsError::Toolchain(error.to_string())
 }
 
 #[cfg(test)]

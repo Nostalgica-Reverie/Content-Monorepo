@@ -36,6 +36,7 @@ pub fn fake_java_spec(id: &str, env: BTreeMap<String, String>) -> InstanceSpec {
 		env,
 		memory: MemoryLimits::default(),
 		session_placeholders: vec![],
+		identity_placeholders: Vec::new(),
 	}
 }
 

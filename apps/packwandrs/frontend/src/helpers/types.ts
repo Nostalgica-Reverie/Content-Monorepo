@@ -25,6 +25,8 @@ export interface AppSettings {
 	layout: ShellLayout | null
 	/** Whether the shell may be rearranged. Off by default and unsupported. */
 	layoutEditing: boolean
+	/** Concurrent downloads while installing; `0` follows the machine. */
+	downloadJobs: number
 }
 
 export interface PackSummary {
@@ -62,6 +64,8 @@ export interface InstanceSettings {
 	windowWidth?: number
 	windowHeight?: number
 	fullscreen?: boolean
+	/** Concurrent downloads for this instance; omitted inherits the app value. */
+	downloadJobs?: number
 }
 
 export interface InstanceSummary {

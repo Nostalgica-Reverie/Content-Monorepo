@@ -44,8 +44,14 @@ impl DownloadCache {
 		if let Some(parent) = path.parent() {
 			fs::create_dir_all(parent)?;
 		}
-		let staging = path.with_extension("pw-part");
+		let staging = crate::download::staging_path(&path);
 		fs::write(&staging, bytes)?;
+		// Two plan entries can share one content hash, so the destination
+		// may already have been filled by a peer; identical bytes either way.
+		if path.exists() {
+			fs::remove_file(&staging)?;
+			return Ok(());
+		}
 		fs::rename(staging, path)?;
 		Ok(())
 	}

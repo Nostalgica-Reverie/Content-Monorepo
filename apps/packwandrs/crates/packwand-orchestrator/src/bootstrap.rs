@@ -5,7 +5,6 @@ use std::collections::BTreeMap;
 use std::path::PathBuf;
 use std::sync::Mutex;
 
-use packwand_auth::Session;
 use packwand_instance::{
 	FsInstanceRepository, InstanceError, InstanceRecord, InstanceRepository, InstanceSpec,
 	MemoryLimits,
@@ -29,13 +28,11 @@ pub struct BootstrapRequest {
 	/// Optional loader overlay: `fabric`, `quilt`, `forge`, or `neoforge`.
 	pub loader: Option<String>,
 	pub loader_version: Option<String>,
-	/// The account identity to bake into this instance's launch arguments.
-	/// Callers decide how it was obtained (offline for dev-testing, or a
-	/// real Microsoft/Xbox Live session) — `bootstrap` itself is agnostic.
-	pub session: Session,
 	/// Explicit Java executable; skips discovery when set.
 	pub java: Option<PathBuf>,
 	pub memory_max_mb: Option<u32>,
+	/// Concurrent downloads; `0` uses the shared default that `--jobs` and
+	/// the app's own setting configure.
 	pub workers: usize,
 	pub endpoints: MetadataEndpoints,
 }
@@ -172,7 +169,7 @@ pub fn bootstrap_with_progress(
 ) -> Result<InstanceRecord, String> {
 	let repo = FsInstanceRepository::new(request.root.clone());
 	let paths = repo.instance_paths(&request.id);
-	let http = UreqClient::new();
+	let http = UreqClient::new().with_document_cache(&request.root.join("cache"));
 	let client = MetadataClient::new(&http, request.endpoints.clone());
 
 	// 1. Resolve metadata (vanilla, optionally overlaid by a loader profile).
@@ -208,13 +205,7 @@ pub fn bootstrap_with_progress(
 	for extra in
 		build_library_downloads(&installer_libraries, &layout).map_err(|e| e.to_string())?
 	{
-		if !plan
-			.downloads
-			.iter()
-			.any(|download| download.target == extra.target)
-		{
-			plan.downloads.push(extra);
-		}
+		plan.push_download(extra);
 	}
 	let index_ref = doc
 		.asset_index
@@ -250,13 +241,20 @@ pub fn bootstrap_with_progress(
 	)?;
 
 	// 4. Execute the plan (verified, staged, resumable).
+	//
+	// Natives are deliberately not unpacked here. The archives they come from
+	// are shared by every instance on this version and are worth keeping; the
+	// unpacked libraries are not, and unpacking them at install time is what
+	// left them on disk forever. `steps::ExtractNatives` does it per launch
+	// and removes them again when the game exits.
+	plan.extractions.clear();
 	eprintln!(
 		"installing {}: {} downloads (~{} MiB known)",
 		doc.id,
 		plan.downloads.len(),
 		plan.known_download_bytes() / (1024 * 1024)
 	);
-	let report = Installer::new(&http)
+	let report = Installer::new(http.inner())
 		.with_workers(request.workers)
 		.execute(&plan, &on_progress)
 		.map_err(|e| e.to_string())?;
@@ -265,14 +263,12 @@ pub fn bootstrap_with_progress(
 		report.downloaded, report.skipped, report.extracted, report.copied
 	);
 
-	// 5. Resolve arguments for the given session's identity.
+	// 5. Resolve arguments. Account values stay as `${identity:*}`
+	// placeholders so this install can serve any account.
 	let context = LaunchContext {
 		version_id: doc.id.clone(),
 		version_type: doc.kind.clone().unwrap_or_else(|| "release".to_string()),
 		assets_index_name: index_ref.id.clone(),
-		player_name: request.session.username.clone(),
-		player_uuid: request.session.uuid.clone(),
-		user_type: request.session.user_type.clone(),
 		launcher_name: "packwand".to_string(),
 		launcher_version: env!("CARGO_PKG_VERSION").to_string(),
 		game_assets_dir: plan
@@ -303,11 +299,11 @@ pub fn bootstrap_with_progress(
 			max_mb: request.memory_max_mb,
 		},
 		session_placeholders: resolved.session_placeholders,
+		identity_placeholders: resolved.identity_placeholders,
 	};
-	// Upsert: `create` fails with `AlreadyExists` when re-baking a different
-	// session's identity onto an already-installed instance, or retrying a
-	// bootstrap that got far enough to persist a record before an earlier
-	// interruption. Overwrite in place instead of treating that as an error.
+	// Upsert: `create` fails with `AlreadyExists` when rebuilding a record an
+	// older build wrote, or retrying a bootstrap that got far enough to
+	// persist one before an interruption. Overwrite rather than error.
 	match repo.create(&spec) {
 		Ok(record) => Ok(record),
 		Err(InstanceError::AlreadyExists(_)) => {

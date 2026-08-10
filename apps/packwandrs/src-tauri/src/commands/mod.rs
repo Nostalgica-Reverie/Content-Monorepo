@@ -13,6 +13,7 @@ pub mod git;
 pub mod identity;
 pub mod instances;
 pub mod jobs;
+pub mod minecraft_accounts;
 pub mod mods;
 pub mod packeater;
 pub mod packs;

@@ -14,7 +14,11 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 
 /// Highest instance-record schema version this build can read and write.
-pub const SCHEMA_VERSION: u32 = 1;
+/// Bumped to 2 when account identity stopped being baked into `game_args`.
+/// A version-1 record carries one account's name inside arguments that a
+/// shared install hands to every account, so it must be rebuilt rather than
+/// reused.
+pub const SCHEMA_VERSION: u32 = 2;
 
 /// Highest user-owned instance schema this build understands.
 pub const USER_INSTANCE_SCHEMA_VERSION: u32 = 1;
@@ -66,6 +70,12 @@ pub struct InstanceSettings {
 	pub window_height: Option<u32>,
 	#[serde(default, skip_serializing_if = "Option::is_none")]
 	pub fullscreen: Option<bool>,
+	/// How many files to fetch at once while installing this instance.
+	/// `0` means "decide from the machine"; the useful reason to set it is a
+	/// metered or shaky connection, where fewer concurrent transfers is the
+	/// point rather than a performance tradeoff.
+	#[serde(default, skip_serializing_if = "Option::is_none")]
+	pub download_jobs: Option<usize>,
 }
 
 impl InstanceSettings {
@@ -90,6 +100,7 @@ impl InstanceSettings {
 			window_width: self.window_width.or(defaults.window_width),
 			window_height: self.window_height.or(defaults.window_height),
 			fullscreen: self.fullscreen.or(defaults.fullscreen),
+			download_jobs: self.download_jobs.or(defaults.download_jobs),
 		}
 	}
 }
@@ -173,10 +184,15 @@ pub struct InstanceSpec {
 	pub env: BTreeMap<String, String>,
 	#[serde(default)]
 	pub memory: MemoryLimits,
-	/// Names of account/session values that a future auth subsystem will
-	/// resolve at launch time. Only names are ever stored, never values.
+	/// Names of secret account values resolved at launch time. Only names are
+	/// ever stored, never values.
 	#[serde(default)]
 	pub session_placeholders: Vec<String>,
+	/// Names of non-secret account values — player name, uuid, user type —
+	/// also resolved at launch. Kept out of the record so one managed install
+	/// serves every account on that version.
+	#[serde(default)]
+	pub identity_placeholders: Vec<String>,
 }
 
 /// A stored, versioned instance record.
@@ -203,6 +219,8 @@ pub struct InstanceRecord {
 	pub memory: MemoryLimits,
 	#[serde(default)]
 	pub session_placeholders: Vec<String>,
+	#[serde(default)]
+	pub identity_placeholders: Vec<String>,
 }
 
 impl InstanceRecord {
@@ -222,6 +240,7 @@ impl InstanceRecord {
 			env: spec.env.clone(),
 			memory: spec.memory.clone(),
 			session_placeholders: spec.session_placeholders.clone(),
+			identity_placeholders: spec.identity_placeholders.clone(),
 		}
 	}
 }
