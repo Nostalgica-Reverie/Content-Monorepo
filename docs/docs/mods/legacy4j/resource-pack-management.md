@@ -14,6 +14,7 @@ Global Resource Packs can be configured in a similar way as vanilla Resource Pac
 Resource Albums are like groups of resource packs that can be applied at once. Albums can be applied per-world (like on LCE), or as the default pack for new worlds if applied in the Graphics options on the main menu. These can also be applied through a World Template.
 
 ### Album Options
+
 In `Album Options`, you can delete, edit and create new Resource Albums with a custom name and description.
 
 For information on syntax of the `resource_albums.json`, see [Resource Album Syntax](/mods/legacy4j/resource-album-syntax)
@@ -28,7 +29,9 @@ globalPack2
 albumPack1
 albumPack2
 ```
+
 However, if `globalPack2` were to be applied above `albumPack2` in the Resource Album, the new order would be this:
+
 ```
 globalPack1
 albumPack1

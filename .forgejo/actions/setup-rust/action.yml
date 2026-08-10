@@ -1,34 +1,34 @@
-name: "Setup Rust"
-description: "Stable Rust toolchain + Swatinem build cache, with optional GTK/WebKitGTK build deps for the webview/Tauri components."
+name: 'Setup Rust'
+description: 'Stable Rust toolchain + Swatinem build cache, with optional GTK/WebKitGTK build deps for the webview/Tauri components.'
 
 inputs:
   components:
     description: "Toolchain components, comma-separated (e.g. 'clippy, rustfmt')"
     required: false
-    default: ""
+    default: ''
   targets:
     description: "Additional compilation targets, comma-separated (e.g. 'x86_64-pc-windows-msvc')"
     required: false
-    default: ""
+    default: ''
   workspaces:
     description: "Cargo workspaces for rust-cache (newline-separated, ' -> target' suffix optional)"
     required: false
-    default: ""
+    default: ''
   cache-key:
-    description: "Extra cache key segment (e.g. a matrix leg name)"
+    description: 'Extra cache key segment (e.g. a matrix leg name)'
     required: false
-    default: ""
+    default: ''
   linux-deps:
     description: "Set 'true' to apt-install the GTK/WebKitGTK/libsoup dev packages the webview and Tauri builds need"
     required: false
-    default: "false"
+    default: 'false'
   extra-packages:
     description: "Additional apt packages to install alongside linux-deps (e.g. 'nsis')"
     required: false
-    default: ""
+    default: ''
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Install Linux webview dependencies
       if: inputs.linux-deps == 'true'

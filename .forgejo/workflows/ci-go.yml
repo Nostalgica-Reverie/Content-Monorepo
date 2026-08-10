@@ -1,20 +1,20 @@
-name: "CI - Packwand CLI"
+name: 'CI - Packwand CLI'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/packwandrs/**"
-      - ".forgejo/actions/setup-packwand/**"
-      - ".forgejo/actions/setup-rust/**"
-      - ".forgejo/workflows/ci-go.yml"
+      - 'apps/packwandrs/**'
+      - '.forgejo/actions/setup-packwand/**'
+      - '.forgejo/actions/setup-rust/**'
+      - '.forgejo/workflows/ci-go.yml'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/packwandrs/**"
-      - ".forgejo/actions/setup-packwand/**"
-      - ".forgejo/actions/setup-rust/**"
-      - ".forgejo/workflows/ci-go.yml"
+      - 'apps/packwandrs/**'
+      - '.forgejo/actions/setup-packwand/**'
+      - '.forgejo/actions/setup-rust/**'
+      - '.forgejo/workflows/ci-go.yml'
   workflow_dispatch:
 
 concurrency:

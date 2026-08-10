@@ -1,17 +1,17 @@
-import * as $dict from "../gleam/dict.mjs";
+import * as $dict from '../gleam/dict.mjs'
 import {
-  classify_dynamic as classify,
-  identity as bool,
-  identity as string,
-  identity as float,
-  identity as int,
-  identity as bit_array,
-  identity as list,
-  list_to_array as array,
-  identity as cast,
-} from "../gleam_stdlib.mjs";
+	classify_dynamic as classify,
+	identity as bool,
+	identity as string,
+	identity as float,
+	identity as int,
+	identity as bit_array,
+	identity as list,
+	list_to_array as array,
+	identity as cast,
+} from '../gleam_stdlib.mjs'
 
-export { array, bit_array, bool, classify, float, int, list, string };
+export { array, bit_array, bool, classify, float, int, list, string }
 
 /**
  * Create a dynamic value made of an unordered series of keys and values, where
@@ -21,7 +21,7 @@ export { array, bit_array, bool, classify, float, int, list, string };
  * object.
  */
 export function properties(entries) {
-  return cast($dict.from_list(entries));
+	return cast($dict.from_list(entries))
 }
 
 /**
@@ -31,5 +31,5 @@ export function properties(entries) {
  * `undefined`.
  */
 export function nil() {
-  return cast(undefined);
+	return cast(undefined)
 }

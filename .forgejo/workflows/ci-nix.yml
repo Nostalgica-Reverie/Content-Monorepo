@@ -1,32 +1,32 @@
-name: "CI - Nix"
+name: 'CI - Nix'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "flake.nix"
-      - "flake.lock"
-      - "apps/api/**"
-      - "apps/packwandrs/**"
-      - "packages/packwand2nix/**"
-      - "modpacks/**/checksums.json"
-      - "justfile"
-      - ".forgejo/actions/setup-nix/**"
-      - ".forgejo/actions/setup-just/**"
-      - ".forgejo/workflows/ci-nix.yml"
+      - 'flake.nix'
+      - 'flake.lock'
+      - 'apps/api/**'
+      - 'apps/packwandrs/**'
+      - 'packages/packwand2nix/**'
+      - 'modpacks/**/checksums.json'
+      - 'justfile'
+      - '.forgejo/actions/setup-nix/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-nix.yml'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "flake.nix"
-      - "flake.lock"
-      - "apps/api/**"
-      - "apps/packwandrs/**"
-      - "packages/packwand2nix/**"
-      - "modpacks/**/checksums.json"
-      - "justfile"
-      - ".forgejo/actions/setup-nix/**"
-      - ".forgejo/actions/setup-just/**"
-      - ".forgejo/workflows/ci-nix.yml"
+      - 'flake.nix'
+      - 'flake.lock'
+      - 'apps/api/**'
+      - 'apps/packwandrs/**'
+      - 'packages/packwand2nix/**'
+      - 'modpacks/**/checksums.json'
+      - 'justfile'
+      - '.forgejo/actions/setup-nix/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-nix.yml'
   workflow_dispatch:
 
 concurrency:

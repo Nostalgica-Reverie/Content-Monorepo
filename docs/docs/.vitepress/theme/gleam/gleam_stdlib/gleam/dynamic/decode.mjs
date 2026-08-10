@@ -1,56 +1,55 @@
 import {
-  Ok,
-  Error,
-  toList,
-  Empty as $Empty,
-  prepend as listPrepend,
-  CustomType as $CustomType,
-  isEqual,
-} from "../../gleam.mjs";
-import * as $bit_array from "../../gleam/bit_array.mjs";
-import * as $dict from "../../gleam/dict.mjs";
-import * as $dynamic from "../../gleam/dynamic.mjs";
-import * as $float from "../../gleam/float.mjs";
-import * as $int from "../../gleam/int.mjs";
-import * as $list from "../../gleam/list.mjs";
-import * as $option from "../../gleam/option.mjs";
-import { None, Some } from "../../gleam/option.mjs";
+	Ok,
+	Error,
+	toList,
+	Empty as $Empty,
+	prepend as listPrepend,
+	CustomType as $CustomType,
+	isEqual,
+} from '../../gleam.mjs'
+import * as $bit_array from '../../gleam/bit_array.mjs'
+import * as $dict from '../../gleam/dict.mjs'
+import * as $dynamic from '../../gleam/dynamic.mjs'
+import * as $float from '../../gleam/float.mjs'
+import * as $int from '../../gleam/int.mjs'
+import * as $list from '../../gleam/list.mjs'
+import * as $option from '../../gleam/option.mjs'
+import { None, Some } from '../../gleam/option.mjs'
 import {
-  float as dynamic_float,
-  int as dynamic_int,
-  bit_array as dynamic_bit_array,
-  string as dynamic_string,
-  identity as cast,
-  list as decode_list,
-  index as bare_index,
-  dict as decode_dict,
-  is_null,
-} from "../../gleam_stdlib.mjs";
+	float as dynamic_float,
+	int as dynamic_int,
+	bit_array as dynamic_bit_array,
+	string as dynamic_string,
+	identity as cast,
+	list as decode_list,
+	index as bare_index,
+	dict as decode_dict,
+	is_null,
+} from '../../gleam_stdlib.mjs'
 
 export class DecodeError extends $CustomType {
-  constructor(expected, found, path) {
-    super();
-    this.expected = expected;
-    this.found = found;
-    this.path = path;
-  }
+	constructor(expected, found, path) {
+		super()
+		this.expected = expected
+		this.found = found
+		this.path = path
+	}
 }
 export const DecodeError$DecodeError = (expected, found, path) =>
-  new DecodeError(expected, found, path);
-export const DecodeError$isDecodeError = (value) =>
-  value instanceof DecodeError;
-export const DecodeError$DecodeError$expected = (value) => value.expected;
-export const DecodeError$DecodeError$0 = (value) => value.expected;
-export const DecodeError$DecodeError$found = (value) => value.found;
-export const DecodeError$DecodeError$1 = (value) => value.found;
-export const DecodeError$DecodeError$path = (value) => value.path;
-export const DecodeError$DecodeError$2 = (value) => value.path;
+	new DecodeError(expected, found, path)
+export const DecodeError$isDecodeError = (value) => value instanceof DecodeError
+export const DecodeError$DecodeError$expected = (value) => value.expected
+export const DecodeError$DecodeError$0 = (value) => value.expected
+export const DecodeError$DecodeError$found = (value) => value.found
+export const DecodeError$DecodeError$1 = (value) => value.found
+export const DecodeError$DecodeError$path = (value) => value.path
+export const DecodeError$DecodeError$2 = (value) => value.path
 
 class Decoder extends $CustomType {
-  constructor(function$) {
-    super();
-    this.function = function$;
-  }
+	constructor(function$) {
+		super()
+		this.function = function$
+	}
 }
 
 /**
@@ -63,7 +62,7 @@ class Decoder extends $CustomType {
  * assert result == Ok(dynamic.float(3.14))
  * ```
  */
-export const dynamic = /* @__PURE__ */ new Decoder(decode_dynamic);
+export const dynamic = /* @__PURE__ */ new Decoder(decode_dynamic)
 
 /**
  * A decoder that decodes `Float` values.
@@ -82,7 +81,7 @@ export const dynamic = /* @__PURE__ */ new Decoder(decode_dynamic);
  * assert result == Ok(3.14)
  * ```
  */
-export const float = /* @__PURE__ */ new Decoder(decode_float);
+export const float = /* @__PURE__ */ new Decoder(decode_float)
 
 /**
  * A decoder that decodes `Int` values.
@@ -101,7 +100,7 @@ export const float = /* @__PURE__ */ new Decoder(decode_float);
  * assert result == Ok(147)
  * ```
  */
-export const int = /* @__PURE__ */ new Decoder(decode_int);
+export const int = /* @__PURE__ */ new Decoder(decode_int)
 
 /**
  * A decoder that decodes `BitArray` values. This decoder never returns an error.
@@ -113,7 +112,7 @@ export const int = /* @__PURE__ */ new Decoder(decode_int);
  * assert result == Ok(<<5, 7>>)
  * ```
  */
-export const bit_array = /* @__PURE__ */ new Decoder(decode_bit_array);
+export const bit_array = /* @__PURE__ */ new Decoder(decode_bit_array)
 
 /**
  * A decoder that decodes `String` values.
@@ -125,7 +124,7 @@ export const bit_array = /* @__PURE__ */ new Decoder(decode_bit_array);
  * assert result == Ok("Hello!")
  * ```
  */
-export const string = /* @__PURE__ */ new Decoder(decode_string);
+export const string = /* @__PURE__ */ new Decoder(decode_string)
 
 /**
  * A decoder that decodes `Bool` values.
@@ -137,10 +136,10 @@ export const string = /* @__PURE__ */ new Decoder(decode_string);
  * assert result == Ok(True)
  * ```
  */
-export const bool = /* @__PURE__ */ new Decoder(decode_bool);
+export const bool = /* @__PURE__ */ new Decoder(decode_bool)
 
 function decode_dynamic(data) {
-  return [data, toList([])];
+	return [data, toList([])]
 }
 
 /**
@@ -160,32 +159,29 @@ function decode_dynamic(data) {
  * ```
  */
 export function run(data, decoder) {
-  let $ = decoder.function(data);
-  let maybe_invalid_data = $[0];
-  let errors = $[1];
-  if (errors instanceof $Empty) {
-    return new Ok(maybe_invalid_data);
-  } else {
-    return new Error(errors);
-  }
+	let $ = decoder.function(data)
+	let maybe_invalid_data = $[0]
+	let errors = $[1]
+	if (errors instanceof $Empty) {
+		return new Ok(maybe_invalid_data)
+	} else {
+		return new Error(errors)
+	}
 }
 
 function run_dynamic_function(data, name, f) {
-  let $ = f(data);
-  if ($ instanceof Ok) {
-    let data$1 = $[0];
-    return [data$1, toList([])];
-  } else {
-    let placeholder = $[0];
-    return [
-      placeholder,
-      toList([new DecodeError(name, $dynamic.classify(data), toList([]))]),
-    ];
-  }
+	let $ = f(data)
+	if ($ instanceof Ok) {
+		let data$1 = $[0]
+		return [data$1, toList([])]
+	} else {
+		let placeholder = $[0]
+		return [placeholder, toList([new DecodeError(name, $dynamic.classify(data), toList([]))])]
+	}
 }
 
 function decode_float(data) {
-  return run_dynamic_function(data, "Float", dynamic_float);
+	return run_dynamic_function(data, 'Float', dynamic_float)
 }
 
 /**
@@ -200,50 +196,48 @@ function decode_float(data) {
  * ```
  */
 export function map(decoder, transformer) {
-  return new Decoder(
-    (d) => {
-      let $ = decoder.function(d);
-      let data = $[0];
-      let errors = $[1];
-      return [transformer(data), errors];
-    },
-  );
+	return new Decoder((d) => {
+		let $ = decoder.function(d)
+		let data = $[0]
+		let errors = $[1]
+		return [transformer(data), errors]
+	})
 }
 
 function decode_int(data) {
-  return run_dynamic_function(data, "Int", dynamic_int);
+	return run_dynamic_function(data, 'Int', dynamic_int)
 }
 
 function decode_bit_array(data) {
-  return run_dynamic_function(data, "BitArray", dynamic_bit_array);
+	return run_dynamic_function(data, 'BitArray', dynamic_bit_array)
 }
 
 function decode_string(data) {
-  return run_dynamic_function(data, "String", dynamic_string);
+	return run_dynamic_function(data, 'String', dynamic_string)
 }
 
 function run_decoders(loop$data, loop$failure, loop$decoders) {
-  while (true) {
-    let data = loop$data;
-    let failure = loop$failure;
-    let decoders = loop$decoders;
-    if (decoders instanceof $Empty) {
-      return failure;
-    } else {
-      let decoder = decoders.head;
-      let decoders$1 = decoders.tail;
-      let $ = decoder.function(data);
-      let layer = $;
-      let errors = $[1];
-      if (errors instanceof $Empty) {
-        return layer;
-      } else {
-        loop$data = data;
-        loop$failure = failure;
-        loop$decoders = decoders$1;
-      }
-    }
-  }
+	while (true) {
+		let data = loop$data
+		let failure = loop$failure
+		let decoders = loop$decoders
+		if (decoders instanceof $Empty) {
+			return failure
+		} else {
+			let decoder = decoders.head
+			let decoders$1 = decoders.tail
+			let $ = decoder.function(data)
+			let layer = $
+			let errors = $[1]
+			if (errors instanceof $Empty) {
+				return layer
+			} else {
+				loop$data = data
+				loop$failure = failure
+				loop$decoders = decoders$1
+			}
+		}
+	}
 }
 
 /**
@@ -265,63 +259,51 @@ function run_decoders(loop$data, loop$failure, loop$decoders) {
  * ```
  */
 export function one_of(first, alternatives) {
-  return new Decoder(
-    (dynamic_data) => {
-      let $ = first.function(dynamic_data);
-      let layer = $;
-      let errors = $[1];
-      if (errors instanceof $Empty) {
-        return layer;
-      } else {
-        return run_decoders(dynamic_data, layer, alternatives);
-      }
-    },
-  );
+	return new Decoder((dynamic_data) => {
+		let $ = first.function(dynamic_data)
+		let layer = $
+		let errors = $[1]
+		if (errors instanceof $Empty) {
+			return layer
+		} else {
+			return run_decoders(dynamic_data, layer, alternatives)
+		}
+	})
 }
 
 function path_segment_to_string(key) {
-  let decoder = one_of(
-    string,
-    toList([
-      (() => {
-        let _pipe = int;
-        return map(_pipe, $int.to_string);
-      })(),
-      (() => {
-        let _pipe = float;
-        return map(_pipe, $float.to_string);
-      })(),
-    ]),
-  );
-  let $ = run(key, decoder);
-  if ($ instanceof Ok) {
-    let key$1 = $[0];
-    return key$1;
-  } else {
-    return ("<" + $dynamic.classify(key)) + ">";
-  }
+	let decoder = one_of(
+		string,
+		toList([
+			(() => {
+				let _pipe = int
+				return map(_pipe, $int.to_string)
+			})(),
+			(() => {
+				let _pipe = float
+				return map(_pipe, $float.to_string)
+			})(),
+		]),
+	)
+	let $ = run(key, decoder)
+	if ($ instanceof Ok) {
+		let key$1 = $[0]
+		return key$1
+	} else {
+		return '<' + $dynamic.classify(key) + '>'
+	}
 }
 
 function push_path(layer, path) {
-  let path$1 = $list.map(
-    path,
-    (key) => {
-      let _pipe = key;
-      let _pipe$1 = cast(_pipe);
-      return path_segment_to_string(_pipe$1);
-    },
-  );
-  let errors = $list.map(
-    layer[1],
-    (error) => {
-      return new DecodeError(
-        error.expected,
-        error.found,
-        $list.append(path$1, error.path),
-      );
-    },
-  );
-  return [layer[0], errors];
+	let path$1 = $list.map(path, (key) => {
+		let _pipe = key
+		let _pipe$1 = cast(_pipe)
+		return path_segment_to_string(_pipe$1)
+	})
+	let errors = $list.map(layer[1], (error) => {
+		return new DecodeError(error.expected, error.found, $list.append(path$1, error.path))
+	})
+	return [layer[0], errors]
 }
 
 /**
@@ -340,64 +322,55 @@ function push_path(layer, path) {
  * ```
  */
 export function list(inner) {
-  return new Decoder(
-    (data) => {
-      return decode_list(
-        data,
-        inner.function,
-        (p, k) => { return push_path(p, toList([k])); },
-        0,
-        toList([]),
-      );
-    },
-  );
+	return new Decoder((data) => {
+		return decode_list(
+			data,
+			inner.function,
+			(p, k) => {
+				return push_path(p, toList([k]))
+			},
+			0,
+			toList([]),
+		)
+	})
 }
 
-function index(
-  loop$path,
-  loop$position,
-  loop$inner,
-  loop$data,
-  loop$handle_miss
-) {
-  while (true) {
-    let path = loop$path;
-    let position = loop$position;
-    let inner = loop$inner;
-    let data = loop$data;
-    let handle_miss = loop$handle_miss;
-    if (path instanceof $Empty) {
-      let _pipe = data;
-      let _pipe$1 = inner(_pipe);
-      return push_path(_pipe$1, $list.reverse(position));
-    } else {
-      let key = path.head;
-      let path$1 = path.tail;
-      let $ = bare_index(data, key);
-      if ($ instanceof Ok) {
-        let $1 = $[0];
-        if ($1 instanceof Some) {
-          let data$1 = $1[0];
-          loop$path = path$1;
-          loop$position = listPrepend(key, position);
-          loop$inner = inner;
-          loop$data = data$1;
-          loop$handle_miss = handle_miss;
-        } else {
-          return handle_miss(data, listPrepend(key, position));
-        }
-      } else {
-        let kind = $[0];
-        let $1 = inner(data);
-        let default$ = $1[0];
-        let _pipe = [
-          default$,
-          toList([new DecodeError(kind, $dynamic.classify(data), toList([]))]),
-        ];
-        return push_path(_pipe, $list.reverse(position));
-      }
-    }
-  }
+function index(loop$path, loop$position, loop$inner, loop$data, loop$handle_miss) {
+	while (true) {
+		let path = loop$path
+		let position = loop$position
+		let inner = loop$inner
+		let data = loop$data
+		let handle_miss = loop$handle_miss
+		if (path instanceof $Empty) {
+			let _pipe = data
+			let _pipe$1 = inner(_pipe)
+			return push_path(_pipe$1, $list.reverse(position))
+		} else {
+			let key = path.head
+			let path$1 = path.tail
+			let $ = bare_index(data, key)
+			if ($ instanceof Ok) {
+				let $1 = $[0]
+				if ($1 instanceof Some) {
+					let data$1 = $1[0]
+					loop$path = path$1
+					loop$position = listPrepend(key, position)
+					loop$inner = inner
+					loop$data = data$1
+					loop$handle_miss = handle_miss
+				} else {
+					return handle_miss(data, listPrepend(key, position))
+				}
+			} else {
+				let kind = $[0]
+				let $1 = inner(data)
+				let default$ = $1[0]
+				let _pipe = [default$, toList([new DecodeError(kind, $dynamic.classify(data), toList([]))])]
+				return push_path(_pipe, $list.reverse(position))
+			}
+		}
+	}
 }
 
 /**
@@ -428,31 +401,20 @@ function index(
  * ```
  */
 export function subfield(field_path, field_decoder, next) {
-  return new Decoder(
-    (data) => {
-      let $ = index(
-        field_path,
-        toList([]),
-        field_decoder.function,
-        data,
-        (data, position) => {
-          let $1 = field_decoder.function(data);
-          let default$ = $1[0];
-          let _pipe = [
-            default$,
-            toList([new DecodeError("Field", "Nothing", toList([]))]),
-          ];
-          return push_path(_pipe, $list.reverse(position));
-        },
-      );
-      let out = $[0];
-      let errors1 = $[1];
-      let $1 = next(out).function(data);
-      let out$1 = $1[0];
-      let errors2 = $1[1];
-      return [out$1, $list.append(errors1, errors2)];
-    },
-  );
+	return new Decoder((data) => {
+		let $ = index(field_path, toList([]), field_decoder.function, data, (data, position) => {
+			let $1 = field_decoder.function(data)
+			let default$ = $1[0]
+			let _pipe = [default$, toList([new DecodeError('Field', 'Nothing', toList([]))])]
+			return push_path(_pipe, $list.reverse(position))
+		})
+		let out = $[0]
+		let errors1 = $[1]
+		let $1 = next(out).function(data)
+		let out$1 = $1[0]
+		let errors2 = $1[1]
+		return [out$1, $list.append(errors1, errors2)]
+	})
 }
 
 /**
@@ -484,25 +446,14 @@ export function subfield(field_path, field_decoder, next) {
  * ```
  */
 export function at(path, inner) {
-  return new Decoder(
-    (data) => {
-      return index(
-        path,
-        toList([]),
-        inner.function,
-        data,
-        (data, position) => {
-          let $ = inner.function(data);
-          let default$ = $[0];
-          let _pipe = [
-            default$,
-            toList([new DecodeError("Field", "Nothing", toList([]))]),
-          ];
-          return push_path(_pipe, $list.reverse(position));
-        },
-      );
-    },
-  );
+	return new Decoder((data) => {
+		return index(path, toList([]), inner.function, data, (data, position) => {
+			let $ = inner.function(data)
+			let default$ = $[0]
+			let _pipe = [default$, toList([new DecodeError('Field', 'Nothing', toList([]))])]
+			return push_path(_pipe, $list.reverse(position))
+		})
+	})
 }
 
 /**
@@ -527,16 +478,16 @@ export function at(path, inner) {
  * ```
  */
 export function success(data) {
-  return new Decoder((_) => { return [data, toList([])]; });
+	return new Decoder((_) => {
+		return [data, toList([])]
+	})
 }
 
 /**
  * Construct a decode error for some unexpected dynamic data.
  */
 export function decode_error(expected, found) {
-  return toList([
-    new DecodeError(expected, $dynamic.classify(found), toList([])),
-  ]);
+	return toList([new DecodeError(expected, $dynamic.classify(found), toList([]))])
 }
 
 /**
@@ -573,7 +524,7 @@ export function decode_error(expected, found) {
  * see [`optional_field`](#optional_field) and / [`optionally_at`](#optionally_at).
  */
 export function field(field_name, field_decoder, next) {
-  return subfield(toList([field_name]), field_decoder, next);
+	return subfield(toList([field_name]), field_decoder, next)
 }
 
 /**
@@ -603,37 +554,32 @@ export function field(field_name, field_decoder, next) {
  * ```
  */
 export function optional_field(key, default$, field_decoder, next) {
-  return new Decoder(
-    (data) => {
-      let _block;
-      let _block$1;
-      let $1 = bare_index(data, key);
-      if ($1 instanceof Ok) {
-        let $2 = $1[0];
-        if ($2 instanceof Some) {
-          let data$1 = $2[0];
-          _block$1 = field_decoder.function(data$1);
-        } else {
-          _block$1 = [default$, toList([])];
-        }
-      } else {
-        let kind = $1[0];
-        _block$1 = [
-          default$,
-          toList([new DecodeError(kind, $dynamic.classify(data), toList([]))]),
-        ];
-      }
-      let _pipe = _block$1;
-      _block = push_path(_pipe, toList([key]));
-      let $ = _block;
-      let out = $[0];
-      let errors1 = $[1];
-      let $2 = next(out).function(data);
-      let out$1 = $2[0];
-      let errors2 = $2[1];
-      return [out$1, $list.append(errors1, errors2)];
-    },
-  );
+	return new Decoder((data) => {
+		let _block
+		let _block$1
+		let $1 = bare_index(data, key)
+		if ($1 instanceof Ok) {
+			let $2 = $1[0]
+			if ($2 instanceof Some) {
+				let data$1 = $2[0]
+				_block$1 = field_decoder.function(data$1)
+			} else {
+				_block$1 = [default$, toList([])]
+			}
+		} else {
+			let kind = $1[0]
+			_block$1 = [default$, toList([new DecodeError(kind, $dynamic.classify(data), toList([]))])]
+		}
+		let _pipe = _block$1
+		_block = push_path(_pipe, toList([key]))
+		let $ = _block
+		let out = $[0]
+		let errors1 = $[1]
+		let $2 = next(out).function(data)
+		let out$1 = $2[0]
+		let errors2 = $2[1]
+		return [out$1, $list.append(errors1, errors2)]
+	})
 }
 
 /**
@@ -657,53 +603,47 @@ export function optional_field(key, default$, field_decoder, next) {
  * ```
  */
 export function optionally_at(path, default$, inner) {
-  return new Decoder(
-    (data) => {
-      return index(
-        path,
-        toList([]),
-        inner.function,
-        data,
-        (_, _1) => { return [default$, toList([])]; },
-      );
-    },
-  );
+	return new Decoder((data) => {
+		return index(path, toList([]), inner.function, data, (_, _1) => {
+			return [default$, toList([])]
+		})
+	})
 }
 
 function decode_bool(data) {
-  let $ = isEqual(cast(true), data);
-  if ($) {
-    return [true, toList([])];
-  } else {
-    let $1 = isEqual(cast(false), data);
-    if ($1) {
-      return [false, toList([])];
-    } else {
-      return [false, decode_error("Bool", data)];
-    }
-  }
+	let $ = isEqual(cast(true), data)
+	if ($) {
+		return [true, toList([])]
+	} else {
+		let $1 = isEqual(cast(false), data)
+		if ($1) {
+			return [false, toList([])]
+		} else {
+			return [false, decode_error('Bool', data)]
+		}
+	}
 }
 
 function fold_dict(acc, key, value, key_decoder, value_decoder) {
-  let $ = key_decoder(key);
-  let $1 = $[1];
-  if ($1 instanceof $Empty) {
-    let key_decoded = $[0];
-    let $2 = value_decoder(value);
-    let $3 = $2[1];
-    if ($3 instanceof $Empty) {
-      let value$1 = $2[0];
-      let dict$1 = $dict.insert(acc[0], key_decoded, value$1);
-      return [dict$1, acc[1]];
-    } else {
-      let errors = $3;
-      let key_identifier = path_segment_to_string(key);
-      return push_path([$dict.new$(), errors], toList([key_identifier]));
-    }
-  } else {
-    let errors = $1;
-    return push_path([$dict.new$(), errors], toList(["keys"]));
-  }
+	let $ = key_decoder(key)
+	let $1 = $[1]
+	if ($1 instanceof $Empty) {
+		let key_decoded = $[0]
+		let $2 = value_decoder(value)
+		let $3 = $2[1]
+		if ($3 instanceof $Empty) {
+			let value$1 = $2[0]
+			let dict$1 = $dict.insert(acc[0], key_decoded, value$1)
+			return [dict$1, acc[1]]
+		} else {
+			let errors = $3
+			let key_identifier = path_segment_to_string(key)
+			return push_path([$dict.new$(), errors], toList([key_identifier]))
+		}
+	} else {
+		let errors = $1
+		return push_path([$dict.new$(), errors], toList(['keys']))
+	}
 }
 
 /**
@@ -724,28 +664,22 @@ function fold_dict(acc, key, value, key_decoder, value_decoder) {
  * ```
  */
 export function dict(key, value) {
-  return new Decoder(
-    (data) => {
-      let $ = decode_dict(data);
-      if ($ instanceof Ok) {
-        let dict$1 = $[0];
-        return $dict.fold(
-          dict$1,
-          [$dict.new$(), toList([])],
-          (a, k, v) => {
-            let $1 = a[1];
-            if ($1 instanceof $Empty) {
-              return fold_dict(a, k, v, key.function, value.function);
-            } else {
-              return a;
-            }
-          },
-        );
-      } else {
-        return [$dict.new$(), decode_error("Dict", data)];
-      }
-    },
-  );
+	return new Decoder((data) => {
+		let $ = decode_dict(data)
+		if ($ instanceof Ok) {
+			let dict$1 = $[0]
+			return $dict.fold(dict$1, [$dict.new$(), toList([])], (a, k, v) => {
+				let $1 = a[1]
+				if ($1 instanceof $Empty) {
+					return fold_dict(a, k, v, key.function, value.function)
+				} else {
+					return a
+				}
+			})
+		} else {
+			return [$dict.new$(), decode_error('Dict', data)]
+		}
+	})
 }
 
 /**
@@ -769,33 +703,29 @@ export function dict(key, value) {
  * ```
  */
 export function optional(inner) {
-  return new Decoder(
-    (data) => {
-      let $ = is_null(data);
-      if ($) {
-        return [new $option.None(), toList([])];
-      } else {
-        let $1 = inner.function(data);
-        let data$1 = $1[0];
-        let errors = $1[1];
-        return [new $option.Some(data$1), errors];
-      }
-    },
-  );
+	return new Decoder((data) => {
+		let $ = is_null(data)
+		if ($) {
+			return [new $option.None(), toList([])]
+		} else {
+			let $1 = inner.function(data)
+			let data$1 = $1[0]
+			let errors = $1[1]
+			return [new $option.Some(data$1), errors]
+		}
+	})
 }
 
 /**
  * Apply a transformation function to any errors returned by the decoder.
  */
 export function map_errors(decoder, transformer) {
-  return new Decoder(
-    (d) => {
-      let $ = decoder.function(d);
-      let data = $[0];
-      let errors = $[1];
-      return [data, transformer(errors)];
-    },
-  );
+	return new Decoder((d) => {
+		let $ = decoder.function(d)
+		let data = $[0]
+		let errors = $[1]
+		return [data, transformer(errors)]
+	})
 }
 
 /**
@@ -814,19 +744,17 @@ export function map_errors(decoder, transformer) {
  * ```
  */
 export function collapse_errors(decoder, name) {
-  return new Decoder(
-    (dynamic_data) => {
-      let $ = decoder.function(dynamic_data);
-      let layer = $;
-      let data = $[0];
-      let errors = $[1];
-      if (errors instanceof $Empty) {
-        return layer;
-      } else {
-        return [data, decode_error(name, dynamic_data)];
-      }
-    },
-  );
+	return new Decoder((dynamic_data) => {
+		let $ = decoder.function(dynamic_data)
+		let layer = $
+		let data = $[0]
+		let errors = $[1]
+		if (errors instanceof $Empty) {
+			return layer
+		} else {
+			return [data, decode_error(name, dynamic_data)]
+		}
+	})
 }
 
 /**
@@ -835,22 +763,20 @@ export function collapse_errors(decoder, name) {
  * This may be useful to run one previous decoder to use in further decoding.
  */
 export function then$(decoder, next) {
-  return new Decoder(
-    (dynamic_data) => {
-      let $ = decoder.function(dynamic_data);
-      let data = $[0];
-      let errors = $[1];
-      let decoder$1 = next(data);
-      let $1 = decoder$1.function(dynamic_data);
-      let layer = $1;
-      let data$1 = $1[0];
-      if (errors instanceof $Empty) {
-        return layer;
-      } else {
-        return [data$1, errors];
-      }
-    },
-  );
+	return new Decoder((dynamic_data) => {
+		let $ = decoder.function(dynamic_data)
+		let data = $[0]
+		let errors = $[1]
+		let decoder$1 = next(data)
+		let $1 = decoder$1.function(dynamic_data)
+		let layer = $1
+		let data$1 = $1[0]
+		if (errors instanceof $Empty) {
+			return layer
+		} else {
+			return [data$1, errors]
+		}
+	})
 }
 
 /**
@@ -870,7 +796,9 @@ export function then$(decoder, next) {
  * ```
  */
 export function failure(placeholder, name) {
-  return new Decoder((d) => { return [placeholder, decode_error(name, d)]; });
+	return new Decoder((d) => {
+		return [placeholder, decode_error(name, d)]
+	})
 }
 
 /**
@@ -912,21 +840,16 @@ export function failure(placeholder, name) {
  * ```
  */
 export function new_primitive_decoder(name, decoding_function) {
-  return new Decoder(
-    (d) => {
-      let $ = decoding_function(d);
-      if ($ instanceof Ok) {
-        let t = $[0];
-        return [t, toList([])];
-      } else {
-        let placeholder = $[0];
-        return [
-          placeholder,
-          toList([new DecodeError(name, $dynamic.classify(d), toList([]))]),
-        ];
-      }
-    },
-  );
+	return new Decoder((d) => {
+		let $ = decoding_function(d)
+		if ($ instanceof Ok) {
+			let t = $[0]
+			return [t, toList([])]
+		} else {
+			let placeholder = $[0]
+			return [placeholder, toList([new DecodeError(name, $dynamic.classify(d), toList([]))])]
+		}
+	})
 }
 
 /**
@@ -954,10 +877,8 @@ export function new_primitive_decoder(name, decoding_function) {
  * ```
  */
 export function recursive(inner) {
-  return new Decoder(
-    (data) => {
-      let decoder = inner();
-      return decoder.function(data);
-    },
-  );
+	return new Decoder((data) => {
+		let decoder = inner()
+		return decoder.function(data)
+	})
 }

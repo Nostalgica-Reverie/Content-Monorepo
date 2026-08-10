@@ -1,0 +1,50 @@
+name: 'CI - Somnus'
+
+on:
+  push:
+    branches: ['main']
+    paths:
+      - 'apps/packwandrs/somnus/**'
+      - 'apps/packwandrs/crates/packwand-cli/**'
+      - '.forgejo/actions/setup-go/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-somnus.yml'
+      - 'justfile'
+  pull_request:
+    branches: ['main']
+    paths:
+      - 'apps/packwandrs/somnus/**'
+      - 'apps/packwandrs/crates/packwand-cli/**'
+      - '.forgejo/actions/setup-go/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-somnus.yml'
+      - 'justfile'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  somnus:
+    runs-on: technocality
+    timeout-minutes: 20
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v5
+        with:
+          filter: blob:none
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /apps/packwandrs/somnus/
+            /.tangled/workflows/
+            /justfile
+            /.forgejo/actions/
+      - uses: ./.forgejo/actions/setup-go
+      - uses: ./.forgejo/actions/setup-just
+      - name: Lint Somnus
+        run: just lint-somnus
+      - name: Test Somnus
+        run: just test-somnus
+      - name: Build Somnus
+        run: just build-somnus

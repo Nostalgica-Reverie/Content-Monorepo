@@ -1,8 +1,8 @@
-name: "Setup Packwand"
-description: "Install Rust"
+name: 'Setup Packwand'
+description: 'Install Rust'
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Setup Packwand Rust toolchain
       uses: ./.forgejo/actions/setup-rust

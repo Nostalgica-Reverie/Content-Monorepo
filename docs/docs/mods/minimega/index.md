@@ -4,8 +4,8 @@ layout: home
 title: Minimega
 
 hero:
-  name: "Minimega"
-  text: ""
+  name: 'Minimega'
+  text: ''
   tagline: Recreating all the Mini Games from Legacy Console Edition!
   image:
     src: /mm-icon.webp
@@ -32,4 +32,3 @@ features:
     details: Fight to the death in this Hunger Games-style Mini Game! An Original LCE Mini Game.
     link: /mods/minimega/battle
 ---
-

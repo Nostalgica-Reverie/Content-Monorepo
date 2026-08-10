@@ -1,11 +1,11 @@
-name: "CI - Release Notes"
+name: 'CI - Release Notes'
 
 on:
   push:
     tags:
-      - "v*"
-      - "installer-v*"
-      - "gui-v*"
+      - 'v*'
+      - 'installer-v*'
+      - 'gui-v*'
   workflow_dispatch:
 
 jobs:

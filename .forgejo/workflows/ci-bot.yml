@@ -1,26 +1,26 @@
-name: "CI - Bot"
+name: 'CI - Bot'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/bot/**"
-      - "package.json"
-      - "bun.lock"
-      - ".forgejo/actions/setup-bot/**"
-      - ".forgejo/actions/setup-just/**"
-      - "justfile"
-      - ".forgejo/workflows/ci-bot.yml"
+      - 'apps/bot/**'
+      - 'package.json'
+      - 'bun.lock'
+      - '.forgejo/actions/setup-bot/**'
+      - '.forgejo/actions/setup-just/**'
+      - 'justfile'
+      - '.forgejo/workflows/ci-bot.yml'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/bot/**"
-      - "package.json"
-      - "bun.lock"
-      - ".forgejo/actions/setup-bot/**"
-      - ".forgejo/actions/setup-just/**"
-      - "justfile"
-      - ".forgejo/workflows/ci-bot.yml"
+      - 'apps/bot/**'
+      - 'package.json'
+      - 'bun.lock'
+      - '.forgejo/actions/setup-bot/**'
+      - '.forgejo/actions/setup-just/**'
+      - 'justfile'
+      - '.forgejo/workflows/ci-bot.yml'
   workflow_dispatch:
 
 concurrency:

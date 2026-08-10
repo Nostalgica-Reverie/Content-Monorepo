@@ -1,12 +1,30 @@
 when:
-  - event: ["push"]
-    tag: ["gui-v*"]
+  - event: ['push']
+    tag: ['gui-v*']
 
 engine: microvm
 image: nixos
 clone:
   depth: 0
-dependencies: [bun, cargo-xwin, cmake, curl, gcc, git, gnumake, jdk25, jq, just, ninja, nsis, pkg-config, rustup, webkitgtk_4_1, xxd]
+dependencies:
+  [
+    bun,
+    cargo-xwin,
+    cmake,
+    curl,
+    gcc,
+    git,
+    gnumake,
+    jdk25,
+    jq,
+    just,
+    ninja,
+    nsis,
+    pkg-config,
+    rustup,
+    webkitgtk_4_1,
+    xxd,
+  ]
 
 steps:
   - name: Install GUI build tools

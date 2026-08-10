@@ -1,378 +1,333 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://git.nostalgica.net/schema/manifest.json",
-  "title": "Manifest",
-  "description": "Manifest for a mod, modpack, datapack, or resourcepack. A manifest is either single-version (has 'mc_version') or multi-variant (has 'variants'), never both. Every manifest must declare a 'role'.",
-  "type": "object",
-  "definitions": {
-    "conventionCheck": {
-      "description": "true to enable at the default level, false to disable, or an object to configure it.",
-      "oneOf": [
-        { "type": "boolean" },
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "false disables the check while keeping its configuration."
-            },
-            "level": {
-              "enum": ["error", "warn", "warning"],
-              "description": "Severity of a failure. 'error' (the default) blocks preflight; 'warn' reports without blocking."
-            },
-            "path": {
-              "type": "string",
-              "description": "Pack-relative path override, for a pack whose file is somewhere unusual."
-            },
-            "expect_name": {
-              "type": "string",
-              "description": "Name the config should carry, when the shipped name differs from the manifest's 'name'."
-            }
-          }
-        }
-      ]
-    }
-  },
-  "properties": {
-    "$schema": {
-      "type": "string",
-      "description": "Path to this schema, for editor autocomplete."
-    },
-    "id": {
-      "type": "string",
-      "description": "Stable project identifier. Matches the project's folder name."
-    },
-    "name": {
-      "type": "string",
-      "description": "Human-readable project name."
-    },
-    "type": {
-      "type": "string",
-      "enum": [
-        "mod",
-        "modpack",
-        "datapack",
-        "resourcepack"
-      ],
-      "description": "Project type."
-    },
-    "loader": {
-      "type": "string",
-      "description": "Mod loader (e.g. fabric, forge, neoforge, quilt). Required for single-version modpacks. For multi-variant projects this is the default loader; individual variants may override it with their own 'loader'."
-    },
-    "release_type": {
-      "type": "string",
-      "enum": [
-        "release",
-        "beta",
-        "alpha"
-      ],
-      "description": "Release channel."
-    },
-    "version": {
-      "type": "string",
-      "description": "Project version. Required for production manifests; generated for experimental builds."
-    },
-    "mc_version": {
-      "type": "string",
-      "description": "Minecraft version. Single-version manifests. Mutually exclusive with 'variants'."
-    },
-    "environment": {
-      "type": "string",
-      "enum": [
-        "client",
-        "server",
-        "both"
-      ],
-      "description": "Which side this project ships into. Orthogonal to 'type': a server modpack is type 'modpack' with environment 'server'. Validation warns when a mod's 'side' cannot run in the declared environment (a client-only mod in a server pack, or the reverse). Individual variants may override this. If omitted, 'both' is assumed."
-    },
-    "variants": {
-      "type": "array",
-      "description": "Independently-built variants published as separate versions under one project. Each variant may set its own loader and, for mods, its Stonecutter Gradle project. Publish order = array order (last lands on top).",
-      "minItems": 1,
-      "items": {
-        "type": "object",
-        "properties": {
-          "mc_version": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          },
-          "release_type": {
-            "type": "string",
-            "enum": [
-              "release",
-              "beta",
-              "alpha"
-            ]
-          },
-          "loader": {
-            "type": "string",
-            "description": "Loader for this variant (e.g. fabric, forge, neoforge, quilt). Overrides the pack-level 'loader'. If omitted, the pack-level 'loader' applies."
-          },
-          "environment": {
-            "type": "string",
-            "enum": [
-              "client",
-              "server",
-              "both"
-            ],
-            "description": "Environment for this variant. Overrides the pack-level 'environment'. Lets one project ship a client and a server variant side by side."
-          },
-          "gradle_project": {
-            "type": "string",
-            "pattern": "^[A-Za-z0-9._-]+$",
-            "description": "Stonecutter Gradle subproject that builds this mod variant (for example, '26.1.2-fabric'). Required for type 'mod'."
-          }
-        },
-        "required": [
-          "mc_version"
-        ],
-        "additionalProperties": false
-      }
-    },
-    "modrinth_id": {
-      "type": "string"
-    },
-    "curseforge_id": {
-      "type": "string"
-    },
-    "github_id": {
-      "type": "string",
-      "description": "GitHub owner/repo slug if the pack is distributed via GitHub Releases."
-    },
-    "gitea_id": {
-      "type": "string",
-      "description": "Forgejo/Gitea/Codeberg owner/repo slug if the pack is distributed via a Forgejo-compatible forge."
-    },
-    "gitlab_id": {
-      "type": "string",
-      "description": "GitLab project path (owner/repo) if the pack is distributed via GitLab."
-    },
-    "lifecycle": {
-      "type": "string",
-      "enum": ["active", "maintenance", "archived", "eol"],
-      "description": "Pack maintenance state. 'archived' and 'eol' packs are excluded from workspace auto-update operations. If omitted, 'active' is assumed."
-    },
-    "role": {
-      "description": "REQUIRED. Declares this pack's performance relationship. One of: 'none' (standalone), 'base' (a performance base others consume), or an object declaring the base this pack consumes from. Forces every pack to state its role explicitly rather than by omission.",
-      "oneOf": [
-        {
-          "type": "string",
-          "enum": [
-            "none",
-            "base"
-          ],
-          "description": "'none' = standalone; 'base' = this pack is a performance base."
-        },
-        {
-          "type": "object",
-          "description": "This pack consumes its performance baseline from another pack.",
-          "properties": {
-            "performance_base": {
-              "type": "object",
-              "description": "Sync copies the base's named source subdir into this pack's named target subdir per mapping. cross platform is forbidden cuz source and target must share the same platform suffix (-mr/-cf), since copying Modrinth mods into a CurseForge pack (or vice versa) risks license violations.",
-              "properties": {
-                "pack": {
-                  "type": "string",
-                  "description": "ID of the base pack. Must exist and have role 'base'."
-                },
-                "mappings": {
-                  "type": "array",
-                  "minItems": 1,
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "source": {
-                        "type": "string",
-                        "pattern": "-(mr|cf)$",
-                        "description": "Subdir in the base to copy from. Must end -mr or -cf."
-                      },
-                      "target": {
-                        "type": "string",
-                        "pattern": "-(mr|cf)$",
-                        "description": "Subdir in THIS pack to copy into. Same platform suffix as source."
-                      }
-                    },
-                    "required": [
-                      "source",
-                      "target"
-                    ],
-                    "additionalProperties": false
-                  }
-                }
-              },
-              "required": [
-                "pack",
-                "mappings"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "required": [
-            "performance_base"
-          ],
-          "additionalProperties": false
-        }
-      ]
-    },
-    "shared_assets": {
-      "type": "string",
-      "description": "ID of a pack providing shared assets (e.g. 'lce-common'). Must exist. Independent of 'role' \u2014 a pack of any role may also use shared assets."
-    },
-    "conventions": {
-      "type": "object",
-      "description": "Opt-in per-mod convention checks run by 'packwand preflight'. Packwand requires no files of its own — a check is dormant until named here. Most useful for catching drift: a bcc config left at the previous release's version.",
-      "additionalProperties": false,
-      "properties": {
-        "options": { "$ref": "#/definitions/conventionCheck" },
-        "resourcepackoverrides": { "$ref": "#/definitions/conventionCheck" },
-        "modpackupdatechecker": { "$ref": "#/definitions/conventionCheck" },
-        "bcc": { "$ref": "#/definitions/conventionCheck" },
-        "ftbquests": { "$ref": "#/definitions/conventionCheck" }
-      }
-    },
-    "automation": {
-      "type": "object",
-      "description": "Per-pack automation settings consumed by packwand and the changelog generator. Replaces the old opt-out.json.",
-      "additionalProperties": false,
-      "properties": {
-        "auto_update": {
-          "type": "boolean",
-          "description": "false: packwand update / loader-update skip this pack."
-        },
-        "server_promo": {
-          "type": "boolean",
-          "description": "false: changelogs omit the BisectHosting block."
-        },
-        "sync_exclude": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Paths sync never copies into this consumer."
-        },
-        "environment_exempt": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Mod slugs the environment check ignores, for mods whose provider-supplied 'side' is wrong. Each entry is a metadata filename without its '.pw.toml' suffix."
-        },
-        "sync_on_build": {
-          "type": "boolean",
-          "description": "Run configured same-pack variant syncs before build and publish."
-        },
-        "sync_variants": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["source", "target"],
-            "properties": {
-              "source": { "type": "string" },
-              "target": { "type": "string" },
-              "folders": {
-                "type": "array",
-                "items": { "type": "string", "enum": ["mods", "config", "resourcepacks", "global_packs"] }
-              }
-            }
-          }
-        },
-        "freeze": {
-          "type": "object",
-          "description": "Frozen (pinned) mods per subdir key, maintained by 'packwand freeze'.",
-          "additionalProperties": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "full_auto": {
-          "type": "object",
-          "description": "Opts this pack into the unattended release pipeline ('packwand automation run'): update -> refresh -> validate -> tests -> docs -> bump. Requires 'version' to already follow the CalVer 'YY.MM' or 'YY.MM.patch' pattern. Ignored (treated as disabled) when 'lifecycle' is 'archived' or 'eol'.",
-          "additionalProperties": false,
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "true: a scheduled workflow may update, validate, test, and version-bump this pack unattended."
-            },
-            "tests": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Shell commands run from the pack dir before bump; a nonzero exit aborts the run and discards update/refresh changes."
-            }
-          },
-          "required": ["enabled"]
-        }
-      }
-    }
-  },
-  "required": [
-    "id",
-    "name",
-    "type",
-    "release_type",
-    "role"
-  ],
-  "oneOf": [
-    {
-      "required": [
-        "mc_version"
-      ],
-      "not": {
-        "required": [
-          "variants"
-        ]
-      }
-    },
-    {
-      "required": [
-        "variants"
-      ],
-      "not": {
-        "required": [
-          "mc_version"
-        ]
-      }
-    }
-  ],
-  "allOf": [
-    {
-      "if": {
-        "properties": {
-          "type": { "const": "mod" }
-        },
-        "required": ["type"]
-      },
-      "then": {
-        "required": ["variants"],
-        "properties": {
-          "variants": {
-            "items": {
-              "required": ["mc_version", "loader", "gradle_project"]
-            }
-          }
-        }
-      }
-    }
-  ],
-  "anyOf": [
-    { "required": ["modrinth_id"] },
-    { "required": ["curseforge_id"] },
-    { "required": ["github_id"] },
-    { "required": ["gitea_id"] },
-    { "required": ["gitlab_id"] }
-  ]
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://git.nostalgica.net/schema/manifest.json",
+	"title": "Manifest",
+	"description": "Manifest for a mod, modpack, datapack, or resourcepack. A manifest is either single-version (has 'mc_version') or multi-variant (has 'variants'), never both. Every manifest must declare a 'role'.",
+	"type": "object",
+	"definitions": {
+		"conventionCheck": {
+			"description": "true to enable at the default level, false to disable, or an object to configure it.",
+			"oneOf": [
+				{ "type": "boolean" },
+				{
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"enabled": {
+							"type": "boolean",
+							"description": "false disables the check while keeping its configuration."
+						},
+						"level": {
+							"enum": ["error", "warn", "warning"],
+							"description": "Severity of a failure. 'error' (the default) blocks preflight; 'warn' reports without blocking."
+						},
+						"path": {
+							"type": "string",
+							"description": "Pack-relative path override, for a pack whose file is somewhere unusual."
+						},
+						"expect_name": {
+							"type": "string",
+							"description": "Name the config should carry, when the shipped name differs from the manifest's 'name'."
+						}
+					}
+				}
+			]
+		}
+	},
+	"properties": {
+		"$schema": {
+			"type": "string",
+			"description": "Path to this schema, for editor autocomplete."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable project identifier. Matches the project's folder name."
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable project name."
+		},
+		"type": {
+			"type": "string",
+			"enum": ["mod", "modpack", "datapack", "resourcepack"],
+			"description": "Project type."
+		},
+		"loader": {
+			"type": "string",
+			"description": "Mod loader (e.g. fabric, forge, neoforge, quilt). Required for single-version modpacks. For multi-variant projects this is the default loader; individual variants may override it with their own 'loader'."
+		},
+		"release_type": {
+			"type": "string",
+			"enum": ["release", "beta", "alpha"],
+			"description": "Release channel."
+		},
+		"version": {
+			"type": "string",
+			"description": "Project version. Required for production manifests; generated for experimental builds."
+		},
+		"mc_version": {
+			"type": "string",
+			"description": "Minecraft version. Single-version manifests. Mutually exclusive with 'variants'."
+		},
+		"environment": {
+			"type": "string",
+			"enum": ["client", "server", "both"],
+			"description": "Which side this project ships into. Orthogonal to 'type': a server modpack is type 'modpack' with environment 'server'. Validation warns when a mod's 'side' cannot run in the declared environment (a client-only mod in a server pack, or the reverse). Individual variants may override this. If omitted, 'both' is assumed."
+		},
+		"variants": {
+			"type": "array",
+			"description": "Independently-built variants published as separate versions under one project. Each variant may set its own loader and, for mods, its Stonecutter Gradle project. Publish order = array order (last lands on top).",
+			"minItems": 1,
+			"items": {
+				"type": "object",
+				"properties": {
+					"mc_version": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"version": {
+						"type": "string"
+					},
+					"release_type": {
+						"type": "string",
+						"enum": ["release", "beta", "alpha"]
+					},
+					"loader": {
+						"type": "string",
+						"description": "Loader for this variant (e.g. fabric, forge, neoforge, quilt). Overrides the pack-level 'loader'. If omitted, the pack-level 'loader' applies."
+					},
+					"environment": {
+						"type": "string",
+						"enum": ["client", "server", "both"],
+						"description": "Environment for this variant. Overrides the pack-level 'environment'. Lets one project ship a client and a server variant side by side."
+					},
+					"gradle_project": {
+						"type": "string",
+						"pattern": "^[A-Za-z0-9._-]+$",
+						"description": "Stonecutter Gradle subproject that builds this mod variant (for example, '26.1.2-fabric'). Required for type 'mod'."
+					}
+				},
+				"required": ["mc_version"],
+				"additionalProperties": false
+			}
+		},
+		"modrinth_id": {
+			"type": "string"
+		},
+		"curseforge_id": {
+			"type": "string"
+		},
+		"github_id": {
+			"type": "string",
+			"description": "GitHub owner/repo slug if the pack is distributed via GitHub Releases."
+		},
+		"gitea_id": {
+			"type": "string",
+			"description": "Forgejo/Gitea/Codeberg owner/repo slug if the pack is distributed via a Forgejo-compatible forge."
+		},
+		"gitlab_id": {
+			"type": "string",
+			"description": "GitLab project path (owner/repo) if the pack is distributed via GitLab."
+		},
+		"lifecycle": {
+			"type": "string",
+			"enum": ["active", "maintenance", "archived", "eol"],
+			"description": "Pack maintenance state. 'archived' and 'eol' packs are excluded from workspace auto-update operations. If omitted, 'active' is assumed."
+		},
+		"role": {
+			"description": "REQUIRED. Declares this pack's performance relationship. One of: 'none' (standalone), 'base' (a performance base others consume), or an object declaring the base this pack consumes from. Forces every pack to state its role explicitly rather than by omission.",
+			"oneOf": [
+				{
+					"type": "string",
+					"enum": ["none", "base"],
+					"description": "'none' = standalone; 'base' = this pack is a performance base."
+				},
+				{
+					"type": "object",
+					"description": "This pack consumes its performance baseline from another pack.",
+					"properties": {
+						"performance_base": {
+							"type": "object",
+							"description": "Sync copies the base's named source subdir into this pack's named target subdir per mapping. cross platform is forbidden cuz source and target must share the same platform suffix (-mr/-cf), since copying Modrinth mods into a CurseForge pack (or vice versa) risks license violations.",
+							"properties": {
+								"pack": {
+									"type": "string",
+									"description": "ID of the base pack. Must exist and have role 'base'."
+								},
+								"mappings": {
+									"type": "array",
+									"minItems": 1,
+									"items": {
+										"type": "object",
+										"properties": {
+											"source": {
+												"type": "string",
+												"pattern": "-(mr|cf)$",
+												"description": "Subdir in the base to copy from. Must end -mr or -cf."
+											},
+											"target": {
+												"type": "string",
+												"pattern": "-(mr|cf)$",
+												"description": "Subdir in THIS pack to copy into. Same platform suffix as source."
+											}
+										},
+										"required": ["source", "target"],
+										"additionalProperties": false
+									}
+								}
+							},
+							"required": ["pack", "mappings"],
+							"additionalProperties": false
+						}
+					},
+					"required": ["performance_base"],
+					"additionalProperties": false
+				}
+			]
+		},
+		"shared_assets": {
+			"type": "string",
+			"description": "ID of a pack providing shared assets (e.g. 'lce-common'). Must exist. Independent of 'role' \u2014 a pack of any role may also use shared assets."
+		},
+		"conventions": {
+			"type": "object",
+			"description": "Opt-in per-mod convention checks run by 'packwand preflight'. Packwand requires no files of its own — a check is dormant until named here. Most useful for catching drift: a bcc config left at the previous release's version.",
+			"additionalProperties": false,
+			"properties": {
+				"options": { "$ref": "#/definitions/conventionCheck" },
+				"resourcepackoverrides": { "$ref": "#/definitions/conventionCheck" },
+				"modpackupdatechecker": { "$ref": "#/definitions/conventionCheck" },
+				"bcc": { "$ref": "#/definitions/conventionCheck" },
+				"ftbquests": { "$ref": "#/definitions/conventionCheck" }
+			}
+		},
+		"automation": {
+			"type": "object",
+			"description": "Per-pack automation settings consumed by packwand and the changelog generator. Replaces the old opt-out.json.",
+			"additionalProperties": false,
+			"properties": {
+				"auto_update": {
+					"type": "boolean",
+					"description": "false: packwand update / loader-update skip this pack."
+				},
+				"server_promo": {
+					"type": "boolean",
+					"description": "false: changelogs omit the BisectHosting block."
+				},
+				"sync_exclude": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Paths sync never copies into this consumer."
+				},
+				"environment_exempt": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Mod slugs the environment check ignores, for mods whose provider-supplied 'side' is wrong. Each entry is a metadata filename without its '.pw.toml' suffix."
+				},
+				"sync_on_build": {
+					"type": "boolean",
+					"description": "Run configured same-pack variant syncs before build and publish."
+				},
+				"sync_variants": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["source", "target"],
+						"properties": {
+							"source": { "type": "string" },
+							"target": { "type": "string" },
+							"folders": {
+								"type": "array",
+								"items": {
+									"type": "string",
+									"enum": ["mods", "config", "resourcepacks", "global_packs"]
+								}
+							}
+						}
+					}
+				},
+				"freeze": {
+					"type": "object",
+					"description": "Frozen (pinned) mods per subdir key, maintained by 'packwand freeze'.",
+					"additionalProperties": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				},
+				"full_auto": {
+					"type": "object",
+					"description": "Opts this pack into the unattended release pipeline ('packwand automation run'): update -> refresh -> validate -> tests -> docs -> bump. Requires 'version' to already follow the CalVer 'YY.MM' or 'YY.MM.patch' pattern. Ignored (treated as disabled) when 'lifecycle' is 'archived' or 'eol'.",
+					"additionalProperties": false,
+					"properties": {
+						"enabled": {
+							"type": "boolean",
+							"description": "true: a scheduled workflow may update, validate, test, and version-bump this pack unattended."
+						},
+						"tests": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							},
+							"description": "Shell commands run from the pack dir before bump; a nonzero exit aborts the run and discards update/refresh changes."
+						}
+					},
+					"required": ["enabled"]
+				}
+			}
+		}
+	},
+	"required": ["id", "name", "type", "release_type", "role"],
+	"oneOf": [
+		{
+			"required": ["mc_version"],
+			"not": {
+				"required": ["variants"]
+			}
+		},
+		{
+			"required": ["variants"],
+			"not": {
+				"required": ["mc_version"]
+			}
+		}
+	],
+	"allOf": [
+		{
+			"if": {
+				"properties": {
+					"type": { "const": "mod" }
+				},
+				"required": ["type"]
+			},
+			"then": {
+				"required": ["variants"],
+				"properties": {
+					"variants": {
+						"items": {
+							"required": ["mc_version", "loader", "gradle_project"]
+						}
+					}
+				}
+			}
+		}
+	],
+	"anyOf": [
+		{ "required": ["modrinth_id"] },
+		{ "required": ["curseforge_id"] },
+		{ "required": ["github_id"] },
+		{ "required": ["gitea_id"] },
+		{ "required": ["gitlab_id"] }
+	]
 }

@@ -1,14 +1,14 @@
 {
-  "name": "@lasting-legacy/packwand-rs",
-  "private": true,
-  "packageManager": "bun@1.3.14",
-  "scripts": {
-    "dev": "bun --cwd frontend dev",
-    "build": "bun --cwd frontend build",
-    "check": "bun --cwd frontend check",
-    "test:frontend": "bun --cwd frontend test",
-    "audit:capabilities": "bun frontend/scripts/audit-capabilities.mjs",
-    "desktop:dev": "cargo tauri dev",
-    "desktop:build": "cargo tauri build"
-  }
+	"name": "@lasting-legacy/packwand-rs",
+	"private": true,
+	"packageManager": "bun@1.3.14",
+	"scripts": {
+		"dev": "bun --cwd frontend dev",
+		"build": "bun --cwd frontend build",
+		"check": "bun --cwd frontend check",
+		"test:frontend": "bun --cwd frontend test",
+		"audit:capabilities": "bun frontend/scripts/audit-capabilities.mjs",
+		"desktop:dev": "cargo tauri dev",
+		"desktop:build": "cargo tauri build"
+	}
 }

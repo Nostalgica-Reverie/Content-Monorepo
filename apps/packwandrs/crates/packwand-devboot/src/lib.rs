@@ -13,6 +13,7 @@
 //! resolved from the pack while Minecraft writes only to the instance.
 
 pub mod bootstrap;
+pub mod jj_toolchain;
 pub mod pack_target;
 
 use std::collections::BTreeMap;
@@ -31,43 +32,45 @@ pub use packwand_minecraft::InstallProgress;
 /// itself and the resolved secret values for its `${secret:<name>}`
 /// placeholders (never part of the plan's own serialization).
 pub struct BootedPack {
-    pub record: InstanceRecord,
-    pub plan: LaunchPlan,
-    pub secrets: BTreeMap<String, SecretString>,
+	pub record: InstanceRecord,
+	pub plan: LaunchPlan,
+	pub secrets: BTreeMap<String, SecretString>,
 }
 
 #[derive(Debug, thiserror::Error)]
 pub enum DevBootError {
-    #[error(transparent)]
-    PackTarget(#[from] PackTargetError),
-    #[error("failed to load or create the shared instance: {0}")]
-    Instance(String),
+	#[error(transparent)]
+	PackTarget(#[from] PackTargetError),
+	#[error("failed to load or create the shared instance: {0}")]
+	Instance(String),
+	#[error("failed to provision developer tool: {0}")]
+	Toolchain(String),
 }
 
 /// A stable, filesystem-safe instance id for one (Minecraft version, loader,
 /// loader version) combination, shared across every pack that targets it.
 pub fn instance_id_for(target: &PackTarget) -> String {
-    let sanitize = |s: &str| -> String {
-        s.chars()
-            .map(|c| {
-                if c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | '_') {
-                    c
-                } else {
-                    '_'
-                }
-            })
-            .collect()
-    };
-    match (&target.loader, &target.loader_version) {
-        (Some(loader), Some(version)) => format!(
-            "{}-{}-{}",
-            sanitize(&target.minecraft),
-            sanitize(loader),
-            sanitize(version)
-        ),
-        (Some(loader), None) => format!("{}-{}", sanitize(&target.minecraft), sanitize(loader)),
-        (None, _) => format!("{}-vanilla", sanitize(&target.minecraft)),
-    }
+	let sanitize = |s: &str| -> String {
+		s.chars()
+			.map(|c| {
+				if c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | '_') {
+					c
+				} else {
+					'_'
+				}
+			})
+			.collect()
+	};
+	match (&target.loader, &target.loader_version) {
+		(Some(loader), Some(version)) => format!(
+			"{}-{}-{}",
+			sanitize(&target.minecraft),
+			sanitize(loader),
+			sanitize(version)
+		),
+		(Some(loader), None) => format!("{}-{}", sanitize(&target.minecraft), sanitize(loader)),
+		(None, _) => format!("{}-vanilla", sanitize(&target.minecraft)),
+	}
 }
 
 /// The offline session used for dev-testing boots when no account is signed
@@ -75,10 +78,10 @@ pub fn instance_id_for(target: &PackTarget) -> String {
 /// (`packwand-msa`); this remains available unconditionally as the
 /// dev-testing fallback.
 pub fn default_offline_session() -> Result<Session, String> {
-    let username = std::env::var("USERNAME")
-        .or_else(|_| std::env::var("USER"))
-        .unwrap_or_else(|_| "packwand-dev".to_string());
-    packwand_auth::offline_session(&username).map_err(|e| e.to_string())
+	let username = std::env::var("USERNAME")
+		.or_else(|_| std::env::var("USER"))
+		.unwrap_or_else(|_| "packwand-dev".to_string());
+	packwand_auth::offline_session(&username).map_err(|e| e.to_string())
 }
 
 /// Tracks which session's identity is currently baked into a shared
@@ -89,26 +92,26 @@ pub fn default_offline_session() -> Result<Session, String> {
 /// bookkeeping, stored alongside `instance.json`.
 #[derive(Serialize, Deserialize)]
 struct BakedIdentity {
-    uuid: String,
+	uuid: String,
 }
 
 fn identity_marker_path(paths: &InstancePaths) -> PathBuf {
-    paths.game_dir.join("devboot-identity.json")
+	paths.game_dir.join("devboot-identity.json")
 }
 
 fn read_baked_identity(paths: &InstancePaths) -> Option<String> {
-    let data = std::fs::read(identity_marker_path(paths)).ok()?;
-    serde_json::from_slice::<BakedIdentity>(&data)
-        .ok()
-        .map(|marker| marker.uuid)
+	let data = std::fs::read(identity_marker_path(paths)).ok()?;
+	serde_json::from_slice::<BakedIdentity>(&data)
+		.ok()
+		.map(|marker| marker.uuid)
 }
 
 fn write_baked_identity(paths: &InstancePaths, uuid: &str) -> Result<(), String> {
-    let bytes = serde_json::to_vec(&BakedIdentity {
-        uuid: uuid.to_string(),
-    })
-    .map_err(|e| e.to_string())?;
-    std::fs::write(identity_marker_path(paths), bytes).map_err(|e| e.to_string())
+	let bytes = serde_json::to_vec(&BakedIdentity {
+		uuid: uuid.to_string(),
+	})
+	.map_err(|e| e.to_string())?;
+	std::fs::write(identity_marker_path(paths), bytes).map_err(|e| e.to_string())
 }
 
 /// Returns the shared instance for `target` under `managed_root`, baked for
@@ -119,85 +122,85 @@ fn write_baked_identity(paths: &InstancePaths, uuid: &str) -> Result<(), String>
 /// metadata re-fetch, no re-download of already-verified assets/libraries).
 /// Does nothing at all (no network) when the install already matches.
 pub fn ensure_instance_for_session(
-    managed_root: &Path,
-    target: &PackTarget,
-    session: &Session,
-    java: Option<PathBuf>,
-    on_progress: impl Fn(InstallProgress) + Sync,
+	managed_root: &Path,
+	target: &PackTarget,
+	session: &Session,
+	java: Option<PathBuf>,
+	on_progress: impl Fn(InstallProgress) + Sync,
 ) -> Result<InstanceRecord, DevBootError> {
-    let repo = FsInstanceRepository::new(managed_root.to_path_buf());
-    let id = instance_id_for(target);
-    let paths = repo.instance_paths(&id);
+	let repo = FsInstanceRepository::new(managed_root.to_path_buf());
+	let id = instance_id_for(target);
+	let paths = repo.instance_paths(&id);
 
-    if let Ok(record) = repo.get(&id)
-        && read_baked_identity(&paths).as_deref() == Some(session.uuid.as_str())
-    {
-        return Ok(record);
-    }
+	if let Ok(record) = repo.get(&id)
+		&& read_baked_identity(&paths).as_deref() == Some(session.uuid.as_str())
+	{
+		return Ok(record);
+	}
 
-    let request = bootstrap::BootstrapRequest {
-        root: managed_root.to_path_buf(),
-        id,
-        minecraft: target.minecraft.clone(),
-        loader: target.loader.clone(),
-        loader_version: target.loader_version.clone(),
-        session: session.clone(),
-        java,
-        memory_max_mb: None,
-        workers: 8,
-        endpoints: MetadataEndpoints::default(),
-    };
-    let record = bootstrap::bootstrap_with_progress(&request, on_progress)
-        .map_err(DevBootError::Instance)?;
-    write_baked_identity(&paths, &session.uuid).map_err(DevBootError::Instance)?;
-    Ok(record)
+	let request = bootstrap::BootstrapRequest {
+		root: managed_root.to_path_buf(),
+		id,
+		minecraft: target.minecraft.clone(),
+		loader: target.loader.clone(),
+		loader_version: target.loader_version.clone(),
+		session: session.clone(),
+		java,
+		memory_max_mb: None,
+		workers: 8,
+		endpoints: MetadataEndpoints::default(),
+	};
+	let record = bootstrap::bootstrap_with_progress(&request, on_progress)
+		.map_err(DevBootError::Instance)?;
+	write_baked_identity(&paths, &session.uuid).map_err(DevBootError::Instance)?;
+	Ok(record)
 }
 
 /// Builds a launch plan using `pack_dir` only as the version/loader manifest
 /// and `game_dir` as Minecraft's writable directory. Shared binaries remain
 /// under `managed_root`.
 pub fn boot_pack(
-    managed_root: &Path,
-    pack_dir: &Path,
-    game_dir: &Path,
-    session: &Session,
-    java: Option<PathBuf>,
-    on_progress: impl Fn(InstallProgress) + Sync,
+	managed_root: &Path,
+	pack_dir: &Path,
+	game_dir: &Path,
+	session: &Session,
+	java: Option<PathBuf>,
+	on_progress: impl Fn(InstallProgress) + Sync,
 ) -> Result<BootedPack, DevBootError> {
-    let pack_toml = pack_dir.join("pack.toml");
-    let target = resolve_pack_target(&pack_toml)?;
-    let record = ensure_instance_for_session(managed_root, &target, session, java, on_progress)?;
+	let pack_toml = pack_dir.join("pack.toml");
+	let target = resolve_pack_target(&pack_toml)?;
+	let record = ensure_instance_for_session(managed_root, &target, session, java, on_progress)?;
 
-    let managed_paths = FsInstanceRepository::new(managed_root.to_path_buf())
-        .instance_paths(&instance_id_for(&target));
-    let paths = InstancePaths {
-        game_dir: game_dir.to_path_buf(),
-        logs_dir: game_dir.join("logs"),
-        natives_dir: managed_paths.natives_dir,
-        assets_dir: managed_paths.assets_dir,
-        libraries_dir: managed_paths.libraries_dir,
-    };
-    let plan = build_launch_plan(&record, &paths);
+	let managed_paths = FsInstanceRepository::new(managed_root.to_path_buf())
+		.instance_paths(&instance_id_for(&target));
+	let paths = InstancePaths {
+		game_dir: game_dir.to_path_buf(),
+		logs_dir: game_dir.join("logs"),
+		natives_dir: managed_paths.natives_dir,
+		assets_dir: managed_paths.assets_dir,
+		libraries_dir: managed_paths.libraries_dir,
+	};
+	let plan = build_launch_plan(&record, &paths);
 
-    // `session` is the same identity already baked into the instance's
-    // game_args (ensure_instance_for_session guarantees that); its secrets
-    // are exactly the `${secret:<name>}` values `launch` needs to resolve.
-    let secrets = if record.session_placeholders.is_empty() {
-        BTreeMap::new()
-    } else {
-        session.secrets()
-    };
+	// `session` is the same identity already baked into the instance's
+	// game_args (ensure_instance_for_session guarantees that); its secrets
+	// are exactly the `${secret:<name>}` values `launch` needs to resolve.
+	let secrets = if record.session_placeholders.is_empty() {
+		BTreeMap::new()
+	} else {
+		session.secrets()
+	};
 
-    Ok(BootedPack {
-        record,
-        plan,
-        secrets,
-    })
+	Ok(BootedPack {
+		record,
+		plan,
+		secrets,
+	})
 }
 
 /// The default shared managed root for the launcher's install cache, given
 /// the Tauri app's data directory. Kept as a plain function (not tied to
 /// any Tauri type) so it stays testable and reusable from a future CLI.
 pub fn default_managed_root(app_data_dir: &Path) -> PathBuf {
-    app_data_dir.join("launcher")
+	app_data_dir.join("launcher")
 }

@@ -1,0 +1,12 @@
+{
+	"client_id": "https://packwand.nostalgica.net/oauth/client-metadata.json",
+	"client_name": "Packwand",
+	"client_uri": "https://packwand.nostalgica.net/",
+	"application_type": "native",
+	"grant_types": ["authorization_code", "refresh_token"],
+	"scope": "atproto blob:image/* repo:net.nostalgica.packwand.contact repo:net.nostalgica.packwand.image repo:net.nostalgica.packwand.pack repo:net.nostalgica.packwand.profile repo:net.nostalgica.packwand.session.invite repo:net.nostalgica.packwand.snippet repo:sh.tangled.pipeline.status",
+	"response_types": ["code"],
+	"redirect_uris": ["http://127.0.0.1:38427/callback"],
+	"token_endpoint_auth_method": "none",
+	"dpop_bound_access_tokens": true
+}

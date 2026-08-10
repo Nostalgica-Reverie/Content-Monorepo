@@ -1,31 +1,31 @@
-name: "Packwand Task"
+name: 'Packwand Task'
 
 on:
   workflow_call:
     inputs:
       verb:
-        description: "packwand command (and fixed args) to run"
+        description: 'packwand command (and fixed args) to run'
         required: true
         type: string
       scope:
-        description: "optional repository-relative pack directory"
+        description: 'optional repository-relative pack directory'
         required: false
         type: string
-        default: ""
+        default: ''
       dry_run:
-        description: "skip committing all resulting changes"
+        description: 'skip committing all resulting changes'
         required: false
         type: boolean
         default: false
       commit-message:
-        description: "commit message for resulting changes"
+        description: 'commit message for resulting changes'
         required: true
         type: string
       add:
-        description: "pathspec to commit"
+        description: 'pathspec to commit'
         required: false
         type: string
-        default: "modpacks"
+        default: 'modpacks'
 jobs:
   packwand:
     runs-on: technocality

@@ -1,18 +1,18 @@
-name: "CI - Packeater"
+name: 'CI - Packeater'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/packwandrs/**"
-      - ".forgejo/actions/setup-packeater/**"
-      - ".forgejo/workflows/ci-packeater.yml"
+      - 'apps/packwandrs/**'
+      - '.forgejo/actions/setup-packeater/**'
+      - '.forgejo/workflows/ci-packeater.yml'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/packwandrs/**"
-      - ".forgejo/actions/setup-packeater/**"
-      - ".forgejo/workflows/ci-packeater.yml"
+      - 'apps/packwandrs/**'
+      - '.forgejo/actions/setup-packeater/**'
+      - '.forgejo/workflows/ci-packeater.yml'
   workflow_dispatch:
 
 jobs:

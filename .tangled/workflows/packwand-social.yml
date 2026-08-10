@@ -1,0 +1,20 @@
+when:
+  - event: ['push']
+    branch: ['main']
+    paths: ['apps/packwandrs/packwand-social/**', 'justfile']
+  - event: ['pull_request']
+    branch: ['main']
+    paths: ['apps/packwandrs/packwand-social/**', 'justfile']
+  - event: ['manual']
+
+engine: microvm
+image: nixos
+dependencies: [go, just]
+
+steps:
+  - name: Lint Packwand social
+    command: just lint-social
+  - name: Test Packwand social
+    command: just test-social
+  - name: Build Packwand social
+    command: just build-social

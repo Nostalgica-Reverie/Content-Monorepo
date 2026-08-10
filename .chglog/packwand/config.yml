@@ -4,7 +4,7 @@ info:
   title: CHANGELOG (packwand)
   repository_url: https://git.nostalgica.net/Reverie-Projects/monorepo
 options:
-  tag_filter_pattern: "^v[0-9]"
+  tag_filter_pattern: '^v[0-9]'
   commits:
     filters:
       Type:

@@ -12,13 +12,17 @@ To run the docs on your own machine for contribution purposes:
 
 - Install [Bun](https://bun.sh/) 1.3.14
 - Install the monorepo dependencies from the repository root
+
 ```
 bun install
 ```
+
 - Start the local development server
+
 ```
 bun run --cwd docs docs:dev
 ```
 
 ## License
+
 The Lasting Legacy Documentation is licensed under Creative Commons Attribution 4.0 International.

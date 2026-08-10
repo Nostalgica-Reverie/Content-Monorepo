@@ -1,73 +1,64 @@
-import { property, schema, SchemaGenerator } from "../schemaDSL.ts";
-import { Hash } from "./shared/Hash.ts";
-import { HashFormat } from "./shared/HashFormat.ts";
-import { Path } from "./shared/Path.ts";
+import { property, schema, SchemaGenerator } from '../schemaDSL.ts'
+import { Hash } from './shared/Hash.ts'
+import { HashFormat } from './shared/HashFormat.ts'
+import { Path } from './shared/Path.ts'
 
 @schema({
 	// TODO(gen): $id?
-	$schema: "http://json-schema.org/draft-07/schema",
-	title: "index.toml",
+	$schema: 'http://json-schema.org/draft-07/schema',
+	title: 'index.toml',
 	description: `The index file of the modpack, storing references to every file to be downloaded in the pack.`,
-	examples: [
-		await Deno.readTextFile("./example-pack/index.toml"),
-	],
+	examples: [await Deno.readTextFile('./example-pack/index.toml')],
 	// TODO(gen): Taplo extensions: links?
 })
 export class Index {
-	@property.arrayRef(
-		"The files listed in this index. If it is not defined, defaults to an empty list.",
-		true,
-	)
-	files = new IndexFile();
+	@property.arrayRef('The files listed in this index. If it is not defined, defaults to an empty list.', true)
+	files = new IndexFile()
 
 	@property.ref(
-		"The default hash format for every file in the index. If missing, consumers assume sha512; packwand transparently upgrades older indexes to sha512 on refresh.",
+		'The default hash format for every file in the index. If missing, consumers assume sha512; packwand transparently upgrades older indexes to sha512 on refresh.',
 	)
 	@property.required
-	@property.default("sha512")
-	"hash-format" = new HashFormat();
+	@property.default('sha512')
+	'hash-format' = new HashFormat()
 }
 // deno-lint-ignore no-empty-interface
 export interface Index extends SchemaGenerator {}
 
 @schema({
-	description: "A single file in the index, to be downloaded by the modpack installer.",
+	description: 'A single file in the index, to be downloaded by the modpack installer.',
 })
 class IndexFile {
-	@property.ref(
-		`The path to the file to be downloaded, relative to this index file.`,
-	)
+	@property.ref(`The path to the file to be downloaded, relative to this index file.`)
 	@property.required
-	file = new Path();
+	file = new Path()
 
 	@property.ref(
-		"The hash of the specified file, as a string. May be omitted when the pack uses no-internal-hashes mode.",
+		'The hash of the specified file, as a string. May be omitted when the pack uses no-internal-hashes mode.',
 	)
-	hash = new Hash();
+	hash = new Hash()
 
 	@property.ref(
-		"The hash format for the hash of the specified file. Defaults to the hash format specified in the index - ideally remove this value if it is equal to the hash format for the index to save space.",
+		'The hash format for the hash of the specified file. Defaults to the hash format specified in the index - ideally remove this value if it is equal to the hash format for the index to save space.',
 	)
-	"hash-format" = new HashFormat();
+	'hash-format' = new HashFormat()
+
+	@property.boolean('True when this entry points to a .toml metadata file, which references a file outside the pack.')
+	@property.default(false)
+	metafile: undefined
 
 	@property.boolean(
-		"True when this entry points to a .toml metadata file, which references a file outside the pack.",
+		'When this is set to true, the file is not overwritten if it already exists, to preserve changes made by a user.',
 	)
 	@property.default(false)
-	metafile: undefined;
-
-	@property.boolean(
-		"When this is set to true, the file is not overwritten if it already exists, to preserve changes made by a user.",
-	)
-	@property.default(false)
-	preserve: undefined;
+	preserve: undefined
 
 	@property.string(
-		"The name with which this file should be downloaded, instead of the filename specified in the path. Not compatible with metafile, and may not be very well supported.",
+		'The name with which this file should be downloaded, instead of the filename specified in the path. Not compatible with metafile, and may not be very well supported.',
 	)
-	alias: undefined;
+	alias: undefined
 }
 // deno-lint-ignore no-empty-interface
 interface IndexFile extends SchemaGenerator {}
 
-export default Index;
+export default Index

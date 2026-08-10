@@ -2,19 +2,19 @@ import { call } from './core'
 
 /** One line of pw4shell output, tagged with the output dock's tone. */
 export interface ShellLine {
-  text: string
-  tone: 'info' | 'error' | 'success'
+	text: string
+	tone: 'info' | 'error' | 'success'
 }
 
 export interface ShellResult {
-  lines: ShellLine[]
-  /** False when the verb was not recognised, or the line was malformed. */
-  handled: boolean
+	lines: ShellLine[]
+	/** False when the verb was not recognised, or the line was malformed. */
+	handled: boolean
 }
 
 /** Run one pw4shell line in the active project or pack folder. */
 export const shellExec = (line: string, cwd?: string) =>
-  call<ShellResult>('shell_exec', { line, cwd: cwd ?? null })
+	call<ShellResult>('shell_exec', { line, cwd: cwd ?? null })
 
 /**
  * Tokenise a line without running it, using the kernel's own quoting rules.

@@ -9,26 +9,18 @@
 	"properties": {
 		"name": {
 			"description": "The name of the mod, which can be displayed in user interfaces to identify the mod. It does not need to be unique between mods, although this may cause confusion.",
-			"examples": [
-				"Borderless Mining"
-			],
+			"examples": ["Borderless Mining"],
 			"type": "string"
 		},
 		"filename": {
 			"type": "string",
 			"description": "The destination path of the mod file, relative to this file.\n\nA relative path using forward slashes. Must not reference a file outside the pack root, and should not include characters or filenames restricted on common operating systems.\n\nImplementations must support special characters including those that are percent-encoded in URLs, such as spaces and square brackets. Implementations must guard against path traversal attacks and manually validate paths.",
 			"pattern": "^([^/\\x00-\\x1F\\x7F\"*/:<>?\\\\|]+\\/)*[^/\\x00-\\x1F\\x7F\"*/:<>?\\\\|]*$",
-			"examples": [
-				"borderless-mining-1.1.5+1.19.jar"
-			]
+			"examples": ["borderless-mining-1.1.5+1.19.jar"]
 		},
 		"side": {
 			"description": "The side on which this mod should be installed.\n\nA physical Minecraft side. Server applies to the dedicated server, client applies to the client (and integrated server), and both applies to every installation.",
-			"enum": [
-				"both",
-				"client",
-				"server"
-			],
+			"enum": ["both", "client", "server"],
 			"default": "both",
 			"type": "string"
 		},
@@ -48,30 +40,19 @@
 				},
 				"mode": {
 					"description": "The download mode. \"url\" (or omitted/empty) downloads from the url field. \"metadata:curseforge\" resolves the download URL through the CurseForge API using the [update.curseforge] metadata, as required by CurseForge's distribution rules; such files have no url field.",
-					"enum": [
-						"url",
-						"metadata:curseforge"
-					],
+					"enum": ["url", "metadata:curseforge"],
 					"default": "url",
 					"type": "string"
 				},
 				"hash": {
 					"type": "string",
 					"description": "The hash of the specified file, as a string.\n\nBinary hashes should be stored as hexadecimal, and case should be ignored during parsing. Numeric hashes (e.g. Murmur2) should still be stored as a string, to ensure the value is preserved correctly.",
-					"examples": [
-						"08f98e28057a0fbdb288c947b7871def4b18b176"
-					]
+					"examples": ["08f98e28057a0fbdb288c947b7871def4b18b176"]
 				},
 				"hash-format": {
 					"type": "string",
 					"description": "The hash format for the hash of the specified file.\n\nThe hash algorithm used to determine if a file is valid. All functions listed must be supported by tools implementing the packwand pack format.",
-					"enum": [
-						"sha256",
-						"sha512",
-						"sha1",
-						"md5",
-						"murmur2"
-					],
+					"enum": ["sha256", "sha512", "sha1", "md5", "murmur2"],
 					"x-taplo": {
 						"docs": {
 							"enumValues": [
@@ -85,10 +66,7 @@
 					}
 				}
 			},
-			"required": [
-				"hash",
-				"hash-format"
-			]
+			"required": ["hash", "hash-format"]
 		},
 		"option": {
 			"type": "object",
@@ -109,9 +87,7 @@
 					"type": "boolean"
 				}
 			},
-			"required": [
-				"optional"
-			]
+			"required": ["optional"]
 		},
 		"update": {
 			"type": "object",
@@ -127,23 +103,16 @@
 					"properties": {
 						"project-id": {
 							"description": "An integer representing the unique project ID of this mod. Updating will retrieve the latest file for this project ID that is valid (correct Minecraft version, release channel, modloader, etc.).",
-							"examples": [
-								327154
-							],
+							"examples": [327154],
 							"type": "number"
 						},
 						"file-id": {
 							"description": "An integer representing the unique file ID of this mod file. This can be used if more metadata needs to be obtained relating to the mod.",
-							"examples": [
-								3643025
-							],
+							"examples": [3643025],
 							"type": "number"
 						}
 					},
-					"required": [
-						"project-id",
-						"file-id"
-					]
+					"required": ["project-id", "file-id"]
 				},
 				"modrinth": {
 					"type": "object",
@@ -151,23 +120,16 @@
 					"properties": {
 						"mod-id": {
 							"description": "A string representing the unique mod ID of this mod. Updating will retrieve the latest file for this project ID that is valid (correct Minecraft version, release channel, modloader, etc.).",
-							"examples": [
-								"kYq5qkSL"
-							],
+							"examples": ["kYq5qkSL"],
 							"type": "string"
 						},
 						"version": {
 							"description": "A string representing the unique version ID of this file. This can be used if more metadata needs to be obtained relating to the mod.",
-							"examples": [
-								"gqoXgtxO"
-							],
+							"examples": ["gqoXgtxO"],
 							"type": "string"
 						}
 					},
-					"required": [
-						"mod-id",
-						"version"
-					]
+					"required": ["mod-id", "version"]
 				},
 				"github": {
 					"type": "object",
@@ -175,9 +137,7 @@
 					"properties": {
 						"slug": {
 							"description": "The repository, as owner/repo.",
-							"examples": [
-								"CaffeineMC/sodium"
-							],
+							"examples": ["CaffeineMC/sodium"],
 							"type": "string"
 						},
 						"tag": {
@@ -193,9 +153,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"slug"
-					]
+					"required": ["slug"]
 				},
 				"gitlab": {
 					"type": "object",
@@ -219,9 +177,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"slug"
-					]
+					"required": ["slug"]
 				},
 				"forgejo": {
 					"type": "object",
@@ -249,17 +205,11 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"slug"
-					]
+					"required": ["slug"]
 				}
 			},
 			"required": []
 		}
 	},
-	"required": [
-		"name",
-		"filename",
-		"download"
-	]
+	"required": ["name", "filename", "download"]
 }

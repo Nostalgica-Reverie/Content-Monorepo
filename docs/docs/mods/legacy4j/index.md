@@ -4,8 +4,8 @@ layout: home
 title: Legacy4J
 
 hero:
-  name: "Legacy4J"
-  text: ""
+  name: 'Legacy4J'
+  text: ''
   tagline: The flagship Legacy Console Edition mod, adapting all features to work with modern Minecraft versions<br>Docs written for Non-LTS Legacy4J
   image:
     src: /l4j-icon.webp
@@ -53,4 +53,3 @@ features:
     details: Learn how to add custom worlds to the Create tab
     link: /mods/legacy4j/world-templates
 ---
-

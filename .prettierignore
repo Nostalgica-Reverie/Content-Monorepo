@@ -7,6 +7,8 @@
 **/.vitepress/cache/
 **/.vitepress/dist/
 apps/packwandrs/frontend/core/build/
+# Tauri regenerates these from tauri.conf.json and the capability files.
+apps/packwandrs/src-tauri/gen/
 
 # Lockfiles are owned by their package managers.
 bun.lock
@@ -40,8 +42,25 @@ datapacks/
 mods/*/src/
 mods/*/versions/
 
-# Vendored sources that upstream owns.
+# Test fixtures are data, not code. A fixture's bytes are the thing under test —
+# packsquash's JSON minifier asserts against these exact files, and reformatting
+# them makes seven of its tests fail.
+**/tests/fixtures/
+**/testdata/
+**/__snapshots__/
+
+# Prettier parses .hbs with its Glimmer parser, which rejects a Handlebars block
+# used inside an HTML attribute -- valid Handlebars it simply cannot represent.
+# See apps/mod-browser-webview/about.hbs:60.
+*.hbs
+
+# Vendored sources that upstream owns. Reformatting them destroys the ability to
+# diff against upstream and gains nothing.
 packages/packwand2nix/
+apps/packwandrs/crates/packsquash/
+apps/packwandrs/crates/packsquash_cli/
+apps/packwandrs/crates/packeater_cli/
+apps/packwandrs/docs/packeater/
 
 # Local reference checkouts of Modrinth's launcher, kept untracked for
 # comparison while porting. Not ours to format.

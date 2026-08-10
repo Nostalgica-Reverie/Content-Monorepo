@@ -23,20 +23,12 @@
 					"hash": {
 						"type": "string",
 						"description": "The hash of the specified file, as a string. May be omitted when the pack uses no-internal-hashes mode.\n\nBinary hashes should be stored as hexadecimal, and case should be ignored during parsing. Numeric hashes (e.g. Murmur2) should still be stored as a string, to ensure the value is preserved correctly.",
-						"examples": [
-							"08f98e28057a0fbdb288c947b7871def4b18b176"
-						]
+						"examples": ["08f98e28057a0fbdb288c947b7871def4b18b176"]
 					},
 					"hash-format": {
 						"type": "string",
 						"description": "The hash format for the hash of the specified file. Defaults to the hash format specified in the index - ideally remove this value if it is equal to the hash format for the index to save space.\n\nThe hash algorithm used to determine if a file is valid. All functions listed must be supported by tools implementing the packwand pack format.",
-						"enum": [
-							"sha256",
-							"sha512",
-							"sha1",
-							"md5",
-							"murmur2"
-						],
+						"enum": ["sha256", "sha512", "sha1", "md5", "murmur2"],
 						"x-taplo": {
 							"docs": {
 								"enumValues": [
@@ -64,21 +56,13 @@
 						"type": "string"
 					}
 				},
-				"required": [
-					"file"
-				]
+				"required": ["file"]
 			}
 		},
 		"hash-format": {
 			"type": "string",
 			"description": "The default hash format for every file in the index. If missing, consumers assume sha512; packwand transparently upgrades older indexes to sha512 on refresh.\n\nThe hash algorithm used to determine if a file is valid. All functions listed must be supported by tools implementing the packwand pack format.",
-			"enum": [
-				"sha256",
-				"sha512",
-				"sha1",
-				"md5",
-				"murmur2"
-			],
+			"enum": ["sha256", "sha512", "sha1", "md5", "murmur2"],
 			"x-taplo": {
 				"docs": {
 					"enumValues": [
@@ -93,7 +77,5 @@
 			"default": "sha512"
 		}
 	},
-	"required": [
-		"hash-format"
-	]
+	"required": ["hash-format"]
 }

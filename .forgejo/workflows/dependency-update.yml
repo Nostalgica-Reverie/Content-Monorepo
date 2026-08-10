@@ -1,9 +1,9 @@
-name: "Update library dependencies"
+name: 'Update library dependencies'
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "23 7 * * 1"
+    - cron: '23 7 * * 1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

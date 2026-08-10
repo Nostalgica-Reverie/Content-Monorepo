@@ -1,204 +1,204 @@
 {
-  "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-07-24T20:46:40Z",
-  "projects": [
-    {
-      "id": "claritymod",
-      "name": "Clarity Mod",
-      "type": "mod",
-      "category": "mod",
-      "dir": "mods/claritymod",
-      "manifest_path": "mods/claritymod/manifest.json",
-      "version": "1.0.1",
-      "release_type": "release",
-      "lifecycle": "active",
-      "role": "none",
-      "auto_update": true,
-      "modrinth_id": "GnCu0CQT",
-      "curseforge_id": "1615913",
-      "platforms": {
-        "modrinth": "GnCu0CQT",
-        "curseforge": "1615913"
-      },
-      "variants": [
-        {
-          "id": "1.21.1-neoforge",
-          "mc_version": "1.21.1",
-          "loader": "neoforge"
-        },
-        {
-          "id": "26.1.2-fabric",
-          "mc_version": "26.1.2",
-          "loader": "fabric"
-        }
-      ],
-      "subdirs": [
-        {
-          "key": "gradle",
-          "path": "mods/claritymod/gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "src",
-          "path": "mods/claritymod/src",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "versions",
-          "path": "mods/claritymod/versions",
-          "has_index": false,
-          "has_pack": false
-        }
-      ]
-    },
-    {
-      "id": "modaudit",
-      "name": "Mod Audit",
-      "type": "mod",
-      "category": "mod",
-      "dir": "mods/modaudit",
-      "manifest_path": "mods/modaudit/manifest.json",
-      "version": "1.0.1",
-      "release_type": "release",
-      "lifecycle": "active",
-      "role": "none",
-      "auto_update": true,
-      "modrinth_id": "qW56EyUi",
-      "curseforge_id": "1615941",
-      "platforms": {
-        "modrinth": "qW56EyUi",
-        "curseforge": "1615941"
-      },
-      "variants": [
-        {
-          "id": "1.21.1-neoforge",
-          "mc_version": "1.21.1",
-          "loader": "neoforge"
-        },
-        {
-          "id": "26.1.2-fabric",
-          "mc_version": "26.1.2",
-          "loader": "fabric"
-        }
-      ],
-      "subdirs": [
-        {
-          "key": "gradle",
-          "path": "mods/modaudit/gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "src",
-          "path": "mods/modaudit/src",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "versions",
-          "path": "mods/modaudit/versions",
-          "has_index": false,
-          "has_pack": false
-        }
-      ]
-    },
-    {
-      "id": "modernica",
-      "name": "Modernica",
-      "type": "mod",
-      "category": "mod",
-      "dir": "mods/modernica",
-      "manifest_path": "mods/modernica/manifest.json",
-      "version": "26.07",
-      "release_type": "release",
-      "lifecycle": "active",
-      "role": "none",
-      "auto_update": true,
-      "modrinth_id": "modernica-fabric",
-      "curseforge_id": "1622990",
-      "platforms": {
-        "modrinth": "modernica-fabric",
-        "curseforge": "1622990"
-      },
-      "variants": [
-        {
-          "id": "26.1.2",
-          "mc_version": "26.1.2",
-          "loader": "fabric"
-        },
-        {
-          "id": "26.2",
-          "mc_version": "26.2",
-          "loader": "fabric"
-        }
-      ],
-      "subdirs": [
-        {
-          "key": "gradle",
-          "path": "mods/modernica/gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "src",
-          "path": "mods/modernica/src",
-          "has_index": false,
-          "has_pack": false
-        }
-      ]
-    },
-    {
-      "id": "packstats",
-      "name": "PackStats",
-      "type": "mod",
-      "category": "mod",
-      "dir": "mods/packstats",
-      "manifest_path": "mods/packstats/manifest.json",
-      "version": "1.0.1",
-      "release_type": "release",
-      "lifecycle": "active",
-      "role": "none",
-      "auto_update": true,
-      "modrinth_id": "MEDfJmrm",
-      "curseforge_id": "1615937",
-      "platforms": {
-        "modrinth": "MEDfJmrm",
-        "curseforge": "1615937"
-      },
-      "variants": [
-        {
-          "id": "1.21.1-neoforge",
-          "mc_version": "1.21.1",
-          "loader": "neoforge"
-        },
-        {
-          "id": "26.1.2-fabric",
-          "mc_version": "26.1.2",
-          "loader": "fabric"
-        }
-      ],
-      "subdirs": [
-        {
-          "key": "gradle",
-          "path": "mods/packstats/gradle",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "src",
-          "path": "mods/packstats/src",
-          "has_index": false,
-          "has_pack": false
-        },
-        {
-          "key": "versions",
-          "path": "mods/packstats/versions",
-          "has_index": false,
-          "has_pack": false
-        }
-      ]
-    }
-  ]
+	"_generated": "Used by Packwand do not touch pls thx",
+	"generated": "2026-07-24T20:46:40Z",
+	"projects": [
+		{
+			"id": "claritymod",
+			"name": "Clarity Mod",
+			"type": "mod",
+			"category": "mod",
+			"dir": "mods/claritymod",
+			"manifest_path": "mods/claritymod/manifest.json",
+			"version": "1.0.1",
+			"release_type": "release",
+			"lifecycle": "active",
+			"role": "none",
+			"auto_update": true,
+			"modrinth_id": "GnCu0CQT",
+			"curseforge_id": "1615913",
+			"platforms": {
+				"modrinth": "GnCu0CQT",
+				"curseforge": "1615913"
+			},
+			"variants": [
+				{
+					"id": "1.21.1-neoforge",
+					"mc_version": "1.21.1",
+					"loader": "neoforge"
+				},
+				{
+					"id": "26.1.2-fabric",
+					"mc_version": "26.1.2",
+					"loader": "fabric"
+				}
+			],
+			"subdirs": [
+				{
+					"key": "gradle",
+					"path": "mods/claritymod/gradle",
+					"has_index": false,
+					"has_pack": false
+				},
+				{
+					"key": "src",
+					"path": "mods/claritymod/src",
+					"has_index": false,
+					"has_pack": false
+				},
+				{
+					"key": "versions",
+					"path": "mods/claritymod/versions",
+					"has_index": false,
+					"has_pack": false
+				}
+			]
+		},
+		{
+			"id": "modaudit",
+			"name": "Mod Audit",
+			"type": "mod",
+			"category": "mod",
+			"dir": "mods/modaudit",
+			"manifest_path": "mods/modaudit/manifest.json",
+			"version": "1.0.1",
+			"release_type": "release",
+			"lifecycle": "active",
+			"role": "none",
+			"auto_update": true,
+			"modrinth_id": "qW56EyUi",
+			"curseforge_id": "1615941",
+			"platforms": {
+				"modrinth": "qW56EyUi",
+				"curseforge": "1615941"
+			},
+			"variants": [
+				{
+					"id": "1.21.1-neoforge",
+					"mc_version": "1.21.1",
+					"loader": "neoforge"
+				},
+				{
+					"id": "26.1.2-fabric",
+					"mc_version": "26.1.2",
+					"loader": "fabric"
+				}
+			],
+			"subdirs": [
+				{
+					"key": "gradle",
+					"path": "mods/modaudit/gradle",
+					"has_index": false,
+					"has_pack": false
+				},
+				{
+					"key": "src",
+					"path": "mods/modaudit/src",
+					"has_index": false,
+					"has_pack": false
+				},
+				{
+					"key": "versions",
+					"path": "mods/modaudit/versions",
+					"has_index": false,
+					"has_pack": false
+				}
+			]
+		},
+		{
+			"id": "modernica",
+			"name": "Modernica",
+			"type": "mod",
+			"category": "mod",
+			"dir": "mods/modernica",
+			"manifest_path": "mods/modernica/manifest.json",
+			"version": "26.07",
+			"release_type": "release",
+			"lifecycle": "active",
+			"role": "none",
+			"auto_update": true,
+			"modrinth_id": "modernica-fabric",
+			"curseforge_id": "1622990",
+			"platforms": {
+				"modrinth": "modernica-fabric",
+				"curseforge": "1622990"
+			},
+			"variants": [
+				{
+					"id": "26.1.2",
+					"mc_version": "26.1.2",
+					"loader": "fabric"
+				},
+				{
+					"id": "26.2",
+					"mc_version": "26.2",
+					"loader": "fabric"
+				}
+			],
+			"subdirs": [
+				{
+					"key": "gradle",
+					"path": "mods/modernica/gradle",
+					"has_index": false,
+					"has_pack": false
+				},
+				{
+					"key": "src",
+					"path": "mods/modernica/src",
+					"has_index": false,
+					"has_pack": false
+				}
+			]
+		},
+		{
+			"id": "packstats",
+			"name": "PackStats",
+			"type": "mod",
+			"category": "mod",
+			"dir": "mods/packstats",
+			"manifest_path": "mods/packstats/manifest.json",
+			"version": "1.0.1",
+			"release_type": "release",
+			"lifecycle": "active",
+			"role": "none",
+			"auto_update": true,
+			"modrinth_id": "MEDfJmrm",
+			"curseforge_id": "1615937",
+			"platforms": {
+				"modrinth": "MEDfJmrm",
+				"curseforge": "1615937"
+			},
+			"variants": [
+				{
+					"id": "1.21.1-neoforge",
+					"mc_version": "1.21.1",
+					"loader": "neoforge"
+				},
+				{
+					"id": "26.1.2-fabric",
+					"mc_version": "26.1.2",
+					"loader": "fabric"
+				}
+			],
+			"subdirs": [
+				{
+					"key": "gradle",
+					"path": "mods/packstats/gradle",
+					"has_index": false,
+					"has_pack": false
+				},
+				{
+					"key": "src",
+					"path": "mods/packstats/src",
+					"has_index": false,
+					"has_pack": false
+				},
+				{
+					"key": "versions",
+					"path": "mods/packstats/versions",
+					"has_index": false,
+					"has_pack": false
+				}
+			]
+		}
+	]
 }

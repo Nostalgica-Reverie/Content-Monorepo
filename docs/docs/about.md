@@ -1,6 +1,7 @@
 ---
 title: About Us
 ---
+
 Reverie Projects is a group of developers, artists, and contributors dedicated to making high quality Minecraft projects.
 
 # Nostalgica Reverie
@@ -10,23 +11,30 @@ Nostalgica Reverie is the sub-org behind Moderner Beta, Programmer Art Continuat
 <br>
 
 # Credits
+
 ## Mod Developers
+
 ### Moderner Beta
+
 Icanttellyou <br>
 BlueStaggo <br>
 
 ### Nostalgic Tweaks
+
 Adrenix <br>
 Icanttellyou <br>
 
 ### RRDiscordBridge
+
 DexrnZacAttack
 
 ## Visual Design
+
 **Branding** <br>
 NicSonic-_-
 
 ### Programmer Art Continuation Project
+
 mzov_jen <br>
 <br>
 <br>
@@ -38,71 +46,95 @@ Lasting Legacy Group is the sub-org behind all of our Legacy Console Edition con
 <br>
 
 # Credits
+
 ## Mod Developers
+
 ### Legacy4J
+
 WilyIcaro <br>
 Creepereater201 <br>
 pizzart <br>
+
 #### Contributors
+
 BrandonItaly <br>
 Jab125 <br>
 RedRain0o0 <br>
 Nabouna32 <br>
-Androser 
+Androser
 
-### Legacy World Sizes 
-WilyIcaro 
+### Legacy World Sizes
 
-### Minimega 
-Jab125 
+WilyIcaro
 
-### Legacy Skins 
+### Minimega
+
+Jab125
+
+### Legacy Skins
+
 Jab125 <br>
-RedRain0o0 
+RedRain0o0
 
-### GlobalAdvancements 
-RedRain0o0 
+### GlobalAdvancements
 
-### AlphaJam 
-reckodev 
+RedRain0o0
 
-### Legacy Mechanics, Legacy Nether, Legacy Nether: Extended 
+### AlphaJam
+
+reckodev
+
+### Legacy Mechanics, Legacy Nether, Legacy Nether: Extended
+
 Pigzone00
 
 ## Modpack Developers
+
 ### Re-Console+
+
 **Creator, Lead Maintainer** <br>
 omo50 <br>
 **Assistant Maintainer** <br>
 Cjnator38
+
 ### Simply Legacy
+
 **Creator, Lead Maintainer** <br>
 Cjnator38 <br>
 **Assistant Maintainer** <br>
 omo50
+
 ### Rekindled Legacy
+
 omo50 <br>
 agari <br>
 Panduino
+
 ### 2000s Edition
+
 **Creator, Lead Maintainer** <br>
 NicSonic-_-
 
 ## Hosting Infrastructure
+
 Technocality
 
 ## Development Software
 
-### packwiz 
+### packwiz
+
 comp500 <br>
 packwiz Contributors
 
 ## Visual Design
+
 ### Lasting Legacy
+
 **Branding** <br>
 Cjnator38
 
 ### Control Icons
+
 **Steam Edition** <br>
 cloud54 <br>
 Cjnator38 <br>
@@ -123,17 +155,20 @@ Cjnator38 <br>
 NicSonic-_-
 
 ### Legacy Modpack Resources
+
 **Intro Sequence** <br>
 NicSonic-_- <br>
 Cjnator38
 
 ### Internal Modpack Resources
+
 (includes Re-Console+ Resources and Simply Legacy Resources)
 
 **Intro Sequence** <br>
 Cjnator38
 
 ### Legacy4J
+
 **Branding** <br>
 WilyIcaro <br>
 
@@ -141,9 +176,10 @@ WilyIcaro <br>
 4J Studios <br>
 Mojang Studios
 
-
 ## Music and Sound Design
+
 ### Legacy4J
+
 **On-Screen Keyboard** <br>
 cloud54 <br>
 **User Interface** <br>
@@ -151,6 +187,7 @@ cloud54 <br>
 Mojang Studios
 
 ### Minimega
+
 **Glide** <br>
 Gareth Coker <br>
 
@@ -158,28 +195,35 @@ Gareth Coker <br>
 Markus "Notch" Persson
 
 ## Asset Ports
-### LCE Ports, Legacy Worlds 
+
+### LCE Ports, Legacy Worlds
+
 BrandonItaly
 
-### Fallout Mash-Up Pack 
+### Fallout Mash-Up Pack
+
 RedRain0o0
 
-### Super Mario Mash-Up Pack 
+### Super Mario Mash-Up Pack
+
 chillyzone
 
-### Legacy Skin Packs, Modern Skin Packs 
+### Legacy Skin Packs, Modern Skin Packs
+
 Lyn_ <br>
 Pigzone00 <br>
 MacAndMayo
 
-### Console Aspects 
+### Console Aspects
+
 AgentMindStorm
 
-### Legacy Titles 
+### Legacy Titles
+
 Cjnator38
 
 ### How to Play
+
 Moutardx (texts) <br>
 RedRain0o0 (screenshots) <br>
 Jab125 (texts, Minimega)
-

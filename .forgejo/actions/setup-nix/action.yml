@@ -1,14 +1,14 @@
-name: "Setup Nix"
-description: "Install Nix with flakes enabled and expose the shared CI defaults."
+name: 'Setup Nix'
+description: 'Install Nix with flakes enabled and expose the shared CI defaults.'
 
 inputs:
   nix-path:
-    description: "NIX_PATH used by legacy expressions such as the vendor hash prefetcher"
+    description: 'NIX_PATH used by legacy expressions such as the vendor hash prefetcher'
     required: false
-    default: "nixpkgs=channel:nixos-26.05"
+    default: 'nixpkgs=channel:nixos-26.05'
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Install Nix
       uses: https://github.com/cachix/install-nix-action@v31

@@ -1,24 +1,24 @@
-name: "Docs - Packwand Command Reference"
+name: 'Docs - Packwand Command Reference'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "docs/packwand/**"
-      - "apps/packwandrs/**"
-      - ".forgejo/actions/setup-packwand/**"
-      - ".forgejo/actions/setup-rust/**"
-      - ".forgejo/actions/setup-docs-node/**"
-      - ".forgejo/workflows/docs-handbook.yml"
+      - 'docs/packwand/**'
+      - 'apps/packwandrs/**'
+      - '.forgejo/actions/setup-packwand/**'
+      - '.forgejo/actions/setup-rust/**'
+      - '.forgejo/actions/setup-docs-node/**'
+      - '.forgejo/workflows/docs-handbook.yml'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "docs/packwand/**"
-      - "apps/packwandrs/**"
-      - ".forgejo/actions/setup-packwand/**"
-      - ".forgejo/actions/setup-rust/**"
-      - ".forgejo/actions/setup-docs-node/**"
-      - ".forgejo/workflows/docs-handbook.yml"
+      - 'docs/packwand/**'
+      - 'apps/packwandrs/**'
+      - '.forgejo/actions/setup-packwand/**'
+      - '.forgejo/actions/setup-rust/**'
+      - '.forgejo/actions/setup-docs-node/**'
+      - '.forgejo/workflows/docs-handbook.yml'
   workflow_dispatch:
 
 concurrency:

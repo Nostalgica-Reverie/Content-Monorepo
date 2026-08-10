@@ -1,4 +1,4 @@
-name: "Auto-Update Drift Report"
+name: 'Auto-Update Drift Report'
 
 # Report-only: packs opted out of auto-update (via manifest.json
 # automation.auto_update or the legacy auto-update-ignore.json) never get
@@ -12,7 +12,7 @@ name: "Auto-Update Drift Report"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 6 * * 1"
+    - cron: '0 6 * * 1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

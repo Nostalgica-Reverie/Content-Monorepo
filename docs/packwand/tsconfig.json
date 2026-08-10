@@ -1,23 +1,23 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "lib": ["ESNext"],
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "isolatedModules": true,
-    "erasableSyntaxOnly": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
-  },
-  "include": ["**/*.mts", "**/*.ts", "docs/.vitepress/*.mts"],
-  "exclude": ["node_modules", "spec", "**/.vitepress/cache", "**/.vitepress/dist"]
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"lib": ["ESNext"],
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"isolatedModules": true,
+		"erasableSyntaxOnly": true,
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"allowImportingTsExtensions": true,
+		"noEmit": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"types": ["node"]
+	},
+	"include": ["**/*.mts", "**/*.ts", "docs/.vitepress/*.mts"],
+	"exclude": ["node_modules", "spec", "**/.vitepress/cache", "**/.vitepress/dist"]
 }

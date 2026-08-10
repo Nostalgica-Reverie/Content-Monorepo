@@ -26,14 +26,18 @@ pulldown-cmark.workspace = true
 packwand-parallel.workspace = true
 packwand-pack = { path = "../crates/packwand-pack" }
 packwand-providers = { path = "../crates/packwand-providers" }
+packwand-vcs.workspace = true
 packwand-workspace = { path = "../crates/packwand-workspace" }
 # Launcher core: instance records, Minecraft/loader install, and process
 # supervision. These crates stay Tauri-free; all Tauri glue for them lives in
 # src/commands/instances.rs.
 packwand-devboot.workspace = true
 packwand-instance.workspace = true
+packwand-identity-client.workspace = true
 packwand-launch.workspace = true
+packwand-auth.workspace = true
 packwand-platform.workspace = true
+packwand-collab.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 sha2.workspace = true

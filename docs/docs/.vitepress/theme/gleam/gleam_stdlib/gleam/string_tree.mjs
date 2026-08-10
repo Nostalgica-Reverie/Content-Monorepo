@@ -1,31 +1,31 @@
-import { toList, CustomType as $CustomType, isEqual } from "../gleam.mjs";
-import * as $list from "../gleam/list.mjs";
+import { toList, CustomType as $CustomType, isEqual } from '../gleam.mjs'
+import * as $list from '../gleam/list.mjs'
 import {
-  concat as from_strings,
-  identity as from_string,
-  add as append_tree,
-  concat,
-  identity as to_string,
-  length as byte_size,
-  lowercase,
-  uppercase,
-  graphemes as do_to_graphemes,
-  split,
-  string_replace as replace,
-} from "../gleam_stdlib.mjs";
+	concat as from_strings,
+	identity as from_string,
+	add as append_tree,
+	concat,
+	identity as to_string,
+	length as byte_size,
+	lowercase,
+	uppercase,
+	graphemes as do_to_graphemes,
+	split,
+	string_replace as replace,
+} from '../gleam_stdlib.mjs'
 
 export {
-  append_tree,
-  byte_size,
-  concat,
-  from_string,
-  from_strings,
-  lowercase,
-  replace,
-  split,
-  to_string,
-  uppercase,
-};
+	append_tree,
+	byte_size,
+	concat,
+	from_string,
+	from_strings,
+	lowercase,
+	replace,
+	split,
+	to_string,
+	uppercase,
+}
 
 class All extends $CustomType {}
 
@@ -34,7 +34,7 @@ class All extends $CustomType {}
  * trees together.
  */
 export function new$() {
-  return from_strings(toList([]));
+	return from_strings(toList([]))
 }
 
 /**
@@ -43,7 +43,7 @@ export function new$() {
  * Runs in constant time.
  */
 export function prepend(tree, prefix) {
-  return append_tree(from_string(prefix), tree);
+	return append_tree(from_string(prefix), tree)
 }
 
 /**
@@ -52,7 +52,7 @@ export function prepend(tree, prefix) {
  * Runs in constant time.
  */
 export function append(tree, second) {
-  return append_tree(tree, from_string(second));
+	return append_tree(tree, from_string(second))
 }
 
 /**
@@ -61,27 +61,27 @@ export function append(tree, second) {
  * Runs in constant time.
  */
 export function prepend_tree(tree, prefix) {
-  return append_tree(prefix, tree);
+	return append_tree(prefix, tree)
 }
 
 /**
  * Joins the given trees into a new tree separated with the given string.
  */
 export function join(trees, sep) {
-  let _pipe = trees;
-  let _pipe$1 = $list.intersperse(_pipe, from_string(sep));
-  return concat(_pipe$1);
+	let _pipe = trees
+	let _pipe$1 = $list.intersperse(_pipe, from_string(sep))
+	return concat(_pipe$1)
 }
 
 /**
  * Converts a `StringTree` to a new one with the contents reversed.
  */
 export function reverse(tree) {
-  let _pipe = tree;
-  let _pipe$1 = to_string(_pipe);
-  let _pipe$2 = do_to_graphemes(_pipe$1);
-  let _pipe$3 = $list.reverse(_pipe$2);
-  return from_strings(_pipe$3);
+	let _pipe = tree
+	let _pipe$1 = to_string(_pipe)
+	let _pipe$2 = do_to_graphemes(_pipe$1)
+	let _pipe$3 = $list.reverse(_pipe$2)
+	return from_strings(_pipe$3)
 }
 
 /**
@@ -103,7 +103,7 @@ export function reverse(tree) {
  * ```
  */
 export function is_equal(a, b) {
-  return isEqual(a, b);
+	return isEqual(a, b)
 }
 
 /**
@@ -124,5 +124,5 @@ export function is_equal(a, b) {
  * ```
  */
 export function is_empty(tree) {
-  return isEqual(from_string(""), tree);
+	return isEqual(from_string(''), tree)
 }

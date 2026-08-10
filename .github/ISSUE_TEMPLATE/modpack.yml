@@ -1,6 +1,6 @@
 name: Modpack Bug Report
 description: File a bug report for one of our modpacks.
-title: "[Modpack]: "
+title: '[Modpack]: '
 labels:
   - bug
   - modpack
@@ -10,7 +10,7 @@ body:
     attributes:
       label: What is the issue?
       description: Please describe what the issue is.
-      placeholder: "ex. Game crashes when [...]"
+      placeholder: 'ex. Game crashes when [...]'
     validations:
       required: true
   - type: textarea
@@ -49,7 +49,7 @@ body:
     attributes:
       label: Pack Version
       description: What version of the pack are you on? (shown on the title screen in some cases and the download page)
-      placeholder: "ex. 26.06.4"
+      placeholder: 'ex. 26.06.4'
     validations:
       required: true
   - type: dropdown

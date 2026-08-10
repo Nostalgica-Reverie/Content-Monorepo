@@ -1,14 +1,14 @@
-name: "Setup Java"
-description: "JDK with the org defaults and Gradle cache. Override the Java version only for components that require it."
+name: 'Setup Java'
+description: 'JDK with the org defaults and Gradle cache. Override the Java version only for components that require it.'
 
 inputs:
   java-version:
-    description: "Temurin Java version"
+    description: 'Temurin Java version'
     required: false
-    default: "21"
+    default: '21'
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Setup Java
       uses: https://github.com/actions/setup-java@v4

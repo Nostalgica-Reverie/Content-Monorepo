@@ -1,28 +1,28 @@
 {
-  "$schema": "../../tools/manifest/schema.json",
-  "id": "modernica",
-  "name": "Modernica",
-  "type": "mod",
-  "version": "26.07",
-  "release_type": "release",
-  "modrinth_id": "modernica-fabric",
-  "curseforge_id": "1622990",
-  "lifecycle": "active",
-  "role": "none",
-  "variants": [
-    {
-      "id": "26.1.2",
-      "name": "Fabric 26.1.2",
-      "mc_version": "26.1.2",
-      "loader": "fabric",
-      "gradle_project": "26.1.2"
-    },
-    {
-      "id": "26.2",
-      "name": "Fabric 26.2",
-      "mc_version": "26.2",
-      "loader": "fabric",
-      "gradle_project": "26.2"
-    }
-  ]
+	"$schema": "../../tools/manifest/schema.json",
+	"id": "modernica",
+	"name": "Modernica",
+	"type": "mod",
+	"version": "26.07",
+	"release_type": "release",
+	"modrinth_id": "modernica-fabric",
+	"curseforge_id": "1622990",
+	"lifecycle": "active",
+	"role": "none",
+	"variants": [
+		{
+			"id": "26.1.2",
+			"name": "Fabric 26.1.2",
+			"mc_version": "26.1.2",
+			"loader": "fabric",
+			"gradle_project": "26.1.2"
+		},
+		{
+			"id": "26.2",
+			"name": "Fabric 26.2",
+			"mc_version": "26.2",
+			"loader": "fabric",
+			"gradle_project": "26.2"
+		}
+	]
 }

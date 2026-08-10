@@ -1,25 +1,25 @@
-import { CustomType as $CustomType, isEqual } from "../gleam.mjs";
+import { CustomType as $CustomType, isEqual } from '../gleam.mjs'
 
 /**
  * Less-than
  */
 export class Lt extends $CustomType {}
-export const Order$Lt = () => new Lt();
-export const Order$isLt = (value) => value instanceof Lt;
+export const Order$Lt = () => new Lt()
+export const Order$isLt = (value) => value instanceof Lt
 
 /**
  * Equal
  */
 export class Eq extends $CustomType {}
-export const Order$Eq = () => new Eq();
-export const Order$isEq = (value) => value instanceof Eq;
+export const Order$Eq = () => new Eq()
+export const Order$isEq = (value) => value instanceof Eq
 
 /**
  * Greater than
  */
 export class Gt extends $CustomType {}
-export const Order$Gt = () => new Gt();
-export const Order$isGt = (value) => value instanceof Gt;
+export const Order$Gt = () => new Gt()
+export const Order$isGt = (value) => value instanceof Gt
 
 /**
  * Inverts an order, so less-than becomes greater-than and greater-than
@@ -40,13 +40,13 @@ export const Order$isGt = (value) => value instanceof Gt;
  * ```
  */
 export function negate(order) {
-  if (order instanceof Lt) {
-    return new Gt();
-  } else if (order instanceof Eq) {
-    return order;
-  } else {
-    return new Lt();
-  }
+	if (order instanceof Lt) {
+		return new Gt()
+	} else if (order instanceof Eq) {
+		return order
+	} else {
+		return new Lt()
+	}
 }
 
 /**
@@ -67,13 +67,13 @@ export function negate(order) {
  * ```
  */
 export function to_int(order) {
-  if (order instanceof Lt) {
-    return -1;
-  } else if (order instanceof Eq) {
-    return 0;
-  } else {
-    return 1;
-  }
+	if (order instanceof Lt) {
+		return -1
+	} else if (order instanceof Eq) {
+		return 0
+	} else {
+		return 1
+	}
 }
 
 /**
@@ -86,17 +86,17 @@ export function to_int(order) {
  * ```
  */
 export function compare(a, b) {
-  let x = a;
-  let y = b;
-  if (isEqual(x, y)) {
-    return new Eq();
-  } else if (a instanceof Lt) {
-    return new Lt();
-  } else if (a instanceof Eq && b instanceof Gt) {
-    return new Lt();
-  } else {
-    return new Gt();
-  }
+	let x = a
+	let y = b
+	if (isEqual(x, y)) {
+		return new Eq()
+	} else if (a instanceof Lt) {
+		return new Lt()
+	} else if (a instanceof Eq && b instanceof Gt) {
+		return new Lt()
+	} else {
+		return new Gt()
+	}
 }
 
 /**
@@ -113,7 +113,9 @@ export function compare(a, b) {
  * ```
  */
 export function reverse(orderer) {
-  return (a, b) => { return orderer(b, a); };
+	return (a, b) => {
+		return orderer(b, a)
+	}
 }
 
 /**
@@ -134,13 +136,13 @@ export function reverse(orderer) {
  * ```
  */
 export function break_tie(order, other) {
-  if (order instanceof Lt) {
-    return order;
-  } else if (order instanceof Eq) {
-    return other;
-  } else {
-    return order;
-  }
+	if (order instanceof Lt) {
+		return order
+	} else if (order instanceof Eq) {
+		return other
+	} else {
+		return order
+	}
 }
 
 /**
@@ -165,11 +167,11 @@ export function break_tie(order, other) {
  * ```
  */
 export function lazy_break_tie(order, comparison) {
-  if (order instanceof Lt) {
-    return order;
-  } else if (order instanceof Eq) {
-    return comparison();
-  } else {
-    return order;
-  }
+	if (order instanceof Lt) {
+		return order
+	} else if (order instanceof Eq) {
+		return comparison()
+	} else {
+		return order
+	}
 }

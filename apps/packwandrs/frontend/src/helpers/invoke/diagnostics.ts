@@ -7,4 +7,5 @@ export const diagnosticsParity = () => call<VariantParityReport[]>('diagnostics_
 export const diagnosticsContentLint = () => call<ValidationReport>('diagnostics_content_lint')
 export const diagnosticsPreflight = () => call<ValidationReport>('diagnostics_preflight')
 export const diagnosticsRegistries = () => call<ContentRegistry[]>('diagnostics_registries')
-export const diagnosticsInstallerTest = (id: string) => call<JobRecord>('diagnostics_installer_test', { id })
+export const diagnosticsInstallerTest = (id: string) =>
+	call<JobRecord>('diagnostics_installer_test', { id })

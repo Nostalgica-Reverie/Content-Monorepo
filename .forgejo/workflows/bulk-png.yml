@@ -1,15 +1,15 @@
-name: "PNG Optimization"
+name: 'PNG Optimization'
 
 on:
   workflow_dispatch:
     inputs:
       packs:
-        description: "Comma-separated paths under modpacks/, resourcepacks/, or datapacks/ (empty runs all)"
+        description: 'Comma-separated paths under modpacks/, resourcepacks/, or datapacks/ (empty runs all)'
         required: false
         type: string
-        default: ""
+        default: ''
       dry_run:
-        description: "List PNG files that would be processed; do not optimize or commit"
+        description: 'List PNG files that would be processed; do not optimize or commit'
         required: false
         type: boolean
         default: false
@@ -32,7 +32,7 @@ jobs:
         if: inputs.dry_run == false
         uses: https://github.com/Swatinem/rust-cache@v2
         with:
-          shared-key: "maintenance-tools"
+          shared-key: 'maintenance-tools'
 
       - name: Install Rust
         if: inputs.dry_run == false

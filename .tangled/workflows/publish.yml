@@ -1,8 +1,14 @@
 when:
-  - event: ["push"]
-    branch: ["main"]
-    paths: ["modpacks/**/manifest.json", "datapacks/**/manifest.json", "resourcepacks/**/manifest.json", "mods/**/manifest.json"]
-  - event: ["manual"]
+  - event: ['push']
+    branch: ['main']
+    paths:
+      [
+        'modpacks/**/manifest.json',
+        'datapacks/**/manifest.json',
+        'resourcepacks/**/manifest.json',
+        'mods/**/manifest.json',
+      ]
+  - event: ['manual']
 
 engine: microvm
 image: nixos

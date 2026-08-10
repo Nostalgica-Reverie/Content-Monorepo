@@ -2,22 +2,23 @@
 // A Vue component whose logic is implemented in Gleam: the functions below
 // are compiled from docs/gleam-demo/src/docs_demo.gleam to JavaScript
 // (rebuild with `node docs/gleam-demo/build.mjs`).
-import { ref, computed } from "vue";
-import { compare_versions, slugify } from "./gleam/docs_demo/docs_demo.mjs";
+import { ref, computed } from 'vue'
+import { compare_versions, slugify } from './gleam/docs_demo/docs_demo.mjs'
 
-const versionA = ref("1.20.1");
-const versionB = ref("1.9");
-const packName = ref("My Cool Pack!");
+const versionA = ref('1.20.1')
+const versionB = ref('1.9')
+const packName = ref('My Cool Pack!')
 
-const verdict = computed(() => compare_versions(versionA.value, versionB.value));
-const slug = computed(() => slugify(packName.value));
+const verdict = computed(() => compare_versions(versionA.value, versionB.value))
+const slug = computed(() => slugify(packName.value))
 </script>
 
 <template>
 	<div class="gleam-demo">
 		<p class="gleam-demo-title">⭐ Powered by Gleam (compiled to JavaScript)</p>
 		<div class="gleam-demo-row">
-			<label>Compare Minecraft versions:
+			<label
+				>Compare Minecraft versions:
 				<input v-model="versionA" placeholder="1.20.1" />
 				vs
 				<input v-model="versionB" placeholder="1.9" />
@@ -25,10 +26,13 @@ const slug = computed(() => slugify(packName.value));
 			<p class="gleam-demo-out">{{ verdict }}</p>
 		</div>
 		<div class="gleam-demo-row">
-			<label>Slugify a pack name:
+			<label
+				>Slugify a pack name:
 				<input v-model="packName" placeholder="My Cool Pack!" />
 			</label>
-			<p class="gleam-demo-out"><code>{{ slug }}</code></p>
+			<p class="gleam-demo-out">
+				<code>{{ slug }}</code>
+			</p>
 		</div>
 	</div>
 </template>

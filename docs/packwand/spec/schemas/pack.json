@@ -39,20 +39,12 @@
 				"hash": {
 					"type": "string",
 					"description": "The hash of the generated index file, as a string. It is omitted from source metadata; run packwand refresh --build to generate it for distribution.\n\nBinary hashes should be stored as hexadecimal, and case should be ignored during parsing. Numeric hashes (e.g. Murmur2) should still be stored as a string, to ensure the value is preserved correctly.",
-					"examples": [
-						"08f98e28057a0fbdb288c947b7871def4b18b176"
-					]
+					"examples": ["08f98e28057a0fbdb288c947b7871def4b18b176"]
 				},
 				"hash-format": {
 					"type": "string",
 					"description": "The hash format for the hash of the index file.\n\nThe hash algorithm used to determine if a file is valid. All functions listed must be supported by tools implementing the packwand pack format.",
-					"enum": [
-						"sha256",
-						"sha512",
-						"sha1",
-						"md5",
-						"murmur2"
-					],
+					"enum": ["sha256", "sha512", "sha1", "md5", "murmur2"],
 					"x-taplo": {
 						"docs": {
 							"enumValues": [
@@ -66,10 +58,7 @@
 					}
 				}
 			},
-			"required": [
-				"file",
-				"hash-format"
-			],
+			"required": ["file", "hash-format"],
 			"description": "Information about the index file in this modpack."
 		},
 		"versions": {
@@ -80,51 +69,36 @@
 			"properties": {
 				"minecraft": {
 					"description": "The version of Minecraft used by this modpack. This should be in the format used by the version.json files.",
-					"examples": [
-						"1.17.1",
-						"16w02a"
-					],
+					"examples": ["1.17.1", "16w02a"],
 					"type": "string"
 				},
 				"fabric": {
 					"description": "The version of Fabric loader used by this modpack.",
-					"examples": [
-						"0.12.1"
-					],
+					"examples": ["0.12.1"],
 					"type": "string"
 				},
 				"forge": {
 					"description": "The version of Forge used by this modpack. This version must not include the Minecraft version as a prefix.",
-					"examples": [
-						"14.23.5.2838"
-					],
+					"examples": ["14.23.5.2838"],
 					"type": "string"
 				},
 				"liteloader": {
 					"description": "The version of Liteloader used by this modpack.",
-					"examples": [
-						"1.12.2-SNAPSHOT"
-					],
+					"examples": ["1.12.2-SNAPSHOT"],
 					"type": "string"
 				},
 				"neoforge": {
 					"description": "The version of NeoForge used by this modpack.",
-					"examples": [
-						"21.1.77"
-					],
+					"examples": ["21.1.77"],
 					"type": "string"
 				},
 				"quilt": {
 					"description": "The version of Quilt loader used by this modpack.",
-					"examples": [
-						"0.12.1"
-					],
+					"examples": ["0.12.1"],
 					"type": "string"
 				}
 			},
-			"required": [
-				"minecraft"
-			],
+			"required": ["minecraft"],
 			"description": "The versions of components used by this modpack - usually Minecraft and the mod loader this pack uses. The existence of a component implies that it should be installed. These values can also be used by tools to determine which versions of mods should be installed. A pack declaring quilt is also compatible with fabric mods, and a pack declaring neoforge is also compatible with forge mods."
 		},
 		"scripts": {
@@ -136,10 +110,5 @@
 			"description": "packwand extension: named commands runnable with packwand run <name>. Each value is a shell command executed from the pack directory."
 		}
 	},
-	"required": [
-		"pack-format",
-		"name",
-		"index",
-		"versions"
-	]
+	"required": ["pack-format", "name", "index", "versions"]
 }

@@ -4,8 +4,8 @@ layout: home
 title: GlobalAdvancements
 
 hero:
-  name: "GlobalAdvancements"
-  text: ""
+  name: 'GlobalAdvancements'
+  text: ''
   tagline: Legacy Console Edition and pre-1.7 Java Edition style global achievements!
   actions:
     - theme: brand
@@ -14,4 +14,3 @@ hero:
 
 features:
 ---
-

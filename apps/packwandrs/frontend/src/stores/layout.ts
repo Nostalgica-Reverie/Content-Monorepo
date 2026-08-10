@@ -24,7 +24,7 @@ import { useSettingsStore } from '@/stores/settings'
 export type SidebarSide = 'left' | 'right'
 
 export function defaultLayout(): ShellLayout {
-  return { version: 2, sidebarSide: 'left' }
+	return { version: 2, sidebarSide: 'left' }
 }
 
 /**
@@ -36,67 +36,67 @@ export function defaultLayout(): ShellLayout {
  * through the UI.
  */
 export function reconcileLayout(stored: ShellLayout | null | undefined): ShellLayout {
-  if (!stored || stored.version !== 2) return defaultLayout()
-  const side: SidebarSide = stored.sidebarSide === 'right' ? 'right' : 'left'
-  const sizes = stored.sizes && typeof stored.sizes === 'object' ? stored.sizes : undefined
-  return { version: 2, sidebarSide: side, sizes }
+	if (!stored || stored.version !== 2) return defaultLayout()
+	const side: SidebarSide = stored.sidebarSide === 'right' ? 'right' : 'left'
+	const sizes = stored.sizes && typeof stored.sizes === 'object' ? stored.sizes : undefined
+	return { version: 2, sidebarSide: side, sizes }
 }
 
 export const useLayoutStore = defineStore('layout', () => {
-  const settings = useSettingsStore()
-  const layout = ref<ShellLayout>(defaultLayout())
-  const editing = ref(false)
+	const settings = useSettingsStore()
+	const layout = ref<ShellLayout>(defaultLayout())
+	const editing = ref(false)
 
-  // Settings load asynchronously, so adopt them whenever they arrive or change
-  // rather than reading once at construction.
-  watch(
-    () => settings.value,
-    value => {
-      if (!value) return
-      layout.value = reconcileLayout(value.layout)
-      editing.value = value.layoutEditing === true
-      applyReduceMotion(value.reduceMotion === true)
-    },
-    { immediate: true },
-  )
+	// Settings load asynchronously, so adopt them whenever they arrive or change
+	// rather than reading once at construction.
+	watch(
+		() => settings.value,
+		(value) => {
+			if (!value) return
+			layout.value = reconcileLayout(value.layout)
+			editing.value = value.layoutEditing === true
+			applyReduceMotion(value.reduceMotion === true)
+		},
+		{ immediate: true },
+	)
 
-  const sidebarSide = computed<SidebarSide>(() => layout.value.sidebarSide)
+	const sidebarSide = computed<SidebarSide>(() => layout.value.sidebarSide)
 
-  async function persist() {
-    if (!settings.value) return
-    await settings.save({ ...settings.value, layout: layout.value, layoutEditing: editing.value })
-  }
+	async function persist() {
+		if (!settings.value) return
+		await settings.save({ ...settings.value, layout: layout.value, layoutEditing: editing.value })
+	}
 
-  async function setSidebarSide(side: SidebarSide) {
-    layout.value = { ...layout.value, sidebarSide: side }
-    await persist()
-  }
+	async function setSidebarSide(side: SidebarSide) {
+		layout.value = { ...layout.value, sidebarSide: side }
+		await persist()
+	}
 
-  async function setEditing(value: boolean) {
-    editing.value = value
-    await persist()
-  }
+	async function setEditing(value: boolean) {
+		editing.value = value
+		await persist()
+	}
 
-  /**
-   * Restores the default arrangement.
-   *
-   * Deliberately does not consult the stored layout: this is the escape hatch
-   * from an arrangement that cannot be interacted with, so it must not depend
-   * on that arrangement being usable.
-   */
-  async function reset() {
-    layout.value = defaultLayout()
-    if (!settings.value) return
-    await settings.save({ ...settings.value, layout: null })
-  }
+	/**
+	 * Restores the default arrangement.
+	 *
+	 * Deliberately does not consult the stored layout: this is the escape hatch
+	 * from an arrangement that cannot be interacted with, so it must not depend
+	 * on that arrangement being usable.
+	 */
+	async function reset() {
+		layout.value = defaultLayout()
+		if (!settings.value) return
+		await settings.save({ ...settings.value, layout: null })
+	}
 
-  async function setReduceMotion(value: boolean) {
-    applyReduceMotion(value)
-    if (!settings.value) return
-    await settings.save({ ...settings.value, reduceMotion: value })
-  }
+	async function setReduceMotion(value: boolean) {
+		applyReduceMotion(value)
+		if (!settings.value) return
+		await settings.save({ ...settings.value, reduceMotion: value })
+	}
 
-  return { layout, editing, sidebarSide, setSidebarSide, setEditing, reset, setReduceMotion }
+	return { layout, editing, sidebarSide, setSidebarSide, setEditing, reset, setReduceMotion }
 })
 
 /**
@@ -105,6 +105,6 @@ export const useLayoutStore = defineStore('layout', () => {
  * it is a side effect on the DOM, not part of the layout model.
  */
 function applyReduceMotion(value: boolean) {
-  if (typeof document === 'undefined') return
-  document.documentElement.dataset.reduceMotion = value ? 'true' : 'false'
+	if (typeof document === 'undefined') return
+	document.documentElement.dataset.reduceMotion = value ? 'true' : 'false'
 }

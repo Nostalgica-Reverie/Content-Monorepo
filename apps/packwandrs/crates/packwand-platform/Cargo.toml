@@ -8,6 +8,7 @@ repository.workspace = true
 
 [dependencies]
 keyring = "3.6"
+packwand-auth.workspace = true
 notify = "8.2"
 thiserror.workspace = true
 uuid.workspace = true

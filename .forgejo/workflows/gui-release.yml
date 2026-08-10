@@ -1,8 +1,8 @@
-name: "Packwand GUI Release"
+name: 'Packwand GUI Release'
 
 on:
   push:
-    tags: ["gui-v*"]
+    tags: ['gui-v*']
   workflow_dispatch:
 
 concurrency:
@@ -30,16 +30,16 @@ jobs:
       - uses: ./.forgejo/actions/setup-rust
         with:
           targets: ${{ matrix.rust_target }}
-          linux-deps: "true"
+          linux-deps: 'true'
           extra-packages: nsis
           cache-key: gui-${{ matrix.name }}
           workspaces: apps/packwandrs
       - uses: https://github.com/oven-sh/setup-bun@v2
         with:
-          bun-version: "1.3.14"
+          bun-version: '1.3.14'
       - uses: ./.forgejo/actions/setup-java
         with:
-          java-version: "25"
+          java-version: '25'
       - uses: ./.forgejo/actions/setup-just
       - name: Install build dependencies
         run: |

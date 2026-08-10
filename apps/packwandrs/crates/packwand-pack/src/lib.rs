@@ -8,6 +8,6 @@ mod model;
 
 pub use hash::{DEFAULT_HASH_FORMAT, HashError, HashFormat, Hasher, hash_bytes, hash_file};
 pub use model::{
-    CURRENT_PACK_FORMAT, Download, Index, IndexFile, Mod, ModOption, Pack, PackFormat,
-    PackFormatError, PackIndex, UpdateTable,
+	CURRENT_PACK_FORMAT, Download, Index, IndexFile, Mod, ModOption, Pack, PackFormat,
+	PackFormatError, PackIndex, UpdateTable,
 };

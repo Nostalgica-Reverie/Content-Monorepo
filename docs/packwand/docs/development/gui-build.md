@@ -22,11 +22,11 @@ Follow the [Tauri v2 prerequisites guide](https://v2.tauri.app/start/prerequisit
 
 Platform-specific webview dependencies:
 
-| Platform | Requirement |
-| --- | --- |
-| Windows | [WebView2 runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) (preinstalled on Windows 11) and the [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) |
-| Linux | `webkit2gtk-4.1`, `libgtk-3-dev`, `build-essential`, `libssl-dev`, `libayatana-appindicator3-dev`, `librsvg2-dev` (names vary by distro — see the Tauri guide) |
-| macOS | Xcode Command Line Tools (`xcode-select --install`) |
+| Platform | Requirement                                                                                                                                                                                                     |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Windows  | [WebView2 runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) (preinstalled on Windows 11) and the [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) |
+| Linux    | `webkit2gtk-4.1`, `libgtk-3-dev`, `build-essential`, `libssl-dev`, `libayatana-appindicator3-dev`, `librsvg2-dev` (names vary by distro — see the Tauri guide)                                                  |
+| macOS    | Xcode Command Line Tools (`xcode-select --install`)                                                                                                                                                             |
 
 ## Building
 

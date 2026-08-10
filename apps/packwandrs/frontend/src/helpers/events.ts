@@ -1,58 +1,122 @@
 import { listen, type Event, type UnlistenFn } from '@tauri-apps/api/event'
 
-import type { AppSettings, InstanceStatusPayload, JobRecord, JobStatus, SerializableError } from './types'
+import type {
+	AppSettings,
+	InstanceStatusPayload,
+	JobRecord,
+	JobStatus,
+	SerializableError,
+} from './types'
+import type {
+	CollabOutput,
+	CollabState,
+	DocumentUpdate,
+	ParticipantEvent,
+	PresenceUpdate,
+} from './invoke/collab'
 
-export interface JobLogPayload { id: string; line: string }
-export interface JobProgressPayload { id: string; fraction: number; message: string | null }
-export interface JobFinishedPayload { id: string; status: JobStatus; error: SerializableError | null }
-export interface JavaInstallProgress { id: string; fraction: number; message: string }
-export interface LauncherState { session: string; phase: string; detail?: string }
-export interface LauncherLog { session: string; stream: string; line: string }
-export interface AuthState { state: string; profile?: unknown }
-export interface WebviewEvent { kind: string; payload: unknown }
+export interface JobLogPayload {
+	id: string
+	line: string
+}
+export interface JobProgressPayload {
+	id: string
+	fraction: number
+	message: string | null
+}
+export interface JobFinishedPayload {
+	id: string
+	status: JobStatus
+	error: SerializableError | null
+}
+export interface JavaInstallProgress {
+	id: string
+	fraction: number
+	message: string
+}
+export interface LauncherState {
+	session: string
+	phase: string
+	detail?: string
+}
+export interface LauncherLog {
+	session: string
+	stream: string
+	line: string
+}
+export interface AuthState {
+	state: string
+	profile?: unknown
+}
+export interface WebviewEvent {
+	kind: string
+	payload: unknown
+}
 export interface RawInputEvent {
-  kind: 'keyboard' | 'mouse'
-  timestampMs: number
-  makeCode: number
-  flags: number
-  virtualKey: number
-  buttonFlags: number
-  deltaX: number
-  deltaY: number
-  wheelDelta: number
+	kind: 'keyboard' | 'mouse'
+	timestampMs: number
+	makeCode: number
+	flags: number
+	virtualKey: number
+	buttonFlags: number
+	deltaX: number
+	deltaY: number
+	wheelDelta: number
 }
 /** One record drained from the bounded Rust platform trace ring. */
 export interface KernelTracePayload {
-  sequence: number
-  tone: 'info' | 'error' | 'success'
-  module: string
-  message: string
-  /** Repo-relative origin of the record. */
-  origin: string
-  platformCode: number | null
+	sequence: number
+	tone: 'info' | 'error' | 'success'
+	module: string
+	message: string
+	/** Repo-relative origin of the record. */
+	origin: string
+	platformCode: number | null
 }
 
 const on = <T>(name: string, handler: (payload: T) => void): Promise<UnlistenFn> =>
-  listen<T>(name, (event: Event<T>) => handler(event.payload))
+	listen<T>(name, (event: Event<T>) => handler(event.payload))
 
 export const onJobStarted = (handler: (payload: JobRecord) => void) => on('job:started', handler)
 export const onJobLog = (handler: (payload: JobLogPayload) => void) => on('job:log', handler)
-export const onJobProgress = (handler: (payload: JobProgressPayload) => void) => on('job:progress', handler)
+export const onJobProgress = (handler: (payload: JobProgressPayload) => void) =>
+	on('job:progress', handler)
 export const onJobDone = (handler: (payload: JobFinishedPayload) => void) => on('job:done', handler)
-export const onJobFailed = (handler: (payload: JobFinishedPayload) => void) => on('job:failed', handler)
+export const onJobFailed = (handler: (payload: JobFinishedPayload) => void) =>
+	on('job:failed', handler)
 export const onPacksChanged = (handler: () => void) => on<void>('packs:changed', handler)
-export const onWorkspaceFilesChanged = (handler: (paths: string[]) => void) => on<string[]>('workspace:files-changed', handler)
-export const onSettingsChanged = (handler: (payload: AppSettings) => void) => on('settings:changed', handler)
+export const onWorkspaceFilesChanged = (handler: (paths: string[]) => void) =>
+	on<string[]>('workspace:files-changed', handler)
+export const onSettingsChanged = (handler: (payload: AppSettings) => void) =>
+	on('settings:changed', handler)
 export const onInstancesChanged = (handler: () => void) => on<void>('instances:changed', handler)
-export const onInstanceStatus = (handler: (payload: InstanceStatusPayload) => void) => on('instance:status', handler)
-export const onJavaInstallProgress = (handler: (payload: JavaInstallProgress) => void) => on('java:install-progress', handler)
-export const onJavaInstallDone = (handler: (payload: unknown) => void) => on('java:install-done', handler)
-export const onLauncherState = (handler: (payload: LauncherState) => void) => on('launcher:state', handler)
-export const onLauncherLog = (handler: (payload: LauncherLog) => void) => on('launcher:log', handler)
+export const onInstanceStatus = (handler: (payload: InstanceStatusPayload) => void) =>
+	on('instance:status', handler)
+export const onJavaInstallProgress = (handler: (payload: JavaInstallProgress) => void) =>
+	on('java:install-progress', handler)
+export const onJavaInstallDone = (handler: (payload: unknown) => void) =>
+	on('java:install-done', handler)
+export const onLauncherState = (handler: (payload: LauncherState) => void) =>
+	on('launcher:state', handler)
+export const onLauncherLog = (handler: (payload: LauncherLog) => void) =>
+	on('launcher:log', handler)
 export const onAuthStatus = (handler: (payload: AuthState) => void) => on('auth:status', handler)
-export const onWebviewEvent = (handler: (payload: WebviewEvent) => void) => on('webview:event', handler)
+export const onWebviewEvent = (handler: (payload: WebviewEvent) => void) =>
+	on('webview:event', handler)
 export const onWebviewClosed = (handler: (payload: string) => void) => on('webview:closed', handler)
-export const onRawInputBatch = (handler: (payload: RawInputEvent[]) => void) => on('raw-input:batch', handler)
-export const onRawInputDropped = (handler: (payload: number) => void) => on('raw-input:dropped', handler)
+export const onRawInputBatch = (handler: (payload: RawInputEvent[]) => void) =>
+	on('raw-input:batch', handler)
+export const onRawInputDropped = (handler: (payload: number) => void) =>
+	on('raw-input:dropped', handler)
 export const onKernelTrace = (handler: (payload: KernelTracePayload) => void) =>
-  on('kernel:trace', handler)
+	on('kernel:trace', handler)
+export const onCollabState = (handler: (payload: CollabState) => void) =>
+	on('collab:state', handler)
+export const onCollabParticipant = (handler: (payload: ParticipantEvent) => void) =>
+	on('collab:participant', handler)
+export const onCollabPresence = (handler: (payload: PresenceUpdate) => void) =>
+	on('collab:presence', handler)
+export const onCollabDocument = (handler: (payload: DocumentUpdate) => void) =>
+	on('collab:document', handler)
+export const onCollabOutput = (handler: (payload: CollabOutput) => void) =>
+	on('collab:output', handler)

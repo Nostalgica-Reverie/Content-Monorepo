@@ -36,24 +36,24 @@ If the field is missing entirely, consumers assume `packwiz:1.1.0` for compatibi
 
 **Table, required.** Information about the [index file](/reference/pack-format/index-toml) of this modpack.
 
-| Key | Type | Description |
-| --- | --- | --- |
-| `file` | path, required | The path to the index file, relative to `pack.toml` (forward slashes). Defaults to `index.toml` when empty. |
-| `hash-format` | string, required | The [hash format](#hash-formats) of the index hash. packwand writes `sha512`. |
-| `hash` | string | The hash of the generated index file. Omitted from source metadata; `packwand refresh --build` writes it for distribution. |
+| Key           | Type             | Description                                                                                                                |
+| ------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `file`        | path, required   | The path to the index file, relative to `pack.toml` (forward slashes). Defaults to `index.toml` when empty.                |
+| `hash-format` | string, required | The [hash format](#hash-formats) of the index hash. packwand writes `sha512`.                                              |
+| `hash`        | string           | The hash of the generated index file. Omitted from source metadata; `packwand refresh --build` writes it for distribution. |
 
 ## `[versions]`
 
 **Table of strings, required.** The versions of components used by this modpack — Minecraft and the mod loader(s). The existence of a component implies it should be installed; tools also use these values to decide which mod versions are compatible.
 
-| Key | Description | Example |
-| --- | --- | --- |
-| `minecraft` | Required. The Minecraft version, in the format used by version.json files. | `"1.20.1"`, `"26.1.2"` |
-| `fabric` | The Fabric loader version. | `"0.16.9"` |
-| `forge` | The Forge version, without the Minecraft-version prefix. | `"14.23.5.2838"` |
-| `neoforge` | The NeoForge version. | `"21.1.77"` |
-| `quilt` | The Quilt loader version. | `"0.27.0"` |
-| `liteloader` | The LiteLoader version. | `"1.12.2-SNAPSHOT"` |
+| Key          | Description                                                                | Example                |
+| ------------ | -------------------------------------------------------------------------- | ---------------------- |
+| `minecraft`  | Required. The Minecraft version, in the format used by version.json files. | `"1.20.1"`, `"26.1.2"` |
+| `fabric`     | The Fabric loader version.                                                 | `"0.16.9"`             |
+| `forge`      | The Forge version, without the Minecraft-version prefix.                   | `"14.23.5.2838"`       |
+| `neoforge`   | The NeoForge version.                                                      | `"21.1.77"`            |
+| `quilt`      | The Quilt loader version.                                                  | `"0.27.0"`             |
+| `liteloader` | The LiteLoader version.                                                    | `"1.12.2-SNAPSHOT"`    |
 
 Additional string keys are permitted. A pack with `quilt` is also considered compatible with `fabric` mods, and a pack with `neoforge` is also considered compatible with `forge` mods.
 
@@ -63,7 +63,7 @@ Additional string keys are permitted. A pack with `quilt` is also considered com
 
 ## `[scripts]`
 
-**Table of strings, optional.** *(packwand extension, not in packwiz.)* Named commands runnable with `packwand run <name>`:
+**Table of strings, optional.** _(packwand extension, not in packwiz.)_ Named commands runnable with `packwand run <name>`:
 
 ```toml
 [scripts]
@@ -78,12 +78,12 @@ postbuild = "echo done"
 
 All hash values in the pack are lowercase strings. Consumers must support:
 
-| Format | Notes |
-| --- | --- |
-| `sha512` | **Default.** Used by packwand for all new files and index entries. |
-| `sha256` | Used as the download-cache key format. |
-| `sha1` | Legacy; provided by some remote APIs. |
-| `md5` | Legacy; provided by some remote APIs. |
+| Format    | Notes                                                                                                                                                    |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sha512`  | **Default.** Used by packwand for all new files and index entries.                                                                                       |
+| `sha256`  | Used as the download-cache key format.                                                                                                                   |
+| `sha1`    | Legacy; provided by some remote APIs.                                                                                                                    |
+| `md5`     | Legacy; provided by some remote APIs.                                                                                                                    |
 | `murmur2` | The CurseForge variant: 32-bit MurmurHash2 (seed 1) with whitespace bytes (9, 10, 13, 32) removed before hashing, stored as an unsigned decimal integer. |
 
 ## Example

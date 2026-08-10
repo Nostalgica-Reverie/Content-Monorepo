@@ -1,59 +1,59 @@
 import {
-  Ok,
-  Error,
-  toList,
-  Empty as $Empty,
-  prepend as listPrepend,
-  CustomType as $CustomType,
-  makeError,
-  divideFloat,
-  isEqual,
-} from "../gleam.mjs";
-import * as $dict from "../gleam/dict.mjs";
-import * as $float from "../gleam/float.mjs";
-import * as $int from "../gleam/int.mjs";
-import * as $order from "../gleam/order.mjs";
+	Ok,
+	Error,
+	toList,
+	Empty as $Empty,
+	prepend as listPrepend,
+	CustomType as $CustomType,
+	makeError,
+	divideFloat,
+	isEqual,
+} from '../gleam.mjs'
+import * as $dict from '../gleam/dict.mjs'
+import * as $float from '../gleam/float.mjs'
+import * as $int from '../gleam/int.mjs'
+import * as $order from '../gleam/order.mjs'
 
-const FILEPATH = "src\\gleam\\list.gleam";
+const FILEPATH = 'src\\gleam\\list.gleam'
 
 export class Continue extends $CustomType {
-  constructor($0) {
-    super();
-    this[0] = $0;
-  }
+	constructor($0) {
+		super()
+		this[0] = $0
+	}
 }
-export const ContinueOrStop$Continue = ($0) => new Continue($0);
-export const ContinueOrStop$isContinue = (value) => value instanceof Continue;
-export const ContinueOrStop$Continue$0 = (value) => value[0];
+export const ContinueOrStop$Continue = ($0) => new Continue($0)
+export const ContinueOrStop$isContinue = (value) => value instanceof Continue
+export const ContinueOrStop$Continue$0 = (value) => value[0]
 
 export class Stop extends $CustomType {
-  constructor($0) {
-    super();
-    this[0] = $0;
-  }
+	constructor($0) {
+		super()
+		this[0] = $0
+	}
 }
-export const ContinueOrStop$Stop = ($0) => new Stop($0);
-export const ContinueOrStop$isStop = (value) => value instanceof Stop;
-export const ContinueOrStop$Stop$0 = (value) => value[0];
+export const ContinueOrStop$Stop = ($0) => new Stop($0)
+export const ContinueOrStop$isStop = (value) => value instanceof Stop
+export const ContinueOrStop$Stop$0 = (value) => value[0]
 
 class Ascending extends $CustomType {}
 
 class Descending extends $CustomType {}
 
-const min_positive = 2.2250738585072014e-308;
+const min_positive = 2.2250738585072014e-308
 
 function length_loop(loop$list, loop$count) {
-  while (true) {
-    let list = loop$list;
-    let count = loop$count;
-    if (list instanceof $Empty) {
-      return count;
-    } else {
-      let list$1 = list.tail;
-      loop$list = list$1;
-      loop$count = count + 1;
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let count = loop$count
+		if (list instanceof $Empty) {
+			return count
+		} else {
+			let list$1 = list.tail
+			loop$list = list$1
+			loop$count = count + 1
+		}
+	}
 }
 
 /**
@@ -80,31 +80,31 @@ function length_loop(loop$list, loop$count) {
  * ```
  */
 export function length(list) {
-  return length_loop(list, 0);
+	return length_loop(list, 0)
 }
 
 function count_loop(loop$list, loop$predicate, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let predicate = loop$predicate;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return acc;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = predicate(first$1);
-      if ($) {
-        loop$list = rest$1;
-        loop$predicate = predicate;
-        loop$acc = acc + 1;
-      } else {
-        loop$list = rest$1;
-        loop$predicate = predicate;
-        loop$acc = acc;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let predicate = loop$predicate
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return acc
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = predicate(first$1)
+			if ($) {
+				loop$list = rest$1
+				loop$predicate = predicate
+				loop$acc = acc + 1
+			} else {
+				loop$list = rest$1
+				loop$predicate = predicate
+				loop$acc = acc
+			}
+		}
+	}
 }
 
 /**
@@ -128,29 +128,29 @@ function count_loop(loop$list, loop$predicate, loop$acc) {
  * ```
  */
 export function count(list, predicate) {
-  return count_loop(list, predicate, 0);
+	return count_loop(list, predicate, 0)
 }
 
 /**
  * Reverses a list and prepends it to another list.
  * This function runs in linear time, proportional to the length of the list
  * to prepend.
- * 
+ *
  * @ignore
  */
 function reverse_and_prepend(loop$prefix, loop$suffix) {
-  while (true) {
-    let prefix = loop$prefix;
-    let suffix = loop$suffix;
-    if (prefix instanceof $Empty) {
-      return suffix;
-    } else {
-      let first$1 = prefix.head;
-      let rest$1 = prefix.tail;
-      loop$prefix = rest$1;
-      loop$suffix = listPrepend(first$1, suffix);
-    }
-  }
+	while (true) {
+		let prefix = loop$prefix
+		let suffix = loop$suffix
+		if (prefix instanceof $Empty) {
+			return suffix
+		} else {
+			let first$1 = prefix.head
+			let rest$1 = prefix.tail
+			loop$prefix = rest$1
+			loop$suffix = listPrepend(first$1, suffix)
+		}
+	}
 }
 
 /**
@@ -178,7 +178,7 @@ function reverse_and_prepend(loop$prefix, loop$suffix) {
  * ```
  */
 export function reverse(list) {
-  return reverse_and_prepend(list, toList([]));
+	return reverse_and_prepend(list, toList([]))
 }
 
 /**
@@ -201,7 +201,7 @@ export function reverse(list) {
  * ```
  */
 export function is_empty(list) {
-  return isEqual(list, toList([]));
+	return isEqual(list, toList([]))
 }
 
 /**
@@ -233,22 +233,22 @@ export function is_empty(list) {
  * ```
  */
 export function contains(loop$list, loop$elem) {
-  while (true) {
-    let list = loop$list;
-    let elem = loop$elem;
-    if (list instanceof $Empty) {
-      return false;
-    } else {
-      let first$1 = list.head;
-      if (isEqual(first$1, elem)) {
-        return true;
-      } else {
-        let rest$1 = list.tail;
-        loop$list = rest$1;
-        loop$elem = elem;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let elem = loop$elem
+		if (list instanceof $Empty) {
+			return false
+		} else {
+			let first$1 = list.head
+			if (isEqual(first$1, elem)) {
+				return true
+			} else {
+				let rest$1 = list.tail
+				loop$list = rest$1
+				loop$elem = elem
+			}
+		}
+	}
 }
 
 /**
@@ -269,12 +269,12 @@ export function contains(loop$list, loop$elem) {
  * ```
  */
 export function first(list) {
-  if (list instanceof $Empty) {
-    return new Error(undefined);
-  } else {
-    let first$1 = list.head;
-    return new Ok(first$1);
-  }
+	if (list instanceof $Empty) {
+		return new Error(undefined)
+	} else {
+		let first$1 = list.head
+		return new Ok(first$1)
+	}
 }
 
 /**
@@ -298,12 +298,12 @@ export function first(list) {
  * ```
  */
 export function rest(list) {
-  if (list instanceof $Empty) {
-    return new Error(undefined);
-  } else {
-    let rest$1 = list.tail;
-    return new Ok(rest$1);
-  }
+	if (list instanceof $Empty) {
+		return new Error(undefined)
+	} else {
+		let rest$1 = list.tail
+		return new Ok(rest$1)
+	}
 }
 
 /**
@@ -340,32 +340,32 @@ export function rest(list) {
  * ```
  */
 export function group(list, key) {
-  return $dict.group(key, list);
+	return $dict.group(key, list)
 }
 
 function filter_loop(loop$list, loop$fun, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let fun = loop$fun;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let _block;
-      let $ = fun(first$1);
-      if ($) {
-        _block = listPrepend(first$1, acc);
-      } else {
-        _block = acc;
-      }
-      let new_acc = _block;
-      loop$list = rest$1;
-      loop$fun = fun;
-      loop$acc = new_acc;
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let fun = loop$fun
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let _block
+			let $ = fun(first$1)
+			if ($) {
+				_block = listPrepend(first$1, acc)
+			} else {
+				_block = acc
+			}
+			let new_acc = _block
+			loop$list = rest$1
+			loop$fun = fun
+			loop$acc = new_acc
+		}
+	}
 }
 
 /**
@@ -383,33 +383,33 @@ function filter_loop(loop$list, loop$fun, loop$acc) {
  * ```
  */
 export function filter(list, predicate) {
-  return filter_loop(list, predicate, toList([]));
+	return filter_loop(list, predicate, toList([]))
 }
 
 function filter_map_loop(loop$list, loop$fun, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let fun = loop$fun;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let _block;
-      let $ = fun(first$1);
-      if ($ instanceof Ok) {
-        let first$2 = $[0];
-        _block = listPrepend(first$2, acc);
-      } else {
-        _block = acc;
-      }
-      let new_acc = _block;
-      loop$list = rest$1;
-      loop$fun = fun;
-      loop$acc = new_acc;
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let fun = loop$fun
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let _block
+			let $ = fun(first$1)
+			if ($ instanceof Ok) {
+				let first$2 = $[0]
+				_block = listPrepend(first$2, acc)
+			} else {
+				_block = acc
+			}
+			let new_acc = _block
+			loop$list = rest$1
+			loop$fun = fun
+			loop$acc = new_acc
+		}
+	}
 }
 
 /**
@@ -427,24 +427,24 @@ function filter_map_loop(loop$list, loop$fun, loop$acc) {
  * ```
  */
 export function filter_map(list, fun) {
-  return filter_map_loop(list, fun, toList([]));
+	return filter_map_loop(list, fun, toList([]))
 }
 
 function map_loop(loop$list, loop$fun, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let fun = loop$fun;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      loop$list = rest$1;
-      loop$fun = fun;
-      loop$acc = listPrepend(fun(first$1), acc);
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let fun = loop$fun
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			loop$list = rest$1
+			loop$fun = fun
+			loop$acc = listPrepend(fun(first$1), acc)
+		}
+	}
 }
 
 /**
@@ -457,30 +457,30 @@ function map_loop(loop$list, loop$fun, loop$acc) {
  * ```
  */
 export function map(list, fun) {
-  return map_loop(list, fun, toList([]));
+	return map_loop(list, fun, toList([]))
 }
 
 function map2_loop(loop$list1, loop$list2, loop$fun, loop$acc) {
-  while (true) {
-    let list1 = loop$list1;
-    let list2 = loop$list2;
-    let fun = loop$fun;
-    let acc = loop$acc;
-    if (list1 instanceof $Empty) {
-      return reverse(acc);
-    } else if (list2 instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let a = list1.head;
-      let as_ = list1.tail;
-      let b = list2.head;
-      let bs = list2.tail;
-      loop$list1 = as_;
-      loop$list2 = bs;
-      loop$fun = fun;
-      loop$acc = listPrepend(fun(a, b), acc);
-    }
-  }
+	while (true) {
+		let list1 = loop$list1
+		let list2 = loop$list2
+		let fun = loop$fun
+		let acc = loop$acc
+		if (list1 instanceof $Empty) {
+			return reverse(acc)
+		} else if (list2 instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let a = list1.head
+			let as_ = list1.tail
+			let b = list2.head
+			let bs = list2.tail
+			loop$list1 = as_
+			loop$list2 = bs
+			loop$fun = fun
+			loop$acc = listPrepend(fun(a, b), acc)
+		}
+	}
 }
 
 /**
@@ -500,29 +500,29 @@ function map2_loop(loop$list1, loop$list2, loop$fun, loop$acc) {
  * ```
  */
 export function map2(list1, list2, fun) {
-  return map2_loop(list1, list2, fun, toList([]));
+	return map2_loop(list1, list2, fun, toList([]))
 }
 
 function map_fold_loop(loop$list, loop$fun, loop$acc, loop$list_acc) {
-  while (true) {
-    let list = loop$list;
-    let fun = loop$fun;
-    let acc = loop$acc;
-    let list_acc = loop$list_acc;
-    if (list instanceof $Empty) {
-      return [acc, reverse(list_acc)];
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = fun(acc, first$1);
-      let acc$1 = $[0];
-      let first$2 = $[1];
-      loop$list = rest$1;
-      loop$fun = fun;
-      loop$acc = acc$1;
-      loop$list_acc = listPrepend(first$2, list_acc);
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let fun = loop$fun
+		let acc = loop$acc
+		let list_acc = loop$list_acc
+		if (list instanceof $Empty) {
+			return [acc, reverse(list_acc)]
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = fun(acc, first$1)
+			let acc$1 = $[0]
+			let first$2 = $[1]
+			loop$list = rest$1
+			loop$fun = fun
+			loop$acc = acc$1
+			loop$list_acc = listPrepend(first$2, list_acc)
+		}
+	}
 }
 
 /**
@@ -541,27 +541,27 @@ function map_fold_loop(loop$list, loop$fun, loop$acc, loop$list_acc) {
  * ```
  */
 export function map_fold(list, initial, fun) {
-  return map_fold_loop(list, fun, initial, toList([]));
+	return map_fold_loop(list, fun, initial, toList([]))
 }
 
 function index_map_loop(loop$list, loop$fun, loop$index, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let fun = loop$fun;
-    let index = loop$index;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let acc$1 = listPrepend(fun(first$1, index), acc);
-      loop$list = rest$1;
-      loop$fun = fun;
-      loop$index = index + 1;
-      loop$acc = acc$1;
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let fun = loop$fun
+		let index = loop$index
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let acc$1 = listPrepend(fun(first$1, index), acc)
+			loop$list = rest$1
+			loop$fun = fun
+			loop$index = index + 1
+			loop$acc = acc$1
+		}
+	}
 }
 
 /**
@@ -578,30 +578,30 @@ function index_map_loop(loop$list, loop$fun, loop$index, loop$acc) {
  * ```
  */
 export function index_map(list, fun) {
-  return index_map_loop(list, fun, 0, toList([]));
+	return index_map_loop(list, fun, 0, toList([]))
 }
 
 function try_map_loop(loop$list, loop$fun, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let fun = loop$fun;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return new Ok(reverse(acc));
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = fun(first$1);
-      if ($ instanceof Ok) {
-        let first$2 = $[0];
-        loop$list = rest$1;
-        loop$fun = fun;
-        loop$acc = listPrepend(first$2, acc);
-      } else {
-        return $;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let fun = loop$fun
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return new Ok(reverse(acc))
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = fun(first$1)
+			if ($ instanceof Ok) {
+				let first$2 = $[0]
+				loop$list = rest$1
+				loop$fun = fun
+				loop$acc = listPrepend(first$2, acc)
+			} else {
+				return $
+			}
+		}
+	}
 }
 
 /**
@@ -634,7 +634,7 @@ function try_map_loop(loop$list, loop$fun, loop$acc) {
  * ```
  */
 export function try_map(list, fun) {
-  return try_map_loop(list, fun, toList([]));
+	return try_map_loop(list, fun, toList([]))
 }
 
 /**
@@ -657,44 +657,44 @@ export function try_map(list, fun) {
  * ```
  */
 export function drop(loop$list, loop$n) {
-  while (true) {
-    let list = loop$list;
-    let n = loop$n;
-    let $ = n <= 0;
-    if ($) {
-      return list;
-    } else {
-      if (list instanceof $Empty) {
-        return list;
-      } else {
-        let rest$1 = list.tail;
-        loop$list = rest$1;
-        loop$n = n - 1;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let n = loop$n
+		let $ = n <= 0
+		if ($) {
+			return list
+		} else {
+			if (list instanceof $Empty) {
+				return list
+			} else {
+				let rest$1 = list.tail
+				loop$list = rest$1
+				loop$n = n - 1
+			}
+		}
+	}
 }
 
 function take_loop(loop$list, loop$n, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let n = loop$n;
-    let acc = loop$acc;
-    let $ = n <= 0;
-    if ($) {
-      return reverse(acc);
-    } else {
-      if (list instanceof $Empty) {
-        return reverse(acc);
-      } else {
-        let first$1 = list.head;
-        let rest$1 = list.tail;
-        loop$list = rest$1;
-        loop$n = n - 1;
-        loop$acc = listPrepend(first$1, acc);
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let n = loop$n
+		let acc = loop$acc
+		let $ = n <= 0
+		if ($) {
+			return reverse(acc)
+		} else {
+			if (list instanceof $Empty) {
+				return reverse(acc)
+			} else {
+				let first$1 = list.head
+				let rest$1 = list.tail
+				loop$list = rest$1
+				loop$n = n - 1
+				loop$acc = listPrepend(first$1, acc)
+			}
+		}
+	}
 }
 
 /**
@@ -717,7 +717,7 @@ function take_loop(loop$list, loop$n, loop$acc) {
  * ```
  */
 export function take(list, n) {
-  return take_loop(list, n, toList([]));
+	return take_loop(list, n, toList([]))
 }
 
 /**
@@ -730,7 +730,7 @@ export function take(list, n) {
  * ```
  */
 export function new$() {
-  return toList([]);
+	return toList([])
 }
 
 /**
@@ -751,22 +751,22 @@ export function new$() {
  * ```
  */
 export function wrap(item) {
-  return toList([item]);
+	return toList([item])
 }
 
 function append_loop(loop$first, loop$second) {
-  while (true) {
-    let first = loop$first;
-    let second = loop$second;
-    if (first instanceof $Empty) {
-      return second;
-    } else {
-      let first$1 = first.head;
-      let rest$1 = first.tail;
-      loop$first = rest$1;
-      loop$second = listPrepend(first$1, second);
-    }
-  }
+	while (true) {
+		let first = loop$first
+		let second = loop$second
+		if (first instanceof $Empty) {
+			return second
+		} else {
+			let first$1 = first.head
+			let rest$1 = first.tail
+			loop$first = rest$1
+			loop$second = listPrepend(first$1, second)
+		}
+	}
 }
 
 /**
@@ -782,7 +782,7 @@ function append_loop(loop$first, loop$second) {
  * ```
  */
 export function append(first, second) {
-  return append_loop(reverse(first), second);
+	return append_loop(reverse(first), second)
 }
 
 /**
@@ -800,22 +800,22 @@ export function append(first, second) {
  * ```
  */
 export function prepend(list, item) {
-  return listPrepend(item, list);
+	return listPrepend(item, list)
 }
 
 function flatten_loop(loop$lists, loop$acc) {
-  while (true) {
-    let lists = loop$lists;
-    let acc = loop$acc;
-    if (lists instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let list = lists.head;
-      let further_lists = lists.tail;
-      loop$lists = further_lists;
-      loop$acc = reverse_and_prepend(list, acc);
-    }
-  }
+	while (true) {
+		let lists = loop$lists
+		let acc = loop$acc
+		if (lists instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let list = lists.head
+			let further_lists = lists.tail
+			loop$lists = further_lists
+			loop$acc = reverse_and_prepend(list, acc)
+		}
+	}
 }
 
 /**
@@ -831,7 +831,7 @@ function flatten_loop(loop$lists, loop$acc) {
  * ```
  */
 export function flatten(lists) {
-  return flatten_loop(lists, toList([]));
+	return flatten_loop(lists, toList([]))
 }
 
 /**
@@ -844,7 +844,7 @@ export function flatten(lists) {
  * ```
  */
 export function flat_map(list, fun) {
-  return flatten(map(list, fun));
+	return flatten(map(list, fun))
 }
 
 /**
@@ -857,20 +857,20 @@ export function flat_map(list, fun) {
  * This function runs in linear time.
  */
 export function fold(loop$list, loop$initial, loop$fun) {
-  while (true) {
-    let list = loop$list;
-    let initial = loop$initial;
-    let fun = loop$fun;
-    if (list instanceof $Empty) {
-      return initial;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      loop$list = rest$1;
-      loop$initial = fun(initial, first$1);
-      loop$fun = fun;
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let initial = loop$initial
+		let fun = loop$fun
+		if (list instanceof $Empty) {
+			return initial
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			loop$list = rest$1
+			loop$initial = fun(initial, first$1)
+			loop$fun = fun
+		}
+	}
 }
 
 /**
@@ -886,32 +886,32 @@ export function fold(loop$list, loop$initial, loop$fun) {
  * `fold` instead as it will use less memory.
  */
 export function fold_right(list, initial, fun) {
-  if (list instanceof $Empty) {
-    return initial;
-  } else {
-    let first$1 = list.head;
-    let rest$1 = list.tail;
-    return fun(fold_right(rest$1, initial, fun), first$1);
-  }
+	if (list instanceof $Empty) {
+		return initial
+	} else {
+		let first$1 = list.head
+		let rest$1 = list.tail
+		return fun(fold_right(rest$1, initial, fun), first$1)
+	}
 }
 
 function index_fold_loop(loop$over, loop$acc, loop$with, loop$index) {
-  while (true) {
-    let over = loop$over;
-    let acc = loop$acc;
-    let with$ = loop$with;
-    let index = loop$index;
-    if (over instanceof $Empty) {
-      return acc;
-    } else {
-      let first$1 = over.head;
-      let rest$1 = over.tail;
-      loop$over = rest$1;
-      loop$acc = with$(acc, first$1, index);
-      loop$with = with$;
-      loop$index = index + 1;
-    }
-  }
+	while (true) {
+		let over = loop$over
+		let acc = loop$acc
+		let with$ = loop$with
+		let index = loop$index
+		if (over instanceof $Empty) {
+			return acc
+		} else {
+			let first$1 = over.head
+			let rest$1 = over.tail
+			loop$over = rest$1
+			loop$acc = with$(acc, first$1, index)
+			loop$with = with$
+			loop$index = index + 1
+		}
+	}
 }
 
 /**
@@ -934,7 +934,7 @@ function index_fold_loop(loop$over, loop$acc, loop$with, loop$index) {
  * ```
  */
 export function index_fold(list, initial, fun) {
-  return index_fold_loop(list, initial, fun, 0);
+	return index_fold_loop(list, initial, fun, 0)
 }
 
 /**
@@ -958,26 +958,26 @@ export function index_fold(list, initial, fun) {
  * ```
  */
 export function try_fold(loop$list, loop$initial, loop$fun) {
-  while (true) {
-    let list = loop$list;
-    let initial = loop$initial;
-    let fun = loop$fun;
-    if (list instanceof $Empty) {
-      return new Ok(initial);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = fun(initial, first$1);
-      if ($ instanceof Ok) {
-        let result = $[0];
-        loop$list = rest$1;
-        loop$initial = result;
-        loop$fun = fun;
-      } else {
-        return $;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let initial = loop$initial
+		let fun = loop$fun
+		if (list instanceof $Empty) {
+			return new Ok(initial)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = fun(initial, first$1)
+			if ($ instanceof Ok) {
+				let result = $[0]
+				loop$list = rest$1
+				loop$initial = result
+				loop$fun = fun
+			} else {
+				return $
+			}
+		}
+	}
 }
 
 /**
@@ -1001,27 +1001,27 @@ export function try_fold(loop$list, loop$initial, loop$fun) {
  * ```
  */
 export function fold_until(loop$list, loop$initial, loop$fun) {
-  while (true) {
-    let list = loop$list;
-    let initial = loop$initial;
-    let fun = loop$fun;
-    if (list instanceof $Empty) {
-      return initial;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = fun(initial, first$1);
-      if ($ instanceof Continue) {
-        let next_accumulator = $[0];
-        loop$list = rest$1;
-        loop$initial = next_accumulator;
-        loop$fun = fun;
-      } else {
-        let b = $[0];
-        return b;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let initial = loop$initial
+		let fun = loop$fun
+		if (list instanceof $Empty) {
+			return initial
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = fun(initial, first$1)
+			if ($ instanceof Continue) {
+				let next_accumulator = $[0]
+				loop$list = rest$1
+				loop$initial = next_accumulator
+				loop$fun = fun
+			} else {
+				let b = $[0]
+				return b
+			}
+		}
+	}
 }
 
 /**
@@ -1045,23 +1045,23 @@ export function fold_until(loop$list, loop$initial, loop$fun) {
  * ```
  */
 export function find(loop$list, loop$is_desired) {
-  while (true) {
-    let list = loop$list;
-    let is_desired = loop$is_desired;
-    if (list instanceof $Empty) {
-      return new Error(undefined);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = is_desired(first$1);
-      if ($) {
-        return new Ok(first$1);
-      } else {
-        loop$list = rest$1;
-        loop$is_desired = is_desired;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let is_desired = loop$is_desired
+		if (list instanceof $Empty) {
+			return new Error(undefined)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = is_desired(first$1)
+			if ($) {
+				return new Ok(first$1)
+			} else {
+				loop$list = rest$1
+				loop$is_desired = is_desired
+			}
+		}
+	}
 }
 
 /**
@@ -1085,23 +1085,23 @@ export function find(loop$list, loop$is_desired) {
  * ```
  */
 export function find_map(loop$list, loop$fun) {
-  while (true) {
-    let list = loop$list;
-    let fun = loop$fun;
-    if (list instanceof $Empty) {
-      return new Error(undefined);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = fun(first$1);
-      if ($ instanceof Ok) {
-        return $;
-      } else {
-        loop$list = rest$1;
-        loop$fun = fun;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let fun = loop$fun
+		if (list instanceof $Empty) {
+			return new Error(undefined)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = fun(first$1)
+			if ($ instanceof Ok) {
+				return $
+			} else {
+				loop$list = rest$1
+				loop$fun = fun
+			}
+		}
+	}
 }
 
 /**
@@ -1124,23 +1124,23 @@ export function find_map(loop$list, loop$fun) {
  * ```
  */
 export function all(loop$list, loop$predicate) {
-  while (true) {
-    let list = loop$list;
-    let predicate = loop$predicate;
-    if (list instanceof $Empty) {
-      return true;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = predicate(first$1);
-      if ($) {
-        loop$list = rest$1;
-        loop$predicate = predicate;
-      } else {
-        return $;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let predicate = loop$predicate
+		if (list instanceof $Empty) {
+			return true
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = predicate(first$1)
+			if ($) {
+				loop$list = rest$1
+				loop$predicate = predicate
+			} else {
+				return $
+			}
+		}
+	}
 }
 
 /**
@@ -1167,44 +1167,44 @@ export function all(loop$list, loop$predicate) {
  * ```
  */
 export function any(loop$list, loop$predicate) {
-  while (true) {
-    let list = loop$list;
-    let predicate = loop$predicate;
-    if (list instanceof $Empty) {
-      return false;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = predicate(first$1);
-      if ($) {
-        return $;
-      } else {
-        loop$list = rest$1;
-        loop$predicate = predicate;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let predicate = loop$predicate
+		if (list instanceof $Empty) {
+			return false
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = predicate(first$1)
+			if ($) {
+				return $
+			} else {
+				loop$list = rest$1
+				loop$predicate = predicate
+			}
+		}
+	}
 }
 
 function zip_loop(loop$one, loop$other, loop$acc) {
-  while (true) {
-    let one = loop$one;
-    let other = loop$other;
-    let acc = loop$acc;
-    if (one instanceof $Empty) {
-      return reverse(acc);
-    } else if (other instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first_one = one.head;
-      let rest_one = one.tail;
-      let first_other = other.head;
-      let rest_other = other.tail;
-      loop$one = rest_one;
-      loop$other = rest_other;
-      loop$acc = listPrepend([first_one, first_other], acc);
-    }
-  }
+	while (true) {
+		let one = loop$one
+		let other = loop$other
+		let acc = loop$acc
+		if (one instanceof $Empty) {
+			return reverse(acc)
+		} else if (other instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first_one = one.head
+			let rest_one = one.tail
+			let first_other = other.head
+			let rest_other = other.tail
+			loop$one = rest_one
+			loop$other = rest_other
+			loop$acc = listPrepend([first_one, first_other], acc)
+		}
+	}
 }
 
 /**
@@ -1232,32 +1232,32 @@ function zip_loop(loop$one, loop$other, loop$acc) {
  * ```
  */
 export function zip(list, other) {
-  return zip_loop(list, other, toList([]));
+	return zip_loop(list, other, toList([]))
 }
 
 function strict_zip_loop(loop$one, loop$other, loop$acc) {
-  while (true) {
-    let one = loop$one;
-    let other = loop$other;
-    let acc = loop$acc;
-    if (one instanceof $Empty) {
-      if (other instanceof $Empty) {
-        return new Ok(reverse(acc));
-      } else {
-        return new Error(undefined);
-      }
-    } else if (other instanceof $Empty) {
-      return new Error(undefined);
-    } else {
-      let first_one = one.head;
-      let rest_one = one.tail;
-      let first_other = other.head;
-      let rest_other = other.tail;
-      loop$one = rest_one;
-      loop$other = rest_other;
-      loop$acc = listPrepend([first_one, first_other], acc);
-    }
-  }
+	while (true) {
+		let one = loop$one
+		let other = loop$other
+		let acc = loop$acc
+		if (one instanceof $Empty) {
+			if (other instanceof $Empty) {
+				return new Ok(reverse(acc))
+			} else {
+				return new Error(undefined)
+			}
+		} else if (other instanceof $Empty) {
+			return new Error(undefined)
+		} else {
+			let first_one = one.head
+			let rest_one = one.tail
+			let first_other = other.head
+			let rest_other = other.tail
+			loop$one = rest_one
+			loop$other = rest_other
+			loop$acc = listPrepend([first_one, first_other], acc)
+		}
+	}
 }
 
 /**
@@ -1284,25 +1284,25 @@ function strict_zip_loop(loop$one, loop$other, loop$acc) {
  * ```
  */
 export function strict_zip(list, other) {
-  return strict_zip_loop(list, other, toList([]));
+	return strict_zip_loop(list, other, toList([]))
 }
 
 function unzip_loop(loop$input, loop$one, loop$other) {
-  while (true) {
-    let input = loop$input;
-    let one = loop$one;
-    let other = loop$other;
-    if (input instanceof $Empty) {
-      return [reverse(one), reverse(other)];
-    } else {
-      let rest$1 = input.tail;
-      let first_one = input.head[0];
-      let first_other = input.head[1];
-      loop$input = rest$1;
-      loop$one = listPrepend(first_one, one);
-      loop$other = listPrepend(first_other, other);
-    }
-  }
+	while (true) {
+		let input = loop$input
+		let one = loop$one
+		let other = loop$other
+		if (input instanceof $Empty) {
+			return [reverse(one), reverse(other)]
+		} else {
+			let rest$1 = input.tail
+			let first_one = input.head[0]
+			let first_other = input.head[1]
+			loop$input = rest$1
+			loop$one = listPrepend(first_one, one)
+			loop$other = listPrepend(first_other, other)
+		}
+	}
 }
 
 /**
@@ -1319,24 +1319,24 @@ function unzip_loop(loop$input, loop$one, loop$other) {
  * ```
  */
 export function unzip(input) {
-  return unzip_loop(input, toList([]), toList([]));
+	return unzip_loop(input, toList([]), toList([]))
 }
 
 function intersperse_loop(loop$list, loop$separator, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let separator = loop$separator;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      loop$list = rest$1;
-      loop$separator = separator;
-      loop$acc = listPrepend(first$1, listPrepend(separator, acc));
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let separator = loop$separator
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			loop$list = rest$1
+			loop$separator = separator
+			loop$acc = listPrepend(first$1, listPrepend(separator, acc))
+		}
+	}
 }
 
 /**
@@ -1355,42 +1355,42 @@ function intersperse_loop(loop$list, loop$separator, loop$acc) {
  * ```
  */
 export function intersperse(list, elem) {
-  if (list instanceof $Empty) {
-    return list;
-  } else {
-    let $ = list.tail;
-    if ($ instanceof $Empty) {
-      return list;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = $;
-      return intersperse_loop(rest$1, elem, toList([first$1]));
-    }
-  }
+	if (list instanceof $Empty) {
+		return list
+	} else {
+		let $ = list.tail
+		if ($ instanceof $Empty) {
+			return list
+		} else {
+			let first$1 = list.head
+			let rest$1 = $
+			return intersperse_loop(rest$1, elem, toList([first$1]))
+		}
+	}
 }
 
 function unique_loop(loop$list, loop$seen, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let seen = loop$seen;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = $dict.has_key(seen, first$1);
-      if ($) {
-        loop$list = rest$1;
-        loop$seen = seen;
-        loop$acc = acc;
-      } else {
-        loop$list = rest$1;
-        loop$seen = $dict.insert(seen, first$1, undefined);
-        loop$acc = listPrepend(first$1, acc);
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let seen = loop$seen
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = $dict.has_key(seen, first$1)
+			if ($) {
+				loop$list = rest$1
+				loop$seen = seen
+				loop$acc = acc
+			} else {
+				loop$list = rest$1
+				loop$seen = $dict.insert(seen, first$1, undefined)
+				loop$acc = listPrepend(first$1, acc)
+			}
+		}
+	}
 }
 
 /**
@@ -1405,7 +1405,7 @@ function unique_loop(loop$list, loop$seen, loop$acc) {
  * ```
  */
 export function unique(list) {
-  return unique_loop(list, $dict.new$(), toList([]));
+	return unique_loop(list, $dict.new$(), toList([]))
 }
 
 /**
@@ -1417,80 +1417,75 @@ export function unique(list) {
  * merge as a tail recursive function. We could reverse the accumulator before
  * returning it but that would end up being less efficient; so the merging
  * algorithm has to play around this.
- * 
+ *
  * @ignore
  */
 function merge_descendings(loop$list1, loop$list2, loop$compare, loop$acc) {
-  while (true) {
-    let list1 = loop$list1;
-    let list2 = loop$list2;
-    let compare = loop$compare;
-    let acc = loop$acc;
-    if (list1 instanceof $Empty) {
-      let list = list2;
-      return reverse_and_prepend(list, acc);
-    } else if (list2 instanceof $Empty) {
-      let list = list1;
-      return reverse_and_prepend(list, acc);
-    } else {
-      let first1 = list1.head;
-      let rest1 = list1.tail;
-      let first2 = list2.head;
-      let rest2 = list2.tail;
-      let $ = compare(first1, first2);
-      if ($ instanceof $order.Lt) {
-        loop$list1 = list1;
-        loop$list2 = rest2;
-        loop$compare = compare;
-        loop$acc = listPrepend(first2, acc);
-      } else if ($ instanceof $order.Eq) {
-        loop$list1 = rest1;
-        loop$list2 = list2;
-        loop$compare = compare;
-        loop$acc = listPrepend(first1, acc);
-      } else {
-        loop$list1 = rest1;
-        loop$list2 = list2;
-        loop$compare = compare;
-        loop$acc = listPrepend(first1, acc);
-      }
-    }
-  }
+	while (true) {
+		let list1 = loop$list1
+		let list2 = loop$list2
+		let compare = loop$compare
+		let acc = loop$acc
+		if (list1 instanceof $Empty) {
+			let list = list2
+			return reverse_and_prepend(list, acc)
+		} else if (list2 instanceof $Empty) {
+			let list = list1
+			return reverse_and_prepend(list, acc)
+		} else {
+			let first1 = list1.head
+			let rest1 = list1.tail
+			let first2 = list2.head
+			let rest2 = list2.tail
+			let $ = compare(first1, first2)
+			if ($ instanceof $order.Lt) {
+				loop$list1 = list1
+				loop$list2 = rest2
+				loop$compare = compare
+				loop$acc = listPrepend(first2, acc)
+			} else if ($ instanceof $order.Eq) {
+				loop$list1 = rest1
+				loop$list2 = list2
+				loop$compare = compare
+				loop$acc = listPrepend(first1, acc)
+			} else {
+				loop$list1 = rest1
+				loop$list2 = list2
+				loop$compare = compare
+				loop$acc = listPrepend(first1, acc)
+			}
+		}
+	}
 }
 
 /**
  * This is the same as merge_ascending_pairs but flipped for descending lists.
- * 
+ *
  * @ignore
  */
 function merge_descending_pairs(loop$sequences, loop$compare, loop$acc) {
-  while (true) {
-    let sequences = loop$sequences;
-    let compare = loop$compare;
-    let acc = loop$acc;
-    if (sequences instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let $ = sequences.tail;
-      if ($ instanceof $Empty) {
-        let sequence = sequences.head;
-        return reverse(listPrepend(reverse(sequence), acc));
-      } else {
-        let descending1 = sequences.head;
-        let descending2 = $.head;
-        let rest$1 = $.tail;
-        let ascending = merge_descendings(
-          descending1,
-          descending2,
-          compare,
-          toList([]),
-        );
-        loop$sequences = rest$1;
-        loop$compare = compare;
-        loop$acc = listPrepend(ascending, acc);
-      }
-    }
-  }
+	while (true) {
+		let sequences = loop$sequences
+		let compare = loop$compare
+		let acc = loop$acc
+		if (sequences instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let $ = sequences.tail
+			if ($ instanceof $Empty) {
+				let sequence = sequences.head
+				return reverse(listPrepend(reverse(sequence), acc))
+			} else {
+				let descending1 = sequences.head
+				let descending2 = $.head
+				let rest$1 = $.tail
+				let ascending = merge_descendings(descending1, descending2, compare, toList([]))
+				loop$sequences = rest$1
+				loop$compare = compare
+				loop$acc = listPrepend(ascending, acc)
+			}
+		}
+	}
 }
 
 /**
@@ -1501,122 +1496,117 @@ function merge_descending_pairs(loop$sequences, loop$compare, loop$acc) {
  * merge as a tail recursive function. We could reverse the accumulator before
  * returning it but that would end up being less efficient; so the merging
  * algorithm has to play around this.
- * 
+ *
  * @ignore
  */
 function merge_ascendings(loop$list1, loop$list2, loop$compare, loop$acc) {
-  while (true) {
-    let list1 = loop$list1;
-    let list2 = loop$list2;
-    let compare = loop$compare;
-    let acc = loop$acc;
-    if (list1 instanceof $Empty) {
-      let list = list2;
-      return reverse_and_prepend(list, acc);
-    } else if (list2 instanceof $Empty) {
-      let list = list1;
-      return reverse_and_prepend(list, acc);
-    } else {
-      let first1 = list1.head;
-      let rest1 = list1.tail;
-      let first2 = list2.head;
-      let rest2 = list2.tail;
-      let $ = compare(first1, first2);
-      if ($ instanceof $order.Lt) {
-        loop$list1 = rest1;
-        loop$list2 = list2;
-        loop$compare = compare;
-        loop$acc = listPrepend(first1, acc);
-      } else if ($ instanceof $order.Eq) {
-        loop$list1 = list1;
-        loop$list2 = rest2;
-        loop$compare = compare;
-        loop$acc = listPrepend(first2, acc);
-      } else {
-        loop$list1 = list1;
-        loop$list2 = rest2;
-        loop$compare = compare;
-        loop$acc = listPrepend(first2, acc);
-      }
-    }
-  }
+	while (true) {
+		let list1 = loop$list1
+		let list2 = loop$list2
+		let compare = loop$compare
+		let acc = loop$acc
+		if (list1 instanceof $Empty) {
+			let list = list2
+			return reverse_and_prepend(list, acc)
+		} else if (list2 instanceof $Empty) {
+			let list = list1
+			return reverse_and_prepend(list, acc)
+		} else {
+			let first1 = list1.head
+			let rest1 = list1.tail
+			let first2 = list2.head
+			let rest2 = list2.tail
+			let $ = compare(first1, first2)
+			if ($ instanceof $order.Lt) {
+				loop$list1 = rest1
+				loop$list2 = list2
+				loop$compare = compare
+				loop$acc = listPrepend(first1, acc)
+			} else if ($ instanceof $order.Eq) {
+				loop$list1 = list1
+				loop$list2 = rest2
+				loop$compare = compare
+				loop$acc = listPrepend(first2, acc)
+			} else {
+				loop$list1 = list1
+				loop$list2 = rest2
+				loop$compare = compare
+				loop$acc = listPrepend(first2, acc)
+			}
+		}
+	}
 }
 
 /**
  * Given a list of ascending lists, it merges adjacent pairs into a single
  * descending list, halving their number.
  * It returns a list of the remaining descending lists.
- * 
+ *
  * @ignore
  */
 function merge_ascending_pairs(loop$sequences, loop$compare, loop$acc) {
-  while (true) {
-    let sequences = loop$sequences;
-    let compare = loop$compare;
-    let acc = loop$acc;
-    if (sequences instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let $ = sequences.tail;
-      if ($ instanceof $Empty) {
-        let sequence = sequences.head;
-        return reverse(listPrepend(reverse(sequence), acc));
-      } else {
-        let ascending1 = sequences.head;
-        let ascending2 = $.head;
-        let rest$1 = $.tail;
-        let descending = merge_ascendings(
-          ascending1,
-          ascending2,
-          compare,
-          toList([]),
-        );
-        loop$sequences = rest$1;
-        loop$compare = compare;
-        loop$acc = listPrepend(descending, acc);
-      }
-    }
-  }
+	while (true) {
+		let sequences = loop$sequences
+		let compare = loop$compare
+		let acc = loop$acc
+		if (sequences instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let $ = sequences.tail
+			if ($ instanceof $Empty) {
+				let sequence = sequences.head
+				return reverse(listPrepend(reverse(sequence), acc))
+			} else {
+				let ascending1 = sequences.head
+				let ascending2 = $.head
+				let rest$1 = $.tail
+				let descending = merge_ascendings(ascending1, ascending2, compare, toList([]))
+				loop$sequences = rest$1
+				loop$compare = compare
+				loop$acc = listPrepend(descending, acc)
+			}
+		}
+	}
 }
 
 /**
  * Given some some sorted sequences (assumed to be sorted in `direction`) it
  * merges them all together until we're left with just a list sorted in
  * ascending order.
- * 
+ *
  * @ignore
  */
 function merge_all(loop$sequences, loop$direction, loop$compare) {
-  while (true) {
-    let sequences = loop$sequences;
-    let direction = loop$direction;
-    let compare = loop$compare;
-    if (sequences instanceof $Empty) {
-      return sequences;
-    } else if (direction instanceof Ascending) {
-      let $ = sequences.tail;
-      if ($ instanceof $Empty) {
-        let sequence = sequences.head;
-        return sequence;
-      } else {
-        let sequences$1 = merge_ascending_pairs(sequences, compare, toList([]));
-        loop$sequences = sequences$1;
-        loop$direction = new Descending();
-        loop$compare = compare;
-      }
-    } else {
-      let $ = sequences.tail;
-      if ($ instanceof $Empty) {
-        let sequence = sequences.head;
-        return reverse(sequence);
-      } else {
-        let sequences$1 = merge_descending_pairs(sequences, compare, toList([]));
-        loop$sequences = sequences$1;
-        loop$direction = new Ascending();
-        loop$compare = compare;
-      }
-    }
-  }
+	while (true) {
+		let sequences = loop$sequences
+		let direction = loop$direction
+		let compare = loop$compare
+		if (sequences instanceof $Empty) {
+			return sequences
+		} else if (direction instanceof Ascending) {
+			let $ = sequences.tail
+			if ($ instanceof $Empty) {
+				let sequence = sequences.head
+				return sequence
+			} else {
+				let sequences$1 = merge_ascending_pairs(sequences, compare, toList([]))
+				loop$sequences = sequences$1
+				loop$direction = new Descending()
+				loop$compare = compare
+			}
+		} else {
+			let $ = sequences.tail
+			if ($ instanceof $Empty) {
+				let sequence = sequences.head
+				return reverse(sequence)
+			} else {
+				let sequences$1 = merge_descending_pairs(sequences, compare, toList([]))
+				loop$sequences = sequences$1
+				loop$direction = new Ascending()
+				loop$compare = compare
+			}
+		}
+	}
 }
 
 /**
@@ -1642,151 +1632,144 @@ function merge_all(loop$sequences, loop$direction, loop$compare) {
  *   it is carried around to check whether we have to keep growing the current
  *   slice or not
  * - `acc` is the accumulator containing the slices sorted in ascending order
- * 
+ *
  * @ignore
  */
-function sequences(
-  loop$list,
-  loop$compare,
-  loop$growing,
-  loop$direction,
-  loop$prev,
-  loop$acc
-) {
-  while (true) {
-    let list = loop$list;
-    let compare = loop$compare;
-    let growing = loop$growing;
-    let direction = loop$direction;
-    let prev = loop$prev;
-    let acc = loop$acc;
-    let growing$1 = listPrepend(prev, growing);
-    if (list instanceof $Empty) {
-      if (direction instanceof Ascending) {
-        return listPrepend(reverse(growing$1), acc);
-      } else {
-        return listPrepend(growing$1, acc);
-      }
-    } else {
-      let new$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = compare(prev, new$1);
-      if (direction instanceof Ascending) {
-        if ($ instanceof $order.Lt) {
-          loop$list = rest$1;
-          loop$compare = compare;
-          loop$growing = growing$1;
-          loop$direction = direction;
-          loop$prev = new$1;
-          loop$acc = acc;
-        } else if ($ instanceof $order.Eq) {
-          loop$list = rest$1;
-          loop$compare = compare;
-          loop$growing = growing$1;
-          loop$direction = direction;
-          loop$prev = new$1;
-          loop$acc = acc;
-        } else {
-          let _block;
-          if (direction instanceof Ascending) {
-            _block = listPrepend(reverse(growing$1), acc);
-          } else {
-            _block = listPrepend(growing$1, acc);
-          }
-          let acc$1 = _block;
-          if (rest$1 instanceof $Empty) {
-            return listPrepend(toList([new$1]), acc$1);
-          } else {
-            let next = rest$1.head;
-            let rest$2 = rest$1.tail;
-            let _block$1;
-            let $1 = compare(new$1, next);
-            if ($1 instanceof $order.Lt) {
-              _block$1 = new Ascending();
-            } else if ($1 instanceof $order.Eq) {
-              _block$1 = new Ascending();
-            } else {
-              _block$1 = new Descending();
-            }
-            let direction$1 = _block$1;
-            loop$list = rest$2;
-            loop$compare = compare;
-            loop$growing = toList([new$1]);
-            loop$direction = direction$1;
-            loop$prev = next;
-            loop$acc = acc$1;
-          }
-        }
-      } else if ($ instanceof $order.Lt) {
-        let _block;
-        if (direction instanceof Ascending) {
-          _block = listPrepend(reverse(growing$1), acc);
-        } else {
-          _block = listPrepend(growing$1, acc);
-        }
-        let acc$1 = _block;
-        if (rest$1 instanceof $Empty) {
-          return listPrepend(toList([new$1]), acc$1);
-        } else {
-          let next = rest$1.head;
-          let rest$2 = rest$1.tail;
-          let _block$1;
-          let $1 = compare(new$1, next);
-          if ($1 instanceof $order.Lt) {
-            _block$1 = new Ascending();
-          } else if ($1 instanceof $order.Eq) {
-            _block$1 = new Ascending();
-          } else {
-            _block$1 = new Descending();
-          }
-          let direction$1 = _block$1;
-          loop$list = rest$2;
-          loop$compare = compare;
-          loop$growing = toList([new$1]);
-          loop$direction = direction$1;
-          loop$prev = next;
-          loop$acc = acc$1;
-        }
-      } else if ($ instanceof $order.Eq) {
-        let _block;
-        if (direction instanceof Ascending) {
-          _block = listPrepend(reverse(growing$1), acc);
-        } else {
-          _block = listPrepend(growing$1, acc);
-        }
-        let acc$1 = _block;
-        if (rest$1 instanceof $Empty) {
-          return listPrepend(toList([new$1]), acc$1);
-        } else {
-          let next = rest$1.head;
-          let rest$2 = rest$1.tail;
-          let _block$1;
-          let $1 = compare(new$1, next);
-          if ($1 instanceof $order.Lt) {
-            _block$1 = new Ascending();
-          } else if ($1 instanceof $order.Eq) {
-            _block$1 = new Ascending();
-          } else {
-            _block$1 = new Descending();
-          }
-          let direction$1 = _block$1;
-          loop$list = rest$2;
-          loop$compare = compare;
-          loop$growing = toList([new$1]);
-          loop$direction = direction$1;
-          loop$prev = next;
-          loop$acc = acc$1;
-        }
-      } else {
-        loop$list = rest$1;
-        loop$compare = compare;
-        loop$growing = growing$1;
-        loop$direction = direction;
-        loop$prev = new$1;
-        loop$acc = acc;
-      }
-    }
-  }
+function sequences(loop$list, loop$compare, loop$growing, loop$direction, loop$prev, loop$acc) {
+	while (true) {
+		let list = loop$list
+		let compare = loop$compare
+		let growing = loop$growing
+		let direction = loop$direction
+		let prev = loop$prev
+		let acc = loop$acc
+		let growing$1 = listPrepend(prev, growing)
+		if (list instanceof $Empty) {
+			if (direction instanceof Ascending) {
+				return listPrepend(reverse(growing$1), acc)
+			} else {
+				return listPrepend(growing$1, acc)
+			}
+		} else {
+			let new$1 = list.head
+			let rest$1 = list.tail
+			let $ = compare(prev, new$1)
+			if (direction instanceof Ascending) {
+				if ($ instanceof $order.Lt) {
+					loop$list = rest$1
+					loop$compare = compare
+					loop$growing = growing$1
+					loop$direction = direction
+					loop$prev = new$1
+					loop$acc = acc
+				} else if ($ instanceof $order.Eq) {
+					loop$list = rest$1
+					loop$compare = compare
+					loop$growing = growing$1
+					loop$direction = direction
+					loop$prev = new$1
+					loop$acc = acc
+				} else {
+					let _block
+					if (direction instanceof Ascending) {
+						_block = listPrepend(reverse(growing$1), acc)
+					} else {
+						_block = listPrepend(growing$1, acc)
+					}
+					let acc$1 = _block
+					if (rest$1 instanceof $Empty) {
+						return listPrepend(toList([new$1]), acc$1)
+					} else {
+						let next = rest$1.head
+						let rest$2 = rest$1.tail
+						let _block$1
+						let $1 = compare(new$1, next)
+						if ($1 instanceof $order.Lt) {
+							_block$1 = new Ascending()
+						} else if ($1 instanceof $order.Eq) {
+							_block$1 = new Ascending()
+						} else {
+							_block$1 = new Descending()
+						}
+						let direction$1 = _block$1
+						loop$list = rest$2
+						loop$compare = compare
+						loop$growing = toList([new$1])
+						loop$direction = direction$1
+						loop$prev = next
+						loop$acc = acc$1
+					}
+				}
+			} else if ($ instanceof $order.Lt) {
+				let _block
+				if (direction instanceof Ascending) {
+					_block = listPrepend(reverse(growing$1), acc)
+				} else {
+					_block = listPrepend(growing$1, acc)
+				}
+				let acc$1 = _block
+				if (rest$1 instanceof $Empty) {
+					return listPrepend(toList([new$1]), acc$1)
+				} else {
+					let next = rest$1.head
+					let rest$2 = rest$1.tail
+					let _block$1
+					let $1 = compare(new$1, next)
+					if ($1 instanceof $order.Lt) {
+						_block$1 = new Ascending()
+					} else if ($1 instanceof $order.Eq) {
+						_block$1 = new Ascending()
+					} else {
+						_block$1 = new Descending()
+					}
+					let direction$1 = _block$1
+					loop$list = rest$2
+					loop$compare = compare
+					loop$growing = toList([new$1])
+					loop$direction = direction$1
+					loop$prev = next
+					loop$acc = acc$1
+				}
+			} else if ($ instanceof $order.Eq) {
+				let _block
+				if (direction instanceof Ascending) {
+					_block = listPrepend(reverse(growing$1), acc)
+				} else {
+					_block = listPrepend(growing$1, acc)
+				}
+				let acc$1 = _block
+				if (rest$1 instanceof $Empty) {
+					return listPrepend(toList([new$1]), acc$1)
+				} else {
+					let next = rest$1.head
+					let rest$2 = rest$1.tail
+					let _block$1
+					let $1 = compare(new$1, next)
+					if ($1 instanceof $order.Lt) {
+						_block$1 = new Ascending()
+					} else if ($1 instanceof $order.Eq) {
+						_block$1 = new Ascending()
+					} else {
+						_block$1 = new Descending()
+					}
+					let direction$1 = _block$1
+					loop$list = rest$2
+					loop$compare = compare
+					loop$growing = toList([new$1])
+					loop$direction = direction$1
+					loop$prev = next
+					loop$acc = acc$1
+				}
+			} else {
+				loop$list = rest$1
+				loop$compare = compare
+				loop$growing = growing$1
+				loop$direction = direction
+				loop$prev = new$1
+				loop$acc = acc
+			}
+		}
+	}
 }
 
 /**
@@ -1802,53 +1785,46 @@ function sequences(
  * ```
  */
 export function sort(list, compare) {
-  if (list instanceof $Empty) {
-    return list;
-  } else {
-    let $ = list.tail;
-    if ($ instanceof $Empty) {
-      return list;
-    } else {
-      let x = list.head;
-      let y = $.head;
-      let rest$1 = $.tail;
-      let _block;
-      let $1 = compare(x, y);
-      if ($1 instanceof $order.Lt) {
-        _block = new Ascending();
-      } else if ($1 instanceof $order.Eq) {
-        _block = new Ascending();
-      } else {
-        _block = new Descending();
-      }
-      let direction = _block;
-      let sequences$1 = sequences(
-        rest$1,
-        compare,
-        toList([x]),
-        direction,
-        y,
-        toList([]),
-      );
-      return merge_all(sequences$1, new Ascending(), compare);
-    }
-  }
+	if (list instanceof $Empty) {
+		return list
+	} else {
+		let $ = list.tail
+		if ($ instanceof $Empty) {
+			return list
+		} else {
+			let x = list.head
+			let y = $.head
+			let rest$1 = $.tail
+			let _block
+			let $1 = compare(x, y)
+			if ($1 instanceof $order.Lt) {
+				_block = new Ascending()
+			} else if ($1 instanceof $order.Eq) {
+				_block = new Ascending()
+			} else {
+				_block = new Descending()
+			}
+			let direction = _block
+			let sequences$1 = sequences(rest$1, compare, toList([x]), direction, y, toList([]))
+			return merge_all(sequences$1, new Ascending(), compare)
+		}
+	}
 }
 
 function repeat_loop(loop$item, loop$times, loop$acc) {
-  while (true) {
-    let item = loop$item;
-    let times = loop$times;
-    let acc = loop$acc;
-    let $ = times <= 0;
-    if ($) {
-      return acc;
-    } else {
-      loop$item = item;
-      loop$times = times - 1;
-      loop$acc = listPrepend(item, acc);
-    }
-  }
+	while (true) {
+		let item = loop$item
+		let times = loop$times
+		let acc = loop$acc
+		let $ = times <= 0
+		if ($) {
+			return acc
+		} else {
+			loop$item = item
+			loop$times = times - 1
+			loop$acc = listPrepend(item, acc)
+		}
+	}
 }
 
 /**
@@ -1865,29 +1841,29 @@ function repeat_loop(loop$item, loop$times, loop$acc) {
  * ```
  */
 export function repeat(a, times) {
-  return repeat_loop(a, times, toList([]));
+	return repeat_loop(a, times, toList([]))
 }
 
 function split_loop(loop$list, loop$n, loop$taken) {
-  while (true) {
-    let list = loop$list;
-    let n = loop$n;
-    let taken = loop$taken;
-    let $ = n <= 0;
-    if ($) {
-      return [reverse(taken), list];
-    } else {
-      if (list instanceof $Empty) {
-        return [reverse(taken), toList([])];
-      } else {
-        let first$1 = list.head;
-        let rest$1 = list.tail;
-        loop$list = rest$1;
-        loop$n = n - 1;
-        loop$taken = listPrepend(first$1, taken);
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let n = loop$n
+		let taken = loop$taken
+		let $ = n <= 0
+		if ($) {
+			return [reverse(taken), list]
+		} else {
+			if (list instanceof $Empty) {
+				return [reverse(taken), toList([])]
+			} else {
+				let first$1 = list.head
+				let rest$1 = list.tail
+				loop$list = rest$1
+				loop$n = n - 1
+				loop$taken = listPrepend(first$1, taken)
+			}
+		}
+	}
 }
 
 /**
@@ -1911,29 +1887,29 @@ function split_loop(loop$list, loop$n, loop$taken) {
  * ```
  */
 export function split(list, index) {
-  return split_loop(list, index, toList([]));
+	return split_loop(list, index, toList([]))
 }
 
 function split_while_loop(loop$list, loop$f, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let f = loop$f;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return [reverse(acc), toList([])];
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = f(first$1);
-      if ($) {
-        loop$list = rest$1;
-        loop$f = f;
-        loop$acc = listPrepend(first$1, acc);
-      } else {
-        return [reverse(acc), list];
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let f = loop$f
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return [reverse(acc), toList([])]
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = f(first$1)
+			if ($) {
+				loop$list = rest$1
+				loop$f = f
+				loop$acc = listPrepend(first$1, acc)
+			} else {
+				return [reverse(acc), list]
+			}
+		}
+	}
 }
 
 /**
@@ -1956,7 +1932,7 @@ function split_while_loop(loop$list, loop$f, loop$acc) {
  * ```
  */
 export function split_while(list, predicate) {
-  return split_while_loop(list, predicate, toList([]));
+	return split_while_loop(list, predicate, toList([]))
 }
 
 /**
@@ -1983,19 +1959,16 @@ export function split_while(list, predicate) {
  * ```
  */
 export function key_find(keyword_list, desired_key) {
-  return find_map(
-    keyword_list,
-    (keyword) => {
-      let key = keyword[0];
-      let value = keyword[1];
-      let $ = isEqual(key, desired_key);
-      if ($) {
-        return new Ok(value);
-      } else {
-        return new Error(undefined);
-      }
-    },
-  );
+	return find_map(keyword_list, (keyword) => {
+		let key = keyword[0]
+		let value = keyword[1]
+		let $ = isEqual(key, desired_key)
+		if ($) {
+			return new Ok(value)
+		} else {
+			return new Error(undefined)
+		}
+	})
 }
 
 /**
@@ -2016,43 +1989,40 @@ export function key_find(keyword_list, desired_key) {
  * ```
  */
 export function key_filter(keyword_list, desired_key) {
-  return filter_map(
-    keyword_list,
-    (keyword) => {
-      let key = keyword[0];
-      let value = keyword[1];
-      let $ = isEqual(key, desired_key);
-      if ($) {
-        return new Ok(value);
-      } else {
-        return new Error(undefined);
-      }
-    },
-  );
+	return filter_map(keyword_list, (keyword) => {
+		let key = keyword[0]
+		let value = keyword[1]
+		let $ = isEqual(key, desired_key)
+		if ($) {
+			return new Ok(value)
+		} else {
+			return new Error(undefined)
+		}
+	})
 }
 
 function key_pop_loop(loop$list, loop$key, loop$checked) {
-  while (true) {
-    let list = loop$list;
-    let key = loop$key;
-    let checked = loop$checked;
-    if (list instanceof $Empty) {
-      return new Error(undefined);
-    } else {
-      let k = list.head[0];
-      if (isEqual(k, key)) {
-        let rest$1 = list.tail;
-        let v = list.head[1];
-        return new Ok([v, reverse_and_prepend(checked, rest$1)]);
-      } else {
-        let first$1 = list.head;
-        let rest$1 = list.tail;
-        loop$list = rest$1;
-        loop$key = key;
-        loop$checked = listPrepend(first$1, checked);
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let key = loop$key
+		let checked = loop$checked
+		if (list instanceof $Empty) {
+			return new Error(undefined)
+		} else {
+			let k = list.head[0]
+			if (isEqual(k, key)) {
+				let rest$1 = list.tail
+				let v = list.head[1]
+				return new Ok([v, reverse_and_prepend(checked, rest$1)])
+			} else {
+				let first$1 = list.head
+				let rest$1 = list.tail
+				loop$list = rest$1
+				loop$key = key
+				loop$checked = listPrepend(first$1, checked)
+			}
+		}
+	}
 }
 
 /**
@@ -2077,32 +2047,32 @@ function key_pop_loop(loop$list, loop$key, loop$checked) {
  * ```
  */
 export function key_pop(list, key) {
-  return key_pop_loop(list, key, toList([]));
+	return key_pop_loop(list, key, toList([]))
 }
 
 function key_set_loop(loop$list, loop$key, loop$value, loop$inspected) {
-  while (true) {
-    let list = loop$list;
-    let key = loop$key;
-    let value = loop$value;
-    let inspected = loop$inspected;
-    if (list instanceof $Empty) {
-      return reverse(listPrepend([key, value], inspected));
-    } else {
-      let k = list.head[0];
-      if (isEqual(k, key)) {
-        let rest$1 = list.tail;
-        return reverse_and_prepend(inspected, listPrepend([k, value], rest$1));
-      } else {
-        let first$1 = list.head;
-        let rest$1 = list.tail;
-        loop$list = rest$1;
-        loop$key = key;
-        loop$value = value;
-        loop$inspected = listPrepend(first$1, inspected);
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let key = loop$key
+		let value = loop$value
+		let inspected = loop$inspected
+		if (list instanceof $Empty) {
+			return reverse(listPrepend([key, value], inspected))
+		} else {
+			let k = list.head[0]
+			if (isEqual(k, key)) {
+				let rest$1 = list.tail
+				return reverse_and_prepend(inspected, listPrepend([k, value], rest$1))
+			} else {
+				let first$1 = list.head
+				let rest$1 = list.tail
+				loop$list = rest$1
+				loop$key = key
+				loop$value = value
+				loop$inspected = listPrepend(first$1, inspected)
+			}
+		}
+	}
 }
 
 /**
@@ -2122,7 +2092,7 @@ function key_set_loop(loop$list, loop$key, loop$value, loop$inspected) {
  * ```
  */
 export function key_set(list, key, value) {
-  return key_set_loop(list, key, value, toList([]));
+	return key_set_loop(list, key, value, toList([]))
 }
 
 /**
@@ -2140,19 +2110,19 @@ export function key_set(list, key, value) {
  * ```
  */
 export function each(loop$list, loop$f) {
-  while (true) {
-    let list = loop$list;
-    let f = loop$f;
-    if (list instanceof $Empty) {
-      return undefined;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      f(first$1);
-      loop$list = rest$1;
-      loop$f = f;
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let f = loop$f
+		if (list instanceof $Empty) {
+			return undefined
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			f(first$1)
+			loop$list = rest$1
+			loop$f = f
+		}
+	}
 }
 
 /**
@@ -2174,50 +2144,50 @@ export function each(loop$list, loop$f) {
  * ```
  */
 export function try_each(loop$list, loop$fun) {
-  while (true) {
-    let list = loop$list;
-    let fun = loop$fun;
-    if (list instanceof $Empty) {
-      return new Ok(undefined);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = fun(first$1);
-      if ($ instanceof Ok) {
-        loop$list = rest$1;
-        loop$fun = fun;
-      } else {
-        return $;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let fun = loop$fun
+		if (list instanceof $Empty) {
+			return new Ok(undefined)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = fun(first$1)
+			if ($ instanceof Ok) {
+				loop$list = rest$1
+				loop$fun = fun
+			} else {
+				return $
+			}
+		}
+	}
 }
 
 function partition_loop(loop$list, loop$categorise, loop$trues, loop$falses) {
-  while (true) {
-    let list = loop$list;
-    let categorise = loop$categorise;
-    let trues = loop$trues;
-    let falses = loop$falses;
-    if (list instanceof $Empty) {
-      return [reverse(trues), reverse(falses)];
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = categorise(first$1);
-      if ($) {
-        loop$list = rest$1;
-        loop$categorise = categorise;
-        loop$trues = listPrepend(first$1, trues);
-        loop$falses = falses;
-      } else {
-        loop$list = rest$1;
-        loop$categorise = categorise;
-        loop$trues = trues;
-        loop$falses = listPrepend(first$1, falses);
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let categorise = loop$categorise
+		let trues = loop$trues
+		let falses = loop$falses
+		if (list instanceof $Empty) {
+			return [reverse(trues), reverse(falses)]
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = categorise(first$1)
+			if ($) {
+				loop$list = rest$1
+				loop$categorise = categorise
+				loop$trues = listPrepend(first$1, trues)
+				loop$falses = falses
+			} else {
+				loop$list = rest$1
+				loop$categorise = categorise
+				loop$trues = trues
+				loop$falses = listPrepend(first$1, falses)
+			}
+		}
+	}
 }
 
 /**
@@ -2233,50 +2203,44 @@ function partition_loop(loop$list, loop$categorise, loop$trues, loop$falses) {
  * ```
  */
 export function partition(list, categorise) {
-  return partition_loop(list, categorise, toList([]), toList([]));
+	return partition_loop(list, categorise, toList([]), toList([]))
 }
 
-function permutation_prepend(
-  loop$el,
-  loop$permutations,
-  loop$list_1,
-  loop$list_2,
-  loop$acc
-) {
-  while (true) {
-    let el = loop$el;
-    let permutations = loop$permutations;
-    let list_1 = loop$list_1;
-    let list_2 = loop$list_2;
-    let acc = loop$acc;
-    if (permutations instanceof $Empty) {
-      return permutation_zip(list_1, list_2, acc);
-    } else {
-      let head = permutations.head;
-      let tail = permutations.tail;
-      loop$el = el;
-      loop$permutations = tail;
-      loop$list_1 = list_1;
-      loop$list_2 = list_2;
-      loop$acc = listPrepend(listPrepend(el, head), acc);
-    }
-  }
+function permutation_prepend(loop$el, loop$permutations, loop$list_1, loop$list_2, loop$acc) {
+	while (true) {
+		let el = loop$el
+		let permutations = loop$permutations
+		let list_1 = loop$list_1
+		let list_2 = loop$list_2
+		let acc = loop$acc
+		if (permutations instanceof $Empty) {
+			return permutation_zip(list_1, list_2, acc)
+		} else {
+			let head = permutations.head
+			let tail = permutations.tail
+			loop$el = el
+			loop$permutations = tail
+			loop$list_1 = list_1
+			loop$list_2 = list_2
+			loop$acc = listPrepend(listPrepend(el, head), acc)
+		}
+	}
 }
 
 function permutation_zip(list, rest, acc) {
-  if (list instanceof $Empty) {
-    return reverse(acc);
-  } else {
-    let head = list.head;
-    let tail = list.tail;
-    return permutation_prepend(
-      head,
-      permutations(reverse_and_prepend(rest, tail)),
-      tail,
-      listPrepend(head, rest),
-      acc,
-    );
-  }
+	if (list instanceof $Empty) {
+		return reverse(acc)
+	} else {
+		let head = list.head
+		let tail = list.tail
+		return permutation_prepend(
+			head,
+			permutations(reverse_and_prepend(rest, tail)),
+			tail,
+			listPrepend(head, rest),
+			acc,
+		)
+	}
 }
 
 /**
@@ -2289,29 +2253,29 @@ function permutation_zip(list, rest, acc) {
  * ```
  */
 export function permutations(list) {
-  if (list instanceof $Empty) {
-    return toList([toList([])]);
-  } else {
-    let l = list;
-    return permutation_zip(l, toList([]), toList([]));
-  }
+	if (list instanceof $Empty) {
+		return toList([toList([])])
+	} else {
+		let l = list
+		return permutation_zip(l, toList([]), toList([]))
+	}
 }
 
 function window_loop(loop$acc, loop$list, loop$n) {
-  while (true) {
-    let acc = loop$acc;
-    let list = loop$list;
-    let n = loop$n;
-    let window$1 = take(list, n);
-    let $ = length(window$1) === n;
-    if ($) {
-      loop$acc = listPrepend(window$1, acc);
-      loop$list = drop(list, 1);
-      loop$n = n;
-    } else {
-      return reverse(acc);
-    }
-  }
+	while (true) {
+		let acc = loop$acc
+		let list = loop$list
+		let n = loop$n
+		let window$1 = take(list, n)
+		let $ = length(window$1) === n
+		if ($) {
+			loop$acc = listPrepend(window$1, acc)
+			loop$list = drop(list, 1)
+			loop$n = n
+		} else {
+			return reverse(acc)
+		}
+	}
 }
 
 /**
@@ -2328,12 +2292,12 @@ function window_loop(loop$acc, loop$list, loop$n) {
  * ```
  */
 export function window(list, n) {
-  let $ = n <= 0;
-  if ($) {
-    return toList([]);
-  } else {
-    return window_loop(toList([]), list, n);
-  }
+	let $ = n <= 0
+	if ($) {
+		return toList([])
+	} else {
+		return window_loop(toList([]), list, n)
+	}
 }
 
 /**
@@ -2350,7 +2314,7 @@ export function window(list, n) {
  * ```
  */
 export function window_by_2(list) {
-  return zip(list, drop(list, 1));
+	return zip(list, drop(list, 1))
 }
 
 /**
@@ -2363,45 +2327,45 @@ export function window_by_2(list) {
  * ```
  */
 export function drop_while(loop$list, loop$predicate) {
-  while (true) {
-    let list = loop$list;
-    let predicate = loop$predicate;
-    if (list instanceof $Empty) {
-      return list;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = predicate(first$1);
-      if ($) {
-        loop$list = rest$1;
-        loop$predicate = predicate;
-      } else {
-        return listPrepend(first$1, rest$1);
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let predicate = loop$predicate
+		if (list instanceof $Empty) {
+			return list
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = predicate(first$1)
+			if ($) {
+				loop$list = rest$1
+				loop$predicate = predicate
+			} else {
+				return listPrepend(first$1, rest$1)
+			}
+		}
+	}
 }
 
 function take_while_loop(loop$list, loop$predicate, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let predicate = loop$predicate;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = predicate(first$1);
-      if ($) {
-        loop$list = rest$1;
-        loop$predicate = predicate;
-        loop$acc = listPrepend(first$1, acc);
-      } else {
-        return reverse(acc);
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let predicate = loop$predicate
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = predicate(first$1)
+			if ($) {
+				loop$list = rest$1
+				loop$predicate = predicate
+				loop$acc = listPrepend(first$1, acc)
+			} else {
+				return reverse(acc)
+			}
+		}
+	}
 }
 
 /**
@@ -2414,45 +2378,39 @@ function take_while_loop(loop$list, loop$predicate, loop$acc) {
  * ```
  */
 export function take_while(list, predicate) {
-  return take_while_loop(list, predicate, toList([]));
+	return take_while_loop(list, predicate, toList([]))
 }
 
-function chunk_loop(
-  loop$list,
-  loop$f,
-  loop$previous_key,
-  loop$current_chunk,
-  loop$acc
-) {
-  while (true) {
-    let list = loop$list;
-    let f = loop$f;
-    let previous_key = loop$previous_key;
-    let current_chunk = loop$current_chunk;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return reverse(listPrepend(reverse(current_chunk), acc));
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let key = f(first$1);
-      let $ = isEqual(key, previous_key);
-      if ($) {
-        loop$list = rest$1;
-        loop$f = f;
-        loop$previous_key = key;
-        loop$current_chunk = listPrepend(first$1, current_chunk);
-        loop$acc = acc;
-      } else {
-        let new_acc = listPrepend(reverse(current_chunk), acc);
-        loop$list = rest$1;
-        loop$f = f;
-        loop$previous_key = key;
-        loop$current_chunk = toList([first$1]);
-        loop$acc = new_acc;
-      }
-    }
-  }
+function chunk_loop(loop$list, loop$f, loop$previous_key, loop$current_chunk, loop$acc) {
+	while (true) {
+		let list = loop$list
+		let f = loop$f
+		let previous_key = loop$previous_key
+		let current_chunk = loop$current_chunk
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return reverse(listPrepend(reverse(current_chunk), acc))
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let key = f(first$1)
+			let $ = isEqual(key, previous_key)
+			if ($) {
+				loop$list = rest$1
+				loop$f = f
+				loop$previous_key = key
+				loop$current_chunk = listPrepend(first$1, current_chunk)
+				loop$acc = acc
+			} else {
+				let new_acc = listPrepend(reverse(current_chunk), acc)
+				loop$list = rest$1
+				loop$f = f
+				loop$previous_key = key
+				loop$current_chunk = toList([first$1])
+				loop$acc = new_acc
+			}
+		}
+	}
 }
 
 /**
@@ -2467,55 +2425,49 @@ function chunk_loop(
  * ```
  */
 export function chunk(list, f) {
-  if (list instanceof $Empty) {
-    return list;
-  } else {
-    let first$1 = list.head;
-    let rest$1 = list.tail;
-    return chunk_loop(rest$1, f, f(first$1), toList([first$1]), toList([]));
-  }
+	if (list instanceof $Empty) {
+		return list
+	} else {
+		let first$1 = list.head
+		let rest$1 = list.tail
+		return chunk_loop(rest$1, f, f(first$1), toList([first$1]), toList([]))
+	}
 }
 
-function sized_chunk_loop(
-  loop$list,
-  loop$count,
-  loop$left,
-  loop$current_chunk,
-  loop$acc
-) {
-  while (true) {
-    let list = loop$list;
-    let count = loop$count;
-    let left = loop$left;
-    let current_chunk = loop$current_chunk;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      if (current_chunk instanceof $Empty) {
-        return reverse(acc);
-      } else {
-        let remaining = current_chunk;
-        return reverse(listPrepend(reverse(remaining), acc));
-      }
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let chunk$1 = listPrepend(first$1, current_chunk);
-      let $ = left > 1;
-      if ($) {
-        loop$list = rest$1;
-        loop$count = count;
-        loop$left = left - 1;
-        loop$current_chunk = chunk$1;
-        loop$acc = acc;
-      } else {
-        loop$list = rest$1;
-        loop$count = count;
-        loop$left = count;
-        loop$current_chunk = toList([]);
-        loop$acc = listPrepend(reverse(chunk$1), acc);
-      }
-    }
-  }
+function sized_chunk_loop(loop$list, loop$count, loop$left, loop$current_chunk, loop$acc) {
+	while (true) {
+		let list = loop$list
+		let count = loop$count
+		let left = loop$left
+		let current_chunk = loop$current_chunk
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			if (current_chunk instanceof $Empty) {
+				return reverse(acc)
+			} else {
+				let remaining = current_chunk
+				return reverse(listPrepend(reverse(remaining), acc))
+			}
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let chunk$1 = listPrepend(first$1, current_chunk)
+			let $ = left > 1
+			if ($) {
+				loop$list = rest$1
+				loop$count = count
+				loop$left = left - 1
+				loop$current_chunk = chunk$1
+				loop$acc = acc
+			} else {
+				loop$list = rest$1
+				loop$count = count
+				loop$left = count
+				loop$current_chunk = toList([])
+				loop$acc = listPrepend(reverse(chunk$1), acc)
+			}
+		}
+	}
 }
 
 /**
@@ -2539,7 +2491,7 @@ function sized_chunk_loop(
  * ```
  */
 export function sized_chunk(list, count) {
-  return sized_chunk_loop(list, count, count, toList([]), toList([]));
+	return sized_chunk_loop(list, count, count, toList([]), toList([]))
 }
 
 /**
@@ -2562,33 +2514,33 @@ export function sized_chunk(list, count) {
  * ```
  */
 export function reduce(list, fun) {
-  if (list instanceof $Empty) {
-    return new Error(undefined);
-  } else {
-    let first$1 = list.head;
-    let rest$1 = list.tail;
-    return new Ok(fold(rest$1, first$1, fun));
-  }
+	if (list instanceof $Empty) {
+		return new Error(undefined)
+	} else {
+		let first$1 = list.head
+		let rest$1 = list.tail
+		return new Ok(fold(rest$1, first$1, fun))
+	}
 }
 
 function scan_loop(loop$list, loop$accumulator, loop$accumulated, loop$fun) {
-  while (true) {
-    let list = loop$list;
-    let accumulator = loop$accumulator;
-    let accumulated = loop$accumulated;
-    let fun = loop$fun;
-    if (list instanceof $Empty) {
-      return reverse(accumulated);
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let next = fun(accumulator, first$1);
-      loop$list = rest$1;
-      loop$accumulator = next;
-      loop$accumulated = listPrepend(next, accumulated);
-      loop$fun = fun;
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let accumulator = loop$accumulator
+		let accumulated = loop$accumulated
+		let fun = loop$fun
+		if (list instanceof $Empty) {
+			return reverse(accumulated)
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let next = fun(accumulator, first$1)
+			loop$list = rest$1
+			loop$accumulator = next
+			loop$accumulated = listPrepend(next, accumulated)
+			loop$fun = fun
+		}
+	}
 }
 
 /**
@@ -2602,7 +2554,7 @@ function scan_loop(loop$list, loop$accumulator, loop$accumulated, loop$fun) {
  * ```
  */
 export function scan(list, initial, fun) {
-  return scan_loop(list, initial, toList([]), fun);
+	return scan_loop(list, initial, toList([]), fun)
 }
 
 /**
@@ -2623,21 +2575,21 @@ export function scan(list, initial, fun) {
  * ```
  */
 export function last(loop$list) {
-  while (true) {
-    let list = loop$list;
-    if (list instanceof $Empty) {
-      return new Error(undefined);
-    } else {
-      let $ = list.tail;
-      if ($ instanceof $Empty) {
-        let last$1 = list.head;
-        return new Ok(last$1);
-      } else {
-        let rest$1 = $;
-        loop$list = rest$1;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		if (list instanceof $Empty) {
+			return new Error(undefined)
+		} else {
+			let $ = list.tail
+			if ($ instanceof $Empty) {
+				let last$1 = list.head
+				return new Ok(last$1)
+			} else {
+				let rest$1 = $
+				loop$list = rest$1
+			}
+		}
+	}
 }
 
 /**
@@ -2655,46 +2607,42 @@ export function last(loop$list) {
  * ```
  */
 export function combinations(items, n) {
-  if (n === 0) {
-    return toList([toList([])]);
-  } else if (items instanceof $Empty) {
-    return items;
-  } else {
-    let first$1 = items.head;
-    let rest$1 = items.tail;
-    let _pipe = rest$1;
-    let _pipe$1 = combinations(_pipe, n - 1);
-    let _pipe$2 = map(
-      _pipe$1,
-      (combination) => { return listPrepend(first$1, combination); },
-    );
-    let _pipe$3 = reverse(_pipe$2);
-    return fold(
-      _pipe$3,
-      combinations(rest$1, n),
-      (acc, c) => { return listPrepend(c, acc); },
-    );
-  }
+	if (n === 0) {
+		return toList([toList([])])
+	} else if (items instanceof $Empty) {
+		return items
+	} else {
+		let first$1 = items.head
+		let rest$1 = items.tail
+		let _pipe = rest$1
+		let _pipe$1 = combinations(_pipe, n - 1)
+		let _pipe$2 = map(_pipe$1, (combination) => {
+			return listPrepend(first$1, combination)
+		})
+		let _pipe$3 = reverse(_pipe$2)
+		return fold(_pipe$3, combinations(rest$1, n), (acc, c) => {
+			return listPrepend(c, acc)
+		})
+	}
 }
 
 function combination_pairs_loop(loop$items, loop$acc) {
-  while (true) {
-    let items = loop$items;
-    let acc = loop$acc;
-    if (items instanceof $Empty) {
-      return reverse(acc);
-    } else {
-      let first$1 = items.head;
-      let rest$1 = items.tail;
-      let first_combinations = map(
-        rest$1,
-        (other) => { return [first$1, other]; },
-      );
-      let acc$1 = reverse_and_prepend(first_combinations, acc);
-      loop$items = rest$1;
-      loop$acc = acc$1;
-    }
-  }
+	while (true) {
+		let items = loop$items
+		let acc = loop$acc
+		if (items instanceof $Empty) {
+			return reverse(acc)
+		} else {
+			let first$1 = items.head
+			let rest$1 = items.tail
+			let first_combinations = map(rest$1, (other) => {
+				return [first$1, other]
+			})
+			let acc$1 = reverse_and_prepend(first_combinations, acc)
+			loop$items = rest$1
+			loop$acc = acc$1
+		}
+	}
 }
 
 /**
@@ -2707,55 +2655,55 @@ function combination_pairs_loop(loop$items, loop$acc) {
  * ```
  */
 export function combination_pairs(items) {
-  return combination_pairs_loop(items, toList([]));
+	return combination_pairs_loop(items, toList([]))
 }
 
 function take_firsts(loop$rows, loop$column, loop$remaining_rows) {
-  while (true) {
-    let rows = loop$rows;
-    let column = loop$column;
-    let remaining_rows = loop$remaining_rows;
-    if (rows instanceof $Empty) {
-      return [reverse(column), reverse(remaining_rows)];
-    } else {
-      let $ = rows.head;
-      if ($ instanceof $Empty) {
-        let rest$1 = rows.tail;
-        loop$rows = rest$1;
-        loop$column = column;
-        loop$remaining_rows = remaining_rows;
-      } else {
-        let rest_rows = rows.tail;
-        let first$1 = $.head;
-        let remaining_row = $.tail;
-        let remaining_rows$1 = listPrepend(remaining_row, remaining_rows);
-        loop$rows = rest_rows;
-        loop$column = listPrepend(first$1, column);
-        loop$remaining_rows = remaining_rows$1;
-      }
-    }
-  }
+	while (true) {
+		let rows = loop$rows
+		let column = loop$column
+		let remaining_rows = loop$remaining_rows
+		if (rows instanceof $Empty) {
+			return [reverse(column), reverse(remaining_rows)]
+		} else {
+			let $ = rows.head
+			if ($ instanceof $Empty) {
+				let rest$1 = rows.tail
+				loop$rows = rest$1
+				loop$column = column
+				loop$remaining_rows = remaining_rows
+			} else {
+				let rest_rows = rows.tail
+				let first$1 = $.head
+				let remaining_row = $.tail
+				let remaining_rows$1 = listPrepend(remaining_row, remaining_rows)
+				loop$rows = rest_rows
+				loop$column = listPrepend(first$1, column)
+				loop$remaining_rows = remaining_rows$1
+			}
+		}
+	}
 }
 
 function transpose_loop(loop$rows, loop$columns) {
-  while (true) {
-    let rows = loop$rows;
-    let columns = loop$columns;
-    if (rows instanceof $Empty) {
-      return reverse(columns);
-    } else {
-      let $ = take_firsts(rows, toList([]), toList([]));
-      let column = $[0];
-      let rest$1 = $[1];
-      if (column instanceof $Empty) {
-        loop$rows = rest$1;
-        loop$columns = columns;
-      } else {
-        loop$rows = rest$1;
-        loop$columns = listPrepend(column, columns);
-      }
-    }
-  }
+	while (true) {
+		let rows = loop$rows
+		let columns = loop$columns
+		if (rows instanceof $Empty) {
+			return reverse(columns)
+		} else {
+			let $ = take_firsts(rows, toList([]), toList([]))
+			let column = $[0]
+			let rest$1 = $[1]
+			if (column instanceof $Empty) {
+				loop$rows = rest$1
+				loop$columns = columns
+			} else {
+				loop$rows = rest$1
+				loop$columns = listPrepend(column, columns)
+			}
+		}
+	}
 }
 
 /**
@@ -2773,7 +2721,7 @@ function transpose_loop(loop$rows, loop$columns) {
  * ```
  */
 export function transpose(list_of_lists) {
-  return transpose_loop(list_of_lists, toList([]));
+	return transpose_loop(list_of_lists, toList([]))
 }
 
 /**
@@ -2787,31 +2735,30 @@ export function transpose(list_of_lists) {
  * ```
  */
 export function interleave(list) {
-  let _pipe = list;
-  let _pipe$1 = transpose(_pipe);
-  return flatten(_pipe$1);
+	let _pipe = list
+	let _pipe$1 = transpose(_pipe)
+	return flatten(_pipe$1)
 }
 
 function shuffle_pair_unwrap_loop(loop$list, loop$acc) {
-  while (true) {
-    let list = loop$list;
-    let acc = loop$acc;
-    if (list instanceof $Empty) {
-      return acc;
-    } else {
-      let elem_pair = list.head;
-      let enumerable = list.tail;
-      loop$list = enumerable;
-      loop$acc = listPrepend(elem_pair[1], acc);
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let acc = loop$acc
+		if (list instanceof $Empty) {
+			return acc
+		} else {
+			let elem_pair = list.head
+			let enumerable = list.tail
+			loop$list = enumerable
+			loop$acc = listPrepend(elem_pair[1], acc)
+		}
+	}
 }
 
 function do_shuffle_by_pair_indexes(list_of_pairs) {
-  return sort(
-    list_of_pairs,
-    (a_pair, b_pair) => { return $float.compare(a_pair[0], b_pair[0]); },
-  );
+	return sort(list_of_pairs, (a_pair, b_pair) => {
+		return $float.compare(a_pair[0], b_pair[0])
+	})
 }
 
 /**
@@ -2827,42 +2774,40 @@ function do_shuffle_by_pair_indexes(list_of_pairs) {
  * ```
  */
 export function shuffle(list) {
-  let _pipe = list;
-  let _pipe$1 = fold(
-    _pipe,
-    toList([]),
-    (acc, a) => { return listPrepend([$float.random(), a], acc); },
-  );
-  let _pipe$2 = do_shuffle_by_pair_indexes(_pipe$1);
-  return shuffle_pair_unwrap_loop(_pipe$2, toList([]));
+	let _pipe = list
+	let _pipe$1 = fold(_pipe, toList([]), (acc, a) => {
+		return listPrepend([$float.random(), a], acc)
+	})
+	let _pipe$2 = do_shuffle_by_pair_indexes(_pipe$1)
+	return shuffle_pair_unwrap_loop(_pipe$2, toList([]))
 }
 
 function max_loop(loop$list, loop$compare, loop$max) {
-  while (true) {
-    let list = loop$list;
-    let compare = loop$compare;
-    let max = loop$max;
-    if (list instanceof $Empty) {
-      return max;
-    } else {
-      let first$1 = list.head;
-      let rest$1 = list.tail;
-      let $ = compare(first$1, max);
-      if ($ instanceof $order.Lt) {
-        loop$list = rest$1;
-        loop$compare = compare;
-        loop$max = max;
-      } else if ($ instanceof $order.Eq) {
-        loop$list = rest$1;
-        loop$compare = compare;
-        loop$max = max;
-      } else {
-        loop$list = rest$1;
-        loop$compare = compare;
-        loop$max = first$1;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let compare = loop$compare
+		let max = loop$max
+		if (list instanceof $Empty) {
+			return max
+		} else {
+			let first$1 = list.head
+			let rest$1 = list.tail
+			let $ = compare(first$1, max)
+			if ($ instanceof $order.Lt) {
+				loop$list = rest$1
+				loop$compare = compare
+				loop$max = max
+			} else if ($ instanceof $order.Eq) {
+				loop$list = rest$1
+				loop$compare = compare
+				loop$max = max
+			} else {
+				loop$list = rest$1
+				loop$compare = compare
+				loop$max = first$1
+			}
+		}
+	}
 }
 
 /**
@@ -2879,112 +2824,110 @@ function max_loop(loop$list, loop$compare, loop$max) {
  * ```
  */
 export function max(list, compare) {
-  if (list instanceof $Empty) {
-    return new Error(undefined);
-  } else {
-    let first$1 = list.head;
-    let rest$1 = list.tail;
-    return new Ok(max_loop(rest$1, compare, first$1));
-  }
+	if (list instanceof $Empty) {
+		return new Error(undefined)
+	} else {
+		let first$1 = list.head
+		let rest$1 = list.tail
+		return new Ok(max_loop(rest$1, compare, first$1))
+	}
 }
 
 function log_random() {
-  let $ = $float.logarithm($float.random() + min_positive);
-  let random;
-  if ($ instanceof Ok) {
-    random = $[0];
-  } else {
-    throw makeError(
-      "let_assert",
-      FILEPATH,
-      "gleam/list",
-      2244,
-      "log_random",
-      "Pattern match failed, no pattern matched the value.",
-      {
-        value: $,
-        start: 55129,
-        end: 55200,
-        pattern_start: 55140,
-        pattern_end: 55150
-      }
-    )
-  }
-  return random;
+	let $ = $float.logarithm($float.random() + min_positive)
+	let random
+	if ($ instanceof Ok) {
+		random = $[0]
+	} else {
+		throw makeError(
+			'let_assert',
+			FILEPATH,
+			'gleam/list',
+			2244,
+			'log_random',
+			'Pattern match failed, no pattern matched the value.',
+			{
+				value: $,
+				start: 55129,
+				end: 55200,
+				pattern_start: 55140,
+				pattern_end: 55150,
+			},
+		)
+	}
+	return random
 }
 
 function sample_loop(loop$list, loop$reservoir, loop$n, loop$w) {
-  while (true) {
-    let list = loop$list;
-    let reservoir = loop$reservoir;
-    let n = loop$n;
-    let w = loop$w;
-    let _block;
-    {
-      let $ = $float.logarithm(1.0 - w);
-      let log;
-      if ($ instanceof Ok) {
-        log = $[0];
-      } else {
-        throw makeError(
-          "let_assert",
-          FILEPATH,
-          "gleam/list",
-          2227,
-          "sample_loop",
-          "Pattern match failed, no pattern matched the value.",
-          {
-            value: $,
-            start: 54690,
-            end: 54736,
-            pattern_start: 54701,
-            pattern_end: 54708
-          }
-        )
-      }
-      _block = $float.round($float.floor(divideFloat(log_random(), log)));
-    }
-    let skip = _block;
-    let $ = drop(list, skip);
-    if ($ instanceof $Empty) {
-      return reservoir;
-    } else {
-      let first$1 = $.head;
-      let rest$1 = $.tail;
-      let reservoir$1 = $dict.insert(reservoir, $int.random(n), first$1);
-      let w$1 = w * $float.exponential(
-        divideFloat(log_random(), $int.to_float(n)),
-      );
-      loop$list = rest$1;
-      loop$reservoir = reservoir$1;
-      loop$n = n;
-      loop$w = w$1;
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let reservoir = loop$reservoir
+		let n = loop$n
+		let w = loop$w
+		let _block
+		{
+			let $ = $float.logarithm(1.0 - w)
+			let log
+			if ($ instanceof Ok) {
+				log = $[0]
+			} else {
+				throw makeError(
+					'let_assert',
+					FILEPATH,
+					'gleam/list',
+					2227,
+					'sample_loop',
+					'Pattern match failed, no pattern matched the value.',
+					{
+						value: $,
+						start: 54690,
+						end: 54736,
+						pattern_start: 54701,
+						pattern_end: 54708,
+					},
+				)
+			}
+			_block = $float.round($float.floor(divideFloat(log_random(), log)))
+		}
+		let skip = _block
+		let $ = drop(list, skip)
+		if ($ instanceof $Empty) {
+			return reservoir
+		} else {
+			let first$1 = $.head
+			let rest$1 = $.tail
+			let reservoir$1 = $dict.insert(reservoir, $int.random(n), first$1)
+			let w$1 = w * $float.exponential(divideFloat(log_random(), $int.to_float(n)))
+			loop$list = rest$1
+			loop$reservoir = reservoir$1
+			loop$n = n
+			loop$w = w$1
+		}
+	}
 }
 
 function build_reservoir_loop(loop$list, loop$size, loop$reservoir) {
-  while (true) {
-    let list = loop$list;
-    let size = loop$size;
-    let reservoir = loop$reservoir;
-    let reservoir_size = $dict.size(reservoir);
-    let $ = reservoir_size >= size;
-    if ($) {
-      return [reservoir, list];
-    } else {
-      if (list instanceof $Empty) {
-        return [reservoir, toList([])];
-      } else {
-        let first$1 = list.head;
-        let rest$1 = list.tail;
-        let reservoir$1 = $dict.insert(reservoir, reservoir_size, first$1);
-        loop$list = rest$1;
-        loop$size = size;
-        loop$reservoir = reservoir$1;
-      }
-    }
-  }
+	while (true) {
+		let list = loop$list
+		let size = loop$size
+		let reservoir = loop$reservoir
+		let reservoir_size = $dict.size(reservoir)
+		let $ = reservoir_size >= size
+		if ($) {
+			return [reservoir, list]
+		} else {
+			if (list instanceof $Empty) {
+				return [reservoir, toList([])]
+			} else {
+				let first$1 = list.head
+				let rest$1 = list.tail
+				let reservoir$1 = $dict.insert(reservoir, reservoir_size, first$1)
+				loop$list = rest$1
+				loop$size = size
+				loop$reservoir = reservoir$1
+			}
+		}
+	}
 }
 
 /**
@@ -2994,11 +2937,11 @@ function build_reservoir_loop(loop$list, loop$size, loop$reservoir) {
  *
  * This also returns the remaining elements of `list` that didn't end up in
  * the reservoir.
- * 
+ *
  * @ignore
  */
 function build_reservoir(list, n) {
-  return build_reservoir_loop(list, n, $dict.new$());
+	return build_reservoir_loop(list, n, $dict.new$())
 }
 
 /**
@@ -3016,14 +2959,14 @@ function build_reservoir(list, n) {
  * ```
  */
 export function sample(list, n) {
-  let $ = build_reservoir(list, n);
-  let reservoir = $[0];
-  let rest$1 = $[1];
-  let $1 = $dict.is_empty(reservoir);
-  if ($1) {
-    return toList([]);
-  } else {
-    let w = $float.exponential(divideFloat(log_random(), $int.to_float(n)));
-    return $dict.values(sample_loop(rest$1, reservoir, n, w));
-  }
+	let $ = build_reservoir(list, n)
+	let reservoir = $[0]
+	let rest$1 = $[1]
+	let $1 = $dict.is_empty(reservoir)
+	if ($1) {
+		return toList([])
+	} else {
+		let w = $float.exponential(divideFloat(log_random(), $int.to_float(n)))
+		return $dict.values(sample_loop(rest$1, reservoir, n, w))
+	}
 }

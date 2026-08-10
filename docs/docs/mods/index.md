@@ -4,8 +4,8 @@ layout: home
 title: Mods
 
 hero:
-  name: "Lasting Legacy"
-  text: "Mods"
+  name: 'Lasting Legacy'
+  text: 'Mods'
   tagline: Mods made to recreate parts of Legacy Console Edition experience
   image:
     src: /banner.webp
@@ -25,8 +25,8 @@ features:
     linkText: All Pages
   - title: Legacy Skins
     icon:
-      src: /ls-icon.webp 
-      height: 48px 
+      src: /ls-icon.webp
+      height: 48px
     details: An add-on for Legacy4J that adds Skin Pack functionality, with the help of Customizable Player Models or Figura
     link: /mods/legacy-skins/making-a-skin-pack
     linkText: Making a Skin Pack
@@ -57,4 +57,3 @@ features:
     link: /mods/moderner-beta/external-documentation
     linkText: All Pages
 ---
-

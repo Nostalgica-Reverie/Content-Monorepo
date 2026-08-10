@@ -1,15 +1,15 @@
-name: "Bulk Update"
+name: 'Bulk Update'
 
 on:
   workflow_dispatch:
     inputs:
       packs:
-        description: "One repository-relative pack directory (empty runs all packs)"
+        description: 'One repository-relative pack directory (empty runs all packs)'
         required: false
         type: string
-        default: ""
+        default: ''
       dry_run:
-        description: "Only check for updates; do not change or commit files"
+        description: 'Only check for updates; do not change or commit files'
         required: false
         type: boolean
         default: false

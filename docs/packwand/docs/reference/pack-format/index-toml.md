@@ -12,14 +12,14 @@ packwand writes `sha512`; when it loads an index using an older format it transp
 
 **Array of tables, optional (defaults to an empty list).** One entry per file in the pack.
 
-| Key | Type | Description |
-| --- | --- | --- |
-| `file` | path, required | The path to the file, relative to the index file, in forward-slash format. |
-| `hash` | string | The hash of the file, in the index's `hash-format` (or this entry's override). May be omitted when `no-internal-hashes` is enabled. |
-| `hash-format` | string | Overrides the index-level hash format for this file only. Omitted when equal to the index's format, to save space. |
-| `metafile` | boolean, default `false` | True when this entry points to a `.pw.toml` [metadata file](/reference/pack-format/mod-toml), which references a file outside the pack. |
-| `preserve` | boolean, default `false` | When true, the file is not overwritten on update if it already exists, preserving user changes. |
-| `alias` | string | The name with which this file should be downloaded, instead of the filename in `file`. Not compatible with `metafile`. Multiple entries may share the same `file` with different aliases. |
+| Key           | Type                     | Description                                                                                                                                                                               |
+| ------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `file`        | path, required           | The path to the file, relative to the index file, in forward-slash format.                                                                                                                |
+| `hash`        | string                   | The hash of the file, in the index's `hash-format` (or this entry's override). May be omitted when `no-internal-hashes` is enabled.                                                       |
+| `hash-format` | string                   | Overrides the index-level hash format for this file only. Omitted when equal to the index's format, to save space.                                                                        |
+| `metafile`    | boolean, default `false` | True when this entry points to a `.pw.toml` [metadata file](/reference/pack-format/mod-toml), which references a file outside the pack.                                                   |
+| `preserve`    | boolean, default `false` | When true, the file is not overwritten on update if it already exists, preserving user changes.                                                                                           |
+| `alias`       | string                   | The name with which this file should be downloaded, instead of the filename in `file`. Not compatible with `metafile`. Multiple entries may share the same `file` with different aliases. |
 
 Entries are sorted by `file` (then `alias`) when packwand writes the index, so diffs stay stable under version control.
 

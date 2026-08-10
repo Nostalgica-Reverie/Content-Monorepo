@@ -25,56 +25,56 @@
 .scale-fade-leave-active,
 .toast-leave-active,
 .tab-leave-active {
-  pointer-events: none;
+	pointer-events: none;
 }
 
 /* Plain opacity. The default for anything that appears in place: banners,
    result panels, and the page area between routes. */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity var(--motion-fast) var(--ease-standard);
+	transition: opacity var(--motion-fast) var(--ease-standard);
 }
 .fade-enter-from,
 .fade-leave-to {
-  opacity: 0;
+	opacity: 0;
 }
 
 /* Opacity plus a short vertical travel, for content that expands out of
    something — a disclosure body, a banner pushing the view down. Enters
    decelerating so it settles, leaves accelerating so it gets out of the way. */
 .slide-fade-enter-active {
-  transition:
-    opacity var(--motion-base) var(--ease-decelerate),
-    transform var(--motion-base) var(--ease-decelerate);
+	transition:
+		opacity var(--motion-base) var(--ease-decelerate),
+		transform var(--motion-base) var(--ease-decelerate);
 }
 .slide-fade-leave-active {
-  transition:
-    opacity var(--motion-fast) var(--ease-accelerate),
-    transform var(--motion-fast) var(--ease-accelerate);
+	transition:
+		opacity var(--motion-fast) var(--ease-accelerate),
+		transform var(--motion-fast) var(--ease-accelerate);
 }
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-4px);
+	opacity: 0;
+	transform: translateY(-4px);
 }
 
 /* Dialog panels. The scale starts at 0.98 rather than something smaller
    because the modal is already centred and backed by a fading scrim; a larger
    scale reads as a zoom effect instead of an arrival. */
 .scale-fade-enter-active {
-  transition:
-    opacity var(--motion-base) var(--ease-decelerate),
-    transform var(--motion-base) var(--ease-decelerate);
+	transition:
+		opacity var(--motion-base) var(--ease-decelerate),
+		transform var(--motion-base) var(--ease-decelerate);
 }
 .scale-fade-leave-active {
-  transition:
-    opacity var(--motion-fast) var(--ease-accelerate),
-    transform var(--motion-fast) var(--ease-accelerate);
+	transition:
+		opacity var(--motion-fast) var(--ease-accelerate),
+		transform var(--motion-fast) var(--ease-accelerate);
 }
 .scale-fade-enter-from,
 .scale-fade-leave-to {
-  opacity: 0;
-  transform: scale(0.98);
+	opacity: 0;
+	transform: scale(0.98);
 }
 
 /* Toasts, as a <TransitionGroup>. They enter from the right edge they are
@@ -83,22 +83,22 @@
    of flow would need absolute positioning inside a bottom-anchored grid, and
    the reflow that costs is smaller than the jump it introduces. */
 .toast-enter-active {
-  transition:
-    opacity var(--motion-base) var(--ease-decelerate),
-    transform var(--motion-base) var(--ease-decelerate);
+	transition:
+		opacity var(--motion-base) var(--ease-decelerate),
+		transform var(--motion-base) var(--ease-decelerate);
 }
 .toast-leave-active {
-  transition:
-    opacity var(--motion-fast) var(--ease-accelerate),
-    transform var(--motion-fast) var(--ease-accelerate);
+	transition:
+		opacity var(--motion-fast) var(--ease-accelerate),
+		transform var(--motion-fast) var(--ease-accelerate);
 }
 .toast-enter-from,
 .toast-leave-to {
-  opacity: 0;
-  transform: translateX(8px);
+	opacity: 0;
+	transform: translateX(8px);
 }
 .toast-move {
-  transition: transform var(--motion-base) var(--ease-standard);
+	transition: transform var(--motion-base) var(--ease-standard);
 }
 
 /* Tab strips, as a <TransitionGroup>. Reordering slides; opening and closing
@@ -108,12 +108,12 @@
    absolutely positioned tab collapses to the strip's left edge mid-fade. */
 .tab-enter-active,
 .tab-leave-active {
-  transition: opacity var(--motion-fast) var(--ease-standard);
+	transition: opacity var(--motion-fast) var(--ease-standard);
 }
 .tab-enter-from,
 .tab-leave-to {
-  opacity: 0;
+	opacity: 0;
 }
 .tab-move {
-  transition: transform var(--motion-base) var(--ease-standard);
+	transition: transform var(--motion-base) var(--ease-standard);
 }

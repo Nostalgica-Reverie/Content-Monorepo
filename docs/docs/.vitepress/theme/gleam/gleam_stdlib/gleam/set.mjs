@@ -1,22 +1,22 @@
-import { CustomType as $CustomType, isEqual } from "../gleam.mjs";
-import * as $dict from "../gleam/dict.mjs";
-import * as $list from "../gleam/list.mjs";
-import * as $result from "../gleam/result.mjs";
+import { CustomType as $CustomType, isEqual } from '../gleam.mjs'
+import * as $dict from '../gleam/dict.mjs'
+import * as $list from '../gleam/list.mjs'
+import * as $result from '../gleam/result.mjs'
 
 class Set extends $CustomType {
-  constructor(dict) {
-    super();
-    this.dict = dict;
-  }
+	constructor(dict) {
+		super()
+		this.dict = dict
+	}
 }
 
-const token = undefined;
+const token = undefined
 
 /**
  * Creates a new empty set.
  */
 export function new$() {
-  return new Set($dict.new$());
+	return new Set($dict.new$())
 }
 
 /**
@@ -35,7 +35,7 @@ export function new$() {
  * ```
  */
 export function size(set) {
-  return $dict.size(set.dict);
+	return $dict.size(set.dict)
 }
 
 /**
@@ -52,7 +52,7 @@ export function size(set) {
  * ```
  */
 export function is_empty(set) {
-  return isEqual(set, new$());
+	return isEqual(set, new$())
 }
 
 /**
@@ -71,7 +71,7 @@ export function is_empty(set) {
  * ```
  */
 export function insert(set, member) {
-  return new Set($dict.insert(set.dict, member, token));
+	return new Set($dict.insert(set.dict, member, token))
 }
 
 /**
@@ -96,9 +96,9 @@ export function insert(set, member) {
  * ```
  */
 export function contains(set, member) {
-  let _pipe = set.dict;
-  let _pipe$1 = $dict.get(_pipe, member);
-  return $result.is_ok(_pipe$1);
+	let _pipe = set.dict
+	let _pipe$1 = $dict.get(_pipe, member)
+	return $result.is_ok(_pipe$1)
 }
 
 /**
@@ -119,7 +119,7 @@ export function contains(set, member) {
  * ```
  */
 export function delete$(set, member) {
-  return new Set($dict.delete$(set.dict, member));
+	return new Set($dict.delete$(set.dict, member))
 }
 
 /**
@@ -137,7 +137,7 @@ export function delete$(set, member) {
  * ```
  */
 export function to_list(set) {
-  return $dict.keys(set.dict);
+	return $dict.keys(set.dict)
 }
 
 /**
@@ -159,12 +159,10 @@ export function to_list(set) {
  * ```
  */
 export function from_list(members) {
-  let dict = $list.fold(
-    members,
-    $dict.new$(),
-    (m, k) => { return $dict.insert(m, k, token); },
-  );
-  return new Set(dict);
+	let dict = $list.fold(members, $dict.new$(), (m, k) => {
+		return $dict.insert(m, k, token)
+	})
+	return new Set(dict)
 }
 
 /**
@@ -184,7 +182,9 @@ export function from_list(members) {
  * ```
  */
 export function fold(set, initial, reducer) {
-  return $dict.fold(set.dict, initial, (a, k, _) => { return reducer(a, k); });
+	return $dict.fold(set.dict, initial, (a, k, _) => {
+		return reducer(a, k)
+	})
 }
 
 /**
@@ -205,7 +205,11 @@ export function fold(set, initial, reducer) {
  * ```
  */
 export function filter(set, predicate) {
-  return new Set($dict.filter(set.dict, (m, _) => { return predicate(m); }));
+	return new Set(
+		$dict.filter(set.dict, (m, _) => {
+			return predicate(m)
+		}),
+	)
 }
 
 /**
@@ -222,11 +226,9 @@ export function filter(set, predicate) {
  * ```
  */
 export function map(set, fun) {
-  return fold(
-    set,
-    new$(),
-    (acc, member) => { return insert(acc, fun(member)); },
-  );
+	return fold(set, new$(), (acc, member) => {
+		return insert(acc, fun(member))
+	})
 }
 
 /**
@@ -243,7 +245,7 @@ export function map(set, fun) {
  * ```
  */
 export function drop(set, disallowed) {
-  return $list.fold(disallowed, set, delete$);
+	return $list.fold(disallowed, set, delete$)
 }
 
 /**
@@ -262,16 +264,16 @@ export function drop(set, disallowed) {
  * ```
  */
 export function take(set, desired) {
-  return new Set($dict.take(set.dict, desired));
+	return new Set($dict.take(set.dict, desired))
 }
 
 function order(first, second) {
-  let $ = $dict.size(first.dict) > $dict.size(second.dict);
-  if ($) {
-    return [first, second];
-  } else {
-    return [second, first];
-  }
+	let $ = $dict.size(first.dict) > $dict.size(second.dict)
+	if ($) {
+		return [first, second]
+	} else {
+		return [second, first]
+	}
 }
 
 /**
@@ -287,10 +289,10 @@ function order(first, second) {
  * ```
  */
 export function union(first, second) {
-  let $ = order(first, second);
-  let larger = $[0];
-  let smaller = $[1];
-  return fold(smaller, larger, insert);
+	let $ = order(first, second)
+	let larger = $[0]
+	let smaller = $[1]
+	return fold(smaller, larger, insert)
 }
 
 /**
@@ -306,10 +308,10 @@ export function union(first, second) {
  * ```
  */
 export function intersection(first, second) {
-  let $ = order(first, second);
-  let larger = $[0];
-  let smaller = $[1];
-  return take(larger, to_list(smaller));
+	let $ = order(first, second)
+	let larger = $[0]
+	let smaller = $[1]
+	return take(larger, to_list(smaller))
 }
 
 /**
@@ -324,7 +326,7 @@ export function intersection(first, second) {
  * ```
  */
 export function difference(first, second) {
-  return drop(first, to_list(second));
+	return drop(first, to_list(second))
 }
 
 /**
@@ -341,7 +343,7 @@ export function difference(first, second) {
  * ```
  */
 export function is_subset(first, second) {
-  return isEqual(intersection(first, second), first);
+	return isEqual(intersection(first, second), first)
 }
 
 /**
@@ -358,7 +360,7 @@ export function is_subset(first, second) {
  * ```
  */
 export function is_disjoint(first, second) {
-  return isEqual(intersection(first, second), new$());
+	return isEqual(intersection(first, second), new$())
 }
 
 /**
@@ -374,7 +376,7 @@ export function is_disjoint(first, second) {
  * ```
  */
 export function symmetric_difference(first, second) {
-  return difference(union(first, second), intersection(first, second));
+	return difference(union(first, second), intersection(first, second))
 }
 
 /**
@@ -398,12 +400,8 @@ export function symmetric_difference(first, second) {
  * ```
  */
 export function each(set, fun) {
-  return fold(
-    set,
-    undefined,
-    (nil, member) => {
-      fun(member);
-      return nil;
-    },
-  );
+	return fold(set, undefined, (nil, member) => {
+		fun(member)
+		return nil
+	})
 }

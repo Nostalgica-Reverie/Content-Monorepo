@@ -1,62 +1,62 @@
 import {
-  Ok,
-  Error,
-  Empty as $Empty,
-  prepend as listPrepend,
-  CustomType as $CustomType,
-  remainderInt,
-  divideInt,
-} from "../gleam.mjs";
-import * as $list from "../gleam/list.mjs";
-import * as $option from "../gleam/option.mjs";
-import { None, Some } from "../gleam/option.mjs";
-import * as $order from "../gleam/order.mjs";
-import * as $string_tree from "../gleam/string_tree.mjs";
+	Ok,
+	Error,
+	Empty as $Empty,
+	prepend as listPrepend,
+	CustomType as $CustomType,
+	remainderInt,
+	divideInt,
+} from '../gleam.mjs'
+import * as $list from '../gleam/list.mjs'
+import * as $option from '../gleam/option.mjs'
+import { None, Some } from '../gleam/option.mjs'
+import * as $order from '../gleam/order.mjs'
+import * as $string_tree from '../gleam/string_tree.mjs'
 import {
-  string_length as length,
-  lowercase,
-  uppercase,
-  less_than,
-  string_grapheme_slice as grapheme_slice,
-  string_byte_slice as unsafe_byte_slice,
-  crop_string as crop,
-  byte_size,
-  contains_string as contains,
-  starts_with,
-  ends_with,
-  pop_grapheme,
-  graphemes as to_graphemes,
-  split_once,
-  trim_end,
-  trim_start,
-  codepoint as unsafe_int_to_utf_codepoint,
-  string_to_codepoint_integer_list,
-  utf_codepoint_list_to_string as from_utf_codepoints,
-  utf_codepoint_to_int,
-  inspect as do_inspect,
-  string_remove_prefix as remove_prefix,
-  string_remove_suffix as remove_suffix,
-} from "../gleam_stdlib.mjs";
+	string_length as length,
+	lowercase,
+	uppercase,
+	less_than,
+	string_grapheme_slice as grapheme_slice,
+	string_byte_slice as unsafe_byte_slice,
+	crop_string as crop,
+	byte_size,
+	contains_string as contains,
+	starts_with,
+	ends_with,
+	pop_grapheme,
+	graphemes as to_graphemes,
+	split_once,
+	trim_end,
+	trim_start,
+	codepoint as unsafe_int_to_utf_codepoint,
+	string_to_codepoint_integer_list,
+	utf_codepoint_list_to_string as from_utf_codepoints,
+	utf_codepoint_to_int,
+	inspect as do_inspect,
+	string_remove_prefix as remove_prefix,
+	string_remove_suffix as remove_suffix,
+} from '../gleam_stdlib.mjs'
 
 export {
-  byte_size,
-  contains,
-  crop,
-  ends_with,
-  from_utf_codepoints,
-  length,
-  lowercase,
-  pop_grapheme,
-  remove_prefix,
-  remove_suffix,
-  split_once,
-  starts_with,
-  to_graphemes,
-  trim_end,
-  trim_start,
-  uppercase,
-  utf_codepoint_to_int,
-};
+	byte_size,
+	contains,
+	crop,
+	ends_with,
+	from_utf_codepoints,
+	length,
+	lowercase,
+	pop_grapheme,
+	remove_prefix,
+	remove_suffix,
+	split_once,
+	starts_with,
+	to_graphemes,
+	trim_end,
+	trim_start,
+	uppercase,
+	utf_codepoint_to_int,
+}
 
 class Leading extends $CustomType {}
 
@@ -76,7 +76,7 @@ class Trailing extends $CustomType {}
  * ```
  */
 export function is_empty(str) {
-  return str === "";
+	return str === ''
 }
 
 /**
@@ -92,10 +92,10 @@ export function is_empty(str) {
  * ```
  */
 export function reverse(string) {
-  let _pipe = string;
-  let _pipe$1 = $string_tree.from_string(_pipe);
-  let _pipe$2 = $string_tree.reverse(_pipe$1);
-  return $string_tree.to_string(_pipe$2);
+	let _pipe = string
+	let _pipe$1 = $string_tree.from_string(_pipe)
+	let _pipe$2 = $string_tree.reverse(_pipe$1)
+	return $string_tree.to_string(_pipe$2)
 }
 
 /**
@@ -112,10 +112,10 @@ export function reverse(string) {
  * ```
  */
 export function replace(string, pattern, substitute) {
-  let _pipe = string;
-  let _pipe$1 = $string_tree.from_string(_pipe);
-  let _pipe$2 = $string_tree.replace(_pipe$1, pattern, substitute);
-  return $string_tree.to_string(_pipe$2);
+	let _pipe = string
+	let _pipe$1 = $string_tree.from_string(_pipe)
+	let _pipe$2 = $string_tree.replace(_pipe$1, pattern, substitute)
+	return $string_tree.to_string(_pipe$2)
 }
 
 /**
@@ -138,17 +138,17 @@ export function replace(string, pattern, substitute) {
  * ```
  */
 export function compare(a, b) {
-  let $ = a === b;
-  if ($) {
-    return new $order.Eq();
-  } else {
-    let $1 = less_than(a, b);
-    if ($1) {
-      return new $order.Lt();
-    } else {
-      return new $order.Gt();
-    }
-  }
+	let $ = a === b
+	if ($) {
+		return new $order.Eq()
+	} else {
+		let $1 = less_than(a, b)
+		if ($1) {
+			return new $order.Lt()
+		} else {
+			return new $order.Gt()
+		}
+	}
 }
 
 /**
@@ -182,23 +182,23 @@ export function compare(a, b) {
  * ```
  */
 export function slice(string, idx, len) {
-  let $ = len <= 0;
-  if ($) {
-    return "";
-  } else {
-    let $1 = idx < 0;
-    if ($1) {
-      let translated_idx = length(string) + idx;
-      let $2 = translated_idx < 0;
-      if ($2) {
-        return "";
-      } else {
-        return grapheme_slice(string, translated_idx, len);
-      }
-    } else {
-      return grapheme_slice(string, idx, len);
-    }
-  }
+	let $ = len <= 0
+	if ($) {
+		return ''
+	} else {
+		let $1 = idx < 0
+		if ($1) {
+			let translated_idx = length(string) + idx
+			let $2 = translated_idx < 0
+			if ($2) {
+				return ''
+			} else {
+				return grapheme_slice(string, translated_idx, len)
+			}
+		} else {
+			return grapheme_slice(string, idx, len)
+		}
+	}
 }
 
 /**
@@ -213,18 +213,14 @@ export function slice(string, idx, len) {
  * ```
  */
 export function drop_start(string, num_graphemes) {
-  let $ = num_graphemes <= 0;
-  if ($) {
-    return string;
-  } else {
-    let prefix = grapheme_slice(string, 0, num_graphemes);
-    let prefix_size = byte_size(prefix);
-    return unsafe_byte_slice(
-      string,
-      prefix_size,
-      byte_size(string) - prefix_size,
-    );
-  }
+	let $ = num_graphemes <= 0
+	if ($) {
+		return string
+	} else {
+		let prefix = grapheme_slice(string, 0, num_graphemes)
+		let prefix_size = byte_size(prefix)
+		return unsafe_byte_slice(string, prefix_size, byte_size(string) - prefix_size)
+	}
 }
 
 /**
@@ -241,28 +237,28 @@ export function drop_start(string, num_graphemes) {
  * ```
  */
 export function drop_end(string, num_graphemes) {
-  let $ = num_graphemes <= 0;
-  if ($) {
-    return string;
-  } else {
-    return slice(string, 0, length(string) - num_graphemes);
-  }
+	let $ = num_graphemes <= 0
+	if ($) {
+		return string
+	} else {
+		return slice(string, 0, length(string) - num_graphemes)
+	}
 }
 
 function to_graphemes_loop(loop$string, loop$acc) {
-  while (true) {
-    let string = loop$string;
-    let acc = loop$acc;
-    let $ = pop_grapheme(string);
-    if ($ instanceof Ok) {
-      let grapheme = $[0][0];
-      let rest = $[0][1];
-      loop$string = rest;
-      loop$acc = listPrepend(grapheme, acc);
-    } else {
-      return acc;
-    }
-  }
+	while (true) {
+		let string = loop$string
+		let acc = loop$acc
+		let $ = pop_grapheme(string)
+		if ($ instanceof Ok) {
+			let grapheme = $[0][0]
+			let rest = $[0][1]
+			loop$string = rest
+			loop$acc = listPrepend(grapheme, acc)
+		} else {
+			return acc
+		}
+	}
 }
 
 /**
@@ -276,14 +272,14 @@ function to_graphemes_loop(loop$string, loop$acc) {
  * ```
  */
 export function split(x, substring) {
-  if (substring === "") {
-    return to_graphemes(x);
-  } else {
-    let _pipe = x;
-    let _pipe$1 = $string_tree.from_string(_pipe);
-    let _pipe$2 = $string_tree.split(_pipe$1, substring);
-    return $list.map(_pipe$2, $string_tree.to_string);
-  }
+	if (substring === '') {
+		return to_graphemes(x)
+	} else {
+		let _pipe = x
+		let _pipe$1 = $string_tree.from_string(_pipe)
+		let _pipe$2 = $string_tree.split(_pipe$1, substring)
+		return $list.map(_pipe$2, $string_tree.to_string)
+	}
 }
 
 /**
@@ -305,22 +301,22 @@ export function split(x, substring) {
  * ```
  */
 export function append(first, second) {
-  return first + second;
+	return first + second
 }
 
 function concat_loop(loop$strings, loop$accumulator) {
-  while (true) {
-    let strings = loop$strings;
-    let accumulator = loop$accumulator;
-    if (strings instanceof $Empty) {
-      return accumulator;
-    } else {
-      let string = strings.head;
-      let strings$1 = strings.tail;
-      loop$strings = strings$1;
-      loop$accumulator = accumulator + string;
-    }
-  }
+	while (true) {
+		let strings = loop$strings
+		let accumulator = loop$accumulator
+		if (strings instanceof $Empty) {
+			return accumulator
+		} else {
+			let string = strings.head
+			let strings$1 = strings.tail
+			loop$strings = strings$1
+			loop$accumulator = accumulator + string
+		}
+	}
 }
 
 /**
@@ -335,32 +331,32 @@ function concat_loop(loop$strings, loop$accumulator) {
  * ```
  */
 export function concat(strings) {
-  return concat_loop(strings, "");
+	return concat_loop(strings, '')
 }
 
 function repeat_loop(loop$times, loop$doubling_acc, loop$acc) {
-  while (true) {
-    let times = loop$times;
-    let doubling_acc = loop$doubling_acc;
-    let acc = loop$acc;
-    let _block;
-    let $ = times % 2;
-    if ($ === 0) {
-      _block = acc;
-    } else {
-      _block = acc + doubling_acc;
-    }
-    let acc$1 = _block;
-    let times$1 = globalThis.Math.trunc(times / 2);
-    let $1 = times$1 <= 0;
-    if ($1) {
-      return acc$1;
-    } else {
-      loop$times = times$1;
-      loop$doubling_acc = doubling_acc + doubling_acc;
-      loop$acc = acc$1;
-    }
-  }
+	while (true) {
+		let times = loop$times
+		let doubling_acc = loop$doubling_acc
+		let acc = loop$acc
+		let _block
+		let $ = times % 2
+		if ($ === 0) {
+			_block = acc
+		} else {
+			_block = acc + doubling_acc
+		}
+		let acc$1 = _block
+		let times$1 = globalThis.Math.trunc(times / 2)
+		let $1 = times$1 <= 0
+		if ($1) {
+			return acc$1
+		} else {
+			loop$times = times$1
+			loop$doubling_acc = doubling_acc + doubling_acc
+			loop$acc = acc$1
+		}
+	}
 }
 
 /**
@@ -375,29 +371,29 @@ function repeat_loop(loop$times, loop$doubling_acc, loop$acc) {
  * ```
  */
 export function repeat(string, times) {
-  let $ = times <= 0;
-  if ($) {
-    return "";
-  } else {
-    return repeat_loop(times, string, "");
-  }
+	let $ = times <= 0
+	if ($) {
+		return ''
+	} else {
+		return repeat_loop(times, string, '')
+	}
 }
 
 function join_loop(loop$strings, loop$separator, loop$accumulator) {
-  while (true) {
-    let strings = loop$strings;
-    let separator = loop$separator;
-    let accumulator = loop$accumulator;
-    if (strings instanceof $Empty) {
-      return accumulator;
-    } else {
-      let string = strings.head;
-      let strings$1 = strings.tail;
-      loop$strings = strings$1;
-      loop$separator = separator;
-      loop$accumulator = (accumulator + separator) + string;
-    }
-  }
+	while (true) {
+		let strings = loop$strings
+		let separator = loop$separator
+		let accumulator = loop$accumulator
+		if (strings instanceof $Empty) {
+			return accumulator
+		} else {
+			let string = strings.head
+			let strings$1 = strings.tail
+			loop$strings = strings$1
+			loop$separator = separator
+			loop$accumulator = accumulator + separator + string
+		}
+	}
 }
 
 /**
@@ -412,20 +408,20 @@ function join_loop(loop$strings, loop$separator, loop$accumulator) {
  * ```
  */
 export function join(strings, separator) {
-  if (strings instanceof $Empty) {
-    return "";
-  } else {
-    let first$1 = strings.head;
-    let rest = strings.tail;
-    return join_loop(rest, separator, first$1);
-  }
+	if (strings instanceof $Empty) {
+		return ''
+	} else {
+		let first$1 = strings.head
+		let rest = strings.tail
+		return join_loop(rest, separator, first$1)
+	}
 }
 
 function padding(size, pad_string) {
-  let pad_string_length = length(pad_string);
-  let num_pads = divideInt(size, pad_string_length);
-  let extra = remainderInt(size, pad_string_length);
-  return repeat(pad_string, num_pads) + slice(pad_string, 0, extra);
+	let pad_string_length = length(pad_string)
+	let num_pads = divideInt(size, pad_string_length)
+	let extra = remainderInt(size, pad_string_length)
+	return repeat(pad_string, num_pads) + slice(pad_string, 0, extra)
 }
 
 /**
@@ -446,14 +442,14 @@ function padding(size, pad_string) {
  * ```
  */
 export function pad_start(string, desired_length, pad_string) {
-  let current_length = length(string);
-  let to_pad_length = desired_length - current_length;
-  let $ = to_pad_length <= 0;
-  if ($) {
-    return string;
-  } else {
-    return padding(to_pad_length, pad_string) + string;
-  }
+	let current_length = length(string)
+	let to_pad_length = desired_length - current_length
+	let $ = to_pad_length <= 0
+	if ($) {
+		return string
+	} else {
+		return padding(to_pad_length, pad_string) + string
+	}
 }
 
 /**
@@ -474,14 +470,14 @@ export function pad_start(string, desired_length, pad_string) {
  * ```
  */
 export function pad_end(string, desired_length, pad_string) {
-  let current_length = length(string);
-  let to_pad_length = desired_length - current_length;
-  let $ = to_pad_length <= 0;
-  if ($) {
-    return string;
-  } else {
-    return string + padding(to_pad_length, pad_string);
-  }
+	let current_length = length(string)
+	let to_pad_length = desired_length - current_length
+	let $ = to_pad_length <= 0
+	if ($) {
+		return string
+	} else {
+		return string + padding(to_pad_length, pad_string)
+	}
 }
 
 /**
@@ -499,15 +495,15 @@ export function pad_end(string, desired_length, pad_string) {
  * ```
  */
 export function trim(string) {
-  let _pipe = string;
-  let _pipe$1 = trim_start(_pipe);
-  return trim_end(_pipe$1);
+	let _pipe = string
+	let _pipe$1 = trim_start(_pipe)
+	return trim_end(_pipe$1)
 }
 
 function do_to_utf_codepoints(string) {
-  let _pipe = string;
-  let _pipe$1 = string_to_codepoint_integer_list(_pipe);
-  return $list.map(_pipe$1, unsafe_int_to_utf_codepoint);
+	let _pipe = string
+	let _pipe$1 = string_to_codepoint_integer_list(_pipe)
+	return $list.map(_pipe$1, unsafe_int_to_utf_codepoint)
 }
 
 /**
@@ -537,7 +533,7 @@ function do_to_utf_codepoints(string) {
  * ```
  */
 export function to_utf_codepoints(string) {
-  return do_to_utf_codepoints(string);
+	return do_to_utf_codepoints(string)
 }
 
 /**
@@ -546,23 +542,23 @@ export function to_utf_codepoints(string) {
  * Returns an `Error` if the integer does not represent a valid UTF codepoint.
  */
 export function utf_codepoint(value) {
-  let i = value;
-  if (i > 1_114_111) {
-    return new Error(undefined);
-  } else {
-    let i = value;
-    if ((i >= 55_296) && (i <= 57_343)) {
-      return new Error(undefined);
-    } else {
-      let i = value;
-      if (i < 0) {
-        return new Error(undefined);
-      } else {
-        let i = value;
-        return new Ok(unsafe_int_to_utf_codepoint(i));
-      }
-    }
-  }
+	let i = value
+	if (i > 1_114_111) {
+		return new Error(undefined)
+	} else {
+		let i = value
+		if (i >= 55_296 && i <= 57_343) {
+			return new Error(undefined)
+		} else {
+			let i = value
+			if (i < 0) {
+				return new Error(undefined)
+			} else {
+				let i = value
+				return new Ok(unsafe_int_to_utf_codepoint(i))
+			}
+		}
+	}
 }
 
 /**
@@ -580,11 +576,11 @@ export function utf_codepoint(value) {
  * ```
  */
 export function to_option(string) {
-  if (string === "") {
-    return new None();
-  } else {
-    return new Some(string);
-  }
+	if (string === '') {
+		return new None()
+	} else {
+		return new Some(string)
+	}
 }
 
 /**
@@ -603,13 +599,13 @@ export function to_option(string) {
  * ```
  */
 export function first(string) {
-  let $ = pop_grapheme(string);
-  if ($ instanceof Ok) {
-    let first$1 = $[0][0];
-    return new Ok(first$1);
-  } else {
-    return $;
-  }
+	let $ = pop_grapheme(string)
+	if ($ instanceof Ok) {
+		let first$1 = $[0][0]
+		return new Ok(first$1)
+	} else {
+		return $
+	}
 }
 
 /**
@@ -631,19 +627,19 @@ export function first(string) {
  * ```
  */
 export function last(string) {
-  let $ = pop_grapheme(string);
-  if ($ instanceof Ok) {
-    let $1 = $[0][1];
-    if ($1 === "") {
-      let first$1 = $[0][0];
-      return new Ok(first$1);
-    } else {
-      let rest = $1;
-      return new Ok(slice(rest, -1, 1));
-    }
-  } else {
-    return $;
-  }
+	let $ = pop_grapheme(string)
+	if ($ instanceof Ok) {
+		let $1 = $[0][1]
+		if ($1 === '') {
+			let first$1 = $[0][0]
+			return new Ok(first$1)
+		} else {
+			let rest = $1
+			return new Ok(slice(rest, -1, 1))
+		}
+	} else {
+		return $
+	}
 }
 
 /**
@@ -657,14 +653,14 @@ export function last(string) {
  * ```
  */
 export function capitalise(string) {
-  let $ = pop_grapheme(string);
-  if ($ instanceof Ok) {
-    let first$1 = $[0][0];
-    let rest = $[0][1];
-    return append(uppercase(first$1), lowercase(rest));
-  } else {
-    return "";
-  }
+	let $ = pop_grapheme(string)
+	if ($ instanceof Ok) {
+		let first$1 = $[0][0]
+		let rest = $[0][1]
+		return append(uppercase(first$1), lowercase(rest))
+	} else {
+		return ''
+	}
 }
 
 /**
@@ -693,7 +689,7 @@ export function capitalise(string) {
  * problems.
  */
 export function inspect(term) {
-  let _pipe = term;
-  let _pipe$1 = do_inspect(_pipe);
-  return $string_tree.to_string(_pipe$1);
+	let _pipe = term
+	let _pipe$1 = do_inspect(_pipe)
+	return $string_tree.to_string(_pipe$1)
 }

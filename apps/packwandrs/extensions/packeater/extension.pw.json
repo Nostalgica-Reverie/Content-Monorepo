@@ -1,14 +1,14 @@
 {
-  "$schema": "../extension.schema.json",
-  "id": "packeater",
-  "name": "PackEater",
-  "version": "26.2.0",
-  "apiVersion": 1,
-  "description": "PackSquash-derived optimization through Packwand's trusted Rust job service.",
-  "entry": "src/index.ts",
-  "activation": ["*"],
-  "commands": ["compress", "preview", "initialize", "list-markers"],
-  "views": ["markers"],
-  "validators": [],
-  "capabilities": ["project.read", "project.write", "native.optimizer"]
+	"$schema": "../extension.schema.json",
+	"id": "packeater",
+	"name": "PackEater",
+	"version": "26.2.0",
+	"apiVersion": 1,
+	"description": "PackSquash-derived optimization through Packwand's trusted Rust job service.",
+	"entry": "src/index.ts",
+	"activation": ["*"],
+	"commands": ["compress", "preview", "initialize", "list-markers"],
+	"views": ["markers"],
+	"validators": [],
+	"capabilities": ["project.read", "project.write", "native.optimizer"]
 }

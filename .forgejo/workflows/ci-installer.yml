@@ -1,22 +1,22 @@
-name: "CI - Installer"
+name: 'CI - Installer'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/packwand-installer/**"
-      - "justfile"
-      - ".forgejo/actions/setup-java/**"
-      - ".forgejo/actions/setup-just/**"
-      - ".forgejo/workflows/ci-installer.yml"
+      - 'apps/packwand-installer/**'
+      - 'justfile'
+      - '.forgejo/actions/setup-java/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-installer.yml'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/packwand-installer/**"
-      - "justfile"
-      - ".forgejo/actions/setup-java/**"
-      - ".forgejo/actions/setup-just/**"
-      - ".forgejo/workflows/ci-installer.yml"
+      - 'apps/packwand-installer/**'
+      - 'justfile'
+      - '.forgejo/actions/setup-java/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-installer.yml'
   workflow_dispatch:
 
 concurrency:

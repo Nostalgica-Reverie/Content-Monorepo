@@ -1,10 +1,10 @@
-name: "Loader Update"
+name: 'Loader Update'
 
 on:
   workflow_dispatch:
     inputs:
       target:
-        description: "loader target"
+        description: 'loader target'
         type: choice
         options:
           - latest

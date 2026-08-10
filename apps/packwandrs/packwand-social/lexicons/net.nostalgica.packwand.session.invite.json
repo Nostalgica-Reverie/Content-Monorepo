@@ -1,0 +1,20 @@
+{
+	"lexicon": 1,
+	"id": "net.nostalgica.packwand.session.invite",
+	"defs": {
+		"main": {
+			"type": "record",
+			"key": "tid",
+			"record": {
+				"type": "object",
+				"required": ["to", "invite", "createdAt", "expiresAt"],
+				"properties": {
+					"to": { "type": "string", "format": "did" },
+					"invite": { "type": "string", "maxLength": 4096 },
+					"createdAt": { "type": "string", "format": "datetime" },
+					"expiresAt": { "type": "string", "format": "datetime" }
+				}
+			}
+		}
+	}
+}

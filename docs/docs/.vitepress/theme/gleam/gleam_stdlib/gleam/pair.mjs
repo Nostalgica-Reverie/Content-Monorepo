@@ -8,8 +8,8 @@
  * ```
  */
 export function first(pair) {
-  let a = pair[0];
-  return a;
+	let a = pair[0]
+	return a
 }
 
 /**
@@ -22,8 +22,8 @@ export function first(pair) {
  * ```
  */
 export function second(pair) {
-  let a = pair[1];
-  return a;
+	let a = pair[1]
+	return a
 }
 
 /**
@@ -36,9 +36,9 @@ export function second(pair) {
  * ```
  */
 export function swap(pair) {
-  let a = pair[0];
-  let b = pair[1];
-  return [b, a];
+	let a = pair[0]
+	let b = pair[1]
+	return [b, a]
 }
 
 /**
@@ -52,9 +52,9 @@ export function swap(pair) {
  * ```
  */
 export function map_first(pair, fun) {
-  let a = pair[0];
-  let b = pair[1];
-  return [fun(a), b];
+	let a = pair[0]
+	let b = pair[1]
+	return [fun(a), b]
 }
 
 /**
@@ -68,9 +68,9 @@ export function map_first(pair, fun) {
  * ```
  */
 export function map_second(pair, fun) {
-  let a = pair[0];
-  let b = pair[1];
-  return [a, fun(b)];
+	let a = pair[0]
+	let b = pair[1]
+	return [a, fun(b)]
 }
 
 /**
@@ -84,5 +84,5 @@ export function map_second(pair, fun) {
  * ```
  */
 export function new$(first, second) {
-  return [first, second];
+	return [first, second]
 }

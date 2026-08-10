@@ -19,6 +19,7 @@ packwiz-installer itself is under the MIT license ([Source](https://github.com/p
 ## Associated notices
 
 ### Commons CLI
+
 Apache Commons CLI
 Copyright 2001-2017 The Apache Software Foundation
 
@@ -28,6 +29,7 @@ The Apache Software Foundation (http://www.apache.org/).
 ## Full license texts
 
 ### MIT
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -251,6 +253,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ### ISC
+
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
 copyright notice and this permission notice appear in all copies.

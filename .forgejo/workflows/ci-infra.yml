@@ -1,20 +1,20 @@
-name: "CI - Infrastructure"
+name: 'CI - Infrastructure'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "justfile"
-      - "_typos.toml"
-      - ".forgejo/actions/**"
-      - ".forgejo/workflows/**"
+      - 'justfile'
+      - '_typos.toml'
+      - '.forgejo/actions/**'
+      - '.forgejo/workflows/**'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "justfile"
-      - "_typos.toml"
-      - ".forgejo/actions/**"
-      - ".forgejo/workflows/**"
+      - 'justfile'
+      - '_typos.toml'
+      - '.forgejo/actions/**'
+      - '.forgejo/workflows/**'
   workflow_dispatch:
 
 concurrency:

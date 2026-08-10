@@ -1,24 +1,24 @@
-name: "CI - Rust"
+name: 'CI - Rust'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/mod-browser-webview/**"
-      - "apps/packwandrs/**"
-      - "justfile"
-      - ".forgejo/actions/setup-rust/**"
-      - ".forgejo/actions/setup-just/**"
-      - ".forgejo/workflows/ci-rust.yml"
+      - 'apps/mod-browser-webview/**'
+      - 'apps/packwandrs/**'
+      - 'justfile'
+      - '.forgejo/actions/setup-rust/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-rust.yml'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "apps/mod-browser-webview/**"
-      - "apps/packwandrs/**"
-      - "justfile"
-      - ".forgejo/actions/setup-rust/**"
-      - ".forgejo/actions/setup-just/**"
-      - ".forgejo/workflows/ci-rust.yml"
+      - 'apps/mod-browser-webview/**'
+      - 'apps/packwandrs/**'
+      - 'justfile'
+      - '.forgejo/actions/setup-rust/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-rust.yml'
   workflow_dispatch:
 
 concurrency:
@@ -43,7 +43,7 @@ jobs:
       - uses: ./.forgejo/actions/setup-rust
         with:
           components: clippy, rustfmt
-          linux-deps: "true"
+          linux-deps: 'true'
           workspaces: |
             apps/mod-browser-webview
             apps/packwandrs

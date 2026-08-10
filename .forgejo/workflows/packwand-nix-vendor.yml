@@ -1,8 +1,8 @@
-name: "Update API Go Nix Vendor Hash"
+name: 'Update API Go Nix Vendor Hash'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
       - 'apps/api/go.mod'
       - 'apps/api/go.sum'

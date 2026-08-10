@@ -1,14 +1,14 @@
-name: "Setup just"
-description: "Install the just binary (just.systems) and add it to PATH. Downloads the release binary directly — no Rust toolchain required."
+name: 'Setup just'
+description: 'Install the just binary (just.systems) and add it to PATH. Downloads the release binary directly — no Rust toolchain required.'
 
 inputs:
   version:
     description: "just version tag to install (e.g. 1.56.0), or 'latest'"
     required: false
-    default: "1.56.0"
+    default: '1.56.0'
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Install just
       shell: bash

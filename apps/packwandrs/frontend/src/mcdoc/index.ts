@@ -10,6 +10,21 @@
 
 export { default as McdocField } from './McdocField.vue'
 export { createMemorySchemaSource, emptySchemaSource, type SchemaSource } from './schema'
-export { childPath, isRecord, rootPath, simplifyType, structFields, structKeys, type ValuePath } from './simplify'
-export { attributeString, defaultValue, findAttribute, idRegistry, selectUnionMember, typeLabel } from './value'
+export {
+	childPath,
+	isRecord,
+	rootPath,
+	simplifyType,
+	structFields,
+	structKeys,
+	type ValuePath,
+} from './simplify'
+export {
+	attributeString,
+	defaultValue,
+	findAttribute,
+	idRegistry,
+	selectUnionMember,
+	typeLabel,
+} from './value'
 export { fixtureSchemaSource, generatorDefinitions, type GeneratorDefinition } from './fixtures'

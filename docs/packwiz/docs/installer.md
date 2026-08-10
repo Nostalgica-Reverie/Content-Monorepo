@@ -22,16 +22,16 @@ java -jar packwiz-installer.jar [options] <pack.toml URL>
 
 ## Options
 
-| Option | Description |
-| --- | --- |
-| `-s`, `--side <side>` | Side to install mods from (`client`/`server`, defaults to `client`) |
-| `--title <title>` | Title of the installer window |
-| `--pack-folder <path>` | Folder to install the pack to (defaults to the JAR directory) |
-| `--multimc-folder <path>` | The MultiMC pack folder (defaults to the parent of the pack directory) |
-| `--meta-file <path>` | JSON file to store pack metadata, relative to the pack folder (defaults to `packwiz.json`) |
+| Option                      | Description                                                                                     |
+| --------------------------- | ----------------------------------------------------------------------------------------------- |
+| `-s`, `--side <side>`       | Side to install mods from (`client`/`server`, defaults to `client`)                             |
+| `--title <title>`           | Title of the installer window                                                                   |
+| `--pack-folder <path>`      | Folder to install the pack to (defaults to the JAR directory)                                   |
+| `--multimc-folder <path>`   | The MultiMC pack folder (defaults to the parent of the pack directory)                          |
+| `--meta-file <path>`        | JSON file to store pack metadata, relative to the pack folder (defaults to `packwiz.json`)      |
 | `-t`, `--timeout <seconds>` | Seconds to wait before automatically launching when asking about optional mods (defaults to 10) |
-| `-g`, `--no-gui` | Don't display a GUI to show update progress (for servers/CI) |
-| `-h`, `--help` | Display usage |
+| `-g`, `--no-gui`            | Don't display a GUI to show update progress (for servers/CI)                                    |
+| `-h`, `--help`              | Display usage                                                                                   |
 
 The `--bootstrap-*` options are accepted (and ignored) so that the bootstrap can pass its own arguments through.
 

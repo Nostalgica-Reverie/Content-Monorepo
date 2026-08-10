@@ -23,7 +23,7 @@
  * ```
  */
 export function and(a, b) {
-  return a && b;
+	return a && b
 }
 
 /**
@@ -51,7 +51,7 @@ export function and(a, b) {
  * ```
  */
 export function or(a, b) {
-  return a || b;
+	return a || b
 }
 
 /**
@@ -70,7 +70,7 @@ export function or(a, b) {
  * ```
  */
 export function negate(bool) {
-  return !bool;
+	return !bool
 }
 
 /**
@@ -95,7 +95,7 @@ export function negate(bool) {
  * ```
  */
 export function nor(a, b) {
-  return !(a || b);
+	return !(a || b)
 }
 
 /**
@@ -120,7 +120,7 @@ export function nor(a, b) {
  * ```
  */
 export function nand(a, b) {
-  return !(a && b);
+	return !(a && b)
 }
 
 /**
@@ -145,7 +145,7 @@ export function nand(a, b) {
  * ```
  */
 export function exclusive_or(a, b) {
-  return a !== b;
+	return a !== b
 }
 
 /**
@@ -170,7 +170,7 @@ export function exclusive_or(a, b) {
  * ```
  */
 export function exclusive_nor(a, b) {
-  return a === b;
+	return a === b
 }
 
 /**
@@ -187,11 +187,11 @@ export function exclusive_nor(a, b) {
  * ```
  */
 export function to_string(bool) {
-  if (bool) {
-    return "True";
-  } else {
-    return "False";
-  }
+	if (bool) {
+		return 'True'
+	} else {
+		return 'False'
+	}
 }
 
 /**
@@ -248,11 +248,11 @@ export function to_string(bool) {
  * ```
  */
 export function guard(requirement, consequence, alternative) {
-  if (requirement) {
-    return consequence;
-  } else {
-    return alternative();
-  }
+	if (requirement) {
+		return consequence
+	} else {
+		return alternative()
+	}
 }
 
 /**
@@ -287,9 +287,9 @@ export function guard(requirement, consequence, alternative) {
  * ```
  */
 export function lazy_guard(requirement, consequence, alternative) {
-  if (requirement) {
-    return consequence();
-  } else {
-    return alternative();
-  }
+	if (requirement) {
+		return consequence()
+	} else {
+		return alternative()
+	}
 }

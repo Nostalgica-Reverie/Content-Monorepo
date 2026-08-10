@@ -1,6 +1,6 @@
 when:
-  - event: ["push"]
-    tag: ["v*"]
+  - event: ['push']
+    tag: ['v*']
 
 engine: microvm
 image: nixos

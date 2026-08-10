@@ -14,10 +14,12 @@ clap.workspace = true
 clap_complete.workspace = true
 packwand-build = { path = "../packwand-build" }
 packwand-diagnostics = { path = "../packwand-diagnostics" }
+packwand-identity-client.workspace = true
 packwand-ops = { path = "../packwand-ops" }
 packwand-parallel.workspace = true
 packwand-pack = { path = "../packwand-pack" }
 packwand-providers = { path = "../packwand-providers" }
+packwand-vcs.workspace = true
 packwand-workspace = { path = "../packwand-workspace" }
 serde.workspace = true
 serde_json.workspace = true

@@ -7,7 +7,7 @@ pre-commit:
   parallel: true
   jobs:
     - name: gofmt
-      glob: "*.go"
+      glob: '*.go'
       run: |
         out=$(gofmt -l {staged_files})
         if [ -n "$out" ]; then

@@ -1,13 +1,13 @@
-name: "Setup Bun (docs sites)"
-description: "Pinned Bun runtime with its install cache keyed on the monorepo lockfile."
+name: 'Setup Bun (docs sites)'
+description: 'Pinned Bun runtime with its install cache keyed on the monorepo lockfile.'
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Setup Bun
       uses: https://github.com/oven-sh/setup-bun@v2
       with:
-        bun-version: "1.3.14"
+        bun-version: '1.3.14'
 
     - name: Cache Bun installs
       uses: https://code.forgejo.org/actions/cache@v4

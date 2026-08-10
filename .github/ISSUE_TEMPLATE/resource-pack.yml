@@ -1,6 +1,6 @@
 name: Resource Pack Bug Report
 description: File a bug report for one of our resource packs.
-title: "[Resource Pack]: "
+title: '[Resource Pack]: '
 labels:
   - bug
   - resourcepack
@@ -10,7 +10,7 @@ body:
     attributes:
       label: What is the issue?
       description: Please describe what the issue is.
-      placeholder: "ex. Texture renders incorrectly when [...]"
+      placeholder: 'ex. Texture renders incorrectly when [...]'
     validations:
       required: true
   - type: textarea

@@ -12,26 +12,26 @@
 
 import type { ExtensionDefinition, ExtensionManifest, LoadedExtension } from './api'
 import {
-  extensionDirectoryOf,
-  extensionManifestProblem,
-  requiredExtensionArrayFields,
-  requiredExtensionStringFields,
+	extensionDirectoryOf,
+	extensionManifestProblem,
+	requiredExtensionArrayFields,
+	requiredExtensionStringFields,
 } from '@/core/packwand'
 
 const manifests = import.meta.glob<ExtensionManifest>('../../../extensions/*/extension.pw.json', {
-  eager: true,
-  import: 'default',
+	eager: true,
+	import: 'default',
 })
 
 const modules = import.meta.glob<{ default?: ExtensionDefinition }>(
-  '../../../extensions/*/src/index.ts',
-  { eager: true },
+	'../../../extensions/*/src/index.ts',
+	{ eager: true },
 )
 
 /** Problems found while loading, surfaced by the host rather than thrown. */
 export interface ExtensionLoadError {
-  directory: string
-  message: string
+	directory: string
+	message: string
 }
 
 // The directory rule and the manifest rules live in `packwand/extension.gleam`
@@ -40,75 +40,75 @@ export interface ExtensionLoadError {
 const directoryOf = extensionDirectoryOf
 
 function validate(directory: string, manifest: unknown): string | null {
-  if (!manifest || typeof manifest !== 'object') return 'extension.pw.json is not an object'
-  const record = manifest as Record<string, unknown>
-  const missing = [
-    ...requiredExtensionStringFields().filter(
-      field => typeof record[field] !== 'string' || !(record[field] as string).trim(),
-    ),
-    ...requiredExtensionArrayFields().filter(field => !Array.isArray(record[field])),
-  ]
-  return extensionManifestProblem(
-    directory,
-    typeof record.id === 'string' ? record.id : String(record.id),
-    missing,
-    typeof record.apiVersion === 'number' ? record.apiVersion : -1,
-  )
+	if (!manifest || typeof manifest !== 'object') return 'extension.pw.json is not an object'
+	const record = manifest as Record<string, unknown>
+	const missing = [
+		...requiredExtensionStringFields().filter(
+			(field) => typeof record[field] !== 'string' || !(record[field] as string).trim(),
+		),
+		...requiredExtensionArrayFields().filter((field) => !Array.isArray(record[field])),
+	]
+	return extensionManifestProblem(
+		directory,
+		typeof record.id === 'string' ? record.id : String(record.id),
+		missing,
+		typeof record.apiVersion === 'number' ? record.apiVersion : -1,
+	)
 }
 
 function load(): { extensions: LoadedExtension[]; errors: ExtensionLoadError[] } {
-  const extensions: LoadedExtension[] = []
-  const errors: ExtensionLoadError[] = []
-  const moduleByDirectory = new Map(
-    Object.entries(modules).map(([path, module]) => [directoryOf(path), module]),
-  )
+	const extensions: LoadedExtension[] = []
+	const errors: ExtensionLoadError[] = []
+	const moduleByDirectory = new Map(
+		Object.entries(modules).map(([path, module]) => [directoryOf(path), module]),
+	)
 
-  for (const [path, manifest] of Object.entries(manifests)) {
-    const directory = directoryOf(path)
-    const invalid = validate(directory, manifest)
-    if (invalid) {
-      errors.push({ directory, message: invalid })
-      continue
-    }
-    const module = moduleByDirectory.get(directory)
-    if (!module) {
-      errors.push({ directory, message: `no src/index.ts found for ${directory}` })
-      continue
-    }
-    if (!module.default) {
-      errors.push({
-        directory,
-        message: `${directory}/src/index.ts has no default export (use definePackwandExtension)`,
-      })
-      continue
-    }
-    const contributionError = validateContributions(manifest, module.default)
-    if (contributionError) {
-      errors.push({ directory, message: contributionError })
-      continue
-    }
-    extensions.push({ manifest, definition: module.default })
-  }
+	for (const [path, manifest] of Object.entries(manifests)) {
+		const directory = directoryOf(path)
+		const invalid = validate(directory, manifest)
+		if (invalid) {
+			errors.push({ directory, message: invalid })
+			continue
+		}
+		const module = moduleByDirectory.get(directory)
+		if (!module) {
+			errors.push({ directory, message: `no src/index.ts found for ${directory}` })
+			continue
+		}
+		if (!module.default) {
+			errors.push({
+				directory,
+				message: `${directory}/src/index.ts has no default export (use definePackwandExtension)`,
+			})
+			continue
+		}
+		const contributionError = validateContributions(manifest, module.default)
+		if (contributionError) {
+			errors.push({ directory, message: contributionError })
+			continue
+		}
+		extensions.push({ manifest, definition: module.default })
+	}
 
-  // Stable order so the palette and sidebar do not reshuffle between builds.
-  extensions.sort((left, right) => left.manifest.id.localeCompare(right.manifest.id))
-  return { extensions, errors }
+	// Stable order so the palette and sidebar do not reshuffle between builds.
+	extensions.sort((left, right) => left.manifest.id.localeCompare(right.manifest.id))
+	return { extensions, errors }
 }
 
 function validateContributions(
-  manifest: ExtensionManifest,
-  definition: ExtensionDefinition,
+	manifest: ExtensionManifest,
+	definition: ExtensionDefinition,
 ): string | null {
-  const checks: Array<[string, string[], string[]]> = [
-    ['commands', manifest.commands, (definition.commands ?? []).map((entry) => entry.id)],
-    ['views', manifest.views, (definition.views ?? []).map((entry) => entry.id)],
-  ]
-  for (const [kind, declared, implemented] of checks) {
-    const left = [...declared].sort().join(',')
-    const right = [...implemented].sort().join(',')
-    if (left !== right) return `${kind} declaration does not match src/index.ts`
-  }
-  return null
+	const checks: Array<[string, string[], string[]]> = [
+		['commands', manifest.commands, (definition.commands ?? []).map((entry) => entry.id)],
+		['views', manifest.views, (definition.views ?? []).map((entry) => entry.id)],
+	]
+	for (const [kind, declared, implemented] of checks) {
+		const left = [...declared].sort().join(',')
+		const right = [...implemented].sort().join(',')
+		if (left !== right) return `${kind} declaration does not match src/index.ts`
+	}
+	return null
 }
 
 const loaded = load()
@@ -118,5 +118,5 @@ export const extensionErrors: ExtensionLoadError[] = loaded.errors
 
 /** Namespaced command id, so two extensions cannot collide. */
 export function qualifiedId(extensionId: string, commandId: string): string {
-  return `${extensionId}.${commandId}`
+	return `${extensionId}.${commandId}`
 }

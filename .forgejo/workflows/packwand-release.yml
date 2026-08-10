@@ -1,9 +1,9 @@
-name: "Packwand Release"
+name: 'Packwand Release'
 
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
   workflow_dispatch:
 
 jobs:

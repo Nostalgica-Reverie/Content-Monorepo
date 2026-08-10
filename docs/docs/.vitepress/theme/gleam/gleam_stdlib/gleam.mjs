@@ -1,1 +1,1 @@
-export * from "../prelude.mjs";
+export * from '../prelude.mjs'

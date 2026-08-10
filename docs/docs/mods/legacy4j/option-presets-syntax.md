@@ -121,9 +121,10 @@ An example is the one found in Legacy Modpack Resources
     }
   },
 ```
-This JSON is for LMR's "Legacy" mode, utilizing Legacy4J's Purist mode, which is configurable and provides settings like ```lceClouds```, ```slowChunkLoading``` and others. These are options available in Legacy4J's config and are enabled here.
 
-For the non "Legacy" mode versions, you can look below. 
+This JSON is for LMR's "Legacy" mode, utilizing Legacy4J's Purist mode, which is configurable and provides settings like `lceClouds`, `slowChunkLoading` and others. These are options available in Legacy4J's config and are enabled here.
+
+For the non "Legacy" mode versions, you can look below.
 These provide more Java-esque visuals than the "Legacy" mode options
 
 ```

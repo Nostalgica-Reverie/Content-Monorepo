@@ -22,6 +22,7 @@ The binary is placed in `$(go env GOPATH)/bin` — make sure that directory is o
 ```sh
 GOPRIVATE=git.nostalgica.net go install git.nostalgica.net/Reverie-Projects/monorepo/apps/packwand@latest
 ```
+
 :::
 
 ## Building from source

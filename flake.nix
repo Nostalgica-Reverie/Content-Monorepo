@@ -23,6 +23,22 @@
           system: f system nixpkgs.legacyPackages.${system}
         );
       packwand2nixLib = import ./packages/packwand2nix/lib;
+      mkPackwandSocial =
+        pkgs:
+        pkgs.callPackage ./apps/packwandrs/packwand-social/nix {
+          vendorHash = builtins.replaceStrings [ "\r" "\n" ] [ "" "" ] (
+            builtins.readFile ./apps/packwandrs/packwand-social/nix/vendor-hash
+          );
+          version = nixpkgs.lib.substring 0 8 (self.rev or "dirty");
+        };
+      mkSomnus =
+        pkgs:
+        pkgs.callPackage ./apps/packwandrs/somnus/nix {
+          vendorHash = builtins.replaceStrings [ "\r" "\n" ] [ "" "" ] (
+            builtins.readFile ./apps/packwandrs/somnus/nix/vendor-hash
+          );
+          version = nixpkgs.lib.substring 0 8 (self.rev or "dirty");
+        };
       mkPackwand =
         pkgs:
         pkgs.rustPlatform.buildRustPackage {
@@ -34,6 +50,8 @@
           doCheck = false;
           postInstall = ''
             test -x "$out/bin/packwand"
+            ln -s ${mkPackwandSocial pkgs}/bin/packwand-social "$out/bin/packwand-social"
+            ln -s ${mkSomnus pkgs}/bin/somnus "$out/bin/somnus"
           '';
         };
       mkCursorapi =
@@ -144,12 +162,16 @@
       packages = forAllSystems (_system: pkgs: rec {
         cursorapi = mkCursorapi pkgs;
         packwand = mkPackwand pkgs;
+        packwand-social = mkPackwandSocial pkgs;
+        somnus = mkSomnus pkgs;
         default = packwand;
       });
 
       checks = forAllSystems (_system: pkgs: {
         cursorapi = mkCursorapi pkgs;
         packwand = mkPackwand pkgs;
+        packwand-social = mkPackwandSocial pkgs;
+        somnus = mkSomnus pkgs;
         modpack-inventory = pkgs.writeText "lasting-legacy-modpack-inventory.json" (
           builtins.toJSON modpackInventory
         );
@@ -163,6 +185,14 @@
         packwand = {
           type = "app";
           program = nixpkgs.lib.getExe self.packages.${system}.packwand;
+        };
+        packwand-social = {
+          type = "app";
+          program = nixpkgs.lib.getExe self.packages.${system}.packwand-social;
+        };
+        somnus = {
+          type = "app";
+          program = nixpkgs.lib.getExe self.packages.${system}.somnus;
         };
         default = packwand;
       });

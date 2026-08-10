@@ -49,6 +49,16 @@ _mod_gradlew_all ARGS:
 lint-cursorapi:
     go vet ./...
 
+# Vet the local ATProto identity bridge
+[working-directory: 'apps/packwandrs/packwand-social']
+lint-social:
+    go vet ./...
+
+# Vet the local Tangled workflow runner
+[working-directory: 'apps/packwandrs/somnus']
+lint-somnus:
+    go vet ./...
+
 # Clippy on mod-browser-webview
 [working-directory: 'apps/mod-browser-webview']
 lint-webview:
@@ -82,10 +92,6 @@ lint-bot:
 # Repo-wide spell check (requires typos -- cargo install typos-cli); config in _typos.toml
 lint-typos:
     typos .
-
-# Not in the `lint` aggregate yet: the repo has not been through `just fmt-js`
-# once, so this reports ~460 files and would fail every run. Add it to `lint`
-# in the same commit that lands the reformat.
 
 # Prettier check; config in prettier.config.mjs, indentation from .editorconfig
 lint-fmt:
@@ -132,7 +138,7 @@ lint-packeater:
     cargo clippy -p packeater_cli --all-targets -- -D warnings
 
 # All linters/vetters and vulnerability scans
-lint: lint-cursorapi lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-typos lint-actions lint-packeater audit-rust docs-typecheck
+lint: lint-cursorapi lint-social lint-somnus lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-fmt lint-typos lint-actions lint-packeater audit-rust docs-typecheck
 
 # — Test —
 
@@ -157,6 +163,16 @@ bench-packwand MR_DIR CF_DIR:
 test-cursorapi:
     go test ./...
 
+# Test the local ATProto identity bridge
+[working-directory: 'apps/packwandrs/packwand-social']
+test-social:
+    go test ./...
+
+# Test workflow parsing, triggers, and reporting
+[working-directory: 'apps/packwandrs/somnus']
+test-somnus:
+    go test ./...
+
 # Gradle tests (installer + bootstrap)
 test-installer: (_gradlew INSTALLER_DIR "test")
 
@@ -178,7 +194,7 @@ test-nix:
     nix flake check --no-update-lock-file --print-build-logs
 
 # All tests
-test: test-cursorapi test-installer test-mods test-webview test-rust-core
+test: test-cursorapi test-social test-somnus test-installer test-mods test-webview test-rust-core
 
 # — Build —
 
@@ -192,8 +208,25 @@ build-packwand:
 build-cursorapi:
     go build -o cursorapi{{ EXE_EXT }} ./cursorapi
 
+# Build the local ATProto identity bridge
+[working-directory: 'apps/packwandrs/packwand-social']
+build-social:
+    mkdir -p ../target/release
+    go build -o ../target/release/packwand-social{{ EXE_EXT }} .
+
+# Build the local Tangled workflow runner
+[working-directory: 'apps/packwandrs/somnus']
+build-somnus:
+    mkdir -p ../target/release
+    go build -o ../target/release/somnus{{ EXE_EXT }} .
+
 # Build packwiz-installer (and the legacy Java bootstrap) via Gradle
 build-installer: (_gradlew INSTALLER_DIR "build -x test")
+
+# Build the native installer; the Gradle recipe remains the launcher-contract fallback
+[working-directory: 'apps/packwandrs']
+build-installer-rs:
+    cargo build --release -p packwand-installer
 
 # Build distributable jars for every Stonecutter mod project
 build-mods: (_mod_gradlew_all "build -x test")
@@ -206,16 +239,16 @@ build-webview:
 # Build the Go packwiz-bootstrap wrapper
 # Build the native Rust/Vue Packwand GUI app (Tauri v2).
 [working-directory: 'apps/packwandrs']
-build-gui: build-packwand
+build-gui: build-packwand build-social build-installer-rs
     cargo tauri build
 
 # Generate/update packwiz2nix checksums.json for every modpack subdir via packwand's internal generator
 gen-nix:
     cargo run --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli -- nix gen --all
 
-# Build the Packwand CLI and Cursor API through Nix without creating result symlinks
+# Build Packwand, its social helper, and Cursor API through Nix without creating result symlinks
 build-nix:
-    nix build --no-link --no-update-lock-file --print-build-logs .#packwand .#cursorapi
+    nix build --no-link --no-update-lock-file --print-build-logs .#packwand .#packwand-social .#somnus .#cursorapi
 
 # Regenerate the webview third-party licenses page (embedded at build time)
 [working-directory: 'apps/mod-browser-webview']
@@ -231,7 +264,7 @@ build-bot:
     bun build src/index.ts --target=bun --outdir=dist
 
 # Build everything (CLI, installer, webview, bootstrap, bot)
-build: build-packwand build-cursorapi build-installer build-mods build-webview build-bot
+build: build-packwand build-cursorapi build-social build-somnus build-installer build-installer-rs build-mods build-webview build-bot
 
 # — Docs —
 

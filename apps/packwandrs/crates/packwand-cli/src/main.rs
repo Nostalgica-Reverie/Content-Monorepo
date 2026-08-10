@@ -10,8 +10,8 @@ mod serve;
 mod test_cmd;
 
 fn main() {
-    if let Err(error) = dispatch::run() {
-        eprintln!("error: {error}");
-        std::process::exit(1);
-    }
+	if let Err(error) = dispatch::run() {
+		eprintln!("error: {error}");
+		std::process::exit(1);
+	}
 }

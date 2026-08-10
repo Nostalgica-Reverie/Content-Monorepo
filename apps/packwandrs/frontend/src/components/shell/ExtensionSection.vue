@@ -17,41 +17,43 @@ const loading = ref(false)
 let stopWatching: (() => void) | undefined
 
 async function load() {
-  loading.value = true
-  try {
-    rows.value = await extensionsStore.rowsFor(props.entry.id)
-  } finally {
-    loading.value = false
-  }
+	loading.value = true
+	try {
+		rows.value = await extensionsStore.rowsFor(props.entry.id)
+	} finally {
+		loading.value = false
+	}
 }
 
 // Rows are derived from the selected pack, so refresh when the selection moves.
 watch(
-  () => [props.entry.id, workbench.selectedPackId, workbench.selectedProjectId],
-  () => void load(),
-  { immediate: true },
+	() => [props.entry.id, workbench.selectedPackId, workbench.selectedProjectId],
+	() => void load(),
+	{ immediate: true },
 )
 
-onMounted(async () => { stopWatching = await onPacksChanged(() => void load()) })
+onMounted(async () => {
+	stopWatching = await onPacksChanged(() => void load())
+})
 onBeforeUnmount(() => stopWatching?.())
 </script>
 
 <template>
-  <SideSection :title="entry.view.title" :count="rows.length" :open="false">
-    <p v-if="loading" class="side-empty">Loading…</p>
-    <p v-else-if="!rows.length" class="side-empty">Nothing to show.</p>
-    <button
-      v-for="(row, index) in rows"
-      :key="index"
-      class="tree-row"
-      :class="{ 'tree-row--static': !row.run }"
-      :disabled="!row.run"
-      :title="row.detail ?? row.label"
-      @click="extensionsStore.runRow(row)"
-    >
-      <AppIcon :name="row.icon ?? entry.view.icon ?? 'package'" :size="15" class="tree-row__icon" />
-      <span class="tree-row__label">{{ row.label }}</span>
-      <span v-if="row.detail" class="tree-row__meta">{{ row.detail }}</span>
-    </button>
-  </SideSection>
+	<SideSection :title="entry.view.title" :count="rows.length" :open="false">
+		<p v-if="loading" class="side-empty">Loading…</p>
+		<p v-else-if="!rows.length" class="side-empty">Nothing to show.</p>
+		<button
+			v-for="(row, index) in rows"
+			:key="index"
+			class="tree-row"
+			:class="{ 'tree-row--static': !row.run }"
+			:disabled="!row.run"
+			:title="row.detail ?? row.label"
+			@click="extensionsStore.runRow(row)"
+		>
+			<AppIcon :name="row.icon ?? entry.view.icon ?? 'package'" :size="15" class="tree-row__icon" />
+			<span class="tree-row__label">{{ row.label }}</span>
+			<span v-if="row.detail" class="tree-row__meta">{{ row.detail }}</span>
+		</button>
+	</SideSection>
 </template>

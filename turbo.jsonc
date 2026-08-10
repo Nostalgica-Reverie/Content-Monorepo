@@ -13,39 +13,39 @@
 		// as an artifact — but the log and exit status are worth reusing.
 		"typecheck": {
 			"dependsOn": ["^build"],
-			"outputs": []
+			"outputs": [],
 		},
 
 		"check": {
 			"dependsOn": ["^build"],
-			"outputs": []
+			"outputs": [],
 		},
 
 		"lint": {
-			"outputs": []
+			"outputs": [],
 		},
 
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": ["dist/**", ".vitepress/dist/**", "docs/.vitepress/dist/**"]
+			"outputs": ["dist/**", ".vitepress/dist/**", "docs/.vitepress/dist/**"],
 		},
 
 		"test": {
 			"dependsOn": ["build"],
-			"outputs": []
+			"outputs": [],
 		},
 
 		// VitePress sites build into their own directory rather than dist/.
 		"docs:build": {
 			"dependsOn": ["^build"],
-			"outputs": ["docs/.vitepress/dist/**"]
+			"outputs": ["docs/.vitepress/dist/**"],
 		},
 
 		// Long-running and interactive: never cache, never let Turbo think it
 		// has finished.
 		"dev": {
 			"cache": false,
-			"persistent": true
-		}
-	}
+			"persistent": true,
+		},
+	},
 }

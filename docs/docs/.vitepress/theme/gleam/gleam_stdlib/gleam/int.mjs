@@ -1,31 +1,31 @@
-import { Ok, Error, Empty as $Empty, remainderInt, divideInt } from "../gleam.mjs";
-import * as $float from "../gleam/float.mjs";
-import * as $order from "../gleam/order.mjs";
+import { Ok, Error, Empty as $Empty, remainderInt, divideInt } from '../gleam.mjs'
+import * as $float from '../gleam/float.mjs'
+import * as $order from '../gleam/order.mjs'
 import {
-  identity as to_float,
-  parse_int as parse,
-  int_from_base_string as do_base_parse,
-  to_string,
-  int_to_base_string as do_to_base_string,
-  bitwise_and,
-  bitwise_not,
-  bitwise_or,
-  bitwise_exclusive_or,
-  bitwise_shift_left,
-  bitwise_shift_right,
-} from "../gleam_stdlib.mjs";
+	identity as to_float,
+	parse_int as parse,
+	int_from_base_string as do_base_parse,
+	to_string,
+	int_to_base_string as do_to_base_string,
+	bitwise_and,
+	bitwise_not,
+	bitwise_or,
+	bitwise_exclusive_or,
+	bitwise_shift_left,
+	bitwise_shift_right,
+} from '../gleam_stdlib.mjs'
 
 export {
-  bitwise_and,
-  bitwise_exclusive_or,
-  bitwise_not,
-  bitwise_or,
-  bitwise_shift_left,
-  bitwise_shift_right,
-  parse,
-  to_float,
-  to_string,
-};
+	bitwise_and,
+	bitwise_exclusive_or,
+	bitwise_not,
+	bitwise_or,
+	bitwise_shift_left,
+	bitwise_shift_right,
+	parse,
+	to_float,
+	to_string,
+}
 
 /**
  * Returns the absolute value of the input.
@@ -41,12 +41,12 @@ export {
  * ```
  */
 export function absolute_value(x) {
-  let $ = x >= 0;
-  if ($) {
-    return x;
-  } else {
-    return x * -1;
-  }
+	let $ = x >= 0
+	if ($) {
+		return x
+	} else {
+		return x * -1
+	}
 }
 
 /**
@@ -76,9 +76,9 @@ export function absolute_value(x) {
  * ```
  */
 export function power(base, exponent) {
-  let _pipe = base;
-  let _pipe$1 = to_float(_pipe);
-  return $float.power(_pipe$1, exponent);
+	let _pipe = base
+	let _pipe$1 = to_float(_pipe)
+	return $float.power(_pipe$1, exponent)
 }
 
 /**
@@ -95,9 +95,9 @@ export function power(base, exponent) {
  * ```
  */
 export function square_root(x) {
-  let _pipe = x;
-  let _pipe$1 = to_float(_pipe);
-  return $float.square_root(_pipe$1);
+	let _pipe = x
+	let _pipe$1 = to_float(_pipe)
+	return $float.square_root(_pipe$1)
 }
 
 /**
@@ -127,12 +127,12 @@ export function square_root(x) {
  * ```
  */
 export function base_parse(string, base) {
-  let $ = (base >= 2) && (base <= 36);
-  if ($) {
-    return do_base_parse(string, base);
-  } else {
-    return new Error(undefined);
-  }
+	let $ = base >= 2 && base <= 36
+	if ($) {
+		return do_base_parse(string, base)
+	} else {
+		return new Error(undefined)
+	}
 }
 
 /**
@@ -163,12 +163,12 @@ export function base_parse(string, base) {
  * ```
  */
 export function to_base_string(x, base) {
-  let $ = (base >= 2) && (base <= 36);
-  if ($) {
-    return new Ok(do_to_base_string(x, base));
-  } else {
-    return new Error(undefined);
-  }
+	let $ = base >= 2 && base <= 36
+	if ($) {
+		return new Ok(do_to_base_string(x, base))
+	} else {
+		return new Error(undefined)
+	}
 }
 
 /**
@@ -181,7 +181,7 @@ export function to_base_string(x, base) {
  * ```
  */
 export function to_base2(x) {
-  return do_to_base_string(x, 2);
+	return do_to_base_string(x, 2)
 }
 
 /**
@@ -194,7 +194,7 @@ export function to_base2(x) {
  * ```
  */
 export function to_base8(x) {
-  return do_to_base_string(x, 8);
+	return do_to_base_string(x, 8)
 }
 
 /**
@@ -207,7 +207,7 @@ export function to_base8(x) {
  * ```
  */
 export function to_base16(x) {
-  return do_to_base_string(x, 16);
+	return do_to_base_string(x, 16)
 }
 
 /**
@@ -220,7 +220,7 @@ export function to_base16(x) {
  * ```
  */
 export function to_base36(x) {
-  return do_to_base_string(x, 36);
+	return do_to_base_string(x, 36)
 }
 
 /**
@@ -233,12 +233,12 @@ export function to_base36(x) {
  * ```
  */
 export function max(a, b) {
-  let $ = a > b;
-  if ($) {
-    return a;
-  } else {
-    return b;
-  }
+	let $ = a > b
+	if ($) {
+		return a
+	} else {
+		return b
+	}
 }
 
 /**
@@ -251,12 +251,12 @@ export function max(a, b) {
  * ```
  */
 export function min(a, b) {
-  let $ = a < b;
-  if ($) {
-    return a;
-  } else {
-    return b;
-  }
+	let $ = a < b
+	if ($) {
+		return a
+	} else {
+		return b
+	}
 }
 
 /**
@@ -277,16 +277,16 @@ export function min(a, b) {
  * ```
  */
 export function clamp(x, min_bound, max_bound) {
-  let $ = min_bound >= max_bound;
-  if ($) {
-    let _pipe = x;
-    let _pipe$1 = min(_pipe, min_bound);
-    return max(_pipe$1, max_bound);
-  } else {
-    let _pipe = x;
-    let _pipe$1 = min(_pipe, max_bound);
-    return max(_pipe$1, min_bound);
-  }
+	let $ = min_bound >= max_bound
+	if ($) {
+		let _pipe = x
+		let _pipe$1 = min(_pipe, min_bound)
+		return max(_pipe$1, max_bound)
+	} else {
+		let _pipe = x
+		let _pipe$1 = min(_pipe, max_bound)
+		return max(_pipe$1, min_bound)
+	}
 }
 
 /**
@@ -307,17 +307,17 @@ export function clamp(x, min_bound, max_bound) {
  * ```
  */
 export function compare(a, b) {
-  let $ = a === b;
-  if ($) {
-    return new $order.Eq();
-  } else {
-    let $1 = a < b;
-    if ($1) {
-      return new $order.Lt();
-    } else {
-      return new $order.Gt();
-    }
-  }
+	let $ = a === b
+	if ($) {
+		return new $order.Eq()
+	} else {
+		let $1 = a < b
+		if ($1) {
+			return new $order.Lt()
+		} else {
+			return new $order.Gt()
+		}
+	}
 }
 
 /**
@@ -334,7 +334,7 @@ export function compare(a, b) {
  * ```
  */
 export function is_even(x) {
-  return (x % 2) === 0;
+	return x % 2 === 0
 }
 
 /**
@@ -351,7 +351,7 @@ export function is_even(x) {
  * ```
  */
 export function is_odd(x) {
-  return (x % 2) !== 0;
+	return x % 2 !== 0
 }
 
 /**
@@ -364,22 +364,22 @@ export function is_odd(x) {
  * ```
  */
 export function negate(x) {
-  return -1 * x;
+	return -1 * x
 }
 
 function sum_loop(loop$numbers, loop$initial) {
-  while (true) {
-    let numbers = loop$numbers;
-    let initial = loop$initial;
-    if (numbers instanceof $Empty) {
-      return initial;
-    } else {
-      let first = numbers.head;
-      let rest = numbers.tail;
-      loop$numbers = rest;
-      loop$initial = first + initial;
-    }
-  }
+	while (true) {
+		let numbers = loop$numbers
+		let initial = loop$initial
+		if (numbers instanceof $Empty) {
+			return initial
+		} else {
+			let first = numbers.head
+			let rest = numbers.tail
+			loop$numbers = rest
+			loop$initial = first + initial
+		}
+	}
 }
 
 /**
@@ -392,22 +392,22 @@ function sum_loop(loop$numbers, loop$initial) {
  * ```
  */
 export function sum(numbers) {
-  return sum_loop(numbers, 0);
+	return sum_loop(numbers, 0)
 }
 
 function product_loop(loop$numbers, loop$initial) {
-  while (true) {
-    let numbers = loop$numbers;
-    let initial = loop$initial;
-    if (numbers instanceof $Empty) {
-      return initial;
-    } else {
-      let first = numbers.head;
-      let rest = numbers.tail;
-      loop$numbers = rest;
-      loop$initial = first * initial;
-    }
-  }
+	while (true) {
+		let numbers = loop$numbers
+		let initial = loop$initial
+		if (numbers instanceof $Empty) {
+			return initial
+		} else {
+			let first = numbers.head
+			let rest = numbers.tail
+			loop$numbers = rest
+			loop$initial = first * initial
+		}
+	}
 }
 
 /**
@@ -420,7 +420,7 @@ function product_loop(loop$numbers, loop$initial) {
  * ```
  */
 export function product(numbers) {
-  return product_loop(numbers, 1);
+	return product_loop(numbers, 1)
 }
 
 /**
@@ -446,9 +446,9 @@ export function product(numbers) {
  * ```
  */
 export function random(max) {
-  let _pipe = ($float.random() * to_float(max));
-  let _pipe$1 = $float.floor(_pipe);
-  return $float.round(_pipe$1);
+	let _pipe = $float.random() * to_float(max)
+	let _pipe$1 = $float.floor(_pipe)
+	return $float.round(_pipe$1)
 }
 
 /**
@@ -476,12 +476,12 @@ export function random(max) {
  * ```
  */
 export function divide(dividend, divisor) {
-  if (divisor === 0) {
-    return new Error(undefined);
-  } else {
-    let divisor$1 = divisor;
-    return new Ok(divideInt(dividend, divisor$1));
-  }
+	if (divisor === 0) {
+		return new Error(undefined)
+	} else {
+		let divisor$1 = divisor
+		return new Ok(divideInt(dividend, divisor$1))
+	}
 }
 
 /**
@@ -524,12 +524,12 @@ export function divide(dividend, divisor) {
  * ```
  */
 export function remainder(dividend, divisor) {
-  if (divisor === 0) {
-    return new Error(undefined);
-  } else {
-    let divisor$1 = divisor;
-    return new Ok(remainderInt(dividend, divisor$1));
-  }
+	if (divisor === 0) {
+		return new Error(undefined)
+	} else {
+		let divisor$1 = divisor
+		return new Ok(remainderInt(dividend, divisor$1))
+	}
 }
 
 /**
@@ -568,17 +568,17 @@ export function remainder(dividend, divisor) {
  * ```
  */
 export function modulo(dividend, divisor) {
-  if (divisor === 0) {
-    return new Error(undefined);
-  } else {
-    let remainder$1 = remainderInt(dividend, divisor);
-    let $ = remainder$1 * divisor < 0;
-    if ($) {
-      return new Ok(remainder$1 + divisor);
-    } else {
-      return new Ok(remainder$1);
-    }
-  }
+	if (divisor === 0) {
+		return new Error(undefined)
+	} else {
+		let remainder$1 = remainderInt(dividend, divisor)
+		let $ = remainder$1 * divisor < 0
+		if ($) {
+			return new Ok(remainder$1 + divisor)
+		} else {
+			return new Ok(remainder$1)
+		}
+	}
 }
 
 /**
@@ -610,17 +610,17 @@ export function modulo(dividend, divisor) {
  * ```
  */
 export function floor_divide(dividend, divisor) {
-  if (divisor === 0) {
-    return new Error(undefined);
-  } else {
-    let divisor$1 = divisor;
-    let $ = (dividend * divisor$1 < 0) && ((remainderInt(dividend, divisor$1)) !== 0);
-    if ($) {
-      return new Ok((divideInt(dividend, divisor$1)) - 1);
-    } else {
-      return new Ok(divideInt(dividend, divisor$1));
-    }
-  }
+	if (divisor === 0) {
+		return new Error(undefined)
+	} else {
+		let divisor$1 = divisor
+		let $ = dividend * divisor$1 < 0 && remainderInt(dividend, divisor$1) !== 0
+		if ($) {
+			return new Ok(divideInt(dividend, divisor$1) - 1)
+		} else {
+			return new Ok(divideInt(dividend, divisor$1))
+		}
+	}
 }
 
 /**
@@ -645,7 +645,7 @@ export function floor_divide(dividend, divisor) {
  * ```
  */
 export function add(a, b) {
-  return a + b;
+	return a + b
 }
 
 /**
@@ -671,7 +671,7 @@ export function add(a, b) {
  * ```
  */
 export function multiply(a, b) {
-  return a * b;
+	return a * b
 }
 
 /**
@@ -701,35 +701,29 @@ export function multiply(a, b) {
  * ```
  */
 export function subtract(a, b) {
-  return a - b;
+	return a - b
 }
 
-function range_loop(
-  loop$current,
-  loop$stop,
-  loop$increment,
-  loop$acc,
-  loop$reducer
-) {
-  while (true) {
-    let current = loop$current;
-    let stop = loop$stop;
-    let increment = loop$increment;
-    let acc = loop$acc;
-    let reducer = loop$reducer;
-    let $ = current === stop;
-    if ($) {
-      return acc;
-    } else {
-      let acc$1 = reducer(acc, current);
-      let current$1 = current + increment;
-      loop$current = current$1;
-      loop$stop = stop;
-      loop$increment = increment;
-      loop$acc = acc$1;
-      loop$reducer = reducer;
-    }
-  }
+function range_loop(loop$current, loop$stop, loop$increment, loop$acc, loop$reducer) {
+	while (true) {
+		let current = loop$current
+		let stop = loop$stop
+		let increment = loop$increment
+		let acc = loop$acc
+		let reducer = loop$reducer
+		let $ = current === stop
+		if ($) {
+			return acc
+		} else {
+			let acc$1 = reducer(acc, current)
+			let current$1 = current + increment
+			loop$current = current$1
+			loop$stop = stop
+			loop$increment = increment
+			loop$acc = acc$1
+			loop$reducer = reducer
+		}
+	}
 }
 
 /**
@@ -752,13 +746,13 @@ function range_loop(
  * ```
  */
 export function range(start, stop, acc, reducer) {
-  let _block;
-  let $ = start < stop;
-  if ($) {
-    _block = 1;
-  } else {
-    _block = -1;
-  }
-  let increment = _block;
-  return range_loop(start, stop, increment, acc, reducer);
+	let _block
+	let $ = start < stop
+	if ($) {
+		_block = 1
+	} else {
+		_block = -1
+	}
+	let increment = _block
+	return range_loop(start, stop, increment, acc, reducer)
 }

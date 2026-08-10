@@ -1,12 +1,16 @@
 use crate::error::{CommandResult, SerializableError};
 
+pub mod accounts;
 pub mod api;
 pub mod automation;
+pub mod changes;
+pub mod collab;
 pub mod diagnostics;
 pub mod editor;
 pub mod exports;
 pub mod extensions;
 pub mod git;
+pub mod identity;
 pub mod instances;
 pub mod jobs;
 pub mod mods;
@@ -17,6 +21,8 @@ pub mod providers;
 pub mod richtext;
 pub mod settings;
 pub mod shell;
+pub mod social;
+pub mod somnus;
 pub mod themes;
 pub mod workspace;
 
@@ -38,10 +44,10 @@ pub mod workspace;
 /// and move only owned values into `work`.
 pub(crate) async fn off_thread<T, F>(work: F) -> CommandResult<T>
 where
-    T: Send + 'static,
-    F: FnOnce() -> CommandResult<T> + Send + 'static,
+	T: Send + 'static,
+	F: FnOnce() -> CommandResult<T> + Send + 'static,
 {
-    tokio::task::spawn_blocking(work)
-        .await
-        .map_err(|error| SerializableError::new("task", error.to_string()))?
+	tokio::task::spawn_blocking(work)
+		.await
+		.map_err(|error| SerializableError::new("task", error.to_string()))?
 }

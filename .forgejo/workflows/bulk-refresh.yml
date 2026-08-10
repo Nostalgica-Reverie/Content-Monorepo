@@ -1,15 +1,15 @@
-name: "Bulk Refresh"
+name: 'Bulk Refresh'
 
 on:
   workflow_dispatch:
     inputs:
       packs:
-        description: "One repository-relative pack directory (empty runs all packs)"
+        description: 'One repository-relative pack directory (empty runs all packs)'
         required: false
         type: string
-        default: ""
+        default: ''
       dry_run:
-        description: "List affected pack directories; do not refresh or commit"
+        description: 'List affected pack directories; do not refresh or commit'
         required: false
         type: boolean
         default: false

@@ -22,49 +22,49 @@ const rootError = ref<string | null>(null)
 const loading = ref(false)
 
 async function loadRoot() {
-  if (!props.packId) {
-    roots.value = []
-    rootError.value = null
-    return
-  }
-  loading.value = true
-  rootError.value = null
-  try {
-    roots.value = await readLevel(props.packId, '')
-  } catch (error) {
-    rootError.value = String(error)
-    roots.value = []
-  } finally {
-    loading.value = false
-  }
+	if (!props.packId) {
+		roots.value = []
+		rootError.value = null
+		return
+	}
+	loading.value = true
+	rootError.value = null
+	try {
+		roots.value = await readLevel(props.packId, '')
+	} catch (error) {
+		rootError.value = String(error)
+		roots.value = []
+	} finally {
+		loading.value = false
+	}
 }
 
 async function toggle(node: FileNode) {
-  if (!node.directory) {
-    emit('open', node.path)
-    return
-  }
-  if (node.expanded) {
-    node.expanded = false
-    return
-  }
-  node.expanded = true
+	if (!node.directory) {
+		emit('open', node.path)
+		return
+	}
+	if (node.expanded) {
+		node.expanded = false
+		return
+	}
+	node.expanded = true
 
-  // Children are fetched once and kept. Re-reading on every expand would make
-  // the tree flicker, and would lose nothing but staleness that the refresh
-  // button already fixes.
-  if (node.children) return
+	// Children are fetched once and kept. Re-reading on every expand would make
+	// the tree flicker, and would lose nothing but staleness that the refresh
+	// button already fixes.
+	if (node.children) return
 
-  node.loading = true
-  node.error = null
-  try {
-    node.children = await readLevel(props.packId, node.path)
-  } catch (error) {
-    node.error = String(error)
-    node.children = []
-  } finally {
-    node.loading = false
-  }
+	node.loading = true
+	node.error = null
+	try {
+		node.children = await readLevel(props.packId, node.path)
+	} catch (error) {
+		node.error = String(error)
+		node.children = []
+	} finally {
+		node.loading = false
+	}
 }
 
 watch(() => props.packId, loadRoot, { immediate: true })
@@ -72,28 +72,28 @@ defineExpose({ refresh: loadRoot })
 </script>
 
 <template>
-  <SideSection title="Files" :count="roots.length || undefined">
-    <p v-if="!props.packId" class="side-empty">Select a pack target to browse its files.</p>
-    <p v-else-if="loading" class="side-empty">Reading pack…</p>
-    <p v-else-if="rootError" class="side-empty">{{ rootError }}</p>
-    <p v-else-if="!roots.length" class="side-empty">This pack has no files.</p>
-    <ul v-else class="filetree">
-      <FileTreeNode
-        v-for="node in roots"
-        :key="node.path"
-        :node="node"
-        :depth="0"
-        @toggle="toggle"
-        @open="emit('open', $event)"
-      />
-    </ul>
-  </SideSection>
+	<SideSection title="Files" :count="roots.length || undefined">
+		<p v-if="!props.packId" class="side-empty">Select a pack target to browse its files.</p>
+		<p v-else-if="loading" class="side-empty">Reading pack…</p>
+		<p v-else-if="rootError" class="side-empty">{{ rootError }}</p>
+		<p v-else-if="!roots.length" class="side-empty">This pack has no files.</p>
+		<ul v-else class="filetree">
+			<FileTreeNode
+				v-for="node in roots"
+				:key="node.path"
+				:node="node"
+				:depth="0"
+				@toggle="toggle"
+				@open="emit('open', $event)"
+			/>
+		</ul>
+	</SideSection>
 </template>
 
 <style scoped>
 .filetree {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 </style>

@@ -1,17 +1,15 @@
-import { property, schema, SchemaGenerator } from "../schemaDSL.ts";
-import { Hash } from "./shared/Hash.ts";
-import { HashFormat } from "./shared/HashFormat.ts";
-import { Path } from "./shared/Path.ts";
+import { property, schema, SchemaGenerator } from '../schemaDSL.ts'
+import { Hash } from './shared/Hash.ts'
+import { HashFormat } from './shared/HashFormat.ts'
+import { Path } from './shared/Path.ts'
 
 @schema({
 	// TODO(gen): $id?
-	$schema: "http://json-schema.org/draft-07/schema",
-	title: "pack.toml",
+	$schema: 'http://json-schema.org/draft-07/schema',
+	title: 'pack.toml',
 	description: `The main modpack file for a packwand modpack.
 	This is the first file loaded, to allow the modpack downloader to download all the files in the modpack.`,
-	examples: [
-		await Deno.readTextFile("./example-pack/pack.toml"),
-	],
+	examples: [await Deno.readTextFile('./example-pack/pack.toml')],
 	// TODO(gen): Taplo extensions: links?
 })
 export class Pack {
@@ -33,41 +31,41 @@ For legacy \"packwiz:<semver>\" values:
 - \"packwiz:1.0.0\" is migrated to \"packwiz:1.1.0\" automatically on load`,
 	)
 	@property.required
-	@property.default("packwand:26")
-	"pack-format": undefined;
+	@property.default('packwand:26')
+	'pack-format': undefined
 
 	@property.string(
-		"The name of the modpack. This can be displayed in user interfaces to identify the pack, and it does not need to be unique between packs.",
+		'The name of the modpack. This can be displayed in user interfaces to identify the pack, and it does not need to be unique between packs.',
 	)
 	@property.required
-	name: undefined;
+	name: undefined
 	@property.string(
-		"The author(s) of the modpack. This is output when exporting to the CurseForge pack format, and can be displayed in user interfaces.",
+		'The author(s) of the modpack. This is output when exporting to the CurseForge pack format, and can be displayed in user interfaces.',
 	)
-	author: undefined;
+	author: undefined
 	@property.string(
-		"The version of the modpack. This is output when exporting to the CurseForge pack format, but is not currently used elsewhere by the tools or installer. It must not be used for determining if the modpack is outdated.",
+		'The version of the modpack. This is output when exporting to the CurseForge pack format, but is not currently used elsewhere by the tools or installer. It must not be used for determining if the modpack is outdated.',
 	)
-	version: undefined;
+	version: undefined
 	@property.string(
-		"A short description of the modpack. This is output when exporting to the Modrinth pack format, but is not currently used elsewhere by the tools or installer.",
+		'A short description of the modpack. This is output when exporting to the Modrinth pack format, but is not currently used elsewhere by the tools or installer.',
 	)
-	description: undefined;
+	description: undefined
 
 	@property.ref(`Information about the index file in this modpack.`)
 	@property.required
-	index = new IndexRef();
+	index = new IndexRef()
 
 	@property.ref(
 		`The versions of components used by this modpack - usually Minecraft and the mod loader this pack uses. The existence of a component implies that it should be installed. These values can also be used by tools to determine which versions of mods should be installed. A pack declaring quilt is also compatible with fabric mods, and a pack declaring neoforge is also compatible with forge mods.`,
 	)
 	@property.required
-	versions = new ComponentVersions();
+	versions = new ComponentVersions()
 
 	@property.ref(
 		`packwand extension: named commands runnable with packwand run <name>. Each value is a shell command executed from the pack directory.`,
 	)
-	scripts = new Scripts();
+	scripts = new Scripts()
 
 	// TODO(doc): export, options
 }
@@ -78,52 +76,52 @@ export interface Pack extends SchemaGenerator {}
 class IndexRef {
 	@property.ref(`The path to the file that contains the index.`)
 	@property.required
-	file = new Path();
+	file = new Path()
 
 	@property.ref(
 		`The hash of the generated index file, as a string. It is omitted from source metadata; run packwand refresh --build to generate it for distribution.`,
 	)
-	hash = new Hash();
+	hash = new Hash()
 
-	@property.ref("The hash format for the hash of the index file.")
+	@property.ref('The hash format for the hash of the index file.')
 	@property.required
-	"hash-format" = new HashFormat();
+	'hash-format' = new HashFormat()
 }
 // deno-lint-ignore no-empty-interface
 interface IndexRef extends SchemaGenerator {}
 
 @schema({
 	additionalProperties: {
-		type: "string",
+		type: 'string',
 	},
 })
 class ComponentVersions {
 	@property.string(
-		"The version of Minecraft used by this modpack. This should be in the format used by the version.json files.",
+		'The version of Minecraft used by this modpack. This should be in the format used by the version.json files.',
 	)
 	@property.required
-	@property.examples(["1.17.1", "16w02a"])
-	minecraft: undefined;
+	@property.examples(['1.17.1', '16w02a'])
+	minecraft: undefined
 
-	@property.string("The version of Fabric loader used by this modpack.")
-	@property.examples(["0.12.1"])
-	fabric: undefined;
+	@property.string('The version of Fabric loader used by this modpack.')
+	@property.examples(['0.12.1'])
+	fabric: undefined
 	@property.string(
-		"The version of Forge used by this modpack. This version must not include the Minecraft version as a prefix.",
+		'The version of Forge used by this modpack. This version must not include the Minecraft version as a prefix.',
 	)
-	@property.examples(["14.23.5.2838"])
-	forge: undefined;
-	@property.string("The version of Liteloader used by this modpack.")
-	@property.examples(["1.12.2-SNAPSHOT"])
-	liteloader: undefined;
+	@property.examples(['14.23.5.2838'])
+	forge: undefined
+	@property.string('The version of Liteloader used by this modpack.')
+	@property.examples(['1.12.2-SNAPSHOT'])
+	liteloader: undefined
 
-	@property.string("The version of NeoForge used by this modpack.")
-	@property.examples(["21.1.77"])
-	neoforge: undefined;
+	@property.string('The version of NeoForge used by this modpack.')
+	@property.examples(['21.1.77'])
+	neoforge: undefined
 
-	@property.string("The version of Quilt loader used by this modpack.")
-	@property.examples(["0.12.1"])
-	quilt: undefined;
+	@property.string('The version of Quilt loader used by this modpack.')
+	@property.examples(['0.12.1'])
+	quilt: undefined
 	// TODO(format): others?
 }
 // deno-lint-ignore no-empty-interface
@@ -131,12 +129,11 @@ interface ComponentVersions extends SchemaGenerator {}
 
 @schema({
 	additionalProperties: {
-		type: "string",
+		type: 'string',
 	},
 })
-class Scripts {
-}
+class Scripts {}
 // deno-lint-ignore no-empty-interface
 interface Scripts extends SchemaGenerator {}
 
-export default Pack;
+export default Pack

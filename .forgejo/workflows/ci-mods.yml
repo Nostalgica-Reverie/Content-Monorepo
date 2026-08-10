@@ -1,22 +1,22 @@
-name: "CI - Mods"
+name: 'CI - Mods'
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "mods/**"
-      - "justfile"
-      - ".forgejo/actions/setup-java/**"
-      - ".forgejo/actions/setup-just/**"
-      - ".forgejo/workflows/ci-mods.yml"
+      - 'mods/**'
+      - 'justfile'
+      - '.forgejo/actions/setup-java/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-mods.yml'
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "mods/**"
-      - "justfile"
-      - ".forgejo/actions/setup-java/**"
-      - ".forgejo/actions/setup-just/**"
-      - ".forgejo/workflows/ci-mods.yml"
+      - 'mods/**'
+      - 'justfile'
+      - '.forgejo/actions/setup-java/**'
+      - '.forgejo/actions/setup-just/**'
+      - '.forgejo/workflows/ci-mods.yml'
   workflow_dispatch:
 
 concurrency:
@@ -38,7 +38,7 @@ jobs:
             .forgejo/actions
       - uses: ./.forgejo/actions/setup-java
         with:
-          java-version: "25"
+          java-version: '25'
       - uses: ./.forgejo/actions/setup-just
       - name: Verify mods
         run: just lint-mods

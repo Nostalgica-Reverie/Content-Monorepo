@@ -1,0 +1,20 @@
+when:
+  - event: ['push']
+    branch: ['main']
+    paths: ['apps/packwandrs/somnus/**', 'apps/packwandrs/crates/packwand-cli/**', 'justfile']
+  - event: ['pull_request']
+    branch: ['main']
+    paths: ['apps/packwandrs/somnus/**', 'apps/packwandrs/crates/packwand-cli/**', 'justfile']
+  - event: ['manual']
+
+engine: microvm
+image: nixos
+dependencies: [go, just]
+
+steps:
+  - name: Lint Somnus
+    command: just lint-somnus
+  - name: Test Somnus
+    command: just test-somnus
+  - name: Build Somnus
+    command: just build-somnus

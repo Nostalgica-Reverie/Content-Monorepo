@@ -5,7 +5,11 @@ members = [
     "crates/packwand-cli",
     "crates/packwand-build",
     "crates/packwand-cache",
+    "crates/packwand-collab",
     "crates/packwand-diagnostics",
+    "crates/packwand-identity-client",
+	"crates/packwand-installer",
+    "crates/packwand-vcs",
     "crates/packwand-ops",
     "crates/packwand-pack",
     "crates/packwand-providers",
@@ -56,6 +60,7 @@ private_intra_doc_links = "deny"
 clap = { version = "4.6.2", features = ["derive"] }
 clap_complete = "4.6.7"
 fancy-regex = "0.16"
+flate2 = "1.1.9"
 globset = "0.4"
 hex = "0.4.3"
 # Local-only schema validation: default features pull in reqwest + TLS for
@@ -72,7 +77,8 @@ sha1 = "0.10.7"
 sha2 = "0.10.9"
 thiserror = "2"
 tempfile = "3"
-tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync", "time"] }
+tar = "0.4.46"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync", "time", "process", "io-util"] }
 tokio-util = { version = "0.7", features = ["rt"] }
 toml = "0.9.12"
 ureq = { version = "2", features = ["gzip"] }
@@ -80,11 +86,17 @@ url = "2"
 uuid = { version = "1", features = ["serde", "v4"] }
 walkdir = "2"
 zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
+jj-lib = "=0.41.0"
+pollster = "0.4.0"
 
 # Launcher core crates, referenced by name so member crates can keep using
 # `<crate>.workspace = true`.
 packwand-parallel = { path = "crates/packwand-parallel" }
 packwand-cache = { path = "crates/packwand-cache" }
+packwand-collab = { path = "crates/packwand-collab" }
+packwand-identity-client = { path = "crates/packwand-identity-client" }
+packwand-installer = { path = "crates/packwand-installer" }
+packwand-vcs = { path = "crates/packwand-vcs" }
 packwand-auth = { path = "crates/packwand-auth" }
 packwand-devboot = { path = "crates/packwand-devboot" }
 packwand-instance = { path = "crates/packwand-instance" }

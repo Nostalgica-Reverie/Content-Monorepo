@@ -1,6 +1,13 @@
-# Pack Installation using packwiz-installer
+# Third-party installation using packwiz-installer
 
-[packwiz-installer](https://github.com/packwiz/packwiz-installer) is a Java-based installer that allows for automatic installation and updates of packwiz-format packs (including packwand packs)! It can be used with MultiMC/Prism/ATLauncher as a prelaunch task, or on servers as part of your start script, and supports side-only mods as well as optional mods with a fancy GUI.
+Packwand's desktop app has its own launcher. Its Install and Play actions run
+the bundled native `packwand-installer` before starting Minecraft, so Packwand
+users do not need to configure MultiMC, Prism, or a Java pre-launch task.
+
+[packwiz-installer](https://github.com/packwiz/packwiz-installer) remains a
+Java-based compatibility option when distributing Packwand-compatible packs to
+third-party launchers such as MultiMC, Prism, or ATLauncher, or when integrating
+a pack into an existing server startup script.
 
 To distribute a modpack, you'll first want to set up a web hosting service (such as Netlify, GitHub Pages, GitLab Pages) so that your pack files are accessible from a HTTP/HTTPS link. For testing, you can use the `packwand serve` command to run a local HTTP server, that serves your pack at `http://localhost:8080/pack.toml` - it'll refresh the index whenever it's queried so you don't need to refresh it manually!
 
@@ -34,5 +41,7 @@ You can use packwiz-installer to download non-client mods (side either `both` or
 itzg's [docker-minecraft-server](https://github.com/itzg/docker-minecraft-server) has built in support for packwiz-format packs. You can pass the `PACKWIZ_URL` environment variable pointing to your pack's TOML file, and the container will bootstrap packwiz-installer and install/update the provided pack. See [the documentation](https://docker-minecraft-server.readthedocs.io/en/latest/mods-and-plugins/packwiz/) for more information.
 
 ::: tip
-For local validation, `packwand test <pack-subdir>` spins up `packwand serve` and runs packwiz-installer against it automatically (requires Java; the bootstrap jar is downloaded into Packwand's cache automatically, with `PACKWAND_INSTALLER_JAR` available as an override).
+For local validation, `packwand test <pack-subdir>` starts an ephemeral pack
+server and invokes the native `packwand-installer` directly. It does not require
+Java. Set `PACKWAND_INSTALLER_BIN` to test with a specific installer binary.
 :::

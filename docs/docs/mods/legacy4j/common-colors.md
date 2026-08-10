@@ -3,7 +3,7 @@
 Common colors are basically variables controlled by resource packs, defining the color of texts and UI elements in general.
 They can be accessed via [UI Definitions](https://github.com/Wilyicaro/FactoryAPI/wiki/UI-Definitions) using the format: `commonColor.<namespace>.<path>` or `commonColor.<path>` (if the namespace is `minecraft`, the default)
 
-***
+---
 
 They are defined by the `common_colors.json` file in any namespace (directories in assets, like `minecraft`).
 
@@ -47,7 +47,9 @@ They are defined by the `common_colors.json` file in any namespace (directories 
   "minecraft:block_light": "#FFFFFFFF"
 }
 ```
+
 ### Description (not self-explanatory)
+
 - `minecraft:inventory_gray_text` -> the color used in container and panel texts
 - `minecraft:title_text` -> the color used in titles, like the one in the Legacy Loading Interface and the Death screen
 - `minecraft:title_text_outline` -> the color used in title outlines, like in the Legacy Loading Interface and the Death screen
@@ -55,4 +57,3 @@ They are defined by the `common_colors.json` file in any namespace (directories 
 - `minecraft:action_text` -> the color used in the action text of control tooltips, like `Inventory`
 - `minecraft:<color>` -> the color used in chat formatting
 - `minecraft:block_light` -> the color used in the block lighting
-

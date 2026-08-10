@@ -1,116 +1,110 @@
-import { property, schema, SchemaGenerator } from "../schemaDSL.ts";
-import { Hash } from "./shared/Hash.ts";
-import { HashFormat } from "./shared/HashFormat.ts";
-import { PackwizURL } from "./shared/PackwizURL.ts";
-import { Path } from "./shared/Path.ts";
+import { property, schema, SchemaGenerator } from '../schemaDSL.ts'
+import { Hash } from './shared/Hash.ts'
+import { HashFormat } from './shared/HashFormat.ts'
+import { PackwizURL } from './shared/PackwizURL.ts'
+import { Path } from './shared/Path.ts'
 
 // TODO(gen): Rename to external?
 // TODO(doc): Document file extension
 
 @schema({
 	// TODO(gen): $id?
-	$schema: "http://json-schema.org/draft-07/schema",
-	title: "mod.pw.toml",
+	$schema: 'http://json-schema.org/draft-07/schema',
+	title: 'mod.pw.toml',
 	description:
 		'A metadata file which references an external file from a URL (or a metadata-based downloader). This allows for side-only mods, optional mods and pinning, and stores metadata to allow finding updates from Modrinth, CurseForge, GitHub, GitLab, and Forgejo. The "mod" terminology is used a lot here, but this should work for any file.',
-	examples: [
-		await Deno.readTextFile(
-			"./example-pack/mods/borderless-mining.pw.toml",
-		),
-	],
+	examples: [await Deno.readTextFile('./example-pack/mods/borderless-mining.pw.toml')],
 	// TODO(gen): Taplo extensions: links?
 })
 export class Mod {
 	@property.string(
-		"The name of the mod, which can be displayed in user interfaces to identify the mod. It does not need to be unique between mods, although this may cause confusion.",
+		'The name of the mod, which can be displayed in user interfaces to identify the mod. It does not need to be unique between mods, although this may cause confusion.',
 	)
-	@property.examples(["Borderless Mining"])
+	@property.examples(['Borderless Mining'])
 	@property.required
-	name: undefined;
+	name: undefined
 
-	@property.ref(
-		"The destination path of the mod file, relative to this file.",
-	)
-	@property.examples(["borderless-mining-1.1.5+1.19.jar"])
+	@property.ref('The destination path of the mod file, relative to this file.')
+	@property.examples(['borderless-mining-1.1.5+1.19.jar'])
 	@property.required
-	filename = new Path();
+	filename = new Path()
 
 	// TODO(gen): Taplo enum docs?
 	@property.enum(
-		["both", "client", "server"],
-		"The side on which this mod should be installed.\n\nA physical Minecraft side. Server applies to the dedicated server, client applies to the client (and integrated server), and both applies to every installation.",
+		['both', 'client', 'server'],
+		'The side on which this mod should be installed.\n\nA physical Minecraft side. Server applies to the dedicated server, client applies to the client (and integrated server), and both applies to every installation.',
 	)
-	@property.default("both")
-	side: undefined;
+	@property.default('both')
+	side: undefined
 
 	@property.boolean(
-		"packwand extension: when true, the file is pinned and update commands skip it until it is unpinned (packwand pin / packwand unpin).",
+		'packwand extension: when true, the file is pinned and update commands skip it until it is unpinned (packwand pin / packwand unpin).',
 	)
 	@property.default(false)
-	pin: undefined;
+	pin: undefined
 
 	@property.ref()
 	@property.required
-	download = new Download();
+	download = new Download()
 	@property.ref()
-	option = new Option();
+	option = new Option()
 	@property.ref()
-	update = new Update();
+	update = new Update()
 }
 // deno-lint-ignore no-empty-interface
 export interface Mod extends SchemaGenerator {}
 
 @schema({
-	description: "Information about how to download this mod.",
+	description: 'Information about how to download this mod.',
 })
 class Download {
 	@property.ref(
 		`The URL to download the mod from. Required when mode is "url" or omitted; not present in metadata download modes.`,
 	)
-	url = new PackwizURL();
+	url = new PackwizURL()
 
 	@property.enum(
-		["url", "metadata:curseforge"],
+		['url', 'metadata:curseforge'],
 		'The download mode. "url" (or omitted/empty) downloads from the url field. "metadata:curseforge" resolves the download URL through the CurseForge API using the [update.curseforge] metadata, as required by CurseForge\'s distribution rules; such files have no url field.',
 	)
-	@property.default("url")
-	mode: undefined;
+	@property.default('url')
+	mode: undefined
 
-	@property.ref("The hash of the specified file, as a string.")
+	@property.ref('The hash of the specified file, as a string.')
 	@property.required
-	hash = new Hash();
+	hash = new Hash()
 
 	// TODO(format): Store additional hashes (particularly for Modrinth export)
 
-	@property.ref("The hash format for the hash of the specified file.")
+	@property.ref('The hash format for the hash of the specified file.')
 	@property.required
-	"hash-format" = new HashFormat();
+	'hash-format' = new HashFormat()
 }
 // deno-lint-ignore no-empty-interface
 interface Download extends SchemaGenerator {}
 
 @schema({
 	description:
-		"Information about the optional state of this mod. When excluded, this indicates that the mod is not optional.",
+		'Information about the optional state of this mod. When excluded, this indicates that the mod is not optional.',
 })
 class Option {
 	@property.boolean(
-		"Whether or not the mod is optional. This can be set to false if you want to keep the description but make the mod required.",
+		'Whether or not the mod is optional. This can be set to false if you want to keep the description but make the mod required.',
 	)
 	@property.default(false)
 	@property.required
-	optional: undefined;
+	optional: undefined
 
 	@property.string(
-		"A description displayed to the user when they select optional mods. This should explain why or why not the user should enable the mod.",
+		'A description displayed to the user when they select optional mods. This should explain why or why not the user should enable the mod.',
 	)
-	description: undefined;
+	description: undefined
 
 	@property.boolean(
-		"If true, the mod will be enabled by default. If false, the mod will be disabled by default. If a pack format does not support optional mods but it does support disabling mods, the mod will be disabled if it defaults to being disabled.",
+		'If true, the mod will be enabled by default. If false, the mod will be disabled by default. If a pack format does not support optional mods but it does support disabling mods, the mod will be disabled if it defaults to being disabled.',
 	)
 	@property.default(false)
-	default: undefined;
+	default: undefined
 }
 // deno-lint-ignore no-empty-interface
 interface Option extends SchemaGenerator {}
@@ -122,22 +116,22 @@ If this object does not exist or there are no defined update sources, the mod wi
 
 If there are multiple defined update sources, one of them will be chosen. The source that is chosen is not defined, so it is therefore dependent on the implementation of the tool (may not be deterministic, so do not rely on one source being chosen over another).`,
 	additionalProperties: {
-		type: "object",
+		type: 'object',
 		description:
-			"Implementations are free to support other update sources, but it would be beneficial to document and standardise these.",
+			'Implementations are free to support other update sources, but it would be beneficial to document and standardise these.',
 	},
 })
 class Update {
 	@property.ref()
-	curseforge = new CurseForgeUpdate();
+	curseforge = new CurseForgeUpdate()
 	@property.ref()
-	modrinth = new ModrinthUpdate();
+	modrinth = new ModrinthUpdate()
 	@property.ref()
-	github = new GitHubUpdate();
+	github = new GitHubUpdate()
 	@property.ref()
-	gitlab = new GitLabUpdate();
+	gitlab = new GitLabUpdate()
 	@property.ref()
-	forgejo = new ForgejoUpdate();
+	forgejo = new ForgejoUpdate()
 }
 // deno-lint-ignore no-empty-interface
 interface Update extends SchemaGenerator {}
@@ -147,18 +141,18 @@ interface Update extends SchemaGenerator {}
 })
 class CurseForgeUpdate {
 	@property.number(
-		"An integer representing the unique project ID of this mod. Updating will retrieve the latest file for this project ID that is valid (correct Minecraft version, release channel, modloader, etc.).",
+		'An integer representing the unique project ID of this mod. Updating will retrieve the latest file for this project ID that is valid (correct Minecraft version, release channel, modloader, etc.).',
 	)
 	@property.required
 	@property.examples([327154])
-	"project-id": undefined;
+	'project-id': undefined
 
 	@property.number(
-		"An integer representing the unique file ID of this mod file. This can be used if more metadata needs to be obtained relating to the mod.",
+		'An integer representing the unique file ID of this mod file. This can be used if more metadata needs to be obtained relating to the mod.',
 	)
 	@property.required
 	@property.examples([3643025])
-	"file-id": undefined;
+	'file-id': undefined
 }
 // deno-lint-ignore no-empty-interface
 interface CurseForgeUpdate extends SchemaGenerator {}
@@ -168,20 +162,20 @@ interface CurseForgeUpdate extends SchemaGenerator {}
 })
 class ModrinthUpdate {
 	@property.string(
-		"A string representing the unique mod ID of this mod. Updating will retrieve the latest file for this project ID that is valid (correct Minecraft version, release channel, modloader, etc.).",
+		'A string representing the unique mod ID of this mod. Updating will retrieve the latest file for this project ID that is valid (correct Minecraft version, release channel, modloader, etc.).',
 	)
 	@property.required
-	@property.examples(["kYq5qkSL"])
+	@property.examples(['kYq5qkSL'])
 	// TODO(v2): change to "project-id"
-	"mod-id": undefined;
+	'mod-id': undefined
 
 	@property.string(
-		"A string representing the unique version ID of this file. This can be used if more metadata needs to be obtained relating to the mod.",
+		'A string representing the unique version ID of this file. This can be used if more metadata needs to be obtained relating to the mod.',
 	)
 	@property.required
-	@property.examples(["gqoXgtxO"])
+	@property.examples(['gqoXgtxO'])
 	// TODO(v2): change to "version-id"
-	"version": undefined;
+	'version': undefined
 }
 // deno-lint-ignore no-empty-interface
 interface ModrinthUpdate extends SchemaGenerator {}
@@ -190,21 +184,19 @@ interface ModrinthUpdate extends SchemaGenerator {}
 	description: `packwand extension: an update source for updating mods downloaded from GitHub release assets.`,
 })
 class GitHubUpdate {
-	@property.string("The repository, as owner/repo.")
+	@property.string('The repository, as owner/repo.')
 	@property.required
-	@property.examples(["CaffeineMC/sodium"])
-	slug: undefined;
+	@property.examples(['CaffeineMC/sodium'])
+	slug: undefined
 
-	@property.string("The currently-installed release tag.")
-	tag: undefined;
+	@property.string('The currently-installed release tag.')
+	tag: undefined
 
-	@property.string("Restrict updates to releases targeting this branch.")
-	branch: undefined;
+	@property.string('Restrict updates to releases targeting this branch.')
+	branch: undefined
 
-	@property.string(
-		"A regular expression an asset filename must match to be selected.",
-	)
-	regex: undefined;
+	@property.string('A regular expression an asset filename must match to be selected.')
+	regex: undefined
 }
 // deno-lint-ignore no-empty-interface
 interface GitHubUpdate extends SchemaGenerator {}
@@ -213,52 +205,45 @@ interface GitHubUpdate extends SchemaGenerator {}
 	description: `packwand extension: an update source for updating mods downloaded from GitLab release assets.`,
 })
 class GitLabUpdate {
-	@property.string("The GitLab instance hostname. Defaults to gitlab.com.")
-	@property.default("gitlab.com")
-	instance: undefined;
+	@property.string('The GitLab instance hostname. Defaults to gitlab.com.')
+	@property.default('gitlab.com')
+	instance: undefined
 
-	@property.string("The project path, as owner/repo.")
+	@property.string('The project path, as owner/repo.')
 	@property.required
-	slug: undefined;
+	slug: undefined
 
-	@property.string("The currently-installed release tag.")
-	tag: undefined;
+	@property.string('The currently-installed release tag.')
+	tag: undefined
 
-	@property.string(
-		"A regular expression an asset filename must match to be selected.",
-	)
-	regex: undefined;
+	@property.string('A regular expression an asset filename must match to be selected.')
+	regex: undefined
 }
 // deno-lint-ignore no-empty-interface
 interface GitLabUpdate extends SchemaGenerator {}
 
 @schema({
-	description:
-		`packwand extension: an update source for updating mods downloaded from Forgejo/Gitea release assets (including Codeberg).`,
+	description: `packwand extension: an update source for updating mods downloaded from Forgejo/Gitea release assets (including Codeberg).`,
 })
 class ForgejoUpdate {
-	@property.string(
-		"The Forgejo/Gitea instance hostname. Defaults to codeberg.org.",
-	)
-	@property.default("codeberg.org")
-	instance: undefined;
+	@property.string('The Forgejo/Gitea instance hostname. Defaults to codeberg.org.')
+	@property.default('codeberg.org')
+	instance: undefined
 
-	@property.string("The repository, as owner/repo.")
+	@property.string('The repository, as owner/repo.')
 	@property.required
-	slug: undefined;
+	slug: undefined
 
-	@property.string("The currently-installed release tag.")
-	tag: undefined;
+	@property.string('The currently-installed release tag.')
+	tag: undefined
 
-	@property.string("Restrict updates to releases targeting this branch.")
-	branch: undefined;
+	@property.string('Restrict updates to releases targeting this branch.')
+	branch: undefined
 
-	@property.string(
-		"A regular expression an asset filename must match to be selected.",
-	)
-	regex: undefined;
+	@property.string('A regular expression an asset filename must match to be selected.')
+	regex: undefined
 }
 // deno-lint-ignore no-empty-interface
 interface ForgejoUpdate extends SchemaGenerator {}
 
-export default Mod;
+export default Mod

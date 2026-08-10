@@ -1,0 +1,20 @@
+[package]
+name = "packwand-identity-client"
+description = "Rust client for Packwand's local ATProto identity bridge"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["atproto", "oauth", "packwand"]
+categories = ["authentication"]
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+ureq.workspace = true
+url.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

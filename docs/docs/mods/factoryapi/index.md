@@ -4,8 +4,8 @@ layout: home
 title: FactoryAPI
 
 hero:
-  name: "FactoryAPI"
-  text: ""
+  name: 'FactoryAPI'
+  text: ''
   tagline: An API that adds several client and server side functions, both for developers and those who make resource packs
   image:
     src: /factoryapi-icon.webp
@@ -17,16 +17,15 @@ hero:
 
 features:
   - title: Default UI Class Identifier
-    details: 
+    details:
     link: /mods/factoryapi/default-ui-class-identifiers
   - title: Overview
-    details: 
+    details:
     link: /mods/factoryapi
   - title: UI Definition Element Types
-    details: 
+    details:
     link: /mods/factoryapi/ui-definition-element-types
   - title: UI Definitions
-    details: 
+    details:
     link: /mods/factoryapi/ui-definitions
 ---
-

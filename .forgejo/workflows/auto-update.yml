@@ -1,9 +1,9 @@
-name: "Auto Update & Refresh"
+name: 'Auto Update & Refresh'
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: '0 */6 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

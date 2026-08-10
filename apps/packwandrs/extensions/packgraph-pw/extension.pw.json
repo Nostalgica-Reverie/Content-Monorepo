@@ -1,14 +1,14 @@
 {
-  "$schema": "../extension.schema.json",
-  "id": "packgraph-pw",
-  "name": "PackGraphPW",
-  "version": "26.2.0",
-  "apiVersion": 1,
-  "description": "Project-aware package, provider, side, and dependency graph inspection.",
-  "entry": "src/index.ts",
-  "activation": ["*"],
-  "commands": ["analyze"],
-  "views": ["packages"],
-  "validators": ["dependencies"],
-  "capabilities": ["project.read"]
+	"$schema": "../extension.schema.json",
+	"id": "packgraph-pw",
+	"name": "PackGraphPW",
+	"version": "26.2.0",
+	"apiVersion": 1,
+	"description": "Project-aware package, provider, side, and dependency graph inspection.",
+	"entry": "src/index.ts",
+	"activation": ["*"],
+	"commands": ["analyze"],
+	"views": ["packages"],
+	"validators": ["dependencies"],
+	"capabilities": ["project.read"]
 }

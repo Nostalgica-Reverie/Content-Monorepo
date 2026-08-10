@@ -4,3 +4,7 @@
 edition = "2024"
 # Never emit CRLF, even when files were checked out or created on Windows.
 newline_style = "Unix"
+# Tabs, per markdowns/newstandards.md. Not rustfmt's default and not the wider
+# Rust community's convention, but this repo indents with tabs across every
+# language that can, and one rule everywhere beats one rule per ecosystem.
+hard_tabs = true

@@ -1,20 +1,20 @@
 {
-  "name": "packwand-docs",
-  "private": true,
-  "packageManager": "bun@1.3.14",
-  "devDependencies": {
-    "@types/node": "^22.18.0",
-    "typescript": "^5.9.3",
-    "vitepress": "^2.0.0-alpha.17",
-    "vitepress-plugin-lightbox": "^1.0.3",
-    "vitepress-sidebar": "^1.33.1"
-  },
-  "scripts": {
-    "docs:commands": "bun build-commands.mts",
-    "docs:check-coverage": "bun check-command-coverage.mts",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "bun run docs:commands && vitepress build docs",
-    "docs:preview": "vitepress preview docs",
-    "typecheck": "tsc --noEmit"
-  }
+	"name": "packwand-docs",
+	"private": true,
+	"packageManager": "bun@1.3.14",
+	"devDependencies": {
+		"@types/node": "^22.18.0",
+		"typescript": "^5.9.3",
+		"vitepress": "^2.0.0-alpha.17",
+		"vitepress-plugin-lightbox": "^1.0.3",
+		"vitepress-sidebar": "^1.33.1"
+	},
+	"scripts": {
+		"docs:commands": "bun build-commands.mts",
+		"docs:check-coverage": "bun check-command-coverage.mts",
+		"docs:dev": "vitepress dev docs",
+		"docs:build": "bun run docs:commands && vitepress build docs",
+		"docs:preview": "vitepress preview docs",
+		"typecheck": "tsc --noEmit"
+	}
 }

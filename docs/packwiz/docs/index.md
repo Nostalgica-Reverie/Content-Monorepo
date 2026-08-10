@@ -2,11 +2,11 @@
 
 This site documents the packwiz ecosystem components vendored into the Lasting Legacy monorepo. They install and update packs in the packwiz/packwand format on end-user machines — the counterpart to [packwand](https://git.nostalgica.net/Lasting-Legacy/Lasting-Legacy-Monorepo), which creators use to author packs.
 
-| Component | Language | Location | Purpose |
-| --- | --- | --- | --- |
-| [packwiz-installer](/installer) | Kotlin | `lib/packwiz-installer` | Downloads and updates pack contents on launch, with optional-mod UI and side-only filtering |
-| [bootstrap](/bootstrap) | Go (new) / Java (legacy) | `apps/packwand/cmd/packwiz-bootstrap`, `lib/packwiz-installer/bootstrap` | Verifies a JDK, keeps packwiz-installer up to date, and launches it |
-| [mod_browser_webview](/webview) | Rust (wry) | `apps/mod-browser-webview` | Native webview for downloading CurseForge files that disallow API distribution; bridged into the packwand GUI |
+| Component                       | Language                 | Location                                                                 | Purpose                                                                                                       |
+| ------------------------------- | ------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| [packwiz-installer](/installer) | Kotlin                   | `lib/packwiz-installer`                                                  | Downloads and updates pack contents on launch, with optional-mod UI and side-only filtering                   |
+| [bootstrap](/bootstrap)         | Go (new) / Java (legacy) | `apps/packwand/cmd/packwiz-bootstrap`, `lib/packwiz-installer/bootstrap` | Verifies a JDK, keeps packwiz-installer up to date, and launches it                                           |
+| [mod_browser_webview](/webview) | Rust (wry)               | `apps/mod-browser-webview`                                               | Native webview for downloading CurseForge files that disallow API distribution; bridged into the packwand GUI |
 
 All three are built from this repository — see [Building](/building).
 

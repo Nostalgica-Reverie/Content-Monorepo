@@ -4,8 +4,8 @@ layout: home
 title: Performance Guide
 
 hero:
-  name: "Reverie"
-  text: "Performance Guide"
+  name: 'Reverie'
+  text: 'Performance Guide'
   tagline: Performance guide that is generally applicable to almost any modpack!
   image:
     src: /banner.webp
@@ -31,4 +31,3 @@ features:
     link: /resource-packs/pacp
     linkText: All Pages
 ---
-

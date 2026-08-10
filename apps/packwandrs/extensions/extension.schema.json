@@ -1,82 +1,107 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://git.nostalgica.net/schema/extension.pw.json",
-  "title": "Packwand extension manifest",
-  "description": "Declares a first-party Packwand extension. Extensions live in apps/packwandrs/extensions/<id>/, are written in TypeScript, and are bundled into the app at build time. Third-party extensions are not supported.",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["id", "name", "version", "apiVersion", "entry", "activation", "commands", "views", "validators", "capabilities"],
-  "properties": {
-    "$schema": {
-      "type": "string",
-      "description": "Path to this schema, for editor autocomplete."
-    },
-    "id": {
-      "type": "string",
-      "pattern": "^[a-z0-9]+([.-][a-z0-9]+)*$",
-      "description": "Stable identifier. Must match the extension's directory name; used to namespace its command ids."
-    },
-    "name": {
-      "type": "string",
-      "description": "Human-readable name. Used as the default palette group heading."
-    },
-    "version": {
-      "type": "string",
-      "description": "Extension version, tracking the Packwand release it ships with."
-    },
-    "apiVersion": {
-      "const": 1,
-      "description": "Version of the typed Packwand extension SDK used by this package."
-    },
-    "description": {
-      "type": "string",
-      "description": "One line on what the extension contributes."
-    },
-    "entry": {
-      "type": "string",
-      "description": "TypeScript entry point relative to the extension directory. Must default-export definePackwandExtension(...).",
-      "default": "src/index.ts"
-    },
-    "activation": {
-      "type": "array",
-      "minItems": 1,
-      "uniqueItems": true,
-      "description": "Events which make the extension applicable. '*' activates in every project.",
-      "items": { "enum": ["*", "project:mods", "project:modpacks", "project:datapacks", "project:resourcepacks"] }
-    },
-    "commands": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": { "$ref": "#/definitions/contributionId" }
-    },
-    "views": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": { "$ref": "#/definitions/contributionId" }
-    },
-    "validators": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": { "$ref": "#/definitions/contributionId" }
-    },
-    "capabilities": {
-      "type": "array",
-      "uniqueItems": true,
-      "description": "Maximum privileged operations the host may expose to this extension.",
-      "items": {
-        "enum": [
-          "project.read", "project.write", "diagnostics.register",
-          "external.krita", "external.blockbench", "process.approved",
-          "network.minecraft-metadata", "export.transform",
-          "credentials.publish", "native.optimizer"
-        ]
-      }
-    }
-  },
-  "definitions": {
-    "contributionId": {
-      "type": "string",
-      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
-    }
-  }
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://git.nostalgica.net/schema/extension.pw.json",
+	"title": "Packwand extension manifest",
+	"description": "Declares a first-party Packwand extension. Extensions live in apps/packwandrs/extensions/<id>/, are written in TypeScript, and are bundled into the app at build time. Third-party extensions are not supported.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"id",
+		"name",
+		"version",
+		"apiVersion",
+		"entry",
+		"activation",
+		"commands",
+		"views",
+		"validators",
+		"capabilities"
+	],
+	"properties": {
+		"$schema": {
+			"type": "string",
+			"description": "Path to this schema, for editor autocomplete."
+		},
+		"id": {
+			"type": "string",
+			"pattern": "^[a-z0-9]+([.-][a-z0-9]+)*$",
+			"description": "Stable identifier. Must match the extension's directory name; used to namespace its command ids."
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable name. Used as the default palette group heading."
+		},
+		"version": {
+			"type": "string",
+			"description": "Extension version, tracking the Packwand release it ships with."
+		},
+		"apiVersion": {
+			"const": 1,
+			"description": "Version of the typed Packwand extension SDK used by this package."
+		},
+		"description": {
+			"type": "string",
+			"description": "One line on what the extension contributes."
+		},
+		"entry": {
+			"type": "string",
+			"description": "TypeScript entry point relative to the extension directory. Must default-export definePackwandExtension(...).",
+			"default": "src/index.ts"
+		},
+		"activation": {
+			"type": "array",
+			"minItems": 1,
+			"uniqueItems": true,
+			"description": "Events which make the extension applicable. '*' activates in every project.",
+			"items": {
+				"enum": [
+					"*",
+					"project:mods",
+					"project:modpacks",
+					"project:datapacks",
+					"project:resourcepacks"
+				]
+			}
+		},
+		"commands": {
+			"type": "array",
+			"uniqueItems": true,
+			"items": { "$ref": "#/definitions/contributionId" }
+		},
+		"views": {
+			"type": "array",
+			"uniqueItems": true,
+			"items": { "$ref": "#/definitions/contributionId" }
+		},
+		"validators": {
+			"type": "array",
+			"uniqueItems": true,
+			"items": { "$ref": "#/definitions/contributionId" }
+		},
+		"capabilities": {
+			"type": "array",
+			"uniqueItems": true,
+			"description": "Maximum privileged operations the host may expose to this extension.",
+			"items": {
+				"enum": [
+					"project.read",
+					"project.write",
+					"diagnostics.register",
+					"external.krita",
+					"external.blockbench",
+					"process.approved",
+					"network.minecraft-metadata",
+					"export.transform",
+					"credentials.publish",
+					"native.optimizer"
+				]
+			}
+		}
+	},
+	"definitions": {
+		"contributionId": {
+			"type": "string",
+			"pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+		}
+	}
 }

@@ -1,0 +1,22 @@
+{
+	"lexicon": 1,
+	"id": "net.nostalgica.packwand.profile",
+	"defs": {
+		"main": {
+			"type": "record",
+			"key": "literal:self",
+			"record": {
+				"type": "object",
+				"properties": {
+					"displayName": { "type": "string", "maxGraphemes": 64, "maxLength": 640 },
+					"avatar": {
+						"type": "blob",
+						"accept": ["image/png", "image/jpeg", "image/webp"],
+						"maxSize": 2097152
+					},
+					"bio": { "type": "string", "maxGraphemes": 256, "maxLength": 2560 }
+				}
+			}
+		}
+	}
+}

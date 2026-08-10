@@ -7,9 +7,11 @@
 // by the Gleam compiler or covered by `gleam test`.
 import * as gleam from '../../core/build/dev/javascript/packwand_frontend_core/packwand_frontend_core.mjs'
 import { toList } from '../../core/build/dev/javascript/packwand_frontend_core/gleam.mjs'
+import * as gleamCollab from '../../core/build/dev/javascript/packwand_frontend_core/packwand/collab.mjs'
 import * as gleamExtension from '../../core/build/dev/javascript/packwand_frontend_core/packwand/extension.mjs'
 import * as gleamHost from '../../core/build/dev/javascript/packwand_frontend_core/packwand/extension_host.mjs'
 import * as gleamInstancing from '../../core/build/dev/javascript/packwand_frontend_core/packwand/instancing.mjs'
+import * as gleamSetup from '../../core/build/dev/javascript/packwand_frontend_core/packwand/setup.mjs'
 import * as gleamShell from '../../core/build/dev/javascript/packwand_frontend_core/packwand/shell.mjs'
 import * as gleamWorkbench from '../../core/build/dev/javascript/packwand_frontend_core/packwand/workbench.mjs'
 import * as gleamTheme from '../../core/build/dev/javascript/packwand_frontend_core/packwand/theme.mjs'
@@ -39,35 +41,35 @@ export const themeTokenNamesFromCore = (): string[] => gleamTheme.token_names().
  * keeps `Ok`/`Error` out of the Vue layer.
  */
 export function contrastRatio(left: string, right: string): number | null {
-  const result = gleamTheme.contrast_ratio(left, right) as { 0?: number } & { isOk?: () => boolean }
-  return typeof result.isOk === 'function' && result.isOk() ? (result[0] as number) : null
+	const result = gleamTheme.contrast_ratio(left, right) as { 0?: number } & { isOk?: () => boolean }
+	return typeof result.isOk === 'function' && result.isOk() ? (result[0] as number) : null
 }
 
 /** The contrast pairs every bundled theme is held to. */
 export function contrastRequirements(): Array<{
-  foreground: string
-  background: string
-  label: string
-  minimum: number
+	foreground: string
+	background: string
+	label: string
+	minimum: number
 }> {
-  return gleamTheme
-    .contrast_requirements()
-    .toArray()
-    .map(([foreground, background, label, minimum]: [string, string, string, number]) => ({
-      foreground,
-      background,
-      label,
-      minimum,
-    }))
+	return gleamTheme
+		.contrast_requirements()
+		.toArray()
+		.map(([foreground, background, label, minimum]: [string, string, string, number]) => ({
+			foreground,
+			background,
+			label,
+			minimum,
+		}))
 }
 
 // Extension loading rules.
 export const extensionDirectoryOf = gleamExtension.directory_of
 export const extensionApiVersion = gleamExtension.api_version
 export const requiredExtensionStringFields = (): string[] =>
-  gleamExtension.required_string_fields().toArray()
+	gleamExtension.required_string_fields().toArray()
 export const requiredExtensionArrayFields = (): string[] =>
-  gleamExtension.required_array_fields().toArray()
+	gleamExtension.required_array_fields().toArray()
 
 /**
  * Why a manifest cannot be loaded, or `null` when it can.
@@ -75,18 +77,18 @@ export const requiredExtensionArrayFields = (): string[] =>
  * Unwraps Gleam's `Result` so the host deals in "a message or nothing".
  */
 export function extensionManifestProblem(
-  directory: string,
-  id: string,
-  missingFields: string[],
-  apiVersion: number,
+	directory: string,
+	id: string,
+	missingFields: string[],
+	apiVersion: number,
 ): string | null {
-  const result = gleamExtension.manifest_problem(
-    directory,
-    id,
-    toList(missingFields),
-    apiVersion,
-  ) as { isOk?: () => boolean; 0?: string }
-  return typeof result.isOk === 'function' && result.isOk() ? null : ((result[0] as string) ?? null)
+	const result = gleamExtension.manifest_problem(
+		directory,
+		id,
+		toList(missingFields),
+		apiVersion,
+	) as { isOk?: () => boolean; 0?: string }
+	return typeof result.isOk === 'function' && result.isOk() ? null : ((result[0] as string) ?? null)
 }
 
 // Shell chrome rules.
@@ -94,7 +96,7 @@ export const clampSize = gleamShell.clamp as (value: number, min: number, max: n
 
 /** Appends to a bounded log, dropping the oldest entries past `limit`. */
 export function pushBounded<T>(lines: T[], line: T, limit: number): T[] {
-  return (gleamShell.push_bounded(toList(lines), line, limit) as { toArray(): T[] }).toArray()
+	return (gleamShell.push_bounded(toList(lines), line, limit) as { toArray(): T[] }).toArray()
 }
 
 /**
@@ -104,11 +106,13 @@ export function pushBounded<T>(lines: T[], line: T, limit: number): T[] {
  * maps the resulting names back to the caller's own tab objects.
  */
 export function openTabIn<T extends { name: string }>(tabs: T[], tab: T): T[] {
-  const names = (gleamShell.open_tab(toList(tabs.map(t => t.name)), tab.name) as {
-    toArray(): string[]
-  }).toArray()
-  const known = new Map([...tabs, tab].map(candidate => [candidate.name, candidate]))
-  return names.map(name => known.get(name)!).filter(Boolean)
+	const names = (
+		gleamShell.open_tab(toList(tabs.map((t) => t.name)), tab.name) as {
+			toArray(): string[]
+		}
+	).toArray()
+	const known = new Map([...tabs, tab].map((candidate) => [candidate.name, candidate]))
+	return names.map((name) => known.get(name)!).filter(Boolean)
 }
 
 /**
@@ -119,31 +123,33 @@ export function openTabIn<T extends { name: string }>(tabs: T[], tab: T): T[] {
  * `packwand/shell.gleam` and is tested there.
  */
 export function closeTabIn<T extends { name: string }>(
-  tabs: T[],
-  name: string,
+	tabs: T[],
+	name: string,
 ): { tabs: T[]; focus: T | null } {
-  const [remainingNames, successor] = gleamShell.close_tab(
-    toList(tabs.map(tab => tab.name)),
-    name,
-  ) as [{ toArray(): string[] }, { isOk?: () => boolean; 0?: string }]
-  const known = new Map(tabs.map(tab => [tab.name, tab]))
-  const focusName =
-    typeof successor.isOk === 'function' && successor.isOk() ? (successor[0] as string) : null
-  return {
-    tabs: remainingNames.toArray().map(candidate => known.get(candidate)!).filter(Boolean),
-    focus: focusName ? (known.get(focusName) ?? null) : null,
-  }
+	const [remainingNames, successor] = gleamShell.close_tab(
+		toList(tabs.map((tab) => tab.name)),
+		name,
+	) as [{ toArray(): string[] }, { isOk?: () => boolean; 0?: string }]
+	const known = new Map(tabs.map((tab) => [tab.name, tab]))
+	const focusName =
+		typeof successor.isOk === 'function' && successor.isOk() ? (successor[0] as string) : null
+	return {
+		tabs: remainingNames
+			.toArray()
+			.map((candidate) => known.get(candidate)!)
+			.filter(Boolean),
+		focus: focusName ? (known.get(focusName) ?? null) : null,
+	}
 }
 
 // Workbench scoping rules.
 export const normalizeWorkspacePath = gleamWorkbench.normalize_path
 export const packBelongsTo = gleamWorkbench.pack_belongs_to
 export const selectOrFirst = (candidates: string[], selected: string): string =>
-  gleamWorkbench.select_or_first(toList(candidates), selected)
+	gleamWorkbench.select_or_first(toList(candidates), selected)
 export const firstPresent = (candidates: string[], fallback: string): string =>
-  gleamWorkbench.first_present(toList(candidates), fallback)
-export const summaryLine = (parts: string[]): string =>
-  gleamWorkbench.summary_line(toList(parts))
+	gleamWorkbench.first_present(toList(candidates), fallback)
+export const summaryLine = (parts: string[]): string => gleamWorkbench.summary_line(toList(parts))
 
 // Instance presentation/inheritance rules.
 export const instanceVersionLabel = gleamInstancing.version_label
@@ -151,13 +157,15 @@ export const inheritedPlaceholder = gleamInstancing.inherited_placeholder
 
 // Extension host rules.
 export const extensionApplies = (when: string[] | undefined, category: string): boolean =>
-  gleamHost.applies(toList(when ?? []), category)
+	gleamHost.applies(toList(when ?? []), category)
 export const extensionActivatedBy = (events: string[], category: string): boolean =>
-  gleamHost.activated_by(toList(events), category)
+	gleamHost.activated_by(toList(events), category)
 export const reconcileInstalledExtensions = (requested: string[], known: string[]): string[] =>
-  (gleamHost.reconcile_installed(toList(requested), toList(known)) as {
-    toArray(): string[]
-  }).toArray()
+	(
+		gleamHost.reconcile_installed(toList(requested), toList(known)) as {
+			toArray(): string[]
+		}
+	).toArray()
 
 /**
  * Normalizes a pack-relative path an extension asked to open.
@@ -167,10 +175,38 @@ export const reconcileInstalledExtensions = (requested: string[], known: string[
  * the path anyway.
  */
 export function safeRelativePath(path: string): string {
-  const result = gleamHost.safe_relative_path(path) as {
-    isOk?: () => boolean
-    0?: string
-  }
-  if (typeof result.isOk === 'function' && result.isOk()) return result[0] as string
-  throw new Error((result[0] as string) ?? 'Invalid pack-relative editor path')
+	const result = gleamHost.safe_relative_path(path) as {
+		isOk?: () => boolean
+		0?: string
+	}
+	if (typeof result.isOk === 'function' && result.isOk()) return result[0] as string
+	throw new Error((result[0] as string) ?? 'Invalid pack-relative editor path')
 }
+
+// First-run setup flow.
+//
+// Re-exported as the module object rather than field by field: the reducer is
+// driven by constructing `Message` values, and those constructors are only
+// reachable from the module itself.
+export const setupCore = gleamSetup
+export type SetupModel = gleamSetup.Model$
+export type SetupMessage = gleamSetup.Message$
+export type SetupStep = gleamSetup.Step$
+
+/**
+ * A stable string name for the active step.
+ *
+ * Never use `step.constructor.name` for this. Gleam variants are ES classes,
+ * esbuild mangles class names in a production build, and the comparison then
+ * silently fails in a way neither `vue-tsc` nor `vite build` can catch.
+ */
+export const setupStepKey = gleamSetup.step_key
+
+// Live collaboration lifecycle.
+export const collabCore = gleamCollab
+export type CollabModel = gleamCollab.Model$
+export type CollabMessage = gleamCollab.Message$
+export type CollabRole = gleamCollab.Role$
+export type CollabConnection = gleamCollab.Connection$
+export const collabRoleKey = gleamCollab.role_key
+export const collabConnectionKey = gleamCollab.connection_key

@@ -1,13 +1,13 @@
 # Validation equivalent of Forgejo's build gate. Publishing/build artifacts remain
 # on Forgejo because Spindle has no artifact upload and this build needs a secret.
 when:
-  - event: ["push"]
-    branch: ["main"]
-    paths: ["modpacks/**", "datapacks/**", "resourcepacks/**"]
-  - event: ["pull_request"]
-    branch: ["main"]
-    paths: ["modpacks/**", "datapacks/**", "resourcepacks/**"]
-  - event: ["manual"]
+  - event: ['push']
+    branch: ['main']
+    paths: ['modpacks/**', 'datapacks/**', 'resourcepacks/**']
+  - event: ['pull_request']
+    branch: ['main']
+    paths: ['modpacks/**', 'datapacks/**', 'resourcepacks/**']
+  - event: ['manual']
 
 engine: microvm
 image: nixos
