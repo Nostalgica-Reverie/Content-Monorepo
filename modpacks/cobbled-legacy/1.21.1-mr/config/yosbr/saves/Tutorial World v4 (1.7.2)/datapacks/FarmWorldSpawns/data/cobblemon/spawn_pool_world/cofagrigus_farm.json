@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cofagrigus_farm",
+            "pokemon": "cofagrigus",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "34-42",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "night",
+		"maxX": -33,
+		"minX": -79,
+		"maxZ": -58,
+		"minZ": -94,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

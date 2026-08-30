@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "azumarill_ride",
+            "pokemon": "azumarill",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "18-38",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -621,
+		"minX": -743,
+		"maxZ": 347,
+		"minZ": 204,
+        "maxY": 67,
+        "minY": 40,
+                "neededNearbyBlocks": [
+                    "minecraft:water",
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

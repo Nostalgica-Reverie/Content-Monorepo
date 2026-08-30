@@ -1,0 +1,27 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+    {
+            "id": "meditite_ride3",
+            "pokemon": "meditite",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-24",
+            "weight": 1000.00,
+            "condition": {
+        "maxX": -401,
+        "minX": -315,
+        "maxY": 199,
+        "minY": 90,
+        "maxZ": -193,
+        "minZ": -406
+            }
+        }
+    ]
+}

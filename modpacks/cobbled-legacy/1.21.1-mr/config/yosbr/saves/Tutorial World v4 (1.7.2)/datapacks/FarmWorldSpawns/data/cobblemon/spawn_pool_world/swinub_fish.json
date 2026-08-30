@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "swinub_fish",
+            "pokemon": "swinub",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "1-25",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": 220,
+		"minX": 169,
+		"maxZ": 500,
+		"minZ": 451,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:snow_block"
+		]
+            }
+        }
+    ]
+}

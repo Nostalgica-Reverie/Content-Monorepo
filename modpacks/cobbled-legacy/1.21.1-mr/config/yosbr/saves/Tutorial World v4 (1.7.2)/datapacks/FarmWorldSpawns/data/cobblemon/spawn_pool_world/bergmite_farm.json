@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "bergmite_farm",
+            "pokemon": "bergmite",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "23-33",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -1,
+		"minX": -112,
+		"maxZ": 336,
+		"minZ": 212,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:blue_ice"
+		]
+            }
+        }
+    ]
+}

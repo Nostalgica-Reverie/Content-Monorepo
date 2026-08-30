@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cottonee_farm3",
+            "pokemon": "cottonee",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "24-30",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -137,
+		"minX": -242,
+		"maxZ": -146,
+		"minZ": -276,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

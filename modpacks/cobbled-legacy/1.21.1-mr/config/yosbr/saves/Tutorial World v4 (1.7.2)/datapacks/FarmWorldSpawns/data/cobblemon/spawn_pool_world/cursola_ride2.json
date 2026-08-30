@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cursola_ride2",
+            "pokemon": "cursola",
+            "presets": [
+                "underwater"
+            ],
+           "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "uncommon",
+            "level": "38-49",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -621,
+		"minX": -743,
+		"maxZ": 347,
+		"minZ": 204,
+        "maxY": 67,
+        "minY": 40,
+                "neededNearbyBlocks": [
+                    "minecraft:water",
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,37 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "budew_ride",
+            "pokemon": "budew",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "7-15",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -553,
+		"minX": -648,
+		"maxZ": 437,
+		"minZ": 327,
+        "maxY": 99,
+        "minY": 66,
+                "biomes": [
+                    "#minecraft:is_savanna"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block",
+                    "minecraft:dirt",
+                    "minecraft:packed_mud",
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

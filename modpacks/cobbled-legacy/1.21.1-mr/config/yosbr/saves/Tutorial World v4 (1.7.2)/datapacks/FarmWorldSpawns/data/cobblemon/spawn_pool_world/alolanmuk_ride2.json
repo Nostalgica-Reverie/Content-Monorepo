@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "alolanmuk_ride2",
+            "pokemon": "muk alolan",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "38-49",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 128,
+		"minX": 5,
+		"maxZ": -218,
+		"minZ": -377,
+        "maxY": 105,
+        "minY": 70,
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+                ]
+            }
+        }
+    ]
+}

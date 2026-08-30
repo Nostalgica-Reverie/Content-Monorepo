@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "shelloswest_fish2",
+           "pokemon": "shellos aspect=west",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-29",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -275,
+		"minX": -544,
+		"maxZ": 860,
+		"minZ": 540,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:sand",
+                    "minecraft:podzol"
+		]
+            }
+        }
+    ]
+}

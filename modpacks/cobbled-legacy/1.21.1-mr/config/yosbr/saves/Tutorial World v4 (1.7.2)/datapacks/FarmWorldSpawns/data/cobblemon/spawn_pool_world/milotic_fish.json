@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "milotic_fish",
+            "pokemon": "milotic",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "20-54",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -389,
+		"minX": -451,
+		"maxZ": 819,
+		"minZ": 757,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

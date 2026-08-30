@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "carbink_museum",
+            "pokemon": "carbink",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "30-37",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": false,
+		"maxX": 220,
+		"minX": 169,
+		"maxZ": 500,
+		"minZ": 451,
+        "maxY": 145,
+        "minY": 118,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:snow_block"
+		]
+            }
+        }
+    ]
+}

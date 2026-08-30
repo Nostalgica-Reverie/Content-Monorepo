@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "natu_farm",
+            "pokemon": "natu",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "10-14",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "night",
+		"maxX": 131,
+		"minX": 10,
+		"maxZ": -240,
+		"minZ": -366,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

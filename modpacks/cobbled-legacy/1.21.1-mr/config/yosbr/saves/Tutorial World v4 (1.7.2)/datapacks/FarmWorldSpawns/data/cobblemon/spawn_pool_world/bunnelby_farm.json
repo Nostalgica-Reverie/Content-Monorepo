@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "bunnelby_farm",
+            "pokemon": "bunnelby",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "4-9",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -39,
+		"minX": -250,
+		"maxZ": 202,
+		"minZ": 71,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

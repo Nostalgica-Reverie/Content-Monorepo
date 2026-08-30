@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "mareanie_fish",
+           "pokemon": "mareanie",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "common",
+            "level": "14-36",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -25,
+		"minX": -275,
+		"maxZ": 900,
+		"minZ": 527,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ]
+            }
+        }
+    ]
+}

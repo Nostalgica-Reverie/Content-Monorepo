@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "murkrow_fish",
+            "pokemon": "murkrow",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "16-41",
+            "weight": 1000.00,
+            "condition": {
+            "canSeeSky": true,
+                "maxX": -236,
+                "minX": -357,
+                "maxZ": 500,
+                "minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:spruce_wood",
+                    "minecraft:spruce_planks",
+                    "minecraft:stripped_spruce_log"
+                ]
+            }
+        }
+    ]
+}

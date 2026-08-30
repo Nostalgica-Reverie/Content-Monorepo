@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "varoom_farm",
+            "pokemon": "varoom",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "27-35",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -168,
+		"minX": -195,
+		"maxZ": -78,
+		"minZ": -97,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:nether_brick_slab",
+                    "minecraft:polished_deepslate"
+		]
+            }
+        }
+    ]
+}

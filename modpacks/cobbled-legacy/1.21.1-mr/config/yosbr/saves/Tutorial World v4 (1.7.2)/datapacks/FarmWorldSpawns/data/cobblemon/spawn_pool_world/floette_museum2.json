@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "floette_museum2",
+            "pokemon": "floette",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "20-35",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": 447,
+        "minX": 432,
+        "maxZ": 693,
+        "minZ": 668,
+        "maxY": 108,
+        "minY": 101,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+        "neededNearbyBlocks": [
+            "minecraft:grass_block"
+        ]
+            }
+        }
+    ]
+}

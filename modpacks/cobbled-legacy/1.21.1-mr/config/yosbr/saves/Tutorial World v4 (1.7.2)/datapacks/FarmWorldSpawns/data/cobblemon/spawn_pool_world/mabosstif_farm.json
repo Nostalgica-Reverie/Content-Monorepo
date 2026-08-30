@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "mabosstiff_farm",
+            "pokemon": "mabosstiff",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-43",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "night",
+		"maxX": 107,
+		"minX": 35,
+		"maxZ": 132,
+		"minZ": 50,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:spruce_planks",
+                    "minecraft:stripped_spruce_log",
+                    "minecraft:stripped_oak_log",
+                    "minecraft:spruce_fence"
+		]
+            }
+        }
+    ]
+}

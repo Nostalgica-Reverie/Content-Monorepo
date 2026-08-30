@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "drednaw_ride4",
+            "pokemon": "drednaw",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "22-34",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+                "maxX": -406,
+                "minX": -461,
+                "maxZ": 707,
+                "minZ": 656,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

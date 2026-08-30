@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "unown_ride2",
+            "pokemon": "unown",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "13-45",
+            "weight": 800.00,
+            "condition": {
+        "maxX": 499,
+        "minX": 485,
+        "maxY": 88,
+        "minY": 77,
+        "maxZ": 698,
+        "minZ": 663,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:sand",
+                    "minecraft:sandstone"
+		]
+            }
+        }
+    ]
+}

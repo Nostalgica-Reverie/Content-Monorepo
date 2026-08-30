@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "nincada_farm",
+            "pokemon": "nincada",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "7-15",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -220,
+		"minX": -256,
+		"maxZ": 31,
+		"minZ": -1,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

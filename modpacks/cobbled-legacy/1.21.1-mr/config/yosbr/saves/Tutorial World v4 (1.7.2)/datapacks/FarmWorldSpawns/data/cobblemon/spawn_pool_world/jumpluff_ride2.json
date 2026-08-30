@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "jumpluff_ride2",
+            "pokemon": "jumpluff",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "27-38",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 224,
+		"minX": 135,
+		"maxZ": -92,
+		"minZ": -178,
+        "maxY": 102,
+        "minY": 66,
+                "neededNearbyBlocks": [
+                    "minecraft:sunflower"
+		]
+            }
+        }
+    ]
+}

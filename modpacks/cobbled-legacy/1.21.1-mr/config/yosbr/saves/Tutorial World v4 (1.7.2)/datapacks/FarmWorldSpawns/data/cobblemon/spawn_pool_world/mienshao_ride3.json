@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+    {
+            "id": "mienshao_ride3",
+            "pokemon": "mienshao",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "50-60",
+            "weight": 600.00,
+            "condition": {
+        "maxX": -401,
+        "minX": -315,
+        "maxY": 199,
+        "minY": 90,
+        "maxZ": -193,
+        "minZ": -406
+             
+            }
+        }
+    ]
+}

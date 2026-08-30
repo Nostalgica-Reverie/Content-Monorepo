@@ -1,0 +1,40 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cutiefly_farm",
+            "pokemon": "cutiefly",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "12-16",
+            "weight": 500.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "night",
+		"maxX": 453,
+		"minX": -611,
+		"maxZ": 570,
+		"minZ": -559,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:bee_nest",
+                    "minecraft:pink_petals",
+                    "minecraft:white_tulip",
+                    "minecraft:oxeye_daisy",
+                    "minecraft:azure_bluet",
+                    "minecraft:red_tulip",
+                    "minecraft:allium",
+                    "minecraft:dandelion"
+		]
+            }
+        }
+    ]
+}

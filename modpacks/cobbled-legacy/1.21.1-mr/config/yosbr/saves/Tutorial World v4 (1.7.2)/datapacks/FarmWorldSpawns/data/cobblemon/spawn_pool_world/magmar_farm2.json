@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "magmar_farm2",
+            "pokemon": "magmar",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "29-33",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -26,
+		"minX": -143,
+		"maxZ": -414,
+		"minZ": -257,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:lava"
+		]
+            }
+        }
+    ]
+}

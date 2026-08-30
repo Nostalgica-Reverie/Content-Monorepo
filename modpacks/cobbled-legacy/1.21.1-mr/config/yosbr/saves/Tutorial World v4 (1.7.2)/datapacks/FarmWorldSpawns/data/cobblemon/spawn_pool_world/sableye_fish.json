@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "sableye_fish",
+            "pokemon": "sableye",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "13-38",
+            "weight": 800.00,
+            "condition": {
+                "canSeeSky": false,
+                "timeRange": "night",
+                "maxX": 229,
+                "minX": 191,
+                "maxZ": 763,
+                "minZ": 713,
+                "maxY": 109,
+                "minY": 83,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "cobblemon:tumblestone_block",
+                    "cobblemon:black_tumblestone_block"
+                ]
+            }
+        }
+    ]
+}

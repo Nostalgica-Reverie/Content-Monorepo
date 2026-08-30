@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "crabominable_farm",
+            "pokemon": "crabominable",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "48-63",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 25,
+		"minX": -115,
+		"maxZ": 347,
+		"minZ": 155,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:ice",
+                    "minecraft:packed_ice",
+                    "minecraft:blue_ice",
+                    "cobblemon:ice_stone_ore"
+		]
+            }
+        }
+    ]
+}

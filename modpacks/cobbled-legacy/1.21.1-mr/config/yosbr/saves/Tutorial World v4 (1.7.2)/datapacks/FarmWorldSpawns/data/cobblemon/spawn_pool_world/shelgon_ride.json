@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "shelgon_ride",
+            "pokemon": "shelgon",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "38-55",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -612,
+		"minX": -859,
+		"maxZ": -17,
+		"minZ": -558,
+        "maxY": 182,
+        "minY": 60,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+        ],
+        "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:grass_block",
+                    "minecraft:coarse_dirt"
+                ]
+            }
+        }
+    ]
+}

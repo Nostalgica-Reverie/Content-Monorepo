@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "haunter_farm3",
+            "pokemon": "haunter",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "27-35",
+            "weight": 800.00,
+            "condition": {
+	        "timeRange": "night",
+		"maxX": -358,
+		"minX": -401,
+		"maxZ": 369,
+		"minZ": 124,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

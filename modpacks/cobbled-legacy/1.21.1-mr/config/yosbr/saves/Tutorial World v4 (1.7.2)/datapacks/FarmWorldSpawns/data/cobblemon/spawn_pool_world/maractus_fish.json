@@ -1,0 +1,37 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "maractus_fish",
+            "pokemon": "maractus",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "21-46",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 513,
+		"minX": -77,
+		"maxZ": 1070,
+		"minZ": 598,
+        "maxY": 160,
+        "minY": 64,
+                "biomes": [
+                    "#minecraft:is_badlands",
+                    "#minecraft:is_eroded_badlands"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:sand",
+                    "minecraft:red_sand",
+                    "minecraft:cactus"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "magcargo_museum",
+            "pokemon": "magcargo",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "40-50",
+            "weight": 800.00,
+            "condition": {
+        "maxX": 300,
+        "minX": 242,
+        "maxZ": 851,
+        "minZ": 746,
+        "maxY": 142,
+        "minY": 103,
+                "neededNearbyBlocks": [
+                    "minecraft:lava",
+                    "minecraft:magma_block"
+		]
+            }
+        }
+    ]
+}

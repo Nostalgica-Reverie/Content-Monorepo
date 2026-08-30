@@ -1,0 +1,38 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "wingull_fish",
+            "pokemon": "wingull",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "2-27",
+            "weight": 1000.00,
+            "condition": {
+                "maxX": -154,
+                "minX": -409,
+                "maxZ": 800,
+                "minZ": 500,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:dead_horn_coral_block",
+                    "minecraft:cobblestone",
+                    "minecraft:stone_bricks",
+                    "minecraft:stone",
+                    "minecraft:andesite",
+                    "minecraft:gravel",
+                    "minecraft:tuff",
+                    "minecraft:oak_log"
+                ]
+            }
+        }
+    ]
+}

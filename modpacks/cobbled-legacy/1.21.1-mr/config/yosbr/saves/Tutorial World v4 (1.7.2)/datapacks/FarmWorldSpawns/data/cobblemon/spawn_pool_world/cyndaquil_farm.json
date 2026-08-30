@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cyndaquil_farm",
+            "pokemon": "cyndaquil",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "5-10",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -189,
+		"minX": -210,
+		"maxZ": -55,
+		"minZ": -79,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:coal_block",
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

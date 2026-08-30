@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "sunkern_fish",
+            "pokemon": "sunkern",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "4-19",
+            "weight": 1000.00,
+            "condition": {
+                "canSeeSky": true,
+                "timeRange": "day",
+                "maxX": 41,
+                "minX": -221,
+                "maxZ": 648,
+                "minZ": 424,
+                "maxY": 105,
+                "minY": 56,
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+                ]
+            }
+        }
+    ]
+}

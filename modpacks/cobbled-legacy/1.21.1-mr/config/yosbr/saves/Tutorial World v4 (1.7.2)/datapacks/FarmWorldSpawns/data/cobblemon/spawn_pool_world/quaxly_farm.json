@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "quaxly_farm",
+            "pokemon": "quaxly",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "5-10",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -203,
+		"minX": -244,
+		"maxZ": 156,
+		"minZ": 116,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

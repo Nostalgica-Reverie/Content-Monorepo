@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "chikorita_fish",
+            "pokemon": "chikorita",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "5-20",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": -52,
+        "minX": -175,
+        "maxZ": 759,
+        "minZ": 601,
+        "maxY": 138,
+        "minY": 99,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

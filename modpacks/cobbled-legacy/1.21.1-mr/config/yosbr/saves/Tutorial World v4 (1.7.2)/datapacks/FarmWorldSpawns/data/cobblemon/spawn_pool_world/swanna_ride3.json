@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "swanna_ride3",
+            "pokemon": "swanna",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-48",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 15,
+		"minX": -54,
+		"maxZ": 117,
+		"minZ": 60,
+        "maxY": 65,
+        "minY": 54
+            }
+        }
+    ]
+}

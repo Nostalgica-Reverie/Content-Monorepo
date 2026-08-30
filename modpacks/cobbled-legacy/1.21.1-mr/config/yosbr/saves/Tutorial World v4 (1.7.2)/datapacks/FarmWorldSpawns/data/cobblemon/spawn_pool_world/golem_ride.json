@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "golem_ride",
+            "pokemon": "golem",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "50-65",
+            "weight": 600.00,
+            "condition": {
+        "canSeeSky": false,
+		"maxX": -413,
+		"minX": -543,
+		"maxZ": -97,
+		"minZ": -296,
+        "maxY": 163,
+        "minY": 76,
+        "neededNearbyBlocks": [
+                    "minecraft:snow",
+                    "minecraft:packed_ice"
+                ]
+            }
+        }
+    ]
+}

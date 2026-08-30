@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "makuhita_ride",
+            "pokemon": "makuhita",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-24",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -535,
+		"minX": -626,
+		"maxZ": 57,
+		"minZ": -324,
+        "maxY": 157,
+        "minY": 62,
+        "biomes": [
+                    "#cobblemon:is_hills",
+                    "#cobblemon:is_peak"
+		],
+        "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:grass_block"
+                ]
+            }
+        }
+    ]
+}

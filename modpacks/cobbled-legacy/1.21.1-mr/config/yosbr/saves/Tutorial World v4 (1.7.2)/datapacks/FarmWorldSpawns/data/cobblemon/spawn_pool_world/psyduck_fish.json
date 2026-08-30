@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "psyduck_fish",
+            "pokemon": "psyduck",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "7-32",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -236,
+		"minX": -357,
+		"maxZ": 500,
+		"minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

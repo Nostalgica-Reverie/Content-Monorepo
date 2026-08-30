@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "gothita_ride",
+            "pokemon": "gothita",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-31",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -502,
+		"minX": -640,
+		"maxZ": 272,
+		"minZ": 83,
+        "maxY": 118,
+        "minY": 63,
+                "biomes": [
+                    "#minecraft:is_savanna"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

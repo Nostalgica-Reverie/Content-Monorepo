@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "hisuianqwilfish_fish",
+           "pokemon": "qwilfish hisuian",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "19-44",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -275,
+		"minX": -544,
+		"maxZ": 860,
+		"minZ": 540,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

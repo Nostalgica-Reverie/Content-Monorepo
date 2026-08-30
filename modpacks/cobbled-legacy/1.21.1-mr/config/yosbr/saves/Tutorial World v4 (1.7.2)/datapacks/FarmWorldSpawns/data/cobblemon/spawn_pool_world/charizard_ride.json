@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "charizard_ride",
+            "pokemon": "charizard",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "ultra-rare",
+            "level": "45-55",
+            "weight": 400.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -535,
+		"minX": -626,
+		"maxZ": 57,
+		"minZ": -324,
+        "maxY": 157,
+        "minY": 62,
+        "biomes": [
+                    "#cobblemon:is_hills",
+                    "#cobblemon:is_peak"
+		],
+        "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:grass_block"
+                ]
+            }
+        }
+    ]
+}

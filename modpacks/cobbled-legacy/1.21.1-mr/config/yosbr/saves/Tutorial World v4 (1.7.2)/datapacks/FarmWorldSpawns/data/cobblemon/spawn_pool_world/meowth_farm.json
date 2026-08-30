@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "meowth_farm",
+            "pokemon": "meowth",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "4-8",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 107,
+		"minX": 35,
+		"maxZ": 132,
+		"minZ": 50,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:spruce_planks",
+                    "minecraft:stripped_spruce_log",
+                    "minecraft:stripped_oak_log",
+                    "minecraft:spruce_fence"
+		]
+            }
+        }
+    ]
+}

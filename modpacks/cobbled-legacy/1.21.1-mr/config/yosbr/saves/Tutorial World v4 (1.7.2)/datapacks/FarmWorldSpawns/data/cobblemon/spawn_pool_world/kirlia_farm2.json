@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "kirlia_farm2",
+            "pokemon": "kirlia",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "20-23",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -150,
+		"minX": -227,
+		"maxZ": 71,
+		"minZ": 4,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:blue_orchid"
+		]
+            }
+        }
+    ]
+}

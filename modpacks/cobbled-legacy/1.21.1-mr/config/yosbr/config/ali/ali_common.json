@@ -1,0 +1,108 @@
+{
+  "blockCategories": [
+    {
+      "key": "ali:plant_loot",
+      "type": "BLOCK",
+      "icon": "minecraft:diamond_hoe",
+      "hide": false,
+      "classes": [
+        "net.minecraft.class_2261"
+      ]
+    },
+    {
+      "key": "ali:block_loot",
+      "type": "BLOCK",
+      "icon": "minecraft:diamond_pickaxe",
+      "hide": false,
+      "classes": [
+        "net.minecraft.class_2248"
+      ]
+    }
+  ],
+  "entityCategories": [
+    {
+      "key": "ali:entity_loot",
+      "type": "ENTITY",
+      "icon": "minecraft:skeleton_skull",
+      "hide": false,
+      "classes": [
+        "net.minecraft.class_1297"
+      ]
+    }
+  ],
+  "gameplayCategories": [
+    {
+      "key": "ali:chest_loot",
+      "type": "GAMEPLAY",
+      "icon": "minecraft:chest",
+      "hide": false,
+      "pattern": [
+        "^.*:chests/[a-z_]*$",
+        "^.*:chests/village/[a-z_]*$"
+      ]
+    },
+    {
+      "key": "ali:trial_chambers",
+      "type": "GAMEPLAY",
+      "icon": "minecraft:spawner",
+      "hide": false,
+      "pattern": [
+        "^.*:chests/trial_chambers/.*$",
+        "^.*:pots/trial_chambers/.*$",
+        "^.*:dispensers/trial_chambers/.*$",
+        "^.*:spawners/ominous/trial_chamber/.*$",
+        "^.*:spawners/trial_chamber/.*$",
+        "^.*:equipment/.*$"
+      ]
+    },
+    {
+      "key": "ali:fishing_loot",
+      "type": "GAMEPLAY",
+      "icon": "minecraft:fishing_rod",
+      "hide": false,
+      "pattern": [
+        "^.*:gameplay/fishing.*$"
+      ]
+    },
+    {
+      "key": "ali:archaeology_loot",
+      "type": "GAMEPLAY",
+      "icon": "minecraft:decorated_pot",
+      "hide": false,
+      "pattern": [
+        "^.*:archaeology/.*$"
+      ]
+    },
+    {
+      "key": "ali:hero_loot",
+      "type": "GAMEPLAY",
+      "icon": "minecraft:emerald",
+      "hide": false,
+      "pattern": [
+        "^.*:gameplay/hero_of_the_village/.*$"
+      ]
+    },
+    {
+      "key": "ali:gameplay_loot",
+      "type": "GAMEPLAY",
+      "icon": "minecraft:compass",
+      "hide": false,
+      "pattern": [
+        ".*"
+      ]
+    }
+  ],
+  "tradeCategories": [
+    {
+      "key": "ali:trade_loot",
+      "type": "TRADE",
+      "icon": "minecraft:emerald_block",
+      "hide": false,
+      "pattern": [
+        ".*"
+      ]
+    }
+  ],
+  "disabledEntities": [],
+  "logMoreStatistics": false
+}

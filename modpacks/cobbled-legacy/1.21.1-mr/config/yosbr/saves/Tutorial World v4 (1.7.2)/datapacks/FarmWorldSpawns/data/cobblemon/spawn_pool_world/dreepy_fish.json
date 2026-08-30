@@ -1,0 +1,38 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "dreepy_fish",
+            "pokemon": "dreepy",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "2-27",
+            "weight": 600.00,
+            "condition": {
+                "canSeeSky": false,
+                "maxX": 43,
+                "minX": -81,
+                "maxZ": 743,
+                "minZ": 602,
+                "maxY": 146,
+                "minY": 69,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:tuff",
+                    "minecraft:cyan_terracotta",
+                    "minecraft:moss_block",
+                    "minecraft:moss_carpet"
+                ]
+            }
+        }
+    ]
+}

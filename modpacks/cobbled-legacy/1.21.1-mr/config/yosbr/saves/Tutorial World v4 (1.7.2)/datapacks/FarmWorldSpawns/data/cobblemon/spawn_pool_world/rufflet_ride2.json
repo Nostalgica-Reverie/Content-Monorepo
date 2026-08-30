@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "rufflet_ride2",
+            "pokemon": "rufflet",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "8-32",
+            "weight": 800.00,
+            "condition": {
+                "maxX": -18,
+                "minX": -165,
+                "maxZ": 452,
+                "minZ": 291,
+                "maxY": 117,
+                "minY": 79,
+                "neededNearbyBlocks": [
+                    "minecraft:mud",
+                    "minecraft:cyan_terracotta",
+                    "minecraft:tuff"
+                ]
+            }
+        }
+    ]
+}

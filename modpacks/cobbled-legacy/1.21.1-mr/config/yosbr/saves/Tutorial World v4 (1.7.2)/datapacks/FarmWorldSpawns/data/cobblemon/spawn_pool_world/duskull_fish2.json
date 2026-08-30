@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "duskull_fish2",
+            "pokemon": "duskull",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "5-30",
+            "weight": 800.00,
+            "condition": {
+                "timeRange": "night",
+                "maxX": -236,
+                "minX": -357,
+                "maxZ": 500,
+                "minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:spruce_wood",
+                    "minecraft:spruce_planks",
+                    "minecraft:stripped_spruce_log",
+                    "minecraft:mangrove_wood"
+                ]
+            }
+        }
+    ]
+}

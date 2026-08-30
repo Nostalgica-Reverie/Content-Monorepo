@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "stoutland_ride",
+            "pokemon": "stoutland",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "32-49",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -245,
+		"minX": -540,
+		"maxZ": 480,
+		"minZ": 196,
+        "maxY": 80,
+        "minY": 62,
+                "biomes": [
+                    "#cobblemon:is_magical"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:saccharine_log",
+                    "minecraft:lilac",
+                    "minecraft:rose_bush"
+		]
+            }
+        }
+    ]
+}

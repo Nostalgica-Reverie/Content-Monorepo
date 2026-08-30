@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "jynx_ride",
+            "pokemon": "jynx",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "30-46",
+            "weight": 800.00,
+            "condition": {
+        "canSeeSky": false,
+		"maxX": -413,
+		"minX": -543,
+		"maxZ": -97,
+		"minZ": -296,
+        "maxY": 163,
+        "minY": 76,
+        "neededNearbyBlocks": [
+                    "minecraft:snow_block",
+                    "minecraft:packed_ice"
+                ]
+            }
+        }
+    ]
+}

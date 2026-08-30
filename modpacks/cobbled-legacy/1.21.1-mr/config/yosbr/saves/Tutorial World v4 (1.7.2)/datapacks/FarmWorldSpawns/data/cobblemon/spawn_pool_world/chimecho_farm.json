@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "chimecho_farm",
+            "pokemon": "chimecho",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "21-27",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "night",
+		"maxX": 79,
+		"minX": 60,
+		"maxZ": 96,
+		"minZ": 77,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:oak_wood"
+		]
+            }
+        }
+    ]
+}

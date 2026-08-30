@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "lapras_fish",
+           "pokemon": "lapras",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "29-54",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -275,
+		"minX": -544,
+		"maxZ": 860,
+		"minZ": 540,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

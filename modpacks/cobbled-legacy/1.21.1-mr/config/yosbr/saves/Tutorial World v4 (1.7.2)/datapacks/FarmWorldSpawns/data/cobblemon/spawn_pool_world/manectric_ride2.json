@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "manectric_ride2",
+            "pokemon": "manectric",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "26-41",
+            "weight": 800.00,
+            "condition": {
+                "maxX": 299,
+                "minX": 265,
+                "maxY": 165,
+                "minY": 135,
+                "maxZ": 840,
+                "minZ": 785
+                
+                
+            }
+        }
+    ]
+}

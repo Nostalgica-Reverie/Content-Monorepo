@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "alolangraveler_ride2",
+            "pokemon": "graveler alolan",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-39",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -608,
+		"minX": -682,
+		"maxZ": -151,
+		"minZ": -548,
+        "maxY": 165,
+        "minY": 62,
+        "neededNearbyBlocks": [
+                    "minecraft:gravel",
+                    "minecraft:copper_ore",
+                    "minecraft:granite"
+                ]
+            }
+        }
+    ]
+}

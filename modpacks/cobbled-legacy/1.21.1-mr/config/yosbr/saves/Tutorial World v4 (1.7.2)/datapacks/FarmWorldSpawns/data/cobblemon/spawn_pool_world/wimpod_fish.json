@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "wimpod_fish",
+            "pokemon": "wimpod",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-23",
+            "weight": 800.00,
+            "condition": {
+                "maxX": -154,
+                "minX": -409,
+                "maxZ": 800,
+                "minZ": 500,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:dead_brain_coral_block",
+                    "minecraft:smooth_basalt"
+                ]
+            }
+        }
+    ]
+}

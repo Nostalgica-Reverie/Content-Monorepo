@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "bouffalant_farm",
+            "pokemon": "bouffalant",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "23-27",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 248,
+		"minX": 113,
+		"maxZ": -88,
+		"minZ": -191,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass"
+		]
+            }
+        }
+    ]
+}

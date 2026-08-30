@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "garchomp_fish",
+            "pokemon": "garchomp",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "50-60",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": -70,
+        "minX": -144,
+        "maxZ": 414,
+        "minZ": 327,
+        "maxY": 134,
+        "minY": 82,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+       "neededNearbyBlocks": [
+            "minecraft:moss_block",
+            "minecraft:coarse_dirt"
+        ]
+            }
+        }
+    ]
+}

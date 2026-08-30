@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "clauncher_fish2",
+            "pokemon": "clauncher",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "common",
+            "level": "13-28",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -172,
+		"minX": -207,
+		"maxZ": 727,
+		"minZ": 678,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

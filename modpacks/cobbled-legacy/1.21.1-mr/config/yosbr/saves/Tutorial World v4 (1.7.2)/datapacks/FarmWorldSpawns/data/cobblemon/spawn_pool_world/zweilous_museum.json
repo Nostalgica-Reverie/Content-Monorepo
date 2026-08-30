@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "zweilous_museum",
+            "pokemon": "zweilous",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "50-63",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": false,
+        "maxX": -70,
+        "minX": -144,
+        "maxZ": 414,
+        "minZ": 327,
+        "maxY": 134,
+        "minY": 82,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+        "neededNearbyBlocks": [
+            "minecraft:deepslate_bricks"
+        ]
+            }
+        }
+    ]
+}

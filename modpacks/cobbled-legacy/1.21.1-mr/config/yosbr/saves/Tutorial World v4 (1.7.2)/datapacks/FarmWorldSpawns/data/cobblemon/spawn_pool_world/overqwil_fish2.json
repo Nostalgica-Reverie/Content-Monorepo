@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "overqwil_fish2",
+           "pokemon": "overqwil",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "39-51",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -266,
+		"minX": -330,
+        "maxY": 27,
+        "minY": -55,
+		"maxZ": 857,
+		"minZ": 785,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "tatsugiri_fish",
+            "pokemon": "tatsugiri",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "24-42",
+            "weight": 1000.00,
+            "condition": {
+                "canSeeSky": true,
+                "maxX": -236,
+                "minX": -357,
+                "maxZ": 500,
+                "minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "poliwrath_ride",
+            "pokemon": "poliwrath",
+            "presets": [
+                "underwater"
+            ],
+           "type": "pokemon",
+            "context": "submerged",
+            "bucket": "rare",
+            "level": "34-51",
+            "weight": 600.00,
+            "condition": {
+		"maxX": -621,
+		"minX": -743,
+		"maxZ": 347,
+		"minZ": 204,
+        "maxY": 67,
+        "minY": 40,
+                "biomes": [
+                    "#minecraft:river"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:dirt",
+                    "minecraft:sand",
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "sprigatito_farm",
+            "pokemon": "sprigatito",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "5-10",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -302,
+		"minX": -418,
+		"maxZ": 7,
+		"minZ": -41,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:azalea_leaves"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "krabby_fish",
+            "pokemon": "krabby",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-33",
+            "weight": 1000.00,
+            "condition": {
+                "maxX": -154,
+                "minX": -409,
+                "maxZ": 800,
+                "minZ": 500,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:sand"
+                ]
+            }
+        }
+    ]
+}

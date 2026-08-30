@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "girafarig_fish",
+            "pokemon": "girafarig",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "19-34",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": 412,
+        "minX": 108,
+        "maxZ": 840,
+        "minZ": 621,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:acacia_wood",
+                    "minecraft:acacia_leaves",
+                    "minecraft:mangrove_leaves",
+                    "minecraft:mangrove_roots"
+		]
+            }
+        }
+    ]
+}

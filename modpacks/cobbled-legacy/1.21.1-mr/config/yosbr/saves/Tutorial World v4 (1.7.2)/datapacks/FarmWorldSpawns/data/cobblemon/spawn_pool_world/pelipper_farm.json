@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "pelipper_farm",
+            "pokemon": "pelipper",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "28-33",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 410,
+		"minX": 139,
+		"maxZ": -146,
+		"minZ": -340,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

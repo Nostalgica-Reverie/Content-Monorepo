@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "wooper_museum",
+            "pokemon": "wooper",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "20-43",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": false,
+		"maxX": 247,
+		"minX": 185,
+		"maxZ": 879,
+		"minZ": 781,
+        "maxY": 122,
+        "minY": 73,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

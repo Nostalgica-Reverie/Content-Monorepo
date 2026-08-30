@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "ambipom_farm",
+            "pokemon": "ambipom",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-43",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 305,
+		"minX": 116,
+		"maxZ": 53,
+		"minZ": -124,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:spruce_log"
+		]
+            }
+        }
+    ]
+}

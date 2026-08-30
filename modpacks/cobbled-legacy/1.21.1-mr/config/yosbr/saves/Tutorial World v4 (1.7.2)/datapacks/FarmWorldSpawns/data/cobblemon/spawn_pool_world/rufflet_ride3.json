@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "rufflet_ride3",
+            "pokemon": "rufflet",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-32",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -608,
+		"minX": -682,
+		"maxZ": -151,
+		"minZ": -548,
+        "maxY": 165,
+        "minY": 62,
+        "neededNearbyBlocks": [
+                    "minecraft:deepslate",
+                    "minecraft:smooth_basalt",
+                    "minecraft:tuff",
+                    "minecraft:gravel"
+                ]
+            }
+        }
+    ]
+}

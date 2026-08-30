@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "bagon_fish2",
+            "pokemon": "bagon",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "27-41",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": -70,
+        "minX": -144,
+        "maxZ": 414,
+        "minZ": 327,
+        "maxY": 134,
+        "minY": 82,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+       "neededNearbyBlocks": [
+            "minecraft:moss_block",
+            "minecraft:coarse_dirt"
+        ]
+            }
+        }
+    ]
+}

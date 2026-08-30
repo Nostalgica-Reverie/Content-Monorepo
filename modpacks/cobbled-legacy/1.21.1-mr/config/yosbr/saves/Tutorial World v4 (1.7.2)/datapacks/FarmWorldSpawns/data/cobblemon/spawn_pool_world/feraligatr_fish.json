@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "feraligatr_fish",
+            "pokemon": "feraligatr",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "30-53",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -236,
+		"minX": -357,
+		"maxZ": 500,
+		"minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

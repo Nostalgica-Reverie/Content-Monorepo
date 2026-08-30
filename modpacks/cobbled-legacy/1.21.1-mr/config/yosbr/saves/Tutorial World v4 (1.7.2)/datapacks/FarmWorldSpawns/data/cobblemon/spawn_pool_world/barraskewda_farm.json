@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "barraskewda_farm",
+            "pokemon": "barraskewda",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "32-40",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 536,
+		"minX": 45,
+		"maxZ": -83,
+		"minZ": -515,
+                "biomes": [
+                    "#minecraft:is_ocean",
+                    "#minecraft:is_deep_ocean"
+		]
+            }
+        }
+    ]
+}

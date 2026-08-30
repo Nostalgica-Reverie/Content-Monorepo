@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "dragonite_ride",
+            "pokemon": "dragonite",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "ultra-rare",
+            "level": "55-65",
+            "weight": 400.00,
+            "condition": {
+		"maxX": -581,
+		"minX": -870,
+		"maxZ": 10,
+		"minZ": -637,
+        "maxY": 85,
+        "minY": 35,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+        ],
+        "neededNearbyBlocks": [
+                    "minecraft:ice",
+                    "minecraft:packed_ice",
+                    "minecraft:blue_ice"
+                ]
+            }
+        }
+    ]
+}

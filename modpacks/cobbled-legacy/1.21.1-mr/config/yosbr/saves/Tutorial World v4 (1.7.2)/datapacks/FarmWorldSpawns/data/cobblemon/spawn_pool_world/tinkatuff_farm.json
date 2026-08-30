@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "tinkatuff_farm",
+            "pokemon": "tinkatuff",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "26-32",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -120,
+		"minX": -154,
+		"maxZ": 202,
+		"minZ": 179,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:rail"
+		]
+            }
+        }
+    ]
+}

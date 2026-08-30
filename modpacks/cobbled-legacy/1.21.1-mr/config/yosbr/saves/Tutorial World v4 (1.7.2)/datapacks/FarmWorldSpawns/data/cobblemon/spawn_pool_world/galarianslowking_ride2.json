@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "galarianslowking_ride2",
+           "pokemon": "slowking galarian",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "37-50",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -275,
+		"minX": -544,
+		"maxZ": 860,
+		"minZ": 540,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:sand",
+                    "minecraft:podzol"
+		]
+            }
+        }
+    ]
+}

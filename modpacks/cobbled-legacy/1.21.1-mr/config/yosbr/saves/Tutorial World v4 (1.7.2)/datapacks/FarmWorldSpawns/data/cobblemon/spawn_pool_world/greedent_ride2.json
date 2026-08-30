@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "greedent_ride2",
+            "pokemon": "greedent",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+           "context": "grounded",
+            "bucket": "uncommon",
+            "level": "24-34",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 224,
+		"minX": 135,
+		"maxZ": -92,
+		"minZ": -178,
+        "maxY": 102,
+        "minY": 66,
+                "neededNearbyBlocks": [
+                    "minecraft:sunflower"
+		]
+            }
+        }
+    ]
+}

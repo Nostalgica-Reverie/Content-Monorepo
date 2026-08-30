@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "musharna_ride4",
+            "pokemon": "musharna",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+           "context": "grounded",
+            "bucket": "uncommon",
+            "level": "33-48",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -676,
+		"minX": -712,
+		"maxZ": 181,
+		"minZ": 152,
+        "maxY": 87,
+        "minY": 52,
+                "biomes": [
+                    "#minecraft:is_deep_ocean"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:tuff"
+		]
+            }
+        }
+    ]
+}

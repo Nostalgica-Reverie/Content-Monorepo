@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "donphan_farm",
+            "pokemon": "donphan",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-40",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -211,
+		"minX": -285,
+		"maxZ": -3,
+		"minZ": -209,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:cobblestone"
+		]
+            }
+        }
+    ]
+}

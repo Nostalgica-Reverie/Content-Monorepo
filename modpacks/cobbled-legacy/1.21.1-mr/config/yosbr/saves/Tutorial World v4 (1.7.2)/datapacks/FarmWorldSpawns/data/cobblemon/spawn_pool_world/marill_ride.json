@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "marill_ride",
+            "pokemon": "marill",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "10-17",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -621,
+		"minX": -743,
+		"maxZ": 347,
+		"minZ": 204,
+        "maxY": 67,
+        "minY": 40,
+                "neededNearbyBlocks": [
+                    "minecraft:water",
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

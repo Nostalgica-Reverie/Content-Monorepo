@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "paldeantaurosaqua_ride3",
+            "pokemon": "paldean tauros bull_breed=aqua",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "29-49",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 278,
+		"minX": 95,
+		"maxZ": -181,
+		"minZ": -330,
+        "maxY": 77,
+        "minY": 54,
+                "biomes": [
+                    "#cobblemon:is_beach"
+                ]
+            }
+        }
+    ]
+}

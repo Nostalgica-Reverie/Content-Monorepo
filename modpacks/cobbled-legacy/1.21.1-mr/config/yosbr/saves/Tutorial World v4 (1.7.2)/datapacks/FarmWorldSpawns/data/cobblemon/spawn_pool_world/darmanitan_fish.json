@@ -1,0 +1,37 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "darmanitan_fish",
+            "pokemon": "darmanitan",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-54",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 513,
+		"minX": -77,
+		"maxZ": 1070,
+		"minZ": 598,
+        "maxY": 160,
+        "minY": 64,
+                "biomes": [
+                    "#minecraft:is_badlands",
+                    "#minecraft:is_eroded_badlands"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:red_terracotta",
+                    "minecraft:orange_terracotta",
+                    "minecraft:red_sand"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "magnezone_ride",
+            "pokemon": "magnezone",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "42-54",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -608,
+		"minX": -682,
+		"maxZ": -151,
+		"minZ": -548,
+        "maxY": 165,
+        "minY": 62,
+        "neededNearbyBlocks": [
+                    "minecraft:gravel",
+                    "minecraft:copper_ore",
+                    "minecraft:granite"
+                ]
+            }
+        }
+    ]
+}

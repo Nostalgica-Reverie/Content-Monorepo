@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "lampent_fish",
+            "pokemon": "lampent",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "41-46",
+            "weight": 800.00,
+            "condition": {
+                "timeRange": "night",
+                "maxX": -236,
+                "minX": -357,
+                "maxZ": 500,
+                "minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:spruce_wood",
+                    "minecraft:spruce_planks",
+                    "minecraft:stripped_spruce_log",
+                    "minecraft:soul_lantern",
+                    "minecraft:lantern"
+                ]
+            }
+        }
+    ]
+}

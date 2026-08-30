@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "farfetchdgalarian_farm",
+            "pokemon": "farfetchd galarian",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "15-21",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 453,
+		"minX": -611,
+		"maxZ": 570,
+		"minZ": -559,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "cobblemon:medicinal_leek"
+                ]
+            }
+        }
+    ]
+}

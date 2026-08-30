@@ -1,0 +1,31 @@
+{
+  "load_resource_packs": {
+    "//": "Determines if OpenLoader should load resource packs.",
+    "//default": true,
+    "value": true
+  },
+  "load_data_packs": {
+    "//": "Determines if OpenLoader should load data packs.",
+    "//default": true,
+    "value": false
+  },
+  "additional_locations": {
+    "//": [
+      "A list of additional locations to load packs from. These can be folders or      ",
+      "direct paths to specific files. By default all file paths will be relative to   ",
+      "the root of your game instance folder. Other locations can be specified using   ",
+      "absolute paths.                                                                 "
+    ],
+    "//default": [],
+    "value": ["config/openloader/resources"]
+  },
+  "load_datapacks_dir": {
+    "//": [
+      "Some launchers like CurseForge install data packs to the datapacks folder       ",
+      "(.minecraft/datapacks). When enabled, OpenLoader will always check that folder  ",
+      "for pack files.                                                                 "
+    ],
+    "//default": true,
+    "value": false
+  }
+}

@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "scovillain_ride",
+            "pokemon": "scovillain",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "29-41",
+            "weight": 800.00,
+            "condition": {
+                "maxX": 340,
+                "minX": 240,
+                "maxY": 84,
+                "minY": 60,
+                "maxZ": 977,
+                "minZ": 797
+                
+                
+            }
+        }
+    ]
+}

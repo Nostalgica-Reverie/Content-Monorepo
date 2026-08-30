@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cutiefly_farm2",
+            "pokemon": "cutiefly",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "19-24",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "day",
+		"maxX": -302,
+		"minX": -418,
+		"maxZ": 7,
+		"minZ": -41,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

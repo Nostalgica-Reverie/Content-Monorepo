@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "gothita_ride3",
+            "pokemon": "gothita",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-31",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 26,
+		"minX": -163,
+		"maxZ": -119,
+		"minZ": -300,
+        "maxY": 80,
+        "minY": 65,
+                "neededNearbyBlocks": [
+                    "minecraft:wheat"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "ariados_ride",
+            "pokemon": "ariados",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "22-39",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+        "timeRange": "night",
+		"maxX": -440,
+		"minX": -720,
+		"maxZ": 420,
+		"minZ": 97,
+        "maxY": 80,
+        "minY": 65,
+                "biomes": [
+                    "#minecraft:is_deep_ocean"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

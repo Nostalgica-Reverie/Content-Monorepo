@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "armarouge_farm",
+            "pokemon": "armarouge",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "45-60",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "day",
+		"maxX": -377,
+		"minX": -407,
+		"maxZ": 99,
+		"minZ": 80,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:basalt"
+		]
+            }
+        }
+    ]
+}

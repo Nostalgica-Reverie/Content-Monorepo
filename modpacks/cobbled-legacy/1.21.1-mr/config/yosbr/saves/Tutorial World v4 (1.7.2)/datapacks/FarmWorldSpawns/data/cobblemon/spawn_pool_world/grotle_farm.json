@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "grotle_farm",
+            "pokemon": "grotle",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "19-23",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -303,
+		"minX": -427,
+		"maxZ": 35,
+		"minZ": -51,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:cherry_wood"
+		]
+            }
+        }
+    ]
+}

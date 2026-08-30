@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "rookidee_ride",
+            "pokemon": "rookidee",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "6-17",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -245,
+		"minX": -540,
+		"maxZ": 480,
+		"minZ": 196,
+        "maxY": 80,
+        "minY": 62,
+                "biomes": [
+                    "#cobblemon:is_magical"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

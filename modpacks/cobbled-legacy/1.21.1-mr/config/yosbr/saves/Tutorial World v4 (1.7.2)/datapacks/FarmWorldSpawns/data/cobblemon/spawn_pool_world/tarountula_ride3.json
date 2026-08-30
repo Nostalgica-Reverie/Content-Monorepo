@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "tarountula_ride3",
+            "pokemon": "tarountula",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "4-14",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 312,
+		"minX": 99,
+		"maxZ": 72,
+		"minZ": -147,
+        "maxY": 76,
+        "minY": 68,
+                "biomes": [
+                    "#minecraft:is_forest"
+		]
+            }
+        }
+    ]
+}

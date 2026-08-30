@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "relicanth_farm",
+            "pokemon": "relicanth",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "24-29",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -303,
+		"minX": -425,
+		"maxZ": 490,
+		"minZ": -312,
+                "biomes": [
+                    "#minecraft:is_river"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "hatterene_fish",
+            "pokemon": "hatterene",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "41-52",
+            "weight": 800.00,
+            "condition": {
+                "canSeeSky": false,
+		        "timeRange": "day",
+                "maxX": 43,
+                "minX": -81,
+                "maxZ": 743,
+                "minZ": 602,
+                "maxY": 146,
+                "minY": 69,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:tuff",
+                    "minecraft:cyan_terracotta",
+                    "minecraft:moss_block",
+                    "minecraft:moss_carpet"
+                ]
+            }
+        }
+    ]
+}

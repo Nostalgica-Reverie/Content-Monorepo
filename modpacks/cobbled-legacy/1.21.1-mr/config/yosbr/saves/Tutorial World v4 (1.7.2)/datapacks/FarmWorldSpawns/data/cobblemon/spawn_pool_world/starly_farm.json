@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "starly_farm",
+            "pokemon": "starly",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "3-7",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -39,
+		"minX": -250,
+		"maxZ": 202,
+		"minZ": 71,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:birch_wood"
+		]
+            }
+        }
+    ]
+}

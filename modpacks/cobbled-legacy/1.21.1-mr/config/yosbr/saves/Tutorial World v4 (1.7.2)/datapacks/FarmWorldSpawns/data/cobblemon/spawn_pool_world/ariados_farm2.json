@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "ariados_farm2",
+            "pokemon": "ariados",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-32",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -219,
+		"minX": -428,
+		"maxZ": 333,
+		"minZ": 181,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:dark_oak_log",
+                    "minecraft:dark_oak_wood"
+		]
+            }
+        }
+    ]
+}

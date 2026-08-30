@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "combee_museum",
+            "pokemon": "combee",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "7-15",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": 447,
+        "minX": 432,
+        "maxZ": 693,
+        "minZ": 682,
+        "maxY": 108,
+        "minY": 101,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+        "neededNearbyBlocks": [
+            "minecraft:beehive"
+        ]
+            }
+        }
+    ]
+}

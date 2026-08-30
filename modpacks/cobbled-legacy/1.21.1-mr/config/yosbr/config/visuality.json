@@ -1,0 +1,66 @@
+{
+  "slimeEnabled": true,
+  "slimeColor": {
+    "field_24364": 8978297
+  },
+  "chargeEnabled": true,
+  "sparkleEnabled": true,
+  "soulEnabled": true,
+  "waterCircles": {
+    "density": 24,
+    "radius": 32,
+    "enabled": true,
+    "colored": true
+  },
+  "hitParticlesEnabled": true,
+  "hitParticleEntries": [
+    "minecraft:skeleton/visuality:bone",
+    "minecraft:skeleton_horse/visuality:bone",
+    "minecraft:stray/visuality:bone",
+    "minecraft:wither_skeleton/visuality:wither_bone",
+    "minecraft:chicken/visuality:feather",
+    "minecraft:villager/visuality:emerald"
+  ],
+  "shinyArmorEnabled": false,
+  "shinyArmorEntries": [
+    "minecraft:golden_helmet",
+    "minecraft:golden_chestplate",
+    "minecraft:golden_leggings",
+    "minecraft:golden_boots",
+    "minecraft:diamond_helmet",
+    "minecraft:diamond_chestplate",
+    "minecraft:diamond_leggings",
+    "minecraft:diamond_boots"
+  ],
+  "shinyBlocksEnabled": true,
+  "shinyBlockEntries": [
+    "minecraft:gold_ore",
+    "minecraft:deepslate_gold_ore",
+    "minecraft:nether_gold_ore",
+    "minecraft:diamond_ore",
+    "minecraft:deepslate_diamond_ore",
+    "minecraft:emerald_ore",
+    "minecraft:deepslate_emerald_ore",
+    "cobblemon:dawn_stone_ore",
+    "cobblemon:dusk_stone_ore",
+    "cobblemon:fire_stone_ore",
+    "cobblemon:ice_stone_ore",
+    "cobblemon:leaf_stone_ore",
+    "cobblemon:moon_stone_ore",
+    "cobblemon:shiny_stone_ore",
+    "cobblemon:sun_stone_ore",
+    "cobblemon:thunder_stone_ore",
+    "cobblemon:water_stone_ore",
+    "cobblemon:deepslate_dawn_stone_ore",
+    "cobblemon:deepslate_dusk_stone_ore",
+    "cobblemon:deepslate_fire_stone_ore",
+    "cobblemon:deepslate_ice_stone_ore",
+    "cobblemon:deepslate_leaf_stone_ore",
+    "cobblemon:deepslate_moon_stone_ore",
+    "cobblemon:deepslate_shiny_stone_ore",
+    "cobblemon:deepslate_sun_stone_ore",
+    "cobblemon:deepslate_thunder_stone_ore",
+    "cobblemon:deepslate_water_stone_ore",
+    "cobblemon:dripstone_moon_stone_ore"
+  ]
+}

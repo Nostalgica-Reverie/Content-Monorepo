@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "toxel_ride3",
+            "pokemon": "toxel",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "11-29",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+                "maxX": -406,
+                "minX": -461,
+                "maxZ": 707,
+                "minZ": 656,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

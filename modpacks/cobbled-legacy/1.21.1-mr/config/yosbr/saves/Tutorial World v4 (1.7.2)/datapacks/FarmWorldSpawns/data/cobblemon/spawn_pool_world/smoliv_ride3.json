@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "smoliv_ride3",
+            "pokemon": "smoliv",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "6-24",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 85,
+		"minX": -46,
+		"maxZ": 11,
+		"minZ": -124,
+        "maxY": 78,
+        "minY": 70,
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "conkeldurr_farm",
+            "pokemon": "conkeldurr",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "43-56",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 123,
+		"minX": 47,
+		"maxZ": -74,
+		"minZ": -148,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

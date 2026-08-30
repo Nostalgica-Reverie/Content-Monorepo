@@ -1,0 +1,589 @@
+{
+  "configVersion": 5,
+  "perf": {
+    "maxParticleAmount": 1000,
+    "particleDensity": 100,
+    "particleStormDensity": 200,
+    "particleDistance": 24,
+    "surfaceRange": 48
+  },
+  "sound": {
+    "rainVolume": 0.2,
+    "snowVolume": 0.02,
+    "windVolume": 0.1,
+    "blockVolume": 0.07
+  },
+  "wind": {
+    "strength": 0.4,
+    "strengthVariance": 0.3,
+    "gustFrequency": 0.2,
+    "modulationSpeed": 0.04,
+    "yLevelAdjustment": true
+  },
+  "compat": {
+    "renderDefaultWeather": false,
+    "doDefaultSplashing": false,
+    "waterTint": true,
+    "tintMix": 0.6,
+    "shaderpackTint": true,
+    "syncRegistries": true,
+    "crossBiomeBorder": false,
+    "useHeightmapTemp": true,
+    "doSpawnHeightLimit": true,
+    "spawnHeightLimit": 0
+  },
+  "particles": [
+    {
+      "presetParticleId": "minecraft:flame",
+      "usePresetParticle": false,
+      "id": "rain",
+      "enabled": true,
+      "density": 1.0,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "RAIN"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "SKY",
+      "gravity": 0.9,
+      "windStrength": 0.3,
+      "stormWindStrength": 1.0,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 1.0,
+      "size": 1.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:rain_0",
+        "particlerain:rain_1",
+        "particlerain:rain_2",
+        "particlerain:rain_3"
+      ],
+      "tintType": "WATER",
+      "customTint": "#000000",
+      "rotationType": "RELATIVE_VELOCITY"
+    },
+    {
+      "presetParticleId": "minecraft:flame",
+      "usePresetParticle": false,
+      "id": "snow",
+      "enabled": true,
+      "density": 1.0,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "SNOW"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "SKY",
+      "gravity": 0.05,
+      "windStrength": 0.02,
+      "stormWindStrength": 0.2,
+      "rotationAmount": 0.4,
+      "lifetime": 3000,
+      "opacity": 1.0,
+      "size": 1.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:snow_0",
+        "particlerain:snow_1",
+        "particlerain:snow_2",
+        "particlerain:snow_3"
+      ],
+      "tintType": "NONE",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "minecraft:flame",
+      "usePresetParticle": false,
+      "id": "dust",
+      "enabled": true,
+      "density": 1.0,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "NONE"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "#minecraft:camel_sand_step_sound_blocks",
+          "#minecraft:sand",
+          "#minecraft:terracotta",
+          "#c:sandstone_blocks"
+        ],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "SKY",
+      "gravity": 0.05,
+      "windStrength": 1.0,
+      "stormWindStrength": 1.5,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 1.0,
+      "size": 1.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:dust"
+      ],
+      "tintType": "MAP",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "minecraft:flame",
+      "usePresetParticle": false,
+      "id": "rain_haze",
+      "enabled": true,
+      "density": 0.1,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "RAIN"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "SKY",
+      "gravity": 0.15,
+      "windStrength": 0.01,
+      "stormWindStrength": 0.1,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.35,
+      "size": 0.3,
+      "constantScreenSize": true,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:fog_dithered"
+      ],
+      "tintType": "FOG",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "minecraft:flame",
+      "usePresetParticle": false,
+      "id": "snow_haze",
+      "enabled": true,
+      "density": 0.2,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "SNOW"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "SKY",
+      "gravity": 0.05,
+      "windStrength": 0.02,
+      "stormWindStrength": 0.2,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.35,
+      "size": 0.3,
+      "constantScreenSize": true,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:fog_dithered"
+      ],
+      "tintType": "FOG",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "minecraft:flame",
+      "usePresetParticle": false,
+      "id": "dust_haze",
+      "enabled": true,
+      "density": 0.201,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "NONE"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "#minecraft:camel_sand_step_sound_blocks",
+          "#minecraft:sand",
+          "#minecraft:terracotta",
+          "#c:sandstone_blocks"
+        ],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "SKY",
+      "gravity": 0.05,
+      "windStrength": 1.0,
+      "stormWindStrength": 1.5,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.35,
+      "size": 1.2,
+      "constantScreenSize": true,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:fog_dithered"
+      ],
+      "tintType": "MAP",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "minecraft:rain",
+      "usePresetParticle": true,
+      "id": "splatter",
+      "enabled": true,
+      "density": 1.0,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "RAIN"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "minecraft:lava"
+        ],
+        "isWhitelist": false
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "BLOCK_TOP",
+      "gravity": 0.9,
+      "windStrength": 0.5,
+      "stormWindStrength": 1.0,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.9,
+      "size": 0.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:rain_0",
+        "particlerain:rain_1",
+        "particlerain:rain_2",
+        "particlerain:rain_3"
+      ],
+      "tintType": "NONE",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "particlerain:ripple",
+      "usePresetParticle": true,
+      "id": "ripple",
+      "enabled": false,
+      "density": 1.0,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "RAIN"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "minecraft:water"
+        ],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "BLOCK_TOP",
+      "gravity": 0.9,
+      "windStrength": 0.5,
+      "stormWindStrength": 1.0,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.9,
+      "size": 0.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:rain_0",
+        "particlerain:rain_1",
+        "particlerain:rain_2",
+        "particlerain:rain_3"
+      ],
+      "tintType": "NONE",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "minecraft:smoke",
+      "usePresetParticle": true,
+      "id": "smoke",
+      "enabled": true,
+      "density": 1.0,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "RAIN"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "#minecraft:strider_warm_blocks",
+          "#minecraft:infiniburn_overworld"
+        ],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "BLOCK_TOP",
+      "gravity": 0.9,
+      "windStrength": 0.5,
+      "stormWindStrength": 1.0,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.9,
+      "size": 0.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:rain_0",
+        "particlerain:rain_1",
+        "particlerain:rain_2",
+        "particlerain:rain_3"
+      ],
+      "tintType": "NONE",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "particlerain:streak",
+      "usePresetParticle": true,
+      "id": "streak",
+      "enabled": true,
+      "density": 0.2,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "RAIN"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "#minecraft:impermeable",
+          "#c:glass_panes",
+          "#minecraft:mineable/pickaxe"
+        ],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "BLOCK_SIDES",
+      "gravity": 0.9,
+      "windStrength": 0.5,
+      "stormWindStrength": 1.0,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.9,
+      "size": 0.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:rain_0",
+        "particlerain:rain_1",
+        "particlerain:rain_2",
+        "particlerain:rain_3"
+      ],
+      "tintType": "NONE",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "particlerain:shrub",
+      "usePresetParticle": true,
+      "id": "shrub",
+      "enabled": true,
+      "density": 5.0E-4,
+      "weather": "DURING_WEATHER",
+      "precipitation": [
+        "NONE"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "#minecraft:camel_sand_step_sound_blocks",
+          "#minecraft:sand",
+          "#minecraft:terracotta",
+          "#c:sandstone_blocks"
+        ],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "WORLD_SURFACE",
+      "gravity": 0.9,
+      "windStrength": 0.5,
+      "stormWindStrength": 1.0,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.9,
+      "size": 0.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:rain_0",
+        "particlerain:rain_1",
+        "particlerain:rain_2",
+        "particlerain:rain_3"
+      ],
+      "tintType": "NONE",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "particlerain:mist",
+      "usePresetParticle": true,
+      "id": "mist_after_rain",
+      "enabled": true,
+      "density": 0.1,
+      "weather": "AFTER_WEATHER",
+      "precipitation": [
+        "RAIN"
+      ],
+      "biomeList": {
+        "entries": [],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "#minecraft:dirt"
+        ],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "WORLD_SURFACE",
+      "gravity": 0.9,
+      "windStrength": 0.5,
+      "stormWindStrength": 1.0,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.9,
+      "size": 0.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:rain_0",
+        "particlerain:rain_1",
+        "particlerain:rain_2",
+        "particlerain:rain_3"
+      ],
+      "tintType": "NONE",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    },
+    {
+      "presetParticleId": "particlerain:mist",
+      "usePresetParticle": true,
+      "id": "mist",
+      "enabled": true,
+      "density": 0.05,
+      "weather": "ALWAYS",
+      "precipitation": [
+        "RAIN"
+      ],
+      "biomeList": {
+        "entries": [
+          "#c:is_wet/overworld",
+          "#c:is_spooky"
+        ],
+        "isWhitelist": true
+      },
+      "blockList": {
+        "entries": [
+          "#minecraft:dirt"
+        ],
+        "isWhitelist": true
+      },
+      "needsSkyAccess": true,
+      "spawnPos": "WORLD_SURFACE",
+      "gravity": 0.9,
+      "windStrength": 0.5,
+      "stormWindStrength": 1.0,
+      "rotationAmount": 0.0,
+      "lifetime": 3000,
+      "opacity": 0.9,
+      "size": 0.5,
+      "constantScreenSize": false,
+      "renderType": "TRANSLUCENT",
+      "spriteLocations": [
+        "particlerain:rain_0",
+        "particlerain:rain_1",
+        "particlerain:rain_2",
+        "particlerain:rain_3"
+      ],
+      "tintType": "NONE",
+      "customTint": "#000000",
+      "rotationType": "COPY_CAMERA"
+    }
+  ],
+  "shrub": {
+    "gravity": 0.2,
+    "windStrength": 0.3,
+    "stormWindStrength": 0.5,
+    "size": 0.5,
+    "rotationAmount": 0.6,
+    "bounciness": 0.2
+  },
+  "ripple": {
+    "opacity": 0.8,
+    "size": 0.25,
+    "resolution": 16,
+    "useResourcepackResolution": true
+  },
+  "streak": {
+    "opacity": 0.9,
+    "size": 0.5
+  },
+  "mist": {
+    "lifetime": 200,
+    "opacity": 1.0,
+    "size": 3.0,
+    "renderStyle": "BLENDED"
+  }
+}

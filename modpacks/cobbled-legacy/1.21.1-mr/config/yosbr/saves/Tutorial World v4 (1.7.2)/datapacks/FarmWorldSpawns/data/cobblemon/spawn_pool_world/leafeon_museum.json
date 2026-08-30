@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "leafeon_museum",
+            "pokemon": "leafeon",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "20-35",
+            "weight": 600.00,
+            "condition": {
+                "canSeeSky": true,
+                "timeRange": "day",
+                "maxX": 41,
+                "minX": -221,
+                "maxZ": 648,
+                "minZ": 424,
+                "maxY": 105,
+                "minY": 56,
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+                ]
+            }
+        }
+    ]
+}

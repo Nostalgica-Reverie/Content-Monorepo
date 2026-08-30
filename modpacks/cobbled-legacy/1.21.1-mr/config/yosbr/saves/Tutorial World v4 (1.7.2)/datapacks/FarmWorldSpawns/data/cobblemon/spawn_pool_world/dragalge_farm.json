@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "dragalge_farm",
+            "pokemon": "dragalge",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "50-65",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 386,
+		"minX": 193,
+		"maxZ": -251,
+		"minZ": -444,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:kelp"
+		]
+            }
+        }
+    ]
+}

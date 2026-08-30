@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "huntail_farm",
+            "pokemon": "huntail",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "37-45",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "night",
+		"maxX": 536,
+		"minX": 45,
+		"maxZ": -83,
+		"minZ": -515,
+                "biomes": [
+                    "#minecraft:is_ocean",
+                    "#minecraft:is_deep_ocean"
+		]
+            }
+        }
+    ]
+}

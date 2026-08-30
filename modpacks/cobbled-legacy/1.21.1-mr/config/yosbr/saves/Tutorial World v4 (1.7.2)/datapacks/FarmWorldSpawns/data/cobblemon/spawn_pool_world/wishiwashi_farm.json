@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "wishiwashi_farm",
+            "pokemon": "wishiwashi",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "36-47",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -296,
+		"minX": -454,
+		"maxZ": -30,
+		"minZ": -250,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

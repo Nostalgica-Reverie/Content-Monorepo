@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "dragalge_fish2",
+            "pokemon": "dragalge",
+           "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "42-49",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -302,
+		"minX": -349,
+		"maxZ": 750,
+		"minZ": 721,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

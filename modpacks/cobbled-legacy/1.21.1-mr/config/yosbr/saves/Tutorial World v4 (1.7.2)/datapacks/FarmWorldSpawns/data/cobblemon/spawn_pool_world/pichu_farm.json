@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "pichu_farm",
+            "pokemon": "pichu",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "5-10",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 321,
+		"minX": 31,
+		"maxZ": 59,
+		"minZ": -164,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass",
+                    "minecraft:fern",
+                    "minecraft:large_fern",
+                    "minecraft:tall_grass"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "binacle_ride2",
+            "pokemon": "binacle",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "common",
+            "level": "12-38",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -302,
+		"minX": -349,
+		"maxZ": 750,
+		"minZ": 721,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

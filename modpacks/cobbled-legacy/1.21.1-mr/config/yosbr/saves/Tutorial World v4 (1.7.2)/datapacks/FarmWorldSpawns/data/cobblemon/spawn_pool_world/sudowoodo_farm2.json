@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "sudowoodo_farm",
+            "pokemon": "sudowoodo",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-35",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -302,
+		"minX": -418,
+		"maxZ": 7,
+		"minZ": -41,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

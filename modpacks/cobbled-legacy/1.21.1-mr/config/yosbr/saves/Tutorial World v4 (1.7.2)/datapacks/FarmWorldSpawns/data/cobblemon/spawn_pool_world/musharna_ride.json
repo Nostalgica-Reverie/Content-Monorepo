@@ -1,0 +1,38 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "musharna_ride",
+            "pokemon": "musharna",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "33-48",
+            "weight": 800.00,
+            "condition": {
+                "canSeeSky": true,
+                "timeRange": "night",
+                "maxX": -118,
+                "minX": -148,
+                "maxZ": 621,
+                "minZ": 595,
+                "maxY": 85,
+                "minY": 68,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:deepslate",
+                    "minecraft:andesite",
+                    "minecraft:grass_block"
+                ]
+            }
+        }
+    ]
+}

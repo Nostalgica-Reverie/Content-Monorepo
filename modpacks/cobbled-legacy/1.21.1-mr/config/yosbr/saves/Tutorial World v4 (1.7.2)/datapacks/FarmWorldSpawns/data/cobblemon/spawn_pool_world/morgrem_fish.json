@@ -1,0 +1,39 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "morgrem_fish",
+            "pokemon": "morgrem",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "32-41",
+            "weight": 1000.00,
+            "condition": {
+                "canSeeSky": false,
+		        "timeRange": "night",
+                "maxX": 43,
+                "minX": -81,
+                "maxZ": 743,
+                "minZ": 602,
+                "maxY": 146,
+                "minY": 69,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:tuff",
+                    "minecraft:cyan_terracotta",
+                    "minecraft:moss_block",
+                    "minecraft:moss_carpet"
+                ]
+            }
+        }
+    ]
+}

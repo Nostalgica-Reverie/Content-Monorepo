@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "dusknoir_farm",
+            "pokemon": "dusknoir",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "56-68",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "night",
+		"maxX": -33,
+		"minX": -79,
+		"maxZ": -58,
+		"minZ": -94,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

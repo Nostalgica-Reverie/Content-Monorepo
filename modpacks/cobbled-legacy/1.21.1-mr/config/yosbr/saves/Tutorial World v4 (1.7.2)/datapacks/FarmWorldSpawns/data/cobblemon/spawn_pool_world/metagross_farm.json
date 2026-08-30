@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "metagross_farm",
+            "pokemon": "metagross",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "51-62",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -324,
+		"minX": -384,
+		"maxZ": 74,
+		"minZ": 31,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:tuff"
+		]
+            }
+        }
+    ]
+}

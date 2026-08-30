@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "roggenrola_museum",
+            "pokemon": "roggenrola",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "15-23",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": false,
+        "maxX": 416,
+        "minX": 361,
+        "maxZ": 754,
+        "minZ": 736,
+        "maxY": 104,
+        "minY": 89,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:smooth_sandstone"
+		]
+            }
+        }
+    ]
+}

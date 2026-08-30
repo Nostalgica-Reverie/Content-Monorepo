@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "clobbopus_ride2",
+            "pokemon": "clobbopus",
+            "presets": [
+                "underwater"
+            ],
+           "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "17-34",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -581,
+		"minX": -870,
+		"maxZ": 10,
+		"minZ": -637,
+        "maxY": 85,
+        "minY": 35,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+        ]
+            }
+        }
+    ]
+}

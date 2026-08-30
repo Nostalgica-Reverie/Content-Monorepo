@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "fletchling_farm",
+            "pokemon": "fletchling",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "4-8",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 8,
+		"minX": -205,
+		"maxZ": -205,
+		"minZ": -428,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:oak_wood",
+                    "minecraft:oak_log"
+		]
+            }
+        }
+    ]
+}

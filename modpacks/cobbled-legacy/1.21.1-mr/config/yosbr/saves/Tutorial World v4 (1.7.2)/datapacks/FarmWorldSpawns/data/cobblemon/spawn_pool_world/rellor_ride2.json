@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "rellor_ride2",
+            "pokemon": "rellor",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "12-35",
+            "weight": 1000.00,
+            "condition": {
+       "maxX": 412,
+        "minX": 108,
+        "maxZ": 840,
+        "minZ": 621,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:red_sand",
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

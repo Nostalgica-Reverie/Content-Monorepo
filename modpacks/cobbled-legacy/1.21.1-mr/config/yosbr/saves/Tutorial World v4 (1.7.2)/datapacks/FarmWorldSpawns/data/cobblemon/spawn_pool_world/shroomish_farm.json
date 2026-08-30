@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "shroomish_farm",
+            "pokemon": "shroomish",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "13-18",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 131,
+		"minX": 10,
+		"maxZ": -240,
+		"minZ": -366,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:cherry_log"
+		]
+            }
+        }
+    ]
+}

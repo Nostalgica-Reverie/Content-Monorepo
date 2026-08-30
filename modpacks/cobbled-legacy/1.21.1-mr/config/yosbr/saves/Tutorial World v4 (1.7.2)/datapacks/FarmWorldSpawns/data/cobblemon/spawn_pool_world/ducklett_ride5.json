@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "ducklett_ride5",
+            "pokemon": "ducklett",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-34",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -220,
+		"minX": -271,
+		"maxZ": -121,
+		"minZ": -199,
+        "maxY": 95,
+        "minY": 75
+            }
+        }
+    ]
+}

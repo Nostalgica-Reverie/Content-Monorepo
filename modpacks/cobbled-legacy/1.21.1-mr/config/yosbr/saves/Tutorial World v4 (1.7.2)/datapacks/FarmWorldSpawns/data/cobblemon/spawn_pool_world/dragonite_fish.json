@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "dragonite_fish",
+           "pokemon": "dragonite",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "55-60",
+            "weight": 600.00,
+            "condition": {
+		"maxX": -406,
+		"minX": -461,
+        "maxY": 5,
+        "minY": -42,
+		"maxZ": 707,
+		"minZ": 656,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+        "neededNearbyBlocks": [
+            "minecraft:moss_block",
+            "minecraft:mangrove_roots"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,83 @@
+{
+	"wakeSpawningRules": {
+		"boat_wake_rules": "WAKES_AND_SPLASHES",
+		"mobs_wake_rules": "ONLY_WAKES",
+		"other_players_wake_rules": "ONLY_WAKES",
+		"player_wake_rules": "ONLY_WAKES",
+		"items_wake_rules": "ONLY_WAKES"
+	},
+	"wakesInRunningWater": false,
+	"waveSpeed": 0.95,
+	"initialStrength": 20,
+	"paddleStrength": 100,
+	"splashStrength": 100,
+	"minimumProducerVelocity": 0.1,
+	"waveDecay": 0.5,
+	"spawnParticles": false,
+	"floodFillDistance": 3,
+	"use9PointStencil": true,
+	"ticksBeforeFill": 2,
+	"drawDebugBoxes": false,
+	"renderWakes": true,
+	"spawnWakes": true,
+	"renderType": "AUTO",
+	"wakeResolution": "SIXTEEN",
+	"wakeOpacity": 1.0,
+	"useWaterBlending": true,
+	"blendMode": "DEFAULT",
+	"colorIntervals": [
+		{
+			"color": "TRANSPARENT",
+			"lower": -50,
+			"upper": -45
+		},
+		{
+			"color": "DARK_GRAY",
+			"lower": -45,
+			"upper": -35
+		},
+		{
+			"color": "GRAY",
+			"lower": -35,
+			"upper": -30
+		},
+		{
+			"color": "LIGHT_GRAY",
+			"lower": -30,
+			"upper": -15
+		},
+		{
+			"color": "TRANSPARENT",
+			"lower": -15,
+			"upper": 2
+		},
+		{
+			"color": "LIGHT_GRAY",
+			"lower": 2,
+			"upper": 10
+		},
+		{
+			"color": "WHITE",
+			"lower": 10,
+			"upper": 20
+		},
+		{
+			"color": "LIGHT_GRAY",
+			"lower": 20,
+			"upper": 40
+		},
+		{
+			"color": "GRAY",
+			"lower": 40,
+			"upper": 50
+		}
+	],
+	"renderSplashPlane": false,
+	"splashPlaneWidth": 3.0,
+	"splashPlaneHeight": 1.5,
+	"splashPlaneDepth": 2.0,
+	"splashPlaneResolution": 5,
+	"maxSplashPlaneVelocity": 0.5,
+	"splashPlaneScale": 1.0,
+	"splashPlaneOffset": 0.0
+}

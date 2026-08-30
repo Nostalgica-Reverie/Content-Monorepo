@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "toucannon_fish",
+            "pokemon": "toucannon",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "28-42",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 69,
+		"minX": -166,
+		"maxZ": 796,
+		"minZ": 540,
+        "maxY": 235,
+        "minY": 62,
+                "biomes": [
+                    "#minecraft:is_jungle"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:jungle_leaves"
+		]
+            }
+        }
+    ]
+}

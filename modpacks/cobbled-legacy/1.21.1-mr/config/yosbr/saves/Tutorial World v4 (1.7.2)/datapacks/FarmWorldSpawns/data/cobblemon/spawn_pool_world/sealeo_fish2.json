@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "sealeo_fish2",
+           "pokemon": "sealeo",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "29-44",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -275,
+		"minX": -544,
+		"maxZ": 860,
+		"minZ": 540,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

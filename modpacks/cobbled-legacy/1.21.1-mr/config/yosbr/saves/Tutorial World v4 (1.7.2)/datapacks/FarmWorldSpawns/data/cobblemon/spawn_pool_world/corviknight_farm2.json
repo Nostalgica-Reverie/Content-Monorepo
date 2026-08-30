@@ -1,0 +1,39 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "corviknight_farm",
+            "pokemon": "corviknight",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "45-60",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 453,
+		"minX": -611,
+		"maxZ": 570,
+		"minZ": -559,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:snow_block"
+		]
+            },
+            "anticondition": {
+                "neededNearbyBlocks": [
+                    "minecraft:ice",
+                    "minecraft:packed_ice",
+                    "minecraft:blue_ice"
+		]
+            }
+        }
+    ]
+}

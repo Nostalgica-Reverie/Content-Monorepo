@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "riolu_farm",
+            "pokemon": "riolu",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "14-20",
+            "weight": 700.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 131,
+		"minX": 10,
+		"maxZ": -240,
+		"minZ": -366,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

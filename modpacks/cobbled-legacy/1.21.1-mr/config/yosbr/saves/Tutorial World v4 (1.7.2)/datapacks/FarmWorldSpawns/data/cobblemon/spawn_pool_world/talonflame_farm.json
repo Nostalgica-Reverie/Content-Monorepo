@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "talonflame_farm",
+            "pokemon": "talonflame",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "37-49",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 8,
+		"minX": -205,
+		"maxZ": -205,
+		"minZ": -428,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:oak_wood",
+                    "minecraft:oak_log"
+		]
+            }
+        }
+    ]
+}

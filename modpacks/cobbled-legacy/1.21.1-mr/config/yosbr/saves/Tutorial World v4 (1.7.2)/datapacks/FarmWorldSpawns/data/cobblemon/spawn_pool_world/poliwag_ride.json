@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "poliwag_ride",
+            "pokemon": "poliwag",
+            "presets": [
+                "underwater"
+            ],
+           "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "5-30",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -621,
+		"minX": -743,
+		"maxZ": 347,
+		"minZ": 204,
+        "maxY": 67,
+        "minY": 40,
+                "biomes": [
+                    "#minecraft:river"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:dirt",
+                    "minecraft:sand",
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

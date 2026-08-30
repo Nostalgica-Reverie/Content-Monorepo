@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "klefki_museum",
+            "pokemon": "klefki",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "20-29",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": false,
+        "maxX": 416,
+        "minX": 361,
+        "maxZ": 754,
+        "minZ": 736,
+        "maxY": 104,
+        "minY": 89,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

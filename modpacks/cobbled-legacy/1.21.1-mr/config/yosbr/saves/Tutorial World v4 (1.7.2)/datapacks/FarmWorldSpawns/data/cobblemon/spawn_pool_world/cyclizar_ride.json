@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "cyclizar_ride",
+            "pokemon": "cyclizar",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "28-49",
+            "weight": 800.00,
+            "condition": {
+                "canSeeSky": true,
+                "maxX": 41,
+                "minX": -221,
+                "maxZ": 648,
+                "minZ": 424,
+                "maxY": 105,
+                "minY": 56,
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+                ]
+            }
+        }
+    ]
+}

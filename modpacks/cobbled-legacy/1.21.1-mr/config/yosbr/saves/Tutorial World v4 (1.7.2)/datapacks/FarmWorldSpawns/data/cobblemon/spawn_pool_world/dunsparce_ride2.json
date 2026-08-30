@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "dunsparce_ride2",
+            "pokemon": "dunsparce",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "8-31",
+            "weight": 800.00,
+            "condition": {
+       "maxX": 412,
+        "minX": 108,
+        "maxZ": 840,
+        "minZ": 621,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:acacia_wood",
+                    "minecraft:acacia_leaves",
+                    "minecraft:mangrove_leaves",
+                    "minecraft:mangrove_roots",
+                    "minecraft:sandstone"
+		]
+            }
+        }
+    ]
+}

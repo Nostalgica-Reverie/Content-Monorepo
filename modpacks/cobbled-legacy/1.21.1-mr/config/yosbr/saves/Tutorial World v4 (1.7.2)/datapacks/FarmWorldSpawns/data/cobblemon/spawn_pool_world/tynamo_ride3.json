@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "tynamo_ride3",
+            "pokemon": "tynamo",
+            "presets": [
+                "water_surface"
+            ],
+           "type": "pokemon",
+            "context": "surface",
+            "bucket": "common",
+            "level": "16-39",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -581,
+		"minX": -870,
+		"maxZ": 10,
+		"minZ": -637,
+        "maxY": 85,
+        "minY": 35,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+        ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+    {
+            "id": "braviary_ride5",
+            "pokemon": "braviary",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "54-65",
+            "weight": 800.00,
+            "condition": {
+        "canSeeSky": true,
+        "maxX": 147,
+        "minX": -2,
+        "maxY": 132,
+        "minY": 98,
+        "maxZ": 392,
+        "minZ": 311
+             
+            }
+        }
+    ]
+}

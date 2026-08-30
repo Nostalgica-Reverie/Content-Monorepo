@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "raichualolan_farm",
+            "pokemon": "raichu alolan",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "48-63",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 453,
+		"minX": -611,
+		"maxZ": 570,
+		"minZ": -559,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:dandelion",
+                    "minecraft:sunflower"
+		]
+            }
+        }
+    ]
+}

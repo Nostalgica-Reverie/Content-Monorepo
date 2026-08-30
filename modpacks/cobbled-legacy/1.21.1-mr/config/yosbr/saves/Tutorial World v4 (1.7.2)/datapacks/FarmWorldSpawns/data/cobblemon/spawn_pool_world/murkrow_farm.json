@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "murkrow_farm",
+            "pokemon": "murkrow",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "10-16",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 43,
+		"minX": 17,
+		"maxZ": 68,
+		"minZ": 33,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:farmland"
+		]
+            }
+        }
+    ]
+}

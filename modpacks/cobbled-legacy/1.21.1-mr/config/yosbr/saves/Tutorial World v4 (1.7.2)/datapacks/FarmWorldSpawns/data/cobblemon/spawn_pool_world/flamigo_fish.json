@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "flamigo_fish",
+            "pokemon": "flamigo",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "22-43",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -236,
+		"minX": -357,
+		"maxZ": 500,
+		"minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud",
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

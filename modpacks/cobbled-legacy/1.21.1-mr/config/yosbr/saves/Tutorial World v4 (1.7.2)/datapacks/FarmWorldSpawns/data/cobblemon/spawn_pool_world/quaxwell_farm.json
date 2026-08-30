@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "quaxwell_farm",
+            "pokemon": "quaxwell",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "16-24",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -203,
+		"minX": -244,
+		"maxZ": 156,
+		"minZ": 116,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

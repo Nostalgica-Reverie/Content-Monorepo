@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "luxio_farm",
+            "pokemon": "luxio",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "15-22",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -159,
+		"minX": -216,
+		"maxZ": 326,
+		"minZ": 206,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:tall_grass"
+		]
+            }
+        }
+    ]
+}

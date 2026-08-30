@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "garbodor_ride2",
+            "pokemon": "garbodor",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "36-60",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -627,
+		"minX": -670,
+		"maxZ": 172,
+		"minZ": 93,
+        "maxY": 94,
+        "minY": 66,
+                "biomes": [
+                    "#minecraft:is_savanna"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block",
+                    "minecraft:dark_oak_wood",
+                    "minecraft:dried_kelp_block"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "mismagius_fish",
+            "pokemon": "mismagius",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "39-50",
+            "weight": 800.00,
+            "condition": {
+                "canSeeSky": true,
+                "timeRange": "night",
+                "maxX": -236,
+                "minX": -357,
+                "maxZ": 500,
+                "minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:spruce_wood",
+                    "minecraft:spruce_planks",
+                    "minecraft:stripped_spruce_log"
+                ]
+            }
+        }
+    ]
+}

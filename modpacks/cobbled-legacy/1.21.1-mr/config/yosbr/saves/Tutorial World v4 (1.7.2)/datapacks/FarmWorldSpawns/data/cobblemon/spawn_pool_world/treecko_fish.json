@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "treecko_fish",
+            "pokemon": "treecko",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "5-31",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": false,
+		        "timeRange": "night",
+		"maxX": 69,
+		"minX": -166,
+		"maxZ": 796,
+		"minZ": 540,
+        "maxY": 235,
+        "minY": 62,
+                "biomes": [
+                    "#minecraft:is_jungle"
+		]
+            }
+        }
+    ]
+}

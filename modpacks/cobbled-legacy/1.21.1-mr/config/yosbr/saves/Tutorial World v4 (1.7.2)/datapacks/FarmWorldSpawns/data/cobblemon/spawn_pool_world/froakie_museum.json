@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "froakie_museum",
+            "pokemon": "froakie_museum",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "5-10",
+            "weight": 800.00,
+            "condition": {
+                "canSeeSky": true,
+                "maxX": 408,
+                "minX": 385,
+                "maxZ": 654,
+                "minZ": 609,
+                "maxY": 85,
+                "minY": 68,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:water"
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "glaceon_ride",
+            "pokemon": "glaceon",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "35-55",
+            "weight": 600.00,
+            "condition": {
+        "canSeeSky": false,
+		"maxX": -413,
+		"minX": -543,
+		"maxZ": -97,
+		"minZ": -296,
+        "maxY": 163,
+        "minY": 76,
+        "neededNearbyBlocks": [
+                    "minecraft:snow_block",
+                    "minecraft:packed_ice"
+                ]
+            }
+        }
+    ]
+}

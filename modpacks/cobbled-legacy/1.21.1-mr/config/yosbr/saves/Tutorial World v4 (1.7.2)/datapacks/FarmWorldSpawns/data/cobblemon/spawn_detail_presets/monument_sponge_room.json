@@ -1,0 +1,14 @@
+{
+  "context": "submerged",
+  "condition": {
+    "canSeeSky":false,
+    "neededNearbyBlocks": [
+      "minecraft:wet_sponge"
+    ],
+    "biomes": [
+      "#minecraft:is_ocean"
+    ],
+    "maxY": 63,
+    "minY": 0
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "numel_farm",
+            "pokemon": "numel",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "20-27",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 170,
+		"minX": 71,
+		"maxZ": 663,
+		"minZ": 537,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:red_sand"
+		]
+            }
+        }
+    ]
+}

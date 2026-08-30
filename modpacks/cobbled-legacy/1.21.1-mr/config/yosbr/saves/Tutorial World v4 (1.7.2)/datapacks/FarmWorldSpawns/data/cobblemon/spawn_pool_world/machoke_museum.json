@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "machoke_museum",
+            "pokemon": "machoke",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "30-40",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -30,
+		"minX": -120,
+		"maxZ": 949,
+		"minZ": 893,
+        "maxY": 89,
+        "minY": 70,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

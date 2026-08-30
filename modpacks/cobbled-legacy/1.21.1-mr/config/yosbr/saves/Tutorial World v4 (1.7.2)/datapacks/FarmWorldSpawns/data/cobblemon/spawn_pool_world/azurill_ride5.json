@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "azurill_ride5",
+            "pokemon": "azurill",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "4-11",
+            "weight": 1000.00,
+            "condition": {
+                "maxX": -406,
+                "minX": -461,
+                "maxZ": 707,
+                "minZ": 656,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ]
+
+            }
+        }
+    ]
+}

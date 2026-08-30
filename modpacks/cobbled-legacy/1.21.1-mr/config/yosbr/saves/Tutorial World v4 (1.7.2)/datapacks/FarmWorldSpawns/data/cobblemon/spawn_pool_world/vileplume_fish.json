@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "vileplume_fish",
+            "pokemon": "vileplume",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-49",
+            "weight": 800.00,
+            "condition": {
+        "canSeeSky": true,
+        "timeRange": "night",
+        "maxX": -52,
+        "minX": -175,
+        "maxZ": 759,
+        "minZ": 601,
+        "maxY": 138,
+        "minY": 99,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:grass"
+		]
+            }
+        }
+    ]
+}

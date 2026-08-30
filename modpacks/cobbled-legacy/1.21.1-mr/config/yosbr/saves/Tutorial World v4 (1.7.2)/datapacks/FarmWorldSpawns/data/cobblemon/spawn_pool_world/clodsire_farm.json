@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "clodsire_farm",
+            "pokemon": "clodsire",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "22-30",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -244,
+		"minX": -361,
+		"maxZ": 483,
+		"minZ": 405,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

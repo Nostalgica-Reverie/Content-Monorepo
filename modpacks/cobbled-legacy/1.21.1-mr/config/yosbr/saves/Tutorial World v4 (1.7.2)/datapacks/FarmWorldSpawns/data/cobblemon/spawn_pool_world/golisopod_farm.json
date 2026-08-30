@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "golisopod_farm",
+            "pokemon": "golisopod",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "32-41",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 231,
+		"minX": 1,
+		"maxZ": -165,
+		"minZ": -500,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

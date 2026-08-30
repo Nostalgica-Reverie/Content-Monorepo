@@ -1,0 +1,25 @@
+version = 1
+enableSodiumMenu = true
+cloudCulling = true
+signTextCulling = true
+rainCulling = true
+useBlockStateCulling = false
+useCustomItemFrameRenderer = true
+itemFrameMapCulling = true
+useItemFrameLOD = true
+itemFrameLODRange = 20
+useItemFrame3FaceCulling = true
+itemFrame3FaceCullingRange = 8.0
+leavesCullingMode = "DEFAULT"
+leavesCullingAmount = 2
+includeMangroveRoots = false
+powderSnowCulling = true
+endGatewayCulling = false
+beaconBeamCulling = true
+entityModelCulling = false
+useOnModdedBlocksByDefault = true
+
+[modCompatibility]
+cobblemon = true
+minecraft = true
+visualoverhaul = true

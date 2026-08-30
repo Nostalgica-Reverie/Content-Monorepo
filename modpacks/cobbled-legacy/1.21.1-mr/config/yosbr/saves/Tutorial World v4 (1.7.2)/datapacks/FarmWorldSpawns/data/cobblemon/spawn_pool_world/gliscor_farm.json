@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "gliscor_farm",
+            "pokemon": "gliscor",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "41-47",
+            "weight": 700.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -33,
+		"minX": -79,
+		"maxZ": -58,
+		"minZ": -94,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:dark_oak_leaves"
+		]
+            }
+        }
+    ]
+}

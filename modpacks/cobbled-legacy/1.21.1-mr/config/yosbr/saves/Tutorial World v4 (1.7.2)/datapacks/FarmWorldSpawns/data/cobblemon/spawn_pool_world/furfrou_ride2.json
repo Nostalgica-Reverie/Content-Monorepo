@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "furfrou_ride2",
+            "pokemon": "furfrou",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "23-38",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -104,
+		"minX": -207,
+		"maxZ": 64,
+		"minZ": -89,
+        "maxY": 125,
+        "minY": 65,
+                "neededNearbyBlocks": [
+                    "minecraft:wheat"
+		]
+            }
+        }
+    ]
+}

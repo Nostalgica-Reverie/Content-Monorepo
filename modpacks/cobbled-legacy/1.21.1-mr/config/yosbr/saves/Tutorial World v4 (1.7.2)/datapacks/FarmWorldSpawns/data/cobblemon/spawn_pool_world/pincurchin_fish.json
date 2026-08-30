@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "pincurchin_fish",
+            "pokemon": "pincurchin",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "uncommon",
+            "level": "25-44",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -169,
+		"minX": -281,
+		"maxZ": 642,
+		"minZ": 506,
+        "maxY": 72,
+        "minY": 50,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "metapod_farm",
+            "pokemon": "metapod",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "7-9",
+            "weight": 500.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -34,
+		"minX": -207,
+		"maxZ": 217,
+		"minZ": 86,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:birch_wood"
+		]
+            }
+        }
+    ]
+}

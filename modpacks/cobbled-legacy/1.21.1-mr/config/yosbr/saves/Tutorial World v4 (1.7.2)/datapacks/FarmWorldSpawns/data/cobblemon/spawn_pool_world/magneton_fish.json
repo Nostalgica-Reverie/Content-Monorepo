@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "magneton_fish",
+            "pokemon": "magneton",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "30-47",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -154,
+		"minX": -193,
+		"maxZ": 605,
+		"minZ": 573,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:redstone",
+                    "minecraft:redstone_lamp",
+                    "minecraft:andesite"
+		]
+            }
+        }
+    ]
+}

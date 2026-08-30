@@ -1,0 +1,195 @@
+# LambDynamicLights configuration.
+# The dynamic lights mode
+mode = "fancy"
+
+# Light sources settings.
+[light_sources]
+	# Enables water-sensitive light sources check. This means that water-sensitive items will not light up when submerged in water.
+	water_sensitive_check = true
+	# Enable block entities light source.
+	block_entities = true
+	# Enable entities light source.
+	entities = true
+	self = true
+	# TNT lighting mode. May be off, simple or fancy.
+	tnt = "off"
+	# Creeper lighting mode. May be off, simple or fancy.
+	creeper = "simple"
+
+			[light_sources.settings.entities.minecraft]
+				zombie_horse = true
+				axolotl = true
+				egg = true
+				zoglin = true
+				spawner_minecart = true
+				allay = true
+				llama = true
+				mule = true
+				bat = true
+				husk = true
+				experience_bottle = true
+				camel = true
+				rabbit = true
+				firework_rocket = true
+				silverfish = true
+				giant = true
+				drowned = true
+				item = true
+				goat = true
+				horse = true
+				vindicator = true
+				minecart = true
+				spectral_arrow = true
+				llama_spit = true
+				mooshroom = true
+				glow_item_frame = false
+				tnt = true
+				snowball = true
+				parrot = true
+				creeper = true
+				lightning_bolt = true
+				tadpole = true
+				ravager = true
+				evoker_fangs = true
+				chest_minecart = true
+				tropical_fish = true
+				slime = true
+				pillager = true
+				area_effect_cloud = true
+				piglin = true
+				blaze = true
+				end_crystal = true
+				endermite = true
+				zombie = true
+				ender_pearl = true
+				item_display = true
+				guardian = true
+				fireball = true
+				illusioner = true
+				wither_skull = true
+				eye_of_ender = true
+				wolf = true
+				zombie_villager = true
+				tnt_minecart = true
+				block_display = true
+				elder_guardian = true
+				chest_boat = true
+				boat = true
+				small_fireball = true
+				strider = true
+				cave_spider = true
+				witch = true
+				cod = true
+				snow_golem = true
+				spider = true
+				command_block_minecart = true
+				panda = true
+				bee = true
+				arrow = true
+				cow = true
+				magma_cube = true
+				pig = true
+				skeleton = true
+				frog = true
+				hoglin = true
+				armadillo = true
+				armor_stand = true
+				experience_orb = true
+				dolphin = true
+				stray = true
+				turtle = true
+				shulker = true
+				salmon = true
+				wandering_trader = true
+				vex = true
+				wither_skeleton = true
+				piglin_brute = true
+				ocelot = true
+				furnace_minecart = true
+				item_frame = true
+				phantom = true
+				ender_dragon = true
+				leash_knot = true
+				evoker = true
+				marker = true
+				glow_squid = true
+				warden = true
+				squid = true
+				shulker_bullet = true
+				enderman = true
+				dragon_fireball = true
+				chicken = true
+				sniffer = true
+				trader_llama = true
+				donkey = true
+				fox = true
+				iron_golem = true
+				zombified_piglin = true
+				cat = true
+				ghast = true
+				sheep = true
+				player = true
+				pufferfish = true
+				potion = true
+				trident = true
+				villager = true
+				skeleton_horse = true
+				fishing_bobber = true
+				polar_bear = true
+				hopper_minecart = true
+				falling_block = true
+				painting = true
+				interaction = true
+				wither = true
+
+			[light_sources.settings.entities.creeperoverhaul]
+				cave_creeper = true
+				savannah_creeper = true
+				desert_creeper = true
+				dripstone_creeper = true
+
+			[light_sources.settings.entities.cobblemon]
+				empty_pokeball = true
+				pokemon = true
+
+			[light_sources.settings.block_entities.minecraft]
+				bed = true
+				furnace = true
+				dropper = true
+				daylight_detector = true
+				jukebox = true
+				sign = true
+				brewing_stand = true
+				sculk_sensor = true
+				conduit = true
+				beehive = true
+				dispenser = true
+				smoker = true
+				lectern = true
+				skull = true
+				campfire = true
+				barrel = true
+				chest = true
+				piston = true
+				sculk_shrieker = true
+				end_portal = true
+				shulker_box = true
+				enchanting_table = true
+				banner = true
+				structure_block = true
+				sculk_catalyst = true
+				ender_chest = true
+				bell = true
+				end_gateway = true
+				comparator = true
+				beacon = true
+				command_block = true
+				jigsaw = true
+				hopper = true
+				mob_spawner = true
+				trapped_chest = true
+				blast_furnace = true
+
+			[light_sources.settings.block_entities.cobblemon]
+				healing_machine = true
+				pc = true

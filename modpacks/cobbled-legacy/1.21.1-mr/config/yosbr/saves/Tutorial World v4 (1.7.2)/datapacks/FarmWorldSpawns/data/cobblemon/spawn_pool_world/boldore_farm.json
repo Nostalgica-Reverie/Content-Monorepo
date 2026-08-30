@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "boldore_farm",
+            "pokemon": "boldore",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-35",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": false,
+		"maxX": -16,
+		"minX": -118,
+		"maxZ": 421,
+		"minZ": 312,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

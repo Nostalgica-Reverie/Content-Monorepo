@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "oinkologne_farm",
+            "pokemon": "oinkologne",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "23-30",
+            "weight": 500.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxY": 100,
+		"maxX": 453,
+		"minX": -611,
+		"maxZ": 570,
+		"minZ": -559,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

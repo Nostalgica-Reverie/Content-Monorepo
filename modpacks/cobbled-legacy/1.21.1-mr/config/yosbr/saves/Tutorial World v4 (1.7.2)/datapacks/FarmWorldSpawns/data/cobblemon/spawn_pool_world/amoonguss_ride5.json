@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "amoonguss_ride5",
+            "pokemon": "amoonguss",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "39-55",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 185,
+		"minX": -158,
+		"maxZ": 343,
+		"minZ": 134,
+        "maxY": 145,
+        "minY": 70,
+                "biomes": [
+                    "#minecraft:is_jungle"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "munna_ride3",
+            "pokemon": "munna",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-22",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -538,
+		"minX": -625,
+		"maxZ": 393,
+		"minZ": 264,
+        "maxY": 119,
+        "minY": 71,
+                "biomes": [
+                    "#minecraft:is_deep_ocean"
+		]
+            }
+        }
+    ]
+}

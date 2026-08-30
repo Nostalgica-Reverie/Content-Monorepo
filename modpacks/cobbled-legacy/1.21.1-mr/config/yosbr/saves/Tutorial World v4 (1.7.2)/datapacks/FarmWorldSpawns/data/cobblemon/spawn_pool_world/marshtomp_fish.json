@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "marshtomp_fish",
+            "pokemon": "marshtomp",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "16-35",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": false,
+		"maxX": 247,
+		"minX": 185,
+		"maxZ": 879,
+		"minZ": 781,
+        "maxY": 122,
+        "minY": 73,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

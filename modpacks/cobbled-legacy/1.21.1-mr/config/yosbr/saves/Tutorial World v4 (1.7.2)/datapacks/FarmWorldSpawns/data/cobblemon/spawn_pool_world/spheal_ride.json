@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "spheal_ride",
+            "pokemon": "spheal",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "9-29",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -581,
+		"minX": -870,
+		"maxZ": 10,
+		"minZ": -637,
+        "maxY": 85,
+        "minY": 35,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+        ],
+        "neededNearbyBlocks": [
+                    "minecraft:ice",
+                    "minecraft:packed_ice",
+                    "minecraft:blue_ice"
+                ]
+            }
+        }
+    ]
+}

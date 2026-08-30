@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "kilowattrel_fish",
+            "pokemon": "kilowattrel",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-39",
+            "weight": 800.00,
+            "condition": {
+                "maxX": -154,
+                "minX": -409,
+                "maxZ": 800,
+                "minZ": 500,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:dead_horn_coral_block",
+                    "minecraft:cobblestone",
+                    "minecraft:stone",
+                    "minecraft:andesite",
+                    "minecraft:gravel",
+                    "minecraft:tuff"
+                ]
+            }
+        }
+    ]
+}

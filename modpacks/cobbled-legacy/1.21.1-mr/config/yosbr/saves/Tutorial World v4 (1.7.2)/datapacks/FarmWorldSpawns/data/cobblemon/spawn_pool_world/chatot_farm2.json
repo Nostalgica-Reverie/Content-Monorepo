@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "chatot_farm2",
+            "pokemon": "chatot",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "15-23",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 305,
+		"minX": 139,
+		"maxZ": -146,
+		"minZ": -340,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:stripped_jungle_log"
+		]
+            }
+        }
+    ]
+}

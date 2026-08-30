@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "farigiraf_fish",
+            "pokemon": "farigiraf",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "32-51",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": 412,
+        "minX": 108,
+        "maxZ": 840,
+        "minZ": 621,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:acacia_wood",
+                    "minecraft:acacia_leaves",
+                    "minecraft:mangrove_leaves",
+                    "minecraft:mangrove_roots"
+		]
+            }
+        }
+    ]
+}

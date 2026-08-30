@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "ursaring_farm",
+            "pokemon": "ursaring",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-45",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 195,
+		"minX": 112,
+		"maxZ": 222,
+		"minZ": 96,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:birch_wood"
+		]
+            }
+        }
+    ]
+}

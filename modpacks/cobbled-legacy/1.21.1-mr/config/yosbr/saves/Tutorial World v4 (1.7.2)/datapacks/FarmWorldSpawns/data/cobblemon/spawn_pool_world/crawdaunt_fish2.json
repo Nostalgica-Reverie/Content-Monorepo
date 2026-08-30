@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "crawdaunt_fish2",
+            "pokemon": "crawdaunt",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "uncommon",
+            "level": "30-48",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -474,
+		"minX": -431,
+		"maxZ": 636,
+		"minZ": 592,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

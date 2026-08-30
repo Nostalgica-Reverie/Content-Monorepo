@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "chinchou_ride",
+            "pokemon": "chinchou",
+            "presets": [
+                "underwater"
+            ],
+           "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "8-33",
+            "weight": 1000.00,
+            "condition": {
+        "timRange": "night",
+		"maxX": -581,
+		"minX": -870,
+		"maxZ": 10,
+		"minZ": -637,
+        "maxY": 85,
+        "minY": 35,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+                ]
+            }
+        }
+    ]
+}

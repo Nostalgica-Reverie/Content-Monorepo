@@ -1,0 +1,41 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "bellossom_fish",
+            "pokemon": "bellossom",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-49",
+            "weight": 800.00,
+            "condition": {
+        "canSeeSky": true,
+        "timeRange": "day",
+        "maxX": -52,
+        "minX": -175,
+        "maxZ": 759,
+        "minZ": 601,
+        "maxY": 138,
+        "minY": 99,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:dandelion",
+                    "minecraft:poppy",
+                    "minecraft:allium",
+                    "minecraft:orange_tulip",
+                    "minecraft:red_tulip",
+                    "minecraft:blue_orchid"
+
+		]
+            }
+        }
+    ]
+}

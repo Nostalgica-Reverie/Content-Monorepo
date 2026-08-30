@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "steelix_farm2",
+            "pokemon": "steelix",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "32-38",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -324,
+		"minX": -384,
+		"maxZ": 74,
+		"minZ": 31,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:tuff"
+		]
+            }
+        }
+    ]
+}

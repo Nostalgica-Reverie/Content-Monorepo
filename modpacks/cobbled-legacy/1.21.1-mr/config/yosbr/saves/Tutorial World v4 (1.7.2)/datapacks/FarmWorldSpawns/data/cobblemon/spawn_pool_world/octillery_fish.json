@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "octillery_fish",
+            "pokemon": "octillery",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "common",
+            "level": "25-44",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -169,
+		"minX": -281,
+		"maxZ": 642,
+		"minZ": 506,
+        "maxY": 72,
+        "minY": 50,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "corsola_fish",
+            "pokemon": "corsola",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "common",
+            "level": "15-38",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -169,
+		"minX": -281,
+		"maxZ": 642,
+		"minZ": 506,
+        "maxY": 72,
+        "minY": 50,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:fire_coral_block",
+                    "minecraft:brain_coral_block",
+                    "minecraft:tube_coral_block",
+                    "minecraft:horn_coral_block",
+                    "minecraft:bubble_coral_block",
+                    "minecraft:fire_coral",
+                    "minecraft:brain_coral",
+                    "minecraft:tube_coral",
+                    "minecraft:horn_coral",
+                    "minecraft:bubble_coral"
+		]
+            }
+        }
+    ]
+}

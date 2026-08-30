@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "magmortar_museum",
+            "pokemon": "magmortar",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "49-66",
+            "weight": 800.00,
+            "condition": {
+        "maxX": 300,
+        "minX": 242,
+        "maxZ": 851,
+        "minZ": 746,
+        "maxY": 142,
+        "minY": 103,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:lava",
+                    "minecraft:magma_block"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "whirlipede_farm",
+            "pokemon": "whirlipede",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "22-25",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -230,
+		"minX": -373,
+		"maxZ": 507,
+		"minZ": 368,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mangrove_roots"
+		]
+            }
+        }
+    ]
+}

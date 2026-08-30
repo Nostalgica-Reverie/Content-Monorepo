@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "wiglett_fish",
+            "pokemon": "wiglett",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "2-27",
+            "weight": 1000.00,
+            "condition": {
+                "maxX": -154,
+                "minX": -409,
+                "maxZ": 800,
+                "minZ": 500,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:sand"
+                ]
+            }
+        }
+    ]
+}

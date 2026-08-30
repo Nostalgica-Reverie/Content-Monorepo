@@ -1,0 +1,8 @@
+type = user_variables
+
+variable {
+  name = is_daytime
+  value = 0
+  reset_on_launch = false
+}
+

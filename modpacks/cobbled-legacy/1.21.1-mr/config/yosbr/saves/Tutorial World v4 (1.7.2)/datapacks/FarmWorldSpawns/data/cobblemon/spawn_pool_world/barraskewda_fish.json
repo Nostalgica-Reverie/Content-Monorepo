@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "barraskewda_fish",
+            "pokemon": "barraskewda",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "26-49",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -169,
+		"minX": -281,
+		"maxZ": 642,
+		"minZ": 506,
+        "maxY": 72,
+        "minY": 50,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

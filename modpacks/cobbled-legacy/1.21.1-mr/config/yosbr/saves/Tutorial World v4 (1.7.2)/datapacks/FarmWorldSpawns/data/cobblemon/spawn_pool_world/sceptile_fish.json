@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "sceptile_fish",
+            "pokemon": "sceptile",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "16-42",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": false,
+		        "timeRange": "night",
+		"maxX": 69,
+		"minX": -166,
+		"maxZ": 796,
+		"minZ": 540,
+        "maxY": 235,
+        "minY": 62,
+                "biomes": [
+                    "#minecraft:is_jungle"
+		]
+            }
+        }
+    ]
+}

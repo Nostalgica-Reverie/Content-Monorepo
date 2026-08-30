@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "turtwig_farm2",
+            "pokemon": "turtwig",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "5-9",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 131,
+		"minX": 10,
+		"maxZ": -240,
+		"minZ": -366,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:cherry_wood"
+		]
+            }
+        }
+    ]
+}

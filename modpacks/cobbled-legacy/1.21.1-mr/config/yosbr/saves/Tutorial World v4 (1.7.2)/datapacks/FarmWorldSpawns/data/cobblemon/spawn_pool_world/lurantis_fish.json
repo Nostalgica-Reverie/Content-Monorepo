@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "lurantis_fish",
+            "pokemon": "fomantis",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "34-48",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 69,
+		"minX": -166,
+		"maxZ": 796,
+		"minZ": 540,
+        "maxY": 235,
+        "minY": 62,
+                "biomes": [
+                    "#minecraft:is_jungle"
+		]
+            }
+        }
+    ]
+}

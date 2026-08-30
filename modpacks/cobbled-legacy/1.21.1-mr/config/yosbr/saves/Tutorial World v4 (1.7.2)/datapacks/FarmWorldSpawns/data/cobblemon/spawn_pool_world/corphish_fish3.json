@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "corphish_fish3",
+           "pokemon": "corphish",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "common",
+            "level": "12-28",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -302,
+		"minX": -349,
+		"maxZ": 750,
+		"minZ": 721,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "tinkatink_farm",
+            "pokemon": "tinkatink",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "18-22",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -120,
+		"minX": -154,
+		"maxZ": 202,
+		"minZ": 179,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:rail"
+		]
+            }
+        }
+    ]
+}

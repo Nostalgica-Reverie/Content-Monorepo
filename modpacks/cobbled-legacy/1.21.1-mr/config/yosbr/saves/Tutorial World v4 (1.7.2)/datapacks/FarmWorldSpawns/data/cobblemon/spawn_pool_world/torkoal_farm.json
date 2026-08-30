@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "torkoal_farm",
+            "pokemon": "torkoal",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "45-57",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": false,
+		"maxX": 144,
+		"minX": -442,
+		"maxZ": 144,
+		"minZ": 60,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:lava",
+                    "minecraft:magma_block"
+		]
+            }
+        }
+    ]
+}

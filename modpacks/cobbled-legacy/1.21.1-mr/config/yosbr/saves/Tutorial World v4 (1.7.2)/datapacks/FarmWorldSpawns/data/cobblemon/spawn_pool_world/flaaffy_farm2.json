@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "flaaffy_farm2",
+            "pokemon": "flaaffy",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "15-22",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 105,
+		"minX": -3,
+		"maxZ": 396,
+		"minZ": 294,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:tuff"
+		]
+            }
+        }
+    ]
+}

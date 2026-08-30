@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "bagon_fish",
+            "pokemon": "bagon",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "5-30",
+            "weight": 600.00,
+            "condition": {
+                "maxX": -18,
+                "minX": -165,
+                "maxZ": 452,
+                "minZ": 291,
+                "maxY": 117,
+                "minY": 79,
+                "neededNearbyBlocks": [
+                    "minecraft:mud",
+                    "minecraft:cyan_terracotta",
+                    "minecraft:tuff"
+                ]
+            }
+        }
+    ]
+}

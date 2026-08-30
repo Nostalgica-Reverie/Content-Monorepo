@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "kilowattrel_fish2",
+           "pokemon": "kilowattrel",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "27-41",
+            "weight": 800.00,
+            "condition": {
+            "canSeeSky": true,
+		"maxX": -25,
+		"minX": -544,
+		"maxZ": 900,
+		"minZ": 474,
+                "biomes": [
+                    "#minecraft:beach",
+                    "#minecraft:ocean"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "bewear_farm2",
+            "pokemon": "bewear",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "37-46",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -235,
+		"minX": -294,
+		"maxZ": -117,
+		"minZ": -186,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:bamboo"
+		]
+            }
+        }
+    ]
+}

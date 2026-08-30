@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "stufful_farm2",
+            "pokemon": "stufful",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "16-22",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -235,
+		"minX": -294,
+		"maxZ": -117,
+		"minZ": -186,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:bamboo"
+		]
+            }
+        }
+    ]
+}

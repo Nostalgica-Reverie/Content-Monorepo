@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "gyarados_ride",
+            "pokemon": "gyarados",
+            "presets": [
+                "underwater"
+            ],
+           "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "20-60",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -621,
+		"minX": -743,
+		"maxZ": 347,
+		"minZ": 204,
+        "maxY": 67,
+        "minY": 40,
+                "biomes": [
+                    "#minecraft:river"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:dirt",
+                    "minecraft:sand",
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

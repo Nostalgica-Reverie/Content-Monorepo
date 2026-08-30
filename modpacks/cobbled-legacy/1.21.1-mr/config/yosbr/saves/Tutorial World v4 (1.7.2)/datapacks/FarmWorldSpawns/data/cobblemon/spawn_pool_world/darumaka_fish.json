@@ -1,0 +1,37 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "darumaka_fish",
+            "pokemon": "darumaka",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "7-32",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 513,
+		"minX": -77,
+		"maxZ": 1070,
+		"minZ": 598,
+        "maxY": 160,
+        "minY": 64,
+                "biomes": [
+                    "#minecraft:is_badlands",
+                    "#minecraft:is_eroded_badlands"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:red_terracotta",
+                    "minecraft:orange_terracotta",
+                    "minecraft:red_sand"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "yamper_farm",
+            "pokemon": "yamper",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-35",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "day",
+		"maxX": 107,
+		"minX": 35,
+		"maxZ": 132,
+		"minZ": 50,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:spruce_planks",
+                    "minecraft:stripped_spruce_log",
+                    "minecraft:stripped_oak_log",
+                    "minecraft:spruce_fence"
+		]
+            }
+        }
+    ]
+}

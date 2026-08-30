@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "poliwrath_fish",
+            "pokemon": "poliwrath",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "34-51",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -236,
+		"minX": -357,
+		"maxZ": 500,
+		"minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud",
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

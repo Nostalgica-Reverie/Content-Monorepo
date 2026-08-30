@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "barboach_farm2",
+            "pokemon": "barboach",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+	    "context": "submerged",
+            "bucket": "common",
+            "level": "14-19",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 23,
+		"minX": -61,
+		"maxZ": 123,
+		"minZ": 49,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

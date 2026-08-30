@@ -1,0 +1,17 @@
+{
+  "context": "grounded",
+  "condition": {
+      "canSeeSky": false,
+      "maxLight": 7,
+    "neededNearbyBlocks": [
+      "minecraft:dark_oak_planks",
+      "minecraft:red_carpet"
+     ],
+     "neededBaseBlocks": [
+	"minecraft:birch_planks"
+],
+     "biomes": [
+	"minecraft:dark_forest"
+]
+  }
+}

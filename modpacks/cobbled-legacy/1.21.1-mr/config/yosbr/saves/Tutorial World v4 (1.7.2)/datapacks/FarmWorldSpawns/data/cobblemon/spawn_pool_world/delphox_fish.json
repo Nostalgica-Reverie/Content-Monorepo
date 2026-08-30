@@ -1,0 +1,41 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "delphox_fish",
+            "pokemon": "delphox",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "36-53",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 513,
+		"minX": -77,
+		"maxZ": 1070,
+		"minZ": 598,
+        "maxY": 160,
+        "minY": 64,
+                "biomes": [
+                    "#minecraft:is_badlands",
+                    "#minecraft:is_eroded_badlands"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:packed_mud",
+                    "minecraft:granite",
+                    "minecraft:light_gray_terracotta",
+                    "minecraft:terracotta",
+                    "minecraft:red_terracotta",
+                    "minecraft:orange_terracotta",
+                    "minecraft:smooth_red_sandstone"
+		]
+            }
+        }
+    ]
+}

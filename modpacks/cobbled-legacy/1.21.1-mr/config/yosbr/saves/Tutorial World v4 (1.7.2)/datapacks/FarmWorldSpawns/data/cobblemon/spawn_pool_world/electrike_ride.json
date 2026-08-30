@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "electrike_ride",
+            "pokemon": "electrike",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "9-25",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -104,
+		"minX": -207,
+		"maxZ": 64,
+		"minZ": -89,
+        "maxY": 125,
+        "minY": 65,
+                "neededNearbyBlocks": [
+                    "minecraft:wheat"
+		]
+            }
+        }
+    ]
+}

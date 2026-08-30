@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "piplup_museum",
+            "pokemon": "piplup",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "5-10",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 269,
+		"minX": 238,
+		"maxZ": 539,
+		"minZ": 515,
+        "maxY": 138,
+        "minY": 122,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

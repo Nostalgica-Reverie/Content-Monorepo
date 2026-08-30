@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "simipour_ride",
+            "pokemon": "simipour",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-48",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+        "timeRange": "day",
+		"maxX": -236,
+		"minX": -357,
+		"maxZ": 500,
+		"minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud",
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "hisuianqwilfish_museum",
+            "pokemon": "qwilfish hisuian",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "16-24",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 269,
+		"minX": 238,
+		"maxZ": 539,
+		"minZ": 515,
+        "maxY": 138,
+        "minY": 122,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

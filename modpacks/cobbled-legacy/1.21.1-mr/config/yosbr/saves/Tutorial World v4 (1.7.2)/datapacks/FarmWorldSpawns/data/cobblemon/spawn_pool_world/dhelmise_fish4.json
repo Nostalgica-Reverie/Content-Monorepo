@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "dhelmise_fish4",
+           "pokemon": "dhelmise",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "27-52",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -266,
+		"minX": -330,
+        "maxY": 27,
+        "minY": -55,
+		"maxZ": 857,
+		"minZ": 785,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

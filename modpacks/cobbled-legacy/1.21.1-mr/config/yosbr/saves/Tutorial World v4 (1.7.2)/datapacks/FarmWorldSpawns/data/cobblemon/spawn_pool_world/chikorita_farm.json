@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "chikorita_farm",
+            "pokemon": "chikorita",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "5-10",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 87,
+		"minX": -5,
+		"maxZ": 31,
+		"minZ": -29,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:white_tulip",
+                    "minecraft:oxeye_daisy",
+                    "minecraft:azure_bluet",
+                    "minecraft:red_tulip",
+                    "minecraft:allium"
+		]
+            }
+        }
+    ]
+}

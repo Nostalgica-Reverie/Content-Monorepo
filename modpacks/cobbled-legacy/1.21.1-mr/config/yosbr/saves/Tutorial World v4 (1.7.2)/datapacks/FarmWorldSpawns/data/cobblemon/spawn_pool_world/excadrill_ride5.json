@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "excadrill_ride5",
+            "pokemon": "excadrill",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "31-55",
+            "weight": 800.00,
+            "condition": {
+                "canSeeSky": false,
+                "maxX": 434,
+                "minX": 353,
+                "maxY": 105,
+                "minY": 94,
+                "maxZ": 751,
+                "minZ": 741
+                
+                
+            }
+        }
+    ]
+}

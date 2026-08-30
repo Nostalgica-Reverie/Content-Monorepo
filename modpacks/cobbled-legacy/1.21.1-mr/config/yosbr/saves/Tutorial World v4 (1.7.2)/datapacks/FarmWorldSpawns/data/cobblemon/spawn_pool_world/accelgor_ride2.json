@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "accelgor_ride2",
+            "pokemon": "accelgor",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "33-55",
+            "weight": 800.00,
+            "condition": {
+        "canSeeSky": true,
+		"maxX": -245,
+		"minX": -540,
+		"maxZ": 480,
+		"minZ": 196,
+        "maxY": 66,
+        "minY": 62,
+        "neededNearbyBlocks": [
+                    "minecraft:water"
+                ]
+            }
+        }
+    ]
+}

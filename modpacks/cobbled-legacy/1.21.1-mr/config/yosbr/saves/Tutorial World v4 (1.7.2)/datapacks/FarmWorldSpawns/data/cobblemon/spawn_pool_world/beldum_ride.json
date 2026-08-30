@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "beldum_ride",
+            "pokemon": "beldum",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "14-17",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -612,
+		"minX": -859,
+		"maxZ": -17,
+		"minZ": -558,
+        "maxY": 182,
+        "minY": 60,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+        ],
+        "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:grass_block",
+                    "minecraft:coarse_dirt"
+                ]
+            }
+        }
+    ]
+}

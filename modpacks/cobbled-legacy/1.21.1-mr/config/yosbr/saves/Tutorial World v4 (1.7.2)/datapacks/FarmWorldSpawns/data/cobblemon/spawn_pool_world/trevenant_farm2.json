@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "trevenant_farm2",
+            "pokemon": "trevenant",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "34-43",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"timeRange": "night",
+		"maxX": 305,
+		"minX": 116,
+		"maxZ": 53,
+		"minZ": -124,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:oak_log",
+                    "minecraft:oak_wood"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "wooperpaldean_farm",
+            "pokemon": "wooper paldean",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "4-12",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -244,
+		"minX": -361,
+		"maxZ": 483,
+		"minZ": 405,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

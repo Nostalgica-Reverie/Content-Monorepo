@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "magmar_ride",
+            "pokemon": "magmar",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "28-35",
+            "weight": 800.00,
+            "condition": {
+        "canSeeSky": true,
+		"maxX": -346,
+		"minX": -512,
+		"maxZ": 243,
+		"minZ": 70,
+        "maxY": 153,
+        "minY": 72,
+        "neededNearbyBlocks": [
+                    "minecraft:mud",
+                    "minecraft:lava",
+                    "minecraft:tuff",
+                    "minecraft:deepslate",
+                    "minecraft:cyan_terracotta"
+                ]
+            }
+        }
+    ]
+}

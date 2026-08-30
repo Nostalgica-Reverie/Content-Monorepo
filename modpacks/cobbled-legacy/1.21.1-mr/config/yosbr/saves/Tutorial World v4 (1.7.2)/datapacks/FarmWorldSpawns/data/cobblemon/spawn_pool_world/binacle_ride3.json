@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "binacle_ride3",
+            "pokemon": "binacle",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "12-38",
+            "weight": 1000.00,
+            "condition": {
+            "canSeeSky": true,
+		"maxX": -593,
+		"minX": -629,
+		"maxZ": 17,
+		"minZ": -35,
+        "maxY": 69,
+        "minY": 60,
+                "neededNearbyBlocks": [
+                    "minecraft:gravel"
+		]
+            }
+        }
+    ]
+}

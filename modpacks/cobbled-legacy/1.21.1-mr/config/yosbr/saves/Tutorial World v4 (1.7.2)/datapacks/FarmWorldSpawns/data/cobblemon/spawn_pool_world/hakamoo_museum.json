@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "hakamoo_museum",
+            "pokemon": "hakamoo",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-42",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+        "timeRange": "day",
+        "maxX": -70,
+        "minX": -144,
+        "maxZ": 414,
+        "minZ": 327,
+        "maxY": 134,
+        "minY": 82,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+        "neededNearbyBlocks": [
+            "minecraft:moss_block",
+            "minecraft:coarse_dirt"
+        ]
+            }
+        }
+    ]
+}

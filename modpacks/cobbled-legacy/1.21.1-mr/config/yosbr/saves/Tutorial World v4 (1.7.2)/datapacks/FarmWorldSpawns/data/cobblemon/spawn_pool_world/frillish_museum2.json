@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "frillish_museum2",
+            "pokemon": "frillish",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "20-30",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": -169,
+        "minX": -281,
+        "maxZ": 593,
+        "minZ": 506,
+        "maxY": 72,
+        "minY": 50,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "elekid_farm",
+            "pokemon": "elekid",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "8-13",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 105,
+		"minX": -3,
+		"maxZ": 396,
+		"minZ": 294,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:tuff"
+		]
+            }
+        }
+    ]
+}

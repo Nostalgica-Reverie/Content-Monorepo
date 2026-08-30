@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "alolangeodude_ride2",
+            "pokemon": "geodude alolan",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "5-30",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -608,
+		"minX": -682,
+		"maxZ": -151,
+		"minZ": -548,
+        "maxY": 165,
+        "minY": 62,
+        "neededNearbyBlocks": [
+                    "minecraft:gravel",
+                    "minecraft:copper_ore",
+                    "minecraft:granite"
+                ]
+            }
+        }
+    ]
+}

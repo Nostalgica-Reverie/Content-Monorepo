@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "gurdurr_farm",
+            "pokemon": "gurdurr",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "17-22",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 123,
+		"minX": 47,
+		"maxZ": -74,
+		"minZ": -148,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

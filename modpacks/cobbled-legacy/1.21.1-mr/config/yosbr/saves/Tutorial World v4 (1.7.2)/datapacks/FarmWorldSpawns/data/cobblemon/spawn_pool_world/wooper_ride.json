@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "wooper_ride",
+            "pokemon": "wooper",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "12-18",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -621,
+		"minX": -743,
+		"maxZ": 347,
+		"minZ": 204,
+        "maxY": 67,
+        "minY": 40,
+                "neededNearbyBlocks": [
+                    "minecraft:water",
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

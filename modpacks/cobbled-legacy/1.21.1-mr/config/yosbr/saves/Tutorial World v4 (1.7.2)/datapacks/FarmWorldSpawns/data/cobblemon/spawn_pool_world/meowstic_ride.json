@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+    {
+            "id": "meowstic_ride",
+            "pokemon": "meowstic",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-38",
+            "weight": 800.00,
+            "condition": {
+        "maxX": 108,
+        "minX": 35,
+        "maxY": 108,
+        "minY": 73,
+        "maxZ": 128,
+        "minZ": 40
+  
+            }
+        }
+    ]
+}

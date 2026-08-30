@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "crabrawler_farm",
+            "pokemon": "crabrawler",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "33-37",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 350,
+		"minX": 258,
+		"maxZ": -140,
+		"minZ": -225,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:stripped_birch_wood",
+                    "minecraft:birch_planks",
+                    "minecraft:sandstone_stairs"
+		]
+            }
+        }
+    ]
+}

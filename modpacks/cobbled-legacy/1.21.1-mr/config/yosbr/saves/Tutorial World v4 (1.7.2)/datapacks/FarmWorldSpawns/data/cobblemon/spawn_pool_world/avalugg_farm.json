@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "avalugg_farm",
+            "pokemon": "avalugg",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "42-54",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -1,
+		"minX": -112,
+		"maxZ": 336,
+		"minZ": 212,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:blue_ice"
+		]
+            }
+        }
+    ]
+}

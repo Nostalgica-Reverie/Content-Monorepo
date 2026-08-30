@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "gossifleur_farm",
+            "pokemon": "gossifleur",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "7-15",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": -52,
+        "minX": -175,
+        "maxZ": 759,
+        "minZ": 601,
+        "maxY": 138,
+        "minY": 99,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

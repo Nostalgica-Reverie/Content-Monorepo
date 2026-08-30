@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "glimmora_fish",
+            "pokemon": "glimmora",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "40-55",
+            "weight": 600.00,
+           "condition": {
+                "canSeeSky": false,
+                "timeRange": "night",
+                "maxX": -31,
+                "minX": -93,
+                "maxZ": 793,
+                "minZ": 682,
+                "maxY": 108,
+                "minY": 49,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:dripstone_block"
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "spheal_fish",
+            "pokemon": "spheal",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "9-29",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 269,
+		"minX": 238,
+		"maxZ": 539,
+		"minZ": 515,
+        "maxY": 138,
+        "minY": 122,
+        "biomes": [
+            "#cobblemon:is_overworld"
+],
+         "neededNearbyBlocks": [
+            "minecraft:ice",
+            "minecraft:snow"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "clefairy_ride",
+            "pokemon": "clefairy",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "18-29",
+            "weight": 800.00,
+            "condition": {
+        "timeRange": "day",
+		"canSeeSky": true,
+		"maxX": -245,
+		"minX": -540,
+		"maxZ": 480,
+		"minZ": 196,
+        "maxY": 80,
+        "minY": 62,
+                "biomes": [
+                    "#cobblemon:is_magical"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

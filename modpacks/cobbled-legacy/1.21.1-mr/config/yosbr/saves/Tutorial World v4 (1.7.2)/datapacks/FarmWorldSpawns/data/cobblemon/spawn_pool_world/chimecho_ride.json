@@ -1,0 +1,27 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "chimecho_ride",
+            "pokemon": "chimecho",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+           "context": "grounded",
+            "bucket": "uncommon",
+            "level": "24-46",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -601,
+		"minX": -625,
+		"maxZ": 139,
+		"minZ": 110,
+        "maxY": 124,
+        "minY": 74
+            }
+        }
+    ]
+}

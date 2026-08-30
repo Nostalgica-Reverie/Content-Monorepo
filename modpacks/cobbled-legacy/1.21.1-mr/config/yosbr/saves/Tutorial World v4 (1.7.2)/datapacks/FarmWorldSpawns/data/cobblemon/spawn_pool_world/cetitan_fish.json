@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cetitan_fish",
+            "pokemon": "cetitan",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "40-58",
+            "weight": 500.00,
+            "condition": {
+        "canSeeSky": true,
+		"maxX": 220,
+		"minX": 169,
+		"maxZ": 500,
+		"minZ": 451,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:snow_block"
+		]
+            }
+        }
+    ]
+}

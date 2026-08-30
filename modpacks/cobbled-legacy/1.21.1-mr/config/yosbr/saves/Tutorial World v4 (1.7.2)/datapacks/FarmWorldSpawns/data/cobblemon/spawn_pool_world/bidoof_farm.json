@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "bidoof_farm",
+            "pokemon": "bidoof",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "3-7",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 62,
+		"minX": 14,
+		"maxZ": -161,
+		"minZ": -208,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mangrove_roots"
+		]
+            }
+        }
+    ]
+}

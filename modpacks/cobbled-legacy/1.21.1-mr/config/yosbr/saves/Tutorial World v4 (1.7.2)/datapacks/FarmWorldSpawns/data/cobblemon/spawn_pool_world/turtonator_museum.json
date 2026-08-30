@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "turtonator_museum",
+            "pokemon": "turtonator",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "48-60",
+            "weight": 1000.00,
+            "condition": {
+        "maxX": 300,
+        "minX": 242,
+        "maxZ": 851,
+        "minZ": 746,
+        "maxY": 142,
+        "minY": 103,
+                "neededNearbyBlocks": [
+                    "minecraft:lava",
+                    "minecraft:magma_block"
+		]
+            }
+        }
+    ]
+}

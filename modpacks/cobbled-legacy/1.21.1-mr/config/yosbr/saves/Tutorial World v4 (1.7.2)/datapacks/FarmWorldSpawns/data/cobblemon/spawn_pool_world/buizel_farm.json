@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "buizel_farm",
+            "pokemon": "buizel",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "17-23",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 410,
+		"minX": 139,
+		"maxZ": -146,
+		"minZ": -340,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:sand"
+		]
+            }
+        }
+    ]
+}

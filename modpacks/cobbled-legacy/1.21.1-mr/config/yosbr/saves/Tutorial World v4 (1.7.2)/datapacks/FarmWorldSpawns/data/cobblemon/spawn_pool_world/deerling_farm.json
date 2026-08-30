@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "deerling_farm",
+            "pokemon": "deerling",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "22-29",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -276,
+		"minX": -367,
+		"maxZ": -190,
+		"minZ": -276,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

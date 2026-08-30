@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cursola_ride3",
+            "pokemon": "cursola",
+            "presets": [
+                "underwater"
+            ],
+           "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "uncommon",
+            "level": "38-49",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -581,
+		"minX": -870,
+		"maxZ": 10,
+		"minZ": -637,
+        "maxY": 85,
+        "minY": 35,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+        ]
+            }
+        }
+    ]
+}

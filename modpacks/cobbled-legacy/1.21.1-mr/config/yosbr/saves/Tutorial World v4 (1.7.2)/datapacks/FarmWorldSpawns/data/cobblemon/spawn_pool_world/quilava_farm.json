@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "quilava_farm",
+            "pokemon": "quilava",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "18-23",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -189,
+		"minX": -210,
+		"maxZ": -55,
+		"minZ": -79,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:coal_block",
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

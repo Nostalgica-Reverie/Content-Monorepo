@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "skiploom_ride",
+            "pokemon": "skiploom",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "19-26",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 85,
+		"minX": -46,
+		"maxZ": 11,
+		"minZ": -124,
+        "maxY": 78,
+        "minY": 70,
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

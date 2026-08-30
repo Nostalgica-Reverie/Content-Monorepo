@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "rabsca_ride",
+            "pokemon": "rabsca",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "36-55",
+            "weight": 600.00,
+            "condition": {
+        "maxX": -30,
+        "minX": -136,
+        "maxZ": 954,
+        "minZ": 862,
+        "maxY": 89,
+        "minY": 68,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

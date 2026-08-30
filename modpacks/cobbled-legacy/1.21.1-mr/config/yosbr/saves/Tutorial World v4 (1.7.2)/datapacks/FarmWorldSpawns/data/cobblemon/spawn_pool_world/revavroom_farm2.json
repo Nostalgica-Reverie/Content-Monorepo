@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "revavroom_farm2",
+            "pokemon": "revavroom",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "45-60",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -189,
+		"minX": -210,
+		"maxZ": -139,
+		"minZ": -155,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:nether_brick_slab",
+                    "minecraft:polished_deepslate"
+		]
+            }
+        }
+    ]
+}

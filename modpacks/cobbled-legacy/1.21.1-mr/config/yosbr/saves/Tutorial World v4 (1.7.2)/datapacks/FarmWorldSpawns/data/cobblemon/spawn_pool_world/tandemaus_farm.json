@@ -1,0 +1,39 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "tandemaus_farm",
+            "pokemon": "tandemaus",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "14-21",
+            "weight": 500.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 453,
+		"minX": -611,
+		"maxZ": 570,
+		"minZ": -559,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:stripped_spruce_log",
+                    "minecraft:spruce_planks",
+                    "minecraft:stripped_oak_log",
+                    "minecraft:oak_planks",
+                    "minecraft:mangrove_planks"
+		],
+                "neededBaseBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "numel_ride",
+            "pokemon": "numel",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "6-31",
+            "weight": 1000.00,
+            "condition": {
+        "canSeeSky": true,
+		"maxX": -346,
+		"minX": -512,
+		"maxZ": 243,
+		"minZ": 70,
+        "maxY": 153,
+        "minY": 72,
+        "neededNearbyBlocks": [
+                    "minecraft:mud",
+                    "minecraft:lava",
+                    "minecraft:tuff",
+                    "minecraft:deepslate",
+                    "minecraft:cyan_terracotta"
+                ]
+            }
+        }
+    ]
+}

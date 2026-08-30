@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "drifloon_museum",
+            "pokemon": "drifloon",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "18-25",
+            "weight": 1000.00,
+            "condition": {
+                "canSeeSky": true,
+                "timeRange": "night",
+                "maxX": 41,
+                "minX": -221,
+                "maxZ": 648,
+                "minZ": 424,
+                "maxY": 105,
+                "minY": 56,
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+    {
+            "id": "gumshoos_ride",
+            "pokemon": "gumshoos",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "20-36",
+            "weight": 800.00,
+            "condition": {
+        "timeRange": "day",
+        "maxX": -398,
+        "minX": -277,
+        "maxY": 133,
+        "minY": 107,
+        "maxZ": 39,
+        "minZ": -69
+             
+            }
+        }
+    ]
+}

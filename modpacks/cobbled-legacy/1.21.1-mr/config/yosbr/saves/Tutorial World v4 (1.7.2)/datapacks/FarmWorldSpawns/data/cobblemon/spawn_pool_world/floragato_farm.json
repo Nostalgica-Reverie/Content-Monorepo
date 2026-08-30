@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "floragato_farm",
+            "pokemon": "floragato",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "16-24",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -302,
+		"minX": -418,
+		"maxZ": 7,
+		"minZ": -41,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:azalea_leaves"
+		]
+            }
+        }
+    ]
+}

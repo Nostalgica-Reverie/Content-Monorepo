@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "pikachu_farm",
+            "pokemon": "pikachu",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "15-23",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 321,
+		"minX": 31,
+		"maxZ": 59,
+		"minZ": -164,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass",
+                    "minecraft:fern",
+                    "minecraft:large_fern",
+                    "minecraft:tall_grass"
+		]
+            }
+        }
+    ]
+}

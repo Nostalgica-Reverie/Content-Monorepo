@@ -1,0 +1,28 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "gimmighoulroaming2_fish",
+            "pokemon": "gimmighoul roaming",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "5-30",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 210,
+		"minX": 194,
+		"maxZ": 735,
+		"minZ": 718,
+        "maxY": 164,
+        "minY": 120
+            }
+        }
+    ]
+}

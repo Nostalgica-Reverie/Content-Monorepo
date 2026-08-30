@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "sneasel_ride",
+            "pokemon": "sneasel",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "18-43",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -314,
+		"minX": -481,
+		"maxZ": -369,
+		"minZ": -497,
+        "maxY": 157,
+        "minY": 89,
+        "neededNearbyBlocks": [
+                    "minecraft:snow"
+                ]
+            }
+        }
+    ]
+}

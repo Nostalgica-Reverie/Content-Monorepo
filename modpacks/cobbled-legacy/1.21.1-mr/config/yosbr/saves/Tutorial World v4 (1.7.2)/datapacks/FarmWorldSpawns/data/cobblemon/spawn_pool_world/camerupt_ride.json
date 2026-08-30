@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "camerupt_ride",
+            "pokemon": "camerupt",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "33-46",
+            "weight": 800.00,
+            "condition": {
+        "canSeeSky": true,
+		"maxX": -346,
+		"minX": -512,
+		"maxZ": 243,
+		"minZ": 70,
+        "maxY": 153,
+        "minY": 72,
+        "neededNearbyBlocks": [
+                    "minecraft:mud",
+                    "minecraft:lava",
+                    "minecraft:tuff",
+                    "minecraft:deepslate",
+                    "minecraft:cyan_terracotta"
+                ]
+            }
+        }
+    ]
+}

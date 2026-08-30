@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "hippopotas_museum",
+            "pokemon": "hippopotas",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "23-29",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 478,
+		"minX": 425,
+		"maxZ": 934,
+		"minZ": 801,
+        "maxY": 121,
+        "minY": 86,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:red_sand"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "whitestripedbasculin_museum",
+            "pokemon": "basculegion striped=white",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "common",
+            "level": "25-35",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -31,
+		"minX": -93,
+		"maxZ": 793,
+		"minZ": 682,
+        "maxY": 108,
+        "minY": 49,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

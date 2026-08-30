@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "garganacl_farm",
+            "pokemon": "garganacl",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "40-55",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": false,
+		"maxX": 424,
+		"minX": 208,
+		"maxZ": -5,
+		"minZ": -122,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:diorite"
+		]
+            }
+        }
+    ]
+}

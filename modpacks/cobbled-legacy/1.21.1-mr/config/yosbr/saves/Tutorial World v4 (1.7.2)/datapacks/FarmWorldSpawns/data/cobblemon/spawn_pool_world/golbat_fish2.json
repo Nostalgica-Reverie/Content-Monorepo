@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "golbat_fish2",
+            "pokemon": "golbat",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "22-46",
+            "weight": 1000.00,
+            "condition": {
+                "canSeeSky": true,
+                "timeRange": "night",
+                "maxX": -236,
+                "minX": -357,
+                "maxZ": 500,
+                "minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:oak_leaves",
+                    "minecraft:acacia_leaves",
+                    "minecraft:mangrove_wood"
+                ]
+            }
+        }
+    ]
+}

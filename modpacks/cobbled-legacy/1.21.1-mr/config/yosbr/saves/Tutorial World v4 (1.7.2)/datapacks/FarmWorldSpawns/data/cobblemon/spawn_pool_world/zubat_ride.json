@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "zubat_ride",
+            "pokemon": "zubat",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "1-25",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+        "timeRange": "night",
+		"maxX": -502,
+		"minX": -640,
+		"maxZ": 272,
+		"minZ": 83,
+        "maxY": 118,
+        "minY": 63,
+                "biomes": [
+                    "#minecraft:is_savanna"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block"
+		]
+            }
+        }
+    ]
+}

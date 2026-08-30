@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "golem_museum",
+            "pokemon": "golem",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "50-65",
+            "weight": 600.00,
+            "condition": {
+                "canSeeSky": true,
+                "maxX": 41,
+                "minX": -221,
+                "maxZ": 648,
+                "minZ": 424,
+                "maxY": 105,
+                "minY": 56,
+                "neededNearbyBlocks": [
+                    "minecraft:stone",
+                    "minecraft:tuff",
+                    "minecraft:smooth_basalt"
+                ]
+            }
+        }
+    ]
+}

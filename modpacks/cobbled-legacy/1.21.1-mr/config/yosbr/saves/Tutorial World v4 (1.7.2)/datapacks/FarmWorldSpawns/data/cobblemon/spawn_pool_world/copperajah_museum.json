@@ -1,0 +1,34 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "copperajah_museum",
+            "pokemon": "copperajah",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "35-50",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 478,
+		"minX": 425,
+		"maxZ": 934,
+		"minZ": 801,
+        "maxY": 121,
+        "minY": 86,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:red_sand"
+		]
+            }
+        }
+    ]
+}

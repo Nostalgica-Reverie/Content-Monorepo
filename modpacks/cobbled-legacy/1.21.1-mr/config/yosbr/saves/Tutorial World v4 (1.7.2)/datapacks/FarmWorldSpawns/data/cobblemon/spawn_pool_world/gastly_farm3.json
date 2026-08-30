@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "gastly_farm3",
+            "pokemon": "gastly",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "15-22",
+            "weight": 1000.00,
+            "timeRange": "night",
+            "condition": {
+		"maxX": -358,
+		"minX": -401,
+		"maxZ": 369,
+		"minZ": 324,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:mud"
+		]
+            }
+        }
+    ]
+}

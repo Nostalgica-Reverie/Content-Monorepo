@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "electrike_ride2",
+            "pokemon": "electrike",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "9-25",
+            "weight": 1000.00,
+            "condition": {
+                "maxX": 299,
+                "minX": 265,
+                "maxY": 165,
+                "minY": 135,
+                "maxZ": 840,
+                "minZ": 785
+                
+                
+            }
+        }
+    ]
+}

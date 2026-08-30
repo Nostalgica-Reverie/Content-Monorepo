@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "alolandugtrio_museum",
+            "pokemon": "dugtrio alolan",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "26-34",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+        "maxX": 505,
+        "minX": 458,
+        "maxZ": 739,
+        "minZ": 695,
+        "maxY": 101,
+        "minY": 84,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

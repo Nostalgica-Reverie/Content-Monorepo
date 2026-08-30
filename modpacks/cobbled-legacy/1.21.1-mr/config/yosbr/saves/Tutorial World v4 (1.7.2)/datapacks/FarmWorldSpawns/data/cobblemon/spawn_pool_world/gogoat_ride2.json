@@ -1,0 +1,27 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "gogoat_ride2",
+            "pokemon": "gogoat",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "17-36",
+            "weight": 800.00,
+            "condition": {
+                "maxX": -18,
+                "minX": -165,
+                "maxZ": 452,
+                "minZ": 291,
+                "maxY": 117,
+                "minY": 79
+            }
+        }
+    ]
+}

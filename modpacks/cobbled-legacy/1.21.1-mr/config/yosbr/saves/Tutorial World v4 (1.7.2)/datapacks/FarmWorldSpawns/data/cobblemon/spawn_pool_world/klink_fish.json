@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "klink_fish",
+            "pokemon": "klink",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "5-30",
+            "weight": 1000.00,
+            "condition": {
+        "maxX": 91,
+        "minX": 73,
+        "maxZ": 570,
+        "minZ": 540,
+        "maxY": 142,
+        "minY": 135,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		]
+            }
+        }
+    ]
+}

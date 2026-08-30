@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "galarianslowking_ride3",
+            "pokemon": "slowking galarian",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "37-50",
+            "weight": 800.00,
+            "condition": {
+            "canSeeSky": true,
+		"maxX": -593,
+		"minX": -629,
+		"maxZ": 17,
+		"minZ": -35,
+        "maxY": 69,
+        "minY": 60,
+                "neededNearbyBlocks": [
+                    "minecraft:gravel"
+		]
+            }
+        }
+    ]
+}

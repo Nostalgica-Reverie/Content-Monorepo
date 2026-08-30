@@ -1,0 +1,38 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "pansear_ride",
+            "pokemon": "pansear",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "12-30",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+        "timeRange": "day",
+		"maxX": 513,
+		"minX": -77,
+		"maxZ": 1070,
+		"minZ": 598,
+        "maxY": 160,
+        "minY": 64,
+                "biomes": [
+                    "#minecraft:is_badlands",
+                    "#minecraft:is_eroded_badlands"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:yellow_terracotta",
+                    "minecraft:red_terracotta",
+                    "minecraft:orange_terracotta"
+		]
+            }
+        }
+    ]
+}

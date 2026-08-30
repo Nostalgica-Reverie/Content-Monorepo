@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "ekans_farm",
+            "pokemon": "ekans",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "14-19",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 252,
+		"minX": 207,
+		"maxZ": -240,
+		"minZ": -305,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:dripstone_block"
+		]
+            }
+        }
+    ]
+}

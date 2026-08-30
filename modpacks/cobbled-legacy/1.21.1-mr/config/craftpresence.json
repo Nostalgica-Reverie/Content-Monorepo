@@ -1,0 +1,434 @@
+{
+  "_schemaVersion": 7,
+  "_lastMCVersionId": 767,
+  "generalSettings": {
+    "detectATLauncherInstance": true,
+    "detectCurseManifest": false,
+    "detectMultiMCManifest": false,
+    "detectMCUpdaterInstance": false,
+    "detectTechnicPack": false,
+    "detectModrinthPack": true,
+    "detectBiomeData": true,
+    "detectDimensionData": true,
+    "detectWorldData": true,
+    "clientId": "1042681781775769610",
+    "defaultIcon": "grass",
+    "enableJoinRequests": false,
+    "preferredClientLevel": 3,
+    "resetTimeOnInit": false,
+    "autoRegister": false
+  },
+  "biomeSettings": {
+    "fallbackBiomeIcon": "unknown",
+    "biomeData": {
+      "default": {
+        "textOverride": "Exploring the {biome.name}",
+        "data": {
+          "enabled": true,
+          "useAsMain": false,
+          "isInstance": false,
+          "activityType": 0,
+          "partyPrivacy": 1,
+          "details": "",
+          "gameState": "",
+          "largeImageKey": "",
+          "largeImageText": "",
+          "smallImageKey": "",
+          "smallImageText": "",
+          "startTimestamp": "",
+          "endTimestamp": "",
+          "buttons": {}
+        }
+      }
+    }
+  },
+  "dimensionSettings": {
+    "fallbackDimensionIcon": "unknown",
+    "dimensionData": {
+      "default": {
+        "textOverride": "In the {dimension.name}",
+        "data": {
+          "enabled": true,
+          "useAsMain": false,
+          "isInstance": false,
+          "activityType": 0,
+          "partyPrivacy": 1,
+          "details": "",
+          "gameState": "",
+          "largeImageKey": "",
+          "largeImageText": "",
+          "smallImageKey": "",
+          "smallImageText": "",
+          "startTimestamp": "",
+          "endTimestamp": "",
+          "buttons": {}
+        }
+      },
+      "the_nether": {
+        "data": {
+          "enabled": false,
+          "useAsMain": true,
+          "isInstance": false,
+          "activityType": 0,
+          "partyPrivacy": 1,
+          "details": "{player.name} is in The Nether",
+          "gameState": "",
+          "largeImageKey": "nether",
+          "largeImageText": "In the Nether",
+          "smallImageKey": "mclogo",
+          "smallImageText": "{general.mods} mods installed",
+          "startTimestamp": "",
+          "endTimestamp": "",
+          "buttons": {}
+        }
+      },
+      "overworld": {
+        "data": {
+          "enabled": false,
+          "useAsMain": true,
+          "isInstance": false,
+          "activityType": 0,
+          "partyPrivacy": 1,
+          "details": "{player.name} is in The Overworld",
+          "gameState": "",
+          "largeImageKey": "overworld",
+          "largeImageText": "In the Overworld",
+          "smallImageKey": "mclogo",
+          "smallImageText": "{general.mods} mods installed",
+          "startTimestamp": "",
+          "endTimestamp": "",
+          "buttons": {}
+        }
+      },
+      "the_end": {
+        "data": {
+          "enabled": false,
+          "useAsMain": true,
+          "isInstance": false,
+          "activityType": 0,
+          "partyPrivacy": 1,
+          "details": "{player.name} is in The End",
+          "gameState": "",
+          "largeImageKey": "end",
+          "largeImageText": "In the End",
+          "smallImageKey": "mclogo",
+          "smallImageText": "{general.mods} mods installed",
+          "startTimestamp": "",
+          "endTimestamp": "",
+          "buttons": {}
+        }
+      }
+    }
+  },
+  "serverSettings": {
+    "fallbackServerIcon": "default",
+    "fallbackServerName": "Minecraft Server",
+    "fallbackServerMotd": "A Minecraft Server",
+    "serverData": {
+      "default": {
+        "textOverride": "{server.message}",
+        "data": {
+          "enabled": true,
+          "useAsMain": true,
+          "isInstance": false,
+          "activityType": 0,
+          "partyPrivacy": 1,
+          "details": "Playing on {server.name} with {server.players.current} players",
+          "gameState": "Playing Online",
+          "largeImageKey": "{server.icon}",
+          "largeImageText": "Cobblemon Fabric {general.version}",
+          "smallImageKey": "mclogo",
+          "smallImageText": "{general.mods} mods installed",
+          "startTimestamp": "",
+          "endTimestamp": "",
+          "buttons": {}
+        }
+      }
+    },
+    "pingRateInterval": 5,
+    "pingRateUnit": "minutes"
+  },
+  "statusMessages": {
+    "mainMenuData": {
+      "textOverride": "In the Main Menu",
+      "data": {
+        "enabled": true,
+        "useAsMain": true,
+        "isInstance": false,
+        "activityType": 0,
+        "partyPrivacy": 1,
+        "details": "{player.name} is deciding a game mode",
+        "gameState": "In the Main Menu",
+        "largeImageKey": "cobblemon_icon",
+        "largeImageText": "Cobblemon Fabric {general.version}",
+        "smallImageKey": "mclogo",
+        "smallImageText": "{general.mods} mods installed",
+        "startTimestamp": "",
+        "endTimestamp": "",
+        "buttons": {}
+      }
+    },
+    "loadingData": {
+      "textOverride": "Loading...",
+      "data": {
+        "enabled": true,
+        "useAsMain": true,
+        "isInstance": false,
+        "activityType": 0,
+        "partyPrivacy": 1,
+        "details": "Cobblemon is loading",
+        "gameState": "Game Starting...",
+        "largeImageKey": "cobblemon_icon",
+        "largeImageText": "Cobblemon Fabric {general.version}",
+        "smallImageKey": "mclogo",
+        "smallImageText": "{general.mods} mods installed",
+        "startTimestamp": "",
+        "endTimestamp": "",
+        "buttons": {}
+      }
+    },
+    "lanData": {
+      "textOverride": "Playing on a LAN Server",
+      "data": {
+        "enabled": true,
+        "useAsMain": false,
+        "isInstance": false,
+        "activityType": 0,
+        "partyPrivacy": 1,
+        "details": "",
+        "gameState": "",
+        "largeImageKey": "",
+        "largeImageText": "",
+        "smallImageKey": "",
+        "smallImageText": "",
+        "startTimestamp": "",
+        "endTimestamp": "",
+        "buttons": {}
+      }
+    },
+    "singleplayerData": {
+      "textOverride": "Playing Singleplayer",
+      "data": {
+        "enabled": true,
+        "useAsMain": true,
+        "isInstance": false,
+        "activityType": 0,
+        "partyPrivacy": 1,
+        "details": "{player.name} is on a Pokémon journey",
+        "gameState": "Playing Solo",
+        "largeImageKey": "cobblemon_icon",
+        "largeImageText": "Cobblemon Fabric {general.version}",
+        "smallImageKey": "mclogo",
+        "smallImageText": "{general.mods} mods installed",
+        "startTimestamp": "",
+        "endTimestamp": "",
+        "buttons": {}
+      }
+    },
+    "realmData": {
+      "textOverride": "Playing on {server.motd.raw}"
+    }
+  },
+  "advancedSettings": {
+    "enablePerGui": true,
+    "enablePerItem": false,
+    "enablePerEntity": false,
+    "formatWords": true,
+    "debugMode": false,
+    "verboseMode": false,
+    "refreshRate": 2,
+    "allowPlaceholderPreviews": false,
+    "guiSettings": {
+      "fallbackGuiIcon": "unknown",
+      "guiData": {
+        "default": {
+          "textOverride": "In {screen.name}",
+          "data": {
+            "enabled": true,
+            "useAsMain": false,
+            "isInstance": false,
+            "activityType": 0,
+            "partyPrivacy": 1,
+            "details": "",
+            "gameState": "",
+            "largeImageKey": "",
+            "largeImageText": "",
+            "smallImageKey": "",
+            "smallImageText": "",
+            "startTimestamp": "",
+            "endTimestamp": "",
+            "buttons": {}
+          }
+        },
+        "class_4905": {
+          "data": {
+            "enabled": true,
+            "useAsMain": true,
+            "isInstance": false,
+            "activityType": 0,
+            "partyPrivacy": 1,
+            "details": "{player.name} is looking for a Realm",
+            "gameState": "Browsing Realms",
+            "largeImageKey": "cobblemon_icon",
+            "largeImageText": "Cobblemon Fabric {general.version}",
+            "smallImageKey": "mclogo",
+            "smallImageText": "{general.mods} mods installed",
+            "startTimestamp": "",
+            "endTimestamp": "",
+            "buttons": {}
+          }
+        },
+        "class_500": {
+          "data": {
+            "enabled": true,
+            "useAsMain": true,
+            "isInstance": false,
+            "activityType": 0,
+            "partyPrivacy": 1,
+            "details": "{player.name} is browsing servers",
+            "gameState": "Searching for Other Trainers",
+            "largeImageKey": "cobblemon_icon",
+            "largeImageText": "Cobblemon Fabric {general.version}",
+            "smallImageKey": "mclogo",
+            "smallImageText": "{general.mods} mods installed",
+            "startTimestamp": "",
+            "endTimestamp": "",
+            "buttons": {}
+          }
+        },
+        "class_434": {
+          "data": {
+            "enabled": true,
+            "useAsMain": true,
+            "isInstance": false,
+            "activityType": 0,
+            "partyPrivacy": 1,
+            "details": "{player.name} is joining a game",
+            "gameState": "Joining Game...",
+            "largeImageKey": "cobblemon_icon",
+            "largeImageText": "Cobblemon Fabric {general.version}",
+            "smallImageKey": "mclogo",
+            "smallImageText": "{general.mods} mods installed",
+            "startTimestamp": "",
+            "endTimestamp": "",
+            "buttons": {}
+          }
+        },
+        "class_3928": {
+          "data": {
+            "enabled": true,
+            "useAsMain": true,
+            "isInstance": false,
+            "activityType": 0,
+            "partyPrivacy": 1,
+            "details": "{player.name} is joining a game",
+            "gameState": "Joining Game...",
+            "largeImageKey": "cobblemon_icon",
+            "largeImageText": "Cobblemon Fabric {general.version}",
+            "smallImageKey": "mclogo",
+            "smallImageText": "{general.mods} mods installed",
+            "startTimestamp": "",
+            "endTimestamp": "",
+            "buttons": {}
+          }
+        }
+      }
+    },
+    "itemMessages": {
+      "default": "Holding {item.message.holding}"
+    },
+    "entitySettings": {
+      "fallbackEntityIcon": "unknown",
+      "targetData": {
+        "default": {
+          "textOverride": "Targeting {entity.target.name}",
+          "data": {
+            "enabled": true,
+            "useAsMain": false,
+            "isInstance": false,
+            "activityType": 0,
+            "partyPrivacy": 1,
+            "details": "",
+            "gameState": "",
+            "largeImageKey": "",
+            "largeImageText": "",
+            "smallImageKey": "",
+            "smallImageText": "",
+            "startTimestamp": "",
+            "endTimestamp": "",
+            "buttons": {}
+          }
+        }
+      },
+      "ridingData": {
+        "default": {
+          "textOverride": "Riding {entity.riding.name}",
+          "data": {
+            "enabled": true,
+            "useAsMain": false,
+            "isInstance": false,
+            "activityType": 0,
+            "partyPrivacy": 1,
+            "details": "",
+            "gameState": "",
+            "largeImageKey": "",
+            "largeImageText": "",
+            "smallImageKey": "",
+            "smallImageText": "",
+            "startTimestamp": "",
+            "endTimestamp": "",
+            "buttons": {}
+          }
+        }
+      }
+    },
+    "allowEndpointIcons": true,
+    "serverIconEndpoint": "https://api.mcsrvstat.us/icon/%1$s",
+    "playerSkinEndpoint": "https://crafatar.com/avatars/%1$s",
+    "allowDuplicatePackets": false,
+    "maxConnectionAttempts": 10,
+    "enableClassGraph": false
+  },
+  "accessibilitySettings": {
+    "languageId": "en_us",
+    "stripTranslationColors": false,
+    "stripTranslationFormatting": false,
+    "stripExtraGuiElements": false,
+    "configKeyCode": -1
+  },
+  "displaySettings": {
+    "presenceData": {
+      "enabled": true,
+      "useAsMain": true,
+      "isInstance": false,
+      "activityType": 0,
+      "partyPrivacy": 1,
+      "details": "Playing Cobblemon",
+      "gameState": "",
+      "largeImageKey": "cobblemon_icon",
+      "largeImageText": "Cobblemon Fabric {general.version}",
+      "smallImageKey": "mclogo",
+      "smallImageText": "{general.mods} mods installed",
+      "startTimestamp": "{data.general.time}",
+      "endTimestamp": "",
+      "buttons": {}
+    },
+    "dynamicIcons": {
+      "73.24.74.7": "https://api.mcsrvstat.us/icon/73.24.74.7",
+      "Veraxiel": "https://crafatar.com/avatars/1db4f9a387894c739a6c179f8ecf91f1",
+      "localhost": "https://api.mcsrvstat.us/icon/localhost",
+      "test.fabric.cobblemon.com": "https://api.mcsrvstat.us/icon/test.fabric.cobblemon.com"
+    },
+    "dynamicVariables": {
+      "mods": "{general.mods} Mod(s)",
+      "player_info_coordinate": "At {player.position.x}, {player.position.z}",
+      "players": "{server.players.current} / {server.players.max} Players",
+      "player_info_in": "({custom.player_info.health})",
+      "player_info_items": "Items: {item.main_hand.message}",
+      "player_info_out": "As {player.name}",
+      "player_info_health": "Health: {player.health.current}/{player.health.max}",
+      "world_info": "On {world.name}",
+      "pack": "{pack.name}"
+    }
+  }
+}

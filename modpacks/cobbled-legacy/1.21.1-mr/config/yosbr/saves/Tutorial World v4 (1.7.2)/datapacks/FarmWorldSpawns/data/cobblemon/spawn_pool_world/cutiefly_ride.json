@@ -1,0 +1,36 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "cutiefly_ride",
+            "pokemon": "cutiefly",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "10-24",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -245,
+		"minX": -540,
+		"maxZ": 480,
+		"minZ": 196,
+        "maxY": 80,
+        "minY": 62,
+                "biomes": [
+                    "#cobblemon:is_magical"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:saccharine_log",
+                    "minecraft:lilac",
+                    "minecraft:rose_bush"
+		]
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "dratini_farm",
+            "pokemon": "dratini",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "rare",
+            "level": "15-23",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": 131,
+		"minX": 10,
+		"maxZ": -240,
+		"minZ": -366,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:water"
+		]
+            }
+        }
+    ]
+}

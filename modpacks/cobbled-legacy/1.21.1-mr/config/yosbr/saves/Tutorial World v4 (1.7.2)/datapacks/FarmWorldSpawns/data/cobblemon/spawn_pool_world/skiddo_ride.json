@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+    {
+            "id": "skiddo_ride",
+            "pokemon": "skiddo",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "9-17",
+            "weight": 1000.00,
+            "condition": {
+        "canSeeSky": true,
+        "maxX": 147,
+        "minX": -2,
+        "maxY": 132,
+        "minY": 98,
+        "maxZ": 392,
+        "minZ": 311
+             
+            }
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "alakazam_ride",
+            "pokemon": "alakazam",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "39-55",
+            "weight": 600.00,
+            "condition": {
+		"maxX": -538,
+		"minX": -625,
+		"maxZ": 393,
+		"minZ": 264,
+        "maxY": 119,
+        "minY": 71,
+                "biomes": [
+                    "#minecraft:is_deep_ocean"
+		]
+            }
+        }
+    ]
+}

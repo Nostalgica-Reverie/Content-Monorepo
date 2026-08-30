@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "probopass_ride2",
+            "pokemon": "probopass",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "33-53",
+            "weight": 800.00,
+            "condition": {
+        "canSeeSky": false,
+		"maxX": -413,
+		"minX": -543,
+		"maxZ": -97,
+		"minZ": -296,
+        "maxY": 163,
+        "minY": 76,
+        "neededNearbyBlocks": [
+                    "minecraft:snow_block",
+                    "minecraft:packed_ice"
+                ]
+            }
+        }
+    ]
+}

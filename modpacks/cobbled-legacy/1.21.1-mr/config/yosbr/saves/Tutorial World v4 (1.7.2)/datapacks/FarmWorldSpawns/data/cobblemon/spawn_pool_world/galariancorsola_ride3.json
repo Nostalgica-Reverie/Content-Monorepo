@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "galariancorsola_ride3",
+            "pokemon": "corsola galarian",
+            "presets": [
+                "underwater"
+            ],
+           "type": "pokemon",
+            "context": "seafloor",
+            "bucket": "common",
+            "level": "12-37",
+            "weight": 1000.00,
+            "condition": {
+		"maxX": -581,
+		"minX": -870,
+		"maxZ": 10,
+		"minZ": -637,
+        "maxY": 85,
+        "minY": 35,
+        "biomes": [
+                    "#cobblemon:is_frozen_ocean"
+        ]
+            }
+        }
+    ]
+}

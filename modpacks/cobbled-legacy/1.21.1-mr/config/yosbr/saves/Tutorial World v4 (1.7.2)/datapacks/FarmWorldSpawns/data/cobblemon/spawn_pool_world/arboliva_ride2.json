@@ -1,0 +1,37 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "arboliva_ride2",
+            "pokemon": "arboliva",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "35-55",
+            "weight": 600.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -553,
+		"minX": -648,
+		"maxZ": 437,
+		"minZ": 327,
+        "maxY": 99,
+        "minY": 66,
+                "biomes": [
+                    "#minecraft:is_savanna"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:grass_block",
+                    "minecraft:dirt",
+                    "minecraft:packed_mud",
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

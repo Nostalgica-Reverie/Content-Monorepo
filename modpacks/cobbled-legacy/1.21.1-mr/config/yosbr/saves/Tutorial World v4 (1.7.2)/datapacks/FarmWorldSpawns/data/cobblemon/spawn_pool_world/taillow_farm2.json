@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "taillow_farm2",
+            "pokemon": "taillow",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "7-14",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -176,
+		"minX": -245,
+		"maxZ": 211,
+		"minZ": 114,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:birch_wood",
+                    "minecraft:birch_log"
+		]
+            }
+        }
+    ]
+}

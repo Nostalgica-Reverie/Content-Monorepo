@@ -1,0 +1,31 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "brambleghast_ride",
+            "pokemon": "brambleghast",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "41-60",
+            "weight": 800.00,
+            "condition": {
+		"maxX": 340,
+		"minX": 240,
+		"maxZ": 977,
+		"minZ": 797,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:cactus"
+		]
+            }
+        }
+    ]
+}

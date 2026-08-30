@@ -1,0 +1,30 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "alolanninetales_ride",
+            "pokemon": "ninetales alolan",
+            "presets": [
+                "natural"
+            ],
+           "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "25-51",
+            "weight": 800.00,
+            "condition": {
+		"maxX": -469,
+		"minX": -571,
+		"maxZ": -403,
+		"minZ": -509,
+        "maxY": 206,
+        "minY": 97,
+        "neededNearbyBlocks": [
+                    "minecraft:snow"
+                ]
+            }
+        }
+    ]
+}

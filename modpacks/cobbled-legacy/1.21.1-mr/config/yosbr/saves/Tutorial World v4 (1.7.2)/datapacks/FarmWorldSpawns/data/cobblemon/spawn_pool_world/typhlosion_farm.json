@@ -1,0 +1,33 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "typhlosion_farm",
+            "pokemon": "typhlosion",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "38-45",
+            "weight": 800.00,
+            "condition": {
+		"canSeeSky": true,
+		"maxX": -189,
+		"minX": -210,
+		"maxZ": -55,
+		"minZ": -79,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:coal_block",
+                    "minecraft:coarse_dirt"
+		]
+            }
+        }
+    ]
+}

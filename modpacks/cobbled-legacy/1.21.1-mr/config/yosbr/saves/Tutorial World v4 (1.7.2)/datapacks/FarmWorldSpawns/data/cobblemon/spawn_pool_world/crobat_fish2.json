@@ -1,0 +1,35 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "crobat_fish2",
+            "pokemon": "crobat",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "41-54",
+            "weight": 800.00,
+            "condition": {
+                "canSeeSky": true,
+                "timeRange": "night",
+                "maxX": -236,
+                "minX": -357,
+                "maxZ": 500,
+                "minZ": 338,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:oak_leaves",
+                    "minecraft:acacia_leaves",
+                    "minecraft:mangrove_wood"
+                ]
+            }
+        }
+    ]
+}

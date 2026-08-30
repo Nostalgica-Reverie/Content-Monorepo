@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+	{
+            "id": "spinarak_farm",
+            "pokemon": "spinarak",
+            "presets": [
+                "underground"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "common",
+            "level": "14-19",
+            "weight": 1000.00,
+            "condition": {
+		"canSeeSky": false,
+		"maxX": -80,
+		"minX": -99,
+		"maxZ": 255,
+		"minZ": 211,
+                "biomes": [
+                    "#cobblemon:is_overworld"
+		],
+                "neededNearbyBlocks": [
+                    "minecraft:cobweb"
+		]
+            }
+        }
+    ]
+}
