@@ -6,8 +6,10 @@ image: nixos
 dependencies: [cmake, gcc, git, gnumake, ninja, openssh, pkg-config, rustup]
 steps:
   - name: Build Packwand CLI
-    command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
+    command: |
+      git clone --depth 1 https://tangled.org/nostalgica.net/bundle bundle-src
+      cd bundle-src && cargo build --locked --release -p bundle-cli --bin packwand
   - name: Refresh all packs and commit
     command: |
-      apps/packwandrs/target/release/packwand batch refresh
+      bundle-src/target/release/packwand batch refresh
       TANGLED_COMMIT_MESSAGE='actions: bulk refresh' sh scripts/tangled/commit-and-push.sh modpacks

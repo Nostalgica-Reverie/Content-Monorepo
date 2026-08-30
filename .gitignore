@@ -90,6 +90,7 @@ replay_*.log
 
 # component build outputs
 apps/mod-browser-webview/target/
+/bundle-src/
 docs/packwiz/docs/.vitepress/cache
 docs/packwiz/docs/.vitepress/dist
 apps/packwand/gui/tauri/src-tauri/gen/

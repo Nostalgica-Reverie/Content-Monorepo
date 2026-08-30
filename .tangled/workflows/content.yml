@@ -15,9 +15,11 @@ dependencies: [cmake, gcc, git, gnumake, ninja, pkg-config, rustup]
 
 steps:
   - name: Build Packwand CLI
-    command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
+    command: |
+      git clone --depth 1 https://tangled.org/nostalgica.net/bundle bundle-src
+      cd bundle-src && cargo build --locked --release -p bundle-cli --bin packwand
   - name: Lint content syntax
-    command: apps/packwandrs/target/release/packwand lint
+    command: bundle-src/target/release/packwand lint
   - name: Preflight changed pack manifests
     command: |
       set -e
@@ -25,5 +27,5 @@ steps:
       packs="$(printf '%s\n' "$changed" | grep -E '^(modpacks|datapacks|resourcepacks)/[^/]+/' | cut -d/ -f1-2 | sort -u || true)"
       test -z "$packs" && exit 0
       printf '%s\n' "$packs" | while IFS= read -r pack; do
-        apps/packwandrs/target/release/packwand preflight "$pack"
+        bundle-src/target/release/packwand preflight "$pack"
       done

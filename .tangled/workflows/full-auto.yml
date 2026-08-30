@@ -6,11 +6,13 @@ image: nixos
 dependencies: [cmake, gcc, git, gnumake, jq, ninja, openssh, pkg-config, rustup]
 steps:
   - name: Build Packwand CLI
-    command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
+    command: |
+      git clone --depth 1 https://tangled.org/nostalgica.net/bundle bundle-src
+      cd bundle-src && cargo build --locked --release -p bundle-cli --bin packwand
   - name: Run full automation and commit version bumps
     command: |
       set -eo pipefail
-      packwand=apps/packwandrs/target/release/packwand
+      packwand=bundle-src/target/release/packwand
       "$packwand" automation list-full-auto | while IFS= read -r id; do
         test -n "$id" || continue
         for category in modpacks datapacks resourcepacks; do

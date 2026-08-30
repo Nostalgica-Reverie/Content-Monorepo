@@ -6,8 +6,10 @@ image: nixos
 dependencies: [cmake, gcc, git, gnumake, ninja, openssh, pkg-config, rustup]
 steps:
   - name: Build Packwand CLI
-    command: cd apps/packwandrs && cargo build --locked --release -p packwand-cli
+    command: |
+      git clone --depth 1 https://tangled.org/nostalgica.net/bundle bundle-src
+      cd bundle-src && cargo build --locked --release -p bundle-cli --bin packwand
   - name: Update loaders to latest and commit
     command: |
-      apps/packwandrs/target/release/packwand batch loader-update latest
+      bundle-src/target/release/packwand batch loader-update latest
       TANGLED_COMMIT_MESSAGE='actions: bulk loader update (latest)' sh scripts/tangled/commit-and-push.sh modpacks
