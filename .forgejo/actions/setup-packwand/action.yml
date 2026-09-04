@@ -1,24 +1,28 @@
 name: 'Setup Packwand'
-description: 'Install Rust'
+description: 'Clone bundle (the packwand/bundle CLI) from Tangled and build it'
 
 runs:
   using: 'composite'
   steps:
+    - name: Clone bundle from Tangled
+      shell: bash
+      run: git clone --depth 1 https://tangled.org/nostalgica.net/bundle "$RUNNER_TEMP/bundle-src"
+
     - name: Setup Packwand Rust toolchain
       uses: ./.forgejo/actions/setup-rust
       with:
-        workspaces: apps/packwandrs
+        workspaces: ${{ runner.temp }}/bundle-src
         cache-key: packwand-cli-release
 
     - name: Build Packwand CLI
       shell: bash
-      working-directory: apps/packwandrs
-      run: cargo build --locked --release -p packwand-cli
+      working-directory: ${{ runner.temp }}/bundle-src
+      run: cargo build --locked --release -p bundle-cli --bin packwand
 
     - name: Export Packwand CLI
       shell: bash
       run: |
-        PACKWAND_BIN="$GITHUB_WORKSPACE/apps/packwandrs/target/release/packwand"
+        PACKWAND_BIN="$RUNNER_TEMP/bundle-src/target/release/packwand"
         test -x "$PACKWAND_BIN"
         echo "$(dirname "$PACKWAND_BIN")" >> "$GITHUB_PATH"
         echo "PACKWAND_BIN=$PACKWAND_BIN" >> "$GITHUB_ENV"

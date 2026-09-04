@@ -7,7 +7,6 @@ on:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
-      - 'apps/packwandrs/**'
       - '.forgejo/actions/setup-packwand/**'
       - '.forgejo/actions/setup-rust/**'
       - '.forgejo/actions/setup-packeater/**'
@@ -18,7 +17,6 @@ on:
       - 'modpacks/**'
       - 'datapacks/**'
       - 'resourcepacks/**'
-      - 'apps/packwandrs/**'
       - '.forgejo/actions/setup-packwand/**'
       - '.forgejo/actions/setup-rust/**'
       - '.forgejo/actions/setup-packeater/**'
@@ -42,7 +40,6 @@ jobs:
             modpacks
             datapacks
             resourcepacks
-            apps/packwandrs
             .forgejo/actions
 
       - name: Meta

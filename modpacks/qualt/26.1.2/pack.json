@@ -1,0 +1,19 @@
+{
+  "name": "qualt",
+  "author": "omo50",
+  "version": "26.06",
+  "pack-format": "bundle:29",
+  "index": {
+    "file": "index.json",
+    "hash-format": "sha512"
+  },
+  "lock": {
+    "file": "bundle.lock",
+    "hash-format": "sha512",
+    "hash": "25f471d41de9cc00734fdcb8a715c787cdbb9eb3361e61d34f11f185ac4532099d87e05ea797d92282960396dcdb2dd0a5426ef435b9bdc3c02ea802600b4198"
+  },
+  "versions": {
+    "fabric": "0.19.3",
+    "minecraft": "26.1.2"
+  }
+}

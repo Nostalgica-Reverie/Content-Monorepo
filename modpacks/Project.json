@@ -1,6 +1,6 @@
 {
   "_generated": "Used by Packwand do not touch pls thx",
-  "generated": "2026-08-03T23:26:16Z",
+  "generated": "2026-09-04T03:12:06Z",
   "projects": [
     {
       "id": "SkyPixel",
@@ -25,18 +25,39 @@
       "docs_path": "/modpacks/SkyPixel/",
       "subdirs": [
         {
-          "key": "26.1.2-cf",
-          "path": "modpacks/skypixel/26.1.2-cf",
-          "platform": "curseforge",
-          "mod_count": 37,
+          "key": "26.1.2",
+          "path": "modpacks/skypixel/26.1.2",
+          "platform": "",
+          "mod_count": 56,
           "has_index": true,
           "has_pack": true
-        },
+        }
+      ]
+    },
+    {
+      "id": "cobbled-legacy",
+      "name": "Cobbled Legacy",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/cobbled-legacy",
+      "manifest_path": "modpacks/cobbled-legacy/manifest.json",
+      "loader": "fabric",
+      "mc_version": "1.21.1",
+      "version": "26.08",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "iY3TX0kR",
+      "platforms": {
+        "modrinth": "iY3TX0kR"
+      },
+      "docs_path": "/modpacks/cobbled-legacy/",
+      "subdirs": [
         {
-          "key": "26.1.2-mr",
-          "path": "modpacks/skypixel/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 49,
+          "key": "1.21.1",
+          "path": "modpacks/cobbled-legacy/1.21.1",
+          "platform": "",
+          "mod_count": 76,
           "has_index": true,
           "has_pack": true
         }
@@ -63,10 +84,10 @@
       "docs_path": "/modpacks/gold-not-old/",
       "subdirs": [
         {
-          "key": "26.1.2-mr",
-          "path": "modpacks/gold-not-old/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 54,
+          "key": "26.1.2",
+          "path": "modpacks/gold-not-old/26.1.2",
+          "platform": "",
+          "mod_count": 55,
           "has_index": true,
           "has_pack": true
         }
@@ -93,18 +114,10 @@
       "docs_path": "/modpacks/lce-common/",
       "subdirs": [
         {
-          "key": "26.1.2-cf",
-          "path": "modpacks/lce-common/26.1.2-cf",
-          "platform": "curseforge",
-          "mod_count": 36,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.1.2-mr",
-          "path": "modpacks/lce-common/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 43,
+          "key": "26.1.2",
+          "path": "modpacks/lce-common/26.1.2",
+          "platform": "",
+          "mod_count": 46,
           "has_index": true,
           "has_pack": true
         }
@@ -133,18 +146,10 @@
       "docs_path": "/modpacks/legacy4server/",
       "subdirs": [
         {
-          "key": "26.1.2-cf",
-          "path": "modpacks/legacy4server/26.1.2-cf",
-          "platform": "curseforge",
-          "mod_count": 20,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.1.2-mr",
-          "path": "modpacks/legacy4server/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 25,
+          "key": "26.1.2",
+          "path": "modpacks/legacy4server/26.1.2",
+          "platform": "",
+          "mod_count": 26,
           "has_index": true,
           "has_pack": true
         }
@@ -171,11 +176,11 @@
       "docs_path": "/modpacks/minigameclient/",
       "subdirs": [
         {
-          "key": "1.20.4-mr",
-          "path": "modpacks/minigameclient/1.20.4-mr",
-          "platform": "modrinth",
+          "key": "1.20.4",
+          "path": "modpacks/minigameclient/1.20.4",
+          "platform": "",
           "mod_count": 26,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -201,10 +206,10 @@
       "docs_path": "/modpacks/qualt/",
       "subdirs": [
         {
-          "key": "26.1.2-mr",
-          "path": "modpacks/qualt/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 114,
+          "key": "26.1.2",
+          "path": "modpacks/qualt/26.1.2",
+          "platform": "",
+          "mod_count": 115,
           "has_index": true,
           "has_pack": true
         }
@@ -286,75 +291,75 @@
       ],
       "subdirs": [
         {
-          "key": "1.20.1-fabric-mr",
-          "path": "modpacks/re-console-lts/1.20.1-fabric-mr",
-          "platform": "modrinth",
+          "key": "1.20.1-fabric",
+          "path": "modpacks/re-console-lts/1.20.1-fabric",
+          "platform": "",
           "mod_count": 73,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.20.4-fabric-mr",
-          "path": "modpacks/re-console-lts/1.20.4-fabric-mr",
-          "platform": "modrinth",
+          "key": "1.20.4-fabric",
+          "path": "modpacks/re-console-lts/1.20.4-fabric",
+          "platform": "",
           "mod_count": 72,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.21.1-fabric-mr",
-          "path": "modpacks/re-console-lts/1.21.1-fabric-mr",
-          "platform": "modrinth",
+          "key": "1.21.1-fabric",
+          "path": "modpacks/re-console-lts/1.21.1-fabric",
+          "platform": "",
           "mod_count": 72,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.21.1-neoforge-mr",
-          "path": "modpacks/re-console-lts/1.21.1-neoforge-mr",
-          "platform": "modrinth",
+          "key": "1.21.1-neoforge",
+          "path": "modpacks/re-console-lts/1.21.1-neoforge",
+          "platform": "",
           "mod_count": 56,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.21.10-fabric-mr",
-          "path": "modpacks/re-console-lts/1.21.10-fabric-mr",
-          "platform": "modrinth",
+          "key": "1.21.10-fabric",
+          "path": "modpacks/re-console-lts/1.21.10-fabric",
+          "platform": "",
           "mod_count": 76,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.21.3-fabric-mr",
-          "path": "modpacks/re-console-lts/1.21.3-fabric-mr",
-          "platform": "modrinth",
+          "key": "1.21.3-fabric",
+          "path": "modpacks/re-console-lts/1.21.3-fabric",
+          "platform": "",
           "mod_count": 57,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.21.4-fabric-mr",
-          "path": "modpacks/re-console-lts/1.21.4-fabric-mr",
-          "platform": "modrinth",
+          "key": "1.21.4-fabric",
+          "path": "modpacks/re-console-lts/1.21.4-fabric",
+          "platform": "",
           "mod_count": 77,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.21.5-fabric-mr",
-          "path": "modpacks/re-console-lts/1.21.5-fabric-mr",
-          "platform": "modrinth",
+          "key": "1.21.5-fabric",
+          "path": "modpacks/re-console-lts/1.21.5-fabric",
+          "platform": "",
           "mod_count": 70,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.21.8-fabric-mr",
-          "path": "modpacks/re-console-lts/1.21.8-fabric-mr",
-          "platform": "modrinth",
+          "key": "1.21.8-fabric",
+          "path": "modpacks/re-console-lts/1.21.8-fabric",
+          "platform": "",
           "mod_count": 73,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -367,16 +372,14 @@
       "dir": "modpacks/re-console-main",
       "manifest_path": "modpacks/re-console-main/manifest.json",
       "loader": "fabric",
-      "version": "26.07.6.main",
+      "version": "26.08.main",
       "release_type": "release",
       "lifecycle": "active",
       "role": "consumer",
       "auto_update": true,
       "modrinth_id": "legacy-minecraft",
-      "curseforge_id": "1066411",
       "platforms": {
-        "modrinth": "legacy-minecraft",
-        "curseforge": "1066411"
+        "modrinth": "legacy-minecraft"
       },
       "docs_path": "/modpacks/re-console-main/",
       "variants": [
@@ -395,27 +398,19 @@
       ],
       "subdirs": [
         {
-          "key": "26.1.2-cf",
-          "path": "modpacks/re-console-main/26.1.2-cf",
-          "platform": "curseforge",
-          "mod_count": 71,
+          "key": "26.1.2",
+          "path": "modpacks/re-console-main/26.1.2",
+          "platform": "",
+          "mod_count": 91,
           "has_index": true,
           "has_pack": true
         },
         {
-          "key": "26.1.2-mr",
-          "path": "modpacks/re-console-main/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 88,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.2-mr",
-          "path": "modpacks/re-console-main/26.2-mr",
-          "platform": "modrinth",
+          "key": "26.2",
+          "path": "modpacks/re-console-main/26.2",
+          "platform": "",
           "mod_count": 74,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -438,11 +433,11 @@
       "docs_path": "/modpacks/reimagined/",
       "subdirs": [
         {
-          "key": "1.21.1-mr",
-          "path": "modpacks/reimagined/1.21.1-mr",
-          "platform": "modrinth",
+          "key": "1.21.1",
+          "path": "modpacks/reimagined/1.21.1",
+          "platform": "",
           "mod_count": 0,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -487,25 +482,25 @@
       ],
       "subdirs": [
         {
-          "key": "tu1-mr",
-          "path": "modpacks/rekindled/tu1-mr",
-          "platform": "modrinth",
-          "mod_count": 30,
+          "key": "tu1",
+          "path": "modpacks/rekindled/tu1",
+          "platform": "",
+          "mod_count": 35,
           "has_index": true,
           "has_pack": true
         },
         {
-          "key": "tu3-mr",
-          "path": "modpacks/rekindled/tu3-mr",
-          "platform": "modrinth",
+          "key": "tu3",
+          "path": "modpacks/rekindled/tu3",
+          "platform": "",
           "mod_count": 67,
           "has_index": true,
           "has_pack": true
         },
         {
-          "key": "tu5-mr",
-          "path": "modpacks/rekindled/tu5-mr",
-          "platform": "modrinth",
+          "key": "tu5",
+          "path": "modpacks/rekindled/tu5",
+          "platform": "",
           "mod_count": 67,
           "has_index": true,
           "has_pack": true
@@ -533,11 +528,11 @@
       "docs_path": "/modpacks/rekindled-common/",
       "subdirs": [
         {
-          "key": "26.1.2-mr",
-          "path": "modpacks/rekindled-common/26.1.2-mr",
-          "platform": "modrinth",
+          "key": "26.1.2",
+          "path": "modpacks/rekindled-common/26.1.2",
+          "platform": "",
           "mod_count": 30,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -594,43 +589,43 @@
       ],
       "subdirs": [
         {
-          "key": "1.12.2-mr",
-          "path": "modpacks/simply-archaic/1.12.2-mr",
-          "platform": "modrinth",
+          "key": "1.12.2",
+          "path": "modpacks/simply-archaic/1.12.2",
+          "platform": "",
           "mod_count": 11,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.16.5-mr",
-          "path": "modpacks/simply-archaic/1.16.5-mr",
-          "platform": "modrinth",
+          "key": "1.16.5",
+          "path": "modpacks/simply-archaic/1.16.5",
+          "platform": "",
           "mod_count": 10,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.18.2-mr",
-          "path": "modpacks/simply-archaic/1.18.2-mr",
-          "platform": "modrinth",
+          "key": "1.18.2",
+          "path": "modpacks/simply-archaic/1.18.2",
+          "platform": "",
           "mod_count": 11,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.7.10-mr",
-          "path": "modpacks/simply-archaic/1.7.10-mr",
-          "platform": "modrinth",
+          "key": "1.7.10",
+          "path": "modpacks/simply-archaic/1.7.10",
+          "platform": "",
           "mod_count": 12,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         },
         {
-          "key": "1.8.9-mr",
-          "path": "modpacks/simply-archaic/1.8.9-mr",
-          "platform": "modrinth",
+          "key": "1.8.9",
+          "path": "modpacks/simply-archaic/1.8.9",
+          "platform": "",
           "mod_count": 10,
-          "has_index": true,
+          "has_index": false,
           "has_pack": true
         }
       ]
@@ -658,18 +653,10 @@
       "docs_path": "/modpacks/simply-legacy/",
       "subdirs": [
         {
-          "key": "26.1.2-cf",
-          "path": "modpacks/simply-legacy/26.1.2-cf",
-          "platform": "curseforge",
-          "mod_count": 45,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.1.2-mr",
-          "path": "modpacks/simply-legacy/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 50,
+          "key": "26.1.2",
+          "path": "modpacks/simply-legacy/26.1.2",
+          "platform": "",
+          "mod_count": 57,
           "has_index": true,
           "has_pack": true
         }
@@ -683,7 +670,7 @@
       "dir": "modpacks/simply-optimized-forked",
       "manifest_path": "modpacks/simply-optimized-forked/manifest.json",
       "loader": "fabric",
-      "version": "26.07.4",
+      "version": "26.08.2",
       "release_type": "release",
       "lifecycle": "active",
       "role": "base",
@@ -711,34 +698,18 @@
       ],
       "subdirs": [
         {
-          "key": "26.1.2-cf",
-          "path": "modpacks/simply-optimized-forked/26.1.2-cf",
-          "platform": "curseforge",
-          "mod_count": 29,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.1.2-mr",
-          "path": "modpacks/simply-optimized-forked/26.1.2-mr",
-          "platform": "modrinth",
+          "key": "26.1.2",
+          "path": "modpacks/simply-optimized-forked/26.1.2",
+          "platform": "",
           "mod_count": 30,
           "has_index": true,
           "has_pack": true
         },
         {
-          "key": "26.2-cf",
-          "path": "modpacks/simply-optimized-forked/26.2-cf",
-          "platform": "curseforge",
-          "mod_count": 27,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.2-mr",
-          "path": "modpacks/simply-optimized-forked/26.2-mr",
-          "platform": "modrinth",
-          "mod_count": 30,
+          "key": "26.2",
+          "path": "modpacks/simply-optimized-forked/26.2",
+          "platform": "",
+          "mod_count": 31,
           "has_index": true,
           "has_pack": true
         }
@@ -767,34 +738,18 @@
       "docs_path": "/modpacks/vital/",
       "subdirs": [
         {
-          "key": "26.1.2-cf",
-          "path": "modpacks/vital/26.1.2-cf",
-          "platform": "curseforge",
-          "mod_count": 66,
+          "key": "26.1.2",
+          "path": "modpacks/vital/26.1.2",
+          "platform": "",
+          "mod_count": 72,
           "has_index": true,
           "has_pack": true
         },
         {
-          "key": "26.1.2-mr",
-          "path": "modpacks/vital/26.1.2-mr",
-          "platform": "modrinth",
-          "mod_count": 71,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.2-cf",
-          "path": "modpacks/vital/26.2-cf",
-          "platform": "curseforge",
-          "mod_count": 66,
-          "has_index": true,
-          "has_pack": true
-        },
-        {
-          "key": "26.2-mr",
-          "path": "modpacks/vital/26.2-mr",
-          "platform": "modrinth",
-          "mod_count": 71,
+          "key": "26.2",
+          "path": "modpacks/vital/26.2",
+          "platform": "",
+          "mod_count": 72,
           "has_index": true,
           "has_pack": true
         }

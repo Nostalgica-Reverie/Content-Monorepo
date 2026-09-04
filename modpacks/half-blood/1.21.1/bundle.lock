@@ -1,0 +1,1311 @@
+{
+  "version": 2,
+  "pack-format": "bundle:29",
+  "packages": [
+    {
+      "path": "mods/amendments.bun.json",
+      "slug": "amendments",
+      "filename": "amendments-neoforge-1.21-2.1.7.jar",
+      "provider": "modrinth",
+      "project-id": "6iTJugQR",
+      "version-id": "BoGvkmKs",
+      "sha512": "ffa9d60ad4c024e5f0ad9b1c9f0e2cbc5eea0666d3370aeec3754f7f1568ce87fc50f1a8ce9017bda7063a1c9a62eff4b901c660631f1a8e5adaf89cf9320c59",
+      "sidecar-hash": "7b1bcb3648dfa11f9c147da2727883cf2458bf0aa6df64fcd5083423c322b48fdc81e7c0577b5339484d46acf2c1e7de5ba42c552fa0ccf51bec0c5b7a77013b",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "6iTJugQR",
+          "version-id": "BoGvkmKs",
+          "filename": "amendments-neoforge-1.21-2.1.7.jar",
+          "url": "https://cdn.modrinth.com/data/6iTJugQR/versions/BoGvkmKs/amendments-neoforge-1.21-2.1.7.jar",
+          "hashes": {
+            "sha1": "69b9a6243a1513f7e40780367c40d23a4d687439",
+            "sha512": "ffa9d60ad4c024e5f0ad9b1c9f0e2cbc5eea0666d3370aeec3754f7f1568ce87fc50f1a8ce9017bda7063a1c9a62eff4b901c660631f1a8e5adaf89cf9320c59"
+          },
+          "size": 1154863
+        }
+      }
+    },
+    {
+      "path": "mods/asynclogger.bun.json",
+      "slug": "asynclogger",
+      "filename": "asynclogger-2.2.1+1.21.1-neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "zvNzKfGF",
+      "version-id": "i5z8ZG27",
+      "sha512": "0ae31f57eee67dbc828fe045658e47195e70f971d09cd786b89320cb27eb0c81a9da56be8539392d948bbc32ebc9c838bc04c3736115e45aa0118b189bce086f",
+      "sidecar-hash": "80944de8c5fef8ad0f3a58607f1361fe6930490e7d2a3152f9cd5c0c2bce5020dd4cc772378eda83da4702dbb530839dd5a0d9c149cff9ff33cf7d86b4a69593",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "zvNzKfGF",
+          "version-id": "i5z8ZG27",
+          "filename": "asynclogger-2.2.1+1.21.1-neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/zvNzKfGF/versions/i5z8ZG27/asynclogger-2.2.1%2B1.21.1-neoforge.jar",
+          "hashes": {
+            "sha1": "9ec66494590b97c9e16c7b0a2af5a18ed49e80e2",
+            "sha512": "0ae31f57eee67dbc828fe045658e47195e70f971d09cd786b89320cb27eb0c81a9da56be8539392d948bbc32ebc9c838bc04c3736115e45aa0118b189bce086f"
+          },
+          "size": 589379
+        }
+      }
+    },
+    {
+      "path": "mods/asyncparticles.bun.json",
+      "slug": "asyncparticles",
+      "filename": "AsyncParticles-21.1.4.0-alpha.2+1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "c3onkd5k",
+      "version-id": "7RpzrsVT",
+      "sha512": "59b9c85bfc44912be4a9328274dfb70557a911b1d40dbb9fc3e2523cbfc9ce5c56b1b7524b5db9eb249e644c907fa8a506e8c20461a1f8cdc481a524ffd00d10",
+      "sidecar-hash": "37a75361c5c4f90652dca91969427c61ba89dbcc88d38cee4fc61d7c41faeae2e4751fbb203cea1dd9835211979a54db66ae8e475453762bf7739635db0ad319",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "c3onkd5k",
+          "version-id": "7RpzrsVT",
+          "filename": "AsyncParticles-21.1.4.0-alpha.2+1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/c3onkd5k/versions/7RpzrsVT/AsyncParticles-21.1.4.0-alpha.2%2B1.21.1.jar",
+          "hashes": {
+            "sha1": "ff278d12b16e88ae77316f2d4191631bc929bdff",
+            "sha512": "59b9c85bfc44912be4a9328274dfb70557a911b1d40dbb9fc3e2523cbfc9ce5c56b1b7524b5db9eb249e644c907fa8a506e8c20461a1f8cdc481a524ffd00d10"
+          },
+          "size": 1155270
+        }
+      }
+    },
+    {
+      "path": "mods/badoptimizations.bun.json",
+      "slug": "badoptimizations",
+      "filename": "BadOptimizations-2.4.1-1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "g96Z4WVZ",
+      "version-id": "S2qthD5S",
+      "sha512": "2b66428bd98bd5ec0e09f2ec6af801cefb7b9b99cc4f0993daeaffe8d0ccc5ee0c2a73e9f38d4f92540ead0181704d2c9e946837ec05cf710fc3b20fce3b0cac",
+      "sidecar-hash": "347cbbbaf563dc5ee5db594cf35326243200af2b89cc7a68ce0aaca8c4264cb2b4f52f6bf6bdb20e7b35e5931f2c464c78d1bfdd1287f9373e73072099e4dbb8",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "g96Z4WVZ",
+          "version-id": "S2qthD5S",
+          "filename": "BadOptimizations-2.4.1-1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/g96Z4WVZ/versions/S2qthD5S/BadOptimizations-2.4.1-1.21.1.jar",
+          "hashes": {
+            "sha1": "1461d8e46391efd32a3085150e86094c9f6f5c9d",
+            "sha512": "2b66428bd98bd5ec0e09f2ec6af801cefb7b9b99cc4f0993daeaffe8d0ccc5ee0c2a73e9f38d4f92540ead0181704d2c9e946837ec05cf710fc3b20fce3b0cac"
+          },
+          "size": 283566
+        }
+      }
+    },
+    {
+      "path": "mods/better-block-entities.bun.json",
+      "slug": "better-block-entities",
+      "filename": "bbe-neoforge-1.3.4-beta.3+mc1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "ONZm0H7Y",
+      "version-id": "RPhK79hl",
+      "sha512": "978c6a260e651633e5aa4191e724d550dc4179a396371438e8a8cb218a55e22bece9c5dbac859a60dc7ced3e630de592660bcd1c2f625cd6cd36d7c4ce0f1e0c",
+      "sidecar-hash": "6adab48659b5055cd5459184a7d747a61542c3bcfd88b40237a21a9f7d3acdebaf5b4fbab5de03cec64170a7050d0b304d748541bc9c13bffb83676406f7b3e3",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "ONZm0H7Y",
+          "version-id": "RPhK79hl",
+          "filename": "bbe-neoforge-1.3.4-beta.3+mc1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/ONZm0H7Y/versions/RPhK79hl/bbe-neoforge-1.3.4-beta.3%2Bmc1.21.1.jar",
+          "hashes": {
+            "sha1": "e715ca1236ea641345b6ac4746e564f44899675b",
+            "sha512": "978c6a260e651633e5aa4191e724d550dc4179a396371438e8a8cb218a55e22bece9c5dbac859a60dc7ced3e630de592660bcd1c2f625cd6cd36d7c4ce0f1e0c"
+          },
+          "size": 177123
+        }
+      }
+    },
+    {
+      "path": "mods/c2me-fabric.bun.json",
+      "slug": "c2me-fabric",
+      "filename": "c2me-fabric-mc26.1.2-0.4.0-alpha.0.44.jar",
+      "provider": "modrinth",
+      "project-id": "VSNURh3q",
+      "version-id": "P1edoXUI",
+      "sha512": "9c2d75a0226fef6d0334453625c23615d0cced33cb42845202e35ff8415f5b9ca08002e14eb6540665a70f987932f5b74d5b33d92cdad3b3de8150f24da824cc",
+      "sidecar-hash": "4a395ec0f0cb7e1e1fe4c76806dfcd79acc00a0c65f85a30fb9c84127dd157c375c915b8d550d363bb573f121b4d207f9797bfc52bcf6a7257195ca12a88b3b9",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "VSNURh3q",
+          "version-id": "P1edoXUI",
+          "filename": "c2me-fabric-mc26.1.2-0.4.0-alpha.0.44.jar",
+          "url": "https://cdn.modrinth.com/data/VSNURh3q/versions/P1edoXUI/c2me-fabric-mc26.1.2-0.4.0-alpha.0.44.jar",
+          "hashes": {
+            "sha1": "9788f3e9f3e327c6ddb5cd783e62deefe3a3d81a",
+            "sha512": "9c2d75a0226fef6d0334453625c23615d0cced33cb42845202e35ff8415f5b9ca08002e14eb6540665a70f987932f5b74d5b33d92cdad3b3de8150f24da824cc"
+          },
+          "size": 3789739
+        }
+      }
+    },
+    {
+      "path": "mods/clarity-mod.bun.json",
+      "slug": "clarity-mod",
+      "filename": "claritymod-neoforge-1.21.1-1.0.0.jar",
+      "provider": "modrinth",
+      "project-id": "GnCu0CQT",
+      "version-id": "pvNPRwyw",
+      "sha512": "042f7ef785ba6b42b91bc58b8810da07e4e70470a59e17409ec2a6932c43558860f90637384a53d60f00139e5e7a355665f76f59a38fa84c407f24c8afee730c",
+      "sidecar-hash": "0cb2994806d18f90d73fa60374f7f841e9702cee4e92c85623187c8f6500785f7b5d09a95ef004f04d3e8bff3b293b923ed38e8a0da40ed29000cda0b5d5168b",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "GnCu0CQT",
+          "version-id": "pvNPRwyw",
+          "filename": "claritymod-neoforge-1.21.1-1.0.0.jar",
+          "url": "https://cdn.modrinth.com/data/GnCu0CQT/versions/pvNPRwyw/claritymod-neoforge-1.21.1-1.0.0.jar",
+          "hashes": {
+            "sha1": "60ce6fd9bd489bb95447485cedb374d7d9af5944",
+            "sha512": "042f7ef785ba6b42b91bc58b8810da07e4e70470a59e17409ec2a6932c43558860f90637384a53d60f00139e5e7a355665f76f59a38fa84c407f24c8afee730c"
+          },
+          "size": 105409
+        }
+      }
+    },
+    {
+      "path": "mods/cloth-config.bun.json",
+      "slug": "cloth-config",
+      "filename": "cloth-config-15.0.140-neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "9s6osm5g",
+      "version-id": "izKINKFg",
+      "sha512": "aaf9b010955b8cd294e5a92f069985b18729fd5e2cf22d351f1dff9680f15488688803ec41e77e941cbde130ceb535014ca4c868047d80ab69c2d508e216654d",
+      "sidecar-hash": "0dcf66815cfdffa950b9c6e288510c5e78a5a154b497b8cf77f6c8e1fd09670ad14874f90f8f44b9b0ef2fe3ec2bcab3a92532c3177345084a5fa394aeec522f",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "9s6osm5g",
+          "version-id": "izKINKFg",
+          "filename": "cloth-config-15.0.140-neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/9s6osm5g/versions/izKINKFg/cloth-config-15.0.140-neoforge.jar",
+          "hashes": {
+            "sha1": "c3e5733ba4503b102589a026000fd5ce0212f6f2",
+            "sha512": "aaf9b010955b8cd294e5a92f069985b18729fd5e2cf22d351f1dff9680f15488688803ec41e77e941cbde130ceb535014ca4c868047d80ab69c2d508e216654d"
+          },
+          "size": 1163890
+        }
+      }
+    },
+    {
+      "path": "mods/configmanager.bun.json",
+      "slug": "configmanager",
+      "filename": "ConfigManager-neoforge-1.21.x-1.0.1.jar",
+      "provider": "modrinth",
+      "project-id": "jlNms3Jp",
+      "version-id": "PoltHx1P",
+      "sha512": "ea5517b7f5da418a8927dc9c36e7cd4297ecc36f7c93ce930608c9f500270ccb6b647330ff754fc512076933b405b68f31d5d91de5320fe4eb70ceaca181348c",
+      "sidecar-hash": "e21f43ae9c072007546e5ae5ab1dfe17ecb484dd23c4e48afb5b20b38bb0db2a26748e371f3c74d1138787f1b86ab172f48ab21e42682730f21427f1f42305ad",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "jlNms3Jp",
+          "version-id": "PoltHx1P",
+          "filename": "ConfigManager-neoforge-1.21.x-1.0.1.jar",
+          "url": "https://cdn.modrinth.com/data/jlNms3Jp/versions/PoltHx1P/ConfigManager-neoforge-1.21.x-1.0.1.jar",
+          "hashes": {
+            "sha1": "4d9071cbb997b28c81215e16cf70eb430276f5d3",
+            "sha512": "ea5517b7f5da418a8927dc9c36e7cd4297ecc36f7c93ce930608c9f500270ccb6b647330ff754fc512076933b405b68f31d5d91de5320fe4eb70ceaca181348c"
+          },
+          "size": 141558
+        }
+      }
+    },
+    {
+      "path": "mods/connector-extras.bun.json",
+      "slug": "connector-extras",
+      "filename": "ConnectorExtras-1.12.1+1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "FYpiwiBR",
+      "version-id": "dgLCqZyo",
+      "sha512": "ff9fc5d48a81e820c8c26b8a045e0ab7a3b0e9b5eaee7369b2eadb3f93d7eb423255073dfc327d131cb667df93be066560f3704b4cc8a12b07486b98a12bad1d",
+      "sidecar-hash": "0f5f40829e0504b80efb90b85a93a1f749f9341e450cf626c3a705271184dcafd0f6dca8523cf7d90893b884c1c385c6a5f7409f8578c1ea1764023bbb56c3a7",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "FYpiwiBR",
+          "version-id": "dgLCqZyo",
+          "filename": "ConnectorExtras-1.12.1+1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/FYpiwiBR/versions/dgLCqZyo/ConnectorExtras-1.12.1%2B1.21.1.jar",
+          "hashes": {
+            "sha1": "8ea07df55b26c8343d06df77936505a23e0d2140",
+            "sha512": "ff9fc5d48a81e820c8c26b8a045e0ab7a3b0e9b5eaee7369b2eadb3f93d7eb423255073dfc327d131cb667df93be066560f3704b4cc8a12b07486b98a12bad1d"
+          },
+          "size": 86284
+        }
+      }
+    },
+    {
+      "path": "mods/connector.bun.json",
+      "slug": "connector",
+      "filename": "connector-2.0.0-beta.16+1.21.1-full.jar",
+      "provider": "modrinth",
+      "project-id": "u58R1TMW",
+      "version-id": "9Bz9VtV5",
+      "sha512": "39094eb8c514db0ffc474bf64a95ebb1a55d50db6a68fcb1dc0fcaea2d1d1fdeb44aa73de9b77a07b04cb7d75741f7c0ac9bb63eae5ded225b2bb0695588c064",
+      "sidecar-hash": "b0f062243d5607aeabacd82467fc502e359a3902cfd11ea411f69dee3caef453634e7a4f7c49d37341e94495c6cbd09869dc14b18ba121006b06d7cd2491dcf6",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "u58R1TMW",
+          "version-id": "9Bz9VtV5",
+          "filename": "connector-2.0.0-beta.16+1.21.1-full.jar",
+          "url": "https://cdn.modrinth.com/data/u58R1TMW/versions/9Bz9VtV5/connector-2.0.0-beta.16%2B1.21.1-full.jar",
+          "hashes": {
+            "sha1": "f874627f9b3f8c33c8ef7f904a0084742aad48e5",
+            "sha512": "39094eb8c514db0ffc474bf64a95ebb1a55d50db6a68fcb1dc0fcaea2d1d1fdeb44aa73de9b77a07b04cb7d75741f7c0ac9bb63eae5ded225b2bb0695588c064"
+          },
+          "size": 4533093
+        }
+      }
+    },
+    {
+      "path": "mods/cull-fewer-leaves.bun.json",
+      "slug": "cull-fewer-leaves",
+      "filename": "cull-fewer-leaves-1.1.2+26.1-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "alhWWxax",
+      "version-id": "jIEsEM7M",
+      "sha512": "80e1763a3e0f2746aaa27da4d20837f62f5bea22fff326a6b7cecff43923ba1de91c6c5d4d8e5125bc263f35464cc858b556aa8ce8f1118e612677341d96d5d2",
+      "sidecar-hash": "ab8512671e9160284a8ce9fb15ce584f97d66eb934b17f8df1dfec4805b68e7012487f4805534fabd05cd6ba55c8b19d12dbe23f2006350b99555a342a384b69",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "alhWWxax",
+          "version-id": "jIEsEM7M",
+          "filename": "cull-fewer-leaves-1.1.2+26.1-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/alhWWxax/versions/jIEsEM7M/cull-fewer-leaves-1.1.2%2B26.1-fabric.jar",
+          "hashes": {
+            "sha512": "80e1763a3e0f2746aaa27da4d20837f62f5bea22fff326a6b7cecff43923ba1de91c6c5d4d8e5125bc263f35464cc858b556aa8ce8f1118e612677341d96d5d2"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/dynamic-fps.bun.json",
+      "slug": "dynamic-fps",
+      "filename": "dynamic-fps-3.11.4+minecraft-1.21.0-neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "LQ3K71Q1",
+      "version-id": "T238FZpQ",
+      "sha512": "8eb18a280b265e598540306275b51a165836f4b14c6c703b6ced11fcac50bfab439e4deb69e222f62614a9f15fa0ef58e5bd84e20e37ae57755d9c2f8b134057",
+      "sidecar-hash": "45ba788e1e46edd97a28a58338353f2f49823975989327bb35e3b349382f7c76623f9aa0bab771499b62778ccd25852911617cd5522ce5740f5099b28c1d5f22",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "LQ3K71Q1",
+          "version-id": "T238FZpQ",
+          "filename": "dynamic-fps-3.11.4+minecraft-1.21.0-neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/LQ3K71Q1/versions/T238FZpQ/dynamic-fps-3.11.4%2Bminecraft-1.21.0-neoforge.jar",
+          "hashes": {
+            "sha1": "35b17e95b2b65930116ccc83e0cc358ac1bfcf9e",
+            "sha512": "8eb18a280b265e598540306275b51a165836f4b14c6c703b6ced11fcac50bfab439e4deb69e222f62614a9f15fa0ef58e5bd84e20e37ae57755d9c2f8b134057"
+          },
+          "size": 220193
+        }
+      }
+    },
+    {
+      "path": "mods/emi.bun.json",
+      "slug": "emi",
+      "filename": "emi-1.1.24+1.21.1+neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "fRiHVvU7",
+      "version-id": "5sIPA1To",
+      "sha512": "f4c45ed686fe617311d6debadcb6ace5963e66f8cfe0cfed398231f081f87407070efc7a73c8b695d158f1d87a97180737b9107a46771e77df2bc9a7dc715ebd",
+      "sidecar-hash": "68a47aab7eae3cbbd587f9cabd71b464a0f5b3b5c0b81e2ae919a5ac8530a961c4ea2e8664a137f782c6e05599ba6229523ea4c689799f3fd2062614705838f9",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "fRiHVvU7",
+          "version-id": "5sIPA1To",
+          "filename": "emi-1.1.24+1.21.1+neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/fRiHVvU7/versions/5sIPA1To/emi-1.1.24%2B1.21.1%2Bneoforge.jar",
+          "hashes": {
+            "sha1": "3fd494b37027dfbc7f78414d7cbf251c9eb6738a",
+            "sha512": "f4c45ed686fe617311d6debadcb6ace5963e66f8cfe0cfed398231f081f87407070efc7a73c8b695d158f1d87a97180737b9107a46771e77df2bc9a7dc715ebd"
+          },
+          "size": 1111538
+        }
+      }
+    },
+    {
+      "path": "mods/entityculling.bun.json",
+      "slug": "entityculling",
+      "filename": "entityculling-neoforge-1.10.5-mc1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "NNAgCjsB",
+      "version-id": "5zRIon6w",
+      "sha512": "0c22502b84b13d8ac6daffe14ac77e7306b5b7a48f5cd9b3950d9e1d60b3786104aa035fbfdb208b1c9a75ad0e356301a774da32edc3f71cb3a53e2d28fd39e6",
+      "sidecar-hash": "c4ec71f88ed92721b9bcb872b8ed2e359aade6bb33d6a93fa05b959e6acad396e94f65919f569406553ab7c23573f48e2532c7437453d0274db2f629157de7b8",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "NNAgCjsB",
+          "version-id": "5zRIon6w",
+          "filename": "entityculling-neoforge-1.10.5-mc1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/5zRIon6w/entityculling-neoforge-1.10.5-mc1.21.1.jar",
+          "hashes": {
+            "sha1": "420d0006dbc0a20b1c2dd0b3c7c20ddb5cc51fcf",
+            "sha512": "0c22502b84b13d8ac6daffe14ac77e7306b5b7a48f5cd9b3950d9e1d60b3786104aa035fbfdb208b1c9a75ad0e356301a774da32edc3f71cb3a53e2d28fd39e6"
+          },
+          "size": 1585287
+        }
+      }
+    },
+    {
+      "path": "mods/ferrite-core.bun.json",
+      "slug": "ferrite-core",
+      "filename": "ferritecore-7.0.3-neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "uXXizFIs",
+      "version-id": "x7kQWVju",
+      "sha512": "19af89a2075bb10a63884fa853ebf84b02c79dc3242430ecdad056fd764fdcde367a7303276b329df01b0736e2ef264c5d80c7dc92c6aebd244f556a230bb417",
+      "sidecar-hash": "9ea548762d0e235f82cd6ecf74c2ccd3fddd555d90c1b548a9813d551dbf09a1aef136a0f351e7111fe1914fb03141b6cc7323b6130040024e1f65105744d390",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "uXXizFIs",
+          "version-id": "x7kQWVju",
+          "filename": "ferritecore-7.0.3-neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/x7kQWVju/ferritecore-7.0.3-neoforge.jar",
+          "hashes": {
+            "sha1": "9563692efb708b6b568df27a01ec52f6311928ef",
+            "sha512": "19af89a2075bb10a63884fa853ebf84b02c79dc3242430ecdad056fd764fdcde367a7303276b329df01b0736e2ef264c5d80c7dc92c6aebd244f556a230bb417"
+          },
+          "size": 121559
+        }
+      }
+    },
+    {
+      "path": "mods/forgified-fabric-api.bun.json",
+      "slug": "forgified-fabric-api",
+      "filename": "forgified-fabric-api-0.116.15+2.3.1+1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "Aqlf1Shp",
+      "version-id": "L9bk5uA9",
+      "sha512": "de6cc76a406371c6cab8600621ea9bf630a796baaa64afa2103a75cddcc8ab52e0a15a5c3dec9b2ed2cf3efcd7d93c622434eb3e8d007361fdd54f2504c09757",
+      "sidecar-hash": "bd7651b42d4d09cf0f43a8ae60571ec4f4d420357120584cdc4f54a1ad940b8a92b295d7881f768c89c48b5d25d69d7b76d4cfab1da8fca88085ceb08ffc8c1b",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "Aqlf1Shp",
+          "version-id": "L9bk5uA9",
+          "filename": "forgified-fabric-api-0.116.15+2.3.1+1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/Aqlf1Shp/versions/L9bk5uA9/forgified-fabric-api-0.116.15%2B2.3.1%2B1.21.1.jar",
+          "hashes": {
+            "sha1": "f3b5ff6e2ca338d8d9338acc5a1e47393e7b1ad2",
+            "sha512": "de6cc76a406371c6cab8600621ea9bf630a796baaa64afa2103a75cddcc8ab52e0a15a5c3dec9b2ed2cf3efcd7d93c622434eb3e8d007361fdd54f2504c09757"
+          },
+          "size": 5590061
+        }
+      }
+    },
+    {
+      "path": "mods/fzzy-config.bun.json",
+      "slug": "fzzy-config",
+      "filename": "fzzy_config-0.7.6+1.21+neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "hYykXjDp",
+      "version-id": "MAPG6cXE",
+      "sha512": "6071890aba7f2273c9fd508914acc7850de9d986423760f9ce416875ffa04eea2ad71a7a6f4d5f90f0625a672f6f54606778d11151b155f3fd98c223c61a4a6d",
+      "sidecar-hash": "7efd518d1bcbeac06d61c1be046e08f8abde796ee2b11093563635a3e93a5136fb22f4a6a31adf2add1bf5828234b3a668ef25b83bf83e0cd2bf6f02e2363729",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "hYykXjDp",
+          "version-id": "MAPG6cXE",
+          "filename": "fzzy_config-0.7.6+1.21+neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/hYykXjDp/versions/MAPG6cXE/fzzy_config-0.7.6%2B1.21%2Bneoforge.jar",
+          "hashes": {
+            "sha1": "c0910f9b975aaab8545ce950539748fb33d704d1",
+            "sha512": "6071890aba7f2273c9fd508914acc7850de9d986423760f9ce416875ffa04eea2ad71a7a6f4d5f90f0625a672f6f54606778d11151b155f3fd98c223c61a4a6d"
+          },
+          "size": 2369895
+        }
+      }
+    },
+    {
+      "path": "mods/gnetum.bun.json",
+      "slug": "gnetum",
+      "filename": "gnetum-3.3.6.jar",
+      "provider": "modrinth",
+      "project-id": "7MoE34WK",
+      "version-id": "zJLIzmi7",
+      "sha512": "4a5efde1d9525cad773a5d1aa32a3d6734d2aee8c8e6894012b8244bb305eee823024b75eb6d3e140f075f3a254efc26efc4c5eb6f2ac390be96877686019f68",
+      "sidecar-hash": "c1bafd2f432b404e9fec1720541abedf956a4e932065bd1a1c7c88c4487ad526171d6699fb2015cf3bfc10c321556903012d89fd1d8c919ac589ba8d6e10a408",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "7MoE34WK",
+          "version-id": "zJLIzmi7",
+          "filename": "gnetum-3.3.6.jar",
+          "url": "https://cdn.modrinth.com/data/7MoE34WK/versions/zJLIzmi7/gnetum-3.3.6.jar",
+          "hashes": {
+            "sha1": "d017e2bb57af33bb8985e759ac929289da05ea4d",
+            "sha512": "4a5efde1d9525cad773a5d1aa32a3d6734d2aee8c8e6894012b8244bb305eee823024b75eb6d3e140f075f3a254efc26efc4c5eb6f2ac390be96877686019f68"
+          },
+          "size": 120726
+        }
+      }
+    },
+    {
+      "path": "mods/handcrafted.bun.json",
+      "slug": "handcrafted",
+      "filename": "handcrafted-neoforge-1.21.1-4.0.3.jar",
+      "provider": "modrinth",
+      "project-id": "pJmCFF0p",
+      "version-id": "JfqnpP2Z",
+      "sha512": "4ff5fb2aa9582b886d03f647fe9b8c12a828d29a1787e9c9b463be18192ea798e6a4ac83479623042791bce0bacbf6e3e2c2e9ef086640aeeb6970d3404e7ee4",
+      "sidecar-hash": "24f0f8e792385caaf12cdeffb0fe7de963cf1af1aa62368f73555b753ed5ad46e7e962e747aa4b5b5c93df407ca1672426adf1b6ce0e76d52d1cb2c0eb5a9755",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "pJmCFF0p",
+          "version-id": "JfqnpP2Z",
+          "filename": "handcrafted-neoforge-1.21.1-4.0.3.jar",
+          "url": "https://cdn.modrinth.com/data/pJmCFF0p/versions/JfqnpP2Z/handcrafted-neoforge-1.21.1-4.0.3.jar",
+          "hashes": {
+            "sha1": "8ecd27f1d66f9b742cfae3c8ffa773765f574b52",
+            "sha512": "4ff5fb2aa9582b886d03f647fe9b8c12a828d29a1787e9c9b463be18192ea798e6a4ac83479623042791bce0bacbf6e3e2c2e9ef086640aeeb6970d3404e7ee4"
+          },
+          "size": 7132842
+        }
+      }
+    },
+    {
+      "path": "mods/immediatelyfast.bun.json",
+      "slug": "immediatelyfast",
+      "filename": "ImmediatelyFast-NeoForge-1.6.11+1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "5ZwdcRci",
+      "version-id": "zxT50PTW",
+      "sha512": "9f6a8d2f90f076cccbb40b519dcb014c832c0fbc28c3995fb9cb5e69e016eb3b8c9bf74c64809374b7c417fcc07545b117238da924c6608e899a6608f1bf64c9",
+      "sidecar-hash": "7d76bc6ba5d1400075b98e58d45818e376866b3c9d8350c09bb6a5d7940908fc9baddc1f73ff74455e35963a7e651378804ad1f3af503bb04d70a72ad7afd14e",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "5ZwdcRci",
+          "version-id": "zxT50PTW",
+          "filename": "ImmediatelyFast-NeoForge-1.6.11+1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/zxT50PTW/ImmediatelyFast-NeoForge-1.6.11%2B1.21.1.jar",
+          "hashes": {
+            "sha1": "6594ea2759455f4e135b9479f807bacf4b4b0b43",
+            "sha512": "9f6a8d2f90f076cccbb40b519dcb014c832c0fbc28c3995fb9cb5e69e016eb3b8c9bf74c64809374b7c417fcc07545b117238da924c6608e899a6608f1bf64c9"
+          },
+          "size": 361795
+        }
+      }
+    },
+    {
+      "path": "mods/immersive-optimization.bun.json",
+      "slug": "immersive-optimization",
+      "filename": "immersive_optimization-neoforge-1.21.1-0.2.0.jar",
+      "provider": "modrinth",
+      "project-id": "vNZgQmjg",
+      "version-id": "h2tTmurt",
+      "sha512": "5c631cb5e65ad0230b0927e3c0cbe0ae476f50513136a9616e1518064c5af55b70db2740a7bf0188a381ee7509b874676abd72c1e71ded244ca1b0d10dc21613",
+      "sidecar-hash": "cf1b01277e8e6f7137e14de5456e5b0aa411e2af615dd62fd8d01a3ccb1488da491935be7fcc77ff95fa7bf438a98b06874f57a3ee39e2bd63b2d0c1fc09879d",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "vNZgQmjg",
+          "version-id": "h2tTmurt",
+          "filename": "immersive_optimization-neoforge-1.21.1-0.2.0.jar",
+          "url": "https://cdn.modrinth.com/data/vNZgQmjg/versions/h2tTmurt/immersive_optimization-neoforge-1.21.1-0.2.0.jar",
+          "hashes": {
+            "sha1": "7e6693dae264f9185b8b12cf99e8407e7e532041",
+            "sha512": "5c631cb5e65ad0230b0927e3c0cbe0ae476f50513136a9616e1518064c5af55b70db2740a7bf0188a381ee7509b874676abd72c1e71ded244ca1b0d10dc21613"
+          },
+          "size": 56122
+        }
+      }
+    },
+    {
+      "path": "mods/iris.bun.json",
+      "slug": "iris",
+      "filename": "iris-neoforge-1.8.14-beta.1+mc1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "YL57xq9U",
+      "version-id": "KduFYu4t",
+      "sha512": "33fddb430e16222902eac75b8b3d57c381b0f3cc729f3b56c4628df12ca108f23a0b11e2feb167923d6d14d1fc7e8ee1a977ec421b19d1951bdca74c4092b9c5",
+      "sidecar-hash": "986abeaaa8764ca71d12788edb39ced7a2bf46e2d1ab4442c7a98f7a281631c3ef983c6388ed648e505c884009855a34497d94560854715e71f367304711be30",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "YL57xq9U",
+          "version-id": "KduFYu4t",
+          "filename": "iris-neoforge-1.8.14-beta.1+mc1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/YL57xq9U/versions/KduFYu4t/iris-neoforge-1.8.14-beta.1%2Bmc1.21.1.jar",
+          "hashes": {
+            "sha1": "1bd129cf7bce65d6b1c0543045f0620c98a0f885",
+            "sha512": "33fddb430e16222902eac75b8b3d57c381b0f3cc729f3b56c4628df12ca108f23a0b11e2feb167923d6d14d1fc7e8ee1a977ec421b19d1951bdca74c4092b9c5"
+          },
+          "size": 2540723
+        }
+      }
+    },
+    {
+      "path": "mods/ixeris.bun.json",
+      "slug": "ixeris",
+      "filename": "Ixeris-4.6.2+1.21.1-forge.jar",
+      "provider": "modrinth",
+      "project-id": "p8RJPJIC",
+      "version-id": "Uvqingaf",
+      "sha512": "22bb80ec644d946e36c068a13513fcea521445ffbcf55917469d3309f03eaa141bbdef2635c91bc5213d9469019e719f20bf0c2bb4b26762012de6806e4f25f0",
+      "sidecar-hash": "1a4f2e0758d17685e17d6f63b763018df1de1c1c17f1c1464c5e6a98275f89329bed6ea697a57f980b8553c030821a994e927cb289cb5ac25a79dd1cf87f9143",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "p8RJPJIC",
+          "version-id": "Uvqingaf",
+          "filename": "Ixeris-4.6.2+1.21.1-forge.jar",
+          "url": "https://cdn.modrinth.com/data/p8RJPJIC/versions/Uvqingaf/Ixeris-4.6.2%2B1.21.1-forge.jar",
+          "hashes": {
+            "sha1": "09630c45ffca5a2f817d1cd47aacc0f65c8a2f15",
+            "sha512": "22bb80ec644d946e36c068a13513fcea521445ffbcf55917469d3309f03eaa141bbdef2635c91bc5213d9469019e719f20bf0c2bb4b26762012de6806e4f25f0"
+          },
+          "size": 1550551
+        }
+      }
+    },
+    {
+      "path": "mods/kerria-opt.bun.json",
+      "slug": "kerria-opt",
+      "filename": "Kerria-1.3.2+1.21.1-neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "f0ruQTF7",
+      "version-id": "MsiyjxjP",
+      "sha512": "2c7f5711d4c19882a0db8b0ffdb030ca83d45998972a28dfd8f2689062a53797f07c315edf58af6129b20fc27879fd881a7d58b7c0461c3b4573cfce05f551f1",
+      "sidecar-hash": "de098f255036cf81f259bf61e909831b8ab84b800465450fa90bae5d524c171d7e2c99cbdd84de45d6cd6589dee6e9fa7405f25c123bea214db32577c7eac8e3",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "f0ruQTF7",
+          "version-id": "MsiyjxjP",
+          "filename": "Kerria-1.3.2+1.21.1-neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/f0ruQTF7/versions/MsiyjxjP/Kerria-1.3.2%2B1.21.1-neoforge.jar",
+          "hashes": {
+            "sha1": "abd5f8a438482e1791bef6a43a9182baef68f822",
+            "sha512": "2c7f5711d4c19882a0db8b0ffdb030ca83d45998972a28dfd8f2689062a53797f07c315edf58af6129b20fc27879fd881a7d58b7c0461c3b4573cfce05f551f1"
+          },
+          "size": 184726
+        }
+      }
+    },
+    {
+      "path": "mods/lithium.bun.json",
+      "slug": "lithium",
+      "filename": "lithium-neoforge-0.15.4+mc1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "gvQqBUqZ",
+      "version-id": "DDUrRVCA",
+      "sha512": "2735da2088b88a8bdcd4ad02a2b6fffbfd3925557cefd4fa54b5477dfb9e582ea7f521300c060f57dff1325dd21bff276b7333363ad3371ed6893e3de9eca9cd",
+      "sidecar-hash": "2a725abba31d74dd0bdd14b0bfcb52fa959bd6145b417d99306dc73fc7fbd5e9b505c3d011f48b3fd34a5c7ecd7fc82424caacc536a3bb3fd683077338c4890b",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "gvQqBUqZ",
+          "version-id": "DDUrRVCA",
+          "filename": "lithium-neoforge-0.15.4+mc1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/DDUrRVCA/lithium-neoforge-0.15.4%2Bmc1.21.1.jar",
+          "hashes": {
+            "sha1": "97212e45c963730bbfc7c44780df99317814c21b",
+            "sha512": "2735da2088b88a8bdcd4ad02a2b6fffbfd3925557cefd4fa54b5477dfb9e582ea7f521300c060f57dff1325dd21bff276b7333363ad3371ed6893e3de9eca9cd"
+          },
+          "size": 774220
+        }
+      }
+    },
+    {
+      "path": "mods/modernfix.bun.json",
+      "slug": "modernfix",
+      "filename": "modernfix-neoforge-5.27.20+mc1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "nmDcB62a",
+      "version-id": "VsJnrw8k",
+      "sha512": "b1f0d3ac5ada811b8204bc82adc1cab8ff71752da8e97ae381f21be5f778c199ae59108850febc87d1c46757b27ccbb2669f3fc6340c837db450a205ca2d8c9c",
+      "sidecar-hash": "702e192ea04c62336d829fdd6158b47cc54bf0c753622050fc16f53303ecf1ac16500461ad19f616e90dc588391c9cf45af9d9252264fe08ff13b0d25c87f232",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "nmDcB62a",
+          "version-id": "VsJnrw8k",
+          "filename": "modernfix-neoforge-5.27.20+mc1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/nmDcB62a/versions/VsJnrw8k/modernfix-neoforge-5.27.20%2Bmc1.21.1.jar",
+          "hashes": {
+            "sha1": "bc1a70e72e7dba8a3ff41404765fdd03a7ac6575",
+            "sha512": "b1f0d3ac5ada811b8204bc82adc1cab8ff71752da8e97ae381f21be5f778c199ae59108850febc87d1c46757b27ccbb2669f3fc6340c837db450a205ca2d8c9c"
+          },
+          "size": 599474
+        }
+      }
+    },
+    {
+      "path": "mods/naturalist.bun.json",
+      "slug": "naturalist",
+      "filename": "naturalist-2.0.2-neoforge-1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "F8BQNPWX",
+      "version-id": "5VOUtmLM",
+      "sha512": "e71c07845c47c6d3886c973a3a998cd423be4581af3e6d8bcd6448ba9756731bd64b4969a19a1d8cdf658446e8afa0d971d7facf53c467883a2fc74a4bf0728a",
+      "sidecar-hash": "9d95be0e54ab68d7fb0a74187aa7d614584c6c49123590f71833f459ee9dfdcd6847746bfad79f8c538ae050db81cbb77b2058d6627ea9acd8c5f42ee123a7ae",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "F8BQNPWX",
+          "version-id": "5VOUtmLM",
+          "filename": "naturalist-2.0.2-neoforge-1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/F8BQNPWX/versions/5VOUtmLM/naturalist-2.0.2-neoforge-1.21.1.jar",
+          "hashes": {
+            "sha1": "6ef58b3e4dc38867f2f69efc8b8a76098dbdd58c",
+            "sha512": "e71c07845c47c6d3886c973a3a998cd423be4581af3e6d8bcd6448ba9756731bd64b4969a19a1d8cdf658446e8afa0d971d7facf53c467883a2fc74a4bf0728a"
+          },
+          "size": 11301868
+        }
+      }
+    },
+    {
+      "path": "mods/neat.bun.json",
+      "slug": "neat",
+      "filename": "Neat-1.21-47-NEOFORGE.jar",
+      "provider": "modrinth",
+      "project-id": "Ins7SzzR",
+      "version-id": "kALoScYM",
+      "sha512": "9ed98ab1eabbceae693de360fd6ec11c5f4badd4e59c2f4a2820345d33f675a7d4d6e55c73ad21d777981c663f21b0827273cb6a050a6052132d3cf3ac492bb2",
+      "sidecar-hash": "b7db00871bfdf94912137ec418c3052652fbe9a49a01bbaf34e534b4e71ccb06914ce13ce8959cd4611863bd582465153afb468cb8efd21d1a2b03dc86e3998d",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "Ins7SzzR",
+          "version-id": "kALoScYM",
+          "filename": "Neat-1.21-47-NEOFORGE.jar",
+          "url": "https://cdn.modrinth.com/data/Ins7SzzR/versions/kALoScYM/Neat-1.21-47-NEOFORGE.jar",
+          "hashes": {
+            "sha1": "7744c5b02427572f7154d6f851507544fd9404d2",
+            "sha512": "9ed98ab1eabbceae693de360fd6ec11c5f4badd4e59c2f4a2820345d33f675a7d4d6e55c73ad21d777981c663f21b0827273cb6a050a6052132d3cf3ac492bb2"
+          },
+          "size": 110834
+        }
+      }
+    },
+    {
+      "path": "mods/no-prying-eyes.bun.json",
+      "slug": "no-prying-eyes",
+      "filename": "NoPryingEyes-26.1.2-3.0.0-beta.jar",
+      "provider": "modrinth",
+      "project-id": "LoXPgYhm",
+      "version-id": "9xWCcBaS",
+      "sha512": "49866d02d6a0f0ebbb7f6baacddb2d0dcd0e7eab15d947ea39d5a09bd3e1528ed3ac60233978e5576e55ca696d17323d671aead6e2b2f15e6b4b3b9ff63e7474",
+      "sidecar-hash": "26c56d1d863bbe7a0b7169ca5c5731715e20b982135618613a4f42c268a692775b8503e4a0bf9e01454ad269d4d08d8fd750e8b2cb8ce8bdb152ffc1d78399b4",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "LoXPgYhm",
+          "version-id": "9xWCcBaS",
+          "filename": "NoPryingEyes-26.1.2-3.0.0-beta.jar",
+          "url": "https://cdn.modrinth.com/data/LoXPgYhm/versions/9xWCcBaS/NoPryingEyes-26.1.2-3.0.0-beta.jar",
+          "hashes": {
+            "sha512": "49866d02d6a0f0ebbb7f6baacddb2d0dcd0e7eab15d947ea39d5a09bd3e1528ed3ac60233978e5576e55ca696d17323d671aead6e2b2f15e6b4b3b9ff63e7474"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/oh-the-biomes-weve-gone.bun.json",
+      "slug": "oh-the-biomes-weve-gone",
+      "filename": "Oh-The-Biomes-Weve-Gone-NeoForge-2.6.0.jar",
+      "provider": "modrinth",
+      "project-id": "NTi7d3Xc",
+      "version-id": "aPEcdSHb",
+      "sha512": "76ceb60d1058bca79e13c7059dc42f8b230cb480986e1d88b505f958fc3922a00bef463eb267c9b676be053bec1e71806fbc27fb2a41df6dcd9881a0f0711f77",
+      "sidecar-hash": "fe08654c79a3853a9692b89d3e2b420f0950186a5ba8d5556aefc2874ec34f696bd5457b03d5d2b56415495e9580110bf7a787201c9cac2a0102d2b209cb94ac",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "NTi7d3Xc",
+          "version-id": "aPEcdSHb",
+          "filename": "Oh-The-Biomes-Weve-Gone-NeoForge-2.6.0.jar",
+          "url": "https://cdn.modrinth.com/data/NTi7d3Xc/versions/aPEcdSHb/Oh-The-Biomes-Weve-Gone-NeoForge-2.6.0.jar",
+          "hashes": {
+            "sha1": "4611dc5bb4240333178e14e81f76168f78167448",
+            "sha512": "76ceb60d1058bca79e13c7059dc42f8b230cb480986e1d88b505f958fc3922a00bef463eb267c9b676be053bec1e71806fbc27fb2a41df6dcd9881a0f0711f77"
+          },
+          "size": 20484967
+        }
+      }
+    },
+    {
+      "path": "mods/oxidizium.bun.json",
+      "slug": "oxidizium",
+      "filename": "oxidizium-panama-1.3.1.jar",
+      "provider": "modrinth",
+      "project-id": "TLtbk2Er",
+      "version-id": "CkO8Xjj9",
+      "sha512": "19d033828d93759fc2fbaa01bf15df39c5d48dae20a946ec8d40891e33b4610d2aef5381d77528f7d73a53d45c5e43508bfa1332cbfa66a4ef7b0b21a3c5492a",
+      "sidecar-hash": "decdb9541f313c5b78318021ef6f68ffbdef974b08ad461f488c6dbaa1f25aae1813b07c05b3e8041391516607f3c22537ec3b637795ca687cc3dd0bb23e20c0",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "TLtbk2Er",
+          "version-id": "CkO8Xjj9",
+          "filename": "oxidizium-panama-1.3.1.jar",
+          "url": "https://cdn.modrinth.com/data/TLtbk2Er/versions/CkO8Xjj9/oxidizium-panama-1.3.1.jar",
+          "hashes": {
+            "sha512": "19d033828d93759fc2fbaa01bf15df39c5d48dae20a946ec8d40891e33b4610d2aef5381d77528f7d73a53d45c5e43508bfa1332cbfa66a4ef7b0b21a3c5492a"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/particle-core.bun.json",
+      "slug": "particle-core",
+      "filename": "particle_core-0.3.3+1.21+neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "RSeLon5O",
+      "version-id": "2QF4NhZD",
+      "sha512": "bf14200f4f279c2c5f5a50e09ef561f34463848fde507cb5930e4f4dbfed107697387ce030593be37a14da73cc459b0901928466fb44b2c2a387c584f38ec489",
+      "sidecar-hash": "74c8c5e11d3277758d2a94381a409d9551ef56ee6e4209772ff44ade70de8ac561eea563f5e6519da9a0ca77df1440293c12cc0d4796cee4dc7d8f3780e90418",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "RSeLon5O",
+          "version-id": "2QF4NhZD",
+          "filename": "particle_core-0.3.3+1.21+neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/RSeLon5O/versions/2QF4NhZD/particle_core-0.3.3%2B1.21%2Bneoforge.jar",
+          "hashes": {
+            "sha1": "f859d68818e522fb00056d3ed1603ca4300eb681",
+            "sha512": "bf14200f4f279c2c5f5a50e09ef561f34463848fde507cb5930e4f4dbfed107697387ce030593be37a14da73cc459b0901928466fb44b2c2a387c584f38ec489"
+          },
+          "size": 138375
+        }
+      }
+    },
+    {
+      "path": "mods/quark.bun.json",
+      "slug": "quark",
+      "filename": "Quark-4.1-482.jar",
+      "provider": "modrinth",
+      "project-id": "qnQsVE2z",
+      "version-id": "yvp3Jbmk",
+      "sha512": "811e1e9f263a7e4951896a646507d6d03bebef6c38c113425e5d25acd4da0af9a07a6e5f9f11393cb41cb6f1a97667d7748c4bf21bf842e87ca2b05d6ea9cd81",
+      "sidecar-hash": "c0d0d574ee1b66f9f3d8aff2892f7999558e807a559fa4e2f05778ed9bc90d65f736292a68780f359783af06d0bab9070b3a5322c56f6210a90f17a831532fb8",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "qnQsVE2z",
+          "version-id": "yvp3Jbmk",
+          "filename": "Quark-4.1-482.jar",
+          "url": "https://cdn.modrinth.com/data/qnQsVE2z/versions/yvp3Jbmk/Quark-4.1-482.jar",
+          "hashes": {
+            "sha1": "f73c3008321a9fb2da1151be9b49f0dfd006b6b5",
+            "sha512": "811e1e9f263a7e4951896a646507d6d03bebef6c38c113425e5d25acd4da0af9a07a6e5f9f11393cb41cb6f1a97667d7748c4bf21bf842e87ca2b05d6ea9cd81"
+          },
+          "size": 15576704
+        }
+      }
+    },
+    {
+      "path": "mods/quick-pack.bun.json",
+      "slug": "quick-pack",
+      "filename": "quick-pack-neoforge-1.4.0+1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "pSISfJ4O",
+      "version-id": "bKdqc6Wf",
+      "sha512": "02f6bed8c9bd5d49ee2d085e2f9c4a11e7e4b2f59caee7159adadc226c83f14902ffd983e69516242e9e5b64ee536cec304459594e3d0f7f2b41f14f337f884b",
+      "sidecar-hash": "cd469d28e8d41a76806bbde635fe670ec49c04df2e5a0a534c7512e24c1e53037cbb3cefab870953fe085c90f5b2d9e00c33f008cfbf454c45388bc5459115a0",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "pSISfJ4O",
+          "version-id": "bKdqc6Wf",
+          "filename": "quick-pack-neoforge-1.4.0+1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/pSISfJ4O/versions/bKdqc6Wf/quick-pack-neoforge-1.4.0%2B1.21.1.jar",
+          "hashes": {
+            "sha1": "a725dffc3ab2e1e96326296255b4cefcc49cab61",
+            "sha512": "02f6bed8c9bd5d49ee2d085e2f9c4a11e7e4b2f59caee7159adadc226c83f14902ffd983e69516242e9e5b64ee536cec304459594e3d0f7f2b41f14f337f884b"
+          },
+          "size": 15082
+        }
+      }
+    },
+    {
+      "path": "mods/scalablelux.bun.json",
+      "slug": "scalablelux",
+      "filename": "ScalableLux-neoforge-0.3.0-alpha.0.6-all.jar",
+      "provider": "modrinth",
+      "project-id": "Ps1zyz6x",
+      "version-id": "w2yQbU01",
+      "sha512": "6ae3a81bdebe9821682f193caa5e82fdd2fba9b94f72aafabc9ce47398bc9e0b09008c7e13338ff438405a5db79e80f3e4d87cf0b5a975669f64e0317d9414e3",
+      "sidecar-hash": "3f01a34e6b82423bed3f27bed4dc9362e7bd1f4e98161e32dea0782038ccb0f229013a1783762764a1480f96a6984c216172e118ed55f02dd8a6ea3499f87e6e",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "Ps1zyz6x",
+          "version-id": "w2yQbU01",
+          "filename": "ScalableLux-neoforge-0.3.0-alpha.0.6-all.jar",
+          "url": "https://cdn.modrinth.com/data/Ps1zyz6x/versions/w2yQbU01/ScalableLux-neoforge-0.3.0-alpha.0.6-all.jar",
+          "hashes": {
+            "sha1": "b824b107489d7b64faf7ed812dcd1a1873c5c1cf",
+            "sha512": "6ae3a81bdebe9821682f193caa5e82fdd2fba9b94f72aafabc9ce47398bc9e0b09008c7e13338ff438405a5db79e80f3e4d87cf0b5a975669f64e0317d9414e3"
+          },
+          "size": 196969
+        }
+      }
+    },
+    {
+      "path": "mods/servercore.bun.json",
+      "slug": "servercore",
+      "filename": "servercore-neoforge-1.5.19+1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "4WWQxlQP",
+      "version-id": "6N9hXiRa",
+      "sha512": "55b97df4cc46f52db85b96487188d73c62d511229d98859991c115414c5f1ab37f2f40a0f2edb5692220aa94d6c48b392b0a2d8593b3c3381b1fcbde2a728c8f",
+      "sidecar-hash": "24577a42df431896c1d178a4c3f7385f60eeb4a7b6e3769c49c061a89b9802b90e8f4fb7c0ab85fb57e25257a33dc3d7f6f697d89cd8bfa491be4d5fdbdd38c7",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "4WWQxlQP",
+          "version-id": "6N9hXiRa",
+          "filename": "servercore-neoforge-1.5.19+1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/4WWQxlQP/versions/6N9hXiRa/servercore-neoforge-1.5.19%2B1.21.1.jar",
+          "hashes": {
+            "sha1": "62ce692654e09271b5c55cbb3a1ef7606d067132",
+            "sha512": "55b97df4cc46f52db85b96487188d73c62d511229d98859991c115414c5f1ab37f2f40a0f2edb5692220aa94d6c48b392b0a2d8593b3c3381b1fcbde2a728c8f"
+          },
+          "size": 1462674
+        }
+      }
+    },
+    {
+      "path": "mods/sodium.bun.json",
+      "slug": "sodium",
+      "filename": "sodium-neoforge-0.8.13-beta.1+mc1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "AANobbMI",
+      "version-id": "5EEI3Guz",
+      "sha512": "a8cd69cbfd5c4022a44a61087d95c77c1ba2688e8e269fdbb5eab771c6834171ae5b6fb2c5cb5f38d23b52c636d0a1a28755337098035babcbeafaee21ce00cd",
+      "sidecar-hash": "ad4699093fc713bc26a282f6360f78328d161e94ef87bf6e4dea24ce06da58d03370d0c69decf633d5e073f442876323ea2cbffe5642ac319d123deaf15d4f28",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "AANobbMI",
+          "version-id": "5EEI3Guz",
+          "filename": "sodium-neoforge-0.8.13-beta.1+mc1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/AANobbMI/versions/5EEI3Guz/sodium-neoforge-0.8.13-beta.1%2Bmc1.21.1.jar",
+          "hashes": {
+            "sha1": "f868ab0a037d1211fabd31b2f42a2862b8e6c669",
+            "sha512": "a8cd69cbfd5c4022a44a61087d95c77c1ba2688e8e269fdbb5eab771c6834171ae5b6fb2c5cb5f38d23b52c636d0a1a28755337098035babcbeafaee21ce00cd"
+          },
+          "size": 1292065
+        }
+      }
+    },
+    {
+      "path": "mods/structory.bun.json",
+      "slug": "structory",
+      "filename": "Structory_26.2_v1.3.7.jar",
+      "provider": "modrinth",
+      "project-id": "aKCwCJlY",
+      "version-id": "TUbwu7eG",
+      "sha512": "4178a15f32f6ed3d59a7eb2222a8e3f539efd7b54d8ffb790cbf1dfe5c54c6ce6ec33220e148424109c6360c4c6f081b9fbebfe74745fe3c8f05619a06ccb9ec",
+      "sidecar-hash": "54ff9383be55c2360b373c7116a9b53cb0c92809ff4da4d44595ddecc050213109a810c0b317cf83e0b31875749a9f7f849486098fb81e04ca7ba89d68e83539",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "aKCwCJlY",
+          "version-id": "TUbwu7eG",
+          "filename": "Structory_26.2_v1.3.7.jar",
+          "url": "https://cdn.modrinth.com/data/aKCwCJlY/versions/TUbwu7eG/Structory_26.2_v1.3.7.jar",
+          "hashes": {
+            "sha1": "8a9a1a1b3f74398310420b6fbe2c26ef142bed42",
+            "sha512": "4178a15f32f6ed3d59a7eb2222a8e3f539efd7b54d8ffb790cbf1dfe5c54c6ce6ec33220e148424109c6360c4c6f081b9fbebfe74745fe3c8f05619a06ccb9ec"
+          },
+          "size": 1261346
+        }
+      }
+    },
+    {
+      "path": "mods/structurify.bun.json",
+      "slug": "structurify",
+      "filename": "structurify-neoforge-2.0.30+mc1.21.1.jar",
+      "provider": "modrinth",
+      "project-id": "yz7AM2zx",
+      "version-id": "aV5lNYVM",
+      "sha512": "5bf4abc2f777f47ec3ee846d861dcf743164475ff9d61790e99e8b515675f14b8cf613365b6e2a1e993f8032a06204ba490341daf2611de2fbbb834c87325130",
+      "sidecar-hash": "49a28071664b98440f52eb5e28204239d767cdf0c92f05fab652b7e45e8e7970ea9e6ad3c04cd85d14742c7d562325b3980d9258700ad79cf7b7bd4381d2f96f",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "yz7AM2zx",
+          "version-id": "aV5lNYVM",
+          "filename": "structurify-neoforge-2.0.30+mc1.21.1.jar",
+          "url": "https://cdn.modrinth.com/data/yz7AM2zx/versions/aV5lNYVM/structurify-neoforge-2.0.30%2Bmc1.21.1.jar",
+          "hashes": {
+            "sha1": "7d80d5f52fc1e6194d3dfa38985f6a4b272c9362",
+            "sha512": "5bf4abc2f777f47ec3ee846d861dcf743164475ff9d61790e99e8b515675f14b8cf613365b6e2a1e993f8032a06204ba490341daf2611de2fbbb834c87325130"
+          },
+          "size": 476663
+        }
+      }
+    },
+    {
+      "path": "mods/supplementaries.bun.json",
+      "slug": "supplementaries",
+      "filename": "supplementaries-1.21.1-3.8.8-neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "fFEIiSDQ",
+      "version-id": "qvhtxmU6",
+      "sha512": "1602507a1485e989490d3e702cfdeeff99da7d05f08a435f31270f839f7b80f3c3d29ee171b31aa58c27526b304ba5c6395a211980ab58f784b7f53573b04115",
+      "sidecar-hash": "fc5fc086590d6b9359983896d8b4a56e59248285fff5431609092cde468b1e3b621902fdbb2616b1208ed29daa28df92904f8941361b9abccc981b2c9d0b3eee",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "fFEIiSDQ",
+          "version-id": "qvhtxmU6",
+          "filename": "supplementaries-1.21.1-3.8.8-neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/fFEIiSDQ/versions/qvhtxmU6/supplementaries-1.21.1-3.8.8-neoforge.jar",
+          "hashes": {
+            "sha1": "4e66106d496a130f9d37824d30aaa8b494225b8f",
+            "sha512": "1602507a1485e989490d3e702cfdeeff99da7d05f08a435f31270f839f7b80f3c3d29ee171b31aa58c27526b304ba5c6395a211980ab58f784b7f53573b04115"
+          },
+          "size": 13470208
+        }
+      }
+    },
+    {
+      "path": "mods/vmp-fabric.bun.json",
+      "slug": "vmp-fabric",
+      "filename": "vmp-fabric-mc26.1.2-0.2.0+beta.7.234-all.jar",
+      "provider": "modrinth",
+      "project-id": "wnEe9KBa",
+      "version-id": "9f7J0dAp",
+      "sha512": "24a0df2407893b1cfb55e27dc1c1fef008df53518d118aa3245924d37b642a27d7b6afde950fbf5d07c4111c44ac264d9ae56b8d8c6a9b55acdfb91ba0a15f16",
+      "sidecar-hash": "a6c519c87114d7d89e54a36e7adf9fa2be5d8d872c7c4dfda9b54ea54061b2330eb8294210a8f697a5a5972392db80e89910a95a416a49dbfc3a0f563f8d0780",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "wnEe9KBa",
+          "version-id": "9f7J0dAp",
+          "filename": "vmp-fabric-mc26.1.2-0.2.0+beta.7.234-all.jar",
+          "url": "https://cdn.modrinth.com/data/wnEe9KBa/versions/9f7J0dAp/vmp-fabric-mc26.1.2-0.2.0%2Bbeta.7.234-all.jar",
+          "hashes": {
+            "sha512": "24a0df2407893b1cfb55e27dc1c1fef008df53518d118aa3245924d37b642a27d7b6afde950fbf5d07c4111c44ac264d9ae56b8d8c6a9b55acdfb91ba0a15f16"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/xaeros-minimap.bun.json",
+      "slug": "xaeros-minimap",
+      "filename": "xaerominimap-neoforge-1.21.1-26.4.2.jar",
+      "provider": "modrinth",
+      "project-id": "1bokaNcj",
+      "version-id": "JXvcT1hp",
+      "sha512": "7ece42b6665cb3a83d77bca1ae9ab31e9f418a7e0ee73f4be1839b62a8dde7e2727d554b6ed056ca4e7510c1aaa6603e5caaa62355bca9ff202171df73ac49ee",
+      "sidecar-hash": "8edcf771b449d3de1dc2e74272c41e358a52df28aef9b07f20aa7ae0864fded03e84e09d0825e17375f95a2bed636764e3908fde6ee865051de7ee9c2356aa8c",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "1bokaNcj",
+          "version-id": "JXvcT1hp",
+          "filename": "xaerominimap-neoforge-1.21.1-26.4.2.jar",
+          "url": "https://cdn.modrinth.com/data/1bokaNcj/versions/JXvcT1hp/xaerominimap-neoforge-1.21.1-26.4.2.jar",
+          "hashes": {
+            "sha1": "21b3232e62dabcbb5bf28866481e8de2c0ccb780",
+            "sha512": "7ece42b6665cb3a83d77bca1ae9ab31e9f418a7e0ee73f4be1839b62a8dde7e2727d554b6ed056ca4e7510c1aaa6603e5caaa62355bca9ff202171df73ac49ee"
+          },
+          "size": 2185409
+        }
+      }
+    },
+    {
+      "path": "mods/xaeros-world-map.bun.json",
+      "slug": "xaeros-world-map",
+      "filename": "xaeroworldmap-neoforge-1.21.1-1.44.2.jar",
+      "provider": "modrinth",
+      "project-id": "NcUtCpym",
+      "version-id": "55gtOc9Y",
+      "sha512": "4a6b128ca0a07290ad62bab03e98c2ed5c7b37014bb3a3e8e74e7422429ca2cad225c045f9f8f9681662dfda29809dd9cdb2701ba4774a3a57e2fc84eb497fa8",
+      "sidecar-hash": "2fc04a36bd7f2cb682dadb398b6f912f0495a3f5a60f29556b81355a762f09f24ec3b238fb0a7d93519cd04e67618959f0f477ff27454802c344424947dd4d2f",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "NcUtCpym",
+          "version-id": "55gtOc9Y",
+          "filename": "xaeroworldmap-neoforge-1.21.1-1.44.2.jar",
+          "url": "https://cdn.modrinth.com/data/NcUtCpym/versions/55gtOc9Y/xaeroworldmap-neoforge-1.21.1-1.44.2.jar",
+          "hashes": {
+            "sha1": "beea95c1a2ca78e1a6ca0a0ddc7770672101fb60",
+            "sha512": "4a6b128ca0a07290ad62bab03e98c2ed5c7b37014bb3a3e8e74e7422429ca2cad225c045f9f8f9681662dfda29809dd9cdb2701ba4774a3a57e2fc84eb497fa8"
+          },
+          "size": 1418918
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-api.bun.json",
+      "slug": "yungs-api",
+      "filename": "YungsApi-1.21.1-NeoForge-5.1.6.jar",
+      "provider": "modrinth",
+      "project-id": "Ua7DFN59",
+      "version-id": "ZB22DE9q",
+      "sha512": "5f36d5166a67a156df52699071f20219bc2320b3c4fbcd9dac38631f66136f034e3219ac89ff4bfb6e26e4c68513a94c833797f2e5ed5bf58cfa1531eeed162d",
+      "sidecar-hash": "1887e6100376fe07435d879f8251eaa85c47652ace263a2b0cb9f46a84481702da9860272e9da1c3619161f982603debda81d29b569b5c4f5876c44046c430f0",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "Ua7DFN59",
+          "version-id": "ZB22DE9q",
+          "filename": "YungsApi-1.21.1-NeoForge-5.1.6.jar",
+          "url": "https://cdn.modrinth.com/data/Ua7DFN59/versions/ZB22DE9q/YungsApi-1.21.1-NeoForge-5.1.6.jar",
+          "hashes": {
+            "sha1": "e1c394779fb9e038e4f7a1b4558d0432607d263b",
+            "sha512": "5f36d5166a67a156df52699071f20219bc2320b3c4fbcd9dac38631f66136f034e3219ac89ff4bfb6e26e4c68513a94c833797f2e5ed5bf58cfa1531eeed162d"
+          },
+          "size": 388678
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-better-desert-temples.bun.json",
+      "slug": "yungs-better-desert-temples",
+      "filename": "YungsBetterDesertTemples-1.21.1-NeoForge-4.1.5.jar",
+      "provider": "modrinth",
+      "project-id": "XNlO7sBv",
+      "version-id": "GQ9iNWkI",
+      "sha512": "6454c955f75f66104810e967a59ae032ddf1ccc5a854346af6bfba6e44cd456e755cd8feb1e0968be4e9132ea6c5d1cb2126fe5e85d3eb18c8d3ea3c81ffdf9a",
+      "sidecar-hash": "c4f2a5666438a52e0e9972753e51880e01099bce2277fc3ec2de63bc72c8894a4ed74134f50340d33768b3a78821aaf6ff83d386457131605864e3e29b05b49c",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "XNlO7sBv",
+          "version-id": "GQ9iNWkI",
+          "filename": "YungsBetterDesertTemples-1.21.1-NeoForge-4.1.5.jar",
+          "url": "https://cdn.modrinth.com/data/XNlO7sBv/versions/GQ9iNWkI/YungsBetterDesertTemples-1.21.1-NeoForge-4.1.5.jar",
+          "hashes": {
+            "sha1": "90529257dbd92558998c65178294bc7b2fd16a64",
+            "sha512": "6454c955f75f66104810e967a59ae032ddf1ccc5a854346af6bfba6e44cd456e755cd8feb1e0968be4e9132ea6c5d1cb2126fe5e85d3eb18c8d3ea3c81ffdf9a"
+          },
+          "size": 905839
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-better-dungeons.bun.json",
+      "slug": "yungs-better-dungeons",
+      "filename": "YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+      "provider": "modrinth",
+      "project-id": "o1C1Dkj5",
+      "version-id": "D6aZn0Em",
+      "sha512": "40513bacd13fa9860abcab507b1fc09dc51649af4b615ce466e0ec361557f02d35e6e44bea1cc17cb4120805f862aad01394eb185f46611e7be63dfd97f272df",
+      "sidecar-hash": "795cc7acb71c78ef16eee84d181501304844f421de79f3630707590d96494176896f4d95bcd93ed5f3d0e50bc7b5b772ea65e6cd54fc997709afab49e2636318",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "o1C1Dkj5",
+          "version-id": "D6aZn0Em",
+          "filename": "YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+          "url": "https://cdn.modrinth.com/data/o1C1Dkj5/versions/D6aZn0Em/YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+          "hashes": {
+            "sha1": "73a660c13063450e555e5e2c015ae24d606b32b4",
+            "sha512": "40513bacd13fa9860abcab507b1fc09dc51649af4b615ce466e0ec361557f02d35e6e44bea1cc17cb4120805f862aad01394eb185f46611e7be63dfd97f272df"
+          },
+          "size": 782160
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-better-end-island.bun.json",
+      "slug": "yungs-better-end-island",
+      "filename": "YungsBetterEndIsland-1.21.1-NeoForge-3.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "2BwBOmBQ",
+      "version-id": "I52NZ1qK",
+      "sha512": "02923a1a97eb81ec13d69bdc6b7e8b36dfb9e6f1a98adfcf103707ec3afde35831ccd4b210e9b3a9c7662541c38ea593a3d94c12171b4072ea7feafa75c95f96",
+      "sidecar-hash": "ac3a5647ccd2c9f7df259537304bc4cb2f23e11cd6c5a808935ce86cf4353a025ed490740869382a780ad22955e7da9346f5f0966408142f117015030b39b853",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "2BwBOmBQ",
+          "version-id": "I52NZ1qK",
+          "filename": "YungsBetterEndIsland-1.21.1-NeoForge-3.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/2BwBOmBQ/versions/I52NZ1qK/YungsBetterEndIsland-1.21.1-NeoForge-3.1.2.jar",
+          "hashes": {
+            "sha1": "832f2c17425debe74a9f267f4136f1a0f0221d19",
+            "sha512": "02923a1a97eb81ec13d69bdc6b7e8b36dfb9e6f1a98adfcf103707ec3afde35831ccd4b210e9b3a9c7662541c38ea593a3d94c12171b4072ea7feafa75c95f96"
+          },
+          "size": 398130
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-better-jungle-temples.bun.json",
+      "slug": "yungs-better-jungle-temples",
+      "filename": "YungsBetterJungleTemples-1.21.1-NeoForge-3.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "z9Ve58Ih",
+      "version-id": "P00i2hJn",
+      "sha512": "eca4233e874a55886c63d2111b8685d479771d3627bad2922582e65b78c51ba74733dc4624aabf91f2a2178a940a72d9209ae33eef74e34f84f07d62256709d9",
+      "sidecar-hash": "c13eb45b5724bb17b1e07117869ae6b6b2b142f846f1ce7799475e0b1775e8d990099e73cca1e4cd5accc7ed164a84851ed6a6f2804d03144498d32a10a2ebf9",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "z9Ve58Ih",
+          "version-id": "P00i2hJn",
+          "filename": "YungsBetterJungleTemples-1.21.1-NeoForge-3.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/z9Ve58Ih/versions/P00i2hJn/YungsBetterJungleTemples-1.21.1-NeoForge-3.1.2.jar",
+          "hashes": {
+            "sha1": "d6b7ce6cf351b09cbd23147ff166c35cfdc572e8",
+            "sha512": "eca4233e874a55886c63d2111b8685d479771d3627bad2922582e65b78c51ba74733dc4624aabf91f2a2178a940a72d9209ae33eef74e34f84f07d62256709d9"
+          },
+          "size": 795839
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-better-nether-fortresses.bun.json",
+      "slug": "yungs-better-nether-fortresses",
+      "filename": "YungsBetterNetherFortresses-1.21.1-NeoForge-3.1.5.jar",
+      "provider": "modrinth",
+      "project-id": "Z2mXHnxP",
+      "version-id": "iopJiJQp",
+      "sha512": "18b461298d3df1215fa3b4d2c0cb2ef1c7ed76701d8a0bb140277b21923e31abd939f0fd9b400c5bd676d739f1cda31c43b4dc753f9187251542223f3424d336",
+      "sidecar-hash": "62b54159124ea7fbe36faafb9592e5d21ab734156b2bc9baa2e14232153de5d0750dea9ce21904ecffa6448c0879cd9068acc7164ceec3a7d4d34269a77be59c",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "Z2mXHnxP",
+          "version-id": "iopJiJQp",
+          "filename": "YungsBetterNetherFortresses-1.21.1-NeoForge-3.1.5.jar",
+          "url": "https://cdn.modrinth.com/data/Z2mXHnxP/versions/iopJiJQp/YungsBetterNetherFortresses-1.21.1-NeoForge-3.1.5.jar",
+          "hashes": {
+            "sha1": "4061ece2141475227646649046fc14c2da505922",
+            "sha512": "18b461298d3df1215fa3b4d2c0cb2ef1c7ed76701d8a0bb140277b21923e31abd939f0fd9b400c5bd676d739f1cda31c43b4dc753f9187251542223f3424d336"
+          },
+          "size": 609639
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-better-ocean-monuments.bun.json",
+      "slug": "yungs-better-ocean-monuments",
+      "filename": "YungsBetterOceanMonuments-1.21.1-NeoForge-4.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "3dT9sgt4",
+      "version-id": "yFjEcj2g",
+      "sha512": "77c864da36f1d2173e6460dc335996893a804954b8a5c274173fc95dfdbf437e80d9dce32f6060306a662fc35322566eecf5dfe24e2d3fab79bf7e0ff9fa4db6",
+      "sidecar-hash": "7381788020aa658353e855be1de2c75263f43a6258d82f07dffb95621bd632923aad48e3b369ab3f0c275cced64b0845f7a2ca4b49fcd2aab1feb8eefe0f42c2",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "3dT9sgt4",
+          "version-id": "yFjEcj2g",
+          "filename": "YungsBetterOceanMonuments-1.21.1-NeoForge-4.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/3dT9sgt4/versions/yFjEcj2g/YungsBetterOceanMonuments-1.21.1-NeoForge-4.1.2.jar",
+          "hashes": {
+            "sha1": "fba629defdb92ad99ec4f411895afb6e19555a18",
+            "sha512": "77c864da36f1d2173e6460dc335996893a804954b8a5c274173fc95dfdbf437e80d9dce32f6060306a662fc35322566eecf5dfe24e2d3fab79bf7e0ff9fa4db6"
+          },
+          "size": 1025571
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-better-strongholds.bun.json",
+      "slug": "yungs-better-strongholds",
+      "filename": "YungsBetterStrongholds-1.21.1-NeoForge-5.1.3.jar",
+      "provider": "modrinth",
+      "project-id": "kidLKymU",
+      "version-id": "8U0dIfSM",
+      "sha512": "385d67e07f2c67af5ea387d92d92949d8f671e8f99204457b6396dbe987ac3b14c2bff765df5fcbaa68016604f82a1fc6ec5a69c012ca22ad088d1a7c9bc135d",
+      "sidecar-hash": "f1113ec8ea69e82993f01f990a752b0bd71e135a76f3fcdece62f506749be4bea04d4109cf92739b57b733a8ac331e2a9743b4812166c1268473bc28c8bb194e",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "kidLKymU",
+          "version-id": "8U0dIfSM",
+          "filename": "YungsBetterStrongholds-1.21.1-NeoForge-5.1.3.jar",
+          "url": "https://cdn.modrinth.com/data/kidLKymU/versions/8U0dIfSM/YungsBetterStrongholds-1.21.1-NeoForge-5.1.3.jar",
+          "hashes": {
+            "sha1": "5d06a5850af7c577612d4592706a8e156bbe1cbf",
+            "sha512": "385d67e07f2c67af5ea387d92d92949d8f671e8f99204457b6396dbe987ac3b14c2bff765df5fcbaa68016604f82a1fc6ec5a69c012ca22ad088d1a7c9bc135d"
+          },
+          "size": 461244
+        }
+      }
+    },
+    {
+      "path": "mods/yungs-cave-biomes.bun.json",
+      "slug": "yungs-cave-biomes",
+      "filename": "YungsCaveBiomes-1.21.1-NeoForge-3.1.1.jar",
+      "provider": "modrinth",
+      "project-id": "cs7iGVq1",
+      "version-id": "HYGqXWqQ",
+      "sha512": "9e88b5109e06c791f27c23df16ebd2c535b5b27cf9b748ee6a439dccf3e560d32110b81ace5ea7dcca2992394b439223c20e4f2688e80e263efa103e2b154024",
+      "sidecar-hash": "86c95c7f8370a3b767e87ef296a53dfbed7b71a657d232b19e61f2aae2eedc04507ba1cd94194c68c55add0f9e7230b06a2cee6013630c06b341be0ffc177456",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "cs7iGVq1",
+          "version-id": "HYGqXWqQ",
+          "filename": "YungsCaveBiomes-1.21.1-NeoForge-3.1.1.jar",
+          "url": "https://cdn.modrinth.com/data/cs7iGVq1/versions/HYGqXWqQ/YungsCaveBiomes-1.21.1-NeoForge-3.1.1.jar",
+          "hashes": {
+            "sha1": "bcab81f578b3cb31e599ae327c6634b9fa8d0f04",
+            "sha512": "9e88b5109e06c791f27c23df16ebd2c535b5b27cf9b748ee6a439dccf3e560d32110b81ace5ea7dcca2992394b439223c20e4f2688e80e263efa103e2b154024"
+          },
+          "size": 13006621
+        }
+      }
+    },
+    {
+      "path": "mods/zfastnoise.bun.json",
+      "slug": "zfastnoise",
+      "filename": "zfastnoise-1.0.13+1.21.1+neoforge.jar",
+      "provider": "modrinth",
+      "project-id": "OnlVIpq5",
+      "version-id": "9vSFkDAr",
+      "sha512": "23c50dc3d75da96d87b065381e32a979528017f872d056bf1cb012e085122734ab218ea8af7b5570403d83c88ebfb53296969af47198fdb637058753d3974278",
+      "sidecar-hash": "0cfdcaf88b6fd777f760d0783420860c76a5db82c6c87abe13e25855fad78abb15c6f6a39508df724eeb51c33408a711a3bc8165929da4d6a754f7ce66d2df6e",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "OnlVIpq5",
+          "version-id": "9vSFkDAr",
+          "filename": "zfastnoise-1.0.13+1.21.1+neoforge.jar",
+          "url": "https://cdn.modrinth.com/data/OnlVIpq5/versions/9vSFkDAr/zfastnoise-1.0.13%2B1.21.1%2Bneoforge.jar",
+          "hashes": {
+            "sha1": "7b9f0b4d62a6e30505f8e64ebb58dfd2dc46c81e",
+            "sha512": "23c50dc3d75da96d87b065381e32a979528017f872d056bf1cb012e085122734ab218ea8af7b5570403d83c88ebfb53296969af47198fdb637058753d3974278"
+          },
+          "size": 39526
+        }
+      }
+    }
+  ],
+  "overlays": [
+    {
+      "file": "bg.png",
+      "hash": "296a183219fe84c2866d49a9f00bd324cc4267dd1d9fd86b47a28ec6e957445cc060f3b231bb097bec616f95a41c9c3769d22a329d5804fca88063a26795d374",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "icon.png",
+      "hash": "9ebe76aae9f46287ea2c15fb2dbd7987e035ff30ead5d3def64bbf00fcfd14cae1d4de2708e8fa57b66b68b3cf1a5a50e5ab6be4f30b15640c2b7751b4ab5aa4",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "mods/sodium.pw copy.toml",
+      "hash": "2afdeed00a84eae4fa7ea1e6f297e5585701555afe1928b18f8c0067cbf48fa3e336082f71ccb5bf9dc4e431ef9d49ffa41d6746cc5442e688bc71db9ee28086",
+      "hash-format": "sha512"
+    }
+  ]
+}

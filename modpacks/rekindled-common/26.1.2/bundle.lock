@@ -1,0 +1,838 @@
+{
+  "version": 2,
+  "pack-format": "bundle:29",
+  "packages": [
+    {
+      "path": "mods/async.bun.json",
+      "slug": "async",
+      "filename": "async-fabric-0.2.4+alpha-26.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "vEC2jm6I",
+      "version-id": "pv07EqRS",
+      "sha512": "049f19cf9a7af413fd71b052208ffe1937691003834f3a15ea2ae633452903943539d33dbfec491fb5f1efd30e5c0a0019c16f55fa378dcd2f4eb816cc688d93",
+      "sidecar-hash": "9085cfd28b91357b5c7016332cb4db4845af0431e53394258bd19d8244f6dad34baca92dd082a014962c2d963986cd53fe3d530e5b561a8ee0efca45e814bdb2",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "vEC2jm6I",
+          "version-id": "pv07EqRS",
+          "filename": "async-fabric-0.2.4+alpha-26.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/vEC2jm6I/versions/pv07EqRS/async-fabric-0.2.4%2Balpha-26.1.2.jar",
+          "hashes": {
+            "sha512": "049f19cf9a7af413fd71b052208ffe1937691003834f3a15ea2ae633452903943539d33dbfec491fb5f1efd30e5c0a0019c16f55fa378dcd2f4eb816cc688d93"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/asynclogger.bun.json",
+      "slug": "asynclogger",
+      "filename": "asynclogger-2.1.2+26.1.2-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "zvNzKfGF",
+      "version-id": "MCoxIcu9",
+      "sha512": "6e1a796f0fdffe9f02d61f0b27b68aac22fbc0f28c963c47cdbf55fedd5f9aa6a22bcea3a9a93b4885f2f819e219e05f45672f8205673f4c74058f3284a476ef",
+      "sidecar-hash": "9fb7663aed74b52350a7189c563eb871af12e720462e1884721638d35edfc6504aabbe772ad02f550f241d7d287941036469224378ca5e64f53d97f2454d0dcd",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "zvNzKfGF",
+          "version-id": "MCoxIcu9",
+          "filename": "asynclogger-2.1.2+26.1.2-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/zvNzKfGF/versions/MCoxIcu9/asynclogger-2.1.2%2B26.1.2-fabric.jar",
+          "hashes": {
+            "sha512": "6e1a796f0fdffe9f02d61f0b27b68aac22fbc0f28c963c47cdbf55fedd5f9aa6a22bcea3a9a93b4885f2f819e219e05f45672f8205673f4c74058f3284a476ef"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/badoptimizations.bun.json",
+      "slug": "badoptimizations",
+      "filename": "BadOptimizations-2.4.1-26.1-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "g96Z4WVZ",
+      "version-id": "gjIvugXc",
+      "sha512": "efba144dec306767da3aceb4b179e093daa60bc4c0ba6295d64c166092b8f62e4a4cc63a5bae76fb4c608f1dffa8ecd70c6884e48c804915e1b37ef042e31a99",
+      "sidecar-hash": "633fdccb4f3b7f9f829301b2c3f673582cc9fe717699879c57996e1e5abc35ca83426830a5e49ab81c7581f1a078c74be9b32a210a725c61c1de7e3313dc7bbb",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "g96Z4WVZ",
+          "version-id": "gjIvugXc",
+          "filename": "BadOptimizations-2.4.1-26.1-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/g96Z4WVZ/versions/gjIvugXc/BadOptimizations-2.4.1-26.1-fabric.jar",
+          "hashes": {
+            "sha512": "efba144dec306767da3aceb4b179e093daa60bc4c0ba6295d64c166092b8f62e4a4cc63a5bae76fb4c608f1dffa8ecd70c6884e48c804915e1b37ef042e31a99"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/better-block-entities.bun.json",
+      "slug": "better-block-entities",
+      "filename": "bbe-fabric-1.3.5+mc26.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "ONZm0H7Y",
+      "version-id": "OQG68fGx",
+      "sha512": "5c43682a4ab319dcd6ad99f3d8a18f49dd6f46b0c195cb06a200df1dd492c7a78837a3ec5a49b05203f64dacd0aea800870a6f2e1f31904348abf22c79eabfb2",
+      "sidecar-hash": "a8fa8624429d0b7175a88fc6fe1099fbc6f2ad395c916aaeb775fe92307b3edd27813812c6a0d3355231c0e9829954c874ca1167cfb32ea7f0e8dc419c4dc1c5",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "ONZm0H7Y",
+          "version-id": "OQG68fGx",
+          "filename": "bbe-fabric-1.3.5+mc26.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/ONZm0H7Y/versions/OQG68fGx/bbe-fabric-1.3.5%2Bmc26.1.2.jar",
+          "hashes": {
+            "sha512": "5c43682a4ab319dcd6ad99f3d8a18f49dd6f46b0c195cb06a200df1dd492c7a78837a3ec5a49b05203f64dacd0aea800870a6f2e1f31904348abf22c79eabfb2"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/c2me-fabric.bun.json",
+      "slug": "c2me-fabric",
+      "filename": "c2me-fabric-mc26.1.2-0.4.0-alpha.0.28.jar",
+      "provider": "modrinth",
+      "project-id": "VSNURh3q",
+      "version-id": "1qBYfTmr",
+      "sha512": "e5a0da868e28a808398bfd62c30ac1fa289ddce59aaeac08bfc3ef88620f78d21269a216344db71d787fd995aad2c58df553e9c16ccf608fb3e843bd43810afe",
+      "sidecar-hash": "c882636a75367ea4dfdfbed73505be85e7c85fe4cb9eb9768713df083ecde19085885b21c36577b2ea12c526075240100d9f3561120beb4e5ce4230214dd1c7b",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "VSNURh3q",
+          "version-id": "1qBYfTmr",
+          "filename": "c2me-fabric-mc26.1.2-0.4.0-alpha.0.28.jar",
+          "url": "https://cdn.modrinth.com/data/VSNURh3q/versions/1qBYfTmr/c2me-fabric-mc26.1.2-0.4.0-alpha.0.28.jar",
+          "hashes": {
+            "sha512": "e5a0da868e28a808398bfd62c30ac1fa289ddce59aaeac08bfc3ef88620f78d21269a216344db71d787fd995aad2c58df553e9c16ccf608fb3e843bd43810afe"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/cloth-config.bun.json",
+      "slug": "cloth-config",
+      "filename": "cloth-config-26.1.154.jar",
+      "provider": "modrinth",
+      "project-id": "9s6osm5g",
+      "version-id": "GFM8zh9J",
+      "sha512": "8bfb75f2cac0a9910316c6a368a228c0f8f1261ac6f03dec5fba594e1619ac04334a3df4fb29778d61d0b8290d55949371a523d722b35501bf9a2902956d3b17",
+      "sidecar-hash": "5d71b2de33aae3b49272ec184deb5407290ba6d7b6795d135726f85ebba2b9fd69271dccfb7bf9ea7605c3b2037636acd71a72dfeebcf0fd0435f5437de966e4",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "9s6osm5g",
+          "version-id": "GFM8zh9J",
+          "filename": "cloth-config-26.1.154.jar",
+          "url": "https://cdn.modrinth.com/data/9s6osm5g/versions/GFM8zh9J/cloth-config-26.1.154.jar",
+          "hashes": {
+            "sha512": "8bfb75f2cac0a9910316c6a368a228c0f8f1261ac6f03dec5fba594e1619ac04334a3df4fb29778d61d0b8290d55949371a523d722b35501bf9a2902956d3b17"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/configmanager.bun.json",
+      "slug": "configmanager",
+      "filename": "ConfigManager-fabric-26.1_26.2-1.1.3.jar",
+      "provider": "modrinth",
+      "project-id": "jlNms3Jp",
+      "version-id": "W4C08wBC",
+      "sha512": "bfa70defff2530780f0f0aa0de1845dc256d9cab244123e4847a6b24db1f812c47585ed1ddc80b2de91671aada421027b72d44e8b748e2a70ae405af54d94de0",
+      "sidecar-hash": "a8d5090b1ec2051569286ac0458aaf165b2f81663450aa0bf43c4089c836b249280cf414b1046edd58bbfa4007cef215c0fa62dbc52295b8d2f0c3e8e6eade6f",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "jlNms3Jp",
+          "version-id": "W4C08wBC",
+          "filename": "ConfigManager-fabric-26.1_26.2-1.1.3.jar",
+          "url": "https://cdn.modrinth.com/data/jlNms3Jp/versions/W4C08wBC/ConfigManager-fabric-26.1_26.2-1.1.3.jar",
+          "hashes": {
+            "sha512": "bfa70defff2530780f0f0aa0de1845dc256d9cab244123e4847a6b24db1f812c47585ed1ddc80b2de91671aada421027b72d44e8b748e2a70ae405af54d94de0"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/dynamic-fps.bun.json",
+      "slug": "dynamic-fps",
+      "filename": "dynamic-fps-3.11.7+minecraft-26.1.0-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "LQ3K71Q1",
+      "version-id": "HV67Kt1R",
+      "sha512": "5feb34934f1f20d0fe65546f65084e9c59ed0ec8e9e80e91dd3ed80dbfc70212bf8cf31f078dc9e7a429edbe5f63774b200c8bd50c8726c4bcd9c74d9b696ab5",
+      "sidecar-hash": "e75c1406958d5192c83f5bee52420abcd387c351725e69218ff693d4df1f5bd184be15b20ce6e931f1a7ce703fa6469038f9d787518187faa3892ed10e797b71",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "LQ3K71Q1",
+          "version-id": "HV67Kt1R",
+          "filename": "dynamic-fps-3.11.7+minecraft-26.1.0-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/LQ3K71Q1/versions/HV67Kt1R/dynamic-fps-3.11.7%2Bminecraft-26.1.0-fabric.jar",
+          "hashes": {
+            "sha512": "5feb34934f1f20d0fe65546f65084e9c59ed0ec8e9e80e91dd3ed80dbfc70212bf8cf31f078dc9e7a429edbe5f63774b200c8bd50c8726c4bcd9c74d9b696ab5"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/entityculling.bun.json",
+      "slug": "entityculling",
+      "filename": "entityculling-fabric-1.10.5-mc26.1.jar",
+      "provider": "modrinth",
+      "project-id": "NNAgCjsB",
+      "version-id": "zAi8nQHj",
+      "sha512": "66fb5518f61a62643eb2901e3d16550fb2ccb496c397f29d1adacf745f4f836805c593cec8560aeab9f2b826cd3af4535d526c4f1ff5a6bde56d5578b3079a18",
+      "sidecar-hash": "30b6e41019106fea04edce76a547b2b4608c65df64ef8f63c2b5ba118c20e01da0964c04a491f0193d920a8443f8f4165845deb4b98ac3ff855690c72914cedf",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "NNAgCjsB",
+          "version-id": "zAi8nQHj",
+          "filename": "entityculling-fabric-1.10.5-mc26.1.jar",
+          "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/zAi8nQHj/entityculling-fabric-1.10.5-mc26.1.jar",
+          "hashes": {
+            "sha512": "66fb5518f61a62643eb2901e3d16550fb2ccb496c397f29d1adacf745f4f836805c593cec8560aeab9f2b826cd3af4535d526c4f1ff5a6bde56d5578b3079a18"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/fabric-api.bun.json",
+      "slug": "fabric-api",
+      "filename": "fabric-api-0.154.0+26.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "P7dR8mSH",
+      "version-id": "1F9Sl2ke",
+      "sha512": "0f5885ca80716dee547e8e8ec6c2eda137b5591d40d8fb424d9d1d99a3e5c7a6d861ef11590903f9fa18838806de8876e51285c5d830cfa50f518c0217139e78",
+      "sidecar-hash": "5d432115070a1a98d3b6e36dbd354cefd26c963b137b730deebe208fdd39044ba24b66f2ea2b5ce0355fa418e1233d82364d65c9a387446b6b9228e7d8ded626",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "P7dR8mSH",
+          "version-id": "1F9Sl2ke",
+          "filename": "fabric-api-0.154.0+26.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/1F9Sl2ke/fabric-api-0.154.0%2B26.1.2.jar",
+          "hashes": {
+            "sha512": "0f5885ca80716dee547e8e8ec6c2eda137b5591d40d8fb424d9d1d99a3e5c7a6d861ef11590903f9fa18838806de8876e51285c5d830cfa50f518c0217139e78"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/fabric-language-kotlin.bun.json",
+      "slug": "fabric-language-kotlin",
+      "filename": "fabric-language-kotlin-1.13.12+kotlin.2.4.0.jar",
+      "provider": "modrinth",
+      "project-id": "Ha28R6CL",
+      "version-id": "Pd0xrHCw",
+      "sha512": "ca238ee480dfb237062200fd300be493d022e0837b6998c15807e01488b2a30d5ba4731e5c6d05a5333719c8923a1cb84c06fd6fa45aa88ced492ddb5b40906f",
+      "sidecar-hash": "9377b6fbf51d966175ece567069e944a91726b335b23f0581d958ba82d0c1bb994564383944258dbd4a952dc55c55ba8830d65b43eb7c80545d3aeba830ba4e5",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "Ha28R6CL",
+          "version-id": "Pd0xrHCw",
+          "filename": "fabric-language-kotlin-1.13.12+kotlin.2.4.0.jar",
+          "url": "https://cdn.modrinth.com/data/Ha28R6CL/versions/Pd0xrHCw/fabric-language-kotlin-1.13.12%2Bkotlin.2.4.0.jar",
+          "hashes": {
+            "sha512": "ca238ee480dfb237062200fd300be493d022e0837b6998c15807e01488b2a30d5ba4731e5c6d05a5333719c8923a1cb84c06fd6fa45aa88ced492ddb5b40906f"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/factory-api.bun.json",
+      "slug": "factory-api",
+      "filename": "FactoryAPI-26.1.2-2.2.8-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "nkTZHOLD",
+      "version-id": "WPmPigj8",
+      "sha512": "0da5335678aceddc1322d30f490441d5632887d2a70b6ddcd28e433374c44292061cc3736cbd7c7660f2d003c4187301c1a67f33e8914fea218b4f18e223af36",
+      "sidecar-hash": "06874045b4f61c66e4966dfead525d844c977e3803a4721a0ffc4ffe83587b281705fae5009a3cd761bf5b52f0294db51b994850f224161f5fc2368f010146d4",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "nkTZHOLD",
+          "version-id": "WPmPigj8",
+          "filename": "FactoryAPI-26.1.2-2.2.8-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/nkTZHOLD/versions/WPmPigj8/FactoryAPI-26.1.2-2.2.8-fabric.jar",
+          "hashes": {
+            "sha512": "0da5335678aceddc1322d30f490441d5632887d2a70b6ddcd28e433374c44292061cc3736cbd7c7660f2d003c4187301c1a67f33e8914fea218b4f18e223af36"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/ferrite-core.bun.json",
+      "slug": "ferrite-core",
+      "filename": "ferritecore-9.0.0-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "uXXizFIs",
+      "version-id": "d5ddUdiB",
+      "sha512": "d81fa97e11784c19d42f89c2f433831d007603dd7193cee45fa177e4a6a9c52b384b198586e04a0f7f63cd996fed713322578bde9a8db57e1188854ae5cbe584",
+      "sidecar-hash": "bb308d0bf8ee2b68a8dd17ac2e9031cd4b6a62e3762bbf64bb3497926597c744d6a2952ca6d9ed84abb4b98d8911223292884ec56df3183919415fc5e9cc7022",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "uXXizFIs",
+          "version-id": "d5ddUdiB",
+          "filename": "ferritecore-9.0.0-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar",
+          "hashes": {
+            "sha512": "d81fa97e11784c19d42f89c2f433831d007603dd7193cee45fa177e4a6a9c52b384b198586e04a0f7f63cd996fed713322578bde9a8db57e1188854ae5cbe584"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/globalpacks.bun.json",
+      "slug": "globalpacks",
+      "filename": "globalpacks-fabric-26.1-26.1.0.jar",
+      "provider": "modrinth",
+      "project-id": "NRLPy2mk",
+      "version-id": "bdqlFvg9",
+      "sha512": "b456d9beca9b0bd41fd06c93c31439099ef1443f26e2b28a58e9ed6d5bf2be23d715730358a4494ce460dd436db2828a82a6ffbaf69d180362b69f0b8566c24e",
+      "sidecar-hash": "770d2f2255645afae3ad605ea771fab54f01277ad53c777d0da7f890df6efa31fc4d8276ecaf0dccf5724f88e89946a468e4bee4e51b190824841a489e57fd89",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "NRLPy2mk",
+          "version-id": "bdqlFvg9",
+          "filename": "globalpacks-fabric-26.1-26.1.0.jar",
+          "url": "https://cdn.modrinth.com/data/NRLPy2mk/versions/bdqlFvg9/globalpacks-fabric-26.1-26.1.0.jar",
+          "hashes": {
+            "sha512": "b456d9beca9b0bd41fd06c93c31439099ef1443f26e2b28a58e9ed6d5bf2be23d715730358a4494ce460dd436db2828a82a6ffbaf69d180362b69f0b8566c24e"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/gnetum.bun.json",
+      "slug": "gnetum",
+      "filename": "Gnetum-4.4.1+26.1.2-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "7MoE34WK",
+      "version-id": "qnhLxDbz",
+      "sha512": "5f0c2eef58c01363aa8f489fc7cf50d274bbc97ef4264ed2b55153ee13edd4a2aa5555210c1ab027e80f05c71431c50aac9eb70abf7e111c0b7d8b6ab2e6a6d0",
+      "sidecar-hash": "96cef62e0a73197c6db4d17741f2727fc70be2480bde19decc50685b6029d3a299dce266572a6485d1de9199a9735e6a9295492680da998c94e49849f1436ea8",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "7MoE34WK",
+          "version-id": "qnhLxDbz",
+          "filename": "Gnetum-4.4.1+26.1.2-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/7MoE34WK/versions/qnhLxDbz/Gnetum-4.4.1%2B26.1.2-fabric.jar",
+          "hashes": {
+            "sha512": "5f0c2eef58c01363aa8f489fc7cf50d274bbc97ef4264ed2b55153ee13edd4a2aa5555210c1ab027e80f05c71431c50aac9eb70abf7e111c0b7d8b6ab2e6a6d0"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/immediatelyfast.bun.json",
+      "slug": "immediatelyfast",
+      "filename": "ImmediatelyFast-Fabric-1.15.3+26.1.jar",
+      "provider": "modrinth",
+      "project-id": "5ZwdcRci",
+      "version-id": "xOA9hbpf",
+      "sha512": "b665037aee8e76e330f068f640b340b97ce8c0c0e940dfccda8a5b00f772dfa9b2d20594bb950e4f2595b359ad3c27190a4d998da28d4507a9747ab507980d11",
+      "sidecar-hash": "327d44067fa60835d756cf3b0b4c4d613c9064e9e5c927a30fde1f91b6e9feafa3de5c032a1455be8ce7b63c087c8c3926bc075ec3014c9777b01fa543e1d0e3",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "5ZwdcRci",
+          "version-id": "xOA9hbpf",
+          "filename": "ImmediatelyFast-Fabric-1.15.3+26.1.jar",
+          "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/xOA9hbpf/ImmediatelyFast-Fabric-1.15.3%2B26.1.jar",
+          "hashes": {
+            "sha512": "b665037aee8e76e330f068f640b340b97ce8c0c0e940dfccda8a5b00f772dfa9b2d20594bb950e4f2595b359ad3c27190a4d998da28d4507a9747ab507980d11"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/ixeris.bun.json",
+      "slug": "ixeris",
+      "filename": "Ixeris-4.5.1+26.1.2-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "p8RJPJIC",
+      "version-id": "apCiWWrv",
+      "sha512": "f3b064e57b93109ab6686fb2cb6c4d38bc28f4bb86326a8c277523d27456fe596ba18134798fa74dfac45ed14a5dbdb816688d5f7c38b8a54ff792a3f253333c",
+      "sidecar-hash": "2a887e4697e63c81a60bdb82173e3f4cc3bc2f5276d95278fd39334b3c137ce8b1c7dabcf86a06b1c4da183f081d78c5eaf7bdff42db0ee45ce00a750a444831",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "p8RJPJIC",
+          "version-id": "apCiWWrv",
+          "filename": "Ixeris-4.5.1+26.1.2-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/p8RJPJIC/versions/apCiWWrv/Ixeris-4.5.1%2B26.1.2-fabric.jar",
+          "hashes": {
+            "sha512": "f3b064e57b93109ab6686fb2cb6c4d38bc28f4bb86326a8c277523d27456fe596ba18134798fa74dfac45ed14a5dbdb816688d5f7c38b8a54ff792a3f253333c"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/legacy-nether-modrinth.bun.json",
+      "slug": "legacy-nether-modrinth",
+      "filename": "legacy-nether-modrinth-3.0.0.jar",
+      "provider": "modrinth",
+      "project-id": "FasxNDY4",
+      "version-id": "DVpYFojh",
+      "sha512": "da39fbd1c2867a71d8d5afc2f4c56778917d6126f3a368b33cbadc5d50e5a2e34f56cb75825282973b8e63f17b83fa71f594b22f2f34697f9772582dedddcebb",
+      "sidecar-hash": "5aa96107cc30b83cdbb77d256d1ecd7439ad43bd3374bce8c50237ce3dfa2f11892e4b0bc9c94807b509d9a524c474ea79d67ec2f1e7ed6fb6e4a0200cbbc5ab",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "FasxNDY4",
+          "version-id": "DVpYFojh",
+          "filename": "legacy-nether-modrinth-3.0.0.jar",
+          "url": "https://cdn.modrinth.com/data/FasxNDY4/versions/DVpYFojh/legacy-nether-modrinth-3.0.0.jar",
+          "hashes": {
+            "sha512": "da39fbd1c2867a71d8d5afc2f4c56778917d6126f3a368b33cbadc5d50e5a2e34f56cb75825282973b8e63f17b83fa71f594b22f2f34697f9772582dedddcebb"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/legacy4j.bun.json",
+      "slug": "legacy4j",
+      "filename": "Legacy4J-26.1.2-1.9-pre-2-fabric.jar",
+      "provider": "modrinth",
+      "project-id": "gHvKJofA",
+      "version-id": "A2IY6LLn",
+      "sha512": "3646580b83a6ae4faf95128a6334bada975d8191812798de380e6457951590819d18399b21ddb8c4e8a1604b66426a2a41ef81b24ea852d9ebdd29c914bfe677",
+      "sidecar-hash": "ea0e547c934ca46344889b6e2a95feb6e633b04a4ad767be71b7598394bd71161b63e5b7f236068cecbcde291fa7c2fa6390412e9130e6dc215927b9156b6988",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "gHvKJofA",
+          "version-id": "A2IY6LLn",
+          "filename": "Legacy4J-26.1.2-1.9-pre-2-fabric.jar",
+          "url": "https://cdn.modrinth.com/data/gHvKJofA/versions/A2IY6LLn/Legacy4J-26.1.2-1.9-pre-2-fabric.jar",
+          "hashes": {
+            "sha512": "3646580b83a6ae4faf95128a6334bada975d8191812798de380e6457951590819d18399b21ddb8c4e8a1604b66426a2a41ef81b24ea852d9ebdd29c914bfe677"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/lithium.bun.json",
+      "slug": "lithium",
+      "filename": "lithium-fabric-0.24.6+mc26.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "gvQqBUqZ",
+      "version-id": "fQBdPR1m",
+      "sha512": "fac351f5b6150889b9355a01889c35b5798147d4bedb291594a590a2d41909eb8dc494ef0051317bf55886f2fc7fe134abbe2e755098df38473edb2bf43357e9",
+      "sidecar-hash": "fd20bf03e5192c444e6fbd55f71518577d755a317e3fe7201b02e1c37ee6dcca5b00bcba64cd2febff8558ec92dadbe13b6f5a6a78af4f6821af77b1e0bc13fb",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "gvQqBUqZ",
+          "version-id": "fQBdPR1m",
+          "filename": "lithium-fabric-0.24.6+mc26.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/fQBdPR1m/lithium-fabric-0.24.6%2Bmc26.1.2.jar",
+          "hashes": {
+            "sha512": "fac351f5b6150889b9355a01889c35b5798147d4bedb291594a590a2d41909eb8dc494ef0051317bf55886f2fc7fe134abbe2e755098df38473edb2bf43357e9"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/moderner-beta.bun.json",
+      "slug": "moderner-beta",
+      "filename": "moderner-beta-fabric-5.0.0-alpha.1+26.1.jar",
+      "provider": "modrinth",
+      "project-id": "xkrdwmh2",
+      "version-id": "dSmUrn0n",
+      "sha512": "8623180a7632f7760807dd0fe18bab1c81f0fa94408ccd66ece2d8a052c5234f896ff500b53a77f7cad8efe9327ac49661444639fe76485e214e2527c1ea7279",
+      "sidecar-hash": "341180853b4bc2f83dd707ca101b4aabb69abfaae2c935085848236eeb7b67f4110311fcb253828fb29ea904803611801edb75281caef9ba4953ced494f3d6ed",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "xkrdwmh2",
+          "version-id": "dSmUrn0n",
+          "filename": "moderner-beta-fabric-5.0.0-alpha.1+26.1.jar",
+          "url": "https://cdn.modrinth.com/data/xkrdwmh2/versions/dSmUrn0n/moderner-beta-fabric-5.0.0-alpha.1%2B26.1.jar",
+          "hashes": {
+            "sha512": "8623180a7632f7760807dd0fe18bab1c81f0fa94408ccd66ece2d8a052c5234f896ff500b53a77f7cad8efe9327ac49661444639fe76485e214e2527c1ea7279"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/modernfix-mvus.bun.json",
+      "slug": "modernfix-mvus",
+      "filename": "modernfix-5.27.19-build.1.jar",
+      "provider": "modrinth",
+      "project-id": "TjSm1wrD",
+      "version-id": "cTKaCklf",
+      "sha512": "0ee91d7e138665375cbf29391ef2c6800c847c4fed3d41653e8c496ccac4b2833f474fb11c77b11e9aeb2eb6a3df246ab592f47678326c8af052612135cd6f7c",
+      "sidecar-hash": "35fcf290d8cda734c5ff3a6ce0fa12bd88c3281be207fe87b62effdb8c518d0bfac5772bec90003e3d5fc4456a92a81f2297ae3ebc29941575c397c088ad77f6",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "TjSm1wrD",
+          "version-id": "cTKaCklf",
+          "filename": "modernfix-5.27.19-build.1.jar",
+          "url": "https://cdn.modrinth.com/data/TjSm1wrD/versions/cTKaCklf/modernfix-5.27.19-build.1.jar",
+          "hashes": {
+            "sha512": "0ee91d7e138665375cbf29391ef2c6800c847c4fed3d41653e8c496ccac4b2833f474fb11c77b11e9aeb2eb6a3df246ab592f47678326c8af052612135cd6f7c"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/moreculling.bun.json",
+      "slug": "moreculling",
+      "filename": "moreculling-fabric-26.1.2-1.7.2.jar",
+      "provider": "modrinth",
+      "project-id": "51shyZVL",
+      "version-id": "IUqOgV5r",
+      "sha512": "f03f57a6097c3db78261156e289e2e5c207229f8583d901d28489baf32ccd78fde65cdbd19d7f703e72569c97e7af03dc6f7d600ca64f318373725188277374e",
+      "sidecar-hash": "04b03166771404b5df46e4f3615a86e96862d5c29c6131655d29b56946083cd7f20f4ef4a519e35dff8355b60230a8409bee77a5e2f02522a2ad8a25b78b85c7",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "51shyZVL",
+          "version-id": "IUqOgV5r",
+          "filename": "moreculling-fabric-26.1.2-1.7.2.jar",
+          "url": "https://cdn.modrinth.com/data/51shyZVL/versions/IUqOgV5r/moreculling-fabric-26.1.2-1.7.2.jar",
+          "hashes": {
+            "sha512": "f03f57a6097c3db78261156e289e2e5c207229f8583d901d28489baf32ccd78fde65cdbd19d7f703e72569c97e7af03dc6f7d600ca64f318373725188277374e"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/no-prying-eyes.bun.json",
+      "slug": "no-prying-eyes",
+      "filename": "NoPryingEyes-2.0.0+1.21.10.jar",
+      "provider": "modrinth",
+      "project-id": "LoXPgYhm",
+      "version-id": "GWft7Ppq",
+      "sha512": "8a768802a8547cf38c34384e680221cae6cd3ab6c55b5293d5ad646fdd8b8be75faef7ebea43373d79db55f1475845244403f9108a4aa7875711c8aa6c0cefde",
+      "sidecar-hash": "2c3be6a87645c1e7aafa57bb3a814b855b9ea33da1b265e4774b69e07eb349e782e58029a3626163c032eafb95e75ce2316465567e4fafc1294aa1e24af74875",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "LoXPgYhm",
+          "version-id": "GWft7Ppq",
+          "filename": "NoPryingEyes-2.0.0+1.21.10.jar",
+          "url": "https://cdn.modrinth.com/data/LoXPgYhm/versions/GWft7Ppq/NoPryingEyes-2.0.0%2B1.21.10.jar",
+          "hashes": {
+            "sha512": "8a768802a8547cf38c34384e680221cae6cd3ab6c55b5293d5ad646fdd8b8be75faef7ebea43373d79db55f1475845244403f9108a4aa7875711c8aa6c0cefde"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/preferred-gamerules.bun.json",
+      "slug": "preferred-gamerules",
+      "filename": "preferred-gamerules-2.0.0+26.1.jar",
+      "provider": "modrinth",
+      "project-id": "kKib77nY",
+      "version-id": "YwL9Cznl",
+      "sha512": "46bb8565208e1eab3bbf62ed14a055ffcce9ac512483845c4e3a580b6b0f7f63d44a75d6975d4c8f6ca2982b32d3eddd2616bf9480ec01ce5dd5d84134400238",
+      "sidecar-hash": "6f7f40959c6961bf583063f07d99b8df489cbcfc3d3c21a06da4753bb53dc8596b1d404157f1fb576dea82717f8a4f77a2eab8809ad32aaa97f836d1a60c216d",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "kKib77nY",
+          "version-id": "YwL9Cznl",
+          "filename": "preferred-gamerules-2.0.0+26.1.jar",
+          "url": "https://cdn.modrinth.com/data/kKib77nY/versions/YwL9Cznl/preferred-gamerules-2.0.0%2B26.1.jar",
+          "hashes": {
+            "sha512": "46bb8565208e1eab3bbf62ed14a055ffcce9ac512483845c4e3a580b6b0f7f63d44a75d6975d4c8f6ca2982b32d3eddd2616bf9480ec01ce5dd5d84134400238"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/scalablelux.bun.json",
+      "slug": "scalablelux",
+      "filename": "ScalableLux-fabric-0.3.0-alpha.0.1-all.jar",
+      "provider": "modrinth",
+      "project-id": "Ps1zyz6x",
+      "version-id": "V7zVzaKP",
+      "sha512": "9db9d0c5a9a8748a117e16607430e9364d1fce8641573eff4464b99557de37024c7e537ba9b6b0814d97c8a894918a50a931ee3042a04dd0c99bfc3a33b288c5",
+      "sidecar-hash": "dcf8b5687e8d44412784f16a8e7de28af5859cb332f19388d4c401d517dcd1375cd1fd572241eb59f96adf287e4fae80632cc03520b2a73bfd0c7f0db810b84c",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "Ps1zyz6x",
+          "version-id": "V7zVzaKP",
+          "filename": "ScalableLux-fabric-0.3.0-alpha.0.1-all.jar",
+          "url": "https://cdn.modrinth.com/data/Ps1zyz6x/versions/V7zVzaKP/ScalableLux-fabric-0.3.0-alpha.0.1-all.jar",
+          "hashes": {
+            "sha512": "9db9d0c5a9a8748a117e16607430e9364d1fce8641573eff4464b99557de37024c7e537ba9b6b0814d97c8a894918a50a931ee3042a04dd0c99bfc3a33b288c5"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/servercore.bun.json",
+      "slug": "servercore",
+      "filename": "servercore-fabric-1.5.19+26.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "4WWQxlQP",
+      "version-id": "H6TboTA2",
+      "sha512": "056d56d74508bf34f25ded9323a721be915b9273796100ee81c4a867717364539285b4ae9749e360d6699d485e3fba0561502a8c94979684b0cf79ce8e80afcd",
+      "sidecar-hash": "81f81d8e7edf9b47ee4e6c140e37680dee08ad4f3a716ecbf581dd076e66d95f15af3bbe5f7d5c3af12208a6274affa0c9947f8485e7e910e4187e89af9729ab",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "4WWQxlQP",
+          "version-id": "H6TboTA2",
+          "filename": "servercore-fabric-1.5.19+26.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/4WWQxlQP/versions/H6TboTA2/servercore-fabric-1.5.19%2B26.1.2.jar",
+          "hashes": {
+            "sha512": "056d56d74508bf34f25ded9323a721be915b9273796100ee81c4a867717364539285b4ae9749e360d6699d485e3fba0561502a8c94979684b0cf79ce8e80afcd"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/sodium.bun.json",
+      "slug": "sodium",
+      "filename": "sodium-fabric-0.9.1-beta.4+mc26.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "AANobbMI",
+      "version-id": "3gOEYetK",
+      "sha512": "24d5a077b23d970e144837e53c330487b2fff4bea02399b39966312c03f4474f8e2c5713eb7b1520990388f3a824500d88fdb65f0907e1adeb84fbc88d3cf179",
+      "sidecar-hash": "e27dcfd7f0976e2627e51b2fac34b9a73bdea7bbc9a0ca5005ee82a9724d9bf2dd367c987a0566bb0a179f8b79ec00b5510405c1a61f2be84b146dcd5469217c",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "AANobbMI",
+          "version-id": "3gOEYetK",
+          "filename": "sodium-fabric-0.9.1-beta.4+mc26.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/AANobbMI/versions/3gOEYetK/sodium-fabric-0.9.1-beta.4%2Bmc26.1.2.jar",
+          "hashes": {
+            "sha512": "24d5a077b23d970e144837e53c330487b2fff4bea02399b39966312c03f4474f8e2c5713eb7b1520990388f3a824500d88fdb65f0907e1adeb84fbc88d3cf179"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/vmp-fabric.bun.json",
+      "slug": "vmp-fabric",
+      "filename": "vmp-fabric-mc26.1.2-0.2.0+beta.7.234-all.jar",
+      "provider": "modrinth",
+      "project-id": "wnEe9KBa",
+      "version-id": "9f7J0dAp",
+      "sha512": "24a0df2407893b1cfb55e27dc1c1fef008df53518d118aa3245924d37b642a27d7b6afde950fbf5d07c4111c44ac264d9ae56b8d8c6a9b55acdfb91ba0a15f16",
+      "sidecar-hash": "a6c519c87114d7d89e54a36e7adf9fa2be5d8d872c7c4dfda9b54ea54061b2330eb8294210a8f697a5a5972392db80e89910a95a416a49dbfc3a0f563f8d0780",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "wnEe9KBa",
+          "version-id": "9f7J0dAp",
+          "filename": "vmp-fabric-mc26.1.2-0.2.0+beta.7.234-all.jar",
+          "url": "https://cdn.modrinth.com/data/wnEe9KBa/versions/9f7J0dAp/vmp-fabric-mc26.1.2-0.2.0%2Bbeta.7.234-all.jar",
+          "hashes": {
+            "sha512": "24a0df2407893b1cfb55e27dc1c1fef008df53518d118aa3245924d37b642a27d7b6afde950fbf5d07c4111c44ac264d9ae56b8d8c6a9b55acdfb91ba0a15f16"
+          }
+        }
+      }
+    },
+    {
+      "path": "mods/zfastnoise.bun.json",
+      "slug": "zfastnoise",
+      "filename": "zfastnoise-1.0.38+26.1.2.jar",
+      "provider": "modrinth",
+      "project-id": "OnlVIpq5",
+      "version-id": "xQmIpGqS",
+      "sha512": "0d4979f039b8e2019e117ebe1a5774ee92883caa9df44a795e47ca157ac0e813f50069ced2b5ce9486f8ff3998b518dcae770beca3e0cd4eec97eb2e77035db5",
+      "sidecar-hash": "edd425e1c047d0542511c46fe71dc1077dfc1e652a8470619cc1ecebd3eee2fb6d70af5dec97994248f298abf3ece06aabccda3d20f85a88d1b8fd122b716a20",
+      "chosen": "modrinth",
+      "providers": {
+        "modrinth": {
+          "project-id": "OnlVIpq5",
+          "version-id": "xQmIpGqS",
+          "filename": "zfastnoise-1.0.38+26.1.2.jar",
+          "url": "https://cdn.modrinth.com/data/OnlVIpq5/versions/xQmIpGqS/zfastnoise-1.0.38%2B26.1.2.jar",
+          "hashes": {
+            "sha512": "0d4979f039b8e2019e117ebe1a5774ee92883caa9df44a795e47ca157ac0e813f50069ced2b5ce9486f8ff3998b518dcae770beca3e0cd4eec97eb2e77035db5"
+          }
+        }
+      }
+    }
+  ],
+  "overlays": [
+    {
+      "file": "Rekindled Legacy Common-26.05.mrpack",
+      "hash": "6a32d5d263f657f1b2bf4f27479fb05965b2e0f4155797f682a0f350c1512b81526f5fe19d6a90000cb1e3c6b681f5cd01ea498d4b6170240356c3b230a0b2bb",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "Simply Optimized Forked-26.05.mrpack",
+      "hash": "14bc9fdbf4db4c3d00a5b5736af1b11c04368e14d961545fad966bc89760d3aade18fe5edbb1c13006e8d68fcb6a45cead124d0d6a964388954c78431fae2bb2",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/crash_assistant/config.toml",
+      "hash": "a303d51a1207d0863bf88e74a0a7300730161da78907130c38ef0af83ec3050cc30fbd1db61399ac78feddd40dd3c7a6e5d743a2cba8d038786b219eba539ad8",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/crash_assistant/lang/README.md",
+      "hash": "f82911ca20e6d0e47b091b4fd25088dac2f0ca7226f464f0bc727b924f440eff388d5dca097e8dcf48d4a28361d25ddd186c75d5815c0226597394b5c5714425",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/crash_assistant/lang/en_us.json",
+      "hash": "09cd2e4e34035230acbba982ffd91c0de930b7d89c93d6d17f57b9e90a23ad0492053837d15c2a1026ad32b33e626462fe76a5404679a73507b141dca3b98dc5",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/crash_assistant/lang/ru_ru.json",
+      "hash": "09cd2e4e34035230acbba982ffd91c0de930b7d89c93d6d17f57b9e90a23ad0492053837d15c2a1026ad32b33e626462fe76a5404679a73507b141dca3b98dc5",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/crash_assistant/lang/zh_cn.json",
+      "hash": "09cd2e4e34035230acbba982ffd91c0de930b7d89c93d6d17f57b9e90a23ad0492053837d15c2a1026ad32b33e626462fe76a5404679a73507b141dca3b98dc5",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/crash_assistant/modlist.json",
+      "hash": "494a0e1bcc132544e338f39168e7f3f139fe1c0fb3fb4471f167cb6add606d3175ee3dd266165cbaff5c3f1a85d8b68f91e5296a8267173b26b8021cdb73a90d",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/crash_assistant/problematic_mods_config.json",
+      "hash": "79c2f3bc4a5181375239bd21e3840399c6ad947c686bc7ef44f258646c6370085170ed0e9ffc0a003efba1a24a8ebbefb1a48fefb42229431e9c4daa4a2a2dae",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/fml.toml",
+      "hash": "2de85dcdf928f55f2ade9f98014b27abff6d797bde8e2e56bdceaa90d12f0ee8c4d4cf0df7ef22361f8b9be1354a6472e56b4db603a2a4e3b2ec40369484fafa",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/badoptimizations.txt",
+      "hash": "b0ceb59a46fc10eb9fc45c11728efd60c1ae60cfe02565269487eac4d045900ff520758d395501d6b2611b7ca9855076d6aca90ff3dd9671877f709dcbd903d3",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/c2me.toml",
+      "hash": "012a826a977791ebeff0ce913607efcfd36dd1b91585c774fca7c211e05b4d04c936f56baf389308eb95a2c98ac09157d9f2d35e4f6b2d6fa62e23bb90248526",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/entityculling.json",
+      "hash": "96f6e422180ca31192ffde79976c6f88c85e63f25a9c1107dc1b9f1a522e0e6f1acafd5698a82d790562a763ca261b0689e190ef6f3e7a65fe692de3abb0f58f",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/fabric/indigo-renderer.properties",
+      "hash": "59ac60770bf6e5d3c5547e4847e8356b9bd740b1b05b2224bb3f6c59140a1e358dac474163bb4936c8d36e5a3867eb4baf7980a760aeaf2a0fb877467bc76931",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/ferritecore.mixin.properties",
+      "hash": "4054daee2e4fdf81cc5ccab0179400e5c964258aec2d8266347109851247ff93fd0c296ea664f5b2b6425faf3d6b81f44f42ceec40c582c115d8f1129b3abd92",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/gnetum.json",
+      "hash": "6b956dbbbd1edd94b418dc8a959d9f9733a98978b58b66d4a2194cd94728ec016609988d4d494bf6bd70d92e50c58606e8a3150e4eb8c9c16740cec63cd4b082",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/immediatelyfast.json",
+      "hash": "6cc7c0e90245e11a477d747a20aa322cd69679937d1e6c6a1bbe6c003224aa3fc1eb3b55f70bf1cc21ded769df8506f3075be6fbbdac40dbe752c75bc26835a5",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/ixeris.toml",
+      "hash": "e3b812e13fe83c4e13271a31281c31ec3006b02ac9507d3d508a0a70d9dc38c7bf70b90717dab66a268617ce587a1202d6f15ac4f89949ddcc28c3cccc682fa6",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/lithium.properties",
+      "hash": "9be53266efb7c570695232da01571f0ff34737191061a1fe502dbbda7c28bd816795db5ddf0ab9cfe57b676e30afb0486c7b0d3f9fe64d1a2bc720b099156ba8",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/modernfix-mixins.properties",
+      "hash": "4a03679445d2e0af0e67101b04cfbf578a650f58411774b59053e9121cc561178b08235ab368ef8134b5dfc3d3774caafcd4d502bb11f1b8710d6d4eaa10cd04",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/moreculling.toml",
+      "hash": "8e528310a6469ed53cc7459c871a6fafc44fa9b989bb9c783241d808bc9befd95b2b170c87948ccef02bdbbbc429645ac86179058a1b88bddde2ae3ed73e5043",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/npe.json",
+      "hash": "5d46823c50c63c83107a41b196820c355a8686b3315a50ae0885873603682bb1322cd07532fa7b85ad550426323ad2627eb097baf638b2c55c967ecc38a7dee2",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/oxidizium.properties",
+      "hash": "b2a18ab52a510a36872ea2e8b9665e4e58907ad63c1ad7cbcd1b7e53b1b6eeec74c8a2e8b63571a4ab08cf33a541a01e7c4c17d7e57440ae288ff3bdbaaf3b07",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/particle_core_config.toml",
+      "hash": "dccf647ad9aab2596f9544403b49d7025c00e3c9dc0344f1ad210e094590289595176ec42a920d069b117c746ddd7f25e1f63c74e70dd5f65506c900b6753028",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/particle_core_disabled_optimizations_v2.json",
+      "hash": "afa216f34dce7c504308a5090a7ed66f66a84c90faa40bad22d376116920df353518327bdcd5aa5959a5bc3cfb47ee209952e023f32477ae55825ade7e4db5a8",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/servercore/config.yml",
+      "hash": "fc07340e94811b9d0e76f2d4938aad76fe8dfce175d388c5accee5b4531b6f2b18180732bc29b3286ba818030541e742bfbab8b8a1016d8bdf3e9ec255bf2985",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/servercore/optimizations.yml",
+      "hash": "a3b03609a0422ce6bebfb502d0a935f7c253695a20729d518633f88714643028134513fc694ee61737d571d101e7eaad73622bc569822deeb8b2204a35f7c9e6",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/sodium-mixins.properties",
+      "hash": "6acd2f3e4956788d0abd2bd941c5bcb3003b63c58eeedb3db727e5abfd37f036e49e7b97310bd37b9d3c29e2adbcbb3e5109af0482842f704a64a409a59bb437",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/sodium-options.json",
+      "hash": "6d1c8abb894334894c6a327debddc0d74aa64436c0e32c0ad594fc994aab371a4b6900404fb88814b8e0fe0e3823f190a26f3211a3b404342121c8e0d305b2d3",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/config/zfastnoise.mixin.toml",
+      "hash": "f713f24b20e7f0c8d59f19300136d5c154c471198864502650550dcb66afc0ef731e85dd27cb83e6b6e7ac40bbfae001fd616b23f512acc83ccc6686a51d5260",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/modpack_defaults/options.txt",
+      "hash": "6737bf8a0d629d270786bff9ad7a0f8be158d9769c60547c9774e42eb947d8e32279c3506cfefbac3ead638df83a24bfb808e7b5f922d07f9ea63448a89011a9",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/nostalgic_tweaks/backup/nostalgic_tweaks-client-startup_backup.json",
+      "hash": "56d6cfaf0f3ab8546da623659d5868bdd6f036421b02e54a56bb63d59885dc6b77972fec91ebafd8a2586b82432d8d9ff2b786e692460be0dd74b5699335d58b",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "config/nostalgic_tweaks/nostalgic_tweaks.json",
+      "hash": "9ae6997a464ac19dc276b5c419d0cb91f3534d03b8341a119d65d642df5bc5aa7022c209d77539b1464b64c3e1d714a6398dd15632eae29697266a949ba24193",
+      "hash-format": "sha512"
+    },
+    {
+      "file": "modlist.md",
+      "hash": "9698377cdfad9fb638a6b45a1af839d39765ec7c064bce568421da6af1d381a2dac6fa4ab96a1a7b5b86a1682ca366856f015adecaaa2a4c30866e265da92b3b",
+      "hash-format": "sha512"
+    }
+  ]
+}

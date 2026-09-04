@@ -1,27 +1,35 @@
 name: Setup Packeater
-description: Build and cache the in-tree Packeater binary. Exports PACKEATER_BIN.
+description: Clone bundle (packeater's home crate) from Tangled and build the Packeater binary. Exports PACKEATER_BIN.
 
 runs:
   using: composite
   steps:
+    - name: Clone bundle from Tangled
+      shell: bash
+      run: |
+        set -eu
+        if [ ! -d "$RUNNER_TEMP/bundle-src" ]; then
+          git clone --depth 1 https://tangled.org/nostalgica.net/bundle "$RUNNER_TEMP/bundle-src"
+        fi
+
     - name: Install Packeater Rust toolchain
       uses: https://github.com/dtolnay/rust-toolchain@nightly
 
     - name: Cache Packeater build
       uses: https://github.com/Swatinem/rust-cache@v2
       with:
-        workspaces: apps/packwandrs -> target
+        workspaces: ${{ runner.temp }}/bundle-src -> target
         key: packeater-release
 
     - name: Build Packeater
       shell: bash
-      working-directory: apps/packwandrs
-      run: cargo build --locked --release -p packeater_cli
+      working-directory: ${{ runner.temp }}/bundle-src
+      run: cargo build --locked --release -p bundle-packeater-cli --bin packeater
 
     - name: Export Packeater
       shell: bash
       run: |
         set -eu
-        PACKEATER_BIN="$GITHUB_WORKSPACE/apps/packwandrs/target/release/packeater"
+        PACKEATER_BIN="$RUNNER_TEMP/bundle-src/target/release/packeater"
         test -x "$PACKEATER_BIN"
         echo "PACKEATER_BIN=$PACKEATER_BIN" >> "$GITHUB_ENV"

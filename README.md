@@ -15,12 +15,13 @@ This repository hosts all the source and files for all of our mods, resource pac
 First, please refer to the CONTRIBUTING.md file in the repository. This will tell you some basics.
 
 ### How to work on the repo
+1. Install Rust (nightly) from https://rustup.rs
+2. `git clone https://tangled.org/nostalgica.net/bundle`
+3. `cd bundle && cargo build --locked --release -p bundle-cli --bin packwand`
+4. Put `bundle/target/release/packwand` on your `PATH`
 
-1. Install Go (1.24 or newer) from https://golang.org/dl/
-2. run `cd src\packwand`
-3. run `go install`
-
-Now you have our tooling set up.
+Install [`just`](https://just.systems) to run the same recipes CI does
+(`just --list`), e.g. `just preflight modpacks/<pack>/<variant>`.
 
 # Documentation
 

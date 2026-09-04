@@ -1,0 +1,19 @@
+{
+  "name": "Legacy4Server",
+  "author": "omo50",
+  "version": "26.05",
+  "pack-format": "bundle:29",
+  "index": {
+    "file": "index.json",
+    "hash-format": "sha512"
+  },
+  "lock": {
+    "file": "bundle.lock",
+    "hash-format": "sha512",
+    "hash": "12f90e3f41b30e67a03a1123859dd972bdcca4e0253fbb428415540fb6677f8da79b377d29574a6b910efeb7b9ee792268f5d0b970c129e93316578fafcc87a6"
+  },
+  "versions": {
+    "fabric": "0.19.3",
+    "minecraft": "26.1.2"
+  }
+}

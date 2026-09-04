@@ -1,0 +1,19 @@
+{
+  "name": "2000s-edition",
+  "author": "NicSonic",
+  "version": "v1.2",
+  "pack-format": "bundle:29",
+  "index": {
+    "file": "index.json",
+    "hash-format": "sha512"
+  },
+  "lock": {
+    "file": "bundle.lock",
+    "hash-format": "sha512",
+    "hash": "ca262267b6f1eb65017d5ddeedaba2b026365d2ef5bd59d5536d9e7d4a5481d33d30a00d2da3e8a0c60a223a5cf2b6af9cd1b49d549147d6abba34b9d90ec3e3"
+  },
+  "versions": {
+    "fabric": "0.19.3",
+    "minecraft": "1.21.1"
+  }
+}

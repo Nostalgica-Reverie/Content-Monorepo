@@ -1,0 +1,19 @@
+{
+  "name": "Vital",
+  "author": "omo50, intergrav, blryface",
+  "version": "26.05.4",
+  "pack-format": "bundle:29",
+  "index": {
+    "file": "index.json",
+    "hash-format": "sha512"
+  },
+  "lock": {
+    "file": "bundle.lock",
+    "hash-format": "sha512",
+    "hash": "9c20d69568dcfda1995aeefc81e3b838b8cc777a0d738d2632869a610e9517def401c860f4d38774963716589f4efdc527e3dccbd87f949ee7161a86c6621dc3"
+  },
+  "versions": {
+    "fabric": "0.19.3",
+    "minecraft": "26.1.2"
+  }
+}

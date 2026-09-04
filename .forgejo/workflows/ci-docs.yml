@@ -7,7 +7,6 @@ on:
       - 'docs/**'
       - 'package.json'
       - 'bun.lock'
-      - 'apps/packwandrs/**'
       - 'justfile'
       - '.forgejo/actions/setup-docs-node/**'
       - '.forgejo/actions/setup-packwand/**'
@@ -20,7 +19,6 @@ on:
       - 'docs/**'
       - 'package.json'
       - 'bun.lock'
-      - 'apps/packwandrs/**'
       - 'justfile'
       - '.forgejo/actions/setup-docs-node/**'
       - '.forgejo/actions/setup-packwand/**'
@@ -45,8 +43,6 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /docs/
-            /apps/packwandrs/
-            /apps/bot/package.json
             /scripts/
             /package.json
             /bun.lock

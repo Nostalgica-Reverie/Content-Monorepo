@@ -1,0 +1,22 @@
+{
+  "name": "Re-Console",
+  "author": "omo50, Cjnator38",
+  "version": "26.06",
+  "pack-format": "bundle:29",
+  "index": {
+    "file": "index.json",
+    "hash-format": "sha512"
+  },
+  "lock": {
+    "file": "bundle.lock",
+    "hash-format": "sha512",
+    "hash": "829d00f51fd2268663211a5a273430d6c33b421e8220c42f37d5acdd33414a26387eaa04ae33802d1c64cff47205c5f28623275b108f39508d28b341bd2d1295"
+  },
+  "versions": {
+    "fabric": "0.19.3",
+    "minecraft": "1.21.10"
+  },
+  "options": {
+    "datapack-folder": "./resources/datapack/required/"
+  }
+}

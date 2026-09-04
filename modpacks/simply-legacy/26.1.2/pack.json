@@ -1,0 +1,44 @@
+{
+  "name": "Simply Legacy",
+  "author": "Cjnator38",
+  "version": "26.07.4",
+  "pack-format": "bundle:29",
+  "index": {
+    "file": "index.json",
+    "hash-format": "sha512"
+  },
+  "lock": {
+    "file": "bundle.lock",
+    "hash-format": "sha512",
+    "hash": "d44e39006a29fa51df85685d662243767fd907783f4e4be844ddf82a456cf85fea9d0c39416d8d982741b3d44fbb8aadec76a8b13b3b687df51b1be0b674aba1"
+  },
+  "versions": {
+    "fabric": "0.19.3",
+    "minecraft": "26.1.2"
+  },
+  "options": {
+    "acceptable-game-versions": [
+      "1.20.1",
+      "1.20.2",
+      "1.20.3",
+      "1.20.4",
+      "1.20.5",
+      "1.20.6",
+      "1.21",
+      "1.21.1",
+      "1.21.2",
+      "1.21.3",
+      "1.21.4",
+      "1.21.5",
+      "1.21.6",
+      "1.21.7",
+      "1.21.8",
+      "1.21.9",
+      "1.21.10",
+      "1.21.11",
+      "26.1",
+      "26.1.2"
+    ],
+    "datapack-folder": "./resources/datapack/required/"
+  }
+}

@@ -1,1370 +1,1325 @@
 {
-	"generated": "2026-08-03T23:26:16Z",
-	"projects": [
-		{
-			"id": "1080p-kbm",
-			"name": "1080p Keyboard and Mouse Tooltips",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/1080p-kbm",
-			"manifest_path": "resourcepacks/1080p-kbm/manifest.json",
-			"mc_version": "1.21.10",
-			"version": "1.0.1",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "1080p-kbm-tooltips",
-			"platforms": {
-				"modrinth": "1080p-kbm-tooltips"
-			},
-			"docs_path": "/resource-packs/1080p-kbm/",
-			"subdirs": []
-		},
-		{
-			"id": "SkyPixel",
-			"name": "SkyPixel Modpack",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/skypixel",
-			"manifest_path": "modpacks/skypixel/manifest.json",
-			"loader": "fabric",
-			"mc_version": "26.1.2",
-			"version": "26.07",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "consumer",
-			"auto_update": true,
-			"modrinth_id": "skypixel-modpack",
-			"curseforge_id": "1613322",
-			"platforms": {
-				"modrinth": "skypixel-modpack",
-				"curseforge": "1613322"
-			},
-			"docs_path": "/modpacks/SkyPixel/",
-			"subdirs": [
-				{
-					"key": "26.1.2-cf",
-					"path": "modpacks/skypixel/26.1.2-cf",
-					"platform": "curseforge",
-					"mod_count": 37,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/skypixel/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 49,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "claritymod",
-			"name": "Clarity Mod",
-			"type": "mod",
-			"category": "mod",
-			"dir": "mods/claritymod",
-			"manifest_path": "mods/claritymod/manifest.json",
-			"version": "1.0.1",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "GnCu0CQT",
-			"curseforge_id": "1615913",
-			"platforms": {
-				"modrinth": "GnCu0CQT",
-				"curseforge": "1615913"
-			},
-			"variants": [
-				{
-					"id": "1.21.1-neoforge",
-					"mc_version": "1.21.1",
-					"loader": "neoforge",
-					"version": null
-				},
-				{
-					"id": "26.1.2-fabric",
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": []
-		},
-		{
-			"id": "extra-controller-tooltips",
-			"name": "Extra Controller Tooltips",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/extra-controller-tooltips",
-			"manifest_path": "resourcepacks/extra-controller-tooltips/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/extra-controller-tooltips/",
-			"subdirs": []
-		},
-		{
-			"id": "faithful-legacy",
-			"name": "Faithful Legacy",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/faithful-legacy",
-			"manifest_path": "resourcepacks/faithful-legacy/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/faithful-legacy/",
-			"subdirs": []
-		},
-		{
-			"id": "gold-not-old",
-			"name": "Gold Not Old",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/gold-not-old",
-			"manifest_path": "modpacks/gold-not-old/manifest.json",
-			"loader": "fabric",
-			"mc_version": "26.1.2",
-			"version": "1.2",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "consumer",
-			"auto_update": true,
-			"modrinth_id": "gold-not-old",
-			"platforms": {
-				"modrinth": "gold-not-old"
-			},
-			"docs_path": "/modpacks/gold-not-old/",
-			"subdirs": [
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/gold-not-old/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 54,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "lce-common",
-			"name": "Legacy Console Edition Core Assets",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/lce-common",
-			"manifest_path": "modpacks/lce-common/manifest.json",
-			"loader": "fabric",
-			"mc_version": "26.1.2",
-			"version": "26.05",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "base",
-			"auto_update": true,
-			"modrinth_id": "re-console-canary",
-			"platforms": {
-				"modrinth": "re-console-canary"
-			},
-			"docs_path": "/modpacks/lce-common/",
-			"subdirs": [
-				{
-					"key": "26.1.2-cf",
-					"path": "modpacks/lce-common/26.1.2-cf",
-					"platform": "curseforge",
-					"mod_count": 36,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/lce-common/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 43,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "lce-panorama-collection",
-			"name": "LCE Panorama Collection",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/lce-panorama-collection",
-			"manifest_path": "resourcepacks/lce-panorama-collection/manifest.json",
-			"version": "",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/lce-panorama-collection/",
-			"variants": [
-				{
-					"id": "build0016",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "build0054",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "tu5",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "tu7",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "tu12",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "tu20",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "tu31",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "tu46",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "tu69",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				}
-			],
-			"subdirs": []
-		},
-		{
-			"id": "legacy-mechanics",
-			"name": "Legacy Mechanics",
-			"type": "datapack",
-			"category": "datapack",
-			"dir": "datapacks/legacy-mechanics",
-			"manifest_path": "datapacks/legacy-mechanics/manifest.json",
-			"mc_version": "26.1.2",
-			"version": "1.1.0",
-			"release_type": "beta",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "legacy-mechanics",
-			"curseforge_id": "legacy-mechanics",
-			"platforms": {
-				"modrinth": "legacy-mechanics",
-				"curseforge": "legacy-mechanics"
-			},
-			"docs_path": "/datapacks/legacy-mechanics/",
-			"subdirs": []
-		},
-		{
-			"id": "legacy-mechanics-addon",
-			"name": "Legacy Mechanics Addon",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/legacy-mechanics-addon",
-			"manifest_path": "resourcepacks/legacy-mechanics-addon/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/legacy-mechanics-addon/",
-			"subdirs": []
-		},
-		{
-			"id": "legacy-modpack-lang",
-			"name": "Legacy Modpack Language Files",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/legacy-modpack-lang",
-			"manifest_path": "resourcepacks/legacy-modpack-lang/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/legacy-modpack-lang/",
-			"subdirs": []
-		},
-		{
-			"id": "legacy-modpack-resources",
-			"name": "Legacy Modpack Resources",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/legacy-modpack-resources",
-			"manifest_path": "resourcepacks/legacy-modpack-resources/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/legacy-modpack-resources/",
-			"subdirs": []
-		},
-		{
-			"id": "legacy-nether",
-			"name": "Legacy Nether",
-			"type": "datapack",
-			"category": "datapack",
-			"dir": "datapacks/legacy-nether",
-			"manifest_path": "datapacks/legacy-nether/manifest.json",
-			"mc_version": "26.1.2",
-			"version": "3.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "legacy-nether",
-			"curseforge_id": "legacy-nether",
-			"platforms": {
-				"modrinth": "legacy-nether",
-				"curseforge": "legacy-nether"
-			},
-			"docs_path": "/datapacks/legacy-nether/",
-			"subdirs": []
-		},
-		{
-			"id": "legacy-nether-extended",
-			"name": "Legacy Nether",
-			"type": "datapack",
-			"category": "datapack",
-			"dir": "datapacks/legacy-nether-extended",
-			"manifest_path": "datapacks/legacy-nether-extended/manifest.json",
-			"mc_version": "26.1.2",
-			"version": "3.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "legacy-nether-extended",
-			"curseforge_id": "legacy-nether-extended",
-			"platforms": {
-				"modrinth": "legacy-nether-extended",
-				"curseforge": "legacy-nether-extended"
-			},
-			"docs_path": "/datapacks/legacy-nether-extended/",
-			"subdirs": []
-		},
-		{
-			"id": "legacy-skin-packs",
-			"name": "Legacy Skin Packs",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/legacy-skin-packs",
-			"manifest_path": "resourcepacks/legacy-skin-packs/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/legacy-skin-packs/",
-			"subdirs": []
-		},
-		{
-			"id": "legacy-titles",
-			"name": "Legacy Titles",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/legacy-titles",
-			"manifest_path": "resourcepacks/legacy-titles/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/legacy-titles/",
-			"subdirs": []
-		},
-		{
-			"id": "legacy4server",
-			"name": "Legacy4Server",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/legacy4server",
-			"manifest_path": "modpacks/legacy4server/manifest.json",
-			"loader": "fabric",
-			"mc_version": "26.1.2",
-			"version": "26.07.1",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "base",
-			"auto_update": true,
-			"modrinth_id": "legacy4server",
-			"curseforge_id": "1583815",
-			"platforms": {
-				"modrinth": "legacy4server",
-				"curseforge": "1583815"
-			},
-			"docs_path": "/modpacks/legacy4server/",
-			"subdirs": [
-				{
-					"key": "26.1.2-cf",
-					"path": "modpacks/legacy4server/26.1.2-cf",
-					"platform": "curseforge",
-					"mod_count": 20,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/legacy4server/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 25,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "minigameclient",
-			"name": "Minigame Client",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/minigameclient",
-			"manifest_path": "modpacks/minigameclient/manifest.json",
-			"loader": "fabric",
-			"mc_version": "1.20.4",
-			"version": "26.07",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "XgbUJwPq",
-			"platforms": {
-				"modrinth": "XgbUJwPq"
-			},
-			"docs_path": "/modpacks/minigameclient/",
-			"subdirs": [
-				{
-					"key": "1.20.4-mr",
-					"path": "modpacks/minigameclient/1.20.4-mr",
-					"platform": "modrinth",
-					"mod_count": 26,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "modaudit",
-			"name": "Mod Audit",
-			"type": "mod",
-			"category": "mod",
-			"dir": "mods/modaudit",
-			"manifest_path": "mods/modaudit/manifest.json",
-			"version": "1.0.1",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "qW56EyUi",
-			"curseforge_id": "1615941",
-			"platforms": {
-				"modrinth": "qW56EyUi",
-				"curseforge": "1615941"
-			},
-			"variants": [
-				{
-					"id": "1.21.1-neoforge",
-					"mc_version": "1.21.1",
-					"loader": "neoforge",
-					"version": null
-				},
-				{
-					"id": "26.1.2-fabric",
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": []
-		},
-		{
-			"id": "modern-how-to-play",
-			"name": "Modern How to Play",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/modern-how-to-play",
-			"manifest_path": "resourcepacks/modern-how-to-play/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/modern-how-to-play/",
-			"subdirs": []
-		},
-		{
-			"id": "modern-skin-packs",
-			"name": "Modern Skin Packs",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/modern-skin-packs",
-			"manifest_path": "resourcepacks/modern-skin-packs/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/modern-skin-packs/",
-			"subdirs": []
-		},
-		{
-			"id": "modernica",
-			"name": "Modernica",
-			"type": "mod",
-			"category": "mod",
-			"dir": "mods/modernica",
-			"manifest_path": "mods/modernica/manifest.json",
-			"version": "26.07",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "modernica-fabric",
-			"curseforge_id": "1622990",
-			"platforms": {
-				"modrinth": "modernica-fabric",
-				"curseforge": "1622990"
-			},
-			"variants": [
-				{
-					"id": "26.1.2",
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "26.2",
-					"mc_version": "26.2",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": []
-		},
-		{
-			"id": "old-l4j-ui",
-			"name": "Old Legacy4J UI",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/old-l4j-ui",
-			"manifest_path": "resourcepacks/old-l4j-ui/manifest.json",
-			"version": "",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/old-l4j-ui/",
-			"variants": [
-				{
-					"id": "no-vanilla-assets",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				},
-				{
-					"id": "vanilla-assets",
-					"mc_version": "1.21.1",
-					"loader": null,
-					"version": "1.0.0"
-				}
-			],
-			"subdirs": []
-		},
-		{
-			"id": "ore4j",
-			"name": "Ore4J",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/ore4j",
-			"manifest_path": "resourcepacks/ore4j/manifest.json",
-			"mc_version": "26.1.2",
-			"version": "4.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "ore4j",
-			"curseforge_id": "1481313",
-			"platforms": {
-				"modrinth": "ore4j",
-				"curseforge": "1481313"
-			},
-			"docs_path": "/resource-packs/ore4j/",
-			"subdirs": []
-		},
-		{
-			"id": "packstats",
-			"name": "PackStats",
-			"type": "mod",
-			"category": "mod",
-			"dir": "mods/packstats",
-			"manifest_path": "mods/packstats/manifest.json",
-			"version": "1.0.1",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "MEDfJmrm",
-			"curseforge_id": "1615937",
-			"platforms": {
-				"modrinth": "MEDfJmrm",
-				"curseforge": "1615937"
-			},
-			"variants": [
-				{
-					"id": "1.21.1-neoforge",
-					"mc_version": "1.21.1",
-					"loader": "neoforge",
-					"version": null
-				},
-				{
-					"id": "26.1.2-fabric",
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": []
-		},
-		{
-			"id": "playstation-skin-packs",
-			"name": "PlayStation Skin Packs",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/playstation-skin-packs",
-			"manifest_path": "resourcepacks/playstation-skin-packs/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/playstation-skin-packs/",
-			"subdirs": []
-		},
-		{
-			"id": "qualt",
-			"name": "qualt",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/qualt",
-			"manifest_path": "modpacks/qualt/manifest.json",
-			"loader": "fabric",
-			"mc_version": "26.1.2",
-			"version": "26.06",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "consumer",
-			"auto_update": true,
-			"modrinth_id": "qualt",
-			"platforms": {
-				"modrinth": "qualt"
-			},
-			"docs_path": "/modpacks/qualt/",
-			"subdirs": [
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/qualt/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 114,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "re-console-lts",
-			"name": "Re-Console",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/re-console-lts",
-			"manifest_path": "modpacks/re-console-lts/manifest.json",
-			"loader": "fabric",
-			"version": "26.07+LTS",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "legacy-minecraft",
-			"platforms": {
-				"modrinth": "legacy-minecraft"
-			},
-			"docs_path": "/modpacks/re-console-lts/",
-			"variants": [
-				{
-					"id": "1.20.1-fabric",
-					"mc_version": "1.20.1",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "1.20.4-fabric",
-					"mc_version": "1.20.4",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "1.21.1-fabric",
-					"mc_version": "1.21.1",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "1.21.1-neoforge",
-					"mc_version": "1.21.1",
-					"loader": "neoforge",
-					"version": null
-				},
-				{
-					"id": "1.21.3-fabric",
-					"mc_version": "1.21.3",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "1.21.4-fabric",
-					"mc_version": "1.21.4",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "1.21.5-fabric",
-					"mc_version": "1.21.5",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "1.21.8-fabric",
-					"mc_version": "1.21.8",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "1.21.10-fabric",
-					"mc_version": "1.21.10",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": [
-				{
-					"key": "1.20.1-fabric-mr",
-					"path": "modpacks/re-console-lts/1.20.1-fabric-mr",
-					"platform": "modrinth",
-					"mod_count": 73,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.20.4-fabric-mr",
-					"path": "modpacks/re-console-lts/1.20.4-fabric-mr",
-					"platform": "modrinth",
-					"mod_count": 72,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.21.1-fabric-mr",
-					"path": "modpacks/re-console-lts/1.21.1-fabric-mr",
-					"platform": "modrinth",
-					"mod_count": 72,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.21.1-neoforge-mr",
-					"path": "modpacks/re-console-lts/1.21.1-neoforge-mr",
-					"platform": "modrinth",
-					"mod_count": 56,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.21.10-fabric-mr",
-					"path": "modpacks/re-console-lts/1.21.10-fabric-mr",
-					"platform": "modrinth",
-					"mod_count": 76,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.21.3-fabric-mr",
-					"path": "modpacks/re-console-lts/1.21.3-fabric-mr",
-					"platform": "modrinth",
-					"mod_count": 57,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.21.4-fabric-mr",
-					"path": "modpacks/re-console-lts/1.21.4-fabric-mr",
-					"platform": "modrinth",
-					"mod_count": 77,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.21.5-fabric-mr",
-					"path": "modpacks/re-console-lts/1.21.5-fabric-mr",
-					"platform": "modrinth",
-					"mod_count": 70,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.21.8-fabric-mr",
-					"path": "modpacks/re-console-lts/1.21.8-fabric-mr",
-					"platform": "modrinth",
-					"mod_count": 73,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "re-console-main",
-			"name": "Re-Console",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/re-console-main",
-			"manifest_path": "modpacks/re-console-main/manifest.json",
-			"loader": "fabric",
-			"version": "26.07.6.main",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "consumer",
-			"auto_update": true,
-			"modrinth_id": "legacy-minecraft",
-			"curseforge_id": "1066411",
-			"platforms": {
-				"modrinth": "legacy-minecraft",
-				"curseforge": "1066411"
-			},
-			"docs_path": "/modpacks/re-console-main/",
-			"variants": [
-				{
-					"id": null,
-					"mc_version": "26.2",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": null,
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": [
-				{
-					"key": "26.1.2-cf",
-					"path": "modpacks/re-console-main/26.1.2-cf",
-					"platform": "curseforge",
-					"mod_count": 71,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/re-console-main/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 88,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.2-mr",
-					"path": "modpacks/re-console-main/26.2-mr",
-					"platform": "modrinth",
-					"mod_count": 74,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "reimagined",
-			"name": "Reimagined Legacy",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/reimagined",
-			"manifest_path": "modpacks/reimagined/manifest.json",
-			"loader": "neoforge",
-			"mc_version": "1.21.1",
-			"version": "26.05-dev",
-			"release_type": "alpha",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/modpacks/reimagined/",
-			"subdirs": [
-				{
-					"key": "1.21.1-mr",
-					"path": "modpacks/reimagined/1.21.1-mr",
-					"platform": "modrinth",
-					"mod_count": 0,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "rekindled",
-			"name": "Rekindled Legacy",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/rekindled",
-			"manifest_path": "modpacks/rekindled/manifest.json",
-			"loader": "fabric",
-			"version": "26.05",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "consumer",
-			"auto_update": true,
-			"modrinth_id": "rekindled-legacy",
-			"platforms": {
-				"modrinth": "rekindled-legacy"
-			},
-			"docs_path": "/modpacks/rekindled/",
-			"variants": [
-				{
-					"id": "tu1",
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "tu3",
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": "tu5",
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": [
-				{
-					"key": "tu1-mr",
-					"path": "modpacks/rekindled/tu1-mr",
-					"platform": "modrinth",
-					"mod_count": 30,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "tu3-mr",
-					"path": "modpacks/rekindled/tu3-mr",
-					"platform": "modrinth",
-					"mod_count": 67,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "tu5-mr",
-					"path": "modpacks/rekindled/tu5-mr",
-					"platform": "modrinth",
-					"mod_count": 67,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "rekindled-common",
-			"name": "Rekindled Legacy Core Assets",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/rekindled-common",
-			"manifest_path": "modpacks/rekindled-common/manifest.json",
-			"loader": "fabric",
-			"mc_version": "26.1.2",
-			"version": "26.05",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "base",
-			"auto_update": true,
-			"modrinth_id": "re-console-canary",
-			"platforms": {
-				"modrinth": "re-console-canary"
-			},
-			"docs_path": "/modpacks/rekindled-common/",
-			"subdirs": [
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/rekindled-common/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 30,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "simply-archaic",
-			"name": "Simply Archaic",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/simply-archaic",
-			"manifest_path": "modpacks/simply-archaic/manifest.json",
-			"loader": "forge",
-			"version": "26.05.2",
-			"release_type": "beta",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"modrinth_id": "simply-archaic",
-			"platforms": {
-				"modrinth": "simply-archaic"
-			},
-			"docs_path": "/modpacks/simply-archaic/",
-			"variants": [
-				{
-					"id": null,
-					"mc_version": "1.7.10",
-					"loader": "forge",
-					"version": null
-				},
-				{
-					"id": null,
-					"mc_version": "1.8.9",
-					"loader": "forge",
-					"version": null
-				},
-				{
-					"id": null,
-					"mc_version": "1.12.2",
-					"loader": "forge",
-					"version": null
-				},
-				{
-					"id": null,
-					"mc_version": "1.16.5",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": null,
-					"mc_version": "1.18.2",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": [
-				{
-					"key": "1.12.2-mr",
-					"path": "modpacks/simply-archaic/1.12.2-mr",
-					"platform": "modrinth",
-					"mod_count": 11,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.16.5-mr",
-					"path": "modpacks/simply-archaic/1.16.5-mr",
-					"platform": "modrinth",
-					"mod_count": 10,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.18.2-mr",
-					"path": "modpacks/simply-archaic/1.18.2-mr",
-					"platform": "modrinth",
-					"mod_count": 11,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.7.10-mr",
-					"path": "modpacks/simply-archaic/1.7.10-mr",
-					"platform": "modrinth",
-					"mod_count": 12,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "1.8.9-mr",
-					"path": "modpacks/simply-archaic/1.8.9-mr",
-					"platform": "modrinth",
-					"mod_count": 10,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "simply-legacy",
-			"name": "Simply Legacy",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/simply-legacy",
-			"manifest_path": "modpacks/simply-legacy/manifest.json",
-			"loader": "fabric",
-			"mc_version": "26.1.2",
-			"version": "26.07.6",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "consumer",
-			"auto_update": true,
-			"modrinth_id": "simply-legacy",
-			"curseforge_id": "1462504",
-			"platforms": {
-				"modrinth": "simply-legacy",
-				"curseforge": "1462504"
-			},
-			"docs_path": "/modpacks/simply-legacy/",
-			"subdirs": [
-				{
-					"key": "26.1.2-cf",
-					"path": "modpacks/simply-legacy/26.1.2-cf",
-					"platform": "curseforge",
-					"mod_count": 45,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/simply-legacy/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 50,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "simply-optimized-forked",
-			"name": "Simply Optimized Forked",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/simply-optimized-forked",
-			"manifest_path": "modpacks/simply-optimized-forked/manifest.json",
-			"loader": "fabric",
-			"version": "26.07.4",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "base",
-			"auto_update": true,
-			"modrinth_id": "simply-optimized-forked",
-			"curseforge_id": "1468747",
-			"platforms": {
-				"modrinth": "simply-optimized-forked",
-				"curseforge": "1468747"
-			},
-			"docs_path": "/modpacks/simply-optimized-forked/",
-			"variants": [
-				{
-					"id": null,
-					"mc_version": "26.1.2",
-					"loader": "fabric",
-					"version": null
-				},
-				{
-					"id": null,
-					"mc_version": "26.2",
-					"loader": "fabric",
-					"version": null
-				}
-			],
-			"subdirs": [
-				{
-					"key": "26.1.2-cf",
-					"path": "modpacks/simply-optimized-forked/26.1.2-cf",
-					"platform": "curseforge",
-					"mod_count": 29,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/simply-optimized-forked/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 30,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.2-cf",
-					"path": "modpacks/simply-optimized-forked/26.2-cf",
-					"platform": "curseforge",
-					"mod_count": 27,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.2-mr",
-					"path": "modpacks/simply-optimized-forked/26.2-mr",
-					"platform": "modrinth",
-					"mod_count": 30,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "tutorial-world-addon",
-			"name": "Tutorial World Addon",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/tutorial-world-addon",
-			"manifest_path": "resourcepacks/tutorial-world-addon/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/tutorial-world-addon/",
-			"subdirs": []
-		},
-		{
-			"id": "vanilla-live",
-			"name": "Vanilla Live",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/vanilla-live",
-			"manifest_path": "resourcepacks/vanilla-live/manifest.json",
-			"mc_version": "1.21.4",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/vanilla-live/",
-			"subdirs": []
-		},
-		{
-			"id": "vital",
-			"name": "Vital Modpack",
-			"type": "modpack",
-			"category": "modpack",
-			"dir": "modpacks/vital",
-			"manifest_path": "modpacks/vital/manifest.json",
-			"loader": "fabric",
-			"mc_version": "26.1.2",
-			"version": "26.07.2",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "base",
-			"auto_update": true,
-			"modrinth_id": "vital",
-			"curseforge_id": "1123869",
-			"platforms": {
-				"modrinth": "vital",
-				"curseforge": "1123869"
-			},
-			"docs_path": "/modpacks/vital/",
-			"subdirs": [
-				{
-					"key": "26.1.2-cf",
-					"path": "modpacks/vital/26.1.2-cf",
-					"platform": "curseforge",
-					"mod_count": 66,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.1.2-mr",
-					"path": "modpacks/vital/26.1.2-mr",
-					"platform": "modrinth",
-					"mod_count": 71,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.2-cf",
-					"path": "modpacks/vital/26.2-cf",
-					"platform": "curseforge",
-					"mod_count": 66,
-					"has_index": true,
-					"has_pack": true
-				},
-				{
-					"key": "26.2-mr",
-					"path": "modpacks/vital/26.2-mr",
-					"platform": "modrinth",
-					"mod_count": 71,
-					"has_index": true,
-					"has_pack": true
-				}
-			]
-		},
-		{
-			"id": "xbox-skin-packs",
-			"name": "Xbox Skin Packs",
-			"type": "resourcepack",
-			"category": "resourcepack",
-			"dir": "resourcepacks/xbox-skin-packs",
-			"manifest_path": "resourcepacks/xbox-skin-packs/manifest.json",
-			"mc_version": "1.21.1",
-			"version": "1.0.0",
-			"release_type": "release",
-			"lifecycle": "active",
-			"role": "none",
-			"auto_update": true,
-			"platforms": {},
-			"docs_path": "/resource-packs/xbox-skin-packs/",
-			"subdirs": []
-		}
-	]
+  "generated": "2026-09-04T03:12:06Z",
+  "projects": [
+    {
+      "id": "1080p-kbm",
+      "name": "1080p Keyboard and Mouse Tooltips",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/1080p-kbm",
+      "manifest_path": "resourcepacks/1080p-kbm/manifest.json",
+      "mc_version": "1.21.10",
+      "version": "1.0.1",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "1080p-kbm-tooltips",
+      "platforms": {
+        "modrinth": "1080p-kbm-tooltips"
+      },
+      "docs_path": "/resource-packs/1080p-kbm/",
+      "subdirs": []
+    },
+    {
+      "id": "SkyPixel",
+      "name": "SkyPixel Modpack",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/skypixel",
+      "manifest_path": "modpacks/skypixel/manifest.json",
+      "loader": "fabric",
+      "mc_version": "26.1.2",
+      "version": "26.07",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "consumer",
+      "auto_update": true,
+      "modrinth_id": "skypixel-modpack",
+      "curseforge_id": "1613322",
+      "platforms": {
+        "modrinth": "skypixel-modpack",
+        "curseforge": "1613322"
+      },
+      "docs_path": "/modpacks/SkyPixel/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/skypixel/26.1.2",
+          "platform": "",
+          "mod_count": 56,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "claritymod",
+      "name": "Clarity Mod",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/claritymod",
+      "manifest_path": "mods/claritymod/manifest.json",
+      "version": "1.0.1",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "GnCu0CQT",
+      "curseforge_id": "1615913",
+      "platforms": {
+        "modrinth": "GnCu0CQT",
+        "curseforge": "1615913"
+      },
+      "variants": [
+        {
+          "id": "1.21.1-neoforge",
+          "mc_version": "1.21.1",
+          "loader": "neoforge",
+          "version": null
+        },
+        {
+          "id": "26.1.2-fabric",
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": []
+    },
+    {
+      "id": "cobbled-legacy",
+      "name": "Cobbled Legacy",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/cobbled-legacy",
+      "manifest_path": "modpacks/cobbled-legacy/manifest.json",
+      "loader": "fabric",
+      "mc_version": "1.21.1",
+      "version": "26.08",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "iY3TX0kR",
+      "platforms": {
+        "modrinth": "iY3TX0kR"
+      },
+      "docs_path": "/modpacks/cobbled-legacy/",
+      "subdirs": [
+        {
+          "key": "1.21.1",
+          "path": "modpacks/cobbled-legacy/1.21.1",
+          "platform": "",
+          "mod_count": 76,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "extra-controller-tooltips",
+      "name": "Extra Controller Tooltips",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/extra-controller-tooltips",
+      "manifest_path": "resourcepacks/extra-controller-tooltips/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/extra-controller-tooltips/",
+      "subdirs": []
+    },
+    {
+      "id": "faithful-legacy",
+      "name": "Faithful Legacy",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/faithful-legacy",
+      "manifest_path": "resourcepacks/faithful-legacy/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/faithful-legacy/",
+      "subdirs": []
+    },
+    {
+      "id": "gold-not-old",
+      "name": "Gold Not Old",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/gold-not-old",
+      "manifest_path": "modpacks/gold-not-old/manifest.json",
+      "loader": "fabric",
+      "mc_version": "26.1.2",
+      "version": "1.2",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "consumer",
+      "auto_update": true,
+      "modrinth_id": "gold-not-old",
+      "platforms": {
+        "modrinth": "gold-not-old"
+      },
+      "docs_path": "/modpacks/gold-not-old/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/gold-not-old/26.1.2",
+          "platform": "",
+          "mod_count": 55,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "lce-common",
+      "name": "Legacy Console Edition Core Assets",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/lce-common",
+      "manifest_path": "modpacks/lce-common/manifest.json",
+      "loader": "fabric",
+      "mc_version": "26.1.2",
+      "version": "26.05",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "base",
+      "auto_update": true,
+      "modrinth_id": "re-console-canary",
+      "platforms": {
+        "modrinth": "re-console-canary"
+      },
+      "docs_path": "/modpacks/lce-common/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/lce-common/26.1.2",
+          "platform": "",
+          "mod_count": 46,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "lce-panorama-collection",
+      "name": "LCE Panorama Collection",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/lce-panorama-collection",
+      "manifest_path": "resourcepacks/lce-panorama-collection/manifest.json",
+      "version": "",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/lce-panorama-collection/",
+      "variants": [
+        {
+          "id": "build0016",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "build0054",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "tu5",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "tu7",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "tu12",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "tu20",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "tu31",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "tu46",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "tu69",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        }
+      ],
+      "subdirs": []
+    },
+    {
+      "id": "legacy-mechanics",
+      "name": "Legacy Mechanics",
+      "type": "datapack",
+      "category": "datapack",
+      "dir": "datapacks/legacy-mechanics",
+      "manifest_path": "datapacks/legacy-mechanics/manifest.json",
+      "mc_version": "26.1.2",
+      "version": "1.1.0",
+      "release_type": "beta",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "legacy-mechanics",
+      "curseforge_id": "legacy-mechanics",
+      "platforms": {
+        "modrinth": "legacy-mechanics",
+        "curseforge": "legacy-mechanics"
+      },
+      "docs_path": "/datapacks/legacy-mechanics/",
+      "subdirs": []
+    },
+    {
+      "id": "legacy-mechanics-addon",
+      "name": "Legacy Mechanics Addon",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-mechanics-addon",
+      "manifest_path": "resourcepacks/legacy-mechanics-addon/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-mechanics-addon/",
+      "subdirs": []
+    },
+    {
+      "id": "legacy-modpack-lang",
+      "name": "Legacy Modpack Language Files",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-modpack-lang",
+      "manifest_path": "resourcepacks/legacy-modpack-lang/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-modpack-lang/",
+      "subdirs": []
+    },
+    {
+      "id": "legacy-modpack-resources",
+      "name": "Legacy Modpack Resources",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-modpack-resources",
+      "manifest_path": "resourcepacks/legacy-modpack-resources/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-modpack-resources/",
+      "subdirs": []
+    },
+    {
+      "id": "legacy-nether",
+      "name": "Legacy Nether",
+      "type": "datapack",
+      "category": "datapack",
+      "dir": "datapacks/legacy-nether",
+      "manifest_path": "datapacks/legacy-nether/manifest.json",
+      "mc_version": "26.1.2",
+      "version": "3.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "legacy-nether",
+      "curseforge_id": "legacy-nether",
+      "platforms": {
+        "modrinth": "legacy-nether",
+        "curseforge": "legacy-nether"
+      },
+      "docs_path": "/datapacks/legacy-nether/",
+      "subdirs": []
+    },
+    {
+      "id": "legacy-nether-extended",
+      "name": "Legacy Nether",
+      "type": "datapack",
+      "category": "datapack",
+      "dir": "datapacks/legacy-nether-extended",
+      "manifest_path": "datapacks/legacy-nether-extended/manifest.json",
+      "mc_version": "26.1.2",
+      "version": "3.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "legacy-nether-extended",
+      "curseforge_id": "legacy-nether-extended",
+      "platforms": {
+        "modrinth": "legacy-nether-extended",
+        "curseforge": "legacy-nether-extended"
+      },
+      "docs_path": "/datapacks/legacy-nether-extended/",
+      "subdirs": []
+    },
+    {
+      "id": "legacy-skin-packs",
+      "name": "Legacy Skin Packs",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-skin-packs",
+      "manifest_path": "resourcepacks/legacy-skin-packs/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-skin-packs/",
+      "subdirs": []
+    },
+    {
+      "id": "legacy-titles",
+      "name": "Legacy Titles",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/legacy-titles",
+      "manifest_path": "resourcepacks/legacy-titles/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/legacy-titles/",
+      "subdirs": []
+    },
+    {
+      "id": "legacy4server",
+      "name": "Legacy4Server",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/legacy4server",
+      "manifest_path": "modpacks/legacy4server/manifest.json",
+      "loader": "fabric",
+      "mc_version": "26.1.2",
+      "version": "26.07.1",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "base",
+      "auto_update": true,
+      "modrinth_id": "legacy4server",
+      "curseforge_id": "1583815",
+      "platforms": {
+        "modrinth": "legacy4server",
+        "curseforge": "1583815"
+      },
+      "docs_path": "/modpacks/legacy4server/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/legacy4server/26.1.2",
+          "platform": "",
+          "mod_count": 26,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "minigameclient",
+      "name": "Minigame Client",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/minigameclient",
+      "manifest_path": "modpacks/minigameclient/manifest.json",
+      "loader": "fabric",
+      "mc_version": "1.20.4",
+      "version": "26.07",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "XgbUJwPq",
+      "platforms": {
+        "modrinth": "XgbUJwPq"
+      },
+      "docs_path": "/modpacks/minigameclient/",
+      "subdirs": [
+        {
+          "key": "1.20.4",
+          "path": "modpacks/minigameclient/1.20.4",
+          "platform": "",
+          "mod_count": 26,
+          "has_index": false,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "modaudit",
+      "name": "Mod Audit",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/modaudit",
+      "manifest_path": "mods/modaudit/manifest.json",
+      "version": "1.0.1",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "qW56EyUi",
+      "curseforge_id": "1615941",
+      "platforms": {
+        "modrinth": "qW56EyUi",
+        "curseforge": "1615941"
+      },
+      "variants": [
+        {
+          "id": "1.21.1-neoforge",
+          "mc_version": "1.21.1",
+          "loader": "neoforge",
+          "version": null
+        },
+        {
+          "id": "26.1.2-fabric",
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": []
+    },
+    {
+      "id": "modern-how-to-play",
+      "name": "Modern How to Play",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/modern-how-to-play",
+      "manifest_path": "resourcepacks/modern-how-to-play/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/modern-how-to-play/",
+      "subdirs": []
+    },
+    {
+      "id": "modern-skin-packs",
+      "name": "Modern Skin Packs",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/modern-skin-packs",
+      "manifest_path": "resourcepacks/modern-skin-packs/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/modern-skin-packs/",
+      "subdirs": []
+    },
+    {
+      "id": "modernica",
+      "name": "Modernica",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/modernica",
+      "manifest_path": "mods/modernica/manifest.json",
+      "version": "26.07",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "modernica-fabric",
+      "curseforge_id": "1622990",
+      "platforms": {
+        "modrinth": "modernica-fabric",
+        "curseforge": "1622990"
+      },
+      "variants": [
+        {
+          "id": "26.1.2",
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "26.2",
+          "mc_version": "26.2",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": []
+    },
+    {
+      "id": "old-l4j-ui",
+      "name": "Old Legacy4J UI",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/old-l4j-ui",
+      "manifest_path": "resourcepacks/old-l4j-ui/manifest.json",
+      "version": "",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/old-l4j-ui/",
+      "variants": [
+        {
+          "id": "no-vanilla-assets",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        },
+        {
+          "id": "vanilla-assets",
+          "mc_version": "1.21.1",
+          "loader": null,
+          "version": "1.0.0"
+        }
+      ],
+      "subdirs": []
+    },
+    {
+      "id": "ore4j",
+      "name": "Ore4J",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/ore4j",
+      "manifest_path": "resourcepacks/ore4j/manifest.json",
+      "mc_version": "26.1.2",
+      "version": "4.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "ore4j",
+      "curseforge_id": "1481313",
+      "platforms": {
+        "modrinth": "ore4j",
+        "curseforge": "1481313"
+      },
+      "docs_path": "/resource-packs/ore4j/",
+      "subdirs": []
+    },
+    {
+      "id": "packstats",
+      "name": "PackStats",
+      "type": "mod",
+      "category": "mod",
+      "dir": "mods/packstats",
+      "manifest_path": "mods/packstats/manifest.json",
+      "version": "1.0.1",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "MEDfJmrm",
+      "curseforge_id": "1615937",
+      "platforms": {
+        "modrinth": "MEDfJmrm",
+        "curseforge": "1615937"
+      },
+      "variants": [
+        {
+          "id": "1.21.1-neoforge",
+          "mc_version": "1.21.1",
+          "loader": "neoforge",
+          "version": null
+        },
+        {
+          "id": "26.1.2-fabric",
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": []
+    },
+    {
+      "id": "playstation-skin-packs",
+      "name": "PlayStation Skin Packs",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/playstation-skin-packs",
+      "manifest_path": "resourcepacks/playstation-skin-packs/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/playstation-skin-packs/",
+      "subdirs": []
+    },
+    {
+      "id": "qualt",
+      "name": "qualt",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/qualt",
+      "manifest_path": "modpacks/qualt/manifest.json",
+      "loader": "fabric",
+      "mc_version": "26.1.2",
+      "version": "26.06",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "consumer",
+      "auto_update": true,
+      "modrinth_id": "qualt",
+      "platforms": {
+        "modrinth": "qualt"
+      },
+      "docs_path": "/modpacks/qualt/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/qualt/26.1.2",
+          "platform": "",
+          "mod_count": 115,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "re-console-lts",
+      "name": "Re-Console",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/re-console-lts",
+      "manifest_path": "modpacks/re-console-lts/manifest.json",
+      "loader": "fabric",
+      "version": "26.07+LTS",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "legacy-minecraft",
+      "platforms": {
+        "modrinth": "legacy-minecraft"
+      },
+      "docs_path": "/modpacks/re-console-lts/",
+      "variants": [
+        {
+          "id": "1.20.1-fabric",
+          "mc_version": "1.20.1",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "1.20.4-fabric",
+          "mc_version": "1.20.4",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "1.21.1-fabric",
+          "mc_version": "1.21.1",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "1.21.1-neoforge",
+          "mc_version": "1.21.1",
+          "loader": "neoforge",
+          "version": null
+        },
+        {
+          "id": "1.21.3-fabric",
+          "mc_version": "1.21.3",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "1.21.4-fabric",
+          "mc_version": "1.21.4",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "1.21.5-fabric",
+          "mc_version": "1.21.5",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "1.21.8-fabric",
+          "mc_version": "1.21.8",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "1.21.10-fabric",
+          "mc_version": "1.21.10",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "1.20.1-fabric",
+          "path": "modpacks/re-console-lts/1.20.1-fabric",
+          "platform": "",
+          "mod_count": 73,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.20.4-fabric",
+          "path": "modpacks/re-console-lts/1.20.4-fabric",
+          "platform": "",
+          "mod_count": 72,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.21.1-fabric",
+          "path": "modpacks/re-console-lts/1.21.1-fabric",
+          "platform": "",
+          "mod_count": 72,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.21.1-neoforge",
+          "path": "modpacks/re-console-lts/1.21.1-neoforge",
+          "platform": "",
+          "mod_count": 56,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.21.10-fabric",
+          "path": "modpacks/re-console-lts/1.21.10-fabric",
+          "platform": "",
+          "mod_count": 76,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.21.3-fabric",
+          "path": "modpacks/re-console-lts/1.21.3-fabric",
+          "platform": "",
+          "mod_count": 57,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.21.4-fabric",
+          "path": "modpacks/re-console-lts/1.21.4-fabric",
+          "platform": "",
+          "mod_count": 77,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.21.5-fabric",
+          "path": "modpacks/re-console-lts/1.21.5-fabric",
+          "platform": "",
+          "mod_count": 70,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.21.8-fabric",
+          "path": "modpacks/re-console-lts/1.21.8-fabric",
+          "platform": "",
+          "mod_count": 73,
+          "has_index": false,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "re-console-main",
+      "name": "Re-Console",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/re-console-main",
+      "manifest_path": "modpacks/re-console-main/manifest.json",
+      "loader": "fabric",
+      "version": "26.08.main",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "consumer",
+      "auto_update": true,
+      "modrinth_id": "legacy-minecraft",
+      "platforms": {
+        "modrinth": "legacy-minecraft"
+      },
+      "docs_path": "/modpacks/re-console-main/",
+      "variants": [
+        {
+          "id": null,
+          "mc_version": "26.2",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": null,
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/re-console-main/26.1.2",
+          "platform": "",
+          "mod_count": 91,
+          "has_index": true,
+          "has_pack": true
+        },
+        {
+          "key": "26.2",
+          "path": "modpacks/re-console-main/26.2",
+          "platform": "",
+          "mod_count": 74,
+          "has_index": false,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "reimagined",
+      "name": "Reimagined Legacy",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/reimagined",
+      "manifest_path": "modpacks/reimagined/manifest.json",
+      "loader": "neoforge",
+      "mc_version": "1.21.1",
+      "version": "26.05-dev",
+      "release_type": "alpha",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/modpacks/reimagined/",
+      "subdirs": [
+        {
+          "key": "1.21.1",
+          "path": "modpacks/reimagined/1.21.1",
+          "platform": "",
+          "mod_count": 0,
+          "has_index": false,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "rekindled",
+      "name": "Rekindled Legacy",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/rekindled",
+      "manifest_path": "modpacks/rekindled/manifest.json",
+      "loader": "fabric",
+      "version": "26.05",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "consumer",
+      "auto_update": true,
+      "modrinth_id": "rekindled-legacy",
+      "platforms": {
+        "modrinth": "rekindled-legacy"
+      },
+      "docs_path": "/modpacks/rekindled/",
+      "variants": [
+        {
+          "id": "tu1",
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "tu3",
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": "tu5",
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "tu1",
+          "path": "modpacks/rekindled/tu1",
+          "platform": "",
+          "mod_count": 35,
+          "has_index": true,
+          "has_pack": true
+        },
+        {
+          "key": "tu3",
+          "path": "modpacks/rekindled/tu3",
+          "platform": "",
+          "mod_count": 67,
+          "has_index": true,
+          "has_pack": true
+        },
+        {
+          "key": "tu5",
+          "path": "modpacks/rekindled/tu5",
+          "platform": "",
+          "mod_count": 67,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "rekindled-common",
+      "name": "Rekindled Legacy Core Assets",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/rekindled-common",
+      "manifest_path": "modpacks/rekindled-common/manifest.json",
+      "loader": "fabric",
+      "mc_version": "26.1.2",
+      "version": "26.05",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "base",
+      "auto_update": true,
+      "modrinth_id": "re-console-canary",
+      "platforms": {
+        "modrinth": "re-console-canary"
+      },
+      "docs_path": "/modpacks/rekindled-common/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/rekindled-common/26.1.2",
+          "platform": "",
+          "mod_count": 30,
+          "has_index": false,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "simply-archaic",
+      "name": "Simply Archaic",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/simply-archaic",
+      "manifest_path": "modpacks/simply-archaic/manifest.json",
+      "loader": "forge",
+      "version": "26.05.2",
+      "release_type": "beta",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "modrinth_id": "simply-archaic",
+      "platforms": {
+        "modrinth": "simply-archaic"
+      },
+      "docs_path": "/modpacks/simply-archaic/",
+      "variants": [
+        {
+          "id": null,
+          "mc_version": "1.7.10",
+          "loader": "forge",
+          "version": null
+        },
+        {
+          "id": null,
+          "mc_version": "1.8.9",
+          "loader": "forge",
+          "version": null
+        },
+        {
+          "id": null,
+          "mc_version": "1.12.2",
+          "loader": "forge",
+          "version": null
+        },
+        {
+          "id": null,
+          "mc_version": "1.16.5",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": null,
+          "mc_version": "1.18.2",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "1.12.2",
+          "path": "modpacks/simply-archaic/1.12.2",
+          "platform": "",
+          "mod_count": 11,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.16.5",
+          "path": "modpacks/simply-archaic/1.16.5",
+          "platform": "",
+          "mod_count": 10,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.18.2",
+          "path": "modpacks/simply-archaic/1.18.2",
+          "platform": "",
+          "mod_count": 11,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.7.10",
+          "path": "modpacks/simply-archaic/1.7.10",
+          "platform": "",
+          "mod_count": 12,
+          "has_index": false,
+          "has_pack": true
+        },
+        {
+          "key": "1.8.9",
+          "path": "modpacks/simply-archaic/1.8.9",
+          "platform": "",
+          "mod_count": 10,
+          "has_index": false,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "simply-legacy",
+      "name": "Simply Legacy",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/simply-legacy",
+      "manifest_path": "modpacks/simply-legacy/manifest.json",
+      "loader": "fabric",
+      "mc_version": "26.1.2",
+      "version": "26.07.6",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "consumer",
+      "auto_update": true,
+      "modrinth_id": "simply-legacy",
+      "curseforge_id": "1462504",
+      "platforms": {
+        "modrinth": "simply-legacy",
+        "curseforge": "1462504"
+      },
+      "docs_path": "/modpacks/simply-legacy/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/simply-legacy/26.1.2",
+          "platform": "",
+          "mod_count": 57,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "simply-optimized-forked",
+      "name": "Simply Optimized Forked",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/simply-optimized-forked",
+      "manifest_path": "modpacks/simply-optimized-forked/manifest.json",
+      "loader": "fabric",
+      "version": "26.08.2",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "base",
+      "auto_update": true,
+      "modrinth_id": "simply-optimized-forked",
+      "curseforge_id": "1468747",
+      "platforms": {
+        "modrinth": "simply-optimized-forked",
+        "curseforge": "1468747"
+      },
+      "docs_path": "/modpacks/simply-optimized-forked/",
+      "variants": [
+        {
+          "id": null,
+          "mc_version": "26.1.2",
+          "loader": "fabric",
+          "version": null
+        },
+        {
+          "id": null,
+          "mc_version": "26.2",
+          "loader": "fabric",
+          "version": null
+        }
+      ],
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/simply-optimized-forked/26.1.2",
+          "platform": "",
+          "mod_count": 30,
+          "has_index": true,
+          "has_pack": true
+        },
+        {
+          "key": "26.2",
+          "path": "modpacks/simply-optimized-forked/26.2",
+          "platform": "",
+          "mod_count": 31,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "tutorial-world-addon",
+      "name": "Tutorial World Addon",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/tutorial-world-addon",
+      "manifest_path": "resourcepacks/tutorial-world-addon/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/tutorial-world-addon/",
+      "subdirs": []
+    },
+    {
+      "id": "vanilla-live",
+      "name": "Vanilla Live",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/vanilla-live",
+      "manifest_path": "resourcepacks/vanilla-live/manifest.json",
+      "mc_version": "1.21.4",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/vanilla-live/",
+      "subdirs": []
+    },
+    {
+      "id": "vital",
+      "name": "Vital Modpack",
+      "type": "modpack",
+      "category": "modpack",
+      "dir": "modpacks/vital",
+      "manifest_path": "modpacks/vital/manifest.json",
+      "loader": "fabric",
+      "mc_version": "26.1.2",
+      "version": "26.07.2",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "base",
+      "auto_update": true,
+      "modrinth_id": "vital",
+      "curseforge_id": "1123869",
+      "platforms": {
+        "modrinth": "vital",
+        "curseforge": "1123869"
+      },
+      "docs_path": "/modpacks/vital/",
+      "subdirs": [
+        {
+          "key": "26.1.2",
+          "path": "modpacks/vital/26.1.2",
+          "platform": "",
+          "mod_count": 72,
+          "has_index": true,
+          "has_pack": true
+        },
+        {
+          "key": "26.2",
+          "path": "modpacks/vital/26.2",
+          "platform": "",
+          "mod_count": 72,
+          "has_index": true,
+          "has_pack": true
+        }
+      ]
+    },
+    {
+      "id": "xbox-skin-packs",
+      "name": "Xbox Skin Packs",
+      "type": "resourcepack",
+      "category": "resourcepack",
+      "dir": "resourcepacks/xbox-skin-packs",
+      "manifest_path": "resourcepacks/xbox-skin-packs/manifest.json",
+      "mc_version": "1.21.1",
+      "version": "1.0.0",
+      "release_type": "release",
+      "lifecycle": "active",
+      "role": "none",
+      "auto_update": true,
+      "platforms": {},
+      "docs_path": "/resource-packs/xbox-skin-packs/",
+      "subdirs": []
+    }
+  ]
 }

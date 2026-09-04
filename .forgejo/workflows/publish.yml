@@ -31,7 +31,6 @@ jobs:
             datapacks
             resourcepacks
             mods
-            apps/packwandrs
             .forgejo/actions
 
       - name: Setup Packwand
@@ -70,7 +69,6 @@ jobs:
             datapacks
             resourcepacks
             mods
-            apps/packwandrs
             scripts
             .forgejo/actions
 
@@ -158,10 +156,7 @@ jobs:
           filter: blob:none
           fetch-depth: 1
           sparse-checkout: |
-            apps/api
-            apps/packwandrs
             modpacks
-            packages/packwand2nix
             flake.nix
             flake.lock
             justfile

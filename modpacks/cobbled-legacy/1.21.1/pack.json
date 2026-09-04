@@ -1,0 +1,19 @@
+{
+  "name": "Cobbled Legacy",
+  "version": "26.07",
+  "description": "Experience Cobblemon with the charm of Legacy Console Edition!",
+  "pack-format": "bundle:29",
+  "index": {
+    "file": "index.json",
+    "hash-format": "sha512"
+  },
+  "lock": {
+    "file": "bundle.lock",
+    "hash-format": "sha512",
+    "hash": "67bba052921407e748dbbee31d483137338f928eb0dc19d3be28d8ae1da1cc2b8030fe2c4744cea508bc86f630fa36edbe3f09dbf965957d428e09bc08f8f7cb"
+  },
+  "versions": {
+    "fabric": "0.19.3",
+    "minecraft": "1.21.1"
+  }
+}
