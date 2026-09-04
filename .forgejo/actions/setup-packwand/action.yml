@@ -21,6 +21,23 @@ runs:
         workspaces: ${{ runner.temp }}/bundle-src
         cache-key: packwand-cli-release
 
+    - name: Work around bundle's Windows-only sandbox export
+      shell: bash
+      working-directory: ${{ runner.temp }}/bundle-src
+      run: |
+        set -eu
+        source=crates/bundle-platform/src/lib.rs
+        buggy='pub use sandbox::{ProcessSandbox, ProcessSpec, SandboxedProcess, delete_profile, profile_name};'
+        if grep -Fqx "$buggy" "$source"; then
+          sed -i \
+            's/^pub use sandbox::{ProcessSandbox, ProcessSpec, SandboxedProcess, delete_profile, profile_name};$/pub use sandbox::{ProcessSandbox, ProcessSpec, delete_profile, profile_name};\n#[cfg(windows)]\npub use sandbox::SandboxedProcess;/' \
+            "$source"
+        fi
+        if grep -Fqx "$buggy" "$source"; then
+          echo "::error::failed to gate bundle-platform's Windows-only SandboxedProcess export" >&2
+          exit 1
+        fi
+
     - name: Work around bundle's dasp_signal no_std bug
       # crates/bundle-packsquash/Cargo.toml pins `dasp_signal` with
       # `default-features = false`, which routes it through a `not(std)`
