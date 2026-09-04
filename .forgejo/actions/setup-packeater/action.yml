@@ -27,6 +27,23 @@ runs:
         workspaces: ${{ runner.temp }}/bundle-src -> target
         key: packeater-release
 
+    - name: Work around bundle's dasp_signal no_std bug
+      # See the identical step in setup-packwand/action.yml for the full
+      # explanation -- bundle-packeater-cli depends on bundle-packsquash too,
+      # so it hits the same broken dasp_signal `default-features = false`
+      # pin. Remove this step once upstream fixes it.
+      shell: bash
+      working-directory: ${{ runner.temp }}/bundle-src
+      run: |
+        set -eu
+        manifest=crates/bundle-packsquash/Cargo.toml
+        sed -i 's/^dasp_signal = .*default-features = false.*/dasp_signal = "0.11.0"/' "$manifest"
+        if grep -q '^dasp_signal = .*default-features = false' "$manifest"; then
+          echo "::error::dasp_signal line in $manifest didn't match the expected pattern -- upstream likely changed it, update this workaround" >&2
+          exit 1
+        fi
+        cargo update -p dasp_signal
+
     - name: Build Packeater
       shell: bash
       working-directory: ${{ runner.temp }}/bundle-src

@@ -21,6 +21,31 @@ runs:
         workspaces: ${{ runner.temp }}/bundle-src
         cache-key: packwand-cli-release
 
+    - name: Work around bundle's dasp_signal no_std bug
+      # crates/bundle-packsquash/Cargo.toml pins `dasp_signal` with
+      # `default-features = false`, which routes it through a `not(std)`
+      # fallback calling unstable `core::intrinsics::{sinf64,floorf64,
+      # ceilf64}`. Those were removed from nightly before 2026-09-03 (the
+      # exact toolchain this job installs), so the crate no longer compiles.
+      # bundle-packsquash uses std everywhere else, so drop the flag. This
+      # also pulls in dasp_signal's optional dasp_envelope/dasp_rms/
+      # dasp_window deps (its `std` feature enables them via old-style
+      # `dep/feature` syntax), which the checked-in lockfile doesn't have --
+      # `cargo update -p` re-syncs just those entries, without touching
+      # anything else `--locked` will pin for the real build below. Remove
+      # this step once upstream fixes the pin.
+      shell: bash
+      working-directory: ${{ runner.temp }}/bundle-src
+      run: |
+        set -eu
+        manifest=crates/bundle-packsquash/Cargo.toml
+        sed -i 's/^dasp_signal = .*default-features = false.*/dasp_signal = "0.11.0"/' "$manifest"
+        if grep -q '^dasp_signal = .*default-features = false' "$manifest"; then
+          echo "::error::dasp_signal line in $manifest didn't match the expected pattern -- upstream likely changed it, update this workaround" >&2
+          exit 1
+        fi
+        cargo update -p dasp_signal
+
     - name: Build Packwand CLI
       shell: bash
       working-directory: ${{ runner.temp }}/bundle-src
