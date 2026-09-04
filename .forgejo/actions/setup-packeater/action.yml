@@ -12,6 +12,12 @@ runs:
           git clone --depth 1 https://tangled.org/nostalgica.net/bundle "$RUNNER_TEMP/bundle-src"
         fi
 
+    - name: Install native build tooling
+      shell: bash
+      run: |
+        apt-get update
+        apt-get install -y cmake
+
     - name: Install Packeater Rust toolchain
       uses: https://github.com/dtolnay/rust-toolchain@nightly
 

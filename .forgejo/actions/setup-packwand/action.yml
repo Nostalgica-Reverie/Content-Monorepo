@@ -8,6 +8,12 @@ runs:
       shell: bash
       run: git clone --depth 1 https://tangled.org/nostalgica.net/bundle "$RUNNER_TEMP/bundle-src"
 
+    - name: Install native build tooling
+      shell: bash
+      run: |
+        apt-get update
+        apt-get install -y cmake
+
     - name: Setup Packwand Rust toolchain
       uses: ./.forgejo/actions/setup-rust
       with:
