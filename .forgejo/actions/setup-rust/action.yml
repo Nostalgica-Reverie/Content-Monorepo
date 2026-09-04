@@ -2,6 +2,10 @@ name: 'Setup Rust'
 description: 'Stable Rust toolchain + Swatinem build cache, with optional GTK/WebKitGTK build deps for the webview/Tauri components.'
 
 inputs:
+  toolchain:
+    description: "Toolchain channel to install (e.g. 'stable', 'nightly', '1.75.0')"
+    required: false
+    default: 'stable'
   components:
     description: "Toolchain components, comma-separated (e.g. 'clippy, rustfmt')"
     required: false
@@ -38,8 +42,9 @@ runs:
         apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev ${{ inputs.extra-packages }}
 
     - name: Install Rust toolchain
-      uses: https://github.com/dtolnay/rust-toolchain@stable
+      uses: https://github.com/dtolnay/rust-toolchain@master
       with:
+        toolchain: ${{ inputs.toolchain }}
         components: ${{ inputs.components }}
         targets: ${{ inputs.targets }}
 

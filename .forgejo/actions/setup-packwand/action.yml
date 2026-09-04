@@ -17,6 +17,7 @@ runs:
     - name: Setup Packwand Rust toolchain
       uses: ./.forgejo/actions/setup-rust
       with:
+        toolchain: nightly
         workspaces: ${{ runner.temp }}/bundle-src
         cache-key: packwand-cli-release
 
