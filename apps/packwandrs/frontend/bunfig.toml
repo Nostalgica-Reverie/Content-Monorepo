@@ -1,5 +1,0 @@
-# Bun has no built-in `.vue` loader. Without this preload, importing a
-# component in a test resolves to a stand-in and assertions against rendered
-# markup pass without rendering anything.
-[test]
-preload = ["./tests/setup/vue-sfc-loader.ts"]

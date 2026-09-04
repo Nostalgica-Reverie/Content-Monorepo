@@ -1,1 +1,0 @@
-ALTER TABLE "users" DROP COLUMN "modrinth_user_id";

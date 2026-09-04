@@ -1,1 +1,0 @@
-ALTER TABLE "applications" ADD COLUMN "linked_message_id" text;

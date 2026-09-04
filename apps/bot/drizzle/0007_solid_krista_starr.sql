@@ -1,1 +1,0 @@
-ALTER TABLE "watchlist" ADD CONSTRAINT "watchlist_discord_user_id_unique" UNIQUE("discord_user_id");
