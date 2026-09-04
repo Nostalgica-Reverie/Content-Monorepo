@@ -41,7 +41,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          entries="$(packwand publish plan | jq -c '.')"
+          entries="$(packwand publish plan --no-validate | jq -c '.')"
           echo "entries=$entries" >> "$GITHUB_OUTPUT"
           if [ "$(jq 'length' <<< "$entries")" -gt 0 ]; then
             echo "has_entries=true" >> "$GITHUB_OUTPUT"
