@@ -1,5 +1,5 @@
 # Monorepo build tasks. Install just from https://just.systems (or
-# `cargo install just`), then run e.g. `just build-installer`. `just --list`
+# `cargo install just`), then run e.g. `just lint-mods`. `just --list`
 # shows every public recipe. CI (.forgejo/workflows/) drives these same
 # recipes so local runs match the build server.
 #
@@ -14,11 +14,6 @@
 #
 set shell := ["sh", "-cu"]
 
-INSTALLER_DIR := "apps/packwand-installer"
-WEBVIEW_DIR := "apps/mod-browser-webview"
-GUI_TAURI_DIR := "apps/packwandrs"
-BOT_DIR := "apps/bot"
-API_DIR := "apps/api"
 DOCS_SITES := "docs docs/packwand docs/packwiz"
 
 # just has no built-in equivalent of Task's `{{exeExt}}`; define it explicitly.
@@ -43,51 +38,8 @@ _mod_gradlew_all ARGS:
 
 # — Lint —
 
-# Vet the Go module; also guard that os.Exit stays confined to cmd/ and cmdshared/
-# Vet the cursorapi Go module
-[working-directory: 'apps/api']
-lint-cursorapi:
-    go vet ./...
-
-# Vet the local ATProto identity bridge
-[working-directory: 'apps/packwandrs/packwand-social']
-lint-social:
-    go vet ./...
-
-# Vet the local Tangled workflow runner
-[working-directory: 'apps/packwandrs/somnus']
-lint-somnus:
-    go vet ./...
-
-# Clippy on mod-browser-webview
-[working-directory: 'apps/mod-browser-webview']
-lint-webview:
-    cargo clippy --all-targets -- -D warnings
-
-# Compile-check packwiz-installer (Gradle has no separate lint; compilation surfaces diagnostics)
-lint-installer: (_gradlew INSTALLER_DIR "classes bootstrap:classes")
-
 # Run every mod's Gradle verification lifecycle
 lint-mods: (_mod_gradlew_all "check")
-
-# Scan the Go module for known vulnerabilities
-# fmt + clippy on the packwandrs workspace (CLI, launcher core, desktop shell)
-[working-directory: 'apps/packwandrs']
-lint-rust-core:
-    cargo fmt --all --check
-    cargo clippy --workspace --all-targets -- -D warnings
-
-# Scan Rust lockfiles for RUSTSEC advisories (requires cargo-audit)
-audit-rust:
-    cargo audit --file {{ WEBVIEW_DIR }}/Cargo.lock
-    cargo audit --file apps/packwandrs/Cargo.lock
-    cargo audit --file Cargo.lock
-
-# ESLint + Prettier check on the Discord bot (requires bun)
-[working-directory: 'apps/bot']
-lint-bot:
-    bun install --cwd ../.. --frozen-lockfile --filter @reverie/pineapple
-    bun run lint
 
 # Repo-wide spell check (requires typos -- cargo install typos-cli); config in _typos.toml
 lint-typos:
@@ -128,143 +80,54 @@ lint-actions:
     actionlint -config-file .forgejo/actionlint.yaml -ignore 'in invalid format because owner and repo' .forgejo/workflows/*.yml
 
 # Evaluate every Nix flake output without building it (Nix requires Linux, macOS, or WSL)
+# NOTE: broken since packages/packwand2nix (the flake's Nix-generation helper
+# library) was removed along with the other non-mc projects -- flake.nix
+# cannot currently evaluate. Left in place pending a decision on whether the
+# Nix packaging story is rebuilt or retired.
 lint-nix:
     nix flake check --no-build --no-update-lock-file
 
-# fmt + clippy on packeater_cli (now a packwandrs workspace member; mirrors ci-packeater.yml)
-[working-directory: 'apps/packwandrs']
-lint-packeater:
-    cargo fmt --package packeater_cli -- --check
-    cargo clippy -p packeater_cli --all-targets -- -D warnings
-
 # All linters/vetters and vulnerability scans
-lint: lint-cursorapi lint-social lint-somnus lint-webview lint-installer lint-mods lint-rust-core lint-bot lint-fmt lint-typos lint-actions lint-packeater audit-rust docs-typecheck
+lint: lint-mods lint-fmt lint-typos lint-actions docs-typecheck
 
 # — Test —
 
-# Run Packwand's manifest/content/registry gate for a pack or subdir
+# Run Packwand's manifest/content/registry gate for a pack or subdir.
+# Requires a `packwand` (or `bundle`) binary on PATH -- see header comment.
 preflight DIR:
-    cargo run --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli -- preflight "{{ DIR }}"
+    packwand preflight "{{ DIR }}"
 
-# Run the IDE's CI-equivalent Packwand stages for a pack subdir
 ci-local DIR:
-    cargo run --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli -- ci-local "{{ DIR }}"
-
-# Time Packwand's hot stages (PACKWAND_TIMINGS spans) against a real mr and cf pack subdir
-bench-packwand MR_DIR CF_DIR:
-    cargo build --release --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli
-    cd "{{ MR_DIR }}" && "{{ justfile_directory() }}/apps/packwandrs/target/release/packwand{{ EXE_EXT }}" update --all --dry-run
-    cd "{{ MR_DIR }}" && "{{ justfile_directory() }}/apps/packwandrs/target/release/packwand{{ EXE_EXT }}" refresh
-    cd "{{ MR_DIR }}" && "{{ justfile_directory() }}/apps/packwandrs/target/release/packwand{{ EXE_EXT }}" modrinth export -o bench-export.mrpack && rm -f bench-export.mrpack
-    cd "{{ CF_DIR }}" && "{{ justfile_directory() }}/apps/packwandrs/target/release/packwand{{ EXE_EXT }}" curseforge export -o bench-export.zip && rm -f bench-export.zip
-
-# Test the cursorapi Go module
-[working-directory: 'apps/api']
-test-cursorapi:
-    go test ./...
-
-# Test the local ATProto identity bridge
-[working-directory: 'apps/packwandrs/packwand-social']
-test-social:
-    go test ./...
-
-# Test workflow parsing, triggers, and reporting
-[working-directory: 'apps/packwandrs/somnus']
-test-somnus:
-    go test ./...
-
-# Gradle tests (installer + bootstrap)
-test-installer: (_gradlew INSTALLER_DIR "test")
+    packwand ci-local "{{ DIR }}"
 
 # Run unit/integration tests for every Stonecutter mod project
 test-mods: (_mod_gradlew_all "test")
 
-# Cargo tests
-[working-directory: 'apps/mod-browser-webview']
-test-webview:
-    cargo test
-
-# Cargo tests for the packwandrs workspace (excludes #[ignore]'d real-boot tests needing Java/network)
-[working-directory: 'apps/packwandrs']
-test-rust-core:
-    cargo test --workspace
-
-# Build all flake checks, including Packwand and the generated modpack inventory
+# Build all flake checks, including the generated modpack inventory
+# NOTE: broken, see lint-nix.
 test-nix:
     nix flake check --no-update-lock-file --print-build-logs
 
 # All tests
-test: test-cursorapi test-social test-somnus test-installer test-mods test-webview test-rust-core
+test: test-mods
 
 # — Build —
-
-# Build the Rust Packwand CLI
-[working-directory: 'apps/packwandrs']
-build-packwand:
-    cargo build --release -p packwand-cli
-
-# Build the cursorapi HTTP server
-[working-directory: 'apps/api']
-build-cursorapi:
-    go build -o cursorapi{{ EXE_EXT }} ./cursorapi
-
-# Build the local ATProto identity bridge
-[working-directory: 'apps/packwandrs/packwand-social']
-build-social:
-    mkdir -p ../target/release
-    go build -o ../target/release/packwand-social{{ EXE_EXT }} .
-
-# Build the local Tangled workflow runner
-[working-directory: 'apps/packwandrs/somnus']
-build-somnus:
-    mkdir -p ../target/release
-    go build -o ../target/release/somnus{{ EXE_EXT }} .
-
-# Build packwiz-installer (and the legacy Java bootstrap) via Gradle
-build-installer: (_gradlew INSTALLER_DIR "build -x test")
-
-# Build the native installer; the Gradle recipe remains the launcher-contract fallback
-[working-directory: 'apps/packwandrs']
-build-installer-rs:
-    cargo build --release -p packwand-installer
 
 # Build distributable jars for every Stonecutter mod project
 build-mods: (_mod_gradlew_all "build -x test")
 
-# Build mod-browser-webview (release). Linux requires webkit2gtk; Windows requires the WebView2 runtime at run time.
-[working-directory: 'apps/mod-browser-webview']
-build-webview:
-    cargo build --release
-
-# Build the Go packwiz-bootstrap wrapper
-# Build the native Rust/Vue Packwand GUI app (Tauri v2).
-[working-directory: 'apps/packwandrs']
-build-gui: build-packwand build-social build-installer-rs
-    cargo tauri build
-
 # Generate/update packwiz2nix checksums.json for every modpack subdir via packwand's internal generator
+# NOTE: broken, see lint-nix -- packwand2nix is gone.
 gen-nix:
-    cargo run --manifest-path apps/packwandrs/Cargo.toml -p packwand-cli -- nix gen --all
+    packwand nix gen --all
 
-# Build Packwand, its social helper, and Cursor API through Nix without creating result symlinks
+# Build the Nix outputs without creating result symlinks
+# NOTE: broken, see lint-nix.
 build-nix:
-    nix build --no-link --no-update-lock-file --print-build-logs .#packwand .#packwand-social .#somnus .#cursorapi
+    nix build --no-link --no-update-lock-file --print-build-logs .#default
 
-# Regenerate the webview third-party licenses page (embedded at build time)
-[working-directory: 'apps/mod-browser-webview']
-gen-licenses:
-    cargo install --locked cargo-about
-    cargo about generate about.hbs -o src/licenses.html
-
-# Typecheck + bundle smoke-test the Discord bot (requires bun; Bun runs the TS sources directly in production)
-[working-directory: 'apps/bot']
-build-bot:
-    bun install --cwd ../.. --frozen-lockfile --filter @reverie/pineapple
-    bun run typecheck
-    bun build src/index.ts --target=bun --outdir=dist
-
-# Build everything (CLI, installer, webview, bootstrap, bot)
-build: build-packwand build-cursorapi build-social build-somnus build-installer build-installer-rs build-mods build-webview build-bot
+# Build everything (mods)
+build: build-mods
 
 # — Docs —
 
@@ -296,10 +159,3 @@ docs-build:
 # Check cross-site links across all three docs sites against their built dist/ output (run after docs-build)
 docs-lint-links:
     bun docs/link-lint.mts
-
-# — Frontend —
-
-# Rebuild the Gleam GUI frontend into gui/static
-[working-directory: 'apps/packwandrs']
-gui-frontend:
-    bun run build
