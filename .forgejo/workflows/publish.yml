@@ -69,16 +69,10 @@ jobs:
             datapacks
             resourcepacks
             mods
-            scripts
             .forgejo/actions
 
       - name: Setup Packwand
         uses: ./.forgejo/actions/setup-packwand
-
-      - name: Set up Bun
-        uses: https://github.com/oven-sh/setup-bun@v2
-        with:
-          bun-version: '1.3.14'
 
       - name: Setup Java for mod builds
         uses: ./.forgejo/actions/setup-java
@@ -92,7 +86,7 @@ jobs:
         run: packwand json minify "$(dirname '${{ matrix.entry.manifest }}')"
 
       - name: Generate Changelog
-        run: bun scripts/run.ts generate-changelog "${{ matrix.entry.manifest }}" "$RUNNER_TEMP/release-notes.md"
+        run: packwand changelog generate "${{ matrix.entry.manifest }}" "$RUNNER_TEMP/release-notes.md"
 
       - name: Build artifacts
         env:

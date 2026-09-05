@@ -67,7 +67,34 @@ jobs:
         id: parity
         shell: bash
         continue-on-error: true
-        run: packwand parity --json > "$RUNNER_TEMP/parity.json"
+        run: |
+          set -euo pipefail
+          url_file="$RUNNER_TEMP/packwand-api-url"
+          log_file="$RUNNER_TEMP/packwand-api.log"
+          packwand api serve --print-port-file "$url_file" > "$log_file" 2>&1 &
+          api_pid=$!
+          cleanup() {
+            kill "$api_pid" 2>/dev/null || true
+            wait "$api_pid" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+          for _ in $(seq 1 100); do
+            if [ -s "$url_file" ]; then
+              break
+            fi
+            if ! kill -0 "$api_pid" 2>/dev/null; then
+              cat "$log_file" >&2
+              exit 1
+            fi
+            sleep 0.1
+          done
+          if [ ! -s "$url_file" ]; then
+            echo "Packwand API did not become ready" >&2
+            cat "$log_file" >&2
+            exit 1
+          fi
+          api_url="$(tr -d '\r\n' < "$url_file")"
+          curl -fsS "${api_url%/}/api/v3/diagnostics/parity" > "$RUNNER_TEMP/parity.json"
 
       - name: Write parity summary
         shell: bash
@@ -82,7 +109,7 @@ jobs:
             fi
             echo "| Pack / variant | Status |"
             echo "| --- | --- |"
-            jq -r '.[] | "| " + .pack + "/" + .variant + " | " + (if .missing_side then "single-platform (no -" + .missing_side + ")" elif ((.only_mr // [] | length) + (.only_cf // [] | length) + (.file_drift // [] | length)) > 0 then "⚠️ " + ((.only_mr // [] | length | tostring)) + " mr-only, " + ((.only_cf // [] | length | tostring)) + " cf-only, " + ((.file_drift // [] | length | tostring)) + " file drift" else "in parity" end) + " |"' "$RUNNER_TEMP/parity.json"
+            jq -r '.[] | "| " + .pack + "/" + .variant + " | " + (if .drifted then "⚠️ drift detected" else "in parity" end) + " |"' "$RUNNER_TEMP/parity.json"
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Fail on check errors
