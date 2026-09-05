@@ -229,7 +229,7 @@
 	#Here you can disable some Analysis tools by class names.
 	#List of them can be found here: dev.kostromdan.mods.crash_assistant.app.gui.analysis
 	#For example "MCreatorModDetectorGUI"
-	blacklisted_tools = [MCreatorModDetectorGUI]
+	blacklisted_tools = ["MCreatorModDetectorGUI"]
 
 #Settings of '/crash_assistant crash' command feature.
 [crash_command]
@@ -356,4 +356,3 @@
 [debug]
 	#Debug option to crash immediately after Crash Assistant launched its process to conveniently debug it, configure it without need to manually crash.
 	crash_after_init = false
-
