@@ -1,18 +1,12 @@
-# Simply Legacy 26.07.7
+# Simply Legacy 26.09
 
 ### Configuration Changes
-- **Modrinth**: The Transparency Fix resource pack has now been properly applied to all Resource Albums.
-- Legacy Skins compatible resource packs are no longer pre-enabled in Global Resource Packs, since Legacy Skins has not been ported for 26.1.2 or Legacy4J 1.9.
+
 
 ### Notable Updates
-- Added Clarity
-  - A utility mod that will assist in debugging certain problems
-- **Modrinth**: Updated Minimega to 6.5.20
-  - Various interface fixes
-  - Programmer Art textures for Battle and Glide UI elements
-  - See the full changelog [here](https://modrinth.com/mod/minimega/version/6.5.20)
-- **Modrinth**: Updated mods
-  - Updated Async Logger to 2.2.0
-  - Updated Jasione to 1.0.6
-  - Updated Mod Menu to 18.0.0 (stable)
-  - Updated YetAnotherConfigLib to 3.9.6
+- Updated Legacy4J from 1.9 Pre-Release 2 to 1.9.1
+  - 
+- Updated Minimega from 6.5.10 to 6.5.33
+  - 
+- Added Legacy4J Addons
+
