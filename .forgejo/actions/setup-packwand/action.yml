@@ -6,7 +6,7 @@ runs:
   steps:
     - name: Clone bundle from Tangled
       shell: bash
-      run: git clone --depth 1 https://tangled.org/nostalgica.net/bundle "$RUNNER_TEMP/bundle-src"
+      run: git clone --depth 1 https://tangled.org/omoso.tngl.sh/bundle "$RUNNER_TEMP/bundle-src"
 
     - name: Install build and workflow tooling
       shell: bash
