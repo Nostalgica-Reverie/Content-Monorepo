@@ -1,36 +1,24 @@
 {
   "name": "ImmediatelyFast",
-  "filename": "ImmediatelyFast-Fabric-1.16.2+26.2.jar",
+  "filename": "ImmediatelyFast-Fabric-1.16.4+26.2.jar",
   "side": "client",
   "download": {
-    "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/uJHxuQxy/ImmediatelyFast-Fabric-1.16.2%2B26.2.jar",
+    "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/vkW9vHhp/ImmediatelyFast-Fabric-1.16.4%2B26.2.jar",
     "hash-format": "sha512",
-    "hash": "5f7c9d7993bfe3654b4f384c23afd83c1adcc359b1fa669b20f29ffa41e4e3135a161c1fdf97c66c5fc513ec5fe63e757a46b6e183b7b93148a28412496c5a0b"
-  },
-  "downloads": {
-    "modrinth": {
-      "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/uJHxuQxy/ImmediatelyFast-Fabric-1.16.2%2B26.2.jar",
-      "hash-format": "sha512",
-      "hash": "5f7c9d7993bfe3654b4f384c23afd83c1adcc359b1fa669b20f29ffa41e4e3135a161c1fdf97c66c5fc513ec5fe63e757a46b6e183b7b93148a28412496c5a0b"
+    "hash": "b8b375e6d47acd6051fc7110065d0a18b59db584eb68699652ced212ea0a9b2b9a78d2f791f641ab3547e0ca56b51e0af7c60c1164b4d38910d9aa94e45241c0",
+    "extra-hashes": {
+      "sha1": "ad000a89ef86575019087a2068eb4eebad02c05e"
     },
-    "curseforge": {
-      "hash-format": "sha512",
-      "hash": "5f7c9d7993bfe3654b4f384c23afd83c1adcc359b1fa669b20f29ffa41e4e3135a161c1fdf97c66c5fc513ec5fe63e757a46b6e183b7b93148a28412496c5a0b",
-      "extra-hashes": {
-        "sha1": "2d1cd27b0b570f908b665c02a35b49381b4c5ec1"
-      },
-      "size": 91422,
-      "mode": "metadata:curseforge"
-    }
+    "size": 98633
   },
   "update": {
-    "modrinth": {
-      "mod-id": "5ZwdcRci",
-      "version": "uJHxuQxy"
-    },
     "curseforge": {
       "file-id": 8415228,
       "project-id": 686911
+    },
+    "modrinth": {
+      "mod-id": "5ZwdcRci",
+      "version": "vkW9vHhp"
     }
   }
 }

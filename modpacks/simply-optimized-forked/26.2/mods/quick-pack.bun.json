@@ -1,45 +1,25 @@
 {
   "name": "quick pack",
-  "filename": "quick-pack-fabric-1.4.0+26.2.jar",
+  "filename": "quick-pack-fabric-1.5.0+26.2.jar",
   "side": "both",
   "download": {
-    "url": "https://cdn.modrinth.com/data/pSISfJ4O/versions/Ts0ciK2G/quick-pack-fabric-1.4.0%2B26.2.jar",
+    "url": "https://cdn.modrinth.com/data/pSISfJ4O/versions/qkkuAg94/quick-pack-fabric-1.5.0%2B26.2.jar",
     "hash-format": "sha512",
-    "hash": "74776821341e33bc8e1e89c7b61ece0d9a891fae889113b76351eb2aa077526efe29025dd1c416d5050b2e01b76f6fbad3113dbf01bfeb77c833a91b927696b5",
+    "hash": "e78e78a4db111afdacff6dc079598bc1a767a628260b8de91f5d768aa043d2eb04ea483eb35fc779a45f361a1e09f3768ab5f06441fb84803da1cf2006f0cc77",
     "extra-hashes": {
-      "sha1": "52665f245611466641e4e71c674fa2c5fd227bd1"
+      "sha1": "21c9cc915bec7ae20427026a0647d72b74522a36"
     },
-    "size": 15638
-  },
-  "downloads": {
-    "modrinth": {
-      "url": "https://cdn.modrinth.com/data/pSISfJ4O/versions/Ts0ciK2G/quick-pack-fabric-1.4.0%2B26.2.jar",
-      "hash-format": "sha512",
-      "hash": "74776821341e33bc8e1e89c7b61ece0d9a891fae889113b76351eb2aa077526efe29025dd1c416d5050b2e01b76f6fbad3113dbf01bfeb77c833a91b927696b5",
-      "extra-hashes": {
-        "sha1": "52665f245611466641e4e71c674fa2c5fd227bd1"
-      },
-      "size": 15638
-    },
-    "curseforge": {
-      "hash-format": "sha512",
-      "hash": "74776821341e33bc8e1e89c7b61ece0d9a891fae889113b76351eb2aa077526efe29025dd1c416d5050b2e01b76f6fbad3113dbf01bfeb77c833a91b927696b5",
-      "extra-hashes": {
-        "sha1": "52665f245611466641e4e71c674fa2c5fd227bd1"
-      },
-      "size": 15638,
-      "mode": "metadata:curseforge"
-    }
+    "size": 20265
   },
   "update": {
-    "modrinth": {
-      "mod-id": "pSISfJ4O",
-      "version": "Ts0ciK2G"
-    },
     "curseforge": {
       "file-id": 8535803,
       "project-id": 1380888,
       "release-channel": ""
+    },
+    "modrinth": {
+      "mod-id": "pSISfJ4O",
+      "version": "qkkuAg94"
     }
   }
 }
